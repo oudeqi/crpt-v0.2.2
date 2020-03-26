@@ -1,0 +1,105 @@
+html, body {
+  height: 100%;
+  font-size: 16px;
+  background-color: rgba(0,0,0,0);
+}
+
+section {
+  background-color: #fff;
+  margin-top: 12px;
+}
+
+.tit {
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding-left: 20px;
+  border-bottom: 1px solid #ededed;
+  position: relative;
+  font-size: 15px
+}
+
+.tit:after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: #1dc4a2;
+  }
+
+.indent {
+  padding-left: 20px;
+}
+.indent-tit {
+  height: 40px;
+  padding-top: 15px;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 14px;
+}
+.ipt-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 50px;
+  border-bottom: 1px solid #ededed
+}
+.ipt-box .label {
+    width: 90px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    color: #000;
+  }
+.ipt-box .ipt {
+    height: 100%;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    color: #ccc;
+  }
+.ipt-box .icon {
+    width: 50px;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center
+  }
+.ipt-box .icon .aui-iconfont {
+      color: #666;
+      font-weight: bold;
+    }
+
+.submit {
+  padding: 25px 20px 40px;
+}

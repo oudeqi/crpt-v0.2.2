@@ -1,0 +1,48 @@
+.container {
+  padding: 10px 25px;
+}
+.btn-box {
+  margin-top: 60px;
+}
+
+.icon {
+  width: 90px;
+  height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+}
+
+.yes {
+  background-image: url(../../image/auth/gou-line.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.no {
+  background-image: url(../../image/auth/cha-line.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.during {
+  width: 130px;
+  height: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  background-image: url(../../image/auth/during.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.title {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+}
+.message {
+  text-align: center;
+  margin-top: 10px;
+}

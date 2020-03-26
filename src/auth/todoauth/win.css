@@ -1,0 +1,219 @@
+
+.container {
+  padding: 20px;
+}
+
+.tips {
+  font-size: 16px;
+  font-weight: bold;
+  color: #8d9daa;
+  line-height: 1.5;
+  text-align: center;
+  padding-top: 10px;
+  & strong {
+    color: #1dc4a2;
+    padding: 0 4px;
+    font-size: 1.2em;
+  }
+}
+.auth-block.active {
+  background-color: #1dc4a2;
+  color: #fff;
+  & p {
+    color: #fff;
+  }
+  & .icon {
+    background-image: url(../../image/auth/arrow-right-fff.png) !important;
+    background-size: contain;
+  }
+  & .badge {
+    background-color: #88dbcb;
+  }
+}
+.auth-block {
+  margin-top: 30px;
+  background-color: #eaeaea;
+  height: 120px;
+  border-radius: 3px;
+  position: relative;
+  padding-left: 50px;
+  padding-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8d9daa;
+  & .text {
+    flex-grow: 1;
+    margin-right: 20px;
+    & strong {
+      font-size: 18px;
+      font-weight: bold;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    & .icon {
+      display: inline-block;
+      vertical-align: middle;
+      background-image: url(../../image/auth/arrow-right.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 30px;
+      height: 30px;
+      margin-left: -6px;
+    }
+    & p {
+      margin-top: 4px;
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+  }
+  & .pic {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #c2ced2;
+  }
+  & .idcard {
+    background-image: url(../../image/auth/idcard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 36px auto;
+  }
+  & .facescan {
+    background-image: url(../../image/auth/facescan.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+  }
+  & .baseinfo {
+    background-image: url(../../image/auth/baseinfo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+  }
+  & .badge {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: #beced6;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.auth-block2.active {
+  background-color: #1dc4a2;
+  color: #fff;
+  & .icon {
+    background-image: url(../../image/auth/arrow-right-fff.png) !important;
+    background-size: contain;
+  }
+  & .badge {
+    background-color: #88dbcb;
+  }
+}
+.auth-block2 {
+  margin-top: 30px;
+  border: 1px solid #1dc4a2;
+  height: 90px;
+  border-radius: 3px;
+  position: relative;
+  padding-left: 50px;
+  padding-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #8d9daa;
+  & .text {
+    flex-grow: 1;
+  }
+  & .badge {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: #1dc4a2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  & .pic {
+    flex-shrink: 0;
+  }
+  & strong {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  & .icon {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url(../../image/auth/arrow-right.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    margin-left: -5px;
+  }
+}
+
+.authing {
+  & .pic {
+    width: 80px;
+    height: 80px;
+    background-image: url(../../image/auth/authing.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80px auto;
+  }
+}
+.authpass {
+  & .pic {
+    width: 50px;
+    height: 50px;
+    background-image: url(../../image/auth/gou.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+  }
+  & span {
+    color: #1dc4a2;
+  }
+}
+.autherror {
+  & .pic {
+    width: 50px;
+    height: 50px;
+    background-image: url(../../image/auth/cha.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+  }
+}
+
+.smile {
+  width: 60px;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-image: url(../../image/auth/smile.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.btn-box {
+  margin-top: 20px;
+}

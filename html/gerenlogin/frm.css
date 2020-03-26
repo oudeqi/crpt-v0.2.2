@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 120px 40px 0;
+}
+
+.link-btns {
+  height: 50px;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.btn-box {
+  padding-top: 40px
+}
+.text-btn {
+  padding-top: 20px;
+  text-align: center;
+}

@@ -1,0 +1,54 @@
+.container {
+  padding: 10px 25px;
+}
+.btn-box {
+  margin-top: 40px;
+}
+.tips {
+  background: #e7eff4;
+  line-height: 1.5;
+  padding: 12px 15px;
+  font-size: 16px;
+  color: #8d9daa
+}
+.tips strong {
+    color: #1dc4a2;
+    padding: 0 2px;
+  }
+
+.welcome {
+  padding: 20px 0;
+  color: #555
+}
+
+.welcome div {
+    font-size: 18px
+  }
+
+.welcome div strong {
+      color: #1dc4a2;
+    }
+
+.welcome p {
+    margin-top: 10px;
+    text-indent: 2em;
+    line-height: 1.5;
+  }
+.yugu {
+  text-align: center;
+  margin-top: 40px
+}
+.yugu p {
+    text-align: center;
+    color: #8d9daa;
+    font-weight: bold;
+  }
+.yugu div {
+    color: #333;
+    font-size: 40px;
+    margin-top: 10px
+  }
+.yugu div span {
+      font-size: 15px;
+      margin-left: 5px;
+    }

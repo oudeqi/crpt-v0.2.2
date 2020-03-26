@@ -1,0 +1,25 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 120px 40px 0;
+}
+
+.link-btns {
+  height: 50px;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-box {
+  padding-top: 40px
+}
+.text-btn {
+  padding-top: 20px;
+  text-align: center;
+}

@@ -1,0 +1,27 @@
+html, body {
+  background-color: #ebebeb;
+}
+ul {
+  padding: 0 15px;
+}
+li {
+  background: #fff;
+  margin-top: 15px;
+  border-radius: 5px;
+  padding: 10px;
+}
+.t {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  & strong {
+    flex-grow: 1;
+  }
+  & span {
+    flex-shrink: 0;
+  }
+}
+.b {
+  color: #aaa;
+  padding: 10px 0;
+}

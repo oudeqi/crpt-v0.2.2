@@ -1,0 +1,61 @@
+html, body {
+  background-color: #ebebeb;
+}
+ul {
+  padding: 15px;
+}
+li {
+  margin-top: 20px;
+}
+.date {
+  padding: 5px;
+  text-align: center;
+  & span {
+    display: inline-block;
+    height: 30px;
+    width: 200px;
+    background-color: #eee;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+.content {
+  background-color: #fff;
+  border-radius: 3px;
+  position: relative;
+  padding: 10px;
+}
+.dot {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  border-radius: 50%;
+  background: red;
+}
+.t {
+  border-bottom: 1px solid #ebebeb;
+  color: #aaa;
+  & .tit {
+    font-size: 17px;
+  }
+  & .msg {
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+}
+.b {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  & strong {
+    flex-grow: 1;
+    color: #333;
+  }
+  & span {
+    flex-shrink: 0;
+    & i {
+      font-weight: bold;
+    }
+  }
+}

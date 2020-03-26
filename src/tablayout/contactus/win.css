@@ -1,0 +1,44 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 50px 40px;
+}
+
+.tel-box {
+  display: flex;
+  align-items: center;
+  & .icon {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    margin-right: 20px;
+    background-image: url(../../image/tel.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  & .txt {
+    flex-grow: 1;
+    & .tit {
+      font-size: 18px;
+    }
+    & .tel {
+      font-size: 18px;
+      color: #0069aa;
+      font-weight: bold;
+    }
+  }
+}
+
+.tips {
+  margin-top: 30px;
+  & p {
+    line-height: 2;
+    color: #555;
+    font-size: 15px;
+
+  }
+}

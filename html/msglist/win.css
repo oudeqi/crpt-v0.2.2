@@ -1,0 +1,68 @@
+html, body {
+  background-color: #ebebeb;
+}
+ul {
+  padding: 15px;
+}
+li {
+  margin-top: 20px;
+}
+.date {
+  padding: 5px;
+  text-align: center
+}
+.date span {
+    display: inline-block;
+    height: 30px;
+    width: 200px;
+    background-color: #eee;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+  }
+.content {
+  background-color: #fff;
+  border-radius: 3px;
+  position: relative;
+  padding: 10px;
+}
+.dot {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  border-radius: 50%;
+  background: red;
+}
+.t {
+  border-bottom: 1px solid #ebebeb;
+  color: #aaa
+}
+.t .tit {
+    font-size: 17px;
+  }
+.t .msg {
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+.b {
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center
+}
+.b strong {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    color: #333;
+  }
+.b span {
+    -ms-flex-negative: 0;
+        flex-shrink: 0
+  }
+.b span i {
+      font-weight: bold;
+    }

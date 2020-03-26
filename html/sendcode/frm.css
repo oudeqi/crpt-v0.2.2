@@ -1,0 +1,101 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 80px 20px 0;
+}
+
+.tips {
+  font-size: 17px;
+  color: #333
+}
+
+.tips strong {
+    color: #1dc4a2;
+  }
+
+.code-ipt {
+  margin-top: 50px;
+  padding-right: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 50px;
+  position: relative;
+  border: 1px solid #ededed;
+  border-radius: 3px
+}
+
+.code-ipt .label {
+    padding: 5px 0 5px 15px;
+    width: 80px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    font-size: 17px;
+    color: #333;
+    border-right: 1px solid #dfdfdf;
+  }
+
+.code-ipt .ipt {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 4px;
+    color: #aaa;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+
+.code-ipt .btn {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 120px;
+    height: 100%;
+    -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+    background-color: #1dc4a2;
+    border: 1px solid #1dc4a2;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    color: #fff;
+    border-radius:0 3px 3px 0
+  }
+
+.code-ipt .btn span {
+      padding-left: 0;
+      padding-right: 1px;
+    }
+
+.code-ipt .btn.active span {
+      padding-left: 1px;
+      padding-right: 0;
+    }
+
+.btn-box {
+  margin-top: 100px;
+}
