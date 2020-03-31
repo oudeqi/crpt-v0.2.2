@@ -149,8 +149,6 @@ function openContactUs() {
   });
 }
 
-// apiready = function () {
-
 apiready = function apiready() {
   api.addEventListener({
     name: 'swiperight'

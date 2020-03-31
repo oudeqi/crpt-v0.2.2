@@ -1,3 +1,5 @@
+import '../../app.css'
+
 import { closeWin } from '../../webview.js'
 
 apiready = function() {

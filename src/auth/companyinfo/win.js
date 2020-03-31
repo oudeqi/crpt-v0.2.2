@@ -1,3 +1,5 @@
+import '../../app.css'
+import './win.css'
 
 import { openRegLogin, openBaseinfoFill, openTodoAuth,
 openIDcardUpload } from '../../webview.js'

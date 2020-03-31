@@ -1,4 +1,5 @@
-
+import '../../app.css'
+import './win.css'
 // apiready = function () {
 //   api.addEventListener({
 //     name: 'navitembtn'

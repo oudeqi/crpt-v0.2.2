@@ -1,3 +1,6 @@
+import '../../app.css'
+import './win.css'
+
 import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
   openFaceAuth, openYuguEdu

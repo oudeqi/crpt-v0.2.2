@@ -1,3 +1,5 @@
+import '../../app.css'
+
 apiready = function() {
   api.parseTapmode();
   let header = $api.byId('header')

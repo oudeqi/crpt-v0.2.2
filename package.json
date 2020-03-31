@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run dev",
+    "start": "npm run rollup",
+    "rollup": "rollup --config rollup.config.js --watch",
     "dev": "cross-env NODE_ENV=development gulp --color",
     "prod": "cross-env NODE_ENV=production gulp build --color"
   },
   "repository": {
     "type": "git",
-    "url": "xxx"
+    "url": "http://gitlab.paas.oak.net.cn/operation-crpt-cloud/cloud-app.git"
   },
   "keywords": [
     "产业，金融"
@@ -26,21 +27,13 @@
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-url": "^4.0.2",
     "cross-env": "^7.0.2",
-    "delete": "^1.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "gulp": "^4.0.2",
-    "gulp-eslint": "^6.0.0",
-    "gulp-flatten": "^0.4.0",
-    "gulp-if": "^3.0.0",
-    "gulp-inline-source": "^4.0.0",
-    "gulp-postcss": "^8.0.0",
+    "glob": "^7.1.6",
     "postcss-preset-env": "^6.7.0",
     "rollup": "^2.1.0",
     "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-postcss": "^2.5.0"
+    "rollup-plugin-html2": "^1.0.0",
+    "rollup-plugin-postcss": "^2.5.0",
+    "rollup-watch": "^4.3.1"
   },
   "dependencies": {
     "lodash-es": "^4.17.15",

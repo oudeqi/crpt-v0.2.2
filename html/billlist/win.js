@@ -16,8 +16,6 @@ function openBillDetails() {
   });
 } // 订单列表
 
-// apiready = function () {
-
 apiready = function apiready() {
   document.querySelector('#billdetails').onclick = function () {
     openBillDetails();

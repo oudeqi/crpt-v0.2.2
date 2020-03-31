@@ -1,3 +1,5 @@
+import '../../app.css'
+
 import { openLeftPane } from '../../webview.js'
 apiready = function () {
 

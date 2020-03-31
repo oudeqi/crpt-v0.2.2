@@ -16,8 +16,6 @@ function openMsgDetails() {
   });
 } // 账单列表
 
-// apiready = function () {
-
 apiready = function apiready() {
   document.querySelector('#msgdetails').onclick = function () {
     openMsgDetails();

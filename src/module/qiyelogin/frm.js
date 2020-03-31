@@ -1,3 +1,6 @@
+import '../../app.css'
+import './frm.css'
+
 import {
   openReg, openGerenLogin, openQiyeLogin,
   openFindPwd, openSendCode

@@ -26,8 +26,6 @@ function openChangePwd() {
   });
 } // 联系我们
 
-// apiready = function () {
-
 apiready = function apiready() {
   document.querySelector('#logout').onclick = function () {
     api.confirm({

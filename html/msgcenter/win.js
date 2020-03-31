@@ -16,8 +16,6 @@ function openMsgList(title) {
   });
 } // 消息详情
 
-// apiready = function () {
-
 apiready = function apiready() {
   document.querySelector('#activitylist').onclick = function () {
     openMsgList('账户动态');
