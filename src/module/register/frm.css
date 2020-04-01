@@ -4,7 +4,7 @@ html, body {
   font-size: 16px;
 }
 .container {
-  padding: 50px 34px 0;
+  padding: 30px;
 }
 .tips {
   font-size: 15px;
@@ -18,6 +18,8 @@ html, body {
   }
 }
 .qiye-name {
+  display: none;
+  margin-bottom: 10px;
   & p {
     font-size: 15px;
     color: #aaa;
@@ -26,7 +28,7 @@ html, body {
     margin-top: 5px;
     border: 1px solid #e9e9e9;
     border-radius: 4px;
-    height: 100px;
+    height: 80px;
   }
 }
 

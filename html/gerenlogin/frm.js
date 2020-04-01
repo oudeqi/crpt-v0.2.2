@@ -132,7 +132,105 @@ function openFindPwd() {
   });
 } // 填写个人信息
 
+var openUIInput = function openUIInput(dom, form, key) {
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  var UIInput = api.require('fillInput');
+
+  var rect = $api.offset(dom);
+  var maxRows = options.maxRows,
+      maxStringLength = options.maxStringLength,
+      inputType = options.inputType,
+      placeholder = options.placeholder,
+      keyboardType = options.keyboardType,
+      alignment = options.alignment,
+      isCenterVertical = options.isCenterVertical;
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength: maxStringLength,
+    inputType: inputType,
+    placeholder: placeholder,
+    keyboardType: keyboardType,
+    alignment: alignment,
+    isCenterVertical: isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    }
+  }, function (ret) {
+    // cb && cb(ret.id)
+    UIInput.value({
+      id: ret.id
+    }, function (value) {
+      form[key] = [ret.id, value && value.msg ? value.msg : ''];
+    });
+  });
+};
+
 apiready = function apiready() {
+  var UIInput = api.require('fillInput'); // 表单数据
+
+
+  var form = {};
+
+  function renderPwd(inputType) {
+    var oldId = form['pwd'] && form['pwd'][0];
+    var oldPwd = form['pwd'] && form['pwd'][1]; // alert(oldId)
+    // alert(oldPwd)
+
+    if (oldId) {
+      UIInput.close({
+        id: oldId
+      });
+    }
+
+    openUIInput($api.byId('pwd'), form, 'pwd', {
+      placeholder: '请输入密码',
+      keyboardType: 'done',
+      inputType: inputType,
+      maxStringLength: 16
+    }, function (id, value) {
+      alert(id);
+      alert(value); // if (oldPwd) {
+      //   UIInput.value({ index: id, msg: oldPwd })
+      // }
+    });
+  }
+
+  renderPwd('password');
+  openUIInput($api.byId('tel'), form, 'tel', {
+    placeholder: '请输入手机号码',
+    keyboardType: 'number',
+    maxStringLength: 11
+  });
+
+  document.querySelector('#switch').onchange = function () {
+    var lockIcon = $api.byId('lockIcon');
+
+    if (this.checked) {
+      $api.addCls(lockIcon, 'aui-icon-unlock');
+      $api.removeCls(lockIcon, 'aui-icon-lock');
+      renderPwd('text');
+    } else {
+      $api.addCls(lockIcon, 'aui-icon-lock');
+      $api.removeCls(lockIcon, 'aui-icon-unlock');
+      renderPwd('password');
+    }
+  };
+
   document.querySelector('#forget').onclick = function () {
     openFindPwd();
   };

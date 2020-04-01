@@ -73,6 +73,9 @@
   &.active {
     background-color: #88dbcb;
   }
+  &.loading {
+    background-color: #88dbcb;
+  }
 }
 
 /*输入框组*/
@@ -87,6 +90,7 @@
     & .icon {
       width: 50px;
       height: 100%;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,15 +98,19 @@
         font-size: 22px;
         color: #666;
       }
+      & .aui-icon-unlock:before {
+        position: relative;
+        left: 4px;
+      }
     }
     & .ipt {
       flex-grow: 1;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      color: #aaa;
-      /*background-color: #eee;*/
+      position: relative;
+      top: 2px;
+      margin-right: 80px;
+      /*color: #aaa;
+      background-color: #eee;*/
     }
     & .btn {
       margin-left: 10px;
@@ -111,6 +119,9 @@
       &.active {
         color: #666;
         padding-right: 3px;
+      }
+      &.loading {
+        color: #666;
       }
     }
   }

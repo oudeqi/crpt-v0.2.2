@@ -39,7 +39,7 @@ apiready = function () {
   //   openRegLogin()
   // }
 
-  openTabLayout()
+  openGerenLogin()
 
   // 云修复完成
   api.addEventListener({
