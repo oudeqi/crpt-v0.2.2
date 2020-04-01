@@ -9,7 +9,7 @@ import { http, openUIInput } from '../../config.js'
 
 apiready = function() {
 
-  let UIInput = api.require('fillInput')
+  let UIInput = api.require('UIInput')
   // 表单数据
   let form = {}
 

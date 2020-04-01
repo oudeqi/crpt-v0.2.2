@@ -135,7 +135,7 @@ function openFindPwd() {
 var openUIInput = function openUIInput(dom, form, key) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-  var UIInput = api.require('fillInput');
+  var UIInput = api.require('UIInput');
 
   var rect = $api.offset(dom);
   var maxRows = options.maxRows,
@@ -181,7 +181,7 @@ var openUIInput = function openUIInput(dom, form, key) {
 };
 
 apiready = function apiready() {
-  var UIInput = api.require('fillInput'); // 表单数据
+  var UIInput = api.require('UIInput'); // 表单数据
 
 
   var form = {};

@@ -31,7 +31,7 @@ export default getPages('src/**/*.html').map(page => {
     // inlineDynamicImports: true,
     output: {
       // dir: `html/${pathname.split('/').reverse()[0]}/`,
-      file: `html/${pathname.split('/').reverse()[0]}/${basename}.js`,
+      file: `widget/html/${pathname.split('/').reverse()[0]}/${basename}.js`,
       format: 'esm', // cjs esm iife amd umd system
       // name: basename
     },
@@ -44,7 +44,7 @@ export default getPages('src/**/*.html').map(page => {
       json(),
       url({
         emitFiles: false,
-        publicPath: 'image/',
+        publicPath: 'widget/image/',
         fileName: '[name][extname]', // [hash]
         limit: 14336 // (14kb)
       }),

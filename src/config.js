@@ -42,7 +42,7 @@ const http = {
 
 
 const resetUIInputPosi = (dom, id) => {
-  let UIInput = api.require('fillInput')
+  let UIInput = api.require('UIInput')
   let rect = $api.offset(dom)
   UIInput.resetPosition({
     id,
@@ -54,7 +54,7 @@ const resetUIInputPosi = (dom, id) => {
 }
 
 const openUIInput = (dom, form, key, options = {}, cb) => {
-  let UIInput = api.require('fillInput')
+  let UIInput = api.require('UIInput')
   let rect = $api.offset(dom)
   let {
     maxRows,

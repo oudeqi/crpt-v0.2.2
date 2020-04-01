@@ -1,7 +1,7 @@
 // const getUIInputIndex = i => api.systemType === 'ios' ? i - 1 : i
 
 var resetUIInputPosi = function resetUIInputPosi(dom, id) {
-  var UIInput = api.require('fillInput');
+  var UIInput = api.require('UIInput');
 
   var rect = $api.offset(dom);
   UIInput.resetPosition({
@@ -16,7 +16,7 @@ var resetUIInputPosi = function resetUIInputPosi(dom, id) {
 var openUIInput = function openUIInput(dom, form, key) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-  var UIInput = api.require('fillInput');
+  var UIInput = api.require('UIInput');
 
   var rect = $api.offset(dom);
   var maxRows = options.maxRows,
