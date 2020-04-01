@@ -27,12 +27,13 @@ apiready = function() {
       inputType,
       maxStringLength: 16
     }, (id, value) => {
-      alert(id)
-      alert(value)
-      // if (oldPwd) {
-      //   UIInput.value({ index: id, msg: oldPwd })
-      // }
+      // alert(id)
+      // alert(value)
+
     })
+    if (oldPwd) {
+      UIInput.value({ index: oldId, msg: oldPwd })
+    }
   }
 
   renderPwd('password')

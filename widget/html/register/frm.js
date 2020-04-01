@@ -15,6 +15,7 @@ var resetUIInputPosi = function resetUIInputPosi(dom, id) {
 
 var openUIInput = function openUIInput(dom, form, key) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var cb = arguments.length > 4 ? arguments[4] : undefined;
 
   var UIInput = api.require('UIInput');
 
@@ -52,7 +53,7 @@ var openUIInput = function openUIInput(dom, form, key) {
       }
     }
   }, function (ret) {
-    // cb && cb(ret.id)
+    cb && cb(ret.id);
     UIInput.value({
       id: ret.id
     }, function (value) {

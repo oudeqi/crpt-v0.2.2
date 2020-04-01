@@ -91,7 +91,7 @@ const openUIInput = (dom, form, key, options = {}, cb) => {
       }
     },
   }, function (ret) {
-    // cb && cb(ret.id)
+    cb && cb(ret.id)
     UIInput.value({ id: ret.id }, function(value) {
       form[key] = [ ret.id, value && value.msg ? value.msg : '' ]
     })

@@ -132,8 +132,9 @@ function openFindPwd() {
   });
 } // 填写个人信息
 
-var openUIInput = function openUIInput(dom, form, key, options, cb) {
-  // var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+var openUIInput = function openUIInput(dom, form, key) {
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var cb = arguments.length > 4 ? arguments[4] : undefined;
 
   var UIInput = api.require('UIInput');
 
@@ -171,7 +172,7 @@ var openUIInput = function openUIInput(dom, form, key, options, cb) {
       }
     }
   }, function (ret) {
-    cb && cb(ret.id)
+    cb && cb(ret.id);
     UIInput.value({
       id: ret.id
     }, function (value) {
@@ -202,13 +203,15 @@ apiready = function apiready() {
       keyboardType: 'done',
       inputType: inputType,
       maxStringLength: 16
-    }, function (id, value) {
-      // alert(id);
-      // alert(value);
-
+    }, function (id, value) {// alert(id)
+      // alert(value)
     });
+
     if (oldPwd) {
-      UIInput.value({ index: oldId, msg: oldPwd })
+      UIInput.value({
+        index: oldId,
+        msg: oldPwd
+      });
     }
   }
 
