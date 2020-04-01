@@ -24,7 +24,7 @@ const getPages = (globs, format) => {
   return pages
 }
 
-export default getPages('src/**/*.html').map(page => {
+export default getPages('.src/**/*.html').map(page => {
   let { input, pathname, basename, extname } = page
   return {
     input,
