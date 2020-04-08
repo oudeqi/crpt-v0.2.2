@@ -93,7 +93,7 @@ list: [{
 */
 
 // 导航布局
-function openTabLayout () {
+function openTabLayout (index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor:'#fff',
@@ -125,8 +125,8 @@ function openTabLayout () {
       scrollEnabled: true,
       selectedColor: '#1dc4a2',
       color: '#bfbfbf',
-      index: 3,
-      preload: 4,
+      index: index || 0,
+      // preload: 4,
       list: [
         {
           text: "首页",
@@ -219,11 +219,12 @@ function openQiyeLogin () {
 }
 
 // 电话号码登录
-function openSendCode () {
+function openSendCode (pageParam) {
   api.openWin({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
+    pageParam
   })
 }
 
@@ -237,20 +238,38 @@ function openFindPwd () {
 }
 
 // 填写个人信息
-function openBaseinfoFill () {
+function openBaseinfoFill (pageParam) {
   api.openWin({
     name: 'html/baseinfofill/win',
     url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    pageParam,
   })
 }
 
 // 打开待认证
-function openTodoAuth () {
+function openTodoAuthGeren () {
   api.openTabLayout({
-    name: 'html/todoauth/win',
+    name: 'html/todoauthgeren/win',
     title: '待认证',
-    url: 'widget://html/todoauth/win.html',
+    url: 'widget://html/todoauthgeren/win.html',
+    bgColor: '#fff',
+    bounces: true,
+    slidBackEnabled: false,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+function openTodoAuthQiye () {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待认证',
+    url: 'widget://html/todoauthqiye/win.html',
     bgColor: '#fff',
     bounces: true,
     slidBackEnabled: false,
@@ -303,12 +322,13 @@ function openIDcardUpload () {
 }
 
 // 确认身份证信息
-function openIDcardInfo () {
+function openIDcardInfo (pageParam) {
   api.openTabLayout({
     name: 'html/idcardinfo/win',
     title: '确认身份证信息',
     url: 'widget://html/idcardinfo/win.html',
     bgColor: '#fff',
+    pageParam,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -322,12 +342,13 @@ function openIDcardInfo () {
 }
 
 // 人脸认证
-function openFaceAuth () {
+function openFaceAuth (pageParam) {
   api.openTabLayout({
     name: 'html/faceauth/win',
-    title: '企业法人人脸认证',
+    title: pageParam.title,
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
+    pageParam,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -516,6 +537,25 @@ function openOrderList () {
   })
 }
 
+// 订单详情
+function openOrderDetails () {
+  api.openTabLayout({
+    name: 'html/orderdetails/win',
+    title: '订单详情',
+    url: 'widget://html/orderdetails/win.html',
+    bgColor: '#fff',
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
 // 我的额度
 function openMyQuota () {
   api.openTabLayout({
@@ -612,6 +652,63 @@ function openContactUs () {
   })
 }
 
+// 还款计划
+function openRepayPlan () {
+  api.openTabLayout({
+    name: 'html/repayplan/win',
+    title: '还款计划',
+    url: 'widget://html/repayplan/win.html',
+    bgColor: '#fff',
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
+// 还款明细
+function openRepayRecord () {
+  api.openTabLayout({
+    name: 'html/repayrecord/win',
+    title: '还款明细',
+    url: 'widget://html/repayrecord/win.html',
+    bgColor: '#fff',
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
+// 订单详情
+function openProductDetails () {
+  api.openTabLayout({
+    name: 'html/productdetails/win',
+    title: '产品详情',
+    url: 'widget://html/productdetails/win.html',
+    bgColor: '#fff',
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
 
 export {
   closeApp,
@@ -628,7 +725,8 @@ export {
   openSendCode,
   openFindPwd,
   openBaseinfoFill,
-  openTodoAuth,
+  openTodoAuthGeren,
+  openTodoAuthQiye,
   openCompanyInfo,
   openIDcardUpload,
   openIDcardInfo,
@@ -642,9 +740,13 @@ export {
   openBillList,
   openBillDetails,
   openOrderList,
+  openOrderDetails,
   openMyQuota,
   openMyProduct,
   openSettings,
   openChangePwd,
-  openContactUs
+  openContactUs,
+  openRepayPlan,
+  openRepayRecord,
+  openProductDetails
 }

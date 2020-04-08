@@ -9,16 +9,27 @@ import './win.css'
 //   })
 // }
 
-import { openMsgList } from '../../webview.js'
+import { openProductDetails } from '../../webview.js'
+import { http } from '../../config.js'
 
 apiready = function () {
 
-  // document.querySelector('#activitylist').onclick = function () {
-  //   openMsgList('账户动态')
-  // }
-  //
+  document.querySelector('#productDetails').onclick = function () {
+    openProductDetails()
+  }
+
   // document.querySelector('#noticelist').onclick = function () {
   //   openMsgList('公告新闻')
   // }
+
+  function getPageData () {
+    http.get('/crpt-cust/product/openinglist/').then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  // getPageData()
 
 }

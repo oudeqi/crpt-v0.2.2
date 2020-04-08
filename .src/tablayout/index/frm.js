@@ -1,6 +1,9 @@
 import '../../app.css'
+import './frm.css'
 
 import { openLeftPane } from '../../webview.js'
+import { http } from '../../config.js'
+
 apiready = function () {
 
   api.addEventListener({
@@ -41,5 +44,23 @@ apiready = function () {
   }, function(ret, err) {
 
   })
+
+  function getDetails (id) {
+    http.get(`/crpt-product/product/detail/${id}`).then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  function getPageData () {
+    http.get('/crpt-product/product/online/list?pageSize=10&pageNo=1').then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  // getDetails(0)
 
 }

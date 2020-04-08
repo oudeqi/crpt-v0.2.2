@@ -52,4 +52,6 @@ apiready = function apiready() {
 
     }
   }, function (ret, err) {});
+  // getDetails('9939393')
+
 };

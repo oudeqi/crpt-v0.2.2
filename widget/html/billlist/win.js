@@ -20,4 +20,6 @@ apiready = function apiready() {
   document.querySelector('#billdetails').onclick = function () {
     openBillDetails();
   };
+  // getDetails('1103')
+
 };

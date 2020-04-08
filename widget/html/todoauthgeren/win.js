@@ -1,17 +1,18 @@
-function openBaseinfoFill() {
+function openBaseinfoFill(pageParam) {
   api.openWin({
     name: 'html/baseinfofill/win',
     url: 'widget://html/baseinfofill/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    pageParam: pageParam
   });
 } // 打开待认证
 
 
-function openCompanyInfo() {
+function openIDcardUpload() {
   api.openTabLayout({
-    name: 'html/companyinfo/win',
-    title: '企业信息',
-    url: 'widget://html/companyinfo/win.html',
+    name: 'html/idcardupload/win',
+    title: '身份证上传',
+    url: 'widget://html/idcardupload/win.html',
     bgColor: '#fff',
     bounces: true,
     slidBackEnabled: false,
@@ -23,15 +24,16 @@ function openCompanyInfo() {
       fontWeight: 'bold'
     }
   });
-} // 身份证上传
+} // 确认身份证信息
 
 
-function openFaceAuth() {
+function openFaceAuth(pageParam) {
   api.openTabLayout({
     name: 'html/faceauth/win',
-    title: '企业法人人脸认证',
+    title: pageParam.title,
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
+    pageParam: pageParam,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -64,18 +66,25 @@ function openYuguEdu() {
 } // 认证结果
 
 apiready = function apiready() {
-  api.parseTapmode();
+  var userinfo = $api.getStorage('userinfo');
+  var userType = userinfo.userType;
+
+  document.querySelector('#realAuth').onclick = function () {
+    openIDcardUpload();
+  };
+
+  document.querySelector('#faceAuth').onclick = function () {
+    openFaceAuth({
+      userType: userType,
+      // userType === '1' ? '个人账号' : '企业账号'
+      title: '人脸认证'
+    });
+  };
 
   document.querySelector('#baseinfo').onclick = function () {
-    openBaseinfoFill();
-  };
-
-  document.querySelector('#companyinfo').onclick = function () {
-    openCompanyInfo();
-  };
-
-  document.querySelector('#faceauth').onclick = function () {
-    openFaceAuth();
+    openBaseinfoFill({
+      userType: userType
+    });
   };
 
   document.querySelector('#yuguedu').onclick = function () {

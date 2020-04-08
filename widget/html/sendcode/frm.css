@@ -303,6 +303,10 @@ html, body {
       padding-right: 0;
     }
 
+.code-ipt .btn.loading {
+      background-color: #88dbcb;
+    }
+
 .btn-box {
   margin-top: 100px;
 }

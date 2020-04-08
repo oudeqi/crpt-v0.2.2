@@ -10,6 +10,7 @@ import './win.css'
 // }
 
 import { openMsgList } from '../../webview.js'
+import { http } from '../../config.js'
 
 apiready = function () {
 
@@ -22,4 +23,13 @@ apiready = function () {
   //   openMsgList('公告新闻')
   // }
 
+  function getPageData () {
+    http.get('/credit/credit/amount').then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  getPageData()
 }

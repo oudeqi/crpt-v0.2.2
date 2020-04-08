@@ -3,7 +3,13 @@ import '../../app.css'
 import { closeWin } from '../../webview.js'
 
 apiready = function() {
-  api.parseTapmode();
+  let pageParam = api.pageParam || {}
+  let { loginType } = pageParam
+  if (loginType === 'geren') {
+    $api.byId('title').innerHTML = '个人登录'
+  } else {
+    $api.byId('title').innerHTML = '企业登录'
+  }
   let header = $api.byId('header')
   $api.fixStatusBar(header)
   let headerPos = $api.offset(header)
@@ -11,6 +17,7 @@ apiready = function() {
     name: 'html/sendcode/frm',
     url: 'widget://html/sendcode/frm.html',
     bounces: true,
+    pageParam: api.pageParam,
     rect: {
       x: 0,
       y: headerPos.h,

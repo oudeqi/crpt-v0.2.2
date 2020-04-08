@@ -1,15 +1,25 @@
 import '../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill, openTodoAuth } from '../../webview.js'
+import { openRegLogin, openBaseinfoFill, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
 
 apiready = function(){
-  api.parseTapmode()
+
+  let userinfo = $api.getStorage('userinfo')
+  let { name, userType } = userinfo
+
+  $api.byId('name').innerHTML = name
+  $api.byId('version').innerHTML = `版本号 v${api.appVersion}`
+
   var header = $api.byId('header')
   $api.fixStatusBar(header)
 
   document.querySelector('#auth').onclick = function () {
-    openTodoAuth()
+    if (userType === '1') {
+      openTodoAuthGeren()
+    } else {
+      openTodoAuthQiye()
+    }
   }
 
   document.querySelector('#logout').onclick = function () {

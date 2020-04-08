@@ -1,8 +1,9 @@
 import '../../app.css'
-import { closeWin } from '../../webview.js'
 
 apiready = function() {
-  api.parseTapmode()
+
+  let pageParam = api.pageParam || {}
+
   let header = $api.byId('header')
   $api.fixStatusBar(header)
   let headerPos = $api.offset(header)
@@ -10,7 +11,8 @@ apiready = function() {
     name: 'html/baseinfofill/frm',
     url: 'widget://html/baseinfofill/frm.html',
     bgColor: '#efefef',
-    bounces: true,
+    pageParam,
+    bounces: false,
     rect: {
       x: 0,
       y: headerPos.h,
@@ -19,6 +21,6 @@ apiready = function() {
     }
   })
   document.querySelector('#back').onclick = function () {
-    closeWin()
+    api.closeWin()
   }
 }

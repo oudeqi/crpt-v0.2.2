@@ -65,6 +65,9 @@ html, body {
       padding-left: 1px;
       padding-right: 0;
     }
+    &.loading {
+      background-color: #88dbcb;
+    }
   }
 }
 

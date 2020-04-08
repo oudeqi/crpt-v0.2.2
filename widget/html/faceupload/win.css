@@ -205,6 +205,9 @@
       padding-right: 0;
     }
 
+html, body {
+  height: 100%;
+}
 .container {
   padding: 10px 20px;
 }

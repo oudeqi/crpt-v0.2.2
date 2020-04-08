@@ -47,16 +47,16 @@ apiready = function apiready() {
       h: 'auto'
     },
     frames: [{
+      name: 'html/orderlist/frm/0',
+      url: 'widget://html/orderlist/frm0.html',
+      bounces: true
+    }, {
       name: 'html/orderlist/frm/1',
-      url: 'widget://html/orderlist/frm.html',
+      url: 'widget://html/orderlist/frm1.html',
       bounces: true
     }, {
       name: 'html/orderlist/frm/2',
-      url: 'widget://html/orderlist/frm.html',
-      bounces: true
-    }, {
-      name: 'html/orderlist/frm/2',
-      url: 'widget://html/orderlist/frm.html',
+      url: 'widget://html/orderlist/frm2.html',
       bounces: true
     }]
   }, function (ret, err) {

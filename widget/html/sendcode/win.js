@@ -3,7 +3,15 @@ function closeWin() {
 }
 
 apiready = function apiready() {
-  api.parseTapmode();
+  var pageParam = api.pageParam || {};
+  var loginType = pageParam.loginType;
+
+  if (loginType === 'geren') {
+    $api.byId('title').innerHTML = '个人登录';
+  } else {
+    $api.byId('title').innerHTML = '企业登录';
+  }
+
   var header = $api.byId('header');
   $api.fixStatusBar(header);
   var headerPos = $api.offset(header);
@@ -11,6 +19,7 @@ apiready = function apiready() {
     name: 'html/sendcode/frm',
     url: 'widget://html/sendcode/frm.html',
     bounces: true,
+    pageParam: api.pageParam,
     rect: {
       x: 0,
       y: headerPos.h,

@@ -42,4 +42,25 @@ apiready = function () {
 
   })
 
+  function getPageData () {
+    // 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销
+    http.get('/crpt-order/order/list/currentuser?pageSize=10&pageNo=1&status=1').then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  function getDetails (id) {
+    http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
+
+    }).catch(error => {
+
+    })
+  }
+
+  // getPageData()
+
+  // getDetails('9939393')
+
 }

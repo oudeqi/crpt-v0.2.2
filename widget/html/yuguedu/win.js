@@ -20,7 +20,7 @@ list: [{
 // 导航布局
 
 
-function openTabLayout() {
+function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor: '#fff',
@@ -52,8 +52,8 @@ function openTabLayout() {
       scrollEnabled: true,
       selectedColor: '#1dc4a2',
       color: '#bfbfbf',
-      index: 3,
-      preload: 4,
+      index: index || 0,
+      // preload: 4,
       list: [{
         text: "首页",
         iconPath: "widget://image/tablayout/shouye.png",

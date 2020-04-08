@@ -2,11 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
-</head>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css"  />
+  <link rel="stylesheet" type="text/css" href="../../css/aui.css"  />
+
+  <link rel="stylesheet" href="./win.css" /></head>
 <body>
   <div class="container">
 
@@ -15,6 +16,39 @@
       完成以下<strong>2步</strong>，即可获得申请额度资格
     </div>
 
+    <div class="auth-block" tapmode="active">
+      <div class="badge">1</div>
+      <div class="text">
+        <div>
+          <strong>实名认证</strong>
+          <span class="icon"></span>
+        </div>
+        <p>请准备您人的二代身份证</p>
+      </div>
+      <div class="pic idcard"></div>
+    </div>
+    <div class="auth-block" tapmode="active">
+      <div class="badge">2</div>
+      <div class="text">
+        <div>
+          <strong>人脸认证</strong>
+          <span class="icon"></span>
+        </div>
+        <p>需要您本人完成人脸认证</p>
+      </div>
+      <div class="pic facescan"></div>
+    </div>
+    <div class="auth-block" tapmode="active">
+      <div class="badge">3</div>
+      <div class="text">
+        <div>
+          <strong>补充基础信息</strong>
+          <span class="icon"></span>
+        </div>
+        <p>请填写法定代表人的基础信息</p>
+      </div>
+      <div class="pic baseinfo"></div>
+    </div>
 
     <div class="auth-block" tapmode="active" id="companyinfo">
       <div class="badge">1</div>
@@ -51,7 +85,6 @@
     </div>
 
 
-
     <div class="auth-block2 authing">
       <div class="badge">1</div>
       <div class="text">
@@ -81,44 +114,6 @@
       <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
     </div>
 
-
-
-    <div class="auth-block" tapmode="active">
-      <div class="badge">1</div>
-      <div class="text">
-        <div>
-          <strong>实名认证</strong>
-          <span class="icon"></span>
-        </div>
-        <p>请准备您人的二代身份证</p>
-      </div>
-      <div class="pic idcard"></div>
-    </div>
-    <div class="auth-block" tapmode="active">
-      <div class="badge">2</div>
-      <div class="text">
-        <div>
-          <strong>人脸认证</strong>
-          <span class="icon"></span>
-        </div>
-        <p>需要您本人完成人脸认证</p>
-      </div>
-      <div class="pic facescan"></div>
-    </div>
-    <div class="auth-block" tapmode="active">
-      <div class="badge">3</div>
-      <div class="text">
-        <div>
-          <strong>补充基础信息</strong>
-          <span class="icon"></span>
-        </div>
-        <p>请填写法定代表人的基础信息</p>
-      </div>
-      <div class="pic baseinfo"></div>
-    </div>
-
-
-
   </div>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript">
@@ -126,5 +121,6 @@
 
     }
   </script>
-</body>
+
+  <script src="./win.js"></script></body>
 </html>

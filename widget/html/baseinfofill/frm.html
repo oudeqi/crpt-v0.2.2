@@ -16,14 +16,36 @@
     <div class="indent">
       <div class="ipt-box">
         <div class="label">婚姻状况</div>
-        <div class="ipt">请选择</div>
+        <div class="ipt" id="marriage">
+          <input type="text" placeholder="请选择" disabled value="" />
+        </div>
         <div class="icon">
           <i class="aui-iconfont aui-icon-right"></i>
         </div>
       </div>
       <div class="ipt-box">
         <div class="label">子女状况</div>
-        <div class="ipt">请选择</div>
+        <div class="ipt" id="isChildren">
+          <input type="text" placeholder="请选择" disabled value="" />
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <div class="label">教育情况</div>
+        <div class="ipt" id="education">
+          <input type="text" placeholder="请选择" disabled value="" />
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <div class="label">户籍地址</div>
+        <div class="ipt" id="permanentAddress">
+          <input type="text" placeholder="请选择" disabled value="" />
+        </div>
         <div class="icon">
           <i class="aui-iconfont aui-icon-right"></i>
         </div>
@@ -32,22 +54,19 @@
       <div class="indent">
         <div class="ipt-box">
           <div class="label">省市地区</div>
-          <div class="ipt">请选择</div>
+          <div class="ipt" id="address">
+            <input type="text" placeholder="请选择" disabled value="" />
+          </div>
           <div class="icon">
             <i class="aui-iconfont aui-icon-right"></i>
           </div>
         </div>
         <div class="ipt-box">
           <div class="label">详细地址</div>
-          <div class="ipt">请输入</div>
+          <div class="ipt" id="addressDetails"></div>
+          
         </div>
-        <div class="ipt-box">
-          <div class="label">入住日期</div>
-          <div class="ipt">请选择</div>
-          <div class="icon">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
+        
       </div>
     </div>
   </section>
@@ -59,38 +78,44 @@
       <div class="indent">
         <div class="ipt-box">
           <div class="label">亲属关系</div>
-          <div class="ipt">请选择</div>
+          <div class="ipt" id="relationship">
+            <input type="text" placeholder="请选择" disabled value="" />
+          </div>
           <div class="icon">
             <i class="aui-iconfont aui-icon-right"></i>
           </div>
         </div>
         <div class="ipt-box">
           <div class="label">姓名</div>
-          <div class="ipt">请输入</div>
+          <div class="ipt" id="relationName"></div>
+          
         </div>
         <div class="ipt-box">
           <div class="label">手机号</div>
-          <div class="ipt">请输入</div>
+          <div class="ipt" id="relationPhone"></div>
+          
         </div>
       </div>
       <div class="indent-tit">其他联系人</div>
       <div class="indent">
         <div class="ipt-box">
           <div class="label">姓名</div>
-          <div class="ipt">请输入</div>
+          <div class="ipt" id="otherName"></div>
+          
         </div>
         <div class="ipt-box">
           <div class="label">手机号</div>
-          <div class="ipt">请输入</div>
+          <div class="ipt" id="otherPhone"></div>
+          
         </div>
       </div>
     </div>
   </section>
 
   <section class="submit">
-    <div class="app_btn" tapmode="active" onclick="xxx()">提交</div>
+    <div class="app_btn" tapmode="active" id="submit">提交</div>
   </section>
-  
+
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript">
     function xxx () {}

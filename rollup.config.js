@@ -35,6 +35,7 @@ export default getPages('.src/**/*.html').map(page => {
       format: 'esm', // cjs esm iife amd umd system
       // name: basename
     },
+    external: ['apiready'],
     watch: {
       exclude: 'node_modules/**,html/**'
     },
@@ -56,7 +57,8 @@ export default getPages('.src/**/*.html').map(page => {
         // inject: true,
       }),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
+        runtimeHelpers: true
       }),
       html2({
         template: `${pathname}/${basename}${extname}`,

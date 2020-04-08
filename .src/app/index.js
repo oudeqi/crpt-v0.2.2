@@ -9,7 +9,8 @@ import {
   openSendCode,
   openFindPwd,
   openBaseinfoFill,
-  openTodoAuth,
+  openTodoAuthGeren,
+  openTodoAuthQiye,
   openCompanyInfo,
   openIDcardUpload,
   openIDcardInfo,
@@ -33,13 +34,12 @@ import {
 apiready = function () {
 
   // $api.clearStorage()
-  // if ($api.getStorage('userinfo')) {
-  //   openDrawer()
-  // } else {
-  //   openRegLogin()
-  // }
-
-  openGerenLogin()
+  if ($api.getStorage('userinfo')) {
+    // openTabLayout(3)
+    openTodoAuthGeren()
+  } else {
+    openRegLogin()
+  }
 
   // 云修复完成
   api.addEventListener({
