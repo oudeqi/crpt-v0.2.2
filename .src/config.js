@@ -1,5 +1,5 @@
-const baseUrl = 'http://crptdev.liuheco.com'
-// const baseUrl = 'http://crptuat.liuheco.com'
+// const baseUrl = 'http://crptdev.liuheco.com'
+const baseUrl = 'http://crptuat.liuheco.com'
 
 const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 10} = {}) => new Promise((resolve, reject) => {
   console.log(baseUrl + url)
