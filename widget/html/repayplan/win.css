@@ -206,26 +206,49 @@
     }
 
 html, body {
-  background-color: #ebebeb;
-}
-.nav {
-  color: #aaa;
-  height: 50px;
   background-color: #fff;
+}
+
+ul {
+  padding: 10px;
+}
+li {
+  margin-top: 10px;
+  padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #eee;
 }
-.nav .item span {
-  padding: 10px 0;
-  border-bottom: 2px solid #fff;
+.l .date {
+    color: #000;
+  }
+.l span {
+    color: #666;
+  }
+.l strong {
+    color: orange;
+    font-weight: normal;
+  }
+
+.r {
+  text-align: right
 }
-.nav .item.active span {
-  color: #1dc4a2;
-  border-bottom: 2px solid #1dc4a2;
-}
+
+.r .txt1 {
+    color: #000;
+  }
+
+.r .txt2 {
+    color: #666;
+  }
+
+.r .txt3 {
+    color: orange;
+  }

@@ -154,7 +154,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com';
+var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -206,7 +206,14 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-};
+}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
+
 
 var handleRet = function handleRet(ret) {
   if (ret && ret.code === 200) {
@@ -228,12 +235,18 @@ var _upload = function upload(url) {
       timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
 
   return new Promise(function (resolve, reject) {
+    console.log(baseUrl + url);
+    var userinfo = $api.getStorage('userinfo');
+    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    console.log(JSON.stringify(token));
     api.ajax({
       url: baseUrl + url,
       method: 'post',
       data: data,
       tag: tag,
-      headers: headers,
+      headers: _objectSpread2({
+        'Authorization': token
+      }, headers),
       timeout: timeout
     }, function (ret, err) {
       if (ret) {
@@ -363,6 +376,24 @@ var openUIInput = function openUIInput(dom, form, key) {
     });
   });
 };
+//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
+//   "token_type":"bearer",
+//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
+//   "expires_in":599757,
+//   "scope":"app",
+//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "code":200,
+//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "name":"欧威",
+//   "userType":"1",
+//   "makeBy":"nh-cloud",
+//   "userId":"20"
+// }
+
+
+var handleLoginSuccess = function handleLoginSuccess(data) {
+  $api.setStorage('userinfo', data);
+};
 
 apiready = function apiready() {
   var form = {}; // 表单数据
@@ -383,15 +414,20 @@ apiready = function apiready() {
 
   if (loginType === 'geren') {
     sendCode();
+  } else {
+    sendStatus = 'sending';
+    countDown();
   }
 
   function countDown() {
     var second = 60;
+    sendStatus = 'countdown';
+    $api.removeCls($api.byId('sendcode'), 'loading');
+    $api.byId('sendcode').innerHTML = second + '秒后重试';
     var timer = setInterval(function () {
       if (second <= 0) {
         sendStatus = 'notsend';
         $api.byId('sendcode').innerHTML = '发送验证码';
-        $api.removeCls($api.byId('sendcode'), 'loading');
         clearInterval(timer);
       } else {
         second--;
@@ -410,12 +446,14 @@ apiready = function apiready() {
           phone: tel
         }
       }).then(function (ret) {
-        console.log(JSON.stringify(ret));
-        sendStatus = 'countdown';
         countDown();
       })["catch"](function (error) {
-        console.log(JSON.stringify(error));
         sendStatus = 'notsend';
+        $api.removeCls($api.byId('sendcode'), 'loading');
+        $api.byId('sendcode').innerHTML = '发送验证码';
+        api.toast({
+          msg: '发送验证码失败'
+        });
       });
     }
   }
@@ -462,14 +500,13 @@ apiready = function apiready() {
         client_secret: 'secret' // 固定传secret
 
       };
-      http.post('/crpt-cust/auth/oauth/token', {
+      http.post('/auth/oauth/token', {
         values: body
       }, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(function (ret) {
-        console.log(JSON.stringify(ret));
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('login'), 'loading');
         api.toast({
@@ -477,9 +514,9 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
+        handleLoginSuccess(ret);
         openTabLayout();
       })["catch"](function (error) {
-        console.log(JSON.stringify(error));
         api.toast({
           msg: '登录失败'
         });

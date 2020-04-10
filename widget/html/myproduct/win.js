@@ -1,9 +1,12 @@
-function openProductDetails() {
+function openProductDetails(id) {
   api.openTabLayout({
     name: 'html/productdetails/win',
     title: '产品详情',
     url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
+    pageParam: {
+      id: id
+    },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

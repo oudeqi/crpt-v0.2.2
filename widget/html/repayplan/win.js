@@ -47,7 +47,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com';
+var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -99,7 +99,14 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-};
+}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
+
 
 var handleRet = function handleRet(ret) {
   if (ret && ret.code === 200) {
@@ -121,12 +128,18 @@ var _upload = function upload(url) {
       timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
 
   return new Promise(function (resolve, reject) {
+    console.log(baseUrl + url);
+    var userinfo = $api.getStorage('userinfo');
+    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    console.log(JSON.stringify(token));
     api.ajax({
       url: baseUrl + url,
       method: 'post',
       data: data,
       tag: tag,
-      headers: headers,
+      headers: _objectSpread2({
+        'Authorization': token
+      }, headers),
       timeout: timeout
     }, function (ret, err) {
       if (ret) {
@@ -209,21 +222,68 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
-  // document.querySelector('#repayplan').onclick = function () {
-  //   openMsgDetails()
-  // }
-  //
-  // document.querySelector('#repayplan').onclick = function () {
-  //   openMsgDetails()
-  // }
-  function getPageData(id) {
-    http.get("/credit/repay/query/repayplan?pageSize=10&pageNo=1&orderNo=".concat(id), {// body: {
-      //   pageSize: 10,
-      //   pageNo: 1,
-      //   orderNo: id
-      // }
-    }).then(function (res) {})["catch"](function (error) {});
+  var loading = false;
+  var id = '1101';
+
+  function getPageData(cb) {
+    if (loading) {
+      return;
+    }
+
+    loading = true;
+    http.get("/crpt-credit/credit/repay/query/repayplan?pageSize=10&pageNo=1&orderNo=".concat(id)).then(function (res) {
+      loading = false;
+      api.refreshHeaderLoadDone();
+
+      if (res && res.data.list.length > 0) {
+        cb(res.data.list);
+      }
+    })["catch"](function (error) {
+      loading = false;
+      api.refreshHeaderLoadDone();
+      api.toast({
+        msg: '数据加载失败'
+      });
+    });
   }
 
-  getPageData('9939393');
+  function refresh() {
+    getPageData(function (data) {
+      $api.byId('list').innerHTML = '';
+      data.forEach(function (item) {
+        $api.append($api.byId('list'), "\n          <li>\n            <div class=\"l\">\n              <div class=\"date\">".concat(item.repayDate, "</div>\n              <span>").concat(item.curPeriod, "\u671F</span><strong>").concat(item.status === 1 ? '（未按期还）' : '', "</strong>\n            </div>\n            <div class=\"r\">\n              <div class=\"txt1\">\u5E94\u8FD8\uFF1A").concat(item.repayTotalAmount, "</div>\n              <div class=\"txt2\">\u672C\u91D1\uFF1A").concat(item.repayPrincipalAmount, "</div>\n              <div class=\"txt2\">\u8D39\u7528\uFF1A").concat(item.serviceFee, "</div>\n              ").concat(item.status === 1 ? "<div class=\"txt3\">\u903E\u671F\u7F5A\u606F\uFF1A".concat(item.repayPenaltyAmount, "</div>") : '', "\n            </div>\n          </li>\n        "));
+      });
+    });
+  }
+
+  function loadmore() {
+    getPageData(function (data) {
+      data.forEach(function (item) {
+        // .split(' ')[0]
+        $api.append($api.byId('list'), "\n          <li>\n            <div class=\"l\">\n              <div class=\"date\">".concat(item.repayDate, "</div>\n              <span>").concat(item.curPeriod, "\u671F</span><strong>").concat(item.status === 1 ? '（未按期还）' : '', "</strong>\n            </div>\n            <div class=\"r\">\n              <div class=\"txt1\">\u5E94\u8FD8\uFF1A").concat(item.repayTotalAmount, "</div>\n              <div class=\"txt2\">\u672C\u91D1\uFF1A").concat(item.repayPrincipalAmount, "</div>\n              <div class=\"txt2\">\u8D39\u7528\uFF1A").concat(item.serviceFee, "</div>\n              ").concat(item.status === 1 ? "<div class=\"txt3\">\u903E\u671F\u7F5A\u606F\uFF1A".concat(item.repayPenaltyAmount, "</div>") : '', "\n            </div>\n          </li>\n        "));
+      });
+    });
+  }
+
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, function (ret, err) {
+    refresh();
+  });
+  api.addEventListener({
+    name: 'scrolltobottom',
+    extra: {
+      threshold: 100 //距离底部距离
+
+    }
+  }, function (ret, err) {
+    loadmore();
+  });
+  api.refreshHeaderLoading();
 };

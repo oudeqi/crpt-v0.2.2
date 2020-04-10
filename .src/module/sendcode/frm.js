@@ -5,7 +5,7 @@ import {
   openReg, openGerenLogin, openQiyeLogin,
   openFindPwd, openSendCode, openTabLayout
 } from '../../webview.js'
-import { http, openUIInput } from '../../config.js'
+import { http, openUIInput, handleLoginSuccess } from '../../config.js'
 
 apiready = function() {
 
@@ -26,16 +26,19 @@ apiready = function() {
   if (loginType === 'geren') {
     sendCode()
   } else {
-
+    sendStatus = 'sending'
+    countDown()
   }
 
   function countDown () {
     let second = 60
+    sendStatus = 'countdown'
+    $api.removeCls($api.byId('sendcode'), 'loading')
+    $api.byId('sendcode').innerHTML = second + '秒后重试'
     let timer = setInterval(() => {
       if (second <= 0) {
         sendStatus = 'notsend'
         $api.byId('sendcode').innerHTML = '发送验证码'
-        $api.removeCls($api.byId('sendcode'), 'loading')
         clearInterval(timer)
       } else {
         second--
@@ -54,12 +57,12 @@ apiready = function() {
           phone: tel
         }
       }).then(ret => {
-        console.log(JSON.stringify(ret))
-        sendStatus = 'countdown'
         countDown()
       }).catch(error => {
-        console.log(JSON.stringify(error))
         sendStatus = 'notsend'
+        $api.removeCls($api.byId('sendcode'), 'loading')
+        $api.byId('sendcode').innerHTML = '发送验证码'
+        api.toast({ msg: '发送验证码失败' })
       })
     }
   }
@@ -93,14 +96,13 @@ apiready = function() {
         client_id: 'client', // client
         client_secret: 'secret', // 固定传secret
       }
-      http.post('/crpt-cust/auth/oauth/token', {
+      http.post('/auth/oauth/token', {
         values: body
       }, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         } 
       }).then(ret => {
-        console.log(JSON.stringify(ret))
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
         api.toast({
@@ -108,9 +110,9 @@ apiready = function() {
           location: 'middle',
           global: true
         })
+        handleLoginSuccess(ret)
         openTabLayout()
       }).catch(error => {
-        console.log(JSON.stringify(error))
         api.toast({ msg: '登录失败' })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')

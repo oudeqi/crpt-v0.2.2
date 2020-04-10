@@ -1,7 +1,7 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane } from '../../webview.js'
+import { openLeftPane, openProductDetails } from '../../webview.js'
 import { http } from '../../config.js'
 
 apiready = function () {
@@ -22,6 +22,75 @@ apiready = function () {
     }
   })
 
+  let pageSize = 20
+  let pageNo = 1
+  let loading = false
+
+  function getPageData (cb) {
+    if (loading) {
+      return
+    }
+    loading = true
+    http.get(`/crpt-product/product/online/list?pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
+      loading = false
+      api.refreshHeaderLoadDone()
+      if (res && res.data.length > 0) {
+        pageNo++
+        cb(res.data)
+      }
+    }).catch(error => {
+      loading = false
+      api.refreshHeaderLoadDone()
+      api.toast({ msg: '数据加载失败' })
+    })
+  }
+
+  function refresh () {
+    pageNo = 1
+    getPageData(function (data) {
+      $api.byId('list').innerHTML = ''
+      data.forEach(item => {
+        $api.append($api.byId('list'), `
+          <li data-id="${item.id}">
+            <div class="col">
+              <p>${item.totalLimit}</p>
+              <p>最高可贷（元）</p>
+            </div>
+            <div class="col">
+              <p>${item.introduce || ''}</p>
+              <p>${item.des || ''}</p>
+            </div>
+            <div class="col">
+              <div class="btn">立即开通</div>
+            </div>
+          </li>
+        `)
+      })
+    })
+  }
+
+  function loadmore () {
+    getPageData(function (data) {
+      data.forEach(item => {
+        $api.append($api.byId('list'), `
+          <li data-id="${item.id}">
+            <div class="col">
+              <p>${item.totalLimit}</p>
+              <p>最高可贷（元）</p>
+            </div>
+            <div class="col">
+              <p>${item.introduce || ''}</p>
+              <p>${item.des || ''}</p>
+            </div>
+            <div class="col">
+              <div class="btn">立即开通</div>
+            </div>
+          </li>
+        `)
+      })
+    })
+  }
+
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
@@ -31,36 +100,21 @@ apiready = function () {
     textLoading: '加载中...',
     showTime: false
   }, function(ret, err) {
-    setTimeout(() => {
-      api.refreshHeaderLoadDone();
-    }, 1000)
-  });
-  api.refreshHeaderLoading();
+    refresh()
+  })
   api.addEventListener({
     name: 'scrolltobottom',
     extra: {
-      threshold: 50 //距离底部距离
+      threshold: 100 //距离底部距离
     }
   }, function(ret, err) {
-
+    loadmore()
   })
 
-  function getDetails (id) {
-    http.get(`/crpt-product/product/detail/${id}`).then(res => {
+  api.refreshHeaderLoading()
 
-    }).catch(error => {
-
-    })
+  document.querySelector('#list').onclick = function (event) {
+    let li = $api.closest(event.target, 'li')
+    openProductDetails(li.dataset.id)
   }
-
-  function getPageData () {
-    http.get('/crpt-product/product/online/list?pageSize=10&pageNo=1').then(res => {
-
-    }).catch(error => {
-
-    })
-  }
-
-  // getDetails(0)
-
 }

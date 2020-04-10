@@ -1,19 +1,31 @@
 html, body {
-  background-color: #ebebeb;
+  background-color: #efefef;
 }
-.nav {
-  color: #aaa;
-  height: 50px;
-  background-color: #fff;
+.title {
+  padding: 30px;
+  background-color: #1e294b;
+  color: #fff;
+}
+
+.btn {
+  color: #1dc4a2;
+}
+
+.plan {
+  margin: 10px;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-}
-.nav .item span {
-  padding: 10px 0;
-  border-bottom: 2px solid #fff;
-}
-.nav .item.active span {
-  color: #1dc4a2;
-  border-bottom: 2px solid #1dc4a2;
+  justify-content: space-between;
+  & .tit {
+    font-size: 15px;
+    color: #222;
+  }
+  & .txt {
+    font-size: 13px;
+    color: #888;
+    flex-grow: 1;
+  }
 }

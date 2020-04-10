@@ -538,12 +538,13 @@ function openOrderList () {
 }
 
 // 订单详情
-function openOrderDetails () {
+function openOrderDetails (id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -653,12 +654,13 @@ function openContactUs () {
 }
 
 // 还款计划
-function openRepayPlan () {
+function openRepayPlan (id) {
   api.openTabLayout({
     name: 'html/repayplan/win',
     title: '还款计划',
     url: 'widget://html/repayplan/win.html',
     bgColor: '#fff',
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -672,12 +674,13 @@ function openRepayPlan () {
 }
 
 // 还款明细
-function openRepayRecord () {
+function openRepayRecord (id) {
   api.openTabLayout({
     name: 'html/repayrecord/win',
     title: '还款明细',
     url: 'widget://html/repayrecord/win.html',
     bgColor: '#fff',
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -691,12 +694,13 @@ function openRepayRecord () {
 }
 
 // 订单详情
-function openProductDetails () {
+function openProductDetails (id) {
   api.openTabLayout({
     name: 'html/productdetails/win',
     title: '产品详情',
     url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

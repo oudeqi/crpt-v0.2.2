@@ -1,22 +1,3 @@
-function openIDcardInfo(pageParam) {
-  api.openTabLayout({
-    name: 'html/idcardinfo/win',
-    title: '确认身份证信息',
-    url: 'widget://html/idcardinfo/win.html',
-    bgColor: '#fff',
-    pageParam: pageParam,
-    bounces: true,
-    slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
-  });
-} // 人脸认证
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -66,7 +47,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com';
+var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -118,7 +99,14 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-};
+}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
+
 
 var handleRet = function handleRet(ret) {
   if (ret && ret.code === 200) {
@@ -140,12 +128,18 @@ var _upload = function upload(url) {
       timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
 
   return new Promise(function (resolve, reject) {
+    console.log(baseUrl + url);
+    var userinfo = $api.getStorage('userinfo');
+    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    console.log(JSON.stringify(token));
     api.ajax({
       url: baseUrl + url,
       method: 'post',
       data: data,
       tag: tag,
-      headers: headers,
+      headers: _objectSpread2({
+        'Authorization': token
+      }, headers),
       timeout: timeout
     }, function (ret, err) {
       if (ret) {
@@ -282,7 +276,7 @@ apiready = function apiready() {
 
       submitStatus = 'submitting';
       $api.addCls($api.byId('next'), 'loading');
-      http.upload('/crpt-cust/sass/realnameauth', {
+      http.upload('/crpt-cust/saas/realnameauth', {
         values: pageParam,
         files: {
           certImageFront: front,
@@ -290,8 +284,7 @@ apiready = function apiready() {
         }
       }).then(function (ret) {
         submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('next'), 'loading');
-        openIDcardInfo(ret.data);
+        $api.removeCls($api.byId('next'), 'loading'); // openIDcardInfo(ret.data)
       })["catch"](function (error) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');

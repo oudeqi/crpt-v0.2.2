@@ -205,3 +205,34 @@
       padding-right: 0;
     }
 
+html, body {
+  background-color: #efefef;
+}
+.title {
+  text-align: center;
+  padding: 20px;
+}
+ul {
+  padding: 20px;
+  margin: 0;
+}
+li {
+  margin-top: 20px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px;
+}
+.btn {
+  background: #1dc4a2;
+  color: #fff;
+  line-height: 1;
+  padding: 3px 6px;
+}

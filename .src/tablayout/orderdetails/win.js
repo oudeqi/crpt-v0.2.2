@@ -7,12 +7,20 @@ import { http } from '../../config.js'
 apiready = function () {
 
   document.querySelector('#repayplan').onclick = function () {
-    openRepayPlan()
+    openRepayPlan('9939393')
   }
 
   document.querySelector('#repayrecord').onclick = function () {
-    openRepayRecord()
+    openRepayRecord('9939393')
   }
+
+  // function getDetails (id) {
+  //   http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
+  //
+  //   }).catch(error => {
+  //
+  //   })
+  // }
 
   function getDetails (id) {
     http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
@@ -21,6 +29,7 @@ apiready = function () {
 
     })
   }
-  // getDetails('9939393')
+
+  getDetails('9939393')
 
 }

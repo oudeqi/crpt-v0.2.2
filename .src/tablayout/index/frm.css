@@ -1,0 +1,25 @@
+html, body {
+  background-color: #efefef;
+}
+.title {
+  text-align: center;
+  padding: 20px;
+}
+ul {
+  padding: 20px;
+  margin: 0;
+}
+li {
+  margin-top: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+.btn {
+  background: #1dc4a2;
+  color: #fff;
+  line-height: 1;
+  padding: 3px 6px;
+}

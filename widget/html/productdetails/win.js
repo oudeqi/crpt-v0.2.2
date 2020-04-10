@@ -47,7 +47,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com';
+var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -99,7 +99,14 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-};
+}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
+
 
 var handleRet = function handleRet(ret) {
   if (ret && ret.code === 200) {
@@ -121,12 +128,18 @@ var _upload = function upload(url) {
       timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
 
   return new Promise(function (resolve, reject) {
+    console.log(baseUrl + url);
+    var userinfo = $api.getStorage('userinfo');
+    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    console.log(JSON.stringify(token));
     api.ajax({
       url: baseUrl + url,
       method: 'post',
       data: data,
       tag: tag,
-      headers: headers,
+      headers: _objectSpread2({
+        'Authorization': token
+      }, headers),
       timeout: timeout
     }, function (ret, err) {
       if (ret) {
@@ -209,8 +222,24 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
+  var pageParam = api.pageParam || {};
+  var id = pageParam.id; // function getDetails (id) {
+  //   http.get(`/crpt-product/product/detail/${id}`).then(res => {
+  //     $api.byId('name').innerHTML = ''
+  //     $api.byId('name').innerHTML = ''
+  //   }).catch(error => {
+  //
+  //   })
+  // }
+
   function getDetails(id) {
-    http.get("/crpt-product/product/openingproduct/detail/".concat(id)).then(function (res) {})["catch"](function (error) {});
+    http.get("/crpt-product/product/openingproduct/detail/".concat(id)).then(function (res) {
+      $api.byId('name').innerHTML = res.data.name;
+      $api.byId('totalLimit').innerHTML = res.data.totalLimit;
+      $api.byId('interestRate').innerHTML = res.data.interestRate;
+      $api.byId('account').innerHTML = res.data.account;
+      $api.byId('introduce').innerHTML = res.data.introduce;
+    })["catch"](function (error) {});
   }
 
   getDetails(15);

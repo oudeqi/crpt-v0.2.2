@@ -50,7 +50,7 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('next'), 'loading')
-      http.upload('/crpt-cust/sass/realnameauth', {
+      http.upload('/crpt-cust/saas/realnameauth', {
         values: pageParam,
         files: {
           certImageFront: front,
@@ -59,7 +59,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
-        openIDcardInfo(ret.data)
+        // openIDcardInfo(ret.data)
       }).catch(error => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')

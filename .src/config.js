@@ -1,4 +1,5 @@
 const baseUrl = 'http://crptdev.liuheco.com'
+// const baseUrl = 'http://crptuat.liuheco.com'
 
 const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 10} = {}) => new Promise((resolve, reject) => {
   console.log(baseUrl + url)
@@ -41,7 +42,13 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 10} =
   })
 })
 
-
+// if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
 
 const handleRet = ret => {
   if (ret && ret.code === 200) {
@@ -52,12 +59,19 @@ const handleRet = ret => {
 }
 
 const upload = (url, data = {}, { headers = {}, tag = null, timeout = 30 }) => new Promise((resolve, reject) => {
+  console.log(baseUrl + url)
+  let userinfo = $api.getStorage('userinfo')
+  let token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
+  console.log(JSON.stringify(token))
   api.ajax({
     url: baseUrl + url,
     method: 'post',
     data,
     tag,
-    headers,
+    headers: {
+      'Authorization': token,
+      ...headers
+    },
     timeout,
   }, function(ret, err) {
     if (ret) {

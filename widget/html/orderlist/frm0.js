@@ -1,9 +1,12 @@
-function openOrderDetails() {
+function openOrderDetails(id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
+    pageParam: {
+      id: id
+    },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

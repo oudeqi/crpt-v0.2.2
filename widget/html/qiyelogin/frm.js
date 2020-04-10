@@ -65,7 +65,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com';
+var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -117,7 +117,14 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-};
+}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
+//   api.toast({
+//     msg: '登录状态已经过期，请重新登录！',
+//     duration: 2000,
+//     location: 'middle'
+//   })
+// }
+
 
 var handleRet = function handleRet(ret) {
   if (ret && ret.code === 200) {
@@ -139,12 +146,18 @@ var _upload = function upload(url) {
       timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
 
   return new Promise(function (resolve, reject) {
+    console.log(baseUrl + url);
+    var userinfo = $api.getStorage('userinfo');
+    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    console.log(JSON.stringify(token));
     api.ajax({
       url: baseUrl + url,
       method: 'post',
       data: data,
       tag: tag,
-      headers: headers,
+      headers: _objectSpread2({
+        'Authorization': token
+      }, headers),
       timeout: timeout
     }, function (ret, err) {
       if (ret) {
@@ -308,14 +321,18 @@ apiready = function apiready() {
 
   function qiyeSendCode(companyName) {
     submitStatus = 'submitting';
+    $api.addCls($api.byId('tel_login'), 'loading');
     http.post('/crpt-cust/identification/gainenterprisephone', {
       body: {
         account: companyName
       }
     }).then(function (res) {
-      if (res.phone) {
+      submitStatus = 'notsubmit';
+      $api.removeCls($api.byId('tel_login'), 'loading');
+
+      if (res.data) {
         openSendCode({
-          tel: tel,
+          tel: res.data,
           loginType: 'qiye'
         });
       } else {
@@ -323,15 +340,12 @@ apiready = function apiready() {
           msg: '获取企业法人手机号失败'
         });
       }
-
-      submitStatus = 'notsubmit';
-      $api.removeCls($api.byId('submit'), 'loading');
     })["catch"](function (error) {
       api.toast({
         msg: '获取企业法人手机号失败'
       });
       submitStatus = 'notsubmit';
-      $api.removeCls($api.byId('submit'), 'loading');
+      $api.removeCls($api.byId('tel_login'), 'loading');
     });
   }
 };

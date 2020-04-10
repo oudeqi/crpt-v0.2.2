@@ -206,26 +206,51 @@
     }
 
 html, body {
-  background-color: #ebebeb;
+  background-color: #efefef;
 }
-.nav {
-  color: #aaa;
-  height: 50px;
-  background-color: #fff;
+.tit {
+  margin-top: 20px;
+  padding-left: 20px;
+  color: #888;
+  font-size: 14px;
+}
+
+ul {
+  padding: 10px;
+  padding-top: 0;
+}
+li {
+  margin-top: 10px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.row1 {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
-.nav .item span {
-  padding: 10px 0;
-  border-bottom: 2px solid #fff;
+.row2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between
 }
-.nav .item.active span {
-  color: #1dc4a2;
-  border-bottom: 2px solid #1dc4a2;
-}
+.row2 span {
+    font-size: 14px;
+    color: #666;
+  }

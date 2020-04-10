@@ -344,6 +344,8 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('submit'), 'loading')
+// 个人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/personinfo/submission
+// 企业法人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/legalinfo/submission
       http.post('/crpt-cust/saas/personinfo/submission', {
         body: {
           ...postData,

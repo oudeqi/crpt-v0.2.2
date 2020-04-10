@@ -7,6 +7,15 @@ import { http } from '../../config.js'
 
 apiready = function() {
 
+  let userinfo = $api.getStorage('userinfo')
+  let { name, userType } = userinfo
+
+  if (userType === '1') { // userType === '1' ? '个人账号' : '企业账号'
+    $api.byId('userType').innerHTML = ''
+  } else {
+    $api.byId('userType').innerHTML = '法定代表人'
+  }
+
   let front = ''
   let back = ''
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
@@ -73,7 +82,7 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('next'), 'loading')
-      http.upload('/crpt-cust/sass/ocr', {
+      http.upload('/crpt-cust/saas/ocr', {
         files: {
           certImageFront: front,
           certImageBack: back

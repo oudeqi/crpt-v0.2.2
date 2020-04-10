@@ -14,7 +14,6 @@ import { http } from '../../config.js'
 
 apiready = function () {
 
-
   // document.querySelector('#activitylist').onclick = function () {
   //   openMsgList('账户动态')
   // }
@@ -24,7 +23,7 @@ apiready = function () {
   // }
 
   function getPageData () {
-    http.get('/credit/credit/amount').then(res => {
+    http.get('/crpt-credit/credit/credit/amount').then(res => {
 
     }).catch(error => {
 

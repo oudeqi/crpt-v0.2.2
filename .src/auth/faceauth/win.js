@@ -52,7 +52,7 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('start'), 'loading')
-      http.upload('/crpt-cust/sass/faceauth', {
+      http.upload('/crpt-cust/saas/faceauth', {
         files: {
           faceImage: facePic
         }

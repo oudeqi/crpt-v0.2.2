@@ -38,22 +38,23 @@ apiready = function() {
 
   function qiyeSendCode (companyName) {
     submitStatus = 'submitting'
+    $api.addCls($api.byId('tel_login'), 'loading')
     http.post('/crpt-cust/identification/gainenterprisephone', {
       body: {
         account: companyName
       }
     }).then(res => {
-      if (res.phone) {
-        openSendCode({ tel, loginType: 'qiye' })
+      submitStatus = 'notsubmit'
+      $api.removeCls($api.byId('tel_login'), 'loading')
+      if (res.data) {
+        openSendCode({ tel: res.data, loginType: 'qiye' })
       } else {
         api.toast({ msg: '获取企业法人手机号失败' })
       }
-      submitStatus = 'notsubmit'
-      $api.removeCls($api.byId('submit'), 'loading')
     }).catch(error => {
       api.toast({ msg: '获取企业法人手机号失败' })
       submitStatus = 'notsubmit'
-      $api.removeCls($api.byId('submit'), 'loading')
+      $api.removeCls($api.byId('tel_login'), 'loading')
     })
   }
 

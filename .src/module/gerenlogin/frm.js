@@ -94,7 +94,6 @@ apiready = function() {
           'Content-Type': 'application/x-www-form-urlencoded'
         } 
       }).then(ret => {
-        console.log(JSON.stringify(ret))
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
         api.toast({
@@ -105,7 +104,6 @@ apiready = function() {
         handleLoginSuccess(ret)
         openTabLayout()
       }).catch(error => {
-        console.log(JSON.stringify(error))
         api.toast({ msg: '登录失败' })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
