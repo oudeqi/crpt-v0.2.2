@@ -182,7 +182,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
+// const baseUrl = 'http://crptdev.liuheco.com'
+var baseUrl = 'http://crptuat.liuheco.com';
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -540,7 +541,8 @@ apiready = function apiready() {
         openTabLayout();
       })["catch"](function (error) {
         api.toast({
-          msg: '登录失败'
+          msg: '登录失败：' + error.msg,
+          location: 'middle'
         });
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('login'), 'loading');

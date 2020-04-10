@@ -198,7 +198,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
+// const baseUrl = 'http://crptdev.liuheco.com'
+var baseUrl = 'http://crptuat.liuheco.com';
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};

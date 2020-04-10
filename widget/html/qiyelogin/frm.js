@@ -65,7 +65,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
+// const baseUrl = 'http://crptdev.liuheco.com'
+var baseUrl = 'http://crptuat.liuheco.com';
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -337,12 +338,14 @@ apiready = function apiready() {
         });
       } else {
         api.toast({
-          msg: '获取企业法人手机号失败'
+          msg: '获取企业法人手机号失败',
+          location: 'middle'
         });
       }
     })["catch"](function (error) {
       api.toast({
-        msg: '获取企业法人手机号失败'
+        msg: '获取企业法人手机号失败',
+        location: 'middle'
       });
       submitStatus = 'notsubmit';
       $api.removeCls($api.byId('tel_login'), 'loading');

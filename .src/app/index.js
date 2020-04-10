@@ -35,7 +35,7 @@ apiready = function () {
 
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openTabLayout(0)
+    openTabLayout()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {

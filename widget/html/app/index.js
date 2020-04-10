@@ -122,7 +122,7 @@ function openRegLogin() {
 apiready = function apiready() {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openTabLayout(1); // openTodoAuthGeren()
+    openTabLayout(); // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
     openRegLogin();

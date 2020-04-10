@@ -62,7 +62,10 @@ apiready = function() {
         sendStatus = 'notsend'
         $api.removeCls($api.byId('sendcode'), 'loading')
         $api.byId('sendcode').innerHTML = '发送验证码'
-        api.toast({ msg: '发送验证码失败' })
+        api.toast({
+          msg: '发送验证码失败',
+          location: 'middle'
+        })
       })
     }
   }
@@ -113,7 +116,10 @@ apiready = function() {
         handleLoginSuccess(ret)
         openTabLayout()
       }).catch(error => {
-        api.toast({ msg: '登录失败' })
+        api.toast({
+          msg: '登录失败',
+          location: 'middle'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
       })

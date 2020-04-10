@@ -86,11 +86,11 @@ apiready = function() {
           phone: tel
         }
       }).then(ret => {
-        console.log(JSON.stringify(ret))
         sendStatus = 'countdown'
         countDown()
       }).catch(error => {
         sendStatus = 'notsend'
+        $api.byId('sendcode').innerHTML = '发送验证码'
       })
     }
   }
@@ -139,6 +139,10 @@ apiready = function() {
         })
         api.closeWin()
       }).catch(error => {
+        api.toast({
+          msg: '注册失败：' + error.msg,
+          location: 'middle'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
       })

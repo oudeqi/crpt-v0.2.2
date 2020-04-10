@@ -47,7 +47,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-var baseUrl = 'http://crptdev.liuheco.com'; // const baseUrl = 'http://crptuat.liuheco.com'
+// const baseUrl = 'http://crptdev.liuheco.com'
+var baseUrl = 'http://crptuat.liuheco.com';
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -396,11 +397,11 @@ apiready = function apiready() {
           phone: tel
         }
       }).then(function (ret) {
-        console.log(JSON.stringify(ret));
         sendStatus = 'countdown';
         countDown();
       })["catch"](function (error) {
         sendStatus = 'notsend';
+        $api.byId('sendcode').innerHTML = '发送验证码';
       });
     }
   };
@@ -472,6 +473,10 @@ apiready = function apiready() {
         });
         api.closeWin();
       })["catch"](function (error) {
+        api.toast({
+          msg: '注册失败：' + error.msg,
+          location: 'middle'
+        });
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
       });

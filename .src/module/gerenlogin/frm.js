@@ -104,7 +104,10 @@ apiready = function() {
         handleLoginSuccess(ret)
         openTabLayout()
       }).catch(error => {
-        api.toast({ msg: '登录失败' })
+        api.toast({
+          msg: '登录失败：' + error.msg,
+          location: 'middle'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
 

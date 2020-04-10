@@ -49,10 +49,16 @@ apiready = function() {
       if (res.data) {
         openSendCode({ tel: res.data, loginType: 'qiye' })
       } else {
-        api.toast({ msg: '获取企业法人手机号失败' })
+        api.toast({
+          msg: '获取企业法人手机号失败',
+          location: 'middle'
+        })
       }
     }).catch(error => {
-      api.toast({ msg: '获取企业法人手机号失败' })
+      api.toast({
+        msg: '获取企业法人手机号失败',
+        location: 'middle'
+      })
       submitStatus = 'notsubmit'
       $api.removeCls($api.byId('tel_login'), 'loading')
     })
