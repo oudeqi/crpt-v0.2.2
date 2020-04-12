@@ -223,19 +223,21 @@ li {
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
-  padding-top: 10px
+          align-items: center
 }
 .t strong {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
+    font-weight: normal;
+    color: #1dc4a2;
   }
 .t span {
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    color: #aaa;
   }
 .b {
   color: #aaa;
-  padding: 10px 0;
+  padding-top: 5px;
 }

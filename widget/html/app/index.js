@@ -1,3 +1,4 @@
+// api.lockSlidPane();
 /*
 list: [{
   text: '首页',
@@ -122,7 +123,8 @@ function openRegLogin() {
 apiready = function apiready() {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openTabLayout(); // openTodoAuthGeren()
+    openTabLayout(); // openBillDetails()
+    // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
     openRegLogin();

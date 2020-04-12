@@ -5,6 +5,7 @@ import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
   openFaceAuth, openYuguEdu
 } from '../../webview.js'
+import { http } from '../../config.js'
 
 apiready = function() {
 
@@ -31,6 +32,18 @@ apiready = function() {
   document.querySelector('#yuguedu').onclick = function () {
     openYuguEdu()
   }
+
+  function getStatus () {
+    http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+
+    }).catch(error => {
+      api.toast({
+        msg: error.msg || '获取认证状态失败'
+      })
+    })
+  }
+
+  getStatus()
 
 
 }

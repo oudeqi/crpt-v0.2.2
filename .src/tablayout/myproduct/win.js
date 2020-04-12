@@ -14,22 +14,88 @@ import { http } from '../../config.js'
 
 apiready = function () {
 
-  document.querySelector('#productDetails').onclick = function () {
-    openProductDetails()
-  }
+  let pageSize = 20
+  let pageNo = 1
+  let loading = false
 
-  // document.querySelector('#noticelist').onclick = function () {
-  //   openMsgList('公告新闻')
-  // }
-
-  function getPageData () {
-    http.get('/crpt-cust/product/openinglist/').then(res => {
-
+  function getPageData (cb) {
+    if (loading) {
+      return
+    }
+    loading = true
+    http.get(`/crpt-cust/product/openinglist/`).then(res => {
+      loading = false
+      api.refreshHeaderLoadDone()
+      if (res && res.data.length > 0) {
+        pageNo++
+        cb(res.data)
+      } else if (pageNo === 1) {
+        api.toast({ msg: '无数据'})
+      } else {
+        api.toast({ msg: '无更多数据'})
+      }
     }).catch(error => {
-
+      loading = false
+      api.refreshHeaderLoadDone()
+      api.toast({ msg: '数据加载失败' })
     })
   }
 
-  // getPageData()
+  function appendList (data) {
+    data.forEach(item => {
+      $api.append($api.byId('list'), `
+        <li tapmode data-id="${item.productId}">
+          <div class="t">
+            <strong>${item.productName}</strong>
+            <span>***（****）</span>
+          </div>
+          <div class="b">
+            开通时间：${item.openDate}
+          </div>
+        </li>
+      `)
+    })
+  }
+
+  function refresh () {
+    pageNo = 1
+    getPageData(function (data) {
+      $api.byId('list').innerHTML = ''
+      appendList(data)
+    })
+  }
+
+  function loadmore () {
+    getPageData(function (data) {
+      appendList(data)
+    })
+  }
+
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, function(ret, err) {
+    refresh()
+  })
+  api.addEventListener({
+    name: 'scrolltobottom',
+    extra: {
+      threshold: 100 //距离底部距离
+    }
+  }, function(ret, err) {
+    loadmore()
+  })
+
+  api.refreshHeaderLoading()
+
+  document.querySelector('#list').onclick = function (event) {
+    let li = $api.closest(event.target, 'li')
+    openProductDetails(li.dataset.id)
+  }
 
 }

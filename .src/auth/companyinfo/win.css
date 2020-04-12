@@ -1,8 +1,11 @@
+html, body {
+  height: 100%;
+}
 .container {
   padding: 40px 30px;
 }
 .btn-box {
-  margin-top: 70px;
+  margin-top: 50px;
 }
 h1 {
   margin: 0;
@@ -11,7 +14,7 @@ h1 {
   line-height: 1;
 }
 section {
-  margin-top: 40px;
+  margin-top: 30px;
   border-bottom: 1px solid #ededed;
   & h2 {
     color: #bbb;

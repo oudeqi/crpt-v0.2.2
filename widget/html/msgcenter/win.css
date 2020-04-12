@@ -239,19 +239,29 @@ li :last-child .content{
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
+    padding: 10px;
   }
 .content .t {
     line-height: 1.5;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
 .content strong {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: normal;
   }
 .content span {
-    font-size: 14px;
+    font-size: 15px;
     color: #aaa;
   }
 .content .b {
-    font-size: 16px;
+    font-size: 15px;
     color: #666;
   }

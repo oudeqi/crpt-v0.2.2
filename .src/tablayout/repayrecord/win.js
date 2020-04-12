@@ -41,24 +41,55 @@ apiready = function () {
   let pageNo = 1
   let loading = false
 
-  let id = '1101'
+    let id = '9939393'
+    // 9939393
+    // 1101
 
   function getPageData (cb) {
     if (loading) {
       return
     }
     loading = true
-    http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=10&pageNo=1&orderNo=${id}`).then(res => {
+    http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${id}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {
         pageNo++
         cb(res.data.list)
+      } else if (pageNo === 1) {
+        api.toast({ msg: '无数据'})
+      } else {
+        api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
-      api.toast({ msg: '数据加载失败' })
+      api.toast({ msg: error.msg })
+    })
+  }
+
+  function appendList (data) {
+    data.forEach(item => {
+      $api.append($api.byId('list'), `
+        <li>
+          <div class="row1">
+            <span>${item.repaidDate ? item.repaidDate.split(' ')[0] : ''}</span>
+            <span>已还：${item.curRepaidTotalAmount}</span>
+          </div>
+          <div class="row2">
+            <span>本金</span>
+            <span>${item.curRepaidPrincipalAmount}</span>
+          </div>
+          <div class="row2">
+            <span>费用</span>
+            <span>${item.curServiceFee}</span>
+          </div>
+          <div class="row2">
+            <span>逾期罚息</span>
+            <span>${item.curRepaidPenaltyAmount}</span>
+          </div>
+        </li>
+      `)
     })
   }
 
@@ -66,56 +97,13 @@ apiready = function () {
     pageNo = 1
     getPageData(function (data) {
       $api.byId('list').innerHTML = ''
-      data.forEach(item => {
-        $api.append($api.byId('list'), `
-          <li>
-            <div class="row1">
-              <span>${item.repaidDate}</span>
-              <span>已还：${item.curRepaidTotalAmount}</span>
-            </div>
-            <div class="row2">
-              <span>本金</span>
-              <span>${item.curRepaidPrincipalAmount}</span>
-            </div>
-            <div class="row2">
-              <span>费用</span>
-              <span>${item.curServiceFee}</span>
-            </div>
-            <div class="row2">
-              <span>逾期罚息</span>
-              <span>${item.curRepaidPenaltyAmount}</span>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 
   function loadmore () {
     getPageData(function (data) {
-      data.forEach(item => {
-        // .split(' ')[0]
-        $api.append($api.byId('list'), `
-          <li>
-            <div class="row1">
-              <span>${item.repaidDate}</span>
-              <span>已还：${item.curRepaidTotalAmount}</span>
-            </div>
-            <div class="row2">
-              <span>本金</span>
-              <span>${item.curRepaidPrincipalAmount}</span>
-            </div>
-            <div class="row2">
-              <span>费用</span>
-              <span>${item.curServiceFee}</span>
-            </div>
-            <div class="row2">
-              <span>逾期罚息</span>
-              <span>${item.curRepaidPenaltyAmount}</span>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 

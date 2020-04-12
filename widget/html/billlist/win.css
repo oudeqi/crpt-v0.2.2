@@ -209,10 +209,11 @@ html, body {
   background-color: #ebebeb;
 }
 ul {
-  padding: 15px;
+  padding: 0 15px;
+  padding-bottom: 15px;
 }
 li {
-  margin-top: 20px;
+  margin-top: 15px;
   background: #fff;
   border-radius: 5px;
   padding: 10px;
@@ -225,24 +226,37 @@ li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 40px
+  height: 40px;
+  padding-bottom: 8px
 }
 .t .tit {
     color: #1dc4a2;
-    font-weight: bold;
+    font-weight: normal;
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    margin-right: 10px;
   }
 .t .status {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 6px;
+    border-radius: 4px;
+  }
+.t .normal {
+    background-color: orange;
+  }
+.t .warning {
+    background-color: #1dc4a2;
+  }
+.t .product {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
-  }
-.t .status {
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
     color: #aaa;
     font-size: 15px;
+    text-align: right;
   }
 
 .b {
@@ -251,7 +265,8 @@ li {
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center
+          align-items: center;
+  margin-top: 10px
 }
 
 .b .text {
@@ -262,13 +277,17 @@ li {
 
 .b .text strong {
       color: #333;
+      font-weight: normal;
     }
 
 .b .text p {
       color: #aaa;
+      margin-top: 5px;
+      font-size: 15px;
     }
 
 .b .icon {
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    padding-right: 5px;
   }

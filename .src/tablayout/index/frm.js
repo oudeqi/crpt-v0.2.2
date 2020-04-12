@@ -37,6 +37,10 @@ apiready = function () {
       if (res && res.data.length > 0) {
         pageNo++
         cb(res.data)
+      } else if (pageNo === 1) {
+        api.toast({ msg: '无数据'})
+      } else {
+        api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
@@ -45,49 +49,37 @@ apiready = function () {
     })
   }
 
+  function appendList (data) {
+    data.forEach(item => {
+      $api.append($api.byId('list'), `
+        <li data-id="${item.id}">
+          <div class="col">
+            <div class="red">${item.totalLimit}</div>
+            <p>最高可贷（元）</p>
+          </div>
+          <div class="col">
+            <p>${item.introduce || ''}</p>
+            <p>${item.des || ''}</p>
+          </div>
+          <div class="col">
+            <div class="btn">立即开通</div>
+          </div>
+        </li>
+      `)
+    })
+  }
+
   function refresh () {
     pageNo = 1
     getPageData(function (data) {
       $api.byId('list').innerHTML = ''
-      data.forEach(item => {
-        $api.append($api.byId('list'), `
-          <li data-id="${item.id}">
-            <div class="col">
-              <p>${item.totalLimit}</p>
-              <p>最高可贷（元）</p>
-            </div>
-            <div class="col">
-              <p>${item.introduce || ''}</p>
-              <p>${item.des || ''}</p>
-            </div>
-            <div class="col">
-              <div class="btn">立即开通</div>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 
   function loadmore () {
     getPageData(function (data) {
-      data.forEach(item => {
-        $api.append($api.byId('list'), `
-          <li data-id="${item.id}">
-            <div class="col">
-              <p>${item.totalLimit}</p>
-              <p>最高可贷（元）</p>
-            </div>
-            <div class="col">
-              <p>${item.introduce || ''}</p>
-              <p>${item.des || ''}</p>
-            </div>
-            <div class="col">
-              <div class="btn">立即开通</div>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 

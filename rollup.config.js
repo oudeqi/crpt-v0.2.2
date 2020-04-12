@@ -7,6 +7,7 @@ const url = require('@rollup/plugin-url');
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const html2 = require('rollup-plugin-html2');
+const replace = require('@rollup/plugin-replace');
 
 const getPages = (globs, format) => {
   let pages = []
@@ -40,6 +41,9 @@ export default getPages('.src/**/*.html').map(page => {
       exclude: 'node_modules/**,html/**'
     },
     plugins: [
+      replace({
+        __buildEnv__: JSON.stringify(process.env.NODE_ENV || 'development')
+      }),
       commonjs(),
       resolve(),
       json(),

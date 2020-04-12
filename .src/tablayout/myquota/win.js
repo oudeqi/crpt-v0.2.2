@@ -1,30 +1,50 @@
 import '../../app.css'
 import './win.css'
 
-// apiready = function () {
-//   api.addEventListener({
-//     name: 'navitembtn'
-//   }, (ret, err) => {
-//     alert('点击了'+ret.index+'按钮');
-//   })
-// }
-
 import { openMsgList } from '../../webview.js'
 import { http } from '../../config.js'
 
 apiready = function () {
 
-  // document.querySelector('#activitylist').onclick = function () {
-  //   openMsgList('账户动态')
-  // }
-  //
-  // document.querySelector('#noticelist').onclick = function () {
-  //   openMsgList('公告新闻')
-  // }
+  const myChart = echarts.init(document.getElementById('chart'))
+  myChart.setOption({
+    color:['#1dc4a2', '#dddddd'],
+    series: [
+      {
+        // name: '访问来源',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        avoidLabelOverlap: false,
+        hoverAnimation: false,
+        // roseType: 'radius',
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '30',
+            fontWeight: 'bold',
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          {value: 80, name: '可用额度'},
+          {value: 335, name: '直接访问'},
+        ]
+      }
+    ]
+  })
 
   function getPageData () {
     http.get('/crpt-credit/credit/credit/amount').then(res => {
-
+      const data = res.data || {}
+      $api.byId('availab').innerHTML = data.availablAmount || '0.00'
+      $api.byId('total').innerHTML = data.limitAmount || '0.00'
+      $api.byId('used').innerHTML = data.loanAmount || '0.00'
     }).catch(error => {
 
     })

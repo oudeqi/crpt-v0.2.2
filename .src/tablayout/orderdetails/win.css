@@ -10,22 +10,78 @@ html, body {
 .btn {
   color: #1dc4a2;
 }
-
-.plan {
-  margin: 10px;
+.txt1 {
+  color: #999;
+  font-size: 15px;
+}
+.txt2 {
+  color: #333;
+  text-align: right;
+}
+.sec {
+  margin: 14px;
   border-radius: 5px;
   background: #fff;
-  padding: 10px;
+  padding: 0 13px;
+}
+.sec_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 46px;
   & .tit {
-    font-size: 15px;
-    color: #222;
+    color: #333;
   }
   & .txt {
     font-size: 13px;
-    color: #888;
+    color: #999;
     flex-grow: 1;
+  }
+}
+.sec_list {
+  border-top: 1px solid #f3f3f3;
+  & .item {
+    border-bottom: 1px solid #f3f3f3;
+    min-height: 44px;
+    padding: 4px 0;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  & .item1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  & .item2 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  & .item3 li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 30px;
+    color: #999;
+    font-size: 15px;
+  }
+}
+
+.sec_list2 {
+  border-top: 1px solid #f3f3f3;
+  padding-bottom: 20px;
+  & li {
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    & span {
+      color: #999;
+      font-size: 15px;
+      display: block;
+    }
+    & span:last-child {
+      flex-grow: 1;
+    }
   }
 }

@@ -38,6 +38,10 @@ apiready = function () {
       if (res && res.data.list.length > 0) {
         pageNo++
         cb(res.data.list)
+      } else if (pageNo === 1) {
+        api.toast({ msg: '无数据'})
+      } else {
+        api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
@@ -46,61 +50,42 @@ apiready = function () {
     })
   }
 
+  function appendList (data) {
+    data.forEach(item => {
+      $api.append($api.byId('list'), `
+        <li data-id="${item.id}">
+          <div class="row1">
+            <span>订单编号</span>
+            <span>${item.orderNo}</span>
+          </div>
+          <div class="row2">
+            <span>支付金额(元)</span>
+            <strong>${item.payAmount}</strong>
+            <div class="btn">去支付</div>
+          </div>
+          <div class="row3">
+            购买来源：${item.saleCustName}
+          </div>
+          <div class="row4">
+            <span class="date">下单时间：${item.orderTime}</span>
+            <span class="btn">取消订单</span>
+          </div>
+        </li>
+      `)
+    })
+  }
+
   function refresh () {
     pageNo = 1
     getPageData(function (data) {
       $api.byId('list').innerHTML = ''
-      data.forEach(item => {
-        $api.append($api.byId('list'), `
-          <li data-id="${item.id}">
-            <div class="row1">
-              <span>订单编号</span>
-              <span>${item.orderNo}</span>
-            </div>
-            <div class="row2">
-              <span>支付金额（元）</span>
-              <strong>${item.payAmount}</strong>
-              <div class="btn">去支付</div>
-            </div>
-            <div class="row3">
-              <span>购买来源</span>
-              <span>${item.saleCustName}</span>
-            </div>
-            <div class="row4">
-              <span class="btn">取消订单</span>
-              <span class="date">下单时间：${item.orderTime}</span>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 
   function loadmore () {
     getPageData(function (data) {
-      data.forEach(item => {
-        $api.append($api.byId('list'), `
-          <li data-id="${item.id}">
-            <div class="row1">
-              <span>订单编号</span>
-              <span>${item.orderNo}</span>
-            </div>
-            <div class="row2">
-              <span>支付金额（元）</span>
-              <strong>${item.payAmount}</strong>
-              <div class="btn">去支付</div>
-            </div>
-            <div class="row3">
-              <span>购买来源</span>
-              <span>${item.saleCustName}</span>
-            </div>
-            <div class="row4">
-              <span class="btn">取消订单</span>
-              <span class="date">下单时间：${item.orderTime}</span>
-            </div>
-          </li>
-        `)
-      })
+      appendList(data)
     })
   }
 
@@ -130,7 +115,5 @@ apiready = function () {
     let li = $api.closest(event.target, 'li')
     openOrderDetails(li.dataset.id)
   }
-
-
 
 }

@@ -1,16 +1,4 @@
 
-function closeApp(){
-  api.closeWidget()
-}
-
-function closeWin(){
-  api.closeWin({})
-}
-
-function closeDrawer () {
-  api.closeDrawerPane()
-}
-
 // api.lockSlidPane();
 // api.unlockSlidPane
 
@@ -500,12 +488,13 @@ function openBillList () {
 }
 
 // 账单详情
-function openBillDetails () {
+function openBillDetails (id) {
   api.openTabLayout({
     name: 'html/billdetails/win',
     title: '账单详情',
     url: 'widget://html/billdetails/win.html',
     bgColor: '#fff',
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -715,9 +704,6 @@ function openProductDetails (id) {
 
 
 export {
-  closeApp,
-  closeWin,
-  closeDrawer,
   openLeftPane,
   openDrawerLayout,
   openSlidLayout,

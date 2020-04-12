@@ -214,19 +214,21 @@ html, body {
   color: #fff;
 }
 ul {
-  padding: 10px;
+  padding: 13px;
   padding-top: 0;
   margin: 0;
 }
 li {
-  margin-top: 10px;
   background: #fff;
-  padding: 10px;
+  padding: 10px 14px;
+  margin-top: 15px;
+  border-radius: 3px;
 }
 
 .row1 {
-  font-size: 14px;
-  color: #666;
+  color: #999;
+  font-size: 15px;
+  padding-top: 2px;
 }
 
 .row2 {
@@ -236,7 +238,8 @@ li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 6px 0;
+  padding-top: 5px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #eee
 }
 
@@ -256,17 +259,27 @@ li {
 .row2 .btn {
     background: #1dc4a2;
     color: #fff;
+    height: 30px;
+    border: 4px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 0 10px;
+    border-radius: 4px;
     line-height: 1;
-    padding: 3px 6px;
+    font-size: 14px;
   }
 .row3 {
   font-size: 15px;
-  color: #666;
-  padding: 6px 0
+  color: #999;
+  padding: 6px 0;
 }
-.row3 span {
-    margin-right: 10px;
-  }
 .row4 {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -282,6 +295,6 @@ li {
     color: #1dc4a2;
   }
 .row4 .date {
-    font-size: 14px;
-    color: #666;
+    font-size: 15px;
+    color: #999;
   }

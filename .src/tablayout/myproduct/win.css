@@ -13,15 +13,17 @@ li {
 .t {
   display: flex;
   align-items: center;
-  padding-top: 10px;
   & strong {
     flex-grow: 1;
+    font-weight: normal;
+    color: #1dc4a2;
   }
   & span {
     flex-shrink: 0;
+    color: #aaa;
   }
 }
 .b {
   color: #aaa;
-  padding: 10px 0;
+  padding-top: 5px;
 }

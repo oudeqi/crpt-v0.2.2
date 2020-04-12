@@ -1,3 +1,4 @@
+// api.lockSlidPane();
 /*
 list: [{
   text: '首页',

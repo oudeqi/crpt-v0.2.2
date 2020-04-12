@@ -287,8 +287,16 @@ section {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
-    color: #ccc;
+    color: #ccc
   }
+.ipt-box .ipt input:disabled {
+      color: #000;
+      opacity: 1;
+    }
+.ipt-box .ipt input[disabled] {
+      color: #000;
+      opacity: 1;
+    }
 .ipt-box .icon {
     width: 50px;
     height: 100%;

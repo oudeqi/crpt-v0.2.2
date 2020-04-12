@@ -219,16 +219,17 @@ html, body {
   font-size: 14px;
 }
 ul {
-  padding: 0 10px 20px;
+  padding: 0 10px 15px;
 }
 li {
   background-color: #fff;
   border-radius: 5px;
   margin-top: 10px;
-  padding: 10px;
+  padding: 15px;
 }
 .t {
   border-bottom: 1px solid #ebebeb;
+  padding-bottom: 10px;
 }
 .row1 {
   display: -webkit-box;
@@ -238,7 +239,8 @@ li {
       -ms-flex-align: center;
           align-items: center;
   color: #aaa;
-  font-size: 16px
+  font-size: 16px;
+  padding-bottom: 5px
 }
 .row1 span {
     -webkit-box-flex: 1;
@@ -253,6 +255,8 @@ li {
 .row2 {
   color: #8d9daa;
   font-size: 15px;
+  height: 28px;
+  line-height: 28px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -282,23 +286,36 @@ li {
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center
+          align-items: center;
+  color: #8d9daa;
+  font-size: 15px;
+  height: 28px;
+  line-height: 28px
 }
 .row3 .label {
     width: 100px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
-    color: #8d9daa;
   }
 .row3 .produce {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
-    font-weight: bold;
+    font-weight: normal;
   }
 .row3 .status {
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    font-size: 14px;
+    height: 24px;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 0 5px;
+    border-radius: 4px;
   }
 
 .b .tit {
@@ -311,13 +328,13 @@ li {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    font-weight: bold;
+    margin-top: 5px;
   }
 
 .b .msg {
     color: #8d9daa;
     font-size: 15px;
-    text-align: right;
+    margin-top: 3px;
   }
 
 .during {

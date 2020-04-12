@@ -2,19 +2,22 @@ html, body {
   background-color: #fff;
 }
 .container {
-  padding: 5px 15px;
+  padding: 15px;
 }
 .title {
   font-size: 20px;
   color: #333;
+  padding-top: 5px;
 }
 .date {
-  font-size: 14px;
+  font-size: 15px;
   color: #aaa;
+  margin-top: 5px;
 }
 .content {
   color: #666;
   line-height: 1.5;
+  margin-top: 10px;
   & span {
     color: #446bb1;
   }

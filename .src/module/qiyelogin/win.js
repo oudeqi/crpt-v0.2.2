@@ -1,6 +1,5 @@
 import '../../app.css'
 
-import { closeWin } from '../../webview.js'
 
 apiready = function() {
   api.parseTapmode();
@@ -19,6 +18,6 @@ apiready = function() {
     }
   })
   document.querySelector('#back').onclick = function () {
-    closeWin()
+    api.closeWin()
   }
 }

@@ -32,5 +32,14 @@ apiready = function() {
     openYuguEdu()
   }
 
+  // function getStatus () {
+  //   http.get(`/customer/query/authstatus`).then(res => {
+  //
+  //   }).catch(error => {
+  //
+  //   })
+  // }
+  //
+  // getStatus()
 
 }

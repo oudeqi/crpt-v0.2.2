@@ -1,7 +1,3 @@
-function closeWin() {
-  api.closeWin({});
-}
-
 apiready = function apiready() {
   api.parseTapmode();
   var header = $api.byId('header');
@@ -20,6 +16,6 @@ apiready = function apiready() {
   });
 
   document.querySelector('#back').onclick = function () {
-    closeWin();
+    api.closeWin();
   };
 };

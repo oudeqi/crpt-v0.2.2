@@ -361,6 +361,10 @@ apiready = function() {
         // })
         // api.closeWin()
       }).catch(error => {
+        api.toast({
+          msg: error.msg || '提交失败',
+          location: 'middle'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
       })

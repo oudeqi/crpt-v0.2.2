@@ -58,6 +58,14 @@ section {
     align-items: center;
     justify-content: flex-start;
     color: #ccc;
+    & input:disabled {
+      color: #000;
+      opacity: 1;
+    }
+    & input[disabled] {
+      color: #000;
+      opacity: 1;
+    }
   }
   & .icon {
     width: 50px;

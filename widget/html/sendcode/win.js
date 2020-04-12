@@ -1,7 +1,3 @@
-function closeWin() {
-  api.closeWin({});
-}
-
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
   var loginType = pageParam.loginType;
@@ -29,6 +25,6 @@ apiready = function apiready() {
   });
 
   document.querySelector('#back').onclick = function () {
-    closeWin();
+    api.closeWin();
   };
 };

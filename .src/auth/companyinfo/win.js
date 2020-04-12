@@ -112,12 +112,17 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('submit'), 'loading')
+      // {"entNameCredit":"四川东雄农业科技有限公司",
+      // "frName":"万国东",
+      // "cid":"51092219690504357X",
+      // "regNo":"9151070431459311XW"
+      // }
       http.post('/crpt-cust/saas/company/auth', {
         body: {
-          entNameCredit: postData.companyName,  // 企业名称 上海风报信息科技有限公司
-          frName: postData.name, // 法定代表人 胡喜
-          cid: postData.frID, // 法人唯一标识 p_64d9c37db2e64d5201a90b4cc37d238e
-          regNo: postData.code, // 统一社会信用代码 91310115MA1K41TJ1J
+          entNameCredit: postData.companyName,  // 企业名称 四川东雄农业科技有限公司
+          frName: postData.name, // 法定代表人 万国东
+          cid: postData.frID, // 法人唯一标识 51092219690504357X
+          regNo: postData.code, // 统一社会信用代码 9151070431459311XW
         }
       }).then(ret => {
         submitStatus = 'notsubmit'
@@ -130,7 +135,7 @@ apiready = function() {
       }).catch(error => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        api.toast({ msg: '企业四要素认证失败，请确认信息是否正确' })
+        api.toast({ msg: error.msg || '企业四要素认证失败，请确认信息是否正确' })
       })
     }
   }

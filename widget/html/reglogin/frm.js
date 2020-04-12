@@ -1,3 +1,6 @@
+// api.lockSlidPane();
+
+
 function openReg() {
   api.openWin({
     name: 'html/register/win',

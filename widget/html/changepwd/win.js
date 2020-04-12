@@ -1,3 +1,4 @@
+// api.lockSlidPane();
 /*
 list: [{
   text: '首页',
@@ -105,10 +106,78 @@ function openTabLayout(index) {
   });
 } // 注册
 
-apiready = function apiready() {
-  api.parseTapmode();
+function openUIInput(dom) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var cb = arguments.length > 2 ? arguments[2] : undefined;
 
+  var UIInput = api.require('UIInput');
+
+  var rect = $api.offset(dom);
+  var maxRows = options.maxRows,
+      maxStringLength = options.maxStringLength,
+      inputType = options.inputType,
+      placeholder = options.placeholder,
+      keyboardType = options.keyboardType,
+      alignment = options.alignment,
+      isCenterVertical = options.isCenterVertical;
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength: maxStringLength,
+    inputType: inputType,
+    placeholder: placeholder,
+    keyboardType: keyboardType,
+    alignment: alignment,
+    isCenterVertical: isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    }
+  }, function (ret) {
+    UIInput.value({
+      id: ret.id
+    }, function (value) {
+      if (value) {
+        cb && cb(value.msg);
+      }
+    });
+  });
+}
+
+apiready = function apiready() {
   document.querySelector('#xxx').onclick = function () {
     openTabLayout();
   };
+  openUIInput($api.byId('pwd'), {
+    placeholder: '登录密码',
+    keyboardType: 'next',
+    inputType: 'password',
+    maxStringLength: 10
+  }, function (value) {
+  });
+  openUIInput($api.byId('repwd'), {
+    placeholder: '确认密码',
+    keyboardType: 'next',
+    inputType: 'password',
+    maxStringLength: 10
+  }, function (value) {
+  });
+  openUIInput($api.byId('code'), {
+    placeholder: '短信验证码',
+    keyboardType: 'number',
+    maxStringLength: 6
+  }, function (value) {
+  });
 };

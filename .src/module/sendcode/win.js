@@ -1,7 +1,5 @@
 import '../../app.css'
 
-import { closeWin } from '../../webview.js'
-
 apiready = function() {
   let pageParam = api.pageParam || {}
   let { loginType } = pageParam
@@ -26,6 +24,6 @@ apiready = function() {
     }
   })
   document.querySelector('#back').onclick = function () {
-    closeWin()
+    api.closeWin()
   }
 }

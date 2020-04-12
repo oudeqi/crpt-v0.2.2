@@ -1,3 +1,4 @@
+// api.lockSlidPane();
 /*
 list: [{
   text: '首页',
@@ -155,7 +156,8 @@ function _objectSpread2(target) {
 }
 
 // const baseUrl = 'http://crptdev.liuheco.com'
-var baseUrl = 'http://crptuat.liuheco.com';
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -166,27 +168,15 @@ var ajax = function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
-    console.log(baseUrl + url);
-    var userinfo = $api.getStorage('userinfo'); // {
-    //   "access_token":"6ca22146-008e-4c12-9772-8d72229b731b",
-    //   "token_type":"bearer",
-    //   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
-    //   "expires_in":594349,
-    //   "scope":"app",
-    //   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
-    //   "code":200,
-    //   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
-    //   "name":"欧威",
-    //   "userType":"1",
-    //   "makeBy":"nh-cloud",
-    //   "userId":"20"
-    // }
-
+    var userinfo = $api.getStorage('userinfo');
     var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    console.log(JSON.stringify(token));
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
       method: method,
@@ -194,16 +184,30 @@ var ajax = function ajax(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread2({
-        'Content-Type': 'application/json;charset=utf-8',
         'Authorization': token
-      }, headers)
-    }, function (ret, err) {
+      }, contentType, {}, headers)
+    }, function (ret, error) {
       if (ret) {
-        console.log(JSON.stringify(ret));
-        resolve(ret);
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          reject(ret);
+        }
       } else {
-        console.log(JSON.stringify(err));
-        reject(err);
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
       }
     });
   });
@@ -216,51 +220,6 @@ var ajax = function ajax(method, url) {
 // }
 
 
-var handleRet = function handleRet(ret) {
-  if (ret && ret.code === 200) {
-    return ret;
-  } else {
-    throw new Error(ret.msg);
-  }
-};
-
-var _upload = function upload(url) {
-  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  var _ref2 = arguments.length > 2 ? arguments[2] : undefined,
-      _ref2$headers = _ref2.headers,
-      headers = _ref2$headers === void 0 ? {} : _ref2$headers,
-      _ref2$tag = _ref2.tag,
-      tag = _ref2$tag === void 0 ? null : _ref2$tag,
-      _ref2$timeout = _ref2.timeout,
-      timeout = _ref2$timeout === void 0 ? 30 : _ref2$timeout;
-
-  return new Promise(function (resolve, reject) {
-    console.log(baseUrl + url);
-    var userinfo = $api.getStorage('userinfo');
-    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    console.log(JSON.stringify(token));
-    api.ajax({
-      url: baseUrl + url,
-      method: 'post',
-      data: data,
-      tag: tag,
-      headers: _objectSpread2({
-        'Authorization': token
-      }, headers),
-      timeout: timeout
-    }, function (ret, err) {
-      if (ret) {
-        console.log(JSON.stringify(ret));
-        resolve(ret);
-      } else {
-        console.log(JSON.stringify(err));
-        reject(err);
-      }
-    });
-  });
-};
-
 var http = {
   cancel: function cancel(tag) {
     return api.cancelAjax({
@@ -268,64 +227,64 @@ var http = {
     });
   },
   get: function get(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
 
     return ajax('get', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    }).then(handleRet);
+    });
   },
   post: function post(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
 
     return ajax('post', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    }).then(handleRet);
+    });
   },
   put: function put(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
 
     return ajax('put', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    }).then(handleRet);
+    });
   },
   "delete": function _delete(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
 
     return ajax('delete', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    }).then(handleRet);
+    });
   },
   upload: function upload(url, data) {
-    var _ref7 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref7.headers,
-        tag = _ref7.tag,
-        timeout = _ref7.timeout;
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
 
-    return _upload(url, data, {
+    return ajax('upload', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    }).then(handleRet);
+    });
   }
 }; // 统一ios和android的输入框，下标都从0开始
 

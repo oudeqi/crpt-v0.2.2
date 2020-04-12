@@ -1,7 +1,5 @@
 import '../../app.css'
 
-import { closeWin } from '../../webview.js'
-
 apiready = function() {
   api.parseTapmode()
   let header = $api.byId('header')
@@ -19,6 +17,6 @@ apiready = function() {
     }
   })
   document.querySelector('#back').onclick = function () {
-    closeWin()
+    api.closeWin()
   }
 }

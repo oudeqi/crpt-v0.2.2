@@ -1,6 +1,6 @@
 import {
   // openDrawerLayout,
-  // openSlidLayout,
+  openMsgCenter,
   openTabLayout,
   openRegLogin,
   openReg,
@@ -32,10 +32,10 @@ import {
 // $api.clearStorage()
 
 apiready = function () {
-
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
     openTabLayout()
+    // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {

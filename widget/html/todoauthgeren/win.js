@@ -1,3 +1,6 @@
+// api.lockSlidPane();
+
+
 function openBaseinfoFill(pageParam) {
   api.openWin({
     name: 'html/baseinfofill/win',
@@ -89,5 +92,14 @@ apiready = function apiready() {
 
   document.querySelector('#yuguedu').onclick = function () {
     openYuguEdu();
-  };
+  }; // function getStatus () {
+  //   http.get(`/customer/query/authstatus`).then(res => {
+  //
+  //   }).catch(error => {
+  //
+  //   })
+  // }
+  //
+  // getStatus()
+
 };
