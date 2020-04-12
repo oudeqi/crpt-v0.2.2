@@ -4880,9 +4880,9 @@ apiready = function apiready() {
       appendList(data.list || []);
     })["catch"](function (error) {
       loading = false;
+      api.refreshHeaderLoadDone();
       api.toast({
-        msg: error.msg || '获取数据失败',
-        location: 'middle'
+        msg: error.msg || '获取数据失败'
       });
     });
   } // function getDetails (id) {

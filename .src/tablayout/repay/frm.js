@@ -112,9 +112,9 @@ apiready = function () {
       appendList(data.list || [])
     }).catch(error => {
       loading = false
+      api.refreshHeaderLoadDone()
       api.toast({
-        msg: error.msg || '获取数据失败',
-        location: 'middle'
+        msg: error.msg || '获取数据失败'
       })
     })
   }
