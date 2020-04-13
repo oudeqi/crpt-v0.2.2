@@ -126,6 +126,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -258,7 +271,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.id, "\">\n          <div class=\"row1\">\n            <span>\u8BA2\u5355\u7F16\u53F7</span>\n            <span>").concat(item.orderNo || '', "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u652F\u4ED8\u91D1\u989D(\u5143)</span>\n            <strong>").concat(item.payAmount || '', "</strong>\n            <div class=\"btn\">\u53BB\u652F\u4ED8</div>\n          </div>\n          <div class=\"row3\">\n            \u8D2D\u4E70\u6765\u6E90\uFF1A").concat(item.saleCustName || '', "\n          </div>\n          <div class=\"row4\">\n            <span class=\"date\">\u4E0B\u5355\u65F6\u95F4\uFF1A").concat(item.orderTime || '', "</span>\n            <span class=\"btn\">\u53D6\u6D88\u8BA2\u5355</span>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"row1\">\n            <span>\u8BA2\u5355\u7F16\u53F7</span>\n            <span>").concat(item.orderNo || '', "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u652F\u4ED8\u91D1\u989D(\u5143)</span>\n            <strong>").concat(item.payAmount || '', "</strong>\n            <div class=\"btn\">\u53BB\u652F\u4ED8</div>\n          </div>\n          <div class=\"row3\">\n            \u8D2D\u4E70\u6765\u6E90\uFF1A").concat(item.saleCustName || '', "\n          </div>\n          <div class=\"row4\">\n            <span class=\"date\">\u4E0B\u5355\u65F6\u95F4\uFF1A").concat(item.orderTime || '', "</span>\n            <span class=\"btn\">\u53D6\u6D88\u8BA2\u5355</span>\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -300,6 +313,14 @@ apiready = function apiready() {
 
   document.querySelector('#list').onclick = function (event) {
     var li = $api.closest(event.target, 'li');
-    openOrderDetails(li.dataset.id);
+    var id = li.dataset.id;
+
+    if (id) {
+      openOrderDetails(id);
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
   };
 };

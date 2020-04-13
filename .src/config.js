@@ -33,7 +33,7 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 15} =
       } else {
         reject(error)
       }
-      if (__buildEnv__ === 'development') {
+      if (__buildEnv__ !== 'production') {
         if (ret) {
           console.log('/************* SUCCESS. **********/')
         } else {

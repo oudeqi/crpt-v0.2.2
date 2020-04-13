@@ -87,6 +87,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -312,6 +325,7 @@ apiready = function apiready() {
 
   function countDown() {
     var second = 60;
+    $api.byId('sendcode').innerHTML = second + '秒后重试';
     var timer = setInterval(function () {
       if (second <= 0) {
         sendStatus = 'notsend';
@@ -344,6 +358,9 @@ apiready = function apiready() {
         sendStatus = 'countdown';
         countDown();
       })["catch"](function (error) {
+        api.toast({
+          msg: error.msg || '网络错误'
+        });
         sendStatus = 'notsend';
         $api.byId('sendcode').innerHTML = '发送验证码';
       });

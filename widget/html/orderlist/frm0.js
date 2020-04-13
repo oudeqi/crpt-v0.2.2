@@ -111,6 +111,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -229,7 +242,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u8BA2\u5355\u7F16\u53F7\uFF1A".concat(item.orderNo, "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"row2\">\n              <span>\u5356\u65B9\uFF1A</span>\n              \u91CD\u5E86\u5E02\u6C38\u5DDD\u533A\u65FA\u6599\u9500\u552E\u6709\u9650\u516C\u53F8\n            </div>\n            <div class=\"row2\">\n              <span>\u652F\u4ED8\u65F6\u95F4</span>\n              2020/12/12 09/08/02\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u652F\u4ED8\u4EA7\u54C1</span>\n              <strong class=\"produce\">\u597D\u517B\u8D37</strong>\n              <span class=\"status during\">\u8FD8\u6B3E\u4E2D</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <div class=\"tit\">\n              <span>\u652F\u4ED8\u91D1\u989D\uFF08\u5143\uFF09</span>\n              <span>1,000,00</span>\n            </div>\n            <div class=\"msg\">\n              \u8BA2\u5355\u91D1\u989D\uFF1A1,000,00\uFF0C\u4F18\u60E0\uFF1A99.00\n            </div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u8BA2\u5355\u7F16\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"row2\">\n              <span>\u5356\u65B9\uFF1A</span>\n              \u91CD\u5E86\u5E02\u6C38\u5DDD\u533A\u65FA\u6599\u9500\u552E\u6709\u9650\u516C\u53F8\n            </div>\n            <div class=\"row2\">\n              <span>\u652F\u4ED8\u65F6\u95F4</span>\n              2020/12/12 09/08/02\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u652F\u4ED8\u4EA7\u54C1</span>\n              <strong class=\"produce\">\u597D\u517B\u8D37</strong>\n              <span class=\"status during\">\u8FD8\u6B3E\u4E2D</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <div class=\"tit\">\n              <span>\u652F\u4ED8\u91D1\u989D\uFF08\u5143\uFF09</span>\n              <span>1,000,00</span>\n            </div>\n            <div class=\"msg\">\n              \u8BA2\u5355\u91D1\u989D\uFF1A1,000,00\uFF0C\u4F18\u60E0\uFF1A99.00\n            </div>\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -271,6 +284,14 @@ apiready = function apiready() {
 
   document.querySelector('#list').onclick = function (event) {
     var li = $api.closest(event.target, 'li');
-    openOrderDetails(li.dataset.id);
+    var id = li.dataset.id;
+
+    if (id) {
+      openOrderDetails(id);
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
   };
 };

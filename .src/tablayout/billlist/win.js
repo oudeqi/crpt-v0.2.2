@@ -36,7 +36,7 @@ apiready = function () {
   function appendList (data) {
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li tapmode data-id="${item.orderNo}">
+        <li tapmode data-id="${item.orderNo || ''}">
           <div class="t">
             <div class="tit">${item.billDate}账单</div>
             ${item.status === 2 ? '<div class="status warning">未按期还款</div>' : ''}
@@ -82,7 +82,12 @@ apiready = function () {
 
   document.querySelector('#list').onclick = function (event) {
     let li = $api.closest(event.target, 'li')
-    openBillDetails(li.dataset.id)
+    let id = li.dataset.id
+    if (id) {
+      openBillDetails(id)
+    } else {
+      api.toast({ msg: 'id 不存在' })
+    }
   }
 
 }

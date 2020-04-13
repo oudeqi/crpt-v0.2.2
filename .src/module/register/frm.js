@@ -61,6 +61,7 @@ apiready = function() {
 
   function countDown () {
     let second = 60
+    $api.byId('sendcode').innerHTML = second + '秒后重试'
     let timer = setInterval(() => {
       if (second <= 0) {
         sendStatus = 'notsend'
@@ -89,6 +90,7 @@ apiready = function() {
         sendStatus = 'countdown'
         countDown()
       }).catch(error => {
+        api.toast({ msg: error.msg || '网络错误' })
         sendStatus = 'notsend'
         $api.byId('sendcode').innerHTML = '发送验证码'
       })

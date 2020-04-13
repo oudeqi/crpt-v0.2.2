@@ -111,6 +111,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -227,7 +240,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId, "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>***\uFF08****\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>***\uFF08****\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -254,6 +267,14 @@ apiready = function apiready() {
 
   document.querySelector('#list').onclick = function (event) {
     var li = $api.closest(event.target, 'li');
-    openProductDetails(li.dataset.id);
+    var id = li.dataset.id;
+
+    if (id) {
+      openProductDetails(id);
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
   };
 };

@@ -126,6 +126,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -257,7 +270,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.id, "\">\n          <div class=\"col\">\n            <div class=\"red\">").concat(item.totalLimit, "</div>\n            <p>\u6700\u9AD8\u53EF\u8D37\uFF08\u5143\uFF09</p>\n          </div>\n          <div class=\"col\">\n            <p>").concat(item.introduce || '', "</p>\n            <p>").concat(item.des || '', "</p>\n          </div>\n          <div class=\"col\">\n            <div class=\"btn\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.id || '', "\">\n          <div class=\"col\">\n            <div class=\"red\">").concat(item.totalLimit, "</div>\n            <p>\u6700\u9AD8\u53EF\u8D37\uFF08\u5143\uFF09</p>\n          </div>\n          <div class=\"col\">\n            <p>").concat(item.introduce || '', "</p>\n            <p>").concat(item.des || '', "</p>\n          </div>\n          <div class=\"col\">\n            <div class=\"btn\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -299,6 +312,14 @@ apiready = function apiready() {
 
   document.querySelector('#list').onclick = function (event) {
     var li = $api.closest(event.target, 'li');
-    openProductDetails(li.dataset.id);
+    var id = li.dataset.id;
+
+    if (id) {
+      openProductDetails(id);
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
   };
 };

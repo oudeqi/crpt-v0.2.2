@@ -111,6 +111,19 @@ var ajax = function ajax(method, url) {
       } else {
         reject(error);
       }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
     });
   });
 }; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
@@ -227,7 +240,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo, "\">\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, "\u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning">未按期还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8").concat(item.sumRepayTotalAmount, "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(item.sumRepayPrincipalAmount, " + \u8D39\u7528").concat(item.sumServiceFee, " + \u903E\u671F\u7F5A\u606F").concat(item.sumRepayPenaltyAmount, "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, "\u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning">未按期还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8").concat(item.sumRepayTotalAmount, "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(item.sumRepayPrincipalAmount, " + \u8D39\u7528").concat(item.sumServiceFee, " + \u903E\u671F\u7F5A\u606F").concat(item.sumRepayPenaltyAmount, "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -254,6 +267,14 @@ apiready = function apiready() {
 
   document.querySelector('#list').onclick = function (event) {
     var li = $api.closest(event.target, 'li');
-    openBillDetails(li.dataset.id);
+    var id = li.dataset.id;
+
+    if (id) {
+      openBillDetails(id);
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
   };
 };

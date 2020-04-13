@@ -44,7 +44,7 @@ apiready = function () {
   function appendList (data) {
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li tapmode data-id="${item.productId}">
+        <li tapmode data-id="${item.productId || ''}">
           <div class="t">
             <strong>${item.productName}</strong>
             <span>***（****）</span>
@@ -80,7 +80,12 @@ apiready = function () {
 
   document.querySelector('#list').onclick = function (event) {
     let li = $api.closest(event.target, 'li')
-    openProductDetails(li.dataset.id)
+    let id = li.dataset.id
+    if (id) {
+      openProductDetails(id)
+    } else {
+      api.toast({ msg: 'id 不存在' })
+    }
   }
 
 }
