@@ -213,9 +213,9 @@ apiready = function apiready() {
       return;
     }
 
-    loading = true; // 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销
+    loading = true; // 查询状态： 1-未还清 2-已还清 3-已失效
 
-    http.get("/crpt-order/order/list/currentuser?status=1&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
+    http.get("/crpt-order/order/payInfo?status=1&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
       loading = false;
       api.refreshHeaderLoadDone();
 

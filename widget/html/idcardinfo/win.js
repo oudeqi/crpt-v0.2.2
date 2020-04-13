@@ -1,11 +1,11 @@
 // api.lockSlidPane();
 
 
-function openAuthResult(status, title, message) {
+function openAuthResult(status, message, title) {
   // status: success error during
   api.openTabLayout({
     name: 'html/authresult/win',
-    title: '认证结果',
+    title: title || '认证结果',
     url: 'widget://html/authresult/win.html',
     bgColor: '#fff',
     pageParam: {

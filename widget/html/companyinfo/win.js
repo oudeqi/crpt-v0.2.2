@@ -289,9 +289,6 @@ apiready = function apiready() {
   });
 
   document.querySelector('#submit').onclick = function () {
-    // openIDcardUpload()
-    console.log(JSON.stringify(postData));
-
     if (submitStatus === 'notsubmit') {
       if (!postData.companyName) {
         return api.toast({
@@ -334,7 +331,7 @@ apiready = function apiready() {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
 
-        if (ret.data.result === 'NO') {
+        if (ret.data.result === 'YES') {
           openIDcardUpload();
         } else {
           api.toast({

@@ -1,3 +1,35 @@
+// api.lockSlidPane();
+
+
+function openAuthResult(status, message, title) {
+  // status: success error during
+  api.openTabLayout({
+    name: 'html/authresult/win',
+    title: title || '认证结果',
+    url: 'widget://html/authresult/win.html',
+    bgColor: '#fff',
+    pageParam: {
+      status: status,
+      title: title,
+      message: message
+    },
+    bounces: true,
+    slidBackEnabled: false,
+    // pageParam: {
+    //   type: type,
+    //   title: title,
+    //   message: message
+    // },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 消息中心
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -250,7 +282,7 @@ apiready = function apiready() {
       }).then(function (ret) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
-        openAuthResult('success');
+        openAuthResult('during');
       })["catch"](function (error) {
         submitStatus = 'notsubmit';
         api.toast({

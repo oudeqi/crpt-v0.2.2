@@ -16,8 +16,8 @@ apiready = function () {
       return
     }
     loading = true
-    // 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销
-    http.get(`/crpt-order/order/list/currentuser?status=2&pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
+    // 查询状态： 1-未还清 2-已还清 3-已失效
+    http.get(`/crpt-order/order/payInfo?status=2&pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {

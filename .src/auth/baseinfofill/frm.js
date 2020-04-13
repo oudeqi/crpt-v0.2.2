@@ -1,6 +1,7 @@
 import '../../app.css'
 import './frm.css'
 
+import { openAuthResult } from '../../webview.js'
 import { http, openActionSheet, openCityList, openCitySelector } from '../../config.js'
 
 function openUIInput (dom, options = {}, cb) {
@@ -48,11 +49,6 @@ function openUIInput (dom, options = {}, cb) {
     })
   })
 }
-
-
-
-
-
 
 
 apiready = function() {
@@ -177,7 +173,6 @@ apiready = function() {
   })
 
   document.querySelector('#submit').onclick = function () {
-    console.log(JSON.stringify(postData))
     if (submitStatus === 'notsubmit') {
       if (!postData.marriage) {
         return api.toast({ msg: '请选择婚姻状况' })
@@ -224,12 +219,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        // api.toast({
-        //   msg: '注册成功',
-        //   location: 'middle',
-        //   global: true
-        // })
-        // api.closeWin()
+          openAuthResult('success', '补充基本信息成功', '补充基本信息')
       }).catch(error => {
         api.toast({
           msg: error.msg || '提交失败',

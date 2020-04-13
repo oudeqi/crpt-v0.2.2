@@ -1,7 +1,7 @@
 import '../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
+import { openRegLogin, openBaseinfoFill, openAuthResult,
 openIDcardUpload, openIDcardInfo } from '../../webview.js'
 import { http, getPicture, openActionSheet } from '../../config.js'
 
@@ -42,7 +42,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        openAuthResult('success')
+        openAuthResult('during')
       }).catch(error => {
         submitStatus = 'notsubmit'
         api.toast({

@@ -95,8 +95,6 @@ apiready = function() {
   })
 
   document.querySelector('#submit').onclick = function () {
-    // openIDcardUpload()
-    console.log(JSON.stringify(postData))
     if (submitStatus === 'notsubmit') {
       if (!postData.companyName) {
         return api.toast({ msg: '请输入企业全称' })
@@ -122,7 +120,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        if (ret.data.result === 'NO') {
+        if (ret.data.result === 'YES') {
           openIDcardUpload()
         } else {
           api.toast({ msg: ret.data.info })

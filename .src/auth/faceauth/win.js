@@ -1,7 +1,7 @@
 import '../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
+import { openRegLogin, openBaseinfoFill, openAuthResult,
 openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../webview.js'
 import { http, getPicture, openActionSheet } from '../../config.js'
 
@@ -51,7 +51,11 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('start'), 'loading')
-        openAuthResult('success')
+        if (ret.data.result === 'YES') {
+          openAuthResult('success')
+        } else {
+          api.toast({ msg: ret.data.info })
+        }
       }).catch(error => {
         api.toast({
           msg: error.msg || '网络错误'

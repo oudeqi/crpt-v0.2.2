@@ -47,6 +47,38 @@ function _objectSpread2(target) {
   return target;
 }
 
+// api.lockSlidPane();
+
+
+function openAuthResult(status, message, title) {
+  // status: success error during
+  api.openTabLayout({
+    name: 'html/authresult/win',
+    title: title || '认证结果',
+    url: 'widget://html/authresult/win.html',
+    bgColor: '#fff',
+    pageParam: {
+      status: status,
+      title: title,
+      message: message
+    },
+    bounces: true,
+    slidBackEnabled: false,
+    // pageParam: {
+    //   type: type,
+    //   title: title,
+    //   message: message
+    // },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 消息中心
+
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
 
@@ -493,8 +525,6 @@ apiready = function apiready() {
   });
 
   document.querySelector('#submit').onclick = function () {
-    console.log(JSON.stringify(postData));
-
     if (submitStatus === 'notsubmit') {
       if (!postData.marriage) {
         return api.toast({
@@ -572,12 +602,8 @@ apiready = function apiready() {
         })
       }).then(function (ret) {
         submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('submit'), 'loading'); // api.toast({
-        //   msg: '注册成功',
-        //   location: 'middle',
-        //   global: true
-        // })
-        // api.closeWin()
+        $api.removeCls($api.byId('submit'), 'loading');
+        openAuthResult('success', '补充基本信息成功', '补充基本信息');
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '提交失败',
