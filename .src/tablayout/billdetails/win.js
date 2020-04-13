@@ -6,21 +6,7 @@ import { http } from '../../config.js'
 apiready = function () {
 
   let pageParam = api.pageParam || {}
-  let id = pageParam.id
-
-  // function getDetails (id) {
-  //   http.post('/crpt-credit/credit/repay/mybill/billdetail', {
-  //     body: {
-  //       orderNo: id
-  //     }
-  //   }).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-  //
-  // getDetails('1103')
+  let id = pageParam.id // '1103'
 
   let pageSize = 20
   let pageNo = 1
@@ -53,7 +39,7 @@ apiready = function () {
     })
   }
 
-  getPageData('1103', function (data) {
+  getPageData(id, function (data) {
     $api.byId('list').innerHTML = ''
     appendList(data)
   })

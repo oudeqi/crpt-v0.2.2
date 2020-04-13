@@ -7,43 +7,14 @@ import { http } from '../../config.js'
 
 apiready = function () {
 
-
-// {
-//   "code":200,
-//   "msg":"",
-//   "data":{
-//     "phone":"13800138000",
-//     "custName":"刘德华",
-//     "limitAmount":1600000,
-//     "loanAmount":900000,
-//     "availablAmount":700000,
-//     "unavailableAmount":0
-//   }
-// }
-
-  // function getPageData (id) {
-  //   http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=10&pageNo=1&orderNo=${id}`, {
-  //     // body: {
-  //     //   pageSize: 10,
-  //     //   pageNo: 1,
-  //     //   orderNo: id
-  //     // }
-  //   }).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-  //
-  // getPageData('1101')
-
   let pageSize = 20
   let pageNo = 1
   let loading = false
 
-    let id = '9939393'
-    // 9939393
-    // 1101
+  let pageParam = api.pageParam || {}
+  let id = pageParam.id // '9939393'
+  // 9939393
+  // 1101
 
   function getPageData (cb) {
     if (loading) {

@@ -180,37 +180,12 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
-  // {
-  //   "code":200,
-  //   "msg":"",
-  //   "data":{
-  //     "phone":"13800138000",
-  //     "custName":"刘德华",
-  //     "limitAmount":1600000,
-  //     "loanAmount":900000,
-  //     "availablAmount":700000,
-  //     "unavailableAmount":0
-  //   }
-  // }
-  // function getPageData (id) {
-  //   http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=10&pageNo=1&orderNo=${id}`, {
-  //     // body: {
-  //     //   pageSize: 10,
-  //     //   pageNo: 1,
-  //     //   orderNo: id
-  //     // }
-  //   }).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-  //
-  // getPageData('1101')
   var pageSize = 20;
   var pageNo = 1;
   var loading = false;
-  var id = '9939393'; // 9939393
+  var pageParam = api.pageParam || {};
+  var id = pageParam.id; // '9939393'
+  // 9939393
   // 1101
 
   function getPageData(cb) {

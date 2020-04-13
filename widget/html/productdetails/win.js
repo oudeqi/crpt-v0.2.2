@@ -181,14 +181,7 @@ var http = {
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var id = pageParam.id; // function getDetails (id) {
-  //   http.get(`/crpt-product/product/detail/${id}`).then(res => {
-  //     $api.byId('name').innerHTML = ''
-  //     $api.byId('name').innerHTML = ''
-  //   }).catch(error => {
-  //
-  //   })
-  // }
+  var id = pageParam.id; // 15
 
   function getDetails(id) {
     http.get("/crpt-product/product/openingproduct/detail/".concat(id)).then(function (res) {
@@ -200,5 +193,5 @@ apiready = function apiready() {
     })["catch"](function (error) {});
   }
 
-  getDetails(15);
+  getDetails(id);
 };

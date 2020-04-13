@@ -6,12 +6,15 @@ import { http } from '../../config.js'
 
 apiready = function () {
 
+  let pageParam = api.pageParam || {}
+  let id = pageParam.id // '9939393'
+
   document.querySelector('#repayplan').onclick = function () {
-    openRepayPlan('9939393')
+    openRepayPlan(id)
   }
 
   document.querySelector('#repayrecord').onclick = function () {
-    openRepayRecord('9939393')
+    openRepayRecord(id)
   }
 
   document.querySelector('#agreement').onclick = function () {
@@ -21,23 +24,16 @@ apiready = function () {
     })
   }
 
-
-  // function getDetails (id) {
-  //   http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-
   function getDetails (id) {
     http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
 
     }).catch(error => {
-
+      api.toast({
+        msg: error.msg || '网络错误'
+      })
     })
   }
 
-  getDetails('9939393')
+  getDetails(id)
 
 }

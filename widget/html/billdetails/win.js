@@ -181,7 +181,7 @@ var http = {
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var id = pageParam.id; // function getDetails (id) {
+  var id = pageParam.id; // '1103'
   var pageNo = 1;
   var loading = false;
 
@@ -220,7 +220,7 @@ apiready = function apiready() {
     });
   }
 
-  getPageData('1103', function (data) {
+  getPageData(id, function (data) {
     $api.byId('list').innerHTML = '';
     appendList(data);
   });

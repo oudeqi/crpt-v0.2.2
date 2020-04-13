@@ -226,12 +226,15 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
+  var pageParam = api.pageParam || {};
+  var id = pageParam.id; // '9939393'
+
   document.querySelector('#repayplan').onclick = function () {
-    openRepayPlan('9939393');
+    openRepayPlan(id);
   };
 
   document.querySelector('#repayrecord').onclick = function () {
-    openRepayRecord('9939393');
+    openRepayRecord(id);
   };
 
   document.querySelector('#agreement').onclick = function () {
@@ -239,18 +242,15 @@ apiready = function apiready() {
       title: '消息',
       msg: '功能开发中...'
     });
-  }; // function getDetails (id) {
-  //   http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-
+  };
 
   function getDetails(id) {
-    http.get("/crpt-order/order/detail/app?orderNo=".concat(id)).then(function (res) {})["catch"](function (error) {});
+    http.get("/crpt-order/order/detail/app?orderNo=".concat(id)).then(function (res) {})["catch"](function (error) {
+      api.toast({
+        msg: error.msg || '网络错误'
+      });
+    });
   }
 
-  getDetails('9939393');
+  getDetails(id);
 };

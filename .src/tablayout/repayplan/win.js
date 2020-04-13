@@ -6,35 +6,12 @@ import { http } from '../../config.js'
 
 apiready = function () {
 
-  // document.querySelector('#repayplan').onclick = function () {
-  //   openMsgDetails()
-  // }
-  //
-  // document.querySelector('#repayplan').onclick = function () {
-  //   openMsgDetails()
-  // }
-
-  // function getPageData (id) {
-  //   http.get(`/crpt-credit/credit/repay/query/repayplan?pageSize=10&pageNo=1&orderNo=${id}`, {
-  //     // body: {
-  //     //   pageSize: 10,
-  //     //   pageNo: 1,
-  //     //   orderNo: id
-  //     // }
-  //   }).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
-  //
-  // getPageData('1101')
-
   let pageSize = 20
   let pageNo = 1
   let loading = false
 
-  let id = '9939393'
+  let pageParam = api.pageParam || {}
+  let id = pageParam.id // '9939393'
   // 9939393
   // 1101
 

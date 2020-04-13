@@ -6,16 +6,7 @@ import { http } from '../../config.js'
 apiready = function () {
 
   let pageParam = api.pageParam || {}
-  let id = pageParam.id
-
-  // function getDetails (id) {
-  //   http.get(`/crpt-product/product/detail/${id}`).then(res => {
-  //     $api.byId('name').innerHTML = ''
-  //     $api.byId('name').innerHTML = ''
-  //   }).catch(error => {
-  //
-  //   })
-  // }
+  let id = pageParam.id // 15
 
   function getDetails (id) {
     http.get(`/crpt-product/product/openingproduct/detail/${id}`).then(res => {
@@ -29,6 +20,6 @@ apiready = function () {
     })
   }
 
-  getDetails(15)
+  getDetails(id)
 
 }
