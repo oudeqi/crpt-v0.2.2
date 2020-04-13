@@ -70,7 +70,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -166,33 +166,57 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function openActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
+  }, function (ret, err) {
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
+    }
+  });
+}
+
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: true,
+    quality: 100,
+    targetWidth: 400,
+    targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
 apiready = function apiready() {
   var facePic = '';
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
-  function getPicture(cb) {
-    // library         //图片库
-    // camera          //相机
-    // album           //相册
-    api.getPicture({
-      sourceType: 'library',
-      encodingType: 'png',
-      mediaValue: 'pic',
-      destinationType: 'file',
-      allowEdit: true,
-      quality: 100,
-      targetWidth: 400,
-      targetHeight: 300,
-      saveToPhotoAlbum: false
-    }, cb);
-  }
-
   document.querySelector('#face').onclick = function () {
-    getPicture(function (ret, err) {
-      if (ret) {
-        $api.dom($api.byId('face'), 'img').src = ret.data;
-        facePic = ret.data;
+    var btns = ['相机', '相册'];
+    var sourceType = '';
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera';
+      } else {
+        sourceType = 'album';
       }
+
+      getPicture(sourceType, function (ret, err) {
+        if (ret) {
+          $api.dom($api.byId('face'), 'img').src = ret.data;
+          facePic = ret.data;
+        }
+      });
     });
   };
 
@@ -212,13 +236,13 @@ apiready = function apiready() {
         }
       }).then(function (ret) {
         submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('submit'), 'loading'); // openIDcardInfo({
-        //   ...ret.data,
-        //   front,
-        //   back
-        // })
+        $api.removeCls($api.byId('submit'), 'loading');
+        openAuthResult('success');
       })["catch"](function (error) {
         submitStatus = 'notsubmit';
+        api.toast({
+          msg: error.msg || '网络错误'
+        });
         $api.removeCls($api.byId('submit'), 'loading');
       });
     }

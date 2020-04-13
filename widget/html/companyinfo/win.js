@@ -91,7 +91,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -305,12 +305,7 @@ apiready = function apiready() {
       }
 
       submitStatus = 'submitting';
-      $api.addCls($api.byId('submit'), 'loading'); // {"entNameCredit":"四川东雄农业科技有限公司",
-      // "frName":"万国东",
-      // "cid":"51092219690504357X",
-      // "regNo":"9151070431459311XW"
-      // }
-
+      $api.addCls($api.byId('submit'), 'loading');
       http.post('/crpt-cust/saas/company/auth', {
         body: {
           entNameCredit: postData.companyName,

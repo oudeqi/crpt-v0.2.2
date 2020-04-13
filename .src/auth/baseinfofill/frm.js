@@ -1,7 +1,7 @@
 import '../../app.css'
 import './frm.css'
 
-import { http } from '../../config.js'
+import { http, openActionSheet, openCityList, openCitySelector } from '../../config.js'
 
 function openUIInput (dom, options = {}, cb) {
   let UIInput = api.require('UIInput')
@@ -49,141 +49,11 @@ function openUIInput (dom, options = {}, cb) {
   })
 }
 
-function openCitySelector (cb) {
-  let UIActionSelector = api.require('UIActionSelector')
-  UIActionSelector.open({
-    datas: 'widget://res/city.json',
-    layout: {
-      row: 5,
-      col: 3,
-      height: 30,
-      size: 12,
-      sizeActive: 14,
-      rowSpacing: 5,
-      colSpacing: 10,
-      maskBg: 'rgba(0,0,0,0.2)',
-      bg: '#008000',
-      color: '#fff',
-      colorActive: '#f00',
-      colorSelected: '#000'
-    },
-    animation: true,
-    cancel: {
-      text: '取消',
-      size: 12,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#fff'
-    },
-    ok: {
-      text: '确定',
-      size: 12,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#fff'
-    },
-    title: {
-      text: '请选择',
-      size: 12,
-      h: 44,
-      bg: '#eee',
-      color: '#888'
-    },
-    fixedOn: api.frameName
-  }, function(ret, err) {
-    if (ret.eventType === 'ok') {
-      cb(ret.selectedInfo)
-    }
-  })
-}
 
-function openCityList(cb) {
-  let UICityList = api.require('UICityList')
-  UICityList.open({
-    rect : {
-      x : 0,
-      y : 0,
-      w : api.frameWidth,
-      h : api.frameHeight
-    },
-    resource : 'widget://res/UICityList.json',
-    topCitys : [{
-      'city' : '北京', //字符串类型；城市
-      'id' : 110001, //字符串类型；城市编号
-      'pinyin' : 'beijing' //（可选项）字符串类型；本字段可不传，若不传模块内会生成该城市名的pinyin，以防止城市名中的多音字乱序问题
-    }],
-    styles : {
-      searchBar : {
-        bgColor : '#696969',
-        cancelColor : '#E3E3E3'
-      },
-      location : {
-        color : '#696969',
-        size : 12
-      },
-      sectionTitle : {
-        bgColor : '#eee',
-        color : '#000',
-        size : 12
-      },
-      item : {
-        bgColor : '#fff',
-        activeBgColor : '#696969',
-        color : '#000',
-        size : 14,
-        height : 40
-      },
-      indicator : {
-        bgColor : '#fff',
-        color : '#696969'
-      }
-    },
-    searchType : 'fuzzy',
-    currentCity : '北京',
-    locationWay : 'GPS',
-    hotTitle : '热门城市',
-    fixedOn : api.frameName,
-    placeholder : '输入城市名或首字母查询',
-    backBtn: {
-      rect: {
-        x: 0,      //（可选项）数字类型；按钮左上角的 x 坐标（相对于模块）；默认：2
-        y: 0,      //（可选项）数字类型；按钮左上角的 y 坐标（相对于模块）；默认：2
-        w: 36,    //（可选项）数字类型；按钮的宽度；默认：36
-        h: 36     //（可选项）数字类型；按钮的高度；默认：36
-      },
-      title: '关闭',    //（可选项）字符串类型；按钮标题；默认：不显示
-      titleColor:'#000000',//（可选项）字符串类型；按钮标题颜色；默认：#ff0000
-      bgColor:'',   //（可选项）字符串类型；按钮背景颜色；默认：透明
-      // image:''      //（可选项）字符串类型；按钮背景图片；默认：不显示
-    }
-  }, function(ret, err) {
-    if (ret.eventType === 'back') {
-      UICityList.close()
-    } else if (ret.eventType === 'selected') {
-      cb(ret.cityInfo)
-      UICityList.close()
-    }
-  })
-}
 
-function openActionSheet (title, buttons, cb) {
-  api.actionSheet({
-    title,
-    cancelTitle: '取消',
-    buttons
-  }, function(ret, err) {
-    let index = ret.buttonIndex // index 从1开始
-    if (index !== buttons.length + 1) {
-      cb(index - 1)
-    }
-  })
-}
+
+
+
 
 apiready = function() {
 
@@ -227,7 +97,7 @@ apiready = function() {
   // 教育情况 ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学']
   document.querySelector('#education').onclick = function () {
     let btns = ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学']
-    openActionSheet('请选择子女状况', btns, function (index) {
+    openActionSheet('请选择教育情况', btns, function (index) {
       $api.dom($api.byId('education'), 'input').value = btns[index]
       postData.education = btns[index]
     })

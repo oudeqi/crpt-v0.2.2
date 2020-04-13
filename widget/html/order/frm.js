@@ -109,7 +109,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -258,7 +258,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.id, "\">\n          <div class=\"row1\">\n            <span>\u8BA2\u5355\u7F16\u53F7</span>\n            <span>").concat(item.orderNo, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u652F\u4ED8\u91D1\u989D(\u5143)</span>\n            <strong>").concat(item.payAmount, "</strong>\n            <div class=\"btn\">\u53BB\u652F\u4ED8</div>\n          </div>\n          <div class=\"row3\">\n            \u8D2D\u4E70\u6765\u6E90\uFF1A").concat(item.saleCustName, "\n          </div>\n          <div class=\"row4\">\n            <span class=\"date\">\u4E0B\u5355\u65F6\u95F4\uFF1A").concat(item.orderTime, "</span>\n            <span class=\"btn\">\u53D6\u6D88\u8BA2\u5355</span>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.id, "\">\n          <div class=\"row1\">\n            <span>\u8BA2\u5355\u7F16\u53F7</span>\n            <span>").concat(item.orderNo || '', "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u652F\u4ED8\u91D1\u989D(\u5143)</span>\n            <strong>").concat(item.payAmount || '', "</strong>\n            <div class=\"btn\">\u53BB\u652F\u4ED8</div>\n          </div>\n          <div class=\"row3\">\n            \u8D2D\u4E70\u6765\u6E90\uFF1A").concat(item.saleCustName || '', "\n          </div>\n          <div class=\"row4\">\n            <span class=\"date\">\u4E0B\u5355\u65F6\u95F4\uFF1A").concat(item.orderTime || '', "</span>\n            <span class=\"btn\">\u53D6\u6D88\u8BA2\u5355</span>\n          </div>\n        </li>\n      "));
     });
   }
 

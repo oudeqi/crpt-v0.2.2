@@ -178,7 +178,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -282,10 +282,11 @@ apiready = function apiready() {
 
   function getPageData() {
     http.get('/crpt-credit/credit/credit/amount').then(function (res) {
-      $api.byId('edu').innerHTML = res.data.limitAmount;
+      var data = res.data || {};
+      $api.byId('edu').innerHTML = data.limitAmount || '****';
     })["catch"](function (error) {
       api.toast({
-        msg: '获取数据失败'
+        msg: error.msg || '获取数据失败'
       });
     });
   }

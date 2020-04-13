@@ -94,7 +94,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -239,12 +239,6 @@ apiready = function apiready() {
     });
   }
 
-  function loadmore() {
-    getPageData(function (data) {
-      appendList(data);
-    });
-  }
-
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
@@ -255,15 +249,6 @@ apiready = function apiready() {
     showTime: false
   }, function (ret, err) {
     refresh();
-  });
-  api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100 //距离底部距离
-
-    }
-  }, function (ret, err) {
-    loadmore();
   });
   api.refreshHeaderLoading();
 

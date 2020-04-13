@@ -1,3 +1,35 @@
+// api.lockSlidPane();
+
+
+function openAuthResult(status, title, message) {
+  // status: success error during
+  api.openTabLayout({
+    name: 'html/authresult/win',
+    title: '认证结果',
+    url: 'widget://html/authresult/win.html',
+    bgColor: '#fff',
+    pageParam: {
+      status: status,
+      title: title,
+      message: message
+    },
+    bounces: true,
+    slidBackEnabled: false,
+    // pageParam: {
+    //   type: type,
+    //   title: title,
+    //   message: message
+    // },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 消息中心
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -70,7 +102,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -229,7 +261,8 @@ apiready = function apiready() {
         }
       }).then(function (ret) {
         submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('next'), 'loading'); // openIDcardInfo(ret.data)
+        $api.removeCls($api.byId('next'), 'loading');
+        openAuthResult('success');
       })["catch"](function (error) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');

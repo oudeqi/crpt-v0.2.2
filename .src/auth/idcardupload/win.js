@@ -3,13 +3,13 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo } from '../../webview.js'
-import { http } from '../../config.js'
+import { http, openActionSheet, getPicture } from '../../config.js'
 
 apiready = function() {
 
   let userinfo = $api.getStorage('userinfo')
   let { name, userType } = userinfo
-
+  $api.byId('name').innerHTML = name
   if (userType === '1') { // userType === '1' ? '个人账号' : '企业账号'
     $api.byId('userType').innerHTML = ''
   } else {
@@ -20,42 +20,42 @@ apiready = function() {
   let back = ''
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
-  function getPicture (cb) {
-    // library         //图片库
-    // camera          //相机
-    // album           //相册
-    api.getPicture({
-      sourceType: 'library',
-      encodingType: 'png',
-      mediaValue: 'pic',
-      destinationType: 'file',
-      allowEdit: true,
-      quality: 100,
-      targetWidth: 400,
-      targetHeight: 300,
-      saveToPhotoAlbum: false
-    }, cb)
-  }
-
   document.querySelector('#front').onclick = function () {
-    getPicture(function(ret, err) {
-      if (ret) {
-        $api.dom($api.byId('front'), 'img').src = ret.data;
-        front = ret.data
-        // api.alert({ msg: front })
+    let btns = ['相机', '相册']
+    let sourceType = ''
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'album'
       }
+      getPicture(sourceType, function(ret, err) {
+        if (ret) {
+          $api.dom($api.byId('front'), 'img').src = ret.data
+          front = ret.data
+        }
+      })
     })
   }
 
   document.querySelector('#back').onclick = function () {
-    getPicture(function(ret, err) {
-      if (ret) {
-        $api.dom($api.byId('back'), 'img').src = ret.data;
-        back = ret.data
+    let btns = ['相机', '相册']
+    let sourceType = ''
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'album'
       }
-    });
+      getPicture(sourceType, function(ret, err) {
+        if (ret) {
+          $api.dom($api.byId('back'), 'img').src = ret.data
+          back = ret.data
+        }
+      })
+    })
   }
-
+  
   // let idcard = {
   //   "code":200,
   //   "msg":"",
@@ -96,6 +96,9 @@ apiready = function() {
           back
         })
       }).catch(error => {
+        api.toast({
+          msg: error.msg || '网络错误'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
       })

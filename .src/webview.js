@@ -388,12 +388,15 @@ function openYuguEdu () {
 }
 
 // 认证结果
-function openAuthResult (type, title, message) {
+function openAuthResult (status, title, message) { // status: success error during
   api.openTabLayout({
     name: 'html/authresult/win',
     title: '认证结果',
     url: 'widget://html/authresult/win.html',
     bgColor: '#fff',
+    pageParam: {
+      status, title, message
+    },
     bounces: true,
     slidBackEnabled: false,
     // pageParam: {

@@ -70,7 +70,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -166,107 +166,16 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function openUIInput(dom) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var cb = arguments.length > 2 ? arguments[2] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      if (value) {
-        cb && cb(value.msg);
-      }
-    });
-  });
-}
-
-function openCitySelector(cb) {
-  var UIActionSelector = api.require('UIActionSelector');
-
-  UIActionSelector.open({
-    datas: 'widget://res/city.json',
-    layout: {
-      row: 5,
-      col: 3,
-      height: 30,
-      size: 12,
-      sizeActive: 14,
-      rowSpacing: 5,
-      colSpacing: 10,
-      maskBg: 'rgba(0,0,0,0.2)',
-      bg: '#008000',
-      color: '#fff',
-      colorActive: '#f00',
-      colorSelected: '#000'
-    },
-    animation: true,
-    cancel: {
-      text: '取消',
-      size: 12,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#fff'
-    },
-    ok: {
-      text: '确定',
-      size: 12,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#fff'
-    },
-    title: {
-      text: '请选择',
-      size: 12,
-      h: 44,
-      bg: '#eee',
-      color: '#888'
-    },
-    fixedOn: api.frameName
+function openActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
   }, function (ret, err) {
-    if (ret.eventType === 'ok') {
-      cb(ret.selectedInfo);
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
     }
   });
 }
@@ -351,17 +260,108 @@ function openCityList(cb) {
   });
 }
 
-function openActionSheet(title, buttons, cb) {
-  api.actionSheet({
-    title: title,
-    cancelTitle: '取消',
-    buttons: buttons
-  }, function (ret, err) {
-    var index = ret.buttonIndex; // index 从1开始
+function openCitySelector(cb) {
+  var UIActionSelector = api.require('UIActionSelector');
 
-    if (index !== buttons.length + 1) {
-      cb(index - 1);
+  UIActionSelector.open({
+    datas: 'widget://res/city.json',
+    layout: {
+      row: 5,
+      col: 3,
+      height: 30,
+      size: 12,
+      sizeActive: 14,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#008000',
+      color: '#fff',
+      colorActive: '#f00',
+      colorSelected: '#000'
+    },
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 12,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#fff'
+    },
+    ok: {
+      text: '确定',
+      size: 12,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#fff'
+    },
+    title: {
+      text: '请选择',
+      size: 12,
+      h: 44,
+      bg: '#eee',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      cb(ret.selectedInfo);
     }
+  });
+}
+
+function openUIInput(dom) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var cb = arguments.length > 2 ? arguments[2] : undefined;
+
+  var UIInput = api.require('UIInput');
+
+  var rect = $api.offset(dom);
+  var maxRows = options.maxRows,
+      maxStringLength = options.maxStringLength,
+      inputType = options.inputType,
+      placeholder = options.placeholder,
+      keyboardType = options.keyboardType,
+      alignment = options.alignment,
+      isCenterVertical = options.isCenterVertical;
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength: maxStringLength,
+    inputType: inputType,
+    placeholder: placeholder,
+    keyboardType: keyboardType,
+    alignment: alignment,
+    isCenterVertical: isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    }
+  }, function (ret) {
+    UIInput.value({
+      id: ret.id
+    }, function (value) {
+      if (value) {
+        cb && cb(value.msg);
+      }
+    });
   });
 }
 
@@ -404,7 +404,7 @@ apiready = function apiready() {
 
   document.querySelector('#education').onclick = function () {
     var btns = ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学'];
-    openActionSheet('请选择子女状况', btns, function (index) {
+    openActionSheet('请选择教育情况', btns, function (index) {
       $api.dom($api.byId('education'), 'input').value = btns[index];
       postData.education = btns[index];
     });

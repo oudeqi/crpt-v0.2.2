@@ -92,7 +92,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -188,10 +188,42 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function openActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
+  }, function (ret, err) {
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
+    }
+  });
+}
+
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: true,
+    quality: 100,
+    targetWidth: 400,
+    targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
 apiready = function apiready() {
   var userinfo = $api.getStorage('userinfo');
   var name = userinfo.name,
       userType = userinfo.userType;
+  $api.byId('name').innerHTML = name;
 
   if (userType === '1') {
     // userType === '1' ? '个人账号' : '企业账号'
@@ -204,38 +236,41 @@ apiready = function apiready() {
   var back = '';
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
-  function getPicture(cb) {
-    // library         //图片库
-    // camera          //相机
-    // album           //相册
-    api.getPicture({
-      sourceType: 'library',
-      encodingType: 'png',
-      mediaValue: 'pic',
-      destinationType: 'file',
-      allowEdit: true,
-      quality: 100,
-      targetWidth: 400,
-      targetHeight: 300,
-      saveToPhotoAlbum: false
-    }, cb);
-  }
-
   document.querySelector('#front').onclick = function () {
-    getPicture(function (ret, err) {
-      if (ret) {
-        $api.dom($api.byId('front'), 'img').src = ret.data;
-        front = ret.data; // api.alert({ msg: front })
+    var btns = ['相机', '相册'];
+    var sourceType = '';
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera';
+      } else {
+        sourceType = 'album';
       }
+
+      getPicture(sourceType, function (ret, err) {
+        if (ret) {
+          $api.dom($api.byId('front'), 'img').src = ret.data;
+          front = ret.data;
+        }
+      });
     });
   };
 
   document.querySelector('#back').onclick = function () {
-    getPicture(function (ret, err) {
-      if (ret) {
-        $api.dom($api.byId('back'), 'img').src = ret.data;
-        back = ret.data;
+    var btns = ['相机', '相册'];
+    var sourceType = '';
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera';
+      } else {
+        sourceType = 'album';
       }
+
+      getPicture(sourceType, function (ret, err) {
+        if (ret) {
+          $api.dom($api.byId('back'), 'img').src = ret.data;
+          back = ret.data;
+        }
+      });
     });
   }; // let idcard = {
   //   "code":200,
@@ -283,6 +318,9 @@ apiready = function apiready() {
           back: back
         }));
       })["catch"](function (error) {
+        api.toast({
+          msg: error.msg || '网络错误'
+        });
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');
       });

@@ -56,18 +56,18 @@ apiready = function () {
         <li data-id="${item.id}">
           <div class="row1">
             <span>订单编号</span>
-            <span>${item.orderNo}</span>
+            <span>${item.orderNo || ''}</span>
           </div>
           <div class="row2">
             <span>支付金额(元)</span>
-            <strong>${item.payAmount}</strong>
+            <strong>${item.payAmount || ''}</strong>
             <div class="btn">去支付</div>
           </div>
           <div class="row3">
-            购买来源：${item.saleCustName}
+            购买来源：${item.saleCustName || ''}
           </div>
           <div class="row4">
-            <span class="date">下单时间：${item.orderTime}</span>
+            <span class="date">下单时间：${item.orderTime || ''}</span>
             <span class="btn">取消订单</span>
           </div>
         </li>

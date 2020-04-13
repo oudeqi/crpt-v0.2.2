@@ -87,6 +87,7 @@ apiready = function() {
         client_id: 'client', // client
         client_secret: 'secret', // 固定传secret
       }
+      $api.addCls($api.byId('login'), 'loading')
       http.post('/auth/oauth/token', {
         values: body
       }, {

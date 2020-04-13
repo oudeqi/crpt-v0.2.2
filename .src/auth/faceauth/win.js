@@ -3,7 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../webview.js'
-import { http } from '../../config.js'
+import { http, getPicture, openActionSheet } from '../../config.js'
 
 apiready = function() {
 
@@ -19,29 +19,21 @@ apiready = function() {
   let facePic = ''
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
-  function getPicture (cb) {
-    // library         //图片库
-    // camera          //相机
-    // album           //相册
-    api.getPicture({
-      sourceType: 'library',
-      encodingType: 'png',
-      mediaValue: 'pic',
-      destinationType: 'file',
-      allowEdit: true,
-      quality: 100,
-      targetWidth: 400,
-      targetHeight: 300,
-      saveToPhotoAlbum: false
-    }, cb)
-  }
-
   document.querySelector('#face').onclick = function () {
-    getPicture(function(ret, err) {
-      if (ret) {
-        $api.dom($api.byId('face'), 'img').src = ret.data;
-        facePic = ret.data
+    let btns = ['相机', '相册']
+    let sourceType = ''
+    openActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'album'
       }
+      getPicture(sourceType, function(ret, err) {
+        if (ret) {
+          $api.dom($api.byId('face'), 'img').src = ret.data;
+          facePic = ret.data
+        }
+      })
     })
   }
 
@@ -59,12 +51,11 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('start'), 'loading')
-        // openIDcardInfo({
-        //   ...ret.data,
-        //   front,
-        //   back
-        // })
+        openAuthResult('success')
       }).catch(error => {
+        api.toast({
+          msg: error.msg || '网络错误'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('start'), 'loading')
       })

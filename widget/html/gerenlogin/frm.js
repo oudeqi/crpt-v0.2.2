@@ -206,7 +206,7 @@ var ajax = function ajax(method, url) {
     method === 'upload' ? contentType = {} : null;
     api.ajax({
       url: baseUrl + url,
-      method: method,
+      method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
@@ -468,6 +468,7 @@ apiready = function apiready() {
         client_secret: 'secret' // 固定传secret
 
       };
+      $api.addCls($api.byId('login'), 'loading');
       http.post('/auth/oauth/token', {
         values: body
       }, {

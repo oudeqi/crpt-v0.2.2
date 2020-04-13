@@ -13,10 +13,11 @@ apiready = function() {
 
   function getPageData () {
     http.get('/crpt-credit/credit/credit/amount').then(res => {
-      $api.byId('edu').innerHTML = res.data.limitAmount
+      const data = res.data || {}
+      $api.byId('edu').innerHTML = data.limitAmount || '****'
     }).catch(error => {
       api.toast({
-        msg: '获取数据失败'
+        msg: error.msg || '获取数据失败'
       })
     })
   }

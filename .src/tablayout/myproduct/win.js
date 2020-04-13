@@ -65,12 +65,6 @@ apiready = function () {
     })
   }
 
-  function loadmore () {
-    getPageData(function (data) {
-      appendList(data)
-    })
-  }
-
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
@@ -82,15 +76,6 @@ apiready = function () {
   }, function(ret, err) {
     refresh()
   })
-  api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100 //距离底部距离
-    }
-  }, function(ret, err) {
-    loadmore()
-  })
-
   api.refreshHeaderLoading()
 
   document.querySelector('#list').onclick = function (event) {

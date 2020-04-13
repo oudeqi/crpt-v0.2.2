@@ -2,7 +2,7 @@ import '../../app.css'
 import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
-openIDcardUpload, openIDcardInfo } from '../../webview.js'
+openIDcardUpload, openIDcardInfo, openAuthResult } from '../../webview.js'
 import { http } from '../../config.js'
 
 apiready = function() {
@@ -59,7 +59,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
-        // openIDcardInfo(ret.data)
+        openAuthResult('success')
       }).catch(error => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
