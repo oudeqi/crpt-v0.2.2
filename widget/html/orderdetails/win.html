@@ -11,8 +11,13 @@
 <body>
 
   <div class="title">
-    <div>剩余未还本金（元）</div>
-    <div>1000.00</div>
+    <div class="l">
+      <div>剩余未还本金（元）</div>
+      <div>**</div>
+    </div>
+    <div class="r" id="status">
+      
+    </div>
   </div>
 
   <div class="sec">
@@ -23,25 +28,19 @@
     </div>
   </div>
 
-  <div class="sec">
+  <div class="sec" id="payDetails" style="display: none;">
     <div class="sec_header">
       <span class="tit">支付明细</span>
     </div>
     <div class="sec_list">
       <div class="item item1">
         <span class="txt1">支付金额</span>
-        <span class="txt2">200</span>
+        <span class="txt2" id="payAmount">**</span>
       </div>
-      <div class="item item2">
-        <span class="txt1">优惠金额</span>
-        <div class="txt2">
-          <div>200</div>
-          <div class="txt1">[xxx优惠券]</div>
-        </div>
-      </div>
+      
       <div class="item item1">
         <span class="txt1">还款方式</span>
-        <span class="txt2">好养贷</span>
+        <span class="txt2" id="productName">**</span>
       </div>
       <div class="item item1">
         <span class="txt1">
@@ -52,20 +51,12 @@
     </div>
   </div>
 
-  <div class="sec">
+  <div class="sec" id="repayDetails" style="display: none;">
     <div class="sec_header">
       <span class="tit">还款明细</span>
     </div>
     <div class="sec_list">
-      <div class="item item1">
-        <span class="txt1">已还总额</span>
-        <span class="txt2">20000</span>
-      </div>
-      <ul class="item item3">
-        <li><span>已还本金</span><span>200</span></li>
-        <li><span>已还利息</span><span>200</span></li>
-        <li><span>已还逾期罚息</span><span>200</span></li>
-      </ul>
+      
       <div class="item item1">
         <span class="txt1">还款记录</span>
         <span class="btn" id="repayrecord">查看</span>
@@ -80,35 +71,30 @@
     <ul class="sec_list2">
       <li>
         <span>订单编号：</span>
-        <span>000000</span>
+        <span id="orderNo">**</span>
       </li>
       <li>
         <span>订单金额：</span>
-        <span>20.00</span>
+        <span id="totalAmount">**</span>
       </li>
       <li>
         <span>创建时间：</span>
-        <span>2020-12-12 00:23:43</span>
+        <span id="orderTime">**</span>
       </li>
       <li>
         <span>订单涞源：</span>
-        <span>线下</span>
+        <span id="appCode">**</span>
       </li>
       <li>
         <span>
           卖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家：
         </span>
-        <span>重庆市重庆市重庆市重庆市重庆市重庆市重庆市</span>
+        <span id="saleCustName">**</span>
       </li>
     </ul>
   </div>
 
   <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript">
-    function xxx() {
-
-    }
-  </script>
 
   <script src="./win.js"></script></body>
 </html>

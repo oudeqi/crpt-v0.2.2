@@ -2,9 +2,24 @@ html, body {
   background-color: #efefef;
 }
 .title {
-  padding: 30px;
+  height: 120px;
   background-color: #1e294b;
   color: #fff;
+  display: flex;
+  align-items: stretch;
+  & .l {
+    flex-grow: 1;
+    padding-top: 30px;
+    padding-left: 30px;
+  }
+  & .r {
+    flex-shrink: 0;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
 }
 
 .btn {

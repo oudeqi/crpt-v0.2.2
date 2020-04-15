@@ -249,8 +249,8 @@ apiready = function apiready() {
           $api.byId('total').innerHTML = res.data.totalAmount;
         }
 
-        if (res.data.totalItem) {
-          $api.byId('totalItem').innerHTML = res.data.totalItem;
+        if (res.data.count) {
+          $api.byId('count').innerHTML = res.data.count;
         }
 
         cb(res.data.list);

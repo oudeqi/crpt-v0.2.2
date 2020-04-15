@@ -354,16 +354,36 @@ apiready = function apiready() {
 
     if (faceAuth) {
       faceAuth.onclick = function () {
-        openFaceAuth({
-          userType: userType,
-          // userType === '1' ? '个人账号' : '企业账号'
-          title: '人脸认证'
-        });
+        if (mapping.realAuth.status === 1) {
+          openFaceAuth({
+            userType: userType,
+            // userType === '1' ? '个人账号' : '企业账号'
+            title: '人脸认证'
+          });
+        } else {
+          api.toast({
+            msg: '请先完成第一步'
+          });
+        }
       };
     }
 
     if (baseinfo) {
       baseinfo.onclick = function () {
+        if (mapping.realAuth.status === 0) {
+          api.toast({
+            msg: '请先完成第一步'
+          });
+          return;
+        }
+
+        if (mapping.faceAuth.status === 0) {
+          api.toast({
+            msg: '请先完成第二步'
+          });
+          return;
+        }
+
         openBaseinfoFill({
           userType: userType
         });
