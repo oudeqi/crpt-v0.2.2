@@ -228,6 +228,10 @@ var openUIInput = function openUIInput(dom, form, key) {
   });
 };
 
+var isPhoneNo = function isPhoneNo(phone) {
+  return /^1[3456789]\d{9}$/.test(phone);
+}; // let userinfo = {
+
 apiready = function apiready() {
   var form = {}; // 表单数据
 
@@ -284,6 +288,13 @@ apiready = function apiready() {
         });
       }
 
+      if (!isPhoneNo(tel)) {
+        return api.toast({
+          msg: '手机号码格式不正确',
+          location: 'middle'
+        });
+      }
+
       sendStatus = 'sending';
       $api.byId('sendcode').innerHTML = '正在发送中...';
       http.post('/crpt-cust/sms/smsverificationcode', {
@@ -310,6 +321,13 @@ apiready = function apiready() {
       if (!form['tel'][1]) {
         return api.toast({
           msg: '请输入手机号码',
+          location: 'middle'
+        });
+      }
+
+      if (!isPhoneNo(form['tel'][1])) {
+        return api.toast({
+          msg: '手机号码格式不正确',
           location: 'middle'
         });
       }

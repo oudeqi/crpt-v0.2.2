@@ -2,7 +2,7 @@ import '../../app.css'
 import './frm.css'
 
 import { openTabLayout, openGerenLogin } from '../../webview.js'
-import { http, openUIInput } from '../../config.js'
+import { http, openUIInput, isPhoneNo } from '../../config.js'
 
 apiready = function() {
 
@@ -36,6 +36,9 @@ apiready = function() {
       if (!tel) {
         return api.toast({ msg: '请输入手机号码', location: 'middle' })
       }
+      if (!isPhoneNo(tel)) {
+        return api.toast({ msg: '手机号码格式不正确', location: 'middle' })
+      }
       sendStatus = 'sending'
       $api.byId('sendcode').innerHTML = '正在发送中...'
       http.post('/crpt-cust/sms/smsverificationcode', {
@@ -61,6 +64,9 @@ apiready = function() {
     if (submitStatus === 'notsubmit') {
       if (!form['tel'][1]) {
         return api.toast({ msg: '请输入手机号码', location: 'middle' })
+      }
+      if (!isPhoneNo(form['tel'][1])) {
+        return api.toast({ msg: '手机号码格式不正确', location: 'middle' })
       }
       if (!form['code'][1]) {
         return api.toast({ msg: '请输入验证码', location: 'middle' })

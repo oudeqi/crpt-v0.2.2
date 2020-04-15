@@ -235,6 +235,7 @@ apiready = function apiready() {
   if (type !== 'daiZhiFu') {
     $api.byId('payDetails').style.display = 'block';
     $api.byId('repayDetails').style.display = 'block';
+    $api.byId('repayDetails').style.display = 'plan';
   }
 
   document.querySelector('#repayplan').onclick = function () {
