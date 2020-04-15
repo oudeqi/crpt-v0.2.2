@@ -7,6 +7,7 @@ apiready = function apiready() {
     name: 'html/qiyelogin/frm',
     url: 'widget://html/qiyelogin/frm.html',
     bounces: true,
+    reload: true,
     rect: {
       x: 0,
       y: headerPos.h,

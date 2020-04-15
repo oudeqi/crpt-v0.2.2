@@ -57,6 +57,7 @@ function openAuthResult(status, message, title) {
     title: title || '认证结果',
     url: 'widget://html/authresult/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       status: status,
       title: title,

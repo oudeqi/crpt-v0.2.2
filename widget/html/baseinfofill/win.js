@@ -7,6 +7,7 @@ apiready = function apiready() {
     name: 'html/baseinfofill/frm',
     url: 'widget://html/baseinfofill/frm.html',
     bgColor: '#efefef',
+    reload: true,
     pageParam: pageParam,
     bounces: false,
     rect: {

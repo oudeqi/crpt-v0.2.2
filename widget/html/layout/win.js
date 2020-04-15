@@ -25,6 +25,7 @@ function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor: '#fff',
+    reload: true,
     delay: 300,
     slidBackEnabled: false,
     animation: {
@@ -78,6 +79,7 @@ function openTabLayout(index) {
         name: "tablayout/index",
         url: "widget://html/index/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -85,6 +87,7 @@ function openTabLayout(index) {
         name: "tablayout/order",
         url: "widget://html/order/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -92,6 +95,7 @@ function openTabLayout(index) {
         name: "tablayout/repay",
         url: "widget://html/repay/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -99,6 +103,7 @@ function openTabLayout(index) {
         name: "tablayout/my",
         url: "widget://html/my/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }]

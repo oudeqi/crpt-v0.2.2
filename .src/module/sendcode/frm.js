@@ -63,7 +63,7 @@ apiready = function() {
         $api.removeCls($api.byId('sendcode'), 'loading')
         $api.byId('sendcode').innerHTML = '发送验证码'
         api.toast({
-          msg: '发送验证码失败',
+          msg: error.msg || '发送验证码失败',
           location: 'middle'
         })
       })
@@ -84,6 +84,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
+        userType: 1, // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code,
@@ -117,7 +118,7 @@ apiready = function() {
         openTabLayout()
       }).catch(error => {
         api.toast({
-          msg: '登录失败',
+          msg: error.msg || '登录失败',
           location: 'middle'
         })
         submitStatus = 'notsubmit'

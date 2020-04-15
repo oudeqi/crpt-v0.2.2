@@ -15,7 +15,7 @@ apiready = function() {
   openUIInput($api.byId('tel'), form, 'tel', { placeholder: '请输入手机号码', keyboardType: 'number', maxStringLength: 11 })
   openUIInput($api.byId('code'), form, 'code', { placeholder: '短信验证码', keyboardType: 'next', maxStringLength: 6 })
   openUIInput($api.byId('pwd'), form, 'pwd', { placeholder: '请输入密码', keyboardType: 'next', inputType: 'password', maxStringLength: 16 })
-  openUIInput($api.byId('repwd'), form, 'repwd', { placeholder: '请输入密码', keyboardType: 'done', inputType: 'password', maxStringLength: 16 })
+  openUIInput($api.byId('repwd'), form, 'repwd', { placeholder: '请确认密码', keyboardType: 'done', inputType: 'password', maxStringLength: 16 })
 
   function resetInputPosi () {
     resetUIInputPosi($api.byId('tel'), form['tel'][0])
@@ -90,7 +90,10 @@ apiready = function() {
         sendStatus = 'countdown'
         countDown()
       }).catch(error => {
-        api.toast({ msg: error.msg || '网络错误' })
+        api.toast({
+          msg: error.msg || '验证码发送失败',
+          location: 'middle'
+        })
         sendStatus = 'notsend'
         $api.byId('sendcode').innerHTML = '发送验证码'
       })
@@ -103,22 +106,22 @@ apiready = function() {
     let url = type === 'geren' ? personRegister : enterpriseRegister
     if (submitStatus === 'notsubmit') {
       if (type === 'qiye' && !form['name'][1]) {
-        return api.toast({ msg: '请输入企业全称' })
+        return api.toast({ msg: '请输入企业全称', location: 'middle' })
       }
       if (!form['tel'][1]) {
-        return api.toast({ msg: '请输入手机号码' })
+        return api.toast({ msg: '请输入手机号码', location: 'middle' })
       }
       if (!form['code'][1]) {
-        return api.toast({ msg: '请输入验证码' })
+        return api.toast({ msg: '请输入验证码', location: 'middle' })
       }
       if (!form['pwd'][1]) {
-        return api.toast({ msg: '请输入密码' })
+        return api.toast({ msg: '请输入密码', location: 'middle' })
       }
       if (form['pwd'][1] !== form['repwd'][1]) {
-        return api.toast({ msg: '两次密码输入不一致' })
+        return api.toast({ msg: '两次密码输入不一致', location: 'middle' })
       }
       if (!$api.byId('checkbox').checked) {
-        return api.toast({ msg: '请仔细阅读，并同意协议' })
+        return api.toast({ msg: '请仔细阅读，并同意协议', location: 'middle' })
       }
       submitStatus = 'submitting'
       let body = {
@@ -142,7 +145,7 @@ apiready = function() {
         api.closeWin()
       }).catch(error => {
         api.toast({
-          msg: '注册失败：' + error.msg,
+          msg: error.msg || '注册失败',
           location: 'middle'
         })
         submitStatus = 'notsubmit'

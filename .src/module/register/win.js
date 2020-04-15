@@ -9,6 +9,7 @@ apiready = function() {
     name: 'html/register/frm',
     url: 'widget://html/register/frm.html',
     bounces: true,
+    reload: true,
     rect: {
       x: 0,
       y: headerPos.h,

@@ -5,7 +5,8 @@ function openReg() {
   api.openWin({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 注册登录选择
 
@@ -14,7 +15,8 @@ function openGerenLogin() {
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 企业登录
 
@@ -23,7 +25,8 @@ function openQiyeLogin() {
   api.openWin({
     name: 'html/qiyelogin/win',
     url: 'widget://html/qiyelogin/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 电话号码登录
 

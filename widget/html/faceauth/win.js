@@ -7,6 +7,7 @@ function openFaceUpload() {
     title: '手持身份证上传',
     url: 'widget://html/faceupload/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -27,6 +28,7 @@ function openAuthResult(status, message, title) {
     title: title || '认证结果',
     url: 'widget://html/authresult/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       status: status,
       title: title,

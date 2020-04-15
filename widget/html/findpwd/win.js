@@ -7,6 +7,7 @@ apiready = function apiready() {
     name: 'html/findpwd/frm',
     url: 'widget://html/findpwd/frm.html',
     bounces: true,
+    reload: true,
     rect: {
       x: 0,
       y: headerPos.h,

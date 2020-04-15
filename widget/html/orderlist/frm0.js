@@ -1,14 +1,16 @@
 // api.lockSlidPane();
 
 
-function openOrderDetails(id) {
+function openOrderDetails(id, type) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
-      id: id
+      id: id,
+      type: type
     },
     bounces: true,
     slidBackEnabled: true,

@@ -12,16 +12,6 @@ apiready = function () {
     openLeftPane()
   })
 
-  // api.addEventListener({
-  //   name: 'navitembtn'
-  // }, (ret, err) => {
-  //   if (ret.index === 0) {
-  //     openLeftPane()
-  //   } else {
-  //     alert('点错按钮了')
-  //   }
-  // })
-
   let pageSize = 20
   let pageNo = 1
   let loading = false
@@ -37,6 +27,12 @@ apiready = function () {
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {
         pageNo++
+        if (res.data.totalAmount) {
+          $api.byId('total').innerHTML = res.data.totalAmount
+        }
+        if (res.data.totalItem) {
+          $api.byId('totalItem').innerHTML = res.data.totalItem
+        }
         cb(res.data.list)
       } else if (pageNo === 1) {
         api.toast({ msg: '无数据'})
@@ -115,7 +111,7 @@ apiready = function () {
     let li = $api.closest(event.target, 'li')
     let id = li.dataset.id
     if (id) {
-      openOrderDetails(id)
+      openOrderDetails(id, 'daiZhiFu')
     } else {
       api.toast({ msg: 'id 不存在' })
     }

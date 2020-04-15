@@ -56,6 +56,7 @@ function openIDcardInfo(pageParam) {
     title: '确认身份证信息',
     url: 'widget://html/idcardinfo/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: pageParam,
     bounces: true,
     slidBackEnabled: false,

@@ -252,7 +252,7 @@ apiready = function apiready() {
     maxStringLength: 16
   });
   openUIInput($api.byId('repwd'), form, 'repwd', {
-    placeholder: '请输入密码',
+    placeholder: '请确认密码',
     keyboardType: 'done',
     inputType: 'password',
     maxStringLength: 16
@@ -260,6 +260,7 @@ apiready = function apiready() {
 
   function countDown() {
     var second = 60;
+    $api.byId('sendcode').innerHTML = second + '秒后重试';
     var timer = setInterval(function () {
       if (second <= 0) {
         sendStatus = 'notsend';
@@ -278,7 +279,8 @@ apiready = function apiready() {
 
       if (!tel) {
         return api.toast({
-          msg: '请输入手机号码'
+          msg: '请输入手机号码',
+          location: 'middle'
         });
       }
 
@@ -289,39 +291,47 @@ apiready = function apiready() {
           phone: tel
         }
       }).then(function (ret) {
-        console.log(JSON.stringify(ret));
         sendStatus = 'countdown';
         countDown();
       })["catch"](function (error) {
+        api.toast({
+          msg: error.msg || '验证码发送失败',
+          location: 'middle'
+        });
         sendStatus = 'notsend';
+        $api.byId('sendcode').innerHTML = '发送验证码';
       });
     }
   };
 
   document.querySelector('#submit').onclick = function () {
-    // openTabLayout()
+    // openGerenLogin()
     if (submitStatus === 'notsubmit') {
       if (!form['tel'][1]) {
         return api.toast({
-          msg: '请输入手机号码'
+          msg: '请输入手机号码',
+          location: 'middle'
         });
       }
 
       if (!form['code'][1]) {
         return api.toast({
-          msg: '请输入验证码'
+          msg: '请输入验证码',
+          location: 'middle'
         });
       }
 
       if (!form['pwd'][1]) {
         return api.toast({
-          msg: '请输入密码'
+          msg: '请输入密码',
+          location: 'middle'
         });
       }
 
       if (form['pwd'][1] !== form['repwd'][1]) {
         return api.toast({
-          msg: '两次密码输入不一致'
+          msg: '两次密码输入不一致',
+          location: 'middle'
         });
       }
 
@@ -336,7 +346,6 @@ apiready = function apiready() {
       http.post('/crpt-cust/identification/getbackpassword', {
         body: body
       }).then(function (ret) {
-        console.log(JSON.stringify(ret));
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
         api.toast({
@@ -346,7 +355,10 @@ apiready = function apiready() {
         });
         api.closeWin();
       })["catch"](function (error) {
-        console.log(JSON.stringify(error));
+        api.toast({
+          msg: error.msg || '操作失败',
+          location: 'middle'
+        });
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
       });

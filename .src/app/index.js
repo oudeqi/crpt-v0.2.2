@@ -67,4 +67,13 @@ apiready = function () {
     })
   })
 
+  api.addEventListener({
+    name: 'keyback'
+  }, function(ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    })
+  })
+
 }

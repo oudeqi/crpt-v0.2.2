@@ -72,6 +72,7 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       let body = {
+        userType: 1, // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         // verification: form['code'][1],
@@ -106,7 +107,7 @@ apiready = function() {
         openTabLayout()
       }).catch(error => {
         api.toast({
-          msg: '登录失败：' + error.msg,
+          msg: error.msg || '登录失败',
           location: 'middle'
         })
         submitStatus = 'notsubmit'

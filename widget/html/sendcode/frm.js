@@ -25,6 +25,7 @@ function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor: '#fff',
+    reload: true,
     delay: 300,
     slidBackEnabled: false,
     animation: {
@@ -78,6 +79,7 @@ function openTabLayout(index) {
         name: "tablayout/index",
         url: "widget://html/index/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -85,6 +87,7 @@ function openTabLayout(index) {
         name: "tablayout/order",
         url: "widget://html/order/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -92,6 +95,7 @@ function openTabLayout(index) {
         name: "tablayout/repay",
         url: "widget://html/repay/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -99,6 +103,7 @@ function openTabLayout(index) {
         name: "tablayout/my",
         url: "widget://html/my/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }]
@@ -411,7 +416,7 @@ apiready = function apiready() {
         $api.removeCls($api.byId('sendcode'), 'loading');
         $api.byId('sendcode').innerHTML = '发送验证码';
         api.toast({
-          msg: '发送验证码失败',
+          msg: error.msg || '发送验证码失败',
           location: 'middle'
         });
       });
@@ -436,6 +441,8 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       $api.addCls($api.byId('login'), 'loading');
       var body = {
+        userType: 1,
+        // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2,
         // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
@@ -478,7 +485,7 @@ apiready = function apiready() {
         openTabLayout();
       })["catch"](function (error) {
         api.toast({
-          msg: '登录失败',
+          msg: error.msg || '登录失败',
           location: 'middle'
         });
         submitStatus = 'notsubmit';

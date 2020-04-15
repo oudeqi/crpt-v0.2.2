@@ -7,6 +7,7 @@ function openIDcardUpload() {
     title: '身份证上传',
     url: 'widget://html/idcardupload/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {

@@ -7,6 +7,7 @@ function openBillDetails(id) {
     title: '账单详情',
     url: 'widget://html/billdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       id: id
     },

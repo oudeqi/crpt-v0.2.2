@@ -15,6 +15,7 @@ apiready = function() {
     name: 'html/sendcode/frm',
     url: 'widget://html/sendcode/frm.html',
     bounces: true,
+    reload: true,
     pageParam: api.pageParam,
     rect: {
       x: 0,

@@ -7,6 +7,7 @@ apiready = function apiready() {
     name: 'html/gerenlogin/frm',
     url: 'widget://html/gerenlogin/frm.html',
     bounces: true,
+    reload: true,
     rect: {
       x: 0,
       y: headerPos.h,

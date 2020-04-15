@@ -25,6 +25,7 @@ function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor: '#fff',
+    reload: true,
     delay: 300,
     slidBackEnabled: false,
     animation: {
@@ -78,6 +79,7 @@ function openTabLayout(index) {
         name: "tablayout/index",
         url: "widget://html/index/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -85,6 +87,7 @@ function openTabLayout(index) {
         name: "tablayout/order",
         url: "widget://html/order/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -92,6 +95,7 @@ function openTabLayout(index) {
         name: "tablayout/repay",
         url: "widget://html/repay/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -99,6 +103,7 @@ function openTabLayout(index) {
         name: "tablayout/my",
         url: "widget://html/my/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }]
@@ -111,7 +116,8 @@ function openReg() {
   api.openWin({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 注册登录选择
 
@@ -121,6 +127,7 @@ function openSendCode(pageParam) {
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: pageParam
   });
 } // 找回密码
@@ -130,7 +137,8 @@ function openFindPwd() {
   api.openWin({
     name: 'html/findpwd/win',
     url: 'widget://html/findpwd/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 填写个人信息
 
@@ -458,6 +466,8 @@ apiready = function apiready() {
 
       submitStatus = 'submitting';
       var body = {
+        userType: 1,
+        // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1,
         // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
@@ -500,7 +510,7 @@ apiready = function apiready() {
         openTabLayout();
       })["catch"](function (error) {
         api.toast({
-          msg: '登录失败：' + error.msg,
+          msg: error.msg || '登录失败',
           location: 'middle'
         });
         submitStatus = 'notsubmit';

@@ -6,6 +6,7 @@ function openLeftPane() {
     name: 'html/leftpane/win',
     url: 'widget://html/leftpane/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: false,
     animation: {
@@ -22,6 +23,7 @@ function openMsgCenter() {
     title: '消息中心',
     url: 'widget://html/msgcenter/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -41,6 +43,7 @@ function openBillList() {
     title: '我的账单',
     url: 'widget://html/billlist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -60,6 +63,7 @@ function openOrderList() {
     title: '订单列表',
     url: 'widget://html/orderlist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: true,
     navigationBar: {
@@ -79,6 +83,7 @@ function openMyQuota() {
     title: '我的额度',
     url: 'widget://html/myquota/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -98,6 +103,7 @@ function openMyProduct() {
     title: '我开通的产品',
     url: 'widget://html/myproduct/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -117,6 +123,7 @@ function openSettings() {
     title: '设置',
     url: 'widget://html/settings/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -136,6 +143,7 @@ function openContactUs() {
     title: '联系我们',
     url: 'widget://html/contactus/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -348,12 +356,28 @@ function getInfo() {
 }
 
 apiready = function apiready() {
-  var userinfo = $api.getStorage('userinfo');
-  var name = userinfo.name,
-      userType = userinfo.userType;
-  $api.byId('name').innerHTML = name;
-  $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号';
+  var userinfo = {};
+  var name = '';
+  var userType = '';
+  var access_token = '';
+
+  function initPage() {
+    userinfo = $api.getStorage('userinfo');
+    name = userinfo.name;
+    userType = userinfo.userType;
+    access_token = userinfo.access_token;
+    $api.byId('name').innerHTML = name;
+    $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号';
+  }
+
+  initPage();
   getInfo();
+  api.addEventListener({
+    name: 'viewappear'
+  }, function (ret, err) {
+    initPage();
+    getInfo();
+  });
   api.addEventListener({
     name: 'swiperight'
   }, function (ret, err) {

@@ -5,7 +5,8 @@ function openReg() {
   api.openWin({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
-    bgColor: '#fff'
+    bgColor: '#fff',
+    reload: true
   });
 } // 注册登录选择
 
@@ -15,6 +16,7 @@ function openSendCode(pageParam) {
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: pageParam
   });
 } // 找回密码
@@ -304,7 +306,7 @@ apiready = function apiready() {
       }
     })["catch"](function (error) {
       api.toast({
-        msg: '获取企业法人手机号失败',
+        msg: error.msg || '获取企业法人手机号失败',
         location: 'middle'
       });
       submitStatus = 'notsubmit';

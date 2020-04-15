@@ -49,15 +49,18 @@ apiready = function apiready() {
     frames: [{
       name: 'html/orderlist/frm/0',
       url: 'widget://html/orderlist/frm0.html',
-      bounces: true
+      bounces: true,
+      reload: true
     }, {
       name: 'html/orderlist/frm/1',
       url: 'widget://html/orderlist/frm1.html',
-      bounces: true
+      bounces: true,
+      reload: true
     }, {
       name: 'html/orderlist/frm/2',
       url: 'widget://html/orderlist/frm2.html',
-      bounces: true
+      bounces: true,
+      reload: true
     }]
   }, function (ret, err) {
     // document.querySelector('#xx').scrollIntoView({

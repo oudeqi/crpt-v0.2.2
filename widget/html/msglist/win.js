@@ -7,6 +7,7 @@ function openMsgDetails() {
     title: '消息详情',
     url: 'widget://html/msgdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

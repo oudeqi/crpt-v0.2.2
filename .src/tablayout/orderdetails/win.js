@@ -7,7 +7,10 @@ import { http } from '../../config.js'
 apiready = function () {
 
   let pageParam = api.pageParam || {}
-  let id = pageParam.id // '9939393'
+  let { id, type } = pageParam // '9939393'
+  // if (type === 'daiZhiFu') {
+  //
+  // }
 
   document.querySelector('#repayplan').onclick = function () {
     openRepayPlan(id)

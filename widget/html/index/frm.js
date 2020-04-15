@@ -6,6 +6,7 @@ function openLeftPane() {
     name: 'html/leftpane/win',
     url: 'widget://html/leftpane/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: false,
     animation: {
@@ -22,6 +23,7 @@ function openProductDetails(id) {
     title: '产品详情',
     url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       id: id
     },

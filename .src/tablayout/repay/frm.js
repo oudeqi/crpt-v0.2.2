@@ -72,6 +72,7 @@ apiready = function () {
     if (data.length > 0) {
       $api.byId('nodata').style.display = 'none'
     }
+    $api.byId('list').innerHTML = ''
     data.forEach(item => {
       $api.append($api.byId('list'), `
         <li>
@@ -97,7 +98,7 @@ apiready = function () {
       <p>剩余待还(元)</p>
       <p><strong>${data.remainderRepayAmount || '无'}</strong></p>
       ${
-        data.remainderRepayAmount ? `<p>最近还款日期 <span>${data.repayTotalAmount}</span></p>` : ''
+        data.remainderRepayAmount ? `<p>最近还款日期 <span>${data.latestRepayDate || '无'}</span></p>` : ''
       }
     `
   }

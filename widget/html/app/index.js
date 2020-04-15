@@ -25,6 +25,7 @@ function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor: '#fff',
+    reload: true,
     delay: 300,
     slidBackEnabled: false,
     animation: {
@@ -78,6 +79,7 @@ function openTabLayout(index) {
         name: "tablayout/index",
         url: "widget://html/index/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -85,6 +87,7 @@ function openTabLayout(index) {
         name: "tablayout/order",
         url: "widget://html/order/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -92,6 +95,7 @@ function openTabLayout(index) {
         name: "tablayout/repay",
         url: "widget://html/repay/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
@@ -99,6 +103,7 @@ function openTabLayout(index) {
         name: "tablayout/my",
         url: "widget://html/my/frm.html",
         bounces: true,
+        reload: true,
         scrollToTop: true //其他继承自openFrame的参数
 
       }]
@@ -112,6 +117,7 @@ function openRegLogin() {
     name: 'html/reglogin/win',
     url: 'widget://html/reglogin/win.html',
     bgColor: '#fff',
+    reload: true,
     slidBackEnabled: false
   });
 } // 个人登录
@@ -152,6 +158,14 @@ apiready = function apiready() {
   }, function (ret, err) {
     api.alert({
       msg: ret.value
+    });
+  });
+  api.addEventListener({
+    name: 'keyback'
+  }, function (ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
     });
   });
 };

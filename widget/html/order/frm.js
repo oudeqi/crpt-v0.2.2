@@ -6,6 +6,7 @@ function openLeftPane() {
     name: 'html/leftpane/win',
     url: 'widget://html/leftpane/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: false,
     animation: {
@@ -16,14 +17,16 @@ function openLeftPane() {
 } // 抽布局
 
 
-function openOrderDetails(id) {
+function openOrderDetails(id, type) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
-      id: id
+      id: id,
+      type: type
     },
     bounces: true,
     slidBackEnabled: true,
@@ -223,16 +226,7 @@ apiready = function apiready() {
     name: 'swiperight'
   }, function (ret, err) {
     openLeftPane();
-  }); // api.addEventListener({
-  //   name: 'navitembtn'
-  // }, (ret, err) => {
-  //   if (ret.index === 0) {
-  //     openLeftPane()
-  //   } else {
-  //     alert('点错按钮了')
-  //   }
-  // })
-
+  });
   var pageSize = 20;
   var pageNo = 1;
   var loading = false;
@@ -250,6 +244,15 @@ apiready = function apiready() {
 
       if (res && res.data.list.length > 0) {
         pageNo++;
+
+        if (res.data.totalAmount) {
+          $api.byId('total').innerHTML = res.data.totalAmount;
+        }
+
+        if (res.data.totalItem) {
+          $api.byId('totalItem').innerHTML = res.data.totalItem;
+        }
+
         cb(res.data.list);
       } else if (pageNo === 1) {
         api.toast({
@@ -316,7 +319,7 @@ apiready = function apiready() {
     var id = li.dataset.id;
 
     if (id) {
-      openOrderDetails(id);
+      openOrderDetails(id, 'daiZhiFu');
     } else {
       api.toast({
         msg: 'id 不存在'

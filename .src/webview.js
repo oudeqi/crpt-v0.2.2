@@ -8,6 +8,7 @@ function openLeftPane () {
     name: 'html/leftpane/win',
     url: 'widget://html/leftpane/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: false,
     animation: {
@@ -22,6 +23,7 @@ function openDrawerLayout () {
   api.openDrawerLayout({
     name: 'drawerLayout',
     url: 'widget://html/layout/win.html',
+    reload: true,
     leftPane: {
       name: 'html/leftpane/win',
       url: 'widget://html/leftpane/win.html',
@@ -85,6 +87,7 @@ function openTabLayout (index) {
   api.openTabLayout({
     name: 'tabLayout',
     bgColor:'#fff',
+    reload: true,
     delay: 300,
     slidBackEnabled: false,
     animation: {
@@ -140,6 +143,7 @@ function openTabLayout (index) {
           name: "tablayout/index",
           url: "widget://html/index/frm.html",
           bounces: true,
+          reload: true,
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
@@ -147,6 +151,7 @@ function openTabLayout (index) {
           name: "tablayout/order",
           url: "widget://html/order/frm.html",
           bounces: true,
+          reload: true,
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
@@ -154,6 +159,7 @@ function openTabLayout (index) {
           name: "tablayout/repay",
           url: "widget://html/repay/frm.html",
           bounces: true,
+          reload: true,
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
@@ -161,6 +167,7 @@ function openTabLayout (index) {
           name: "tablayout/my",
           url: "widget://html/my/frm.html",
           bounces: true,
+          reload: true,
           scrollToTop: true,
           //其他继承自openFrame的参数
         }
@@ -175,6 +182,7 @@ function openReg () {
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
     bgColor: '#fff',
+    reload: true,
   })
 }
 
@@ -184,6 +192,7 @@ function openRegLogin () {
     name: 'html/reglogin/win',
     url: 'widget://html/reglogin/win.html',
     bgColor: '#fff',
+    reload: true,
     slidBackEnabled: false,
   })
 }
@@ -194,6 +203,7 @@ function openGerenLogin () {
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
+    reload: true,
   })
 }
 
@@ -203,6 +213,7 @@ function openQiyeLogin () {
     name: 'html/qiyelogin/win',
     url: 'widget://html/qiyelogin/win.html',
     bgColor: '#fff',
+    reload: true,
   })
 }
 
@@ -212,6 +223,7 @@ function openSendCode (pageParam) {
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam
   })
 }
@@ -222,6 +234,7 @@ function openFindPwd () {
     name: 'html/findpwd/win',
     url: 'widget://html/findpwd/win.html',
     bgColor: '#fff',
+    reload: true,
   })
 }
 
@@ -231,6 +244,7 @@ function openBaseinfoFill (pageParam) {
     name: 'html/baseinfofill/win',
     url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam,
   })
 }
@@ -242,6 +256,7 @@ function openTodoAuthGeren () {
     title: '待认证',
     url: 'widget://html/todoauthgeren/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -259,6 +274,7 @@ function openTodoAuthQiye () {
     title: '待认证',
     url: 'widget://html/todoauthqiye/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -278,6 +294,7 @@ function openCompanyInfo () {
     title: '企业信息',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -297,6 +314,7 @@ function openIDcardUpload () {
     title: '身份证上传',
     url: 'widget://html/idcardupload/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -316,6 +334,7 @@ function openIDcardInfo (pageParam) {
     title: '确认身份证信息',
     url: 'widget://html/idcardinfo/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam,
     bounces: true,
     slidBackEnabled: false,
@@ -336,6 +355,7 @@ function openFaceAuth (pageParam) {
     title: pageParam.title,
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam,
     bounces: true,
     slidBackEnabled: false,
@@ -356,6 +376,7 @@ function openFaceUpload () {
     title: '手持身份证上传',
     url: 'widget://html/faceupload/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -375,6 +396,7 @@ function openYuguEdu () {
     title: '预估额度',
     url: 'widget://html/yuguedu/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -394,6 +416,7 @@ function openAuthResult (status, message, title) { // status: success error duri
     title: title || '认证结果',
     url: 'widget://html/authresult/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       status, title, message
     },
@@ -421,6 +444,7 @@ function openMsgCenter () {
     title: '消息中心',
     url: 'widget://html/msgcenter/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -440,6 +464,7 @@ function openMsgList (title) {
     title: title || '',
     url: 'widget://html/msglist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -459,6 +484,7 @@ function openMsgDetails () {
     title: '消息详情',
     url: 'widget://html/msgdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -478,6 +504,7 @@ function openBillList () {
     title: '我的账单',
     url: 'widget://html/billlist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -497,6 +524,7 @@ function openBillDetails (id) {
     title: '账单详情',
     url: 'widget://html/billdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
@@ -517,6 +545,7 @@ function openOrderList () {
     title: '订单列表',
     url: 'widget://html/orderlist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: true,
     navigationBar: {
@@ -530,13 +559,14 @@ function openOrderList () {
 }
 
 // 订单详情
-function openOrderDetails (id) {
+function openOrderDetails (id, type) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
-    pageParam: { id },
+    reload: true,
+    pageParam: { id, type },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -556,6 +586,7 @@ function openMyQuota () {
     title: '我的额度',
     url: 'widget://html/myquota/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -575,6 +606,7 @@ function openMyProduct () {
     title: '我开通的产品',
     url: 'widget://html/myproduct/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -594,6 +626,7 @@ function openSettings () {
     title: '设置',
     url: 'widget://html/settings/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -614,6 +647,7 @@ function openChangePwd () {
     title: '修改密码',
     url: 'widget://html/changepwd/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -633,6 +667,7 @@ function openContactUs () {
     title: '联系我们',
     url: 'widget://html/contactus/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -652,6 +687,7 @@ function openRepayPlan (id) {
     title: '还款计划',
     url: 'widget://html/repayplan/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
@@ -672,6 +708,7 @@ function openRepayRecord (id) {
     title: '还款明细',
     url: 'widget://html/repayrecord/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
@@ -692,6 +729,7 @@ function openProductDetails (id) {
     title: '产品详情',
     url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,

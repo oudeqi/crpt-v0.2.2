@@ -6,6 +6,7 @@ function openBaseinfoFill(pageParam) {
     name: 'html/baseinfofill/win',
     url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: pageParam
   });
 } // 打开待认证
@@ -17,6 +18,7 @@ function openCompanyInfo() {
     title: '企业信息',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -36,6 +38,7 @@ function openFaceAuth(pageParam) {
     title: pageParam.title,
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: pageParam,
     bounces: true,
     slidBackEnabled: false,
@@ -56,6 +59,7 @@ function openYuguEdu() {
     title: '预估额度',
     url: 'widget://html/yuguedu/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
@@ -253,35 +257,119 @@ apiready = function apiready() {
   var userinfo = $api.getStorage('userinfo');
   var userType = userinfo.userType;
 
-  document.querySelector('#companyInfo').onclick = function () {
-    openCompanyInfo();
-  };
+  function getStatus(cb) {
+    http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+      // 1：正常
+      // 2：待实名认证
+      // 3：待人脸审核
+      // 4：人脸认证失败，待人工审核
+      // 5：待补充基本信息
 
-  document.querySelector('#faceAuth').onclick = function () {
-    openFaceAuth({
-      userType: userType,
-      // userType === '1' ? '个人账号' : '企业账号'
-      title: '人脸认证'
-    });
-  };
+      var status = res.data;
 
-  document.querySelector('#baseinfo').onclick = function () {
-    openBaseinfoFill({
-      userType: userType
-    });
-  };
-
-  document.querySelector('#yuguedu').onclick = function () {
-    openYuguEdu();
-  };
-
-  function getStatus() {
-    http.get("/crpt-cust/customer/query/authstatus").then(function (res) {})["catch"](function (error) {
+      cb(map);
+    })["catch"](function (error) {
       api.toast({
         msg: error.msg || '获取认证状态失败'
       });
     });
   }
 
-  getStatus();
+  function renderStep1(status) {
+    if (status === 0) {
+      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"companyInfo\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u4F01\u4E1A\u5B9E\u540D\u8BA4\u8BC1</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u8BF7\u51C6\u5907\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n          </div>\n          <div class=\"pic idcard\"></div>\n        </div>\n      ";
+    } else {
+      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block2 authpass\" id=\"companyInfoResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u901A\u8FC7</span>\n        </div>\n      ";
+    }
+  }
+
+  function renderStep2(status) {
+    if (status === 0) {
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u8FDB\u884C\u4EBA\u8138\u8BA4\u8BC1</strong>\n              ".concat(status === 2 ? '<span class="icon"></span>' : '', "\n            </div>\n            <p>\u9700\u8981\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : '', "\n        </div>\n      ");
+    } else {
+      // autherror
+      var type = 'authpass';
+
+      if (status === 2) {
+        type = 'authing';
+      } // <span>图片模糊</span>
+
+
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" tapmode=\"active\" id=\"faceAuthResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            <span class=\"icon\"></span>\n          </div>\n          <div class=\"pic\"></div>\n        </div>\n      ");
+    }
+  }
+
+  function renderStep3(status) {
+    if (status === 0) {
+      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u8BF7\u586B\u5199\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n          </div>\n          <div class=\"pic baseinfo\"></div>\n        </div>\n      ";
+    } else {
+      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block2 authpass\" id=\"baseinfoResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u8865\u5145\u57FA\u672C\u4FE1\u606F</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u6210\u529F</span>\n        </div>\n      ";
+    }
+  }
+
+  function bindEvent() {
+    api.parseTapmode();
+    var companyInfo = document.querySelector('#companyInfo');
+    var faceAuth = document.querySelector('#faceAuth');
+    var baseinfo = document.querySelector('#baseinfo');
+    var yuguedu = document.querySelector('#yuguedu');
+
+    if (companyInfo) {
+      companyInfo.onclick = function () {
+        openCompanyInfo();
+      };
+    }
+
+    if (faceAuth) {
+      faceAuth.onclick = function () {
+        openFaceAuth({
+          userType: userType,
+          // userType === '1' ? '个人账号' : '企业账号'
+          title: '人脸认证'
+        });
+      };
+    }
+
+    if (baseinfo) {
+      baseinfo.onclick = function () {
+        openBaseinfoFill({
+          userType: userType
+        });
+      };
+    }
+
+    if (yuguedu) {
+      yuguedu.onclick = function () {
+        openYuguEdu();
+      };
+    }
+  }
+
+  function initPage() {
+    getStatus(function (mapping) {
+      // 0未通过，1通过，2人工审核
+      var step = 3;
+      mapping.realAuth.status === 1 ? step = 2 : null;
+      mapping.faceAuth.status === 1 ? step = 1 : null;
+      mapping.baseinfo.status === 1 ? step = 0 : null;
+
+      if (step > 0) {
+        $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "\u6B65</strong>\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C");
+      } else if (step === 0) {
+        $api.byId('yugueduContainer').innerHTML = "\n          <div class=\"smile\"></div>\n          <div class=\"btn-box\">\n            <div class=\"app_btn\" tapmode=\"active\" id=\"yuguedu\">\u7ACB\u5373\u9884\u4F30\u989D\u5EA6</div>\n          </div>\n        ";
+      }
+
+      renderStep1(mapping.realAuth.status);
+      renderStep2(mapping.faceAuth.status);
+      renderStep3(mapping.baseinfo.status);
+      bindEvent();
+    });
+  }
+
+  initPage();
+  api.addEventListener({
+    name: 'viewappear'
+  }, function (ret, err) {
+    initPage();
+  });
 };

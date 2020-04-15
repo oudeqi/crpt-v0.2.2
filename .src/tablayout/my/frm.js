@@ -1,14 +1,6 @@
 import '../../app.css'
 import './frm.css'
 
-// apiready = function () {
-//   api.addEventListener({
-//     name: 'navitembtn'
-//   }, (ret, err) => {
-//     alert('点击了'+ret.index+'按钮');
-//   })
-// }
-
 import { openLeftPane, openMsgCenter, openBillList,
 openOrderList, openMyQuota, openMyProduct, openSettings,
 openContactUs } from '../../webview.js'
@@ -34,19 +26,33 @@ function getInfo () {
 
 apiready = function () {
 
-  let userinfo = $api.getStorage('userinfo')
-  let { name, userType } = userinfo
+  let userinfo = {}
+  let name = ''
+  let userType = ''
+  let access_token = ''
 
-  $api.byId('name').innerHTML = name
-  $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
+  function initPage () {
+    userinfo = $api.getStorage('userinfo')
+    name = userinfo.name
+    userType = userinfo.userType
+    access_token = userinfo.access_token
+    $api.byId('name').innerHTML = name
+    $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
+  }
 
+  initPage()
   getInfo()
-
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
+    initPage()
+    getInfo()
+  })
   api.addEventListener({
     name: 'swiperight'
   }, function(ret, err){
     openLeftPane()
-  });
+  })
 
   document.querySelector('#msgcenter').onclick = function () {
     openMsgCenter()

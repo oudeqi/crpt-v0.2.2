@@ -6,6 +6,7 @@ function openLeftPane() {
     name: 'html/leftpane/win',
     url: 'widget://html/leftpane/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: false,
     slidBackEnabled: false,
     animation: {
@@ -4874,13 +4875,14 @@ apiready = function apiready() {
       $api.byId('nodata').style.display = 'none';
     }
 
+    $api.byId('list').innerHTML = '';
     data.forEach(function (item) {
       $api.append($api.byId('list'), "\n        <li>\n          <div class=\"row1\">\n            <span class=\"name\">".concat(item.productName, "</span>\n            ").concat(item.status === '4' ? "<span class=\"warning\">\u672A\u6309\u671F\u8FD8\u6B3E</span>" : '', "\n            <span class=\"data ").concat(item.status === '4' ? 'red' : '', "\">\u8FD8\u6B3E\u65E5 ").concat(item.repayDate, "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"txt\"><div><strong>").concat(item.repayAmount, "</strong><span>(\u542B\u670D\u52A1\u8D39").concat(item.serviceFee, ")</span></div>\n            <i>").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</i>\n            </div>\n            <div class=\"btn\">\u8FD8\u6B3E</div>\n          </div>\n        </li>\n      "));
     });
   }
 
   function appendTotal(data) {
-    $api.byId('total').innerHTML = "\n      <p>\u5269\u4F59\u5F85\u8FD8(\u5143)</p>\n      <p><strong>".concat(data.remainderRepayAmount || '无', "</strong></p>\n      ").concat(data.remainderRepayAmount ? "<p>\u6700\u8FD1\u8FD8\u6B3E\u65E5\u671F <span>".concat(data.repayTotalAmount, "</span></p>") : '', "\n    ");
+    $api.byId('total').innerHTML = "\n      <p>\u5269\u4F59\u5F85\u8FD8(\u5143)</p>\n      <p><strong>".concat(data.remainderRepayAmount || '无', "</strong></p>\n      ").concat(data.remainderRepayAmount ? "<p>\u6700\u8FD1\u8FD8\u6B3E\u65E5\u671F <span>".concat(data.latestRepayDate || '无', "</span></p>") : '', "\n    ");
   }
 
   function getPageData() {

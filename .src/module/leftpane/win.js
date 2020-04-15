@@ -2,14 +2,38 @@ import '../../app.css'
 import './win.css'
 
 import { openRegLogin, openBaseinfoFill, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
+import { http } from '../../config.js'
+
+
 
 apiready = function(){
 
-  let userinfo = $api.getStorage('userinfo')
-  let { name, userType } = userinfo
+  let userinfo = {}
+  let name = ''
+  let userType = ''
+  let access_token = ''
 
-  $api.byId('name').innerHTML = name
-  $api.byId('version').innerHTML = `版本号 v${api.appVersion}`
+
+  function initPage () {
+    userinfo = $api.getStorage('userinfo')
+    name = userinfo.name
+    userType = userinfo.userType
+    access_token = userinfo.access_token
+    $api.byId('name').innerHTML = name
+    $api.byId('version').innerHTML = `版本号 v${api.appVersion}`
+  }
+
+  initPage()
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
+    initPage()
+  })
+  api.addEventListener({
+    name: 'swipeleft'
+  }, function(ret, err){
+    api.closeWin()
+  })
 
   var header = $api.byId('header')
   $api.fixStatusBar(header)
@@ -22,6 +46,17 @@ apiready = function(){
     }
   }
 
+  function logout (cb) {
+    http.delete(`/auth/token/${access_token}`).then(res => {
+      cb()
+    }).catch(error => {
+      api.toast({
+        msg: error.msg || '操作失败',
+        location: 'middle'
+      })
+    })
+  }
+
   document.querySelector('#logout').onclick = function () {
     api.confirm({
       title: '提示',
@@ -29,8 +64,16 @@ apiready = function(){
       buttons: ['确定', '取消']
     }, (ret, err) => {
       if (ret.buttonIndex === 1) {
-        openRegLogin()
-        $api.clearStorage()
+        logout(function () {
+          api.toast({
+            msg: '退出登录成功',
+            duration: 2000,
+            location: 'middle',
+            global: true
+          })
+          $api.clearStorage()
+          openRegLogin()
+        })
       }
     })
   }
@@ -39,9 +82,4 @@ apiready = function(){
     api.closeWin()
   }
 
-  api.addEventListener({
-    name: 'swipeleft'
-  }, function(ret, err){
-    api.closeWin()
-  });
-};
+}

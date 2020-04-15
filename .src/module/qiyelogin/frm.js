@@ -56,7 +56,7 @@ apiready = function() {
       }
     }).catch(error => {
       api.toast({
-        msg: '获取企业法人手机号失败',
+        msg: error.msg || '获取企业法人手机号失败',
         location: 'middle'
       })
       submitStatus = 'notsubmit'

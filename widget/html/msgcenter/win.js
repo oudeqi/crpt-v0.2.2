@@ -7,6 +7,7 @@ function openMsgList(title) {
     title: title || '',
     url: 'widget://html/msglist/win.html',
     bgColor: '#fff',
+    reload: true,
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

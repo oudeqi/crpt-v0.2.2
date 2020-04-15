@@ -7,6 +7,7 @@ function openRepayPlan(id) {
     title: '还款计划',
     url: 'widget://html/repayplan/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       id: id
     },
@@ -29,6 +30,7 @@ function openRepayRecord(id) {
     title: '还款明细',
     url: 'widget://html/repayrecord/win.html',
     bgColor: '#fff',
+    reload: true,
     pageParam: {
       id: id
     },
@@ -227,7 +229,11 @@ var http = {
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var id = pageParam.id; // '9939393'
+  var id = pageParam.id,
+      type = pageParam.type; // '9939393'
+  // if (type === 'daiZhiFu') {
+  //
+  // }
 
   document.querySelector('#repayplan').onclick = function () {
     openRepayPlan(id);
