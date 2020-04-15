@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+</head>
+
+<body>
+  <div class="container">
+    <p class="tips">请选择您将使用的身份</p>
+    <div class="radio-container">
+      <label tapmode><input class="aui-radio" type="radio" name="type" id="geren" data-type="geren" checked>&nbsp;个人用户</label>
+      <label tapmode><input class="aui-radio" type="radio" name="type" id="qiye" data-type="qiye">&nbsp;企业用户</label>
+    </div>
+    <div id="companyName" class="qiye-name">
+      <p>企业全称</p>
+      <div id="name"></div>
+    </div>
+    <div class="app_ipt_group">
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-mobile"></i>
+        </div>
+        <div class="ipt" id="tel"></div>
+        <!-- 请输入手机号码 -->
+      </div>
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-comment"></i>
+        </div>
+        <div class="ipt" id="code"></div>
+        <!-- 短信验证码 -->
+        <div class="btn" tapmode id="sendcode">发送验证码</div>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-lock"></i>
+        </div>
+        <div class="ipt" id="pwd"></div>
+        <!-- 登录密码 -->
+      </div>
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-lock"></i>
+        </div>
+        <div class="ipt" id="repwd"></div>
+        <!-- 确认密码 -->
+      </div>
+    </div>
+    <div class="app_agreement agreement-box">
+      <label><input class="aui-radio" type="checkbox" id="checkbox" name="type">&nbsp;已阅读并同意</label>
+      <span>《</span>
+      <strong tapmode="active" id="agreement">用户服务协议</strong>
+      <span>》</span>
+    </div>
+    <div class="submit app_btn" tapmode="active" id="submit">确认</div>
+  </div>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript">
+    function xxx() {
+
+    }
+  </script>
+</body>
+</html>

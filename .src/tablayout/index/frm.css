@@ -1,0 +1,38 @@
+html, body {
+  background-color: #efefef;
+}
+.title {
+  text-align: center;
+  padding-top: 20px;
+  color: #333;
+  font-size: 15px;
+}
+ul {
+  padding: 0 15px;
+  margin: 0;
+}
+li {
+  margin-top: 15px;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+.btn {
+  background: #1dc4a2;
+  color: #fff;
+  height: 30px;
+  border: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border-radius: 4px;
+  line-height: 1;
+  font-size: 14px;
+}
+.red {
+  color: #ce0016;
+}

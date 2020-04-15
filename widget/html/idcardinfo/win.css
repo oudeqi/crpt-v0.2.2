@@ -1,0 +1,320 @@
+/* aui reset */
+.aui-radio:checked,
+.aui-radio.aui-checked,
+.aui-checkbox:checked,
+.aui-checkbox.aui-checked {
+  background-color: #1dc4a2 !important;
+  border: solid 1px #1dc4a2 !important;
+}
+
+.aui-switch:checked {
+  border-color: #1dc4a2 !important;
+  background-color: #1dc4a2 !important;
+}
+
+/*1cb594 88dbcb 1aa689 5aae9c*/
+
+/*页面头部*/
+.app_header {
+  background-color: #1dc4a2;
+  position: relative
+}
+.app_header div {
+    width: 55px;
+    height: 44px;
+    position: absolute;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center
+  }
+.app_header div .aui-iconfont {
+      color: #fff;
+      font-weight: bold;
+      font-size: 20px;
+    }
+.app_header div.active {
+      background-color: #88dbcb;
+    }
+.app_header div:first-child {
+    left: 0;
+  }
+.app_header div:last-child {
+    right: 0;
+  }
+.app_header h1 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    height: 44px;
+    padding: 0 44px;
+  }
+
+/*块状按钮*/
+.app_btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 18px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #fff;
+  background-color: #1dc4a2;
+  font-weight: bold;
+  height: 50px;
+  border-radius: 50px;
+  overflow: hidden
+}
+.app_btn.sm {
+    height: 44px;
+    width: 100%;
+    border-radius: 44px;
+  }
+.app_btn.active {
+    background-color: #88dbcb;
+  }
+.app_btn.loading {
+    background-color: #88dbcb;
+  }
+
+/*输入框组*/
+.app_ipt_group {
+  padding-top: 20px
+}
+.app_ipt_group .item {
+    height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    border-bottom: 1px solid #ededed
+  }
+.app_ipt_group .item .icon {
+      width: 50px;
+      height: 100%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center
+    }
+.app_ipt_group .item .icon .aui-iconfont {
+        font-size: 22px;
+        color: #666;
+      }
+.app_ipt_group .item .icon .aui-icon-unlock:before {
+        position: relative;
+        left: 4px;
+      }
+.app_ipt_group .item .ipt {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      height: 100%;
+      position: relative;
+      top: 2px;
+      margin-right: 80px;
+      /*color: #aaa;
+      background-color: #eee;*/
+    }
+.app_ipt_group .item .btn {
+      margin-left: 10px;
+      padding-right: 4px;
+      color: #333
+    }
+.app_ipt_group .item .btn.active {
+        color: #666;
+        padding-right: 3px;
+      }
+.app_ipt_group .item .btn.loading {
+        color: #666;
+      }
+
+/*连接按钮*/
+.app_link_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  color: #333
+}
+.app_link_btn.active {
+    color: #666;
+    padding-left: 1px;
+    padding-right: 0px;
+  }
+/*文字按钮*/
+.app_text_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  color: #1dc4a2
+}
+.app_text_btn.active {
+    color: #88dbcb;
+    padding-left: 1px;
+    padding-right: 0px;
+  }
+
+.app_agreement {
+  text-align: center;
+  color: #aaa;
+  font-size: 15px
+}
+
+.app_agreement input {
+    top: -2px;
+  }
+
+.app_agreement strong {
+    color: #1dc4a2;
+    font-weight: normal;
+    padding-left: 0;
+    padding-right: 1px
+  }
+
+.app_agreement strong.active {
+      padding-left: 1px;
+      padding-right: 0;
+    }
+
+html, body {
+  background-color: #fff;
+}
+.container {
+  padding: 10px 26px 20px;
+}
+
+.tips {
+  background: #e7eff4;
+  line-height: 1.5;
+  padding: 12px 15px;
+  font-size: 16px;
+  color: #8d9daa;
+}
+.tips2 {
+  border-bottom: 1px solid #ededed;
+  padding: 10px 0
+}
+.tips2 h2 {
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0;
+  }
+.tips2 p {
+    color: #aaa;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+.ipt-group {
+  padding: 10px 0
+}
+.ipt-group .item {
+    height: 36px;
+    margin-top: 5px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+  }
+.ipt-group .item label {
+      width: 100px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      color: #8d9daa;
+      font-size: 16px;
+      height: 100%;
+      line-height: 1.5;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start;
+    }
+.ipt-group .item div {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      height: 100%;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start;
+    }
+.ipt-group .item:last-child {
+    height: 70px;
+  }
+
+.btn-box {
+  text-align: center
+}
+
+.btn-box .icon-btn {
+    color: #1dc4a2;
+    border: 1px solid #1dc4a2;
+    height: 36px;
+    border-radius: 36px;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 0 15px
+  }
+
+.btn-box .icon-btn i {
+      font-size: 18px;
+      font-weight: bold;
+      position: relative;
+      top: -1px;
+    }
+
+.btn-box .icon-btn span {
+      margin-left: 5px;
+      font-size: 15px;
+    }
+
+.btn-box .icon-btn.active {
+      background-color: #88dbcb;
+      color: #fff;
+      border: 0;
+    }
+.agreement-box {
+  margin-top: 30px;
+}
+.btn-box {
+  margin-top: 10px;
+}

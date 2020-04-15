@@ -1,5 +1,0 @@
-
-apiready = function() {
-  api.parseTapmode();
-
-}
