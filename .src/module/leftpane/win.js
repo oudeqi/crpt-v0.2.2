@@ -23,7 +23,6 @@ apiready = function(){
     $api.byId('version').innerHTML = `版本号 v${api.appVersion}`
   }
 
-  initPage()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

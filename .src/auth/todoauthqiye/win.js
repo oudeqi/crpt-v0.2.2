@@ -100,11 +100,11 @@ apiready = function() {
       }
       // <span>图片模糊</span>
       $api.byId('step2').innerHTML = `
-        <div class="auth-block2 ${type}" tapmode="active" id="faceAuthResult">
+        <div class="auth-block2 ${type}" id="faceAuthResult">
           <div class="badge">1</div>
           <div class="text">
             <strong>人脸认证</strong>
-            <span class="icon"></span>
+            ${status === 2 ? '<span class="icon"></span>' : ''}
           </div>
           <div class="pic"></div>
         </div>
@@ -141,7 +141,7 @@ apiready = function() {
     }
   }
 
-  function bindEvent () {
+  function bindEvent (mapping) {
     api.parseTapmode()
     let companyInfo = document.querySelector('#companyInfo')
     let faceAuth = document.querySelector('#faceAuth')
@@ -215,7 +215,6 @@ apiready = function() {
       bindEvent(mapping)
     })
   }
-  initPage()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

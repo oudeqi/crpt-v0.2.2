@@ -327,7 +327,7 @@ apiready = function apiready() {
         type = 'authing';
       }
 
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" tapmode=\"active\" id=\"faceAuthResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            ").concat(status === 2 ? '<span class="icon"></span>' : '', "\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : '', "\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            ").concat(status === 2 ? '<span class="icon"></span>' : '', "\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : '', "\n        </div>\n      ");
     }
   }
 
@@ -339,7 +339,7 @@ apiready = function apiready() {
     }
   }
 
-  function bindEvent() {
+  function bindEvent(mapping) {
     api.parseTapmode();
     var realAuth = document.querySelector('#realAuth');
     var faceAuth = document.querySelector('#faceAuth');
@@ -414,11 +414,10 @@ apiready = function apiready() {
       renderStep1(mapping.realAuth.status);
       renderStep2(mapping.faceAuth.status);
       renderStep3(mapping.baseinfo.status);
-      bindEvent();
+      bindEvent(mapping);
     });
   }
 
-  initPage();
   api.addEventListener({
     name: 'viewappear'
   }, function (ret, err) {

@@ -40,8 +40,6 @@ apiready = function () {
     $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
   }
 
-  initPage()
-  getInfo()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

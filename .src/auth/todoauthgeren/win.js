@@ -98,7 +98,7 @@ apiready = function() {
         type = 'authing'
       }
       $api.byId('step2').innerHTML = `
-        <div class="auth-block2 ${type}" tapmode="active" id="faceAuthResult">
+        <div class="auth-block2 ${type}" id="faceAuthResult">
           <div class="badge">1</div>
           <div class="text">
             <strong>人脸认证</strong>
@@ -140,7 +140,7 @@ apiready = function() {
     }
   }
 
-  function bindEvent () {
+  function bindEvent (mapping) {
     api.parseTapmode()
     let realAuth = document.querySelector('#realAuth')
     let faceAuth = document.querySelector('#faceAuth')
@@ -215,7 +215,6 @@ apiready = function() {
     })
   }
 
-  initPage()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

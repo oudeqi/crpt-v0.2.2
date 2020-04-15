@@ -246,7 +246,6 @@ apiready = function apiready() {
     $api.byId('version').innerHTML = "\u7248\u672C\u53F7 v".concat(api.appVersion);
   }
 
-  initPage();
   api.addEventListener({
     name: 'viewappear'
   }, function (ret, err) {
