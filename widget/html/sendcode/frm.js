@@ -111,6 +111,17 @@ function openTabLayout(index) {
   });
 } // 注册
 
+
+function openGerenLogin(pageParam) {
+  api.openWin({
+    name: 'html/gerenlogin/win',
+    url: 'widget://html/gerenlogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: pageParam
+  });
+} // 企业登录
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -425,6 +436,13 @@ apiready = function apiready() {
 
   document.querySelector('#sendcode').onclick = function () {
     sendCode();
+  };
+
+  document.querySelector('#ap_login').onclick = function () {
+    openGerenLogin({
+      title: '企业登录',
+      userType: 2
+    });
   };
 
   document.querySelector('#login').onclick = function () {

@@ -295,7 +295,7 @@ apiready = function apiready() {
       } // <span>图片模糊</span>
 
 
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            ").concat(status === 2 ? '<span class="icon"></span>' : '', "\n          </div>\n          <div class=\"pic\"></div>\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            ").concat(status === 2 ? '<span class="icon"></span>' : '', "\n          </div>\n          <div class=\"pic\"></div>\n        </div>\n      ");
     }
   }
 
@@ -303,7 +303,7 @@ apiready = function apiready() {
     if (status === 0) {
       $api.byId('step3').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u8BF7\u586B\u5199\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n          </div>\n          <div class=\"pic baseinfo\"></div>\n        </div>\n      ";
     } else {
-      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block2 authpass\" id=\"baseinfoResult\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u8865\u5145\u57FA\u672C\u4FE1\u606F</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u6210\u529F</span>\n        </div>\n      ";
+      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block2 authpass\" id=\"baseinfoResult\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <strong>\u8865\u5145\u57FA\u672C\u4FE1\u606F</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u6210\u529F</span>\n        </div>\n      ";
     }
   }
 

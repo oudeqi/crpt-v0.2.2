@@ -34,7 +34,8 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openTabLayout()
+    openRegLogin()
+    // openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()

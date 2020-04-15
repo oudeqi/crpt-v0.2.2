@@ -8,7 +8,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const html2 = require('rollup-plugin-html2');
 const replace = require('@rollup/plugin-replace');
-
+const copy = require('rollup-plugin-copy')
 const getPages = (globs, format) => {
   let pages = []
   glob.sync(globs).forEach(_path => { // src/module/login/win.html
@@ -69,6 +69,11 @@ export default getPages('.src/**/*.html').map(page => {
         // dest: `html/${pathname.split('/').reverse()[0]}/`, //${basename}${extname}
         fileName: `${basename}${extname}`,
         onlinePath: '.',
+      }),
+      copy({
+        targets: [
+          { src: 'widget', dest: '../' }
+        ]
       })
     ]
   }

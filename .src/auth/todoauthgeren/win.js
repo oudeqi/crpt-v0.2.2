@@ -99,7 +99,7 @@ apiready = function() {
       }
       $api.byId('step2').innerHTML = `
         <div class="auth-block2 ${type}" id="faceAuthResult">
-          <div class="badge">1</div>
+          <div class="badge">2</div>
           <div class="text">
             <strong>人脸认证</strong>
             ${status === 2 ? '<span class="icon"></span>' : ''}
@@ -129,7 +129,7 @@ apiready = function() {
     } else {
       $api.byId('step3').innerHTML = `
         <div class="auth-block2 authpass">
-          <div class="badge">1</div>
+          <div class="badge">3</div>
           <div class="text">
             <strong>补充基础信息</strong>
           </div>
