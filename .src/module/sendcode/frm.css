@@ -14,7 +14,15 @@ html, body {
     color: #1dc4a2;
   }
 }
-
+.link-btns {
+  height: 50px;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .code-ipt {
   margin-top: 50px;
   padding-right: 120px;

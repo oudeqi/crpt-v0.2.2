@@ -15,7 +15,6 @@ apiready = function() {
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   let pageParam = api.pageParam || {}
   let { tel, loginType } = pageParam
-
   openUIInput($api.byId('code'), form, 'code', {
     placeholder: '请输入...',
     keyboardType: 'done',
@@ -72,6 +71,10 @@ apiready = function() {
 
   document.querySelector('#sendcode').onclick = function () {
     sendCode()
+  }
+
+  document.querySelector('#ap_login').onclick = function() {
+    openGerenLogin({title: '企业登录', userType: 2})
   }
 
   document.querySelector('#login').onclick = function () {

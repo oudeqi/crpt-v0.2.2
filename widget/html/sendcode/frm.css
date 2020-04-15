@@ -222,7 +222,21 @@ html, body {
 .tips strong {
     color: #1dc4a2;
   }
-
+.link-btns {
+  height: 50px;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
 .code-ipt {
   margin-top: 50px;
   padding-right: 120px;
@@ -240,7 +254,6 @@ html, body {
   border: 1px solid #ededed;
   border-radius: 3px
 }
-
 .code-ipt .label {
     padding: 5px 0 5px 15px;
     width: 80px;
@@ -250,7 +263,6 @@ html, body {
     color: #333;
     border-right: 1px solid #dfdfdf;
   }
-
 .code-ipt .ipt {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
@@ -269,7 +281,6 @@ html, body {
         -ms-flex-pack: start;
             justify-content: flex-start;
   }
-
 .code-ipt .btn {
     position: absolute;
     top: -1px;
@@ -292,17 +303,14 @@ html, body {
     color: #fff;
     border-radius:0 3px 3px 0
   }
-
 .code-ipt .btn span {
       padding-left: 0;
       padding-right: 1px;
     }
-
 .code-ipt .btn.active span {
       padding-left: 1px;
       padding-right: 0;
     }
-
 .code-ipt .btn.loading {
       background-color: #88dbcb;
     }

@@ -191,8 +191,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -398,7 +399,9 @@ apiready = function apiready() {
   // 表单数据
   var form = {};
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
+  //  根据传参确定登录接口的userType类型和是否隐藏
 
+  var params = api.pageParam;
   openUIInput($api.byId('tel'), form, 'tel', {
     placeholder: '请输入手机号码',
     keyboardType: 'number',
@@ -421,6 +424,11 @@ apiready = function apiready() {
   //     renderPwd('password')
   //   }
   // }
+  //  企业登录，屏蔽短信验证码按钮
+
+  if (params.userType === 2) {
+    document.querySelector('#tel_login').style.display = 'none';
+  }
 
   document.querySelector('#forget').onclick = function () {
     openFindPwd();
@@ -466,7 +474,7 @@ apiready = function apiready() {
 
       submitStatus = 'submitting';
       var body = {
-        userType: 1,
+        userType: params.userType || 1,
         // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1,

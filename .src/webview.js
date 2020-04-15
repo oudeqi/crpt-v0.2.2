@@ -198,12 +198,13 @@ function openRegLogin () {
 }
 
 // 个人登录
-function openGerenLogin () {
+function openGerenLogin (pageParam) {
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
     reload: true,
+    pageParam
   })
 }
 

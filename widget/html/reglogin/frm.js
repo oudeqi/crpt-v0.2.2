@@ -11,12 +11,13 @@ function openReg() {
 } // 注册登录选择
 
 
-function openGerenLogin() {
+function openGerenLogin(pageParam) {
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
-    reload: true
+    reload: true,
+    pageParam: pageParam
   });
 } // 企业登录
 
