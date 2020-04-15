@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run dev",
-    "dev": "cross-env NODE_ENV=development rollup --config",
+    "dev": "cross-env NODE_ENV=development rollup --config --watch",
     "testing": "cross-env NODE_ENV=testing rollup --config --watch",
     "uat": "cross-env NODE_ENV=testing rollup --config",
     "prod": "cross-env NODE_ENV=production rollup --config --silent"

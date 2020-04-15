@@ -3,6 +3,7 @@ import './frm.css'
 
 import { openTabLayout } from '../../webview.js'
 import { http, openUIInput, resetUIInputPosi, handleLoginSuccess } from '../../config.js'
+import { Base64 } from 'js-base64'
 
 apiready = function() {
 
@@ -24,7 +25,7 @@ apiready = function() {
       username: form['tel'][1],
       loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
       // verification: form['code'][1],
-      password: form['pwd'][1],
+      password: Base64.encode(form['pwd'][1]),
       loginDevice: api.deviceId, // 客户手机设备号(android-imei,IOS-??)
       ipAddress: '',
       latitude: '',
@@ -162,8 +163,8 @@ apiready = function() {
       submitStatus = 'submitting'
       let body = {
         phone: form['tel'][1],
-        password: form['pwd'][1],
-        confirmPassword: form['repwd'][1],
+        password: Base64.encode(form['pwd'][1]),
+        confirmPassword: Base64.encode(form['repwd'][1]),
         verification: form['code'][1]
       }
       if (type === 'qiye') {

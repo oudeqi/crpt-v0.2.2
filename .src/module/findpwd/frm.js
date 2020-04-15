@@ -3,6 +3,7 @@ import './frm.css'
 
 import { openTabLayout, openGerenLogin } from '../../webview.js'
 import { http, openUIInput, isPhoneNo } from '../../config.js'
+import { Base64 } from 'js-base64'
 
 apiready = function() {
 
@@ -80,8 +81,8 @@ apiready = function() {
       submitStatus = 'submitting'
       let body = {
         phone: form['tel'][1],
-        password: form['pwd'][1],
-        confirmPassword: form['repwd'][1],
+        password: Base64.encode(form['pwd'][1]),
+        confirmPassword: Base64.encode(form['repwd'][1]),
         verification: form['code'][1]
       }
       $api.addCls($api.byId('submit'), 'loading')

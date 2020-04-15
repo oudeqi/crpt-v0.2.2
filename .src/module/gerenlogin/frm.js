@@ -6,13 +6,9 @@ import {
   openFindPwd, openSendCode, openTabLayout
 } from '../../webview.js'
 import { http, openUIInput, isPhoneNo, handleLoginSuccess } from '../../config.js'
-// import CryptoJS from 'crypto-js'
-// import Base64 from 'crypto-js/enc-base64'
+import { Base64 } from 'js-base64'
 
 apiready = function() {
-
-  // console.log('Base64')
-  // console.log(CryptoJS.enc.Base64.parse('************'))
 
   // 表单数据
   let form = {}
@@ -84,7 +80,7 @@ apiready = function() {
         username: form['tel'][1],
         loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         // verification: form['code'][1],
-        password: form['pwd'][1],
+        password: Base64.encode(form['pwd'][1]),
         loginDevice: api.deviceId, // 客户手机设备号(android-imei,IOS-??)
         ipAddress: '',
         latitude: '',
