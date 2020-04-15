@@ -543,7 +543,7 @@ function openBillDetails (id) {
 function openOrderList () {
   api.openTabLayout({
     name: 'html/orderlist/win',
-    title: '订单列表',
+    title: '我的订单',
     url: 'widget://html/orderlist/win.html',
     bgColor: '#fff',
     reload: true,

@@ -36,38 +36,54 @@ apiready = function () {
   }
 
   function appendList (data) {
+    let mapping = {
+      4: 'cancel',
+      5: 'cancel',
+      6: 'cancel',
+      7: 'during',
+      8: 'warning',
+      9: 'repaied',
+    }
+    let mapping2 = {
+      4: '退货',
+      5: '过期失效',
+      6: '已撤销',
+      7: '还款中',
+      8: '逾期',
+      9: '已还清',
+    }
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li tapmode data-id="${item.orderNo || ''}">
-          <div class="t">
-            <div class="row1">
-              <span>订单编号：${item.orderNo || ''}</span>
-              <i class="aui-iconfont aui-icon-right"></i>
-            </div>
-            <div class="row2">
-              <span>卖方：</span>
-              重庆市永川区旺料销售有限公司
-            </div>
-            <div class="row2">
-              <span>支付时间</span>
-              2020/12/12 09/08/02
-            </div>
-            <div class="row3">
-              <span class="label">支付产品</span>
-              <strong class="produce">好养贷</strong>
-              <span class="status during">还款中</span>
-            </div>
+      <li tapmode data-id="${item.orderNo || ''}">
+        <div class="t">
+          <div class="row1">
+            <span>订单编号：${item.orderNo || ''}</span>
+            <i class="aui-iconfont aui-icon-right"></i>
           </div>
-          <div class="b">
-            <div class="tit">
-              <span>支付金额（元）</span>
-              <span>1,000,00</span>
-            </div>
-            <div class="msg">
-              订单金额：1,000,00，优惠：99.00
-            </div>
+          <div class="row2">
+            <span>卖方：</span>
+            ${item.saleCustName}
           </div>
-        </li>
+          <div class="row2">
+            <span>支付时间</span>
+            ${item.orderTime}
+          </div>
+          <div class="row3">
+            <span class="label">支付产品</span>
+            <strong class="produce">${item.productName}</strong>
+            <span class="status ${mapping[item.status]}">${mapping2[item.status] || ''}</span>
+          </div>
+        </div>
+        <div class="b">
+          <div class="tit">
+            <span>支付金额（元）</span>
+            <span>${item.payAmount}</span>
+          </div>
+          <div class="msg">
+            订单金额：${item.totalAmount}
+          </div>
+        </div>
+      </li>
       `)
     })
   }

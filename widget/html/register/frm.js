@@ -160,9 +160,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -635,7 +634,7 @@ apiready = function apiready() {
 
   function login(cb) {
     var body = {
-      userType: type === 'geren' ? 1 : '',
+      userType: type === 'geren' ? 1 : 2,
       // 1个人用户登录，2企业用户登录
       username: form['tel'][1],
       loginType: 1,
@@ -745,7 +744,8 @@ apiready = function apiready() {
 
       if (!tel) {
         return api.toast({
-          msg: '请输入手机号码'
+          msg: '请输入手机号码',
+          location: 'middle'
         });
       }
 

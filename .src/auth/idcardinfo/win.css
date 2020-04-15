@@ -2,7 +2,7 @@ html, body {
   background-color: #fff;
 }
 .container {
-  padding: 10px 26px 20px;
+  padding: 10px 20px 20px;
 }
 
 .tips {
@@ -16,14 +16,15 @@ html, body {
   border-bottom: 1px solid #ededed;
   padding: 10px 0;
   & h2 {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
+    color: #1dc4a2;
     margin: 0;
   }
-  & p {
+  & div {
     color: #aaa;
-    font-size: 15px;
-    margin-top: 5px;
+    font-size: 13px;
+    margin: 5px 0 0;
   }
 }
 .ipt-group {
@@ -32,25 +33,37 @@ html, body {
     height: 36px;
     margin-top: 5px;
     display: flex;
+    align-items: center;
     & label {
-      width: 100px;
+      width: 88px;
       flex-shrink: 0;
       color: #8d9daa;
       font-size: 16px;
       height: 100%;
       line-height: 1.5;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
     }
     & div {
       flex-grow: 1;
       height: 100%;
       display: flex;
       align-items: flex-start;
+      display: flex;
+      align-items: center;
+      padding-left: 4px;
     }
   }
   & .item:last-child {
     height: 70px;
+    & label {
+      display: flex;
+      align-items: flex-start;
+    }
+    & div {
+      display: flex;
+      align-items: flex-start;
+    }
   }
 }
 

@@ -21,7 +21,7 @@ apiready = function() {
 
   function login (cb) {
     let body = {
-      userType: type === 'geren' ? 1 : '', // 1个人用户登录，2企业用户登录
+      userType: type === 'geren' ? 1 : 2, // 1个人用户登录，2企业用户登录
       username: form['tel'][1],
       loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
       // verification: form['code'][1],
@@ -115,7 +115,7 @@ apiready = function() {
     if (sendStatus === 'notsend') {
       let tel = form['tel'][1]
       if (!tel) {
-        return api.toast({ msg: '请输入手机号码' })
+        return api.toast({ msg: '请输入手机号码', location: 'middle' })
       }
       sendStatus = 'sending'
       $api.byId('sendcode').innerHTML = '正在发送中...'

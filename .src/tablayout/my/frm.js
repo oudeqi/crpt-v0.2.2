@@ -41,6 +41,7 @@ apiready = function () {
   }
 
   initPage()
+  getInfo()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

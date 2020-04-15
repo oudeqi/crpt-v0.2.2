@@ -314,9 +314,56 @@ function getPicture (sourceType, cb) {
   }, cb)
 }
 
+function openUIInput2 (dom, options = {}, cb) {
+  let UIInput = api.require('UIInput')
+  let rect = $api.offset(dom)
+  let {
+    maxRows,
+    maxStringLength,
+    inputType,
+    placeholder,
+    keyboardType,
+    alignment,
+    isCenterVertical
+  } = options
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength,
+    inputType,
+    placeholder,
+    keyboardType,
+    alignment,
+    isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    },
+  }, function (ret) {
+    UIInput.value({ id: ret.id }, function(value) {
+      if (value) {
+        cb && cb(value.msg)
+      }
+    })
+  })
+}
+
 export {
   http,
   openUIInput,
+  openUIInput2,
   resetUIInputPosi,
   isPhoneNo,
   handleLoginSuccess,

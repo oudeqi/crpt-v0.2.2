@@ -73,9 +73,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -251,8 +250,24 @@ apiready = function apiready() {
   }
 
   function appendList(data) {
+    var mapping = {
+      4: 'cancel',
+      5: 'cancel',
+      6: 'cancel',
+      7: 'during',
+      8: 'warning',
+      9: 'repaied'
+    };
+    var mapping2 = {
+      4: '退货',
+      5: '过期失效',
+      6: '已撤销',
+      7: '还款中',
+      8: '逾期',
+      9: '已还清'
+    };
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u8BA2\u5355\u7F16\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"row2\">\n              <span>\u5356\u65B9\uFF1A</span>\n              \u91CD\u5E86\u5E02\u6C38\u5DDD\u533A\u65FA\u6599\u9500\u552E\u6709\u9650\u516C\u53F8\n            </div>\n            <div class=\"row2\">\n              <span>\u652F\u4ED8\u65F6\u95F4</span>\n              2020/12/12 09/08/02\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u652F\u4ED8\u4EA7\u54C1</span>\n              <strong class=\"produce\">\u597D\u517B\u8D37</strong>\n              <span class=\"status during\">\u8FD8\u6B3E\u4E2D</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <div class=\"tit\">\n              <span>\u652F\u4ED8\u91D1\u989D\uFF08\u5143\uFF09</span>\n              <span>1,000,00</span>\n            </div>\n            <div class=\"msg\">\n              \u8BA2\u5355\u91D1\u989D\uFF1A1,000,00\uFF0C\u4F18\u60E0\uFF1A99.00\n            </div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u8BA2\u5355\u7F16\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"row2\">\n              <span>\u5356\u65B9\uFF1A</span>\n              ").concat(item.saleCustName, "\n            </div>\n            <div class=\"row2\">\n              <span>\u652F\u4ED8\u65F6\u95F4</span>\n              ").concat(item.orderTime, "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u652F\u4ED8\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName, "</strong>\n              <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <div class=\"tit\">\n              <span>\u652F\u4ED8\u91D1\u989D\uFF08\u5143\uFF09</span>\n              <span>").concat(item.payAmount, "</span>\n            </div>\n            <div class=\"msg\">\n              \u8BA2\u5355\u91D1\u989D\uFF1A").concat(item.totalAmount, "\n            </div>\n          </div>\n        </li>\n      "));
     });
   }
 

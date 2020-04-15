@@ -179,9 +179,7 @@ apiready = function() {
           })
           return
         }
-        openBaseinfoFill({
-          userType: userType
-        })
+        openBaseinfoFill()
       }
     }
     if (yuguedu) {

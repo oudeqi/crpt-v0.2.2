@@ -70,9 +70,8 @@ function openIDcardInfo(pageParam) {
   });
 } // 人脸认证
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 

@@ -39,7 +39,7 @@ apiready = function () {
     name: 'orderFrameGroup',
     index: index,
     fixedOn: 'ui_window',
-    preload: 3,
+    // preload: 3,
     rect: {
       x: 0,
       y:  navPos.h,

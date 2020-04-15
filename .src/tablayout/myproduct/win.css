@@ -27,3 +27,11 @@ li {
   color: #aaa;
   padding-top: 5px;
 }
+.contactus {
+  padding: 30px;
+  text-align: center;
+  color: #1dc4a2;
+  & span {
+    text-decoration: underline;
+  }
+}

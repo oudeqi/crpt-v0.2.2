@@ -3,10 +3,9 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo, openAuthResult } from '../../webview.js'
-import { http } from '../../config.js'
+import { http, openUIInput2 } from '../../config.js'
 
 apiready = function() {
-
 
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
@@ -26,15 +25,33 @@ apiready = function() {
   // }
 
   let pageParam = api.pageParam || {}
-  let { name, gender, number, birthday, address,
-    nation, authority, timelimit, front, back } = pageParam
+  let {
+    name, gender, number, birthday, address,
+    nation, authority, timelimit, front, back
+  } = pageParam
 
-  $api.byId('name').innerHTML = name
+  openUIInput2($api.byId('name'), {
+    placeholder: '请输入',
+    keyboardType: 'done',
+    maxStringLength: 10
+  }, function (value) {
+    name = value
+  })
+
+  // $api.byId('name').innerHTML = name
+  let UIInput = api.require('UIInput')
+  let iptIndex = api.systemType === 'ios' ? 1 : 0
+  UIInput.insertValue({
+    index: iptIndex,
+    msg: name
+  })
   $api.byId('number').innerHTML = number
   $api.byId('authority').innerHTML = authority
   $api.byId('timelimit').innerHTML = timelimit
   $api.byId('nation').innerHTML = nation
   $api.byId('address').innerHTML = address
+
+
 
   document.querySelector('#retry').onclick = function () {
     api.closeWin()
@@ -42,7 +59,10 @@ apiready = function() {
 
   document.querySelector('#next').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!name || !gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
+      if (!name) {
+        return api.toast({ msg: '请输入姓名' })
+      }
+      if (!gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
         return api.toast({ msg: '未完全识别，请重新上传' })
       }
       if (!$api.byId('checkbox').checked) {
@@ -51,7 +71,10 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('next'), 'loading')
       http.upload('/crpt-cust/saas/realnameauth', {
-        values: pageParam,
+        values: {
+          name, gender, number, birthday, address,
+          nation, authority, timelimit
+        },
         files: {
           certImageFront: front,
           certImageBack: back
@@ -59,8 +82,17 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
-        openAuthResult('success')
+        if (ret.data.result === 'NO') {
+          api.toast({
+            msg: ret.data.info || '实名认证失败'
+          })
+        } else {
+          openAuthResult('success')
+        }
       }).catch(error => {
+        api.toast({
+          msg: error.msg || '实名认证失败'
+        })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
       })

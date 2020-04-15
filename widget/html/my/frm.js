@@ -60,7 +60,7 @@ function openBillList() {
 function openOrderList() {
   api.openTabLayout({
     name: 'html/orderlist/win',
-    title: '订单列表',
+    title: '我的订单',
     url: 'widget://html/orderlist/win.html',
     bgColor: '#fff',
     reload: true,
@@ -205,9 +205,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -379,6 +378,7 @@ apiready = function apiready() {
   }
 
   initPage();
+  getInfo();
   api.addEventListener({
     name: 'viewappear'
   }, function (ret, err) {

@@ -9,7 +9,7 @@ import './win.css'
 //   })
 // }
 
-import { openProductDetails } from '../../webview.js'
+import { openProductDetails, openContactUs } from '../../webview.js'
 import { http } from '../../config.js'
 
 apiready = function () {
@@ -47,7 +47,7 @@ apiready = function () {
         <li tapmode data-id="${item.productId || ''}">
           <div class="t">
             <strong>${item.productName}</strong>
-            <span>***（****）</span>
+            <span>${item.investorName}（${item.account}）</span>
           </div>
           <div class="b">
             开通时间：${item.openDate}
@@ -87,5 +87,10 @@ apiready = function () {
       api.toast({ msg: 'id 不存在' })
     }
   }
+
+  document.querySelector('#contactus').onclick = function (event) {
+    openContactUs()
+  }
+
 
 }

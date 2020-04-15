@@ -80,9 +80,8 @@ function openAuthResult(status, message, title) {
   });
 } // 消息中心
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -369,7 +368,7 @@ function openCitySelector(cb) {
   });
 }
 
-function openUIInput(dom) {
+function openUIInput2(dom) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var cb = arguments.length > 2 ? arguments[2] : undefined;
 
@@ -420,8 +419,10 @@ function openUIInput(dom) {
 }
 
 apiready = function apiready() {
-  var pageParam = api.pageParam || {};
-  var userType = pageParam.userType;
+  var userinfo = $api.getStorage('userinfo');
+  var userType = userinfo.userType;
+  $api.byId('userType1').innerHTML = userType === '1' ? '个人' : '法定代表人';
+  $api.byId('userType2').innerHTML = userType === '1' ? '个人' : '法定代表人';
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
   var postData = {
@@ -484,7 +485,7 @@ apiready = function apiready() {
   }; // 详细地址
 
 
-  openUIInput($api.byId('addressDetails'), {
+  openUIInput2($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -501,7 +502,7 @@ apiready = function apiready() {
   }; // 姓名
 
 
-  openUIInput($api.byId('relationName'), {
+  openUIInput2($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -509,7 +510,7 @@ apiready = function apiready() {
     postData.relationName = value;
   }); // 手机号
 
-  openUIInput($api.byId('relationPhone'), {
+  openUIInput2($api.byId('relationPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11
@@ -517,7 +518,7 @@ apiready = function apiready() {
     postData.relationPhone = value;
   }); // 姓名
 
-  openUIInput($api.byId('otherName'), {
+  openUIInput2($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -525,7 +526,7 @@ apiready = function apiready() {
     postData.otherName = value;
   }); // 手机号
 
-  openUIInput($api.byId('otherPhone'), {
+  openUIInput2($api.byId('otherPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11

@@ -87,7 +87,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
-        userType: 1, // 1个人用户登录，2企业用户登录
+        userType: loginType === 'geren' ? 1 : 2, // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code,

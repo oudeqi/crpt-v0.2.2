@@ -1,6 +1,26 @@
 // api.lockSlidPane();
 
 
+function openContactUs() {
+  api.openTabLayout({
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 还款计划
+
+
 function openProductDetails(id) {
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -72,9 +92,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -249,7 +268,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>***\uFF08****\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>").concat(item.investorName, "\uFF08").concat(item.account, "\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -285,5 +304,9 @@ apiready = function apiready() {
         msg: 'id 不存在'
       });
     }
+  };
+
+  document.querySelector('#contactus').onclick = function (event) {
+    openContactUs();
   };
 };

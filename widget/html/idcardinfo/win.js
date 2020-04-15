@@ -80,9 +80,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -220,6 +219,56 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function openUIInput2(dom) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var cb = arguments.length > 2 ? arguments[2] : undefined;
+
+  var UIInput = api.require('UIInput');
+
+  var rect = $api.offset(dom);
+  var maxRows = options.maxRows,
+      maxStringLength = options.maxStringLength,
+      inputType = options.inputType,
+      placeholder = options.placeholder,
+      keyboardType = options.keyboardType,
+      alignment = options.alignment,
+      isCenterVertical = options.isCenterVertical;
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength: maxStringLength,
+    inputType: inputType,
+    placeholder: placeholder,
+    keyboardType: keyboardType,
+    alignment: alignment,
+    isCenterVertical: isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    }
+  }, function (ret) {
+    UIInput.value({
+      id: ret.id
+    }, function (value) {
+      if (value) {
+        cb && cb(value.msg);
+      }
+    });
+  });
+}
+
 apiready = function apiready() {
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
   // let idcard = {
@@ -248,7 +297,21 @@ apiready = function apiready() {
       timelimit = pageParam.timelimit,
       front = pageParam.front,
       back = pageParam.back;
-  $api.byId('name').innerHTML = name;
+  openUIInput2($api.byId('name'), {
+    placeholder: '请输入',
+    keyboardType: 'done',
+    maxStringLength: 10
+  }, function (value) {
+    name = value;
+  }); // $api.byId('name').innerHTML = name
+
+  var UIInput = api.require('UIInput');
+
+  var iptIndex = api.systemType === 'ios' ? 1 : 0;
+  UIInput.insertValue({
+    index: iptIndex,
+    msg: name
+  });
   $api.byId('number').innerHTML = number;
   $api.byId('authority').innerHTML = authority;
   $api.byId('timelimit').innerHTML = timelimit;
@@ -261,7 +324,13 @@ apiready = function apiready() {
 
   document.querySelector('#next').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!name || !gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
+      if (!name) {
+        return api.toast({
+          msg: '请输入姓名'
+        });
+      }
+
+      if (!gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
         return api.toast({
           msg: '未完全识别，请重新上传'
         });
@@ -276,7 +345,16 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       $api.addCls($api.byId('next'), 'loading');
       http.upload('/crpt-cust/saas/realnameauth', {
-        values: pageParam,
+        values: {
+          name: name,
+          gender: gender,
+          number: number,
+          birthday: birthday,
+          address: address,
+          nation: nation,
+          authority: authority,
+          timelimit: timelimit
+        },
         files: {
           certImageFront: front,
           certImageBack: back
@@ -284,8 +362,18 @@ apiready = function apiready() {
       }).then(function (ret) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');
-        openAuthResult('success');
+
+        if (ret.data.result === 'NO') {
+          api.toast({
+            msg: ret.data.info || '实名认证失败'
+          });
+        } else {
+          openAuthResult('success');
+        }
       })["catch"](function (error) {
+        api.toast({
+          msg: error.msg || '实名认证失败'
+        });
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');
       });
