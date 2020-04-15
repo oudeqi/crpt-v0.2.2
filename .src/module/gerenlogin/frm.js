@@ -6,8 +6,13 @@ import {
   openFindPwd, openSendCode, openTabLayout
 } from '../../webview.js'
 import { http, openUIInput, isPhoneNo, handleLoginSuccess } from '../../config.js'
+// import CryptoJS from 'crypto-js'
+// import Base64 from 'crypto-js/enc-base64'
 
 apiready = function() {
+
+  // console.log('Base64')
+  // console.log(CryptoJS.enc.Base64.parse('************'))
 
   // 表单数据
   let form = {}

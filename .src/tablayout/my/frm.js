@@ -40,6 +40,7 @@ apiready = function () {
     $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
   }
 
+  initPage()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){
@@ -50,6 +51,14 @@ apiready = function () {
     name: 'swiperight'
   }, function(ret, err){
     openLeftPane()
+  })
+  api.addEventListener({
+    name: 'keyback'
+  }, function(ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    })
   })
 
   document.querySelector('#msgcenter').onclick = function () {

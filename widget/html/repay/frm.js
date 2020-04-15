@@ -65,8 +65,11 @@ function _objectSpread2(target) {
   return target;
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -79,22 +82,27 @@ var ajax = function ajax(method, url) {
       _ref$timeout = _ref.timeout,
       timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
 
+  var include = whiteList.find(function (value) {
+    return url.includes(value);
+  });
   return new Promise(function (resolve, reject) {
     var userinfo = $api.getStorage('userinfo');
     var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     };
+    var Authorization = {
+      Authorization: token
+    };
     method === 'upload' ? contentType = {} : null;
+    include ? Authorization = {} : null;
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread2({
-        'Authorization': token
-      }, contentType, {}, headers)
+      headers: _objectSpread2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       if (ret) {
         if (ret.code === 200) {
@@ -4810,6 +4818,14 @@ var moment = createCommonjsModule(function (module, exports) {
 apiready = function apiready() {
   var now = null;
   var loading = false;
+  api.addEventListener({
+    name: 'keyback'
+  }, function (ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    });
+  });
 
   function renderMonth() {
     var month = parseInt(now.format('M'));

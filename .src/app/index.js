@@ -34,8 +34,8 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openRegLogin()
-    // openTabLayout()
+    // openRegLogin()
+    openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
@@ -65,15 +65,6 @@ apiready = function () {
   }, (ret,err) => {
     api.alert({
       msg:ret.value
-    })
-  })
-
-  api.addEventListener({
-    name: 'keyback'
-  }, function(ret, err) {
-    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
-    api.closeWidget({
-      silent: false
     })
   })
 

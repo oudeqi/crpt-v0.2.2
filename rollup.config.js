@@ -41,12 +41,12 @@ export default getPages('.src/**/*.html').map(page => {
       exclude: 'node_modules/**,html/**'
     },
     plugins: [
+      resolve(),
+      commonjs(),
+      json(),
       replace({
         __buildEnv__: JSON.stringify(process.env.NODE_ENV || 'development')
       }),
-      commonjs(),
-      resolve(),
-      json(),
       url({
         emitFiles: false,
         publicPath: 'widget/image/',

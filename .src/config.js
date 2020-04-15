@@ -4,14 +4,29 @@ const uat = 'http://crptuat.liuheco.com'
 const prod = 'http://crptuat.liuheco.com'
 const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
 
+const whiteList = [
+  '/sms/smsverificationcode',
+  '/identification/gainenterprisephone',
+  '/identification/personregister',
+  '/identification/enterpriseregister',
+  '/identification/enterpriseregister',
+  '/identification/getbackpassword',
+  '/auth/oauth/token',
+  '/auth/token/' // 退出登录
+]
 const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 15} = {}) => {
+  let include = whiteList.find(value => url.includes(value))
   return new Promise((resolve, reject) => {
     let userinfo = $api.getStorage('userinfo')
     let token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
     let contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     }
+    let Authorization = {
+      Authorization: token
+    }
     method === 'upload' ? contentType = {} : null
+    include ? Authorization = {} : null
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -19,7 +34,7 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 15} =
       tag,
       timeout,
       headers: {
-        'Authorization': token,
+        ...Authorization,
         ...contentType,
         ...headers
       } 

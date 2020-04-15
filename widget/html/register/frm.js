@@ -1,3 +1,116 @@
+// api.lockSlidPane();
+/*
+list: [{
+  text: '首页',
+  iconPath: 'widget://image/tabLayout/index.png',
+  selectedIconPath: 'widget://image/tabLayout/index_active.png'
+}, {
+  text: '订单',
+  iconPath: 'widget://image/tabLayout/order.png',
+  selectedIconPath: 'widget://image/tabLayout/order_active.png'
+}, {
+  text: '还款',
+  iconPath: 'widget://image/tabLayout/repay.png',
+  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
+}, {
+  text: '我的',
+  iconPath: 'widget://image/tabLayout/mine.png',
+  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
+}],
+*/
+// 导航布局
+
+
+function openTabLayout(index) {
+  api.openTabLayout({
+    name: 'tabLayout',
+    bgColor: '#fff',
+    reload: true,
+    delay: 300,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        // text: '设置',
+        // color: '#fff',
+        // fontSize: 16,
+        iconPath: 'widget://image/avatar.png'
+      }] // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      // }]
+
+    },
+    tabBar: {
+      animated: false,
+      scrollEnabled: true,
+      selectedColor: '#1dc4a2',
+      color: '#bfbfbf',
+      index: index || 0,
+      // preload: 4,
+      list: [{
+        text: "首页",
+        iconPath: "widget://image/tablayout/shouye.png",
+        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+      }, {
+        text: "订单",
+        iconPath: "widget://image/tablayout/dingdan.png",
+        selectedIconPath: "widget://image/tablayout/dingdan_active.png"
+      }, {
+        text: "还款",
+        iconPath: "widget://image/tablayout/huankuan.png",
+        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+      }, {
+        text: "我的",
+        iconPath: "widget://image/tablayout/wode.png",
+        selectedIconPath: "widget://image/tablayout/wode_active.png"
+      }],
+      frames: [{
+        title: "首页",
+        //tab切换时对应的标题
+        name: "tablayout/index",
+        url: "widget://html/index/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "订单",
+        name: "tablayout/order",
+        url: "widget://html/order/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "还款",
+        name: "tablayout/repay",
+        url: "widget://html/repay/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "我的",
+        name: "tablayout/my",
+        url: "widget://html/my/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }]
+    }
+  });
+} // 注册
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -47,8 +160,11 @@ function _objectSpread2(target) {
   return target;
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -61,22 +177,27 @@ var ajax = function ajax(method, url) {
       _ref$timeout = _ref.timeout,
       timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
 
+  var include = whiteList.find(function (value) {
+    return url.includes(value);
+  });
   return new Promise(function (resolve, reject) {
     var userinfo = $api.getStorage('userinfo');
     var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     };
+    var Authorization = {
+      Authorization: token
+    };
     method === 'upload' ? contentType = {} : null;
+    include ? Authorization = {} : null;
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread2({
-        'Authorization': token
-      }, contentType, {}, headers)
+      headers: _objectSpread2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       if (ret) {
         if (ret.code === 200) {
@@ -241,6 +362,24 @@ var openUIInput = function openUIInput(dom, form, key) {
     });
   });
 };
+//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
+//   "token_type":"bearer",
+//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
+//   "expires_in":599757,
+//   "scope":"app",
+//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "code":200,
+//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "name":"欧威",
+//   "userType":"1",
+//   "makeBy":"nh-cloud",
+//   "userId":"20"
+// }
+
+
+var handleLoginSuccess = function handleLoginSuccess(data) {
+  $api.setStorage('userinfo', data);
+};
 
 apiready = function apiready() {
   var UIInput = api.require('UIInput');
@@ -275,6 +414,50 @@ apiready = function apiready() {
     inputType: 'password',
     maxStringLength: 16
   });
+
+  function login(cb) {
+    var body = {
+      userType: type === 'geren' ? 1 : '',
+      // 1个人用户登录，2企业用户登录
+      username: form['tel'][1],
+      loginType: 1,
+      // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
+      // verification: form['code'][1],
+      password: form['pwd'][1],
+      loginDevice: api.deviceId,
+      // 客户手机设备号(android-imei,IOS-??)
+      ipAddress: '',
+      latitude: '',
+      longitude: '',
+      terminal_version: api.systemVersion,
+      // 系统终端版本
+      location: '',
+      // 最近登录地点
+      grant_type: 'password',
+      // 固定传password
+      scope: 'app',
+      // 固定传app
+      client_id: 'client',
+      // client
+      client_secret: 'secret' // 固定传secret
+
+    };
+    http.post('/auth/oauth/token', {
+      values: body
+    }, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(function (ret) {
+      handleLoginSuccess(ret);
+      cb();
+    })["catch"](function (error) {
+      api.toast({
+        msg: error.msg || '登录失败',
+        location: 'middle'
+      });
+    });
+  }
 
   function resetInputPosi() {
     resetUIInputPosi($api.byId('tel'), form['tel'][0]);
@@ -439,7 +622,9 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
-        api.closeWin();
+        login(function () {
+          openTabLayout();
+        });
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '注册失败',

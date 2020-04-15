@@ -121,8 +121,11 @@ function _objectSpread2(target) {
   return target;
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
 
 var ajax = function ajax(method, url) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -135,22 +138,27 @@ var ajax = function ajax(method, url) {
       _ref$timeout = _ref.timeout,
       timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
 
+  var include = whiteList.find(function (value) {
+    return url.includes(value);
+  });
   return new Promise(function (resolve, reject) {
     var userinfo = $api.getStorage('userinfo');
     var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     };
+    var Authorization = {
+      Authorization: token
+    };
     method === 'upload' ? contentType = {} : null;
+    include ? Authorization = {} : null;
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread2({
-        'Authorization': token
-      }, contentType, {}, headers)
+      headers: _objectSpread2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       if (ret) {
         if (ret.code === 200) {
@@ -259,6 +267,21 @@ apiready = function apiready() {
 
   function getStatus(cb) {
     http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+      var mapping = {
+        // 0未通过，1通过，2人工审核
+        realAuth: {
+          status: 0,
+          msg: ''
+        },
+        faceAuth: {
+          status: 0,
+          msg: ''
+        },
+        baseinfo: {
+          status: 0,
+          msg: ''
+        }
+      }; // 认证状态 int
       // 1：正常
       // 2：待实名认证
       // 3：待人脸审核
@@ -267,7 +290,25 @@ apiready = function apiready() {
 
       var status = res.data;
 
-      cb(map);
+      if (status === 1) {
+        // 认证全部通过
+        mapping.realAuth.status = 1;
+        mapping.faceAuth.status = 1;
+        mapping.baseinfo.status = 1;
+      } else if (status === 3) {
+        //待人脸审核
+        mapping.realAuth.status = 1;
+      } else if (status === 4) {
+        // 人脸认证失败，待人工审核
+        mapping.realAuth.status = 1;
+        mapping.faceAuth.status = 2;
+      } else if (status === 5) {
+        // 待补充基本信息
+        mapping.realAuth.status = 1;
+        mapping.faceAuth.status = 1;
+      }
+
+      cb(mapping);
     })["catch"](function (error) {
       api.toast({
         msg: error.msg || '获取认证状态失败'
@@ -285,7 +326,7 @@ apiready = function apiready() {
 
   function renderStep2(status) {
     if (status === 0) {
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u8FDB\u884C\u4EBA\u8138\u8BA4\u8BC1</strong>\n              ".concat(status === 2 ? '<span class="icon"></span>' : '', "\n            </div>\n            <p>\u9700\u8981\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : '', "\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u8FDB\u884C\u4EBA\u8138\u8BA4\u8BC1</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u9700\u8981\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n          ".concat(status === 1 ? '<span>通过</span>' : '', "\n        </div>\n      ");
     } else {
       // autherror
       var type = 'authpass';

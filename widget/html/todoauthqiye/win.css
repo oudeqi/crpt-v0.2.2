@@ -266,7 +266,7 @@ html, body {
     margin-right: 20px
   }
 .auth-block .text strong {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       display: inline-block;
       vertical-align: middle;
@@ -290,8 +290,8 @@ html, body {
 .auth-block .pic {
     -ms-flex-negative: 0;
         flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background-color: #c2ced2;
   }

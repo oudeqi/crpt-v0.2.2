@@ -39,7 +39,7 @@ apiready = function() {
         mapping.realAuth.status = 1
         mapping.faceAuth.status = 1
       }
-      cb(map)
+      cb(mapping)
     }).catch(error => {
       api.toast({
         msg: error.msg || '获取认证状态失败'
@@ -84,7 +84,7 @@ apiready = function() {
           <div class="text">
             <div>
               <strong>法定代表人进行人脸认证</strong>
-              ${status === 2 ? '<span class="icon"></span>' : ''}
+              <span class="icon"></span>
             </div>
             <p>需要法定代表人本人完成人脸认证</p>
           </div>

@@ -10,6 +10,15 @@ apiready = function () {
   let now = null
   let loading = false
 
+  api.addEventListener({
+    name: 'keyback'
+  }, function(ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    })
+  })
+
   function renderMonth () {
     let month = parseInt(now.format('M'))
     let tit = now.format('YYYY年M月')
