@@ -54,7 +54,7 @@ apiready = function() {
     } else if (isPhoneNo(tel)) {
       openSendCode({
         tel,
-        loginType: 'geren'
+        userType: 1
       })
     } else {
       api.toast({ msg: '手机号码格式不正确' })

@@ -171,8 +171,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -386,15 +387,17 @@ apiready = function apiready() {
 
   var pageParam = api.pageParam || {};
   var tel = pageParam.tel,
-      loginType = pageParam.loginType;
+      userType = pageParam.userType;
   openUIInput($api.byId('code'), form, 'code', {
     placeholder: '请输入...',
     keyboardType: 'done',
     maxStringLength: 6
   });
   $api.byId('tel').innerHTML = tel;
+  var apLoginBtn = document.querySelector('#ap_login');
 
-  if (loginType === 'geren') {
+  if (userType === 1) {
+    // 个人登录
     sendCode();
   } else {
     sendStatus = 'sending';
@@ -445,12 +448,17 @@ apiready = function apiready() {
     sendCode();
   };
 
-  document.querySelector('#ap_login').onclick = function () {
-    openGerenLogin({
-      title: '企业登录',
-      userType: 2
-    });
-  };
+  if (userType === 2) {
+    apLoginBtn.onclick = function () {
+      openGerenLogin({
+        title: '企业登录',
+        userType: 2
+      });
+    };
+  } else {
+    // 个人登录时隐藏账密登录提示
+    apLoginBtn.style.display = 'none';
+  }
 
   document.querySelector('#login').onclick = function () {
     // openTabLayout()
@@ -466,7 +474,7 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       $api.addCls($api.byId('login'), 'loading');
       var body = {
-        userType: loginType === 'geren' ? 1 : 2,
+        userType: userType,
         // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2,

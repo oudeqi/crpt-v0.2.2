@@ -47,7 +47,7 @@ apiready = function() {
       submitStatus = 'notsubmit'
       $api.removeCls($api.byId('tel_login'), 'loading')
       if (res.data) {
-        openSendCode({ tel: res.data, loginType: 'qiye' })
+        openSendCode({ tel: res.data, userType: 2 })
       } else {
         api.toast({
           msg: '获取企业法人手机号失败',
