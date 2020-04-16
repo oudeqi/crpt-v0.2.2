@@ -9,12 +9,11 @@ import { http, openUIInput, handleLoginSuccess } from '../../config.js'
 
 apiready = function() {
 
-
   let form = {} // 表单数据
   let sendStatus = 'notsend' // notsend:未发送,sending:发送中,countdown:倒计时中
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   let pageParam = api.pageParam || {}
-  let { tel, loginType } = pageParam
+  let { tel, userType } = pageParam
   openUIInput($api.byId('code'), form, 'code', {
     placeholder: '请输入...',
     keyboardType: 'done',
@@ -22,7 +21,8 @@ apiready = function() {
   })
 
   $api.byId('tel').innerHTML = tel
-  if (loginType === 'geren') {
+  let apLoginBtn = document.querySelector('#ap_login')
+  if (userType === 1) { // 个人登录
     sendCode()
   } else {
     sendStatus = 'sending'
@@ -73,8 +73,12 @@ apiready = function() {
     sendCode()
   }
 
-  document.querySelector('#ap_login').onclick = function() {
-    openGerenLogin({title: '企业登录', userType: 2})
+  if(userType === 2) {
+    apLoginBtn.onclick = function() {
+      openGerenLogin({title: '企业登录', userType: 2})
+    }
+  }else {// 个人登录时隐藏账密登录提示
+    apLoginBtn.style.display = 'none'
   }
 
   document.querySelector('#login').onclick = function () {
@@ -87,7 +91,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
-        userType: loginType === 'geren' ? 1 : 2, // 1个人用户登录，2企业用户登录
+        userType: userType, // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code,

@@ -80,8 +80,9 @@ function openAuthResult(status, message, title) {
   });
 } // 消息中心
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
