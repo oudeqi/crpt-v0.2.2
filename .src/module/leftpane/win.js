@@ -3,8 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
 import { http } from '../../config.js'
-
-
+import { version } from '../../../package.json'
 
 apiready = function(){
 
@@ -19,7 +18,7 @@ apiready = function(){
     userType = userinfo.userType
     access_token = userinfo.access_token
     $api.byId('name').innerHTML = name
-    $api.byId('version').innerHTML = `版本号 v${api.appVersion}`
+    $api.byId('version').innerHTML = `版本号 v${version}`
   }
   initPage()
 
@@ -42,12 +41,14 @@ apiready = function(){
 
   function logout (cb) {
     http.delete(`/auth/token/${access_token}`).then(res => {
+      $api.removeCls($api.byId('logout'), 'loading')
       cb()
     }).catch(error => {
       api.toast({
         msg: error.msg || '操作失败',
         location: 'middle'
       })
+      $api.removeCls($api.byId('logout'), 'loading')
     })
   }
 
@@ -58,6 +59,7 @@ apiready = function(){
       buttons: ['确定', '取消']
     }, (ret, err) => {
       if (ret.buttonIndex === 1) {
+        $api.addCls($api.byId('logout'), 'loading')
         logout(function () {
           api.toast({
             msg: '退出登录成功',

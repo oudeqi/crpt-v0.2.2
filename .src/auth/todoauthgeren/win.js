@@ -173,7 +173,7 @@ apiready = function() {
           })
           return
         }
-        if (mapping.faceAuth.status === 0) {
+        if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2) {
           api.toast({
             msg: '请先完成第二步'
           })

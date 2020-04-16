@@ -99,9 +99,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -239,6 +238,8 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var version = "0.1.0";
+
 apiready = function apiready() {
   var userinfo = {};
   var name = '';
@@ -251,7 +252,7 @@ apiready = function apiready() {
     userType = userinfo.userType;
     access_token = userinfo.access_token;
     $api.byId('name').innerHTML = name;
-    $api.byId('version').innerHTML = "\u7248\u672C\u53F7 v".concat(api.appVersion);
+    $api.byId('version').innerHTML = "\u7248\u672C\u53F7 v".concat(version);
   }
 
   initPage();
@@ -273,12 +274,14 @@ apiready = function apiready() {
 
   function logout(cb) {
     http["delete"]("/auth/token/".concat(access_token)).then(function (res) {
+      $api.removeCls($api.byId('logout'), 'loading');
       cb();
     })["catch"](function (error) {
       api.toast({
         msg: error.msg || '操作失败',
         location: 'middle'
       });
+      $api.removeCls($api.byId('logout'), 'loading');
     });
   }
 
@@ -289,6 +292,7 @@ apiready = function apiready() {
       buttons: ['确定', '取消']
     }, function (ret, err) {
       if (ret.buttonIndex === 1) {
+        $api.addCls($api.byId('logout'), 'loading');
         logout(function () {
           api.toast({
             msg: '退出登录成功',

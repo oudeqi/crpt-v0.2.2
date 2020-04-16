@@ -1,6 +1,6 @@
 {
   "name": "industryfinance",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "产融结合项目",
   "main": "index.js",
   "scripts": {

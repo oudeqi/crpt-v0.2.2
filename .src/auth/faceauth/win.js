@@ -3,7 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill, openAuthResult,
 openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../webview.js'
-import { http, getPicture, openActionSheet } from '../../config.js'
+import { http, getPicture, ActionSheet } from '../../config.js'
 
 apiready = function() {
 
@@ -22,7 +22,7 @@ apiready = function() {
   document.querySelector('#face').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    openActionSheet('请选择', btns, function (index) {
+    ActionSheet('请选择', btns, function (index) {
       if (index === 0) {
         sourceType = 'camera'
       } else {

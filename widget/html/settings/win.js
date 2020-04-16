@@ -80,9 +80,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -228,8 +227,10 @@ apiready = function apiready() {
 
   function logout(cb) {
     http["delete"]("/auth/token/".concat(access_token)).then(function (res) {
+      $api.removeCls($api.byId('logout'), 'loading');
       cb();
     })["catch"](function (error) {
+      $api.removeCls($api.byId('logout'), 'loading');
       api.toast({
         msg: error.msg || '操作失败',
         location: 'middle'
@@ -244,6 +245,7 @@ apiready = function apiready() {
       buttons: ['确定', '取消']
     }, function (ret, err) {
       if (ret.buttonIndex === 1) {
+        $api.addCls($api.byId('logout'), 'loading');
         logout(function () {
           api.toast({
             msg: '退出登录成功',

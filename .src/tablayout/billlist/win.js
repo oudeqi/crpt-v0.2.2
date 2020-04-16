@@ -82,6 +82,9 @@ apiready = function () {
 
   document.querySelector('#list').onclick = function (event) {
     let li = $api.closest(event.target, 'li')
+    if (!li) {
+      return
+    }
     let id = li.dataset.id
     if (id) {
       openBillDetails(id)

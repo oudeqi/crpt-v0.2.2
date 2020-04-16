@@ -229,9 +229,9 @@ body {
 .close {
   position: absolute;
   top: 40px;
-  right: 30px;
-  width: 40px;
-  height: 40px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
   display: block;
   background-image: url(../../image/close.png);
   background-position: center;

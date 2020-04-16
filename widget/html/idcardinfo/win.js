@@ -80,9 +80,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -220,7 +219,7 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function openUIInput2(dom) {
+function UIInput2(dom) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var cb = arguments.length > 2 ? arguments[2] : undefined;
 
@@ -298,7 +297,7 @@ apiready = function apiready() {
       timelimit = pageParam.timelimit,
       front = pageParam.front,
       back = pageParam.back;
-  openUIInput2($api.byId('name'), {
+  UIInput2($api.byId('name'), {
     placeholder: '请输入',
     keyboardType: 'done',
     maxStringLength: 10

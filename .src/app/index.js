@@ -34,7 +34,7 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openIDcardUpload()
+    // openBaseinfoFill()
     openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()

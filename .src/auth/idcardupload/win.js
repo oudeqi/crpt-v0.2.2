@@ -3,7 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo } from '../../webview.js'
-import { http, openActionSheet, getPicture } from '../../config.js'
+import { http, ActionSheet, getPicture } from '../../config.js'
 
 apiready = function() {
 
@@ -23,7 +23,7 @@ apiready = function() {
   document.querySelector('#front').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    openActionSheet('请选择', btns, function (index) {
+    ActionSheet('请选择', btns, function (index) {
       if (index === 0) {
         sourceType = 'camera'
       } else {
@@ -41,7 +41,7 @@ apiready = function() {
   document.querySelector('#back').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    openActionSheet('请选择', btns, function (index) {
+    ActionSheet('请选择', btns, function (index) {
       if (index === 0) {
         sourceType = 'camera'
       } else {
@@ -55,7 +55,7 @@ apiready = function() {
       })
     })
   }
-  
+
   // let idcard = {
   //   "code":200,
   //   "msg":"",

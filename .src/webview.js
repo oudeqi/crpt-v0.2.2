@@ -744,6 +744,26 @@ function openProductDetails (id) {
   })
 }
 
+// 城市选择
+function openCityList (pageParam) {
+  api.openTabLayout({
+    name: 'html/citylist/win',
+    title: '城市选择',
+    url: 'widget://html/citylist/win.html',
+    bgColor: '#fff',
+    pageParam,
+    slidBackEnabled: true,
+    navigationBar: {
+      height: 45,
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
 
 export {
   openLeftPane,
@@ -780,5 +800,6 @@ export {
   openContactUs,
   openRepayPlan,
   openRepayRecord,
-  openProductDetails
+  openProductDetails,
+  openCityList
 }

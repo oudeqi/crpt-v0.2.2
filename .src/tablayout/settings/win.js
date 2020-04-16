@@ -1,14 +1,6 @@
 import '../../app.css'
 import './win.css'
 
-// apiready = function () {
-//   api.addEventListener({
-//     name: 'navitembtn'
-//   }, (ret, err) => {
-//     alert('点击了'+ret.index+'按钮');
-//   })
-// }
-
 import { openMsgList, openRegLogin, openChangePwd } from '../../webview.js'
 import { http } from '../../config.js'
 
@@ -19,8 +11,10 @@ apiready = function () {
 
   function logout (cb) {
     http.delete(`/auth/token/${access_token}`).then(res => {
+      $api.removeCls($api.byId('logout'), 'loading')
       cb()
     }).catch(error => {
+      $api.removeCls($api.byId('logout'), 'loading')
       api.toast({
         msg: error.msg || '操作失败',
         location: 'middle'
@@ -35,6 +29,7 @@ apiready = function () {
       buttons: ['确定', '取消']
     }, (ret, err) => {
       if (ret.buttonIndex === 1) {
+        $api.addCls($api.byId('logout'), 'loading')
         logout(function () {
           api.toast({
             msg: '退出登录成功',

@@ -80,9 +80,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-// const baseUrl = 'http://crptdev.liuheco.com'
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -220,7 +219,7 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function openActionSheet(title, buttons, cb) {
+function ActionSheet(title, buttons, cb) {
   api.actionSheet({
     title: title,
     cancelTitle: '取消',
@@ -258,7 +257,7 @@ apiready = function apiready() {
   document.querySelector('#face').onclick = function () {
     var btns = ['相机', '相册'];
     var sourceType = '';
-    openActionSheet('请选择', btns, function (index) {
+    ActionSheet('请选择', btns, function (index) {
       if (index === 0) {
         sourceType = 'camera';
       } else {
