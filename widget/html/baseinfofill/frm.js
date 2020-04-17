@@ -13,39 +13,7 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
+var defineProperty = _defineProperty;
 
 // api.lockSlidPane();
 
@@ -100,8 +68,13 @@ function openCityList(pageParam) {
   });
 }
 
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+// const baseUrl = 'http://crptdev.liuheco.com'
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
@@ -136,7 +109,7 @@ var ajax = function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread2({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       if (ret) {
         if (ret.code === 200) {
@@ -358,6 +331,10 @@ function UIInput2(dom) {
   });
 }
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 apiready = function apiready() {
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
@@ -560,8 +537,14 @@ apiready = function apiready() {
       $api.addCls($api.byId('submit'), 'loading'); // 个人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/personinfo/submission
       // 企业法人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/legalinfo/submission
 
-      http.post('/crpt-cust/saas/personinfo/submission', {
-        body: _objectSpread2({}, postData, {
+      var url = '/crpt-cust/saas/legalinfo/submission';
+
+      if (userType === '1') {
+        url = '/crpt-cust/saas/personinfo/submission';
+      }
+
+      http.post(url, {
+        body: _objectSpread$1({}, postData, {
           residentialAddress: postData.address + postData.addressDetails
         })
       }).then(function (ret) {

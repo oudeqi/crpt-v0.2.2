@@ -23,7 +23,8 @@ import {
   openOrderList,
   openMyProduct,
   openSettings,
-  openContactUs
+  openContactUs,
+  openProductDetails
 } from '../webview.js'
 
 // $api.setStorage()
@@ -34,7 +35,7 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openBaseinfoFill()
+    // openProductDetails()
     openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()

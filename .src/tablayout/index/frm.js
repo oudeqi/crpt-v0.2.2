@@ -3,6 +3,7 @@ import './frm.css'
 
 import { openLeftPane, openProductDetails } from '../../webview.js'
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -61,33 +62,37 @@ apiready = function () {
   function appendList (data) {
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li data-id="${item.id || ''}">
+        <li tapmode data-id="${item.id || ''}">
           <div class="col">
-            <div class="red">${item.totalLimit}</div>
-            <p>最高可贷（元）</p>
+          ${
+            item.totalLimit > 0
+            ? `
+            <div class="red">${numeral(item.totalLimit).format('0,0.00')}</div>
+            <p>最高可贷(元)</p>
+            `
+            : `
+            <div class="red">${item.interestRate}%</div>
+            <p>贷款利率</p>
+            `
+          }
           </div>
           <div class="col">
             <p>${item.introduce || ''}</p>
             <p>${item.des || ''}</p>
           </div>
           <div class="col">
-            <div class="btn">立即开通</div>
+            <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>
           </div>
         </li>
       `)
     })
+    api.parseTapmode()
   }
 
   function refresh () {
     pageNo = 1
     getPageData(function (data) {
       $api.byId('list').innerHTML = ''
-      appendList(data)
-    })
-  }
-
-  function loadmore () {
-    getPageData(function (data) {
       appendList(data)
     })
   }
@@ -103,27 +108,24 @@ apiready = function () {
   }, function(ret, err) {
     refresh()
   })
-  api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100 //距离底部距离
-    }
-  }, function(ret, err) {
-    loadmore()
-  })
 
   api.refreshHeaderLoading()
 
   document.querySelector('#list').onclick = function (event) {
+    let btn = $api.closest(event.target, '.btn')
     let li = $api.closest(event.target, 'li')
-    if (!li) {
-      return
-    }
-    let id = li.dataset.id
-    if (id) {
-      openProductDetails(id)
-    } else {
-      api.toast({ msg: 'id 不存在' })
+    if (btn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...',
+      })
+    } else if (li) {
+      let id = li.dataset.id
+      if (id) {
+        openProductDetails(id)
+      } else {
+        api.toast({ msg: 'id 不存在' })
+      }
     }
   }
 }

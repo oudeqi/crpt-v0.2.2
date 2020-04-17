@@ -1,12 +1,14 @@
 {
   "presets": [
     ["@babel/preset-env", {
-      "modules": false
+      "modules": false,
+      "useBuiltIns": false
     }]
   ],
   "plugins": [
-    ["@babel/plugin-transform-runtime", {
-      "helpers": false
+    ["@babel/plugin-transform-runtime"],
+    ["transform-remove-console", {
+      "exclude": [ "error", "warn", "log"]
     }],
     "@babel/plugin-transform-object-assign",
     "@babel/plugin-proposal-object-rest-spread",

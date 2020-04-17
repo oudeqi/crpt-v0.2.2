@@ -205,6 +205,13 @@
       padding-right: 0;
     }
 
+.otw {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+}
+
 html, body {
   background-color: #fff;
 }

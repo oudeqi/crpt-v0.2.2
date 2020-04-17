@@ -51,6 +51,9 @@ li {
     border-radius: 4px;
     line-height: 1;
     font-size: 14px;
+    &.active {
+      background: #88dbcb;
+    }
   }
 }
 .row3 {
@@ -62,8 +65,11 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  & .btn {
+  & .btn2 {
     color: #1dc4a2;
+    &.active {
+      color: #88dbcb;
+    }
   }
   & .date {
     font-size: 15px;

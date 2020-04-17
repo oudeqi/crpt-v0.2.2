@@ -1,27 +1,20 @@
 html, body {
-  background-color: #ebebeb;
+  background-color: #f3f3f3;
 }
-ul {
-  padding: 0 15px;
+.container {
+  padding: 15px;
+  padding-top: 5px;
 }
-li {
+.sec {
   background: #fff;
-  margin-top: 15px;
   border-radius: 5px;
-  padding: 10px;
-}
-.t {
-  display: flex;
-  align-items: center;
-  padding-top: 10px;
+  padding: 15px;
+  margin-top: 15px;
   & strong {
-    flex-grow: 1;
+    font-weight: normal;
   }
-  & span {
-    flex-shrink: 0;
+  & .item {
+    margin-top: 5px;
+    color: #333;
   }
-}
-.b {
-  color: #aaa;
-  padding: 10px 0;
 }

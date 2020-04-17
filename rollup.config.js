@@ -9,6 +9,7 @@ const commonjs = require('@rollup/plugin-commonjs');
 const html2 = require('rollup-plugin-html2');
 const replace = require('@rollup/plugin-replace');
 const copy = require('rollup-plugin-copy')
+
 const getPages = (globs, format) => {
   let pages = []
   glob.sync(globs).forEach(_path => { // src/module/login/win.html
@@ -41,8 +42,8 @@ export default getPages('.src/**/*.html').map(page => {
       exclude: 'node_modules/**,html/**'
     },
     plugins: [
-      resolve(),
       commonjs(),
+      resolve(),
       json(),
       replace({
         __buildEnv__: JSON.stringify(process.env.NODE_ENV || 'development')

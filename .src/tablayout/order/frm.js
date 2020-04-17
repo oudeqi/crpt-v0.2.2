@@ -3,6 +3,7 @@ import './frm.css'
 
 import { openLeftPane, openOrderDetails } from '../../webview.js'
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -37,7 +38,7 @@ apiready = function () {
       if (res && res.data.list.length > 0) {
         pageNo++
         if (res.data.totalAmount) {
-          $api.byId('total').innerHTML = res.data.totalAmount
+          $api.byId('total').innerHTML = numeral(res.data.totalAmount).format('0,0.00')
         }
         if (res.data.count) {
           $api.byId('count').innerHTML = res.data.count
@@ -58,26 +59,27 @@ apiready = function () {
   function appendList (data) {
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li data-id="${item.orderNo || ''}">
+        <li tapmode data-id="${item.orderNo || ''}">
           <div class="row1">
             <span>订单编号</span>
             <span>${item.orderNo || ''}</span>
           </div>
           <div class="row2">
             <span>支付金额(元)</span>
-            <strong>${item.payAmount || ''}</strong>
-            <div class="btn">去支付</div>
+            <strong>${numeral(item.payAmount || '').format('0,0.00')}</strong>
+            <div tapmode="active" class="btn" data-id="${item.orderNo || ''}">去支付</div>
           </div>
           <div class="row3">
             购买来源：${item.saleCustName || ''}
           </div>
           <div class="row4">
             <span class="date">下单时间：${item.orderTime || ''}</span>
-            <span class="btn">取消订单</span>
+            <span tapmode="active" class="btn2" data-id="${item.orderNo || ''}">取消订单</span>
           </div>
         </li>
       `)
     })
+    api.parseTapmode()
   }
 
   function refresh () {
@@ -118,14 +120,25 @@ apiready = function () {
 
   document.querySelector('#list').onclick = function (event) {
     let li = $api.closest(event.target, 'li')
-    if (!li) {
-      return
-    }
-    let id = li.dataset.id
-    if (id) {
-      openOrderDetails(id, 'daiZhiFu')
-    } else {
-      api.toast({ msg: 'id 不存在' })
+    let btn = $api.closest(event.target, '.btn')
+    let btn2 = $api.closest(event.target, '.btn2')
+    if (btn2) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...',
+      })
+    } else if (btn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...',
+      })
+    } else if (li) {
+      let id = li.dataset.id
+      if (id) {
+        openOrderDetails(id, 'daiZhiFu')
+      } else {
+        api.toast({ msg: 'id 不存在' })
+      }
     }
   }
 

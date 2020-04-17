@@ -24,14 +24,14 @@ apiready = function () {
         pageNo++
         cb(res.data.list)
       } else if (pageNo === 1) {
-        api.toast({ msg: '无数据'})
+        // api.toast({ msg: '无数据'})
       } else {
-        api.toast({ msg: '无更多数据'})
+        // api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
-      api.toast({ msg: '数据加载失败' })
+      api.toast({ msg: error.msg || '数据加载失败' })
     })
   }
 

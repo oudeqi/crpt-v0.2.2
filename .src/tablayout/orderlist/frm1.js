@@ -31,7 +31,7 @@ apiready = function () {
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
-      api.toast({ msg: '数据加载失败' })
+      api.toast({ msg: error.msg || '数据加载失败' })
     })
   }
 

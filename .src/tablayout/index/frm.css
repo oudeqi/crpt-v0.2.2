@@ -10,6 +10,7 @@ html, body {
 ul {
   padding: 0 15px;
   margin: 0;
+  padding-bottom: 20px;
 }
 li {
   margin-top: 15px;
@@ -32,6 +33,9 @@ li {
   border-radius: 4px;
   line-height: 1;
   font-size: 14px;
+  &.active {
+    background: #88dbcb;
+  }
 }
 .red {
   color: #ce0016;

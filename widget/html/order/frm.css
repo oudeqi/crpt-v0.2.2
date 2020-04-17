@@ -205,6 +205,13 @@
       padding-right: 0;
     }
 
+.otw {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+}
+
 html, body {
   background-color: #efefef;
 }
@@ -273,8 +280,12 @@ li {
     padding: 0 10px;
     border-radius: 4px;
     line-height: 1;
-    font-size: 14px;
+    font-size: 14px
   }
+
+.row2 .btn.active {
+      background: #88dbcb;
+    }
 .row3 {
   font-size: 15px;
   color: #999;
@@ -291,9 +302,12 @@ li {
       -ms-flex-pack: justify;
           justify-content: space-between
 }
-.row4 .btn {
-    color: #1dc4a2;
+.row4 .btn2 {
+    color: #1dc4a2
   }
+.row4 .btn2.active {
+      color: #88dbcb;
+    }
 .row4 .date {
     font-size: 15px;
     color: #999;

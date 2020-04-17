@@ -166,14 +166,14 @@ apiready = function apiready() {
     openTabLayout();
   };
   openUIInput($api.byId('pwd'), {
-    placeholder: '登录密码',
+    placeholder: '设置登录密码',
     keyboardType: 'next',
     inputType: 'password',
     maxStringLength: 10
   }, function (value) {
   });
   openUIInput($api.byId('repwd'), {
-    placeholder: '确认密码',
+    placeholder: '确认登录密码',
     keyboardType: 'next',
     inputType: 'password',
     maxStringLength: 10
