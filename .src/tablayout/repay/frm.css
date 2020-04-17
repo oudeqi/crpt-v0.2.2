@@ -39,7 +39,7 @@ html, body {
   text-align: center;
   border-top: 1px solid #f3f3f3;
   padding: 20px;
-  height: 140px;
+  height: 155px;
   & p {
     font-size: 16px;
     color: #999;
@@ -49,8 +49,7 @@ html, body {
       font-weight: bold;
     }
     & span {
-      color: blue;
-
+      color: #999;
     }
   }
 }
@@ -127,5 +126,19 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+.tips {
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 20px;
+}
+.contactus {
+  padding: 40px;
+  text-align: center;
+  color: #1dc4a2;
+  & span {
+    text-decoration: underline;
   }
 }

@@ -46,7 +46,7 @@
     "crypto-js": "^4.0.0",
     "echarts": "^4.7.0",
     "js-base64": "^2.5.2",
-    "lodash-es": "^4.17.15",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "numeral": "^2.0.6"
   }

@@ -40,3 +40,10 @@ li {
 .red {
   color: #ce0016;
 }
+.otw {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
+  text-align: center;
+}

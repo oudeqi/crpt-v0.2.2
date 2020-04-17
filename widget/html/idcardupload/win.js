@@ -205,8 +205,8 @@ function getPicture(sourceType, cb) {
     destinationType: 'file',
     allowEdit: true,
     quality: 100,
-    targetWidth: 400,
-    targetHeight: 300,
+    // targetWidth: 400,
+    // targetHeight: 300,
     saveToPhotoAlbum: false
   }, cb);
 }

@@ -254,7 +254,7 @@ function openBaseinfoFill (pageParam) {
 function openTodoAuthGeren () {
   api.openTabLayout({
     name: 'html/todoauthgeren/win',
-    title: '待认证',
+    title: '待完成',
     url: 'widget://html/todoauthgeren/win.html',
     bgColor: '#fff',
     reload: true,
@@ -272,7 +272,7 @@ function openTodoAuthGeren () {
 function openTodoAuthQiye () {
   api.openTabLayout({
     name: 'html/todoauthqiye/win',
-    title: '待认证',
+    title: '待完成',
     url: 'widget://html/todoauthqiye/win.html',
     bgColor: '#fff',
     reload: true,
@@ -292,7 +292,7 @@ function openTodoAuthQiye () {
 function openCompanyInfo () {
   api.openTabLayout({
     name: 'html/companyinfo/win',
-    title: '企业信息',
+    title: '企业实名认证',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
     reload: true,
@@ -350,7 +350,7 @@ function openIDcardInfo (pageParam) {
 }
 
 // 人脸认证
-function openFaceAuth (pageParam) {
+function openFaceAuth (pageParam = {}) {
   api.openTabLayout({
     name: 'html/faceauth/win',
     title: pageParam.title,
@@ -706,7 +706,7 @@ function openRepayPlan (id) {
 function openRepayRecord (id) {
   api.openTabLayout({
     name: 'html/repayrecord/win',
-    title: '还款明细',
+    title: '还款记录',
     url: 'widget://html/repayrecord/win.html',
     bgColor: '#fff',
     reload: true,

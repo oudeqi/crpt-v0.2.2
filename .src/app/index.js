@@ -35,7 +35,7 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openProductDetails()
+    // openFaceAuth()
     openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()

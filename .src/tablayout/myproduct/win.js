@@ -47,7 +47,7 @@ apiready = function () {
         <li tapmode data-id="${item.productId || ''}">
           <div class="t">
             <strong>${item.productName}</strong>
-            <span>${item.investorName}（${item.account}）</span>
+            <span>${item.bankName}（${item.account}）</span>
           </div>
           <div class="b">
             开通时间：${item.openDate}

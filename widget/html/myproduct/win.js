@@ -239,7 +239,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>").concat(item.investorName, "\uFF08").concat(item.account, "\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <strong>").concat(item.productName, "</strong>\n            <span>").concat(item.bankName, "\uFF08").concat(item.account, "\uFF09</span>\n          </div>\n          <div class=\"b\">\n            \u5F00\u901A\u65F6\u95F4\uFF1A").concat(item.openDate, "\n          </div>\n        </li>\n      "));
     });
   }
 

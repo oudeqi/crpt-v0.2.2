@@ -20,7 +20,9 @@ function getInfo () {
       $api.byId('prodopencount').innerHTML = ''
     }
   }).catch(error => {
-
+    api.toast({
+      msg: error.msg || '获取信息失败'
+    })
   })
 }
 

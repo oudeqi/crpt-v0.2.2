@@ -205,13 +205,6 @@
       padding-right: 0;
     }
 
-.otw {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100px;
-}
-
 html, body {
   background-color: #f3f3f3;
 }
@@ -274,7 +267,7 @@ html, body {
   text-align: center;
   border-top: 1px solid #f3f3f3;
   padding: 20px;
-  height: 140px
+  height: 155px
 }
 
 .secl_body p {
@@ -289,8 +282,7 @@ html, body {
     }
 
 .secl_body p span {
-      color: blue;
-
+      color: #999;
     }
 .loading {
   padding-top: 40px;
@@ -395,4 +387,18 @@ ul li {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+  }
+.tips {
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 20px;
+}
+.contactus {
+  padding: 40px;
+  text-align: center;
+  color: #1dc4a2
+}
+.contactus span {
+    text-decoration: underline;
   }

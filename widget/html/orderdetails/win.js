@@ -27,7 +27,7 @@ function openRepayPlan(id) {
 function openRepayRecord(id) {
   api.openTabLayout({
     name: 'html/repayrecord/win',
-    title: '还款明细',
+    title: '还款记录',
     url: 'widget://html/repayrecord/win.html',
     bgColor: '#fff',
     reload: true,
@@ -211,9 +211,9 @@ apiready = function apiready() {
       type = pageParam.type; // '9939393'
 
   if (type !== 'daiZhiFu') {
+    $api.byId('plan').style.display = 'block';
     $api.byId('payDetails').style.display = 'block';
     $api.byId('repayDetails').style.display = 'block';
-    $api.byId('repayDetails').style.display = 'plan';
   }
 
   document.querySelector('#repayplan').onclick = function () {

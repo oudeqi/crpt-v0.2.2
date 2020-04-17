@@ -223,23 +223,22 @@ apiready = function apiready() {
             duration: 2000,
             location: 'middle',
             global: true
-          });
-          var windows = api.windows();
+          }); // let windows = api.windows()
+          // if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
+          //   windows.forEach(win => {
+          //     // 关闭非root、非登录注册页
+          //     if (win.name !== 'root' && win.name !== 'html/reglogin/win') {
+          //       api.closeWin({
+          //         name: win.name
+          //       })
+          //     }
+          //   })
+          // }
 
-          if (windows && windows.length > 0) {
-            // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(function (win) {
-              // 关闭非root、非登录注册页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/win') {
-                api.closeWin({
-                  name: win.name
-                });
-              }
-            });
-          }
-
-          $api.clearStorage();
-          openRegLogin();
+          setTimeout(function () {
+            $api.clearStorage();
+            openRegLogin();
+          }, 150);
         });
       }
     });

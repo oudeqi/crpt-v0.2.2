@@ -4,6 +4,7 @@ import './win.css'
 // import { openMsgDetails } from '../../webview.js'
 
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -24,6 +25,7 @@ apiready = function () {
     http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${id}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
+      $api.byId('total').innerHTML = numeral(res.data.sumRepaidTotalAmount).format('0,0.00')
       if (res && res.data.list.length > 0) {
         pageNo++
         cb(res.data.list)

@@ -15,7 +15,7 @@ function openBaseinfoFill(pageParam) {
 function openCompanyInfo() {
   api.openTabLayout({
     name: 'html/companyinfo/win',
-    title: '企业信息',
+    title: '企业实名认证',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
     reload: true,
@@ -32,7 +32,8 @@ function openCompanyInfo() {
 } // 身份证上传
 
 
-function openFaceAuth(pageParam) {
+function openFaceAuth() {
+  var pageParam = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   api.openTabLayout({
     name: 'html/faceauth/win',
     title: pageParam.title,
@@ -236,7 +237,13 @@ apiready = function apiready() {
   var userType = userinfo.userType;
 
   function getStatus(cb) {
+    api.showProgress({
+      title: '加载中...',
+      text: '',
+      modal: false
+    });
     http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+      api.hideProgress();
       var mapping = {
         // 0未通过，1通过，2人工审核
         realAuth: {
@@ -257,6 +264,7 @@ apiready = function apiready() {
       // 3：待人脸审核
       // 4：人脸认证失败，待人工审核
       // 5：待补充基本信息
+      // 6：人工审核不通过
 
       var status = res.data;
 
@@ -276,10 +284,15 @@ apiready = function apiready() {
         // 待补充基本信息
         mapping.realAuth.status = 1;
         mapping.faceAuth.status = 1;
+      } else if (status === 6) {
+        // 6：人工审核不通过
+        mapping.realAuth.status = 1;
+        mapping.faceAuth.status = 3;
       }
 
       cb(mapping);
     })["catch"](function (error) {
+      api.hideProgress();
       api.toast({
         msg: error.msg || '获取认证状态失败'
       });
@@ -303,10 +316,14 @@ apiready = function apiready() {
 
       if (status === 2) {
         type = 'authing';
+      }
+
+      if (status === 3) {
+        type = 'autherror';
       } // <span>图片模糊</span>
 
 
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            ").concat(status === 2 ? '<span class="icon"></span>' : '', "\n          </div>\n          <div class=\"pic\"></div>\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : status === 3 ? '<span>人工审核失败<br />请联系客服</span>' : '', "\n        </div>\n      ");
     }
   }
 

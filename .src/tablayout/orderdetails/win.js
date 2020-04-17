@@ -9,9 +9,9 @@ apiready = function () {
   let pageParam = api.pageParam || {}
   let { id, type } = pageParam // '9939393'
   if (type !== 'daiZhiFu') {
+    $api.byId('plan').style.display = 'block'
     $api.byId('payDetails').style.display = 'block'
     $api.byId('repayDetails').style.display = 'block'
-    $api.byId('repayDetails').style.display = 'plan'
   }
 
   document.querySelector('#repayplan').onclick = function () {

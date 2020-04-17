@@ -77,8 +77,8 @@ apiready = function () {
           }
           </div>
           <div class="col">
-            <p>${item.introduce || ''}</p>
-            <p>${item.des || ''}</p>
+            <p class="otw">${item.introduce || ''}</p>
+            <p class="otw">${item.des || ''}</p>
           </div>
           <div class="col">
             <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>

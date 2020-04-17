@@ -4,6 +4,7 @@ import './frm0.css'
 
 import { openOrderDetails } from '../../webview.js'
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -26,7 +27,7 @@ apiready = function () {
       } else if (pageNo === 1) {
         // api.toast({ msg: '无数据'})
       } else {
-        // api.toast({ msg: '无更多数据'})
+        api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
@@ -77,10 +78,10 @@ apiready = function () {
           <div class="b">
             <div class="tit">
               <span>支付金额（元）</span>
-              <span>${item.payAmount}</span>
+              <span>${numeral(item.payAmount).format('0,0.00')}</span>
             </div>
             <div class="msg">
-              订单金额：${item.totalAmount}
+              订单金额：${numeral(item.totalAmount).format('0,0.00')}
             </div>
           </div>
         </li>

@@ -13,8 +13,14 @@ apiready = function() {
   let { userType } = userinfo
 
   function getStatus (cb) {
+    api.showProgress({
+      title: '加载中...',
+      text: '',
+      modal: false
+    })
     http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
-      let mapping = { // 0未通过，1通过，2人工审核
+      api.hideProgress()
+      let mapping = { // 0未通过，1通过，2人工审核，3人工审核不通过
         realAuth: { status: 0, msg: '' },
         faceAuth: { status: 0, msg: '' },
         baseinfo: { status: 0, msg: '' },
@@ -25,6 +31,7 @@ apiready = function() {
       // 3：待人脸审核
       // 4：人脸认证失败，待人工审核
       // 5：待补充基本信息
+      // 6：人工审核不通过
       let status = res.data
       if (status === 1) { // 认证全部通过
         mapping.realAuth.status = 1
@@ -38,9 +45,13 @@ apiready = function() {
       } else if (status === 5) { // 待补充基本信息
         mapping.realAuth.status = 1
         mapping.faceAuth.status = 1
+      } else if (status === 6) { // 6：人工审核不通过
+        mapping.realAuth.status = 1
+        mapping.faceAuth.status = 3
       }
       cb(mapping)
     }).catch(error => {
+      api.hideProgress()
       api.toast({
         msg: error.msg || '获取认证状态失败'
       })
@@ -97,15 +108,23 @@ apiready = function() {
       if (status === 2) {
         type = 'authing'
       }
+      if (status === 3) {
+        type = 'autherror'
+      }
       $api.byId('step2').innerHTML = `
         <div class="auth-block2 ${type}" id="faceAuthResult">
           <div class="badge">2</div>
           <div class="text">
             <strong>人脸认证</strong>
-            ${status === 2 ? '<span class="icon"></span>' : ''}
           </div>
           <div class="pic"></div>
-          ${status === 1 ? '<span>通过</span>' : ''}
+          ${
+            status === 1
+            ? '<span>通过</span>'
+            : status === 3
+            ? '<span>审核失败<br />请联系客服</span>'
+            : ''
+          }
         </div>
       `
     }

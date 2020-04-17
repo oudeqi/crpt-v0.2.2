@@ -1,9 +1,10 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane } from '../../webview.js'
+import { openLeftPane, openContactUs } from '../../webview.js'
 import { http } from '../../config.js'
 import moment from 'moment'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -80,6 +81,10 @@ apiready = function () {
   function appendList (data) {
     if (data.length > 0) {
       $api.byId('nodata').style.display = 'none'
+      $api.byId('tips').style.display = 'block'
+    } else {
+      $api.byId('nodata').style.display = 'block'
+      $api.byId('tips').style.display = 'none'
     }
     $api.byId('list').innerHTML = ''
     data.forEach(item => {
@@ -93,7 +98,7 @@ apiready = function () {
             <span class="data ${item.status === '4' ? 'red' : ''}">还款日 ${item.repayDate}</span>
           </div>
           <div class="row2">
-            <div class="txt"><div><strong>${item.repayAmount}</strong><span>(含服务费${item.serviceFee})</span></div>
+            <div class="txt"><div><strong>${numeral(item.repayAmount).format('0,0.00')}</strong><span>(含服务费${item.serviceFee || 0})</span></div>
             <i>${item.curPeriod}/${item.repayPeriod}期</i>
             </div>
             <div class="btn">还款</div>
@@ -105,10 +110,11 @@ apiready = function () {
   function appendTotal (data) {
     $api.byId('total').innerHTML = `
       <p>剩余待还(元)</p>
-      <p><strong>${data.remainderRepayAmount || '无'}</strong></p>
+      <p><strong>${numeral(data.remainderRepayAmount).format('0,0.00')}</strong></p>
       ${
-        data.remainderRepayAmount ? `<p>最近还款日期 <span>${data.latestRepayDate || '无'}</span></p>` : ''
+        data.remainderRepayAmount ? `<p>最近还款日期：<span>${data.latestRepayDate || '无'}</span></p>` : ''
       }
+      <p>全部待还：<span>${data.repayTotalAmount || '0'}元</span></p>
     `
   }
 
@@ -129,16 +135,9 @@ apiready = function () {
     })
   }
 
-  // function getDetails (id) {
-  //   http.get(`/crpt-order/order/detail/app?orderNo=${id}`).then(res => {
-  //
-  //   }).catch(error => {
-  //
-  //   })
-  // }
+  document.querySelector('#contactus').onclick = function (event) {
+    openContactUs()
+  }
 
-  // getPageData()
-
-  // getDetails('9939393')
 
 }

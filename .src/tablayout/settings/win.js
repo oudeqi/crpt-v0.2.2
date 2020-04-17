@@ -37,19 +37,21 @@ apiready = function () {
             location: 'middle',
             global: true
           })
-          let windows = api.windows()
-          if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(win => {
-              // 关闭非root、非登录注册页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/win') {
-                api.closeWin({
-                  name: win.name
-                })
-              }
-            })
-          }
-          $api.clearStorage()
-          openRegLogin()
+          // let windows = api.windows()
+          // if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
+          //   windows.forEach(win => {
+          //     // 关闭非root、非登录注册页
+          //     if (win.name !== 'root' && win.name !== 'html/reglogin/win') {
+          //       api.closeWin({
+          //         name: win.name
+          //       })
+          //     }
+          //   })
+          // }
+          setTimeout(() => {
+            $api.clearStorage()
+            openRegLogin()
+          }, 150)
         })
       }
     })

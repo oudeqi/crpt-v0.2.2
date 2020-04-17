@@ -330,7 +330,11 @@ function getInfo() {
     } else {
       $api.byId('prodopencount').innerHTML = '';
     }
-  })["catch"](function (error) {});
+  })["catch"](function (error) {
+    api.toast({
+      msg: error.msg || '获取信息失败'
+    });
+  });
 }
 
 apiready = function apiready() {

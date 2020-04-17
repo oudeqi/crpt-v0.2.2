@@ -6,6 +6,7 @@ import {
   openFindPwd, openSendCode
 } from '../../webview.js'
 import { http, openUIInput } from '../../config.js'
+import trim from 'lodash/trim'
 
 apiready = function() {
 
@@ -41,7 +42,7 @@ apiready = function() {
     $api.addCls($api.byId('tel_login'), 'loading')
     http.post('/crpt-cust/identification/gainenterprisephone', {
       body: {
-        account: companyName
+        account: trim(companyName)
       }
     }).then(res => {
       submitStatus = 'notsubmit'
