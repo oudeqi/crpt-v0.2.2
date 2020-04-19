@@ -33,11 +33,6 @@ function openAuthResult(status, message, title) {
     },
     bounces: true,
     slidBackEnabled: false,
-    // pageParam: {
-    //   type: type,
-    //   title: title,
-    //   message: message
-    // },
     navigationBar: {
       hideBackButton: false,
       background: '#1dc4a2',
@@ -279,7 +274,7 @@ function CitySelector(cb) {
   });
 }
 
-function UIInput2(dom) {
+function UIInput(dom) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var cb = arguments.length > 2 ? arguments[2] : undefined;
 
@@ -349,7 +344,7 @@ apiready = function apiready() {
     otherName: '',
     otherPhone: ''
   };
-  var userinfo = $api.getStorage('userinfo');
+  var userinfo = $api.getStorage('userinfo') || {};
   var userType = userinfo.userType;
   $api.byId('userType1').innerHTML = userType === '1' ? '个人' : '法定代表人';
   $api.byId('userType2').innerHTML = userType === '1' ? '个人' : '法定代表人'; // 婚姻状况 1：已婚   2：未婚 3：离异
@@ -414,7 +409,7 @@ apiready = function apiready() {
   }; // 详细地址
 
 
-  UIInput2($api.byId('addressDetails'), {
+  UIInput($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -431,7 +426,7 @@ apiready = function apiready() {
   }; // 姓名
 
 
-  UIInput2($api.byId('relationName'), {
+  UIInput($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -439,7 +434,7 @@ apiready = function apiready() {
     postData.relationName = value;
   }); // 手机号
 
-  UIInput2($api.byId('relationPhone'), {
+  UIInput($api.byId('relationPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11
@@ -447,7 +442,7 @@ apiready = function apiready() {
     postData.relationPhone = value;
   }); // 姓名
 
-  UIInput2($api.byId('otherName'), {
+  UIInput($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -455,7 +450,7 @@ apiready = function apiready() {
     postData.otherName = value;
   }); // 手机号
 
-  UIInput2($api.byId('otherPhone'), {
+  UIInput($api.byId('otherPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11

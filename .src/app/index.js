@@ -35,13 +35,14 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openFaceAuth()
-    openTabLayout()
+    openBaseinfoFill()
+    // openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
-    openRegLogin()
+    // openRegLogin()
+    openBaseinfoFill()
   }
 
   // 云修复完成

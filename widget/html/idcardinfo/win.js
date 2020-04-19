@@ -16,11 +16,6 @@ function openAuthResult(status, message, title) {
     },
     bounces: true,
     slidBackEnabled: false,
-    // pageParam: {
-    //   type: type,
-    //   title: title,
-    //   message: message
-    // },
     navigationBar: {
       hideBackButton: false,
       background: '#1dc4a2',
@@ -190,56 +185,6 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function UIInput2(dom) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var cb = arguments.length > 2 ? arguments[2] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      if (value) {
-        cb && cb(value.msg);
-      }
-    });
-  });
-}
-
 apiready = function apiready() {
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
   // let idcard = {
@@ -268,7 +213,7 @@ apiready = function apiready() {
       timelimit = pageParam.timelimit,
       front = pageParam.front,
       back = pageParam.back;
-  UIInput2($api.byId('name'), {
+  UIInput($api.byId('name'), {
     placeholder: '请输入',
     keyboardType: 'done',
     maxStringLength: 10

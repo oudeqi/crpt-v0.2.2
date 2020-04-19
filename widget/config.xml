@@ -1,14 +1,12 @@
- <widget id="A6038689491241"  version="0.0.1">
-    <name>IndustryFinance</name>
-    <description>
-        Example For APICloud.
-    </description>
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
-        Developer
-    </author>
-    <content src="html/app/index.html"/>
-    <access origin="*" />    <permission name="UIInput"/>
-    <preference name="pageBounce" value="false"/>
+ <widget id="A6038689491241"  version="0.0.1">  <name>IndustryFinance</name>
+  <description>
+    Example For APICloud.
+  </description>
+  <author email="developer@apicloud.com" href="http://www.apicloud.com">
+    Developer
+  </author>
+  <content src="html/app/index.html"/>
+  <access origin="*" />  <permission name="UIInput"/>  <preference name="pageBounce" value="false"/>  <preference name="softInputMode" value="auto"/>  <preference name="softInputBarEnabled" value="true" />
 	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
 	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
 	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>

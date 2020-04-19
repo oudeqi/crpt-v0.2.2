@@ -9,7 +9,6 @@ import { http, openUIInput, isPhoneNo, handleLoginSuccess } from '../../config.j
 import { Base64 } from 'js-base64'
 
 apiready = function() {
-
   // 表单数据
   let form = {}
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交

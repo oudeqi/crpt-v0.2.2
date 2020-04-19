@@ -423,11 +423,6 @@ function openAuthResult (status, message, title) { // status: success error duri
     },
     bounces: true,
     slidBackEnabled: false,
-    // pageParam: {
-    //   type: type,
-    //   title: title,
-    //   message: message
-    // },
     navigationBar: {
       hideBackButton: false,
       background: '#1dc4a2',

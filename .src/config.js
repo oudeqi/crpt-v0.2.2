@@ -314,7 +314,7 @@ function getPicture (sourceType, cb) {
   }, cb)
 }
 
-function UIInput2 (dom, options = {}, cb) {
+function UIInput (dom, options = {}, cb) {
   let UIInput = api.require('UIInput')
   let rect = $api.offset(dom)
   let {
@@ -370,5 +370,5 @@ export {
   CityList,
   CitySelector,
   getPicture,
-  UIInput2,
+  UIInput,
 }
