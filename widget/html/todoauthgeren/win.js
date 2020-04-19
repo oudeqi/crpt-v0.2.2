@@ -7,6 +7,7 @@ function openBaseinfoFill(pageParam) {
     url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
+    bounces: true,
     pageParam: pageParam
   });
 } // 打开待认证

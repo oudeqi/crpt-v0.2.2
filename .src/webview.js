@@ -246,6 +246,7 @@ function openBaseinfoFill (pageParam) {
     url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
+    bounces: true,
     pageParam,
   })
 }
