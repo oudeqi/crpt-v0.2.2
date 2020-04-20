@@ -20,6 +20,7 @@ apiready = function() {
     })
     http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
       api.hideProgress()
+      api.refreshHeaderLoadDone()
       let mapping = { // 0未通过，1通过，2人工审核，3人工审核不通过
         realAuth: { status: 0, msg: '' },
         faceAuth: { status: 0, msg: '' },
@@ -192,7 +193,7 @@ apiready = function() {
           })
           return
         }
-        if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2) {
+        if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2 || mapping.faceAuth.status === 3) {
           api.toast({
             msg: '请先完成第二步'
           })
@@ -237,4 +238,17 @@ apiready = function() {
   }, function(ret, err){
     initPage()
   })
+
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, function(ret, err) {
+    initPage()
+  })
+
 }

@@ -1,7 +1,7 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane, openProductDetails } from '../../webview.js'
+import { openLeftPane, openProductDetails, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
 import { http } from '../../config.js'
 import numeral from 'numeral'
 
@@ -24,6 +24,17 @@ apiready = function () {
   //     })
   //   }
   // })
+
+  document.querySelector('#body').onclick = function (event) {
+    let clickBtn = $api.closest(event.target, '.clickBtn')
+    if (clickBtn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...',
+      })
+    }
+  }
+
 
   api.addEventListener({
     name: 'keyback'
@@ -54,6 +65,16 @@ apiready = function () {
   let pageNo = 1
   let loading = false
 
+  function getStatus (cb) {
+    http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+      cb(res.data)
+    }).catch(error => {
+      api.toast({
+        msg: error.msg || '获取认证状态失败'
+      })
+    })
+  }
+
   function getPageData (cb) {
     if (loading) {
       return
@@ -81,26 +102,26 @@ apiready = function () {
     data.forEach(item => {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.id || ''}">
-          <div class="col1">
-          ${
-            item.totalLimit > 0
-            ? `
-            <div class="red">${numeral(item.totalLimit).format('0,0.00')}</div>
-            <p>最高可贷(元)</p>
-            `
-            : `
-            <div class="red">${item.interestRate}%</div>
-            <p>贷款利率</p>
-            `
-          }
+          <div class="l">
+            <div class="col">
+            ${
+              item.totalLimit > 0
+              ? `
+              <div class="otw red">${numeral(item.totalLimit).format('0,0.00')}</div>
+              <p>最高可贷(元)</p>
+              `
+              : `
+              <div class="otw red">${item.interestRate}%</div>
+              <p>贷款利率</p>
+              `
+            }
+            </div>
+            <div class="col">
+              <p class="otw">${item.introduce || ''}</p>
+              <p class="otw">${item.des || ''}</p>
+            </div>
           </div>
-          <div class="col2">
-            <p class="otw">${item.introduce || ''}</p>
-            <p class="otw">${item.des || ''}</p>
-          </div>
-          <div class="col3">
-            <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>
-          </div>
+          <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>
         </li>
       `)
     })
@@ -146,4 +167,23 @@ apiready = function () {
       }
     }
   }
+
+  // getStatus(function (status) {
+  //   // 认证状态 int
+  //   // 1：正常
+  //   // 2：待实名认证
+  //   // 3：待人脸审核
+  //   // 4：人脸认证失败，待人工审核
+  //   // 5：待补充基本信息
+  //   // 6：人工审核不通过
+  //   let userinfo = $api.getStorage('userinfo') || {}
+  //   let userType = userinfo.userType
+  //   if (status !== 1) {
+  //     if (userType === '1') {
+  //       openTodoAuthGeren()
+  //     } else {
+  //       openTodoAuthQiye()
+  //     }
+  //   }
+  // })
 }

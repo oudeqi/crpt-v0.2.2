@@ -9,6 +9,7 @@ apiready = function () {
   let pageParam = api.pageParam || {}
   let { id, type } = pageParam // '9939393'
   if (type !== 'daiZhiFu') {
+    $api.byId('title').style.display = 'block'
     $api.byId('plan').style.display = 'block'
     $api.byId('payDetails').style.display = 'block'
     $api.byId('repayDetails').style.display = 'block'
@@ -44,7 +45,7 @@ apiready = function () {
       $api.byId('payAmount').innerHTML = data.payAmount || ''
       $api.byId('saleCustName').innerHTML = data.saleCustName || ''
       $api.byId('orderTime').innerHTML = data.orderTime || ''
-      $api.byId('appCode').innerHTML = data.appCode || ''
+      $api.byId('appCode').innerHTML = data.appCode === '1' ? 'EBS' : ''
       $api.byId('totalAmount').innerHTML = data.totalAmount || ''
       $api.byId('productName').innerHTML = data.productName || ''
       let mapping = {

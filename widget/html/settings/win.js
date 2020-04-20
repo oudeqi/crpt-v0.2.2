@@ -65,7 +65,7 @@ var ajax = function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 60 : _ref$timeout;
 
   var include = whiteList.find(function (value) {
     return url.includes(value);

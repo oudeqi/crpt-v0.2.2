@@ -108,7 +108,7 @@ var ajax = function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 60 : _ref$timeout;
 
   var include = whiteList.find(function (value) {
     return url.includes(value);
@@ -245,6 +245,7 @@ apiready = function apiready() {
     });
     http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
       api.hideProgress();
+      api.refreshHeaderLoadDone();
       var mapping = {
         // 0未通过，1通过，2人工审核，3人工审核不通过
         realAuth: {
@@ -373,7 +374,7 @@ apiready = function apiready() {
           return;
         }
 
-        if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2) {
+        if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2 || mapping.faceAuth.status === 3) {
           api.toast({
             msg: '请先完成第二步'
           });
@@ -414,6 +415,17 @@ apiready = function apiready() {
 
   api.addEventListener({
     name: 'viewappear'
+  }, function (ret, err) {
+    initPage();
+  });
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
   }, function (ret, err) {
     initPage();
   });

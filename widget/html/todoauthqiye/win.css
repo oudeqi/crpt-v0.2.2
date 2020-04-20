@@ -246,7 +246,7 @@ html, body {
   height: 120px;
   border-radius: 3px;
   position: relative;
-  padding-left: 45px;
+  padding-left: 40px;
   padding-right: 25px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -347,7 +347,7 @@ html, body {
   height: 90px;
   border-radius: 3px;
   position: relative;
-  padding-left: 50px;
+  padding-left: 40px;
   padding-right: 25px;
   display: -webkit-box;
   display: -ms-flexbox;

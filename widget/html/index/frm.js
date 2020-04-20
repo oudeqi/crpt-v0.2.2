@@ -73,7 +73,7 @@ var ajax = function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 60 : _ref$timeout;
 
   var include = whiteList.find(function (value) {
     return url.includes(value);
@@ -1232,6 +1232,17 @@ apiready = function apiready() {
   //     })
   //   }
   // })
+  document.querySelector('#body').onclick = function (event) {
+    var clickBtn = $api.closest(event.target, '.clickBtn');
+
+    if (clickBtn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...'
+      });
+    }
+  };
+
   api.addEventListener({
     name: 'keyback'
   }, function (ret, err) {
@@ -1291,7 +1302,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"col1\">\n          ").concat(item.totalLimit > 0 ? "\n            <div class=\"red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n            <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n            ") : "\n            <div class=\"red\">".concat(item.interestRate, "%</div>\n            <p>\u8D37\u6B3E\u5229\u7387</p>\n            "), "\n          </div>\n          <div class=\"col2\">\n            <p class=\"otw\">").concat(item.introduce || '', "</p>\n            <p class=\"otw\">").concat(item.des || '', "</p>\n          </div>\n          <div class=\"col3\">\n            <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
     });
     api.parseTapmode();
   }
@@ -1337,5 +1348,23 @@ apiready = function apiready() {
         });
       }
     }
-  };
+  }; // getStatus(function (status) {
+  //   // 认证状态 int
+  //   // 1：正常
+  //   // 2：待实名认证
+  //   // 3：待人脸审核
+  //   // 4：人脸认证失败，待人工审核
+  //   // 5：待补充基本信息
+  //   // 6：人工审核不通过
+  //   let userinfo = $api.getStorage('userinfo') || {}
+  //   let userType = userinfo.userType
+  //   if (status !== 1) {
+  //     if (userType === '1') {
+  //       openTodoAuthGeren()
+  //     } else {
+  //       openTodoAuthQiye()
+  //     }
+  //   }
+  // })
+
 };

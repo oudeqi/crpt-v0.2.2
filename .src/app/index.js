@@ -36,14 +36,13 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openIDcardUpload()
     openTabLayout()
+    // openIDcardUpload()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
     openRegLogin()
-    // openBaseinfoFill()
   }
 
   // 云修复完成

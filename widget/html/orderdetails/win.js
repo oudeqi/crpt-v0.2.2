@@ -80,7 +80,7 @@ var ajax = function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 15 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 60 : _ref$timeout;
 
   var include = whiteList.find(function (value) {
     return url.includes(value);
@@ -211,6 +211,7 @@ apiready = function apiready() {
       type = pageParam.type; // '9939393'
 
   if (type !== 'daiZhiFu') {
+    $api.byId('title').style.display = 'block';
     $api.byId('plan').style.display = 'block';
     $api.byId('payDetails').style.display = 'block';
     $api.byId('repayDetails').style.display = 'block';
@@ -246,7 +247,7 @@ apiready = function apiready() {
       $api.byId('payAmount').innerHTML = data.payAmount || '';
       $api.byId('saleCustName').innerHTML = data.saleCustName || '';
       $api.byId('orderTime').innerHTML = data.orderTime || '';
-      $api.byId('appCode').innerHTML = data.appCode || '';
+      $api.byId('appCode').innerHTML = data.appCode === '1' ? 'EBS' : '';
       $api.byId('totalAmount').innerHTML = data.totalAmount || '';
       $api.byId('productName').innerHTML = data.productName || '';
       var mapping = {

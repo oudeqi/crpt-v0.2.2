@@ -13,7 +13,7 @@ apiready = function(){
   let access_token = ''
 
   function initPage () {
-    userinfo = $api.getStorage('userinfo')
+    userinfo = $api.getStorage('userinfo') || {}
     name = userinfo.name
     userType = userinfo.userType
     access_token = userinfo.access_token

@@ -18,29 +18,27 @@ li {
   background: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 12px;
-}
-.col1 {
-  flex-grow: 1;
-}
-.col2 {
-  width: 130px;
-  flex-shrink: 0;
-  text-align: center;
-  & .otw {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-    text-align: center;
+  & .l {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 1;
+    & .col {
+      width: 50%;
+    }
   }
 }
-.col3 {
-  width: 80px;
-  flex-shrink: 0;
+
+.otw {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
+
 .btn {
+  flex-shrink: 0;
   background: #1dc4a2;
   color: #fff;
   height: 30px;
@@ -97,5 +95,91 @@ li {
   }
 }
 .banner {
+  padding: 10px;
+  padding-bottom: 15px;
+  background-color: #eaf7f9;
+  & img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
 
+.high {
+  & .tit {
+    color: #333;
+    font-weight: bold;
+    padding: 20px 15px 5px;
+  }
+  & .body {
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    & .high_item {
+      width: 50%;
+      text-align: center;
+      background-color: #fff;
+      margin: 4px;
+      border-radius: 4px;
+      padding-bottom: 5px;
+      & .row1 {
+        padding-top: 10px;
+        color: #888;
+      }
+      & .row2 {
+        color: #c20015;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      & .row3 {
+        color: #888;
+        font-size: 14px;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+.low {
+  & .tit {
+    color: #333;
+    font-weight: bold;
+    padding: 15px 15px 5px;
+  }
+  & .body {
+    padding: 0 10px;
+    & .row {
+      margin-bottom: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      & .l {
+        width: 100px;
+        flex-shrink: 0;
+        & strong {
+          font-size: 30px;
+          color: #c20015;
+        }
+        & span {
+          font-size: 14px;
+          color: #888;
+        }
+      }
+      & .r {
+        flex-grow: 1;
+        & strong {
+          font-size: 18px;
+          color: #444;
+          font-weight: normal;
+        }
+        & span {
+          font-size: 15px;
+          color: #888;
+        }
+      }
+
+    }
+  }
 }

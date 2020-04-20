@@ -129,12 +129,12 @@ function openRegLogin() {
 apiready = function apiready() {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    // openIDcardUpload()
-    openTabLayout(); // openBillDetails()
+    openTabLayout(); // openIDcardUpload()
+    // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
-    openRegLogin(); // openBaseinfoFill()
+    openRegLogin();
   } // 云修复完成
 
 

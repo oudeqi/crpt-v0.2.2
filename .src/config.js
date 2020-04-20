@@ -14,7 +14,7 @@ const whiteList = [
   '/auth/oauth/token',
   '/auth/token/' // 退出登录
 ]
-const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 15} = {}) => {
+const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} = {}) => {
   let include = whiteList.find(value => url.includes(value))
   return new Promise((resolve, reject) => {
     let userinfo = $api.getStorage('userinfo')

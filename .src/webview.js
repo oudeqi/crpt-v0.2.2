@@ -261,6 +261,9 @@ function openTodoAuthGeren () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
     navigationBar: {
       hideBackButton: false,
       background: '#1dc4a2',
@@ -279,6 +282,9 @@ function openTodoAuthQiye () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
     navigationBar: {
       hideBackButton: false,
       background: '#1dc4a2',
