@@ -308,13 +308,13 @@ function getPicture (sourceType, cb) {
     destinationType: 'file',
     allowEdit: true,
     quality: 100,
-    // targetWidth: 400,
+    targetWidth: 1000,
     // targetHeight: 300,
     saveToPhotoAlbum: false
   }, cb)
 }
 
-function UIInput (dom, options = {}, cb) {
+function initUIInput (dom, options = {}, cb) {
   let UIInput = api.require('UIInput')
   let rect = $api.offset(dom)
   let {
@@ -370,5 +370,5 @@ export {
   CityList,
   CitySelector,
   getPicture,
-  UIInput,
+  initUIInput,
 }

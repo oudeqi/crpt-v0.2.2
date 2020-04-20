@@ -12,8 +12,8 @@ apiready = function() {
     url: 'widget://html/baseinfofill/frm.html',
     bgColor: '#efefef',
     reload: true,
+    bounces: true,
     pageParam,
-    bounces: false,
     rect: {
       x: 0,
       y: headerPos.h,

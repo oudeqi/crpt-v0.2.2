@@ -22,6 +22,7 @@ import {
   openBillDetails,
   openOrderList,
   openMyProduct,
+  openMyQuota,
   openSettings,
   openContactUs,
   openProductDetails
@@ -35,14 +36,14 @@ import {
 apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openBaseinfoFill()
-    // openTabLayout()
+    // openIDcardUpload()
+    openTabLayout()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
   } else {
-    // openRegLogin()
-    openBaseinfoFill()
+    openRegLogin()
+    // openBaseinfoFill()
   }
 
   // 云修复完成

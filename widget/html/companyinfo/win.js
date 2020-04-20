@@ -179,7 +179,7 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function openUIInput(dom) {
+function initUIInput(dom) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var cb = arguments.length > 2 ? arguments[2] : undefined;
 
@@ -238,28 +238,28 @@ apiready = function apiready() {
     name: '',
     frID: ''
   };
-  openUIInput($api.byId('companyName'), {
+  initUIInput($api.byId('companyName'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40
   }, function (value) {
     postData.companyName = value;
   });
-  openUIInput($api.byId('code'), {
+  initUIInput($api.byId('code'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40
   }, function (value) {
     postData.code = value;
   });
-  openUIInput($api.byId('name'), {
+  initUIInput($api.byId('name'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 10
   }, function (value) {
     postData.name = value;
   });
-  openUIInput($api.byId('frID'), {
+  initUIInput($api.byId('frID'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40

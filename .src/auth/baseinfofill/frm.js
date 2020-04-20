@@ -2,7 +2,7 @@ import '../../app.css'
 import './frm.css'
 
 import { openAuthResult, openCityList } from '../../webview.js'
-import { http, ActionSheet, CitySelector, UIInput } from '../../config.js'
+import { http, ActionSheet, CitySelector, initUIInput } from '../../config.js'
 
 apiready = function() {
 
@@ -86,7 +86,7 @@ apiready = function() {
   }
 
   // 详细地址
-  UIInput($api.byId('addressDetails'), {
+  initUIInput($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -104,7 +104,7 @@ apiready = function() {
   }
 
   // 姓名
-  UIInput($api.byId('relationName'), {
+  initUIInput($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -113,7 +113,7 @@ apiready = function() {
   })
 
   // 手机号
-  UIInput($api.byId('relationPhone'), {
+  initUIInput($api.byId('relationPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11
@@ -122,7 +122,7 @@ apiready = function() {
   })
 
   // 姓名
-  UIInput($api.byId('otherName'), {
+  initUIInput($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -131,7 +131,7 @@ apiready = function() {
   })
 
   // 手机号
-  UIInput($api.byId('otherPhone'), {
+  initUIInput($api.byId('otherPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11

@@ -1215,6 +1215,23 @@ return numeral;
 });
 
 apiready = function apiready() {
+  // api.setTabLayoutAttr({
+  //   hideNavigationBar: true
+  // })
+  //
+  // api.addEventListener({
+  //   name:'tabframe'
+  // }, function(ret, err){
+  //   if (ret.name === 'tablayout/index') {
+  //     api.setTabLayoutAttr({
+  //       hideNavigationBar: true
+  //     })
+  //   } else {
+  //     api.setTabLayoutAttr({
+  //       hideNavigationBar: false
+  //     })
+  //   }
+  // })
   api.addEventListener({
     name: 'keyback'
   }, function (ret, err) {
@@ -1274,7 +1291,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"col\">\n          ").concat(item.totalLimit > 0 ? "\n            <div class=\"red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n            <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n            ") : "\n            <div class=\"red\">".concat(item.interestRate, "%</div>\n            <p>\u8D37\u6B3E\u5229\u7387</p>\n            "), "\n          </div>\n          <div class=\"col\">\n            <p class=\"otw\">").concat(item.introduce || '', "</p>\n            <p class=\"otw\">").concat(item.des || '', "</p>\n          </div>\n          <div class=\"col\">\n            <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"col1\">\n          ").concat(item.totalLimit > 0 ? "\n            <div class=\"red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n            <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n            ") : "\n            <div class=\"red\">".concat(item.interestRate, "%</div>\n            <p>\u8D37\u6B3E\u5229\u7387</p>\n            "), "\n          </div>\n          <div class=\"col2\">\n            <p class=\"otw\">").concat(item.introduce || '', "</p>\n            <p class=\"otw\">").concat(item.des || '', "</p>\n          </div>\n          <div class=\"col3\">\n            <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
     });
     api.parseTapmode();
   }

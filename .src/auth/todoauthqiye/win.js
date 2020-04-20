@@ -117,7 +117,7 @@ apiready = function() {
         <div class="auth-block2 ${type}" id="faceAuthResult">
           <div class="badge">2</div>
           <div class="text">
-            <strong>人脸认证</strong>
+            <strong>法定代表人脸认证</strong>
           </div>
           <div class="pic"></div>
           ${

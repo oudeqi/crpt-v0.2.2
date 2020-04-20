@@ -274,7 +274,7 @@ function CitySelector(cb) {
   });
 }
 
-function UIInput(dom) {
+function initUIInput(dom) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var cb = arguments.length > 2 ? arguments[2] : undefined;
 
@@ -409,7 +409,7 @@ apiready = function apiready() {
   }; // 详细地址
 
 
-  UIInput($api.byId('addressDetails'), {
+  initUIInput($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -426,7 +426,7 @@ apiready = function apiready() {
   }; // 姓名
 
 
-  UIInput($api.byId('relationName'), {
+  initUIInput($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -434,7 +434,7 @@ apiready = function apiready() {
     postData.relationName = value;
   }); // 手机号
 
-  UIInput($api.byId('relationPhone'), {
+  initUIInput($api.byId('relationPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11
@@ -442,7 +442,7 @@ apiready = function apiready() {
     postData.relationPhone = value;
   }); // 姓名
 
-  UIInput($api.byId('otherName'), {
+  initUIInput($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
     maxStringLength: 40
@@ -450,7 +450,7 @@ apiready = function apiready() {
     postData.otherName = value;
   }); // 手机号
 
-  UIInput($api.byId('otherPhone'), {
+  initUIInput($api.byId('otherPhone'), {
     placeholder: '请输入',
     keyboardType: 'number',
     maxStringLength: 11

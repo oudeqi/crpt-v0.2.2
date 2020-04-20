@@ -324,7 +324,7 @@ apiready = function apiready() {
       } // <span>图片模糊</span>
 
 
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : status === 3 ? '<span>人工审核失败<br />请联系客服</span>' : '', "\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u8138\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : status === 3 ? '<span>人工审核失败<br />请联系客服</span>' : '', "\n        </div>\n      ");
     }
   }
 

@@ -7,6 +7,24 @@ import numeral from 'numeral'
 
 apiready = function () {
 
+  // api.setTabLayoutAttr({
+  //   hideNavigationBar: true
+  // })
+  //
+  // api.addEventListener({
+  //   name:'tabframe'
+  // }, function(ret, err){
+  //   if (ret.name === 'tablayout/index') {
+  //     api.setTabLayoutAttr({
+  //       hideNavigationBar: true
+  //     })
+  //   } else {
+  //     api.setTabLayoutAttr({
+  //       hideNavigationBar: false
+  //     })
+  //   }
+  // })
+
   api.addEventListener({
     name: 'keyback'
   }, function(ret, err) {
@@ -63,7 +81,7 @@ apiready = function () {
     data.forEach(item => {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.id || ''}">
-          <div class="col">
+          <div class="col1">
           ${
             item.totalLimit > 0
             ? `
@@ -76,11 +94,11 @@ apiready = function () {
             `
           }
           </div>
-          <div class="col">
+          <div class="col2">
             <p class="otw">${item.introduce || ''}</p>
             <p class="otw">${item.des || ''}</p>
           </div>
-          <div class="col">
+          <div class="col3">
             <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>
           </div>
         </li>

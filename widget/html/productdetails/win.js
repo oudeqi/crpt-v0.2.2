@@ -168,7 +168,11 @@ apiready = function apiready() {
       $api.byId('interestRate').innerHTML = res.data.interestRate;
       $api.byId('account').innerHTML = res.data.account;
       $api.byId('introduce').innerHTML = res.data.introduce;
-    })["catch"](function (error) {});
+    })["catch"](function (error) {
+      api.toast({
+        msg: error.msg || '获取产品详情失败'
+      });
+    });
   }
 
   getDetails(id);

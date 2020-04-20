@@ -3,7 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo, openAuthResult } from '../../webview.js'
-import { http, UIInput } from '../../config.js'
+import { http, initUIInput } from '../../config.js'
 
 apiready = function() {
 
@@ -30,7 +30,7 @@ apiready = function() {
     nation, authority, timelimit, front, back
   } = pageParam
 
-  UIInput($api.byId('name'), {
+  initUIInput($api.byId('name'), {
     placeholder: '请输入',
     keyboardType: 'done',
     maxStringLength: 10

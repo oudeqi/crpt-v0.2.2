@@ -16,7 +16,9 @@ apiready = function () {
       $api.byId('account').innerHTML = res.data.account
       $api.byId('introduce').innerHTML = res.data.introduce
     }).catch(error => {
-
+      api.toast({
+        msg: error.msg || '获取产品详情失败'
+      })
     })
   }
 

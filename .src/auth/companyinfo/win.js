@@ -3,54 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill,
 openIDcardUpload } from '../../webview.js'
-import { http } from '../../config.js'
-
-function openUIInput (dom, options = {}, cb) {
-  let UIInput = api.require('UIInput')
-  let rect = $api.offset(dom)
-  let {
-    maxRows,
-    maxStringLength,
-    inputType,
-    placeholder,
-    keyboardType,
-    alignment,
-    isCenterVertical
-  } = options
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength,
-    inputType,
-    placeholder,
-    keyboardType,
-    alignment,
-    isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    },
-  }, function (ret) {
-    UIInput.value({ id: ret.id }, function(value) {
-      if (value) {
-        cb && cb(value.msg)
-      }
-    })
-  })
-}
-
+import { http, initUIInput } from '../../config.js'
 
 apiready = function() {
 
@@ -62,7 +15,7 @@ apiready = function() {
     frID: ''
   }
 
-  openUIInput($api.byId('companyName'), {
+  initUIInput($api.byId('companyName'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40
@@ -70,7 +23,7 @@ apiready = function() {
     postData.companyName = value
   })
 
-  openUIInput($api.byId('code'), {
+  initUIInput($api.byId('code'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40
@@ -78,7 +31,7 @@ apiready = function() {
     postData.code = value
   })
 
-  openUIInput($api.byId('name'), {
+  initUIInput($api.byId('name'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 10
@@ -86,7 +39,7 @@ apiready = function() {
     postData.name = value
   })
 
-  openUIInput($api.byId('frID'), {
+  initUIInput($api.byId('frID'), {
     placeholder: '请输入...',
     keyboardType: 'next',
     maxStringLength: 40
