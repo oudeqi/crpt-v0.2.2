@@ -17,6 +17,51 @@ function openLeftPane() {
 } // 抽布局
 
 
+function openTodoAuthGeren() {
+  api.openTabLayout({
+    name: 'html/todoauthgeren/win',
+    title: '待完成',
+    url: 'widget://html/todoauthgeren/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+}
+
+function openTodoAuthQiye() {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待完成',
+    url: 'widget://html/todoauthqiye/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 企业信息确认
+
+
 function openProductDetails(id) {
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -1269,6 +1314,16 @@ apiready = function apiready() {
   var pageNo = 1;
   var loading = false;
 
+  function getStatus(cb) {
+    http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+      cb(res.data);
+    })["catch"](function (error) {
+      api.toast({
+        msg: error.msg || '获取认证状态失败'
+      });
+    });
+  }
+
   function getPageData(cb) {
     if (loading) {
       return;
@@ -1348,23 +1403,25 @@ apiready = function apiready() {
         });
       }
     }
-  }; // getStatus(function (status) {
-  //   // 认证状态 int
-  //   // 1：正常
-  //   // 2：待实名认证
-  //   // 3：待人脸审核
-  //   // 4：人脸认证失败，待人工审核
-  //   // 5：待补充基本信息
-  //   // 6：人工审核不通过
-  //   let userinfo = $api.getStorage('userinfo') || {}
-  //   let userType = userinfo.userType
-  //   if (status !== 1) {
-  //     if (userType === '1') {
-  //       openTodoAuthGeren()
-  //     } else {
-  //       openTodoAuthQiye()
-  //     }
-  //   }
-  // })
+  };
 
+  getStatus(function (status) {
+    // 认证状态 int
+    // 1：正常
+    // 2：待实名认证
+    // 3：待人脸审核
+    // 4：人脸认证失败，待人工审核
+    // 5：待补充基本信息
+    // 6：人工审核不通过
+    var userinfo = $api.getStorage('userinfo') || {};
+    var userType = userinfo.userType;
+
+    if (status !== 1) {
+      if (userType === '1') {
+        openTodoAuthGeren();
+      } else {
+        openTodoAuthQiye();
+      }
+    }
+  });
 };

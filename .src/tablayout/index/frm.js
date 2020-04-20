@@ -168,22 +168,23 @@ apiready = function () {
     }
   }
 
-  // getStatus(function (status) {
-  //   // 认证状态 int
-  //   // 1：正常
-  //   // 2：待实名认证
-  //   // 3：待人脸审核
-  //   // 4：人脸认证失败，待人工审核
-  //   // 5：待补充基本信息
-  //   // 6：人工审核不通过
-  //   let userinfo = $api.getStorage('userinfo') || {}
-  //   let userType = userinfo.userType
-  //   if (status !== 1) {
-  //     if (userType === '1') {
-  //       openTodoAuthGeren()
-  //     } else {
-  //       openTodoAuthQiye()
-  //     }
-  //   }
-  // })
+  getStatus(function (status) {
+    // 认证状态 int
+    // 1：正常
+    // 2：待实名认证
+    // 3：待人脸审核
+    // 4：人脸认证失败，待人工审核
+    // 5：待补充基本信息
+    // 6：人工审核不通过
+    let userinfo = $api.getStorage('userinfo') || {}
+    let userType = userinfo.userType
+    if (status !== 1) {
+      if (userType === '1') {
+        openTodoAuthGeren()
+      } else {
+        openTodoAuthQiye()
+      }
+    }
+  })
+
 }

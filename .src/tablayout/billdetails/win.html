@@ -9,18 +9,18 @@
 </head>
 <body>
   <div class="header">
-    <div class="date">2019年9月15日账单</div>
+    <div class="date"><span id="billDate">XXXX年X月X日</span>账单</div>
     <div class="txt1">应还(元)</div>
-    <div class="txt2">3,101,00</div>
-    <div class="txt1">本金2,000.00 + 费用900.22 + 逾期罚息109.20</div>
+    <div class="txt2" id="sumRepayTotalAmount">****</div>
+    <div class="txt1">本金 <span id="sumRepayPrincipalAmount">****</span> + 费用 <span id="sumServiceFee">****</span> + 逾期罚息 <span id="sumRepayPenaltyAmount">****</span></div>
     <div class="txt3">
-      还款日将自动还款，请确保您的<strong>招商银行卡(尾号9999)</strong>
+      还款日将自动还款，请确保您的<strong><span id="bankName">***</span>卡(尾号<span id="account">****</span>)</strong>
       余额充足
     </div>
   </div>
 
   <ul id="list">
-    <li>
+    <!-- <li>
       <div class="t">
         <div class="tit">
           <span>应还</span>
@@ -35,7 +35,7 @@
         <span>支付2,000元</span>
         <span>第4/12期</span>
       </div>
-    </li>
+    </li> -->
 
   </ul>
 
