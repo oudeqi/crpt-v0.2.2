@@ -228,7 +228,7 @@ function getPicture(sourceType, cb) {
     encodingType: 'png',
     mediaValue: 'pic',
     destinationType: 'file',
-    allowEdit: true,
+    allowEdit: false,
     quality: 100,
     targetWidth: 1000,
     // targetHeight: 300,

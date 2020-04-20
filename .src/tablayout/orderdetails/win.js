@@ -3,6 +3,7 @@ import './win.css'
 
 import { openRepayPlan, openRepayRecord } from '../../webview.js'
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -41,13 +42,15 @@ apiready = function () {
     // productName	String	(借贷的)产品名称
     // status int 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销 7-还款中 8-逾期 9-已还清
       let data = res.data || {}
+      $api.byId('surplusPrincipalAmount').innerHTML = data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : ''
       $api.byId('orderNo').innerHTML = data.orderNo || ''
-      $api.byId('payAmount').innerHTML = data.payAmount || ''
+      $api.byId('payAmount').innerHTML = data.payAmount ? numeral(data.payAmount).format('0,0.00') : ''
       $api.byId('saleCustName').innerHTML = data.saleCustName || ''
       $api.byId('orderTime').innerHTML = data.orderTime || ''
       $api.byId('appCode').innerHTML = data.appCode === '1' ? 'EBS' : ''
       $api.byId('totalAmount').innerHTML = data.totalAmount || ''
       $api.byId('productName').innerHTML = data.productName || ''
+
       let mapping = {
         1: '未支付',
         2: '支付成功',
