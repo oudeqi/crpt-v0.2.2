@@ -37,21 +37,24 @@ apiready = function () {
   }
 
   function appendList (data) {
+    // 3-逾期 4-已还清  5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
     let mapping = {
-      4: 'cancel',
+      3: 'warning',
+      4: 'repaied',
       5: 'cancel',
       6: 'cancel',
-      7: 'during',
-      8: 'warning',
-      9: 'repaied',
+      7: 'cancel',
+      8: 'cancel',
+      9: 'during',
     }
     let mapping2 = {
-      4: '退货',
+      3: '逾期',
+      4: '已还清',
       5: '过期失效',
       6: '已撤销',
-      7: '还款中',
-      8: '逾期',
-      9: '已还清',
+      7: '已退货',
+      8: '赊销退货',
+      9: '还款中',
     }
     data.forEach(item => {
       $api.append($api.byId('list'), `

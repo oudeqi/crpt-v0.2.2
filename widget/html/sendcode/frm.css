@@ -225,17 +225,9 @@ html, body {
 .link-btns {
   height: 50px;
   font-size: 15px;
-  padding-left: 15px;
-  padding-right: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  padding: 20px;
+  color: #1dc4a2;
+  text-align: center;
 }
 .code-ipt {
   margin-top: 50px;
@@ -316,5 +308,5 @@ html, body {
     }
 
 .btn-box {
-  margin-top: 100px;
+  margin-top: 90px;
 }

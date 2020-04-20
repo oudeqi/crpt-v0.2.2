@@ -14,8 +14,8 @@ apiready = function () {
       $api.byId('name').innerHTML = res.data.name
       $api.byId('totalLimit').innerHTML = res.data.totalLimit ? numeral(res.data.totalLimit).format('0,0') : ''
       $api.byId('interestRate').innerHTML = res.data.interestRate ? (res.data.interestRate + '%') : ''
-      $api.byId('account').innerHTML = res.data.account
-      $api.byId('introduce').innerHTML = res.data.introduce
+      $api.byId('account').innerHTML = res.data.account || ''
+      $api.byId('introduce').innerHTML = res.data.introduce || ''
     }).catch(error => {
       api.toast({
         msg: error.msg || '获取产品详情失败'

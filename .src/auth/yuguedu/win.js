@@ -13,9 +13,9 @@ apiready = function() {
   $api.byId('name').innerHTML = name
 
   function getPageData () {
-    http.get('/crpt-credit/credit/credit/amount').then(res => {
+    http.get('/crpt-credit/credit/creditpre/amount').then(res => {
       const data = res.data || {}
-      $api.byId('edu').innerHTML = numeral(data.limitAmount).format('0,0') || '****'
+      $api.byId('edu').innerHTML = numeral(data.creditAmount).format('0,0') || '****'
     }).catch(error => {
       api.toast({
         msg: error.msg || '获取数据失败'

@@ -234,7 +234,7 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
-  var userinfo = $api.getStorage('userinfo');
+  var userinfo = $api.getStorage('userinfo') || {};
   var userType = userinfo.userType;
 
   function getStatus(cb) {

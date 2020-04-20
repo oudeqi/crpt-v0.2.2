@@ -329,6 +329,10 @@ var openUIInput = function openUIInput(dom, form, key) {
     });
   });
 };
+
+var isPhoneNo = function isPhoneNo(phone) {
+  return /^1[3456789]\d{9}$/.test(phone);
+}; // let userinfo = {
 //   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
 //   "token_type":"bearer",
 //   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
@@ -363,7 +367,15 @@ apiready = function apiready() {
     keyboardType: 'done',
     maxStringLength: 6
   });
-  $api.byId('tel').innerHTML = tel;
+
+  if (tel && isPhoneNo(tel)) {
+    var a = tel.substring(0, 4);
+    var b = tel.substr(7, 4);
+    $api.byId('tel').innerHTML = a + '****' + b;
+  } else {
+    $api.byId('tel').innerHTML = '';
+  }
+
   var apLoginBtn = document.querySelector('#ap_login');
 
   if (userType === 1) {

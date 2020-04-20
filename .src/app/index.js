@@ -37,6 +37,10 @@ apiready = function () {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
     openTabLayout()
+    // openSendCode({
+    //   tel: '18989193368',
+    //   userType: 2
+    // })
     // openIDcardUpload()
     // openBillDetails()
     // openTodoAuthGeren()

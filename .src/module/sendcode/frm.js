@@ -5,7 +5,7 @@ import {
   openReg, openGerenLogin, openQiyeLogin,
   openFindPwd, openSendCode, openTabLayout
 } from '../../webview.js'
-import { http, openUIInput, handleLoginSuccess } from '../../config.js'
+import { http, openUIInput, handleLoginSuccess, isPhoneNo } from '../../config.js'
 
 apiready = function() {
 
@@ -19,8 +19,13 @@ apiready = function() {
     keyboardType: 'done',
     maxStringLength: 6
   })
-
-  $api.byId('tel').innerHTML = tel
+  if (tel && isPhoneNo(tel)) {
+    let a = tel.substring(0, 4)
+    let b = tel.substr(7, 4)
+    $api.byId('tel').innerHTML = a + '****' + b
+  } else {
+    $api.byId('tel').innerHTML = ''
+  }
   let apLoginBtn = document.querySelector('#ap_login')
   if (userType === 1) { // 个人登录
     sendCode()

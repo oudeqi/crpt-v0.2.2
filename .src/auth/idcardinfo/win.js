@@ -43,15 +43,21 @@ apiready = function() {
   let iptIndex = api.systemType === 'ios' ? 1 : 0
   UIInput.insertValue({
     index: iptIndex,
-    msg: name
+    msg: name || ''
   })
-  $api.byId('number').innerHTML = number
-  $api.byId('authority').innerHTML = authority
-  $api.byId('timelimit').innerHTML = timelimit
-  $api.byId('nation').innerHTML = nation
-  $api.byId('address').innerHTML = address
+  $api.byId('number').innerHTML = number || ''
+  $api.byId('authority').innerHTML = authority || ''
+  $api.byId('timelimit').innerHTML = timelimit || ''
+  $api.byId('nation').innerHTML = nation || ''
+  $api.byId('address').innerHTML = address || ''
 
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, (ret, err) => {
+    if (ret.index === 0) {
+      api.closeWin()
+    }
+  })
 
   document.querySelector('#retry').onclick = function () {
     api.closeWin()

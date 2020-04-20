@@ -207,6 +207,7 @@
 
 html, body {
   height: 100%;
+  background-color: #fff;
 }
 .container {
   padding: 40px 30px;
@@ -222,10 +223,10 @@ h1 {
 }
 section {
   margin-top: 30px;
-  border-bottom: 1px solid #ededed
+  border-bottom: 1px solid #666
 }
 section h2 {
-    color: #bbb;
+    color: #666;
     font-size: 14px;
     line-height: 1;
     font-weight: bold;

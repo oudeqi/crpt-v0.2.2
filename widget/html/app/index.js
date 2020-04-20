@@ -129,7 +129,11 @@ function openRegLogin() {
 apiready = function apiready() {
   // $api.clearStorage()
   if ($api.getStorage('userinfo')) {
-    openTabLayout(); // openIDcardUpload()
+    openTabLayout(); // openSendCode({
+    //   tel: '18989193368',
+    //   userType: 2
+    // })
+    // openIDcardUpload()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()

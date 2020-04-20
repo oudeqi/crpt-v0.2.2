@@ -9,7 +9,7 @@ import { http } from '../../config.js'
 
 apiready = function() {
 
-  let userinfo = $api.getStorage('userinfo')
+  let userinfo = $api.getStorage('userinfo') || {}
   let { userType } = userinfo
 
   function getStatus (cb) {

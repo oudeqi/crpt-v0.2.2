@@ -1293,9 +1293,9 @@ apiready = function apiready() {
   $api.byId('name').innerHTML = name;
 
   function getPageData() {
-    http.get('/crpt-credit/credit/credit/amount').then(function (res) {
+    http.get('/crpt-credit/credit/creditpre/amount').then(function (res) {
       var data = res.data || {};
-      $api.byId('edu').innerHTML = numeral(data.limitAmount).format('0,0') || '****';
+      $api.byId('edu').innerHTML = numeral(data.creditAmount).format('0,0') || '****';
     })["catch"](function (error) {
       api.toast({
         msg: error.msg || '获取数据失败'

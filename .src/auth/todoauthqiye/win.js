@@ -9,7 +9,7 @@ import { http } from '../../config.js'
 
 apiready = function() {
 
-  let userinfo = $api.getStorage('userinfo')
+  let userinfo = $api.getStorage('userinfo') || {}
   let { userType } = userinfo
 
   function getStatus (cb) {
@@ -189,7 +189,6 @@ apiready = function() {
     }
     if (baseinfo) {
       baseinfo.onclick = function () {
-        alert(mapping.faceAuth.status)
         if (mapping.realAuth.status === 0) {
           api.toast({
             msg: '请先完成第一步'

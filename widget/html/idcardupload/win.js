@@ -33,7 +33,11 @@ function openIDcardInfo(pageParam) {
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '返回',
+        iconPath: 'widget://image/back.png'
+      }]
     }
   });
 } // 人脸认证

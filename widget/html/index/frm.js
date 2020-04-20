@@ -1306,8 +1306,6 @@ apiready = function apiready() {
   }, function (ret, err) {
     if (ret.index === 0) {
       openLeftPane();
-    } else {
-      alert('点错按钮了');
     }
   });
   var pageSize = 20;

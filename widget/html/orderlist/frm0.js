@@ -1233,21 +1233,24 @@ apiready = function apiready() {
   }
 
   function appendList(data) {
+    // 3-逾期 4-已还清  5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
     var mapping = {
-      4: 'cancel',
+      3: 'warning',
+      4: 'repaied',
       5: 'cancel',
       6: 'cancel',
-      7: 'during',
-      8: 'warning',
-      9: 'repaied'
+      7: 'cancel',
+      8: 'cancel',
+      9: 'during'
     };
     var mapping2 = {
-      4: '退货',
+      3: '逾期',
+      4: '已还清',
       5: '过期失效',
       6: '已撤销',
-      7: '还款中',
-      8: '逾期',
-      9: '已还清'
+      7: '已退货',
+      8: '赊销退货',
+      9: '还款中'
     };
     data.forEach(function (item) {
       $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u8BA2\u5355\u7F16\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"row2\">\n              <span>\u5356\u65B9\uFF1A</span>\n              ").concat(item.saleCustName, "\n            </div>\n            <div class=\"row2\">\n              <span>\u652F\u4ED8\u65F6\u95F4</span>\n              ").concat(item.orderTime, "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u652F\u4ED8\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName, "</strong>\n              <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <div class=\"tit\">\n              <span>\u652F\u4ED8\u91D1\u989D\uFF08\u5143\uFF09</span>\n              <span>").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n            </div>\n            <div class=\"msg\">\n              \u8BA2\u5355\u91D1\u989D\uFF1A").concat(numeral(item.totalAmount).format('0,0.00'), "\n            </div>\n          </div>\n        </li>\n      "));

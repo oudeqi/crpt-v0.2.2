@@ -234,7 +234,7 @@ var http = {
 }; // 统一ios和android的输入框，下标都从0开始
 
 apiready = function apiready() {
-  var userinfo = $api.getStorage('userinfo');
+  var userinfo = $api.getStorage('userinfo') || {};
   var userType = userinfo.userType;
 
   function getStatus(cb) {
@@ -368,8 +368,6 @@ apiready = function apiready() {
 
     if (baseinfo) {
       baseinfo.onclick = function () {
-        alert(mapping.faceAuth.status);
-
         if (mapping.realAuth.status === 0) {
           api.toast({
             msg: '请先完成第一步'
