@@ -2,7 +2,7 @@ import '../../app.css'
 import './frm.css'
 
 import { openAuthResult, openCityList } from '../../webview.js'
-import { http, ActionSheet, CitySelector, initUIInput } from '../../config.js'
+import { http, ActionSheet, CitySelector, initUIInput, isPhoneNo } from '../../config.js'
 
 apiready = function() {
 
@@ -89,7 +89,7 @@ apiready = function() {
   initUIInput($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 30
   }, function (value) {
     postData.addressDetails = value
   })
@@ -107,7 +107,7 @@ apiready = function() {
   initUIInput($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 10
   }, function (value) {
     postData.relationName = value
   })
@@ -125,7 +125,7 @@ apiready = function() {
   initUIInput($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 10
   }, function (value) {
     postData.otherName = value
   })
@@ -168,11 +168,17 @@ apiready = function() {
       if (!postData.relationPhone) {
         return api.toast({ msg: '请输入直属亲属手机号' })
       }
+      if (!isPhoneNo(postData.relationPhone)) {
+        return api.toast({ msg: '直属亲属手机号格式不正确' })
+      }
       if (!postData.otherName) {
         return api.toast({ msg: '请输入其他联系人姓名' })
       }
       if (!postData.otherPhone) {
         return api.toast({ msg: '请输入其他联系人手机号' })
+      }
+      if (!isPhoneNo(postData.otherPhone)) {
+        return api.toast({ msg: '其他联系人手机号格式不正确' })
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('submit'), 'loading')

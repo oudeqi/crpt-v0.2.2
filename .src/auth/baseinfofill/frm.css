@@ -58,6 +58,12 @@ section {
     align-items: center;
     justify-content: flex-start;
     color: #ccc;
+    & input {
+      font-size: 16px;
+    }
+    & input::placeholder {
+      color: #aaa;
+    }
     & input:disabled {
       color: #000;
       opacity: 1;

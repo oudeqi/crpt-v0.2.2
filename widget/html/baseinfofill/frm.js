@@ -205,6 +205,10 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var isPhoneNo = function isPhoneNo(phone) {
+  return /^1[3456789]\d{9}$/.test(phone);
+}; // let userinfo = {
+
 function ActionSheet(title, buttons, cb) {
   api.actionSheet({
     title: title,
@@ -412,7 +416,7 @@ apiready = function apiready() {
   initUIInput($api.byId('addressDetails'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 30
   }, function (value) {
     postData.addressDetails = value;
   }); // 亲属关系  标记  1-配偶 2-子女 3-父母  4-其他
@@ -429,7 +433,7 @@ apiready = function apiready() {
   initUIInput($api.byId('relationName'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 10
   }, function (value) {
     postData.relationName = value;
   }); // 手机号
@@ -445,7 +449,7 @@ apiready = function apiready() {
   initUIInput($api.byId('otherName'), {
     placeholder: '请输入',
     keyboardType: 'next',
-    maxStringLength: 40
+    maxStringLength: 10
   }, function (value) {
     postData.otherName = value;
   }); // 手机号
@@ -514,6 +518,12 @@ apiready = function apiready() {
         });
       }
 
+      if (!isPhoneNo(postData.relationPhone)) {
+        return api.toast({
+          msg: '直属亲属手机号格式不正确'
+        });
+      }
+
       if (!postData.otherName) {
         return api.toast({
           msg: '请输入其他联系人姓名'
@@ -523,6 +533,12 @@ apiready = function apiready() {
       if (!postData.otherPhone) {
         return api.toast({
           msg: '请输入其他联系人手机号'
+        });
+      }
+
+      if (!isPhoneNo(postData.otherPhone)) {
+        return api.toast({
+          msg: '其他联系人手机号格式不正确'
         });
       }
 
