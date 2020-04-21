@@ -46,11 +46,11 @@ apiready = function () {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.productId || ''}">
           <div class="t">
-            <strong>${item.productName}</strong>
-            <span>${item.bankName}（${item.account}）</span>
+            <strong>${item.productName || '***'}</strong>
+            <span>${item.bankName || '***'}（${item.account || '***'}）</span>
           </div>
           <div class="b">
-            开通时间：${item.openDate}
+            开通时间：${item.openDate || ''}
           </div>
         </li>
       `)
