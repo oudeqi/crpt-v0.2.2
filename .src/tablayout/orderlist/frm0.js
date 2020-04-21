@@ -1,5 +1,5 @@
 import '../../app.css'
-import './frm0.css'
+import './frm.css'
 
 
 import { openOrderDetails } from '../../webview.js'
@@ -65,16 +65,16 @@ apiready = function () {
               <i class="aui-iconfont aui-icon-right"></i>
             </div>
             <div class="row2">
-              <span>卖方：</span>
-              ${item.saleCustName}
+              <span>卖方</span>
+              ${item.saleCustName || ''}
             </div>
             <div class="row2">
               <span>支付时间</span>
-              ${item.orderTime}
+              ${item.orderTime || ''}
             </div>
             <div class="row3">
               <span class="label">支付产品</span>
-              <strong class="produce">${item.productName}</strong>
+              <strong class="produce">${item.productName || ''}</strong>
               <span class="status ${mapping[item.status]}">${mapping2[item.status] || ''}</span>
             </div>
           </div>

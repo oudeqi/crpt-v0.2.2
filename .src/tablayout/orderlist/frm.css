@@ -41,14 +41,13 @@ li {
 .row2 {
   color: #8d9daa;
   font-size: 15px;
-  height: 28px;
-  line-height: 28px;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-start;
+  padding-bottom: 3px;
   & span {
-    width: 100px;
-    display: inline-flex;
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
     align-items: center;
     justify-content: space-between;
   }
@@ -61,7 +60,7 @@ li {
   height: 28px;
   line-height: 28px;
   & .label {
-    width: 100px;
+    width: 80px;
     flex-shrink: 0;
   }
   & .produce {

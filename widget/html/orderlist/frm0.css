@@ -255,24 +255,22 @@ li {
 .row2 {
   color: #8d9daa;
   font-size: 15px;
-  height: 28px;
-  line-height: 28px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding-bottom: 3px
 }
 
 .row2 span {
-    width: 100px;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
+    width: 80px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
@@ -293,7 +291,7 @@ li {
   line-height: 28px
 }
 .row3 .label {
-    width: 100px;
+    width: 80px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
   }
