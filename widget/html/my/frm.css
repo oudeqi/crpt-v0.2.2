@@ -206,14 +206,15 @@
     }
 
 html, body {
-  background-color: #fff;
+  background-color: #f2f2f2;
 }
 .top {
   height: 120px;
   background: #1dc4a2;
   padding-left: 30px;
   color: #fff;
-  border-top: 1px solid #88dbcb
+  border-top: 1px solid #88dbcb;
+  margin-top: -1px
 }
 .top .name {
     font-size: 20px;
@@ -221,9 +222,20 @@ html, body {
     padding-top: 20px;
   }
 .top .tel {
-    font-size: 18px;
-  }
+    font-size: 16px;
+    font-family: PingFangSC-Medium;
+    }
 
+.tab_my-main {
+  padding: 12px;
+}
+.tm-main-ul {
+  background: #FFFFFF;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(162,177,163,0.10);
+          box-shadow: 0 4px 6px 0 rgba(162,177,163,0.10);
+  border-radius: 6px;
+  border-radius: 6px;
+}
 li.active {
   background-color: #ededed;
   position: relative;
@@ -240,12 +252,30 @@ li {
   padding-right: 10px
 }
 li .icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    background: #ddd;
+    width: 24px;
+    height: 24px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+li .message {
+    background-image: url(../../image/tab_my/message@2x.png);
+  }
+li .bill {
+    background-image: url(../../image/tab_my/bill@2x.png);
+  }
+li .orders {
+    background-image: url(../../image/tab_my/orders@2x.png);
+  }
+li .limit {
+    background-image: url(../../image/tab_my/limit@2x.png);
+  }
+li .products {
+    background-image: url(../../image/tab_my/products@2x.png);
+  }
+li .contact {
+    background-image: url(../../image/tab_my/contact@2x.png);
   }
 li .line-box {
     -webkit-box-flex: 1;
@@ -260,7 +290,7 @@ li .line-box {
     padding-right: 10px;
     margin-left: 10px;
     height: 54px;
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid #f5f5f5;
     -webkit-box-sizing: border-box;
             box-sizing: border-box
   }
@@ -268,7 +298,9 @@ li .line-box .text {
       -webkit-box-flex: 1;
           -ms-flex-positive: 1;
               flex-grow: 1;
-      font-size: 15px;
+      font-family: PingFang-SC-Medium;
+      font-size: 16px;
+      color: #303133;
     }
 li .line-box .msg {
       margin-right: 5px;
@@ -281,5 +313,6 @@ li .line-box .arrow {
     }
 li .line-box .arrow i {
         font-weight: bold;
-        color: #666;
+        color: #9fa3ac;
       }
+

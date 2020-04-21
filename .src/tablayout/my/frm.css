@@ -1,5 +1,5 @@
 html, body {
-  background-color: #fff;
+  background-color: #f2f2f2;
 }
 .top {
   height: 120px;
@@ -7,16 +7,27 @@ html, body {
   padding-left: 30px;
   color: #fff;
   border-top: 1px solid #88dbcb;
+  margin-top: -1px;
   & .name {
     font-size: 20px;
     font-weight: bold;
     padding-top: 20px;
   }
   & .tel {
-    font-size: 18px;
-  }
+    font-size: 16px;
+    font-family: PingFangSC-Medium;
+    }
 }
 
+.tab_my-main {
+  padding: 12px;
+}
+.tm-main-ul {
+  background: #FFFFFF;
+  box-shadow: 0 4px 6px 0 rgba(162,177,163,0.10);
+  border-radius: 6px;
+  border-radius: 6px;
+}
 li.active {
   background-color: #ededed;
   position: relative;
@@ -28,11 +39,29 @@ li {
   padding-left: 20px;
   padding-right: 10px;
   & .icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    background: #ddd;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  & .message {
+    background-image: url(../../image/tab_my/message@2x.png);
+  }
+  & .bill {
+    background-image: url(../../image/tab_my/bill@2x.png);
+  }
+  & .orders {
+    background-image: url(../../image/tab_my/orders@2x.png);
+  }
+  & .limit {
+    background-image: url(../../image/tab_my/limit@2x.png);
+  }
+  & .products {
+    background-image: url(../../image/tab_my/products@2x.png);
+  }
+  & .contact {
+    background-image: url(../../image/tab_my/contact@2x.png);
   }
   & .line-box {
     flex-grow: 1;
@@ -41,11 +70,13 @@ li {
     padding-right: 10px;
     margin-left: 10px;
     height: 54px;
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid #f5f5f5;
     box-sizing: border-box;
     & .text {
       flex-grow: 1;
-      font-size: 15px;
+      font-family: PingFang-SC-Medium;
+      font-size: 16px;
+      color: #303133;
     }
     & .msg {
       margin-right: 5px;
@@ -56,8 +87,9 @@ li {
       flex-shrink: 0;
       & i {
         font-weight: bold;
-        color: #666;
+        color: #9fa3ac;
       }
     }
   }
 }
+

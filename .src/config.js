@@ -278,8 +278,8 @@ function CitySelector (cb) {
       rowSpacing: 5,
       colSpacing: 10,
       maskBg: 'rgba(0,0,0,0.2)',
-      bg: '#008000',
-      color: '#fff',
+      bg: '#fff',
+      color: '#333',
       colorActive: '#f00',
       colorSelected: '#000'
     },

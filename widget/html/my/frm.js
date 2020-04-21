@@ -128,26 +128,6 @@ function openMyProduct() {
 } // 设置
 
 
-function openSettings() {
-  api.openTabLayout({
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
-  });
-} // 修改密码
-
-
 function openContactUs() {
   api.openTabLayout({
     name: 'html/contactus/win',
@@ -414,11 +394,10 @@ apiready = function apiready() {
 
   document.querySelector('#myproduct').onclick = function () {
     openMyProduct();
-  };
+  }; // document.querySelector('#settings').onclick = function () {
+  //   openSettings()
+  // }
 
-  document.querySelector('#settings').onclick = function () {
-    openSettings();
-  };
 
   document.querySelector('#contactus').onclick = function () {
     openContactUs();
