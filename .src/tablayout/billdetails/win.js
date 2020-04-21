@@ -83,6 +83,7 @@ apiready = function () {
       $api.byId('bankName').innerHTML = res.bankName || ''
       $api.byId('account').innerHTML = res.account || ''
       let list = res.list
+      $api.byId('list').innerHTML = ''
       appendList(list)
     })
   }

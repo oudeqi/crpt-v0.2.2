@@ -86,6 +86,15 @@ var ajax = function ajax(method, url) {
               msg: '登录状态已经过期，请重新登录！'
             }, function (ret, err) {
               hasAlert = false;
+              api.closeWin({
+                name: 'html/register/win'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/win'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/win'
+              });
               setTimeout(function () {
                 $api.clearStorage();
                 openRegLogin();
@@ -5861,6 +5870,7 @@ apiready = function apiready() {
       $api.byId('bankName').innerHTML = res.bankName || '';
       $api.byId('account').innerHTML = res.account || '';
       var list = res.list;
+      $api.byId('list').innerHTML = '';
       appendList(list);
     });
   }
