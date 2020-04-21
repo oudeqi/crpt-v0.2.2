@@ -40,7 +40,8 @@ apiready = function () {
     // appCode	String	订单来源
     // totalAmount	BigDecimal	订单金额
     // productName	String	(借贷的)产品名称
-    // status int 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销 7-还款中 8-逾期 9-已还清
+    // status int 订单状态：
+    // 1-未支付 2-处理中 3-逾期 4-已还清 5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
       let data = res.data || {}
       $api.byId('surplusPrincipalAmount').innerHTML = data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : ''
       $api.byId('orderNo').innerHTML = data.orderNo || ''
@@ -50,22 +51,21 @@ apiready = function () {
       $api.byId('appCode').innerHTML = data.appCode === '1' ? 'EBS' : ''
       $api.byId('totalAmount').innerHTML = data.totalAmount || ''
       $api.byId('productName').innerHTML = data.productName || ''
-
       let mapping = {
         1: '未支付',
-        2: '支付成功',
-        3: '支付失败',
-        4: '退货',
+        2: '处理中',
+        3: '逾期',
+        4: '已还清',
         5: '过期失效',
         6: '已撤销',
-        7: '还款中',
-        8: '逾期',
-        9: '已还清',
+        7: '已退货',
+        8: '赊销退货',
+        9: '还款中',
       }
       $api.byId('status').innerHTML = mapping[data.status] || ''
     }).catch(error => {
       api.toast({
-        msg: error.msg || '网络错误'
+        msg: error.msg || '请求发生错误'
       })
     })
   }

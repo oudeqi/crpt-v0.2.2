@@ -7,8 +7,24 @@ import numeral from 'numeral'
 
 apiready = function () {
   let pageParam = api.pageParam || {}
-  let id = pageParam.id // '1103'
+  let {
+    id, // '1103'
+    billDate,
+    sumRepayTotalAmount,
+    sumRepayPrincipalAmount,
+    sumServiceFee,
+    sumRepayPenaltyAmount,
+    sumRepayInterestAmount,
+  } = pageParam
   let loading = false
+
+  // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
+  $api.byId('billDate').innerHTML = billDate || ''
+  $api.byId('sumRepayTotalAmount').innerHTML = numeral(sumRepayTotalAmount).format('0,0.00')
+  $api.byId('sumRepayPrincipalAmount').innerHTML = sumRepayPrincipalAmount || 0
+  $api.byId('sumServiceFee').innerHTML = sumServiceFee || 0
+  $api.byId('sumRepayPenaltyAmount').innerHTML = sumRepayPenaltyAmount || 0
+  $api.byId('sumRepayInterestAmount').innerHTML = sumRepayInterestAmount || 0
 
   function getPageData (id, cb) {
     if (loading) {
@@ -66,12 +82,6 @@ apiready = function () {
 
   function initPageData() {
     getPageData(id, function (res) {
-      // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
-      $api.byId('billDate').innerHTML = res.billDate || ''
-      $api.byId('sumRepayTotalAmount').innerHTML = res.sumRepayTotalAmount || ''
-      $api.byId('sumRepayPrincipalAmount').innerHTML = res.sumRepayPrincipalAmount || ''
-      $api.byId('sumServiceFee').innerHTML = res.sumServiceFee || ''
-      $api.byId('sumRepayPenaltyAmount').innerHTML = res.sumRepayPenaltyAmount || ''
       $api.byId('bankName').innerHTML = res.bankName || ''
       $api.byId('account').innerHTML = res.account || ''
       let list = res.list

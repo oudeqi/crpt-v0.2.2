@@ -525,14 +525,29 @@ function openBillList () {
 }
 
 // 账单详情
-function openBillDetails (id) {
+function openBillDetails (id, {
+  billDate,
+  sumRepayTotalAmount,
+  sumRepayPrincipalAmount,
+  sumServiceFee,
+  sumRepayPenaltyAmount,
+  sumRepayInterestAmount,
+} = {}) {
   api.openTabLayout({
     name: 'html/billdetails/win',
     title: '账单详情',
     url: 'widget://html/billdetails/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: { id },
+    pageParam: {
+      id,
+      billDate,
+      sumRepayTotalAmount,
+      sumRepayPrincipalAmount,
+      sumServiceFee,
+      sumRepayPenaltyAmount,
+      sumRepayInterestAmount,
+    },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -730,14 +745,14 @@ function openRepayRecord (id) {
 }
 
 // 订单详情
-function openProductDetails (id) {
+function openProductDetails ({id, open} = {}) {
   api.openTabLayout({
     name: 'html/productdetails/win',
     title: '产品详情',
     url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: { id },
+    pageParam: { id, open }, // open 1 已开通， 0未开通
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

@@ -15,12 +15,27 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+
+
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
-var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+var hasAlert = false;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
 var ajax = function ajax(method, url) {
@@ -63,6 +78,22 @@ var ajax = function ajax(method, url) {
           reject(ret);
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
         reject(error);
       }
 
@@ -80,14 +111,7 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
-
+};
 
 var http = {
   cancel: function cancel(tag) {
@@ -1177,10 +1201,18 @@ apiready = function apiready() {
   var pageParam = api.pageParam || {};
   var id = pageParam.id; // 15
 
+  var open = pageParam.open;
+
+  if (open === 1) {
+    $api.byId('isOpen').style.display = 'block';
+  } else {
+    $api.byId('isOpen').style.display = 'none';
+  }
+
   function getDetails(id) {
     http.get("/crpt-product/product/openingproduct/detail/".concat(id)).then(function (res) {
       $api.byId('name').innerHTML = res.data.name;
-      $api.byId('totalLimit').innerHTML = res.data.totalLimit ? numeral(res.data.totalLimit).format('0,0') : '';
+      $api.byId('totalLimit').innerHTML = res.data.totalLimit ? numeral(res.data.totalLimit).format('0,0.00') : '';
       $api.byId('interestRate').innerHTML = res.data.interestRate ? res.data.interestRate + '%' : '';
       $api.byId('account').innerHTML = res.data.account || '';
       $api.byId('introduce').innerHTML = res.data.introduce || '';

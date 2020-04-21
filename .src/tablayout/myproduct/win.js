@@ -85,7 +85,10 @@ apiready = function () {
     }
     let id = li.dataset.id
     if (id) {
-      openProductDetails(id)
+      openProductDetails({
+        id,
+        open: 1  // 1 已开通， 0未开通
+      })
     } else {
       api.toast({ msg: 'id 不存在' })
     }

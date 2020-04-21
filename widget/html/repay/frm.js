@@ -17,6 +17,17 @@ function openLeftPane() {
 } // 抽布局
 
 
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
+
 function openContactUs() {
   api.openTabLayout({
     name: 'html/contactus/win',
@@ -58,7 +69,9 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
-var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+var hasAlert = false;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
 var ajax = function ajax(method, url) {
@@ -101,6 +114,22 @@ var ajax = function ajax(method, url) {
           reject(ret);
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
         reject(error);
       }
 
@@ -118,14 +147,7 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
-
+};
 
 var http = {
   cancel: function cancel(tag) {
@@ -5897,7 +5919,7 @@ apiready = function apiready() {
 
     $api.byId('list').innerHTML = '';
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"row1\">\n            <span class=\"name\">".concat(item.productName, "</span>\n            ").concat(item.status === '4' ? "<span class=\"warning\">\u672A\u6309\u671F\u8FD8\u6B3E</span>" : '', "\n            <span class=\"data ").concat(item.status === '4' ? 'red' : '', "\">\u8FD8\u6B3E\u65E5 ").concat(item.repayDate, "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"txt\"><div><strong>").concat(numeral(item.repayAmount).format('0,0.00'), "</strong><span>(\u542B\u670D\u52A1\u8D39").concat(item.serviceFee || 0, ")</span></div>\n            <i>").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</i>\n            </div>\n            <div class=\"btn\">\u8FD8\u6B3E</div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.productId, "\">\n          <div class=\"row1\">\n            <span class=\"name\">").concat(item.productName, "</span>\n            ").concat(item.status === '4' ? "<span class=\"warning\">\u672A\u6309\u671F\u8FD8\u6B3E</span>" : '', "\n            <span class=\"data ").concat(item.status === '4' ? 'red' : '', "\">\u8FD8\u6B3E\u65E5 ").concat(item.repayDate, "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"txt\"><div><strong>").concat(numeral(item.repayAmount).format('0,0.00'), "</strong><span>(\u542B\u670D\u52A1\u8D39").concat(item.serviceFee || 0, ")</span></div>\n            <i>").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</i>\n            </div>\n            <div class=\"btn\" data-id=\"").concat(item.productId, "\">\u8FD8\u6B3E</div>\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -5924,5 +5946,24 @@ apiready = function apiready() {
 
   document.querySelector('#contactus').onclick = function (event) {
     openContactUs();
+  };
+
+  document.querySelector('#list').onclick = function (event) {
+    var li = $api.closest(event.target, 'li');
+
+    if (li) {
+      var id = li.dataset.id;
+
+      if (id) {
+        api.alert({
+          title: '提示',
+          msg: '功能开发中...'
+        });
+      } else {
+        api.toast({
+          msg: 'id 不存在'
+        });
+      }
+    }
   };
 };

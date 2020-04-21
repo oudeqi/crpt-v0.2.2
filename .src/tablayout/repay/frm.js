@@ -89,7 +89,7 @@ apiready = function () {
     $api.byId('list').innerHTML = ''
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li>
+        <li data-id="${item.productId}">
           <div class="row1">
             <span class="name">${item.productName}</span>
             ${
@@ -101,7 +101,7 @@ apiready = function () {
             <div class="txt"><div><strong>${numeral(item.repayAmount).format('0,0.00')}</strong><span>(含服务费${item.serviceFee || 0})</span></div>
             <i>${item.curPeriod}/${item.repayPeriod}期</i>
             </div>
-            <div class="btn">还款</div>
+            <div class="btn" data-id="${item.productId}">还款</div>
           </div>
         </li>
       `)
@@ -137,6 +137,21 @@ apiready = function () {
 
   document.querySelector('#contactus').onclick = function (event) {
     openContactUs()
+  }
+
+  document.querySelector('#list').onclick = function (event) {
+    let li = $api.closest(event.target, 'li')
+    if (li) {
+      let id = li.dataset.id
+      if (id) {
+        api.alert({
+          title: '提示',
+          msg: '功能开发中...',
+        })
+      } else {
+        api.toast({ msg: 'id 不存在' })
+      }
+    }
   }
 
 

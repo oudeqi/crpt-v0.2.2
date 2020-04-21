@@ -5,7 +5,7 @@ import {
   openReg, openGerenLogin, openQiyeLogin,
   openFindPwd, openSendCode, openTabLayout
 } from '../../webview.js'
-import { http, openUIInput, handleLoginSuccess, isPhoneNo } from '../../config.js'
+import { http, openUIInput, handleLoginSuccess, isPhoneNo, phoneNoFormat } from '../../config.js'
 
 apiready = function() {
 
@@ -20,9 +20,9 @@ apiready = function() {
     maxStringLength: 6
   })
   if (tel && isPhoneNo(tel)) {
-    let a = tel.substring(0, 4)
+    let a = tel.substring(0, 3)
     let b = tel.substr(7, 4)
-    $api.byId('tel').innerHTML = a + '****' + b
+    $api.byId('tel').innerHTML = phoneNoFormat(tel)
   } else {
     $api.byId('tel').innerHTML = ''
   }

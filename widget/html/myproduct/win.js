@@ -1,6 +1,17 @@
 // api.lockSlidPane();
 
 
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
+
 function openContactUs() {
   api.openTabLayout({
     name: 'html/contactus/win',
@@ -21,7 +32,11 @@ function openContactUs() {
 } // 还款计划
 
 
-function openProductDetails(id) {
+function openProductDetails() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref2.id,
+      open = _ref2.open;
+
   api.openTabLayout({
     name: 'html/productdetails/win',
     title: '产品详情',
@@ -29,8 +44,10 @@ function openProductDetails(id) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id
+      id: id,
+      open: open
     },
+    // open 1 已开通， 0未开通
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -65,7 +82,9 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
-var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+var hasAlert = false;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
 var ajax = function ajax(method, url) {
@@ -108,6 +127,22 @@ var ajax = function ajax(method, url) {
           reject(ret);
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
         reject(error);
       }
 
@@ -125,14 +160,7 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
-
+};
 
 var http = {
   cancel: function cancel(tag) {
@@ -274,7 +302,11 @@ apiready = function apiready() {
     var id = li.dataset.id;
 
     if (id) {
-      openProductDetails(id);
+      openProductDetails({
+        id: id,
+        open: 1 // 1 已开通， 0未开通
+
+      });
     } else {
       api.toast({
         msg: 'id 不存在'

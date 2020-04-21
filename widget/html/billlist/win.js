@@ -1,7 +1,26 @@
 // api.lockSlidPane();
 
 
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
+
 function openBillDetails(id) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      billDate = _ref.billDate,
+      sumRepayTotalAmount = _ref.sumRepayTotalAmount,
+      sumRepayPrincipalAmount = _ref.sumRepayPrincipalAmount,
+      sumServiceFee = _ref.sumServiceFee,
+      sumRepayPenaltyAmount = _ref.sumRepayPenaltyAmount,
+      sumRepayInterestAmount = _ref.sumRepayInterestAmount;
+
   api.openTabLayout({
     name: 'html/billdetails/win',
     title: '账单详情',
@@ -9,7 +28,13 @@ function openBillDetails(id) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id
+      id: id,
+      billDate: billDate,
+      sumRepayTotalAmount: sumRepayTotalAmount,
+      sumRepayPrincipalAmount: sumRepayPrincipalAmount,
+      sumServiceFee: sumServiceFee,
+      sumRepayPenaltyAmount: sumRepayPenaltyAmount,
+      sumRepayInterestAmount: sumRepayInterestAmount
     },
     bounces: true,
     slidBackEnabled: true,
@@ -45,7 +70,9 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
-var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+var hasAlert = false;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
 var ajax = function ajax(method, url) {
@@ -88,6 +115,22 @@ var ajax = function ajax(method, url) {
           reject(ret);
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
         reject(error);
       }
 
@@ -105,14 +148,7 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
-
+};
 
 var http = {
   cancel: function cancel(tag) {
@@ -1199,7 +1235,6 @@ return numeral;
 });
 
 apiready = function apiready() {
-  var pageNo = 1;
   var loading = false;
 
   function getPageData(cb) {
@@ -1213,34 +1248,28 @@ apiready = function apiready() {
       api.refreshHeaderLoadDone();
 
       if (res && res.data.list.length > 0) {
-        pageNo++;
         cb(res.data.list);
-      } else if (pageNo === 1) {
-        api.toast({
-          msg: '无数据'
-        });
       } else {
         api.toast({
-          msg: '无更多数据'
+          msg: '无数据'
         });
       }
     })["catch"](function (error) {
       loading = false;
       api.refreshHeaderLoadDone();
       api.toast({
-        msg: '数据加载失败'
+        msg: error.msg || '数据加载失败'
       });
     });
   }
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, " \u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning">未按期还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8 ").concat(numeral(item.sumRepayTotalAmount).format('0,0.00'), "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(item.sumRepayPrincipalAmount, " + \u8D39\u7528").concat(item.sumServiceFee, " + \u903E\u671F\u7F5A\u606F").concat(item.sumRepayPenaltyAmount, "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\"\n          data-billdate=\"").concat(item.billDate || '', "\"\n          data-sumrepaytotalamount=\"").concat(item.sumRepayTotalAmount || 0, "\"\n          data-sumrepayprincipalamount=\"").concat(item.sumRepayPrincipalAmount || 0, "\"\n          data-sumserviceFee=\"").concat(item.sumServiceFee || 0, "\"\n          data-sumrepaypenaltyamount=\"").concat(item.sumRepayPenaltyAmount || 0, "\"\n          data-sumrepayinterestamount=\"").concat(item.sumRepayInterestAmount || 0, "\"\n        >\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, " \u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning">未按期还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8 ").concat(numeral(item.sumRepayTotalAmount).format('0,0.00'), "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(item.sumRepayPrincipalAmount, " + \u8D39\u7528").concat(item.sumServiceFee, " + \u903E\u671F\u7F5A\u606F").concat(item.sumRepayPenaltyAmount, "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
     });
   }
 
   function refresh() {
-    pageNo = 1;
     getPageData(function (data) {
       $api.byId('list').innerHTML = '';
       appendList(data);
@@ -1268,9 +1297,22 @@ apiready = function apiready() {
     }
 
     var id = li.dataset.id;
+    var billDate = li.dataset.billdate;
+    var sumRepayTotalAmount = li.dataset.sumrepaytotalamount;
+    var sumRepayPrincipalAmount = li.dataset.sumrepayprincipalamount;
+    var sumServiceFee = li.dataset.sumserviceFee;
+    var sumRepayPenaltyAmount = li.dataset.sumrepaypenaltyamount;
+    var sumRepayInterestAmount = li.dataset.sumrepayinterestamount;
 
     if (id) {
-      openBillDetails(id);
+      openBillDetails(id, {
+        billDate: billDate,
+        sumRepayTotalAmount: sumRepayTotalAmount,
+        sumRepayPrincipalAmount: sumRepayPrincipalAmount,
+        sumServiceFee: sumServiceFee,
+        sumRepayPenaltyAmount: sumRepayPenaltyAmount,
+        sumRepayInterestAmount: sumRepayInterestAmount
+      });
     } else {
       api.toast({
         msg: 'id 不存在'

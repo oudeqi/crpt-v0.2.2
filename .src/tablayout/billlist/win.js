@@ -7,8 +7,6 @@ import numeral from 'numeral'
 
 apiready = function () {
 
-  let pageSize = 20
-  let pageNo = 1
   let loading = false
 
   function getPageData (cb) {
@@ -20,24 +18,28 @@ apiready = function () {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {
-        pageNo++
         cb(res.data.list)
-      } else if (pageNo === 1) {
-        api.toast({ msg: '无数据'})
       } else {
-        api.toast({ msg: '无更多数据'})
+        api.toast({ msg: '无数据'})
       }
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
-      api.toast({ msg: '数据加载失败' })
+      api.toast({ msg: error.msg || '数据加载失败' })
     })
   }
 
   function appendList (data) {
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li tapmode data-id="${item.orderNo || ''}">
+        <li tapmode data-id="${item.orderNo || ''}"
+          data-billdate="${item.billDate || ''}"
+          data-sumrepaytotalamount="${item.sumRepayTotalAmount || 0}"
+          data-sumrepayprincipalamount="${item.sumRepayPrincipalAmount || 0}"
+          data-sumserviceFee="${item.sumServiceFee || 0}"
+          data-sumrepaypenaltyamount="${item.sumRepayPenaltyAmount || 0}"
+          data-sumrepayinterestamount="${item.sumRepayInterestAmount || 0}"
+        >
           <div class="t">
             <div class="tit">${item.billDate} 账单</div>
             ${item.status === 2 ? '<div class="status warning">未按期还款</div>' : ''}
@@ -60,7 +62,6 @@ apiready = function () {
   }
 
   function refresh () {
-    pageNo = 1
     getPageData(function (data) {
       $api.byId('list').innerHTML = ''
       appendList(data)
@@ -87,8 +88,21 @@ apiready = function () {
       return
     }
     let id = li.dataset.id
+    let billDate = li.dataset.billdate
+    let sumRepayTotalAmount = li.dataset.sumrepaytotalamount
+    let sumRepayPrincipalAmount = li.dataset.sumrepayprincipalamount
+    let sumServiceFee = li.dataset.sumserviceFee
+    let sumRepayPenaltyAmount = li.dataset.sumrepaypenaltyamount
+    let sumRepayInterestAmount = li.dataset.sumrepayinterestamount
     if (id) {
-      openBillDetails(id)
+      openBillDetails(id, {
+        billDate,
+        sumRepayTotalAmount,
+        sumRepayPrincipalAmount,
+        sumServiceFee,
+        sumRepayPenaltyAmount,
+        sumRepayInterestAmount,
+      })
     } else {
       api.toast({ msg: 'id 不存在' })
     }

@@ -1,10 +1,13 @@
+import { openRegLogin } from './webview.js'
+
 // const baseUrl = 'http://crptdev.liuheco.com'
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://crptuat.liuheco.com'
 const prod = 'http://crptuat.liuheco.com'
 const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
+let hasAlert = false
 
-const whiteList = [
+const whiteList = [ // 白名单里不带token，否则后端会报错
   '/sms/smsverificationcode',
   '/identification/gainenterprisephone',
   '/identification/personregister',
@@ -46,6 +49,21 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} =
           reject(ret)
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！',
+            }, function(ret, err){
+              hasAlert = false
+              setTimeout(() => {
+                $api.clearStorage()
+                openRegLogin()
+              }, 150)
+            })
+          }
+        }
         reject(error)
       }
       if (__buildEnv__ !== 'production') {
@@ -63,13 +81,7 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} =
   })
 }
 
-// if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
+
 
 const http = {
   cancel: tag => api.cancelAjax({ tag }),
@@ -141,6 +153,16 @@ const openUIInput = (dom, form, key, options = {}, cb) => {
 }
 
 const isPhoneNo = phone => (/^1[3456789]\d{9}$/.test(phone))
+const phoneNoFormat = (tel, tag = '****') => {
+  let a = String(tel).substring(0, 3)
+  let b = String(tel).substr(3, 4)
+  let c = String(tel).substr(7, 4)
+  if (tag === '****') {
+    return a + tag + b
+  } else {
+    return a + tag + b + tag + c
+  }
+}
 
 // let userinfo = {
 //   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
@@ -365,6 +387,7 @@ export {
   openUIInput,
   resetUIInputPosi,
   isPhoneNo,
+  phoneNoFormat,
   handleLoginSuccess,
   ActionSheet,
   CityList,

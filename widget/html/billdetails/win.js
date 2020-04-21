@@ -15,12 +15,27 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+
+
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://crptuat.liuheco.com';
 var baseUrl =   uat ;
-var whiteList = ['/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+var hasAlert = false;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
 
 var ajax = function ajax(method, url) {
@@ -63,6 +78,22 @@ var ajax = function ajax(method, url) {
           reject(ret);
         }
       } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
         reject(error);
       }
 
@@ -80,14 +111,7 @@ var ajax = function ajax(method, url) {
       }
     });
   });
-}; // if (ret && ret.statusCode === 500 && ret.body.code === 216) {
-//   api.toast({
-//     msg: '登录状态已经过期，请重新登录！',
-//     duration: 2000,
-//     location: 'middle'
-//   })
-// }
-
+};
 
 var http = {
   cancel: function cancel(tag) {
@@ -5779,9 +5803,21 @@ return numeral;
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var id = pageParam.id; // '1103'
+  var id = pageParam.id,
+      billDate = pageParam.billDate,
+      sumRepayTotalAmount = pageParam.sumRepayTotalAmount,
+      sumRepayPrincipalAmount = pageParam.sumRepayPrincipalAmount,
+      sumServiceFee = pageParam.sumServiceFee,
+      sumRepayPenaltyAmount = pageParam.sumRepayPenaltyAmount,
+      sumRepayInterestAmount = pageParam.sumRepayInterestAmount;
+  var loading = false; // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
 
-  var loading = false;
+  $api.byId('billDate').innerHTML = billDate || '';
+  $api.byId('sumRepayTotalAmount').innerHTML = numeral(sumRepayTotalAmount).format('0,0.00');
+  $api.byId('sumRepayPrincipalAmount').innerHTML = sumRepayPrincipalAmount || 0;
+  $api.byId('sumServiceFee').innerHTML = sumServiceFee || 0;
+  $api.byId('sumRepayPenaltyAmount').innerHTML = sumRepayPenaltyAmount || 0;
+  $api.byId('sumRepayInterestAmount').innerHTML = sumRepayInterestAmount || 0;
 
   function getPageData(id, cb) {
     if (loading) {
@@ -5825,12 +5861,6 @@ apiready = function apiready() {
 
   function initPageData() {
     getPageData(id, function (res) {
-      // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
-      $api.byId('billDate').innerHTML = res.billDate || '';
-      $api.byId('sumRepayTotalAmount').innerHTML = res.sumRepayTotalAmount || '';
-      $api.byId('sumRepayPrincipalAmount').innerHTML = res.sumRepayPrincipalAmount || '';
-      $api.byId('sumServiceFee').innerHTML = res.sumServiceFee || '';
-      $api.byId('sumRepayPenaltyAmount').innerHTML = res.sumRepayPenaltyAmount || '';
       $api.byId('bankName').innerHTML = res.bankName || '';
       $api.byId('account').innerHTML = res.account || '';
       var list = res.list;
