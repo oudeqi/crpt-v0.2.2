@@ -45,6 +45,26 @@ function openRegLogin() {
 } // 个人登录
 
 
+function openBillList() {
+  api.openTabLayout({
+    name: 'html/billlist/win',
+    title: '我的账单',
+    url: 'widget://html/billlist/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 账单详情
+
+
 function openContactUs() {
   api.openTabLayout({
     name: 'html/contactus/win',
@@ -9061,7 +9081,7 @@ apiready = function apiready() {
     $api.byId('list').innerHTML = '';
     data.forEach(function (item) {
       // 贷款状态：1-正常(未结清，无逾期)  2-正常结清 3-提前结清 4-逾期
-      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.productId, "\">\n          <div class=\"row1\">\n            <span class=\"name\">").concat(item.productName, "</span>\n            ").concat(item.status === 4 ? "<span class=\"warning\">\u672A\u6309\u671F\u8FD8\u6B3E</span>" : '', "\n            <span class=\"data ").concat(item.status === 4 ? 'red' : '', "\">\u8FD8\u6B3E\u65E5 ").concat(item.repayDate, "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"txt\"><div><strong>").concat(numeral(item.repayAmount).format('0,0.00'), "</strong><span>(\u542B\u670D\u52A1\u8D39").concat(item.serviceFee || 0, ")</span></div>\n            <i>").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</i>\n            </div>\n            ").concat(item.status === 2 || item.status === 3 ? "<div class=\"btn disabled\">\u5DF2\u8FD8\u6E05</div>" : "<div class=\"btn\" data-id=\"".concat(item.productId, "\">\u8FD8\u6B3E</div>"), "\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li data-id=\"".concat(item.productId, "\">\n          <div class=\"row1\">\n            <span class=\"name\">").concat(item.productName, "</span>\n            ").concat(item.status === 4 ? "<span class=\"warning\">\u672A\u6309\u671F\u8FD8\u6B3E</span>" : '', "\n            <span class=\"data ").concat(item.status === 4 ? 'red' : '', "\">\u8FD8\u6B3E\u65E5 ").concat(item.repayDate ? item.repayDate.split(' ')[0] : '', "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"txt\"><div><strong>").concat(numeral(item.repayAmount).format('0,0.00'), "</strong><span>(\u542B\u670D\u52A1\u8D39").concat(item.serviceFee || 0, ")</span></div>\n            <i>").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</i>\n            </div>\n            ").concat(item.status === 2 || item.status === 3 ? "<div class=\"btn disabled\">\u5DF2\u8FD8\u6E05</div>" : "<div class=\"btn\" data-id=\"".concat(item.productId, "\">\u8FD8\u6B3E</div>"), "\n          </div>\n        </li>\n      "));
     });
   }
 
@@ -9093,6 +9113,10 @@ apiready = function apiready() {
 
   document.querySelector('#contactus').onclick = function (event) {
     openContactUs();
+  };
+
+  document.querySelector('#billlist').onclick = function (event) {
+    openBillList();
   };
 
   document.querySelector('#list').onclick = function (event) {

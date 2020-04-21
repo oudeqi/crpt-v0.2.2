@@ -71,7 +71,6 @@ html, body {
 }
 
 ul {
-  margin-top: 15px;
   border-radius: 5px;
   overflow: hidden;
   & li {
@@ -84,6 +83,7 @@ ul {
 .row1 {
   display: flex;
   align-items: center;
+  width: 100%;
   & .name {
     color: #333;
     flex-grow: 1;
@@ -150,5 +150,21 @@ ul {
   color: #1dc4a2;
   & span {
     text-decoration: underline;
+  }
+}
+.listTit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10px 8px;
+  & strong {
+    font-size: 15px;
+    color: #999;
+    font-weight: normal;
+  }
+  & span {
+    text-decoration: underline;
+    color: #1dc4a2;
+    font-size: 15px;
   }
 }

@@ -59,45 +59,53 @@ li {
 }
 
 .header {
-  height: 240px;
-  background: #1dc4a2;
-  margin-bottom: -85px;
-  margin-top: -1px;
-  background-image: url(../../image/banner.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-color: #e3b256;
-  background-position: top center;
+  padding: 10px;
+  position: relative;
+  & .bg {
+    height: 120px;
+    background-color: #1dc4a2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  & .inner {
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1000;
+  }
+  & img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 }
 .nav {
-  height: 145px;
-  margin: 15px;
+  padding: 15px 10px;
+  margin: 0 10px;
   border-radius: 5px;
   background: #fff;
-  & .row {
-    display: flex;
-    align-items: center;
-    & .row-item {
-      padding-top: 10px;
-      width: 33.33%;
-      text-align: center;
-      font-size: 13px;
-      color: #666;
-    }
-    & img {
-      width: 36px;
-      height: 36px;
-      display: block;
-      margin: 0 auto;
-      margin-bottom: 2px;
-    }
+  display: flex;
+  align-items: center;
+  & .nav-item {
+    width: 33.33%;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+  }
+  & img {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 2px;
   }
 }
 .banner {
-  padding: 10px;
-  padding-bottom: 15px;
-  background-color: #eaf7f9;
+  margin: 10px;
+  border-radius: 5px;
+  overflow: hidden;
   & img {
     display: block;
     width: 100%;
@@ -109,7 +117,7 @@ li {
   & .tit {
     color: #333;
     font-weight: bold;
-    padding: 20px 15px 5px;
+    padding: 10px 15px 5px;
   }
   & .body {
     display: flex;
@@ -159,7 +167,7 @@ li {
         width: 100px;
         flex-shrink: 0;
         & strong {
-          font-size: 30px;
+          font-size: 25px;
           color: #c20015;
         }
         & span {

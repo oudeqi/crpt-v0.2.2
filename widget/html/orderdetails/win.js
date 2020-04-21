@@ -1248,13 +1248,6 @@ apiready = function apiready() {
   var id = pageParam.id,
       type = pageParam.type; // '9939393'
 
-  if (type !== 'daiZhiFu') {
-    $api.byId('title').style.display = 'block';
-    $api.byId('plan').style.display = 'block';
-    $api.byId('payDetails').style.display = 'block';
-    $api.byId('repayDetails').style.display = 'block';
-  }
-
   document.querySelector('#repayplan').onclick = function () {
     openRepayPlan(id);
   };
@@ -1282,7 +1275,6 @@ apiready = function apiready() {
       // status int 订单状态：
       // 1-未支付 2-处理中 3-逾期 4-已还清 5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
       var data = res.data || {};
-      $api.byId('surplusPrincipalAmount').innerHTML = data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : '';
       $api.byId('orderNo').innerHTML = data.orderNo || '';
       $api.byId('payAmount').innerHTML = data.payAmount ? numeral(data.payAmount).format('0,0.00') : '';
       $api.byId('saleCustName').innerHTML = data.saleCustName || '';
@@ -1301,7 +1293,35 @@ apiready = function apiready() {
         8: '赊销退货',
         9: '还款中'
       };
-      $api.byId('status').innerHTML = mapping[data.status] || '';
+      $api.byId('status').innerHTML = mapping[data.status] || ''; // 过期失效 -已撤销 ，已退货 ，赊销退货 的订单   不展示 还款计划，支付明细，和还款明细
+      // 待支付 也不展示
+
+      if ([1, 2].includes(data.status)) {
+        $api.byId('title').style.display = 'none';
+        $api.byId('plan').style.display = 'none';
+        $api.byId('payDetails').style.display = 'none';
+        $api.byId('repayDetails').style.display = 'none';
+      }
+
+      if ([5, 6, 7, 8].includes(data.status)) {
+        $api.byId('title').style.display = 'block';
+        $api.byId('plan').style.display = 'none';
+        $api.byId('payDetails').style.display = 'none';
+        $api.byId('repayDetails').style.display = 'none';
+      }
+
+      if ([3, 4, 9].includes(data.status)) {
+        $api.byId('title').style.display = 'block';
+        $api.byId('plan').style.display = 'block';
+        $api.byId('payDetails').style.display = 'block';
+        $api.byId('repayDetails').style.display = 'block';
+      }
+
+      if ([5, 6, 7, 8].includes(data.status)) {
+        $api.byId('titText').innerHTML = "\n          <div>\u8BA2\u5355\u91D1\u989D(\u5143)</div>\n          <div>".concat(data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : '', "</div>\n        ");
+      } else {
+        $api.byId('titText').innerHTML = "\n          <div>\u5269\u4F59\u672A\u8FD8\u672C\u91D1(\u5143)</div>\n          <div>".concat(data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : '', "</div>\n        ");
+      }
     })["catch"](function (error) {
       api.toast({
         msg: error.msg || '请求发生错误'

@@ -303,7 +303,6 @@ html, body {
 }
 
 ul {
-  margin-top: 15px;
   border-radius: 5px;
   overflow: hidden
 }
@@ -320,7 +319,8 @@ ul li {
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center
+          align-items: center;
+  width: 100%
 }
 
 .row1 .name {
@@ -413,4 +413,26 @@ ul li {
 }
 .contactus span {
     text-decoration: underline;
+  }
+.listTit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px 10px 8px
+}
+.listTit strong {
+    font-size: 15px;
+    color: #999;
+    font-weight: normal;
+  }
+.listTit span {
+    text-decoration: underline;
+    color: #1dc4a2;
+    font-size: 15px;
   }

@@ -1,7 +1,7 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane, openContactUs } from '../../webview.js'
+import { openLeftPane, openContactUs, openBillList } from '../../webview.js'
 import { http } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
@@ -99,7 +99,7 @@ apiready = function () {
               ? `<span class="warning">未按期还款</span>`
               : ''
             }
-            <span class="data ${item.status === 4 ? 'red' : ''}">还款日 ${item.repayDate}</span>
+            <span class="data ${item.status === 4 ? 'red' : ''}">还款日 ${item.repayDate ? item.repayDate.split(' ')[0] : ''}</span>
           </div>
           <div class="row2">
             <div class="txt"><div><strong>${numeral(item.repayAmount).format('0,0.00')}</strong><span>(含服务费${item.serviceFee || 0})</span></div>
@@ -152,6 +152,11 @@ apiready = function () {
   document.querySelector('#contactus').onclick = function (event) {
     openContactUs()
   }
+
+  document.querySelector('#billlist').onclick = function (event) {
+    openBillList()
+  }
+
 
   document.querySelector('#list').onclick = function (event) {
     let li = $api.closest(event.target, 'li')
