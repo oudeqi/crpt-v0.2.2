@@ -5851,10 +5851,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      // console.log('=====---///--------x--')
-      // console.log(JSON.stringify(item))
-      // <span>支付2,000元</span>
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"t\">\n            <div class=\"tit\">\n              <span>\u5E94\u8FD8</span>\n              <span>".concat(numeral(item.repayTotalAmount).format('0,0.00'), "</span>\n            </div>\n            <div class=\"msg\">\n              \u672C\u91D1 ").concat(item.repayPrincipalAmount, " + \u8D39\u7528 ").concat(item.serviceFee, "\n            </div>\n          </div>\n          <div class=\"b\">\n            <span>").concat(item.repayDate, "</span>\n            <span>\u7B2C").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</span>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"t\">\n            <div class=\"tit\">\n              <span>\u5E94\u8FD8</span>\n              <span>".concat(numeral(item.repayTotalAmount).format('0,0.00'), "</span>\n            </div>\n            <div class=\"msg\">\n              <span>\u5229\u606F\uFF1A").concat(item.repayInterestAmount || '', "</span>\n              <span>\u672C\u91D1 ").concat(item.repayPrincipalAmount, " + \u8D39\u7528 ").concat(item.serviceFee, "</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <span>").concat(item.repayDate, "</span>\n            <span>\u7B2C").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</span>\n          </div>\n        </li>\n      "));
     });
     api.parseTapmode();
   }

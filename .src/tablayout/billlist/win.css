@@ -31,10 +31,10 @@ li {
     border-radius: 4px;
   }
   & .normal {
-    background-color: orange;
+    background-color: #1dc4a2;
   }
   & .warning {
-    background-color: #1dc4a2;
+    background-color: orange;
   }
   & .product {
     flex-grow: 1;

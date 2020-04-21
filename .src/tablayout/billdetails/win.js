@@ -56,9 +56,6 @@ apiready = function () {
 
   function appendList (data) {
     data.forEach(item => {
-      // console.log('=====---///--------x--')
-      // console.log(JSON.stringify(item))
-      // <span>支付2,000元</span>
       $api.append($api.byId('list'), `
         <li>
           <div class="t">
@@ -67,7 +64,8 @@ apiready = function () {
               <span>${numeral(item.repayTotalAmount).format('0,0.00')}</span>
             </div>
             <div class="msg">
-              本金 ${item.repayPrincipalAmount} + 费用 ${item.serviceFee}
+              <span>利息：${item.repayInterestAmount || ''}</span>
+              <span>本金 ${item.repayPrincipalAmount} + 费用 ${item.serviceFee}</span>
             </div>
           </div>
           <div class="b">

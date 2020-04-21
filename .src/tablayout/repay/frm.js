@@ -5,6 +5,7 @@ import { openLeftPane, openContactUs } from '../../webview.js'
 import { http } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
+import find from 'lodash/find'
 
 apiready = function () {
 
@@ -88,20 +89,27 @@ apiready = function () {
     }
     $api.byId('list').innerHTML = ''
     data.forEach(item => {
+      // 贷款状态：1-正常(未结清，无逾期)  2-正常结清 3-提前结清 4-逾期
       $api.append($api.byId('list'), `
         <li data-id="${item.productId}">
           <div class="row1">
             <span class="name">${item.productName}</span>
             ${
-              item.status === '4' ? `<span class="warning">未按期还款</span>` : ''
+              item.status === 4
+              ? `<span class="warning">未按期还款</span>`
+              : ''
             }
-            <span class="data ${item.status === '4' ? 'red' : ''}">还款日 ${item.repayDate}</span>
+            <span class="data ${item.status === 4 ? 'red' : ''}">还款日 ${item.repayDate}</span>
           </div>
           <div class="row2">
             <div class="txt"><div><strong>${numeral(item.repayAmount).format('0,0.00')}</strong><span>(含服务费${item.serviceFee || 0})</span></div>
             <i>${item.curPeriod}/${item.repayPeriod}期</i>
             </div>
-            <div class="btn" data-id="${item.productId}">还款</div>
+            ${
+              item.status === 2 || item.status === 3
+              ? `<div class="btn disabled">已还清</div>`
+              : `<div class="btn" data-id="${item.productId}">还款</div>`
+            }
           </div>
         </li>
       `)
@@ -112,7 +120,9 @@ apiready = function () {
       <p>剩余待还(元)</p>
       <p><strong>${numeral(data.remainderRepayAmount).format('0,0.00')}</strong></p>
       ${
-        data.remainderRepayAmount ? `<p>最近还款日期：<span>${data.latestRepayDate || '无'}</span></p>` : ''
+        data.remainderRepayAmount ? `<p>最近还款日期：<span>${data.latestRepayDate || '无'}</span> ${
+          data.yuqi ? '<span class="warning">未按期还款</span>' : ''
+        }</p>` : ''
       }
       <p>全部待还：<span>${data.repayTotalAmount || '0'}元</span></p>
     `
@@ -124,8 +134,12 @@ apiready = function () {
       loading = false
       api.refreshHeaderLoadDone()
       let data = res.data || {}
-      appendTotal(data)
       appendList(data.list || [])
+      let yuqi = find(data.list, item => item.status === 4)
+      appendTotal({
+        ...data,
+        yuqi: yuqi
+      })
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()

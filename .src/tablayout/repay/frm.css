@@ -52,6 +52,13 @@ html, body {
       color: #999;
     }
   }
+  & .warning {
+    background-color: orange;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 6px;
+    border-radius: 4px;
+  }
 }
 .loading {
   padding-top: 40px;
@@ -126,6 +133,9 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  & .btn.disabled {
+    background-color: #aaa;
   }
 }
 .tips {

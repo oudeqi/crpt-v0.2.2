@@ -284,6 +284,14 @@ html, body {
 .secl_body p span {
       color: #999;
     }
+
+.secl_body .warning {
+    background-color: orange;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 6px;
+    border-radius: 4px;
+  }
 .loading {
   padding-top: 40px;
   color: #999;
@@ -387,6 +395,10 @@ ul li {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+  }
+
+.row2 .btn.disabled {
+    background-color: #aaa;
   }
 .tips {
   text-align: center;

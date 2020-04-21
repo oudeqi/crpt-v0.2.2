@@ -245,10 +245,10 @@ li {
     border-radius: 4px;
   }
 .t .normal {
-    background-color: orange;
+    background-color: #1dc4a2;
   }
 .t .warning {
-    background-color: #1dc4a2;
+    background-color: orange;
   }
 .t .product {
     -webkit-box-flex: 1;

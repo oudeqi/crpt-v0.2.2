@@ -30,6 +30,9 @@ apiready = function () {
   }
 
   function appendList (data) {
+    // 1、正常（页面不做展示）
+    // 2、未按期还款
+    // 3、今日还款
     data.forEach(item => {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.orderNo || ''}"
@@ -42,7 +45,13 @@ apiready = function () {
         >
           <div class="t">
             <div class="tit">${item.billDate} 账单</div>
-            ${item.status === 2 ? '<div class="status warning">未按期还款</div>' : ''}
+            ${
+              item.status === 2
+              ? '<div class="status warning">未按期还款</div>'
+              : item.status === 3
+              ? '<div class="status normal">今日还款</div>'
+              : ''
+            }
             <div class="product">${item.productName}</div>
           </div>
           <div class="b">

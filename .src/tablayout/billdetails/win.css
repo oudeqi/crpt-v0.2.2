@@ -45,7 +45,9 @@ li {
     padding-bottom: 10px;
     font-size: 15px;
     color: #aaa;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
