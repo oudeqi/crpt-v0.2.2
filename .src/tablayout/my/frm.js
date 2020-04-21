@@ -84,9 +84,9 @@ apiready = function () {
     openMyProduct()
   }
 
-  document.querySelector('#settings').onclick = function () {
-    openSettings()
-  }
+  // document.querySelector('#settings').onclick = function () {
+  //   openSettings()
+  // }
 
   document.querySelector('#contactus').onclick = function () {
     openContactUs()

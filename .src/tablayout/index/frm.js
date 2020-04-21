@@ -4,6 +4,7 @@ import './frm.css'
 import { openLeftPane, openProductDetails, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
 import { http } from '../../config.js'
 import numeral from 'numeral'
+import {openSettings} from "../../webview";
 
 apiready = function () {
 
@@ -54,8 +55,10 @@ apiready = function () {
   api.addEventListener({
     name: 'navitembtn'
   }, (ret, err) => {
-    if (ret.index === 0) {
+    if (ret.type === 'left') {
       openLeftPane()
+    }else {
+      openSettings()
     }
   })
 

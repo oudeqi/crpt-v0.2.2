@@ -62,6 +62,26 @@ function openTodoAuthQiye() {
 } // 企业信息确认
 
 
+function openSettings() {
+  api.openTabLayout({
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 修改密码
+
+
 function openProductDetails(id) {
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -1304,8 +1324,10 @@ apiready = function apiready() {
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
-    if (ret.index === 0) {
+    if (ret.type === 'left') {
       openLeftPane();
+    } else {
+      openSettings();
     }
   });
   var pageSize = 20;

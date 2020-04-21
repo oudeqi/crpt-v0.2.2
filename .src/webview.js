@@ -64,7 +64,7 @@ function openSlidLayout (fn) {
 
 /*
 list: [{
-  text: '首页',
+  text: '',
   iconPath: 'widget://image/tabLayout/index.png',
   selectedIconPath: 'widget://image/tabLayout/index_active.png'
 }, {
@@ -105,11 +105,12 @@ function openTabLayout (index) {
         // fontSize: 16,
         iconPath: 'widget://image/avatar.png',
       }],
-      // rightButtons: [{
-      //   text: '设置',
-      //   color: '#fff',
-      //   fontSize: 16,
-      // }]
+      rightButtons: [{
+        text: '设置',
+        color: '#fff',
+        fontSize: 16,
+        // iconPath: 'widget://image/settings@2x.png'
+      }]
     },
     tabBar: {
       animated: false,
