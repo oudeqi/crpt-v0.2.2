@@ -444,3 +444,7 @@ li .l .col {
           font-size: 15px;
           color: #888;
         }
+
+.clickBtn {
+  cursor: pointer;
+}
