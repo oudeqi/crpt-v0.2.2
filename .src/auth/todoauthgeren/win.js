@@ -69,7 +69,7 @@ apiready = function() {
               <strong>实名认证</strong>
               <span class="icon"></span>
             </div>
-            <p>请准备您人的二代身份证</p>
+            <p>请准备您的二代身份证</p>
           </div>
           <div class="pic idcard"></div>
         </div>

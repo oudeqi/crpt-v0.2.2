@@ -42,7 +42,7 @@ apiready = function () {
     //   tel: '18989193368',
     //   userType: 2
     // })
-    // openIDcardUpload()
+    // openIDcardInfo()
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()

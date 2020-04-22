@@ -355,6 +355,7 @@ function openIDcardInfo (pageParam) {
       fontWeight: 'bold',
       leftButtons: [{
         text: '返回',
+        color: '#fff',
         iconPath: 'widget://image/back.png',
       }],
     }
