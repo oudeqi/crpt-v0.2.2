@@ -5,6 +5,7 @@ const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://crptuat.liuheco.com'
 const prod = 'http://crptuat.liuheco.com'
 const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
+
 let hasAlert = false
 
 const whiteList = [ // 白名单里不带token，否则后端会报错
@@ -385,6 +386,23 @@ function initUIInput (dom, options = {}, cb) {
   })
 }
 
+function getAuthStatus (cb) {
+  // 认证状态 int
+  // 1：正常
+  // 2：待实名认证
+  // 3：待人脸审核
+  // 4：人脸认证失败，待人工审核
+  // 5：待补充基本信息
+  // 6：人工审核不通过
+  http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+    cb(res.data)
+  }).catch(error => {
+    api.toast({
+      msg: error.msg || '获取认证状态失败'
+    })
+  })
+}
+
 export {
   http,
   openUIInput,
@@ -397,4 +415,5 @@ export {
   CitySelector,
   getPicture,
   initUIInput,
+  getAuthStatus
 }

@@ -1,8 +1,7 @@
 import '../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
-openIDcardUpload, openIDcardInfo, openTabLayout } from '../../webview.js'
+import { openProductRecommend } from '../../webview.js'
 import { http } from '../../config.js'
 import numeral from 'numeral'
 
@@ -25,8 +24,8 @@ apiready = function() {
 
   getPageData()
 
-  document.querySelector('#goIndex').onclick = function () {
-    openTabLayout()
+  document.querySelector('#next').onclick = function () {
+    openProductRecommend()
   }
 
 }

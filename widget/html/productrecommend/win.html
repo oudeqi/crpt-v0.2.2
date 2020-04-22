@@ -10,26 +10,17 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
-  <div class="tips">
-    预估额度仅用于信用评估，非实际贷款额度
+
+  <div class="title">
+    <div>根据您的资金需求，为您推荐以下产品</div>
+    <div>立即开通，用款更便捷</div>
   </div>
-  <div class="container">
-    <div class="welcome">
-      <div>欢迎您，<strong id="name">****</strong></div>
-      <p>
-        您的每一次守信，都是信用的积累，
-        根据您过去的交易记录和信用行为为您预测出您的额度。
-      </p>
-    </div>
-    <div class="yugu">
-      <p>您的预估额度为</p>
-      <div>
-        <strong id="edu">****</strong><span>元</span>
-      </div>
-    </div>
-    <div class="btn-box">
-      <div class="app_btn" tapmode="active" id="next">下一步</div>
-    </div>
+  <ul id="list">
+
+  </ul>
+
+  <div class="btn-box" id="btnContainer" style="display: none;">
+    <div class="app_btn" tapmode="active" id="goIndex">跳 过</div>
   </div>
 
   <script type="text/javascript" src="../../script/api.js"></script>

@@ -1,4 +1,116 @@
 // api.lockSlidPane();
+/*
+list: [{
+  text: '',
+  iconPath: 'widget://image/tabLayout/index.png',
+  selectedIconPath: 'widget://image/tabLayout/index_active.png'
+}, {
+  text: '订单',
+  iconPath: 'widget://image/tabLayout/order.png',
+  selectedIconPath: 'widget://image/tabLayout/order_active.png'
+}, {
+  text: '还款',
+  iconPath: 'widget://image/tabLayout/repay.png',
+  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
+}, {
+  text: '我的',
+  iconPath: 'widget://image/tabLayout/mine.png',
+  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
+}],
+*/
+// 导航布局
+
+
+function openTabLayout(index) {
+  api.openTabLayout({
+    name: 'tabLayout',
+    bgColor: '#fff',
+    reload: true,
+    delay: 300,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        // text: '设置',
+        // color: '#fff',
+        // fontSize: 16,
+        iconPath: 'widget://image/avatar.png'
+      }],
+      rightButtons: [{
+        text: '设置',
+        color: '#fff',
+        fontSize: 16 // iconPath: 'widget://image/settings@2x.png'
+
+      }]
+    },
+    tabBar: {
+      animated: false,
+      scrollEnabled: true,
+      selectedColor: '#1dc4a2',
+      color: '#bfbfbf',
+      index: index || 0,
+      // preload: 4,
+      list: [{
+        text: "首页",
+        iconPath: "widget://image/tablayout/shouye.png",
+        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+      }, {
+        text: "订单",
+        iconPath: "widget://image/tablayout/dingdan.png",
+        selectedIconPath: "widget://image/tablayout/dingdan_active.png"
+      }, {
+        text: "还款",
+        iconPath: "widget://image/tablayout/huankuan.png",
+        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+      }, {
+        text: "我的",
+        iconPath: "widget://image/tablayout/wode.png",
+        selectedIconPath: "widget://image/tablayout/wode_active.png"
+      }],
+      frames: [{
+        title: "首页",
+        //tab切换时对应的标题
+        name: "tablayout/index",
+        url: "widget://html/index/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "订单",
+        name: "tablayout/order",
+        url: "widget://html/order/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "还款",
+        name: "tablayout/repay",
+        url: "widget://html/repay/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "我的",
+        name: "tablayout/my",
+        url: "widget://html/my/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }]
+    }
+  });
+} // 注册
 
 
 function openRegLogin() {
@@ -12,13 +124,23 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openProductRecommend(pageParam) {
+function openProductDetails() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref2.id,
+      open = _ref2.open;
+
   api.openTabLayout({
-    name: 'html/productrecommend/win',
-    title: '产品推荐',
-    url: 'widget://html/productrecommend/win.html',
+    name: 'html/productdetails/win',
+    title: '产品详情',
+    url: 'widget://html/productdetails/win.html',
     bgColor: '#fff',
-    pageParam: pageParam,
+    reload: true,
+    pageParam: {
+      id: id,
+      open: open
+    },
+    // open 1 已开通， 0未开通
+    bounces: true,
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
@@ -28,7 +150,7 @@ function openProductRecommend(pageParam) {
       fontWeight: 'bold'
     }
   });
-}
+} // 城市选择
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1226,25 +1348,97 @@ return numeral;
 });
 
 apiready = function apiready() {
-  var userinfo = $api.getStorage('userinfo') || {};
-  var name = userinfo.name,
-      userType = userinfo.userType;
-  $api.byId('name').innerHTML = name;
+  var pageSize = 20;
+  var pageNo = 1;
+  var loading = false;
 
-  function getPageData() {
-    http.get('/crpt-credit/credit/creditpre/amount').then(function (res) {
-      var data = res.data || {};
-      $api.byId('edu').innerHTML = numeral(data.creditAmount).format('0,0') || '****';
+  function getPageData(cb) {
+    if (loading) {
+      return;
+    }
+
+    loading = true;
+    http.get("/crpt-product/product/online/list?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
+      loading = false;
+      api.refreshHeaderLoadDone();
+
+      if (res && res.data.length > 0) {
+        pageNo++;
+        cb(res.data);
+      } else if (pageNo === 1) {
+        api.toast({
+          msg: '无数据'
+        });
+      } else {
+        api.toast({
+          msg: '无更多数据'
+        });
+      }
     })["catch"](function (error) {
+      loading = false;
+      api.refreshHeaderLoadDone();
       api.toast({
-        msg: error.msg || '获取数据失败'
+        msg: '数据加载失败'
       });
     });
   }
 
-  getPageData();
+  function appendList(data) {
+    data.forEach(function (item) {
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+    });
+    api.parseTapmode();
+  }
 
-  document.querySelector('#next').onclick = function () {
-    openProductRecommend();
+  function refresh() {
+    pageNo = 1;
+    getPageData(function (data) {
+      $api.byId('list').innerHTML = '';
+      appendList(data);
+      $api.byId('btnContainer').style.display = 'block';
+    });
+  }
+
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, function (ret, err) {
+    refresh();
+  });
+  api.refreshHeaderLoading();
+
+  document.querySelector('#list').onclick = function (event) {
+    var btn = $api.closest(event.target, '.btn');
+    var li = $api.closest(event.target, 'li');
+
+    if (btn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...'
+      });
+    } else if (li) {
+      var id = li.dataset.id;
+
+      if (id) {
+        openProductDetails({
+          id: id,
+          open: 0 // 1 已开通， 0未开通
+
+        });
+      } else {
+        api.toast({
+          msg: 'id 不存在'
+        });
+      }
+    }
+  };
+
+  document.querySelector('#goIndex').onclick = function (event) {
+    openTabLayout();
   };
 };

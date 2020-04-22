@@ -2,8 +2,7 @@ import '../../app.css'
 import './frm.css'
 
 import {
-  openReg, openGerenLogin, openQiyeLogin,
-  openFindPwd, openSendCode, openTabLayout
+  openGerenLogin, openTodoAuthGeren, openTabLayout, openTodoAuthQiye
 } from '../../webview.js'
 import { http, openUIInput, handleLoginSuccess, isPhoneNo, phoneNoFormat } from '../../config.js'
 
@@ -87,7 +86,6 @@ apiready = function() {
   }
 
   document.querySelector('#login').onclick = function () {
-    // openTabLayout()
     if (submitStatus === 'notsubmit') {
       let code = form['code'][1]
       if (!code) {
@@ -126,8 +124,27 @@ apiready = function() {
           location: 'middle',
           global: true
         })
-        handleLoginSuccess(ret)
-        openTabLayout()
+        getAuthStatus(function (status) {
+          // 认证状态 int
+          // 1：正常
+          // 2：待实名认证
+          // 3：待人脸审核
+          // 4：人脸认证失败，待人工审核
+          // 5：待补充基本信息
+          // 6：人工审核不通过
+          let userinfo = ret || {}
+          let userType = userinfo.userType
+          handleLoginSuccess(userinfo)
+          if (status === 1) {
+            openTabLayout()
+          } else {
+            if (userType === '1') {
+              openTodoAuthGeren()
+            } else {
+              openTodoAuthQiye()
+            }
+          }
+        })
       }).catch(error => {
         api.toast({
           msg: error.msg || '登录失败',

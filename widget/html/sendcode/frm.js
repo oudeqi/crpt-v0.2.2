@@ -134,6 +134,51 @@ function openGerenLogin(pageParam) {
   });
 } // 企业登录
 
+
+function openTodoAuthGeren() {
+  api.openTabLayout({
+    name: 'html/todoauthgeren/win',
+    title: '待完成',
+    url: 'widget://html/todoauthgeren/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+}
+
+function openTodoAuthQiye() {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待完成',
+    url: 'widget://html/todoauthqiye/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 企业信息确认
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -488,7 +533,6 @@ apiready = function apiready() {
   }
 
   document.querySelector('#login').onclick = function () {
-    // openTabLayout()
     if (submitStatus === 'notsubmit') {
       var code = form['code'][1];
 
@@ -541,8 +585,28 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
-        handleLoginSuccess(ret);
-        openTabLayout();
+        getAuthStatus(function (status) {
+          // 认证状态 int
+          // 1：正常
+          // 2：待实名认证
+          // 3：待人脸审核
+          // 4：人脸认证失败，待人工审核
+          // 5：待补充基本信息
+          // 6：人工审核不通过
+          var userinfo = ret || {};
+          var userType = userinfo.userType;
+          handleLoginSuccess(userinfo);
+
+          if (status === 1) {
+            openTabLayout();
+          } else {
+            if (userType === '1') {
+              openTodoAuthGeren();
+            } else {
+              openTodoAuthQiye();
+            }
+          }
+        });
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '登录失败',

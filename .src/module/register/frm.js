@@ -1,8 +1,8 @@
 import '../../app.css'
 import './frm.css'
 
-import { openTabLayout } from '../../webview.js'
-import { http, openUIInput, resetUIInputPosi, handleLoginSuccess } from '../../config.js'
+import { openTabLayout, openTodoAuthGeren, openTodoAuthQiye } from '../../webview.js'
+import { http, openUIInput, resetUIInputPosi, handleLoginSuccess, getAuthStatus } from '../../config.js'
 import { Base64 } from 'js-base64'
 
 apiready = function() {
@@ -44,8 +44,7 @@ apiready = function() {
         'Content-Type': 'application/x-www-form-urlencoded'
       } 
     }).then(ret => {
-      handleLoginSuccess(ret)
-      cb()
+      cb(ret)
     }).catch(error => {
       api.toast({
         msg: error.msg || '登录失败',
@@ -179,8 +178,28 @@ apiready = function() {
           location: 'middle',
           global: true
         })
-        login(function () {
-          openTabLayout()
+        login(function (user) {
+          getAuthStatus(function (status) {
+            // 认证状态 int
+            // 1：正常
+            // 2：待实名认证
+            // 3：待人脸审核
+            // 4：人脸认证失败，待人工审核
+            // 5：待补充基本信息
+            // 6：人工审核不通过
+            let userinfo = user || {}
+            let userType = userinfo.userType
+            handleLoginSuccess(userinfo)
+            if (status === 1) {
+              openTabLayout()
+            } else {
+              if (userType === '1') {
+                openTodoAuthGeren()
+              } else {
+                openTodoAuthQiye()
+              }
+            }
+          })
         })
       }).catch(error => {
         api.toast({

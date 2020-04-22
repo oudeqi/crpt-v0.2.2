@@ -786,6 +786,26 @@ function openCityList (pageParam) {
   })
 }
 
+// 产品推荐
+function openProductRecommend (pageParam) {
+  api.openTabLayout({
+    name: 'html/productrecommend/win',
+    title: '产品推荐',
+    url: 'widget://html/productrecommend/win.html',
+    bgColor: '#fff',
+    pageParam,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
+
 
 export {
   openLeftPane,
@@ -823,5 +843,6 @@ export {
   openRepayPlan,
   openRepayRecord,
   openProductDetails,
-  openCityList
+  openCityList,
+  openProductRecommend
 }

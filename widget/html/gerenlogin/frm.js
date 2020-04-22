@@ -154,6 +154,51 @@ function openFindPwd() {
   });
 } // 填写个人信息
 
+
+function openTodoAuthGeren() {
+  api.openTabLayout({
+    name: 'html/todoauthgeren/win',
+    title: '待完成',
+    url: 'widget://html/todoauthgeren/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+}
+
+function openTodoAuthQiye() {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待完成',
+    url: 'widget://html/todoauthqiye/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 企业信息确认
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -403,6 +448,23 @@ var isPhoneNo = function isPhoneNo(phone) {
 var handleLoginSuccess = function handleLoginSuccess(data) {
   $api.setStorage('userinfo', data);
 };
+
+function getAuthStatus(cb) {
+  // 认证状态 int
+  // 1：正常
+  // 2：待实名认证
+  // 3：待人脸审核
+  // 4：人脸认证失败，待人工审核
+  // 5：待补充基本信息
+  // 6：人工审核不通过
+  http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+    cb(res.data);
+  })["catch"](function (error) {
+    api.toast({
+      msg: error.msg || '获取认证状态失败'
+    });
+  });
+}
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -741,8 +803,28 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
-        handleLoginSuccess(ret);
-        openTabLayout();
+        getAuthStatus(function (status) {
+          // 认证状态 int
+          // 1：正常
+          // 2：待实名认证
+          // 3：待人脸审核
+          // 4：人脸认证失败，待人工审核
+          // 5：待补充基本信息
+          // 6：人工审核不通过
+          var userinfo = ret || {};
+          var userType = userinfo.userType;
+          handleLoginSuccess(userinfo);
+
+          if (status === 1) {
+            openTabLayout();
+          } else {
+            if (userType === '1') {
+              openTodoAuthGeren();
+            } else {
+              openTodoAuthQiye();
+            }
+          }
+        });
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '登录失败',
