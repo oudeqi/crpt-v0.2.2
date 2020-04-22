@@ -6,7 +6,7 @@ import { http } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
-
+  let emptyBox = $api.byId('empty-box')
   api.addEventListener({
     name: 'swiperight'
   }, function(ret, err){
@@ -43,15 +43,19 @@ apiready = function () {
         if (res.data.count) {
           $api.byId('count').innerHTML = res.data.count
         }
+        emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '')
         cb(res.data.list)
       } else if (pageNo === 1) {
+        emptyBox.className = `${emptyBox.className} showing`
         api.toast({ msg: '无数据'})
       } else {
+        emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '')
         api.toast({ msg: '无更多数据'})
       }
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
+      emptyBox.className = `${emptyBox.className} showing`
       api.toast({ msg: '数据加载失败' })
     })
   }

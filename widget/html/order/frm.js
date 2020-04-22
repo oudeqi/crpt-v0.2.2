@@ -1247,6 +1247,7 @@ return numeral;
 });
 
 apiready = function apiready() {
+  var emptyBox = $api.byId('empty-box');
   api.addEventListener({
     name: 'swiperight'
   }, function (ret, err) {
@@ -1286,12 +1287,15 @@ apiready = function apiready() {
           $api.byId('count').innerHTML = res.data.count;
         }
 
+        emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '');
         cb(res.data.list);
       } else if (pageNo === 1) {
+        emptyBox.className = "".concat(emptyBox.className, " showing");
         api.toast({
           msg: '无数据'
         });
       } else {
+        emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '');
         api.toast({
           msg: '无更多数据'
         });
@@ -1299,6 +1303,7 @@ apiready = function apiready() {
     })["catch"](function (error) {
       loading = false;
       api.refreshHeaderLoadDone();
+      emptyBox.className = "".concat(emptyBox.className, " showing");
       api.toast({
         msg: '数据加载失败'
       });
