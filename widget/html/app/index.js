@@ -182,9 +182,9 @@ apiready = function apiready() {
   // 6：人工审核不通过
 
   if (userinfo) {
-    var authStatus = $api.getStorage('authStatus');
+    var authStatus = $api.getStorage('authStatus') || {};
 
-    if (authStatus === 1) {
+    if (authStatus.status === 1) {
       openTabLayout();
     } else {
       var userType = userinfo.userType;
@@ -194,15 +194,7 @@ apiready = function apiready() {
       } else {
         openTodoAuthQiye();
       }
-    } // openSendCode({
-    //   tel: '18989193368',
-    //   userType: 2
-    // })
-    // openIDcardInfo()
-    // openBillDetails()
-    // openTodoAuthGeren()
-    // openTodoAuthQiye()
-
+    }
   } else {
     openRegLogin();
   } // 云修复完成

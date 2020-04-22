@@ -477,8 +477,9 @@ function getAuthStatus(token, cb) {
       token: token
     }
   }).then(function (res) {
-    $api.setStorage('authStatus', res.data); // 当前认证状态
-
+    $api.setStorage('authStatus', {
+      status: res.data
+    });
     cb(res.data);
   })["catch"](function (error) {
     api.toast({

@@ -404,7 +404,9 @@ function getAuthStatus (token, cb) {
       token
     }
   }).then(res => {
-    $api.setStorage('authStatus', res.data) // 当前认证状态
+    $api.setStorage('authStatus', {
+      status: res.data
+    })
     cb(res.data)
   }).catch(error => {
     api.toast({
