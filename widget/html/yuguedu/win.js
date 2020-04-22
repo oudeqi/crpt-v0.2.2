@@ -72,8 +72,15 @@ var ajax = function ajax(method, url) {
     return url.includes(value);
   });
   return new Promise(function (resolve, reject) {
-    var userinfo = $api.getStorage('userinfo');
-    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     };

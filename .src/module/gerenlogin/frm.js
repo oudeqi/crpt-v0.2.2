@@ -106,7 +106,10 @@ apiready = function() {
           location: 'middle',
           global: true
         })
-        getAuthStatus(function (status) {
+        let userinfo = ret || {}
+        let userType = userinfo.userType
+        let token = userinfo.token_type + ' ' + userinfo.access_token
+        getAuthStatus(token, function (status) {
           // 认证状态 int
           // 1：正常
           // 2：待实名认证
@@ -114,8 +117,6 @@ apiready = function() {
           // 4：人脸认证失败，待人工审核
           // 5：待补充基本信息
           // 6：人工审核不通过
-          let userinfo = ret || {}
-          let userType = userinfo.userType
           handleLoginSuccess(userinfo)
           if (status === 1) {
             openTabLayout()

@@ -21,8 +21,13 @@ const whiteList = [ // 白名单里不带token，否则后端会报错
 const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} = {}) => {
   let include = whiteList.find(value => url.includes(value))
   return new Promise((resolve, reject) => {
-    let userinfo = $api.getStorage('userinfo')
-    let token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
+    let token = ''
+    if (headers.token) {
+      token = headers.token
+    } else {
+      let userinfo = $api.getStorage('userinfo')
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
+    }
     let contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     }
@@ -386,7 +391,7 @@ function initUIInput (dom, options = {}, cb) {
   })
 }
 
-function getAuthStatus (cb) {
+function getAuthStatus (token, cb) {
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -394,7 +399,11 @@ function getAuthStatus (cb) {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+  http.get(`/crpt-cust/customer/query/authstatus`, null, {
+    headers: {
+      token
+    }
+  }).then(res => {
     cb(res.data)
   }).catch(error => {
     api.toast({

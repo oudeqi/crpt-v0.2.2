@@ -266,7 +266,7 @@ function openTodoAuthGeren () {
       type: 'none'
     },
     navigationBar: {
-      hideBackButton: false,
+      hideBackButton: true,
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,
@@ -287,7 +287,7 @@ function openTodoAuthQiye () {
       type: 'none'
     },
     navigationBar: {
-      hideBackButton: false,
+      hideBackButton: true,
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,

@@ -168,7 +168,7 @@ function openTodoAuthGeren() {
       type: 'none'
     },
     navigationBar: {
-      hideBackButton: false,
+      hideBackButton: true,
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,
@@ -190,7 +190,7 @@ function openTodoAuthQiye() {
       type: 'none'
     },
     navigationBar: {
-      hideBackButton: false,
+      hideBackButton: true,
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,
@@ -241,8 +241,15 @@ var ajax = function ajax(method, url) {
     return url.includes(value);
   });
   return new Promise(function (resolve, reject) {
-    var userinfo = $api.getStorage('userinfo');
-    var token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
     };
@@ -449,7 +456,7 @@ var handleLoginSuccess = function handleLoginSuccess(data) {
   $api.setStorage('userinfo', data);
 };
 
-function getAuthStatus(cb) {
+function getAuthStatus(token, cb) {
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -457,7 +464,11 @@ function getAuthStatus(cb) {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+  http.get("/crpt-cust/customer/query/authstatus", null, {
+    headers: {
+      token: token
+    }
+  }).then(function (res) {
     cb(res.data);
   })["catch"](function (error) {
     api.toast({
@@ -803,7 +814,10 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
-        getAuthStatus(function (status) {
+        var userinfo = ret || {};
+        var userType = userinfo.userType;
+        var token = userinfo.token_type + ' ' + userinfo.access_token;
+        getAuthStatus(token, function (status) {
           // 认证状态 int
           // 1：正常
           // 2：待实名认证
@@ -811,8 +825,6 @@ apiready = function apiready() {
           // 4：人脸认证失败，待人工审核
           // 5：待补充基本信息
           // 6：人工审核不通过
-          var userinfo = ret || {};
-          var userType = userinfo.userType;
           handleLoginSuccess(userinfo);
 
           if (status === 1) {
