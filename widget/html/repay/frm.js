@@ -16,22 +16,6 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 // api.lockSlidPane();
-// api.unlockSlidPane
-// 打开侧滑
-function openLeftPane() {
-  api.openWin({
-    name: 'html/leftpane/win',
-    url: 'widget://html/leftpane/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: false,
-    animation: {
-      type: 'push',
-      subType: 'from_left'
-    }
-  });
-} // 抽布局
 
 
 function openRegLogin() {
@@ -9064,11 +9048,6 @@ apiready = function apiready() {
     getPageData();
   };
 
-  api.addEventListener({
-    name: 'swiperight'
-  }, function (ret, err) {
-    openLeftPane();
-  });
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',

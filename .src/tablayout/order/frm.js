@@ -1,17 +1,12 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane, openOrderDetails } from '../../webview.js'
+import { openOrderTodo } from '../../webview.js'
 import { http } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
   let emptyBox = $api.byId('empty-box')
-  api.addEventListener({
-    name: 'swiperight'
-  }, function(ret, err){
-    openLeftPane()
-  })
 
   api.addEventListener({
     name: 'keyback'
@@ -132,14 +127,9 @@ apiready = function () {
         msg: '功能开发中...',
       })
     } else if (btn) {
-      api.alert({
-        title: '提示',
-        msg: '功能开发中...',
-      })
-    } else if (li) {
-      let id = li.dataset.id
+      let id = btn.dataset.id
       if (id) {
-        openOrderDetails(id, 'daiZhiFu')
+        openOrderTodo(id)
       } else {
         api.toast({ msg: 'id 不存在' })
       }

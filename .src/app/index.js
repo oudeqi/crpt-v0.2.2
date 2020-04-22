@@ -21,6 +21,7 @@ import {
   openBillList,
   openBillDetails,
   openOrderList,
+  openOrderTodo,
   openMyProduct,
   openMyQuota,
   openSettings,
@@ -35,9 +36,28 @@ import {
 // $api.clearStorage()
 
 apiready = function () {
-  // $api.clearStorage()
-  if ($api.getStorage('userinfo')) {
+  const userinfo = $api.getStorage('userinfo')
+  // 认证状态 int
+  // 1：正常
+  // 2：待实名认证
+  // 3：待人脸审核
+  // 4：人脸认证失败，待人工审核
+  // 5：待补充基本信息
+  // 6：人工审核不通过
+  if (userinfo) {
+    // openOrderTodo(9939393)
     openTabLayout()
+    // const authStatus = userinfo.authStatus
+    // if (authStatus === 1) {
+    //   openTabLayout()
+    // } else {
+    //   const userType = userinfo.userType
+    //   if (userType === '1') {
+    //     openTodoAuthGeren()
+    //   } else {
+    //     openTodoAuthQiye()
+    //   }
+    // }
     // openSendCode({
     //   tel: '18989193368',
     //   userType: 2

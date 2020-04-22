@@ -3,6 +3,7 @@ import './win.css'
 
 // import { openMsgDetails } from '../../webview.js'
 import { http } from '../../config.js'
+import numeral from 'numeral'
 
 apiready = function () {
 
@@ -47,11 +48,11 @@ apiready = function () {
             <span class="txt2">${item.curPeriod}期</span><span class="txt3">${item.status===1?'（未按期还）': ''}</span>
           </div>
           <div class="r">
-            <div class="txt1">应还：${item.repayTotalAmount}</div>
-            <div class="txt2">本金：${item.repayPrincipalAmount}</div>
-            <div class="txt2">费用：${item.serviceFee}</div>
+            <div class="txt1">应还：${numeral(item.repayTotalAmount).format('0,0.00')}</div>
+            <div class="txt2">本金：${numeral(item.repayPrincipalAmount).format('0,0.00')}</div>
+            <div class="txt2">费用：${numeral(item.serviceFee).format('0,0.00')}</div>
             ${
-              item.status===1 ? `<div class="txt3">逾期罚息：${item.repayPenaltyAmount}</div>` : ''
+              item.status===1 ? `<div class="txt3">逾期罚息：${numeral(item.repayPenaltyAmount).format('0,0.00')}</div>` : ''
             }
           </div>
         </li>

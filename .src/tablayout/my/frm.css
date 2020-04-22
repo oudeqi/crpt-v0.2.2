@@ -63,6 +63,9 @@ li {
   & .contact {
     background-image: url(../../image/tab_my/contact@2x.png);
   }
+  & .settings {
+    background-image: url(../../image/tab_my/settings@2x.png);
+  }
   & .line-box {
     flex-grow: 1;
     display: flex;
@@ -92,4 +95,3 @@ li {
     }
   }
 }
-

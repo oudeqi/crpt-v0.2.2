@@ -1,3 +1,16 @@
+// api.lockSlidPane();
+
+
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -14,19 +27,6 @@ function _defineProperty(obj, key, value) {
 }
 
 var defineProperty = _defineProperty;
-
-// api.lockSlidPane();
-
-
-function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1214,63 +1214,38 @@ return numeral;
 });
 
 apiready = function apiready() {
-  var pageSize = 20;
-  var pageNo = 1;
-  var loading = false;
   var pageParam = api.pageParam || {};
   var id = pageParam.id; // '9939393'
-  // 9939393
-  // 1101
 
-  function getPageData(cb) {
-    if (loading) {
-      return;
-    }
-
-    loading = true;
-    http.get("/crpt-credit/credit/repay/query/repayrecord?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo, "&orderNo=").concat(id)).then(function (res) {
-      loading = false;
+  function getDetails(id) {
+    api.showProgress({
+      title: '加载中...',
+      text: '',
+      modal: false
+    });
+    http.get("/crpt-order/order/detail/app?orderNo=".concat(id)).then(function (res) {
+      // orderNo	String	产融APP订单编号
+      // payAmount	BigDecimal	支付金额
+      // saleCustName	String	购买来源
+      // orderTime	Date	创建时间
+      // appCode	String	订单来源
+      // totalAmount	BigDecimal	订单金额
+      // productName	String	(借贷的)产品名称
+      // status int 订单状态：
+      // 1-未支付 2-处理中 3-逾期 4-已还清 5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
+      api.hideProgress();
       api.refreshHeaderLoadDone();
-      $api.byId('total').innerHTML = numeral(res.data.sumRepaidTotalAmount).format('0,0.00');
-
-      if (res && res.data.list.length > 0) {
-        pageNo++;
-        cb(res.data.list);
-      } else if (pageNo === 1) {
-        api.toast({
-          msg: '无数据'
-        });
-      } else {
-        api.toast({
-          msg: '无更多数据'
-        });
-      }
+      var data = res.data || {};
+      $api.byId('orderNo').innerHTML = data.orderNo || '';
+      $api.byId('payAmount').innerHTML = numeral(data.payAmount).format('0,0.00');
+      $api.byId('saleCustName').innerHTML = data.saleCustName || '';
+      $api.byId('orderTime').innerHTML = data.orderTime || '';
     })["catch"](function (error) {
-      loading = false;
       api.refreshHeaderLoadDone();
+      api.hideProgress();
       api.toast({
-        msg: error.msg
+        msg: error.msg || '请求发生错误'
       });
-    });
-  }
-
-  function appendList(data) {
-    data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"row1\">\n            <span>".concat(item.repayDate ? item.repayDate.split(' ')[0] : '', "</span>\n            <span>\u5DF2\u8FD8\uFF1A").concat(numeral(item.curRepaidTotalAmount).format('0,0.00'), "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u672C\u91D1</span>\n            <span>").concat(numeral(item.curRepaidPrincipalAmount).format('0,0.00'), "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u8D39\u7528</span>\n            <span>").concat(numeral(item.curServiceFee).format('0,0.00'), "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u903E\u671F\u7F5A\u606F</span>\n            <span>").concat(numeral(item.curRepaidPenaltyAmount).format('0,0.00'), "</span>\n          </div>\n        </li>\n      "));
-    });
-  }
-
-  function refresh() {
-    pageNo = 1;
-    getPageData(function (data) {
-      $api.byId('list').innerHTML = '';
-      appendList(data);
-    });
-  }
-
-  function loadmore() {
-    getPageData(function (data) {
-      appendList(data);
     });
   }
 
@@ -1283,16 +1258,14 @@ apiready = function apiready() {
     textLoading: '加载中...',
     showTime: false
   }, function (ret, err) {
-    refresh();
-  });
-  api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100 //距离底部距离
-
-    }
-  }, function (ret, err) {
-    loadmore();
+    getDetails(id);
   });
   api.refreshHeaderLoading();
+
+  document.querySelector('#pay').onclick = function (event) {
+    api.alert({
+      title: '提示',
+      msg: '功能开发中...'
+    });
+  };
 };

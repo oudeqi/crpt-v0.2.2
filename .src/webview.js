@@ -99,18 +99,18 @@ function openTabLayout (index) {
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
-      leftButtons: [{
-        // text: '设置',
-        // color: '#fff',
-        // fontSize: 16,
-        iconPath: 'widget://image/avatar.png',
-      }],
-      rightButtons: [{
-        text: '设置',
-        color: '#fff',
-        fontSize: 16,
-        // iconPath: 'widget://image/settings@2x.png'
-      }]
+      // leftButtons: [{
+      //   // text: '设置',
+      //   // color: '#fff',
+      //   // fontSize: 16,
+      //   iconPath: 'widget://image/avatar.png',
+      // }],
+      // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      //   // iconPath: 'widget://image/settings@2x.png'
+      // }]
     },
     tabBar: {
       animated: false,
@@ -589,14 +589,35 @@ function openOrderList () {
 }
 
 // 订单详情
-function openOrderDetails (id, type) {
+function openOrderDetails (id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: { id, type },
+    pageParam: { id },
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
+}
+
+// 待支付订单
+function openOrderTodo (id) {
+  api.openTabLayout({
+    name: 'html/ordertodo/win',
+    title: '待支付订单',
+    url: 'widget://html/ordertodo/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {
@@ -842,6 +863,7 @@ export {
   openBillDetails,
   openOrderList,
   openOrderDetails,
+  openOrderTodo,
   openMyQuota,
   openMyProduct,
   openSettings,

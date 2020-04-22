@@ -1,20 +1,4 @@
 // api.lockSlidPane();
-// api.unlockSlidPane
-// 打开侧滑
-function openLeftPane() {
-  api.openWin({
-    name: 'html/leftpane/win',
-    url: 'widget://html/leftpane/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: false,
-    animation: {
-      type: 'push',
-      subType: 'from_left'
-    }
-  });
-} // 抽布局
 
 
 function openRegLogin() {
@@ -126,6 +110,26 @@ function openMyProduct() {
     }
   });
 } // 设置
+
+
+function openSettings() {
+  api.openTabLayout({
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 修改密码
 
 
 function openContactUs() {
@@ -379,11 +383,6 @@ apiready = function apiready() {
     getInfo();
   });
   api.addEventListener({
-    name: 'swiperight'
-  }, function (ret, err) {
-    openLeftPane();
-  });
-  api.addEventListener({
     name: 'keyback'
   }, function (ret, err) {
     // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
@@ -410,10 +409,11 @@ apiready = function apiready() {
 
   document.querySelector('#myproduct').onclick = function () {
     openMyProduct();
-  }; // document.querySelector('#settings').onclick = function () {
-  //   openSettings()
-  // }
+  };
 
+  document.querySelector('#settings').onclick = function () {
+    openSettings();
+  };
 
   document.querySelector('#contactus').onclick = function () {
     openContactUs();

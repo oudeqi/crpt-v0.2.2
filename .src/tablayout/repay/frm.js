@@ -57,12 +57,6 @@ apiready = function () {
     getPageData()
   }
 
-  api.addEventListener({
-    name: 'swiperight'
-  }, function(ret, err){
-    openLeftPane()
-  })
-
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',

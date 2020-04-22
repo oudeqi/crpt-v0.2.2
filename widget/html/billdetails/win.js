@@ -5830,10 +5830,10 @@ apiready = function apiready() {
 
   $api.byId('billDate').innerHTML = billDate || '';
   $api.byId('sumRepayTotalAmount').innerHTML = numeral(sumRepayTotalAmount).format('0,0.00');
-  $api.byId('sumRepayPrincipalAmount').innerHTML = sumRepayPrincipalAmount || 0;
-  $api.byId('sumServiceFee').innerHTML = sumServiceFee || 0;
-  $api.byId('sumRepayPenaltyAmount').innerHTML = sumRepayPenaltyAmount || 0;
-  $api.byId('sumRepayInterestAmount').innerHTML = sumRepayInterestAmount || 0;
+  $api.byId('sumRepayPrincipalAmount').innerHTML = numeral(sumRepayPrincipalAmount).format('0,0.00');
+  $api.byId('sumServiceFee').innerHTML = numeral(sumServiceFee).format('0,0.00');
+  $api.byId('sumRepayPenaltyAmount').innerHTML = numeral(sumRepayPenaltyAmount).format('0,0.00');
+  $api.byId('sumRepayInterestAmount').innerHTML = numeral(sumRepayInterestAmount).format('0,0.00');
 
   function getPageData(id, cb) {
     if (loading) {
@@ -5867,7 +5867,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"t\">\n            <div class=\"tit\">\n              <span>\u5E94\u8FD8</span>\n              <span>".concat(numeral(item.repayTotalAmount).format('0,0.00'), "</span>\n            </div>\n            <div class=\"msg\">\n              <span>\u5229\u606F\uFF1A").concat(item.repayInterestAmount || '', "</span>\n              <span>\u672C\u91D1 ").concat(item.repayPrincipalAmount, " + \u8D39\u7528 ").concat(item.serviceFee, "</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <span>").concat(item.repayDate, "</span>\n            <span>\u7B2C").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</span>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"t\">\n            <div class=\"tit\">\n              <span>\u5E94\u8FD8</span>\n              <span>".concat(numeral(item.repayTotalAmount).format('0,0.00'), "</span>\n            </div>\n            <div class=\"msg\">\n              <span>\u5229\u606F\uFF1A").concat(numeral(item.repayInterestAmount).format('0,0.00'), "</span>\n              <span>\u672C\u91D1 ").concat(numeral(item.repayPrincipalAmount).format('0,0.00'), " + \u8D39\u7528 ").concat(numeral(item.serviceFee).format('0,0.00'), "</span>\n            </div>\n          </div>\n          <div class=\"b\">\n            <span>").concat(item.repayDate, "</span>\n            <span>\u7B2C").concat(item.curPeriod, "/").concat(item.repayPeriod, "\u671F</span>\n          </div>\n        </li>\n      "));
     });
     api.parseTapmode();
   }

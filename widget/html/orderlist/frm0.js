@@ -12,7 +12,7 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openOrderDetails(id, type) {
+function openOrderDetails(id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
     title: '订单详情',
@@ -20,8 +20,7 @@ function openOrderDetails(id, type) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id,
-      type: type
+      id: id
     },
     bounces: true,
     slidBackEnabled: true,
@@ -33,7 +32,7 @@ function openOrderDetails(id, type) {
       fontWeight: 'bold'
     }
   });
-} // 我的额度
+} // 待支付订单
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {

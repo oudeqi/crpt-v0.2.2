@@ -43,20 +43,20 @@ apiready = function () {
     })
   })
 
-  api.addEventListener({
-    name: 'swiperight'
-  }, function(ret, err){
-    openLeftPane()
-  })
+  // api.addEventListener({
+  //   name: 'swiperight'
+  // }, function(ret, err){
+  //   openLeftPane()
+  // })
 
-  api.addEventListener({
-    name: 'navitembtn'
-  }, (ret, err) => {
-    if (ret.type === 'left') {
-      openLeftPane()
-    }else {
-      openSettings()
-    }
-  })
+  // api.addEventListener({
+  //   name: 'navitembtn'
+  // }, (ret, err) => {
+  //   if (ret.type === 'left') {
+  //     openLeftPane()
+  //   }else {
+  //     openSettings()
+  //   }
+  // })
 
 }

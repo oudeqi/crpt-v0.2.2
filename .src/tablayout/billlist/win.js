@@ -58,7 +58,7 @@ apiready = function () {
             <div class="text">
               <strong>应还 ${numeral(item.sumRepayTotalAmount).format('0,0.00')}元</strong>
               <p>
-                本金${item.sumRepayPrincipalAmount} + 费用${item.sumServiceFee} + 逾期罚息${item.sumRepayPenaltyAmount}
+                本金${numeral(item.sumRepayPrincipalAmount).format('0,0.00')} + 费用${numeral(item.sumServiceFee).format('0,0.00')} + 逾期罚息${numeral(item.sumRepayPenaltyAmount).format('0,0.00')}
               </p>
             </div>
             <div class="icon">

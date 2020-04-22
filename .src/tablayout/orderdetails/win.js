@@ -42,7 +42,7 @@ apiready = function () {
       $api.byId('saleCustName').innerHTML = data.saleCustName || ''
       $api.byId('orderTime').innerHTML = data.orderTime || ''
       $api.byId('appCode').innerHTML = data.appCode === '1' ? 'EBS' : ''
-      $api.byId('totalAmount').innerHTML = data.totalAmount || ''
+      $api.byId('totalAmount').innerHTML = numeral(data.totalAmount).format('0,0.00')
       $api.byId('productName').innerHTML = data.productName || ''
       let mapping = {
         1: '未支付',

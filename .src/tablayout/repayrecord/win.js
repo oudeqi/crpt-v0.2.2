@@ -46,20 +46,20 @@ apiready = function () {
       $api.append($api.byId('list'), `
         <li>
           <div class="row1">
-            <span>${item.repaidDate ? item.repaidDate.split(' ')[0] : ''}</span>
+            <span>${item.repayDate ? item.repayDate.split(' ')[0] : ''}</span>
             <span>已还：${numeral(item.curRepaidTotalAmount).format('0,0.00')}</span>
           </div>
           <div class="row2">
             <span>本金</span>
-            <span>${item.curRepaidPrincipalAmount}</span>
+            <span>${numeral(item.curRepaidPrincipalAmount).format('0,0.00')}</span>
           </div>
           <div class="row2">
             <span>费用</span>
-            <span>${item.curServiceFee}</span>
+            <span>${numeral(item.curServiceFee).format('0,0.00')}</span>
           </div>
           <div class="row2">
             <span>逾期罚息</span>
-            <span>${item.curRepaidPenaltyAmount}</span>
+            <span>${numeral(item.curRepaidPenaltyAmount).format('0,0.00')}</span>
           </div>
         </li>
       `)

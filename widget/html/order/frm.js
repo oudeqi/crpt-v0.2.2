@@ -1,20 +1,4 @@
 // api.lockSlidPane();
-// api.unlockSlidPane
-// 打开侧滑
-function openLeftPane() {
-  api.openWin({
-    name: 'html/leftpane/win',
-    url: 'widget://html/leftpane/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: false,
-    animation: {
-      type: 'push',
-      subType: 'from_left'
-    }
-  });
-} // 抽布局
 
 
 function openRegLogin() {
@@ -28,16 +12,15 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openOrderDetails(id, type) {
+function openOrderTodo(id) {
   api.openTabLayout({
-    name: 'html/orderdetails/win',
-    title: '订单详情',
-    url: 'widget://html/orderdetails/win.html',
+    name: 'html/ordertodo/win',
+    title: '待支付订单',
+    url: 'widget://html/ordertodo/win.html',
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id,
-      type: type
+      id: id
     },
     bounces: true,
     slidBackEnabled: true,
@@ -1256,11 +1239,6 @@ return numeral;
 apiready = function apiready() {
   var emptyBox = $api.byId('empty-box');
   api.addEventListener({
-    name: 'swiperight'
-  }, function (ret, err) {
-    openLeftPane();
-  });
-  api.addEventListener({
     name: 'keyback'
   }, function (ret, err) {
     // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
@@ -1371,15 +1349,10 @@ apiready = function apiready() {
         msg: '功能开发中...'
       });
     } else if (btn) {
-      api.alert({
-        title: '提示',
-        msg: '功能开发中...'
-      });
-    } else if (li) {
-      var id = li.dataset.id;
+      var id = btn.dataset.id;
 
       if (id) {
-        openOrderDetails(id, 'daiZhiFu');
+        openOrderTodo(id);
       } else {
         api.toast({
           msg: 'id 不存在'

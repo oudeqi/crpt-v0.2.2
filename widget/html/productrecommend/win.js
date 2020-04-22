@@ -36,19 +36,19 @@ function openTabLayout(index) {
       background: '#1dc4a2',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        // text: '设置',
-        // color: '#fff',
-        // fontSize: 16,
-        iconPath: 'widget://image/avatar.png'
-      }],
-      rightButtons: [{
-        text: '设置',
-        color: '#fff',
-        fontSize: 16 // iconPath: 'widget://image/settings@2x.png'
+      fontWeight: 'bold' // leftButtons: [{
+      //   // text: '设置',
+      //   // color: '#fff',
+      //   // fontSize: 16,
+      //   iconPath: 'widget://image/avatar.png',
+      // }],
+      // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      //   // iconPath: 'widget://image/settings@2x.png'
+      // }]
 
-      }]
     },
     tabBar: {
       animated: false,

@@ -254,7 +254,7 @@ html, body {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    padding: 8px 0 8px 8px
+    padding: 8px 0
   }
 .nav .nav-item:nth-child(1) {
       border-bottom: 1px solid #f2f2f2;
@@ -262,15 +262,18 @@ html, body {
     }
 .nav .nav-item:nth-child(2) {
       border-bottom: 1px solid #f2f2f2;
+      padding-left: 8px;
     }
 .nav .nav-item:nth-child(3) {
       border-right: 1px solid #f2f2f2;
+    }
+.nav .nav-item:nth-child(4) {
+      padding-left: 8px;
     }
 .nav .nav-item img {
       width: 60px;
       height: 60px;
       display: block;
-      border: 1px dashed #cdcdcd;
     }
 .nav .nav-item span {
       -webkit-box-flex: 1;

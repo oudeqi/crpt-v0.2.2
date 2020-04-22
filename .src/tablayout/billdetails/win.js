@@ -21,10 +21,10 @@ apiready = function () {
   // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
   $api.byId('billDate').innerHTML = billDate || ''
   $api.byId('sumRepayTotalAmount').innerHTML = numeral(sumRepayTotalAmount).format('0,0.00')
-  $api.byId('sumRepayPrincipalAmount').innerHTML = sumRepayPrincipalAmount || 0
-  $api.byId('sumServiceFee').innerHTML = sumServiceFee || 0
-  $api.byId('sumRepayPenaltyAmount').innerHTML = sumRepayPenaltyAmount || 0
-  $api.byId('sumRepayInterestAmount').innerHTML = sumRepayInterestAmount || 0
+  $api.byId('sumRepayPrincipalAmount').innerHTML = numeral(sumRepayPrincipalAmount).format('0,0.00')
+  $api.byId('sumServiceFee').innerHTML = numeral(sumServiceFee).format('0,0.00')
+  $api.byId('sumRepayPenaltyAmount').innerHTML = numeral(sumRepayPenaltyAmount).format('0,0.00')
+  $api.byId('sumRepayInterestAmount').innerHTML = numeral(sumRepayInterestAmount).format('0,0.00')
 
   function getPageData (id, cb) {
     if (loading) {
@@ -64,8 +64,8 @@ apiready = function () {
               <span>${numeral(item.repayTotalAmount).format('0,0.00')}</span>
             </div>
             <div class="msg">
-              <span>利息：${item.repayInterestAmount || ''}</span>
-              <span>本金 ${item.repayPrincipalAmount} + 费用 ${item.serviceFee}</span>
+              <span>利息：${numeral(item.repayInterestAmount).format('0,0.00')}</span>
+              <span>本金 ${numeral(item.repayPrincipalAmount).format('0,0.00')} + 费用 ${numeral(item.serviceFee).format('0,0.00')}</span>
             </div>
           </div>
           <div class="b">

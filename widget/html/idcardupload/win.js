@@ -344,6 +344,11 @@ apiready = function apiready() {
 
       submitStatus = 'submitting';
       $api.addCls($api.byId('next'), 'loading');
+      api.showProgress({
+        title: '加载中...',
+        text: '',
+        modal: false
+      });
       http.upload('/crpt-cust/saas/ocr', {
         files: {
           certImageFront: front,
@@ -352,6 +357,7 @@ apiready = function apiready() {
       }).then(function (ret) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');
+        api.hideProgress();
         openIDcardInfo(_objectSpread$1({}, ret.data, {
           front: front,
           back: back
@@ -360,6 +366,7 @@ apiready = function apiready() {
         api.toast({
           msg: error.msg || '网络错误'
         });
+        api.hideProgress();
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('next'), 'loading');
       });

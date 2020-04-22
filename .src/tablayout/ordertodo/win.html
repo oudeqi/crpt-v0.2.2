@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+</head>
+<body>
+  <div>
+    <div class="title">
+      <div>支付金额(元)</div>
+      <div id="payAmount">***</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec_header">
+      <span class="tit">订单明细</span>
+    </div>
+    <ul class="sec_list">
+      <li>
+        <strong>订单编号：</strong>
+        <span id="orderNo">***</span>
+      </li>
+      <li>
+        <strong>下单时间：</strong>
+        <span id="orderTime">***</span>
+      </li>
+      <li>
+        <strong>
+          卖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方：
+        </strong>
+        <span id="saleCustName">***</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <div class="sec_header">
+      <span class="tit">支付推荐</span>
+    </div>
+    <div class="sec_body">
+      <div class="row1">
+        <div><strong>建行快贷</strong></div>
+        <div>
+          <span>最高可贷(元)</span>
+          <strong>600,000</strong>
+        </div>
+      </div>
+      <div class="row2">
+        <span class="txt">实际贷款金额以最终放款金额为准</span>
+        <span class="btn">计算器</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-box">
+    <div class="app_btn" tapmode id="pay">去支付</div>
+  </div>
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+</body>
+</html>

@@ -50,11 +50,7 @@ apiready = function () {
     initPage()
     getInfo()
   })
-  api.addEventListener({
-    name: 'swiperight'
-  }, function(ret, err){
-    openLeftPane()
-  })
+
   api.addEventListener({
     name: 'keyback'
   }, function(ret, err) {
@@ -84,9 +80,9 @@ apiready = function () {
     openMyProduct()
   }
 
-  // document.querySelector('#settings').onclick = function () {
-  //   openSettings()
-  // }
+  document.querySelector('#settings').onclick = function () {
+    openSettings()
+  }
 
   document.querySelector('#contactus').onclick = function () {
     openContactUs()
