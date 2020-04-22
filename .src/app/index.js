@@ -45,19 +45,18 @@ apiready = function () {
   // 5：待补充基本信息
   // 6：人工审核不通过
   if (userinfo) {
-    // openOrderTodo(9939393)
-    openTabLayout()
-    // const authStatus = userinfo.authStatus
-    // if (authStatus === 1) {
-    //   openTabLayout()
-    // } else {
-    //   const userType = userinfo.userType
-    //   if (userType === '1') {
-    //     openTodoAuthGeren()
-    //   } else {
-    //     openTodoAuthQiye()
-    //   }
-    // }
+    const authStatus = $api.getStorage('authStatus')
+    if (authStatus === 1) {
+      openTabLayout()
+    } else {
+      const userType = userinfo.userType
+      if (userType === '1') {
+        openTodoAuthGeren()
+      } else {
+        openTodoAuthQiye()
+      }
+    }
+
     // openSendCode({
     //   tel: '18989193368',
     //   userType: 2

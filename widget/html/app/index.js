@@ -123,6 +123,51 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openTodoAuthGeren() {
+  api.openTabLayout({
+    name: 'html/todoauthgeren/win',
+    title: '待完成',
+    url: 'widget://html/todoauthgeren/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+}
+
+function openTodoAuthQiye() {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待完成',
+    url: 'widget://html/todoauthqiye/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 企业信息确认
+
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
@@ -137,19 +182,19 @@ apiready = function apiready() {
   // 6：人工审核不通过
 
   if (userinfo) {
-    // openOrderTodo(9939393)
-    openTabLayout(); // const authStatus = userinfo.authStatus
-    // if (authStatus === 1) {
-    //   openTabLayout()
-    // } else {
-    //   const userType = userinfo.userType
-    //   if (userType === '1') {
-    //     openTodoAuthGeren()
-    //   } else {
-    //     openTodoAuthQiye()
-    //   }
-    // }
-    // openSendCode({
+    var authStatus = $api.getStorage('authStatus');
+
+    if (authStatus === 1) {
+      openTabLayout();
+    } else {
+      var userType = userinfo.userType;
+
+      if (userType === '1') {
+        openTodoAuthGeren();
+      } else {
+        openTodoAuthQiye();
+      }
+    } // openSendCode({
     //   tel: '18989193368',
     //   userType: 2
     // })
@@ -157,6 +202,7 @@ apiready = function apiready() {
     // openBillDetails()
     // openTodoAuthGeren()
     // openTodoAuthQiye()
+
   } else {
     openRegLogin();
   } // 云修复完成

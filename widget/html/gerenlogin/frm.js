@@ -461,7 +461,7 @@ var isPhoneNo = function isPhoneNo(phone) {
 
 
 var handleLoginSuccess = function handleLoginSuccess(data) {
-  $api.setStorage('userinfo', data);
+  $api.setStorage('userinfo', data); // 用户信息
 };
 
 function getAuthStatus(token, cb) {
@@ -477,6 +477,8 @@ function getAuthStatus(token, cb) {
       token: token
     }
   }).then(function (res) {
+    $api.setStorage('authStatus', res.data); // 当前认证状态
+
     cb(res.data);
   })["catch"](function (error) {
     api.toast({
@@ -832,7 +834,6 @@ apiready = function apiready() {
           // 4：人脸认证失败，待人工审核
           // 5：待补充基本信息
           // 6：人工审核不通过
-          userinfo.authStatus = status;
           handleLoginSuccess(userinfo);
 
           if (status === 1) {

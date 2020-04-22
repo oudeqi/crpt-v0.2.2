@@ -167,7 +167,7 @@ const phoneNoFormat = (tel, tag = '****') => {
   let b = String(tel).substr(3, 4)
   let c = String(tel).substr(7, 4)
   if (tag === '****') {
-    return a + tag + b
+    return a + tag + c
   } else {
     return a + tag + b + tag + c
   }
@@ -189,7 +189,7 @@ const phoneNoFormat = (tel, tag = '****') => {
 // }
 
 const handleLoginSuccess = data => {
-  $api.setStorage('userinfo', data)
+  $api.setStorage('userinfo', data) // 用户信息
 }
 
 function ActionSheet (title, buttons, cb) {
@@ -404,6 +404,7 @@ function getAuthStatus (token, cb) {
       token
     }
   }).then(res => {
+    $api.setStorage('authStatus', res.data) // 当前认证状态
     cb(res.data)
   }).catch(error => {
     api.toast({

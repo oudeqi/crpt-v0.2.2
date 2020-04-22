@@ -136,7 +136,6 @@ apiready = function() {
           // 4：人脸认证失败，待人工审核
           // 5：待补充基本信息
           // 6：人工审核不通过
-          userinfo.authStatus = status
           handleLoginSuccess(userinfo)
           if (status === 1) {
             openTabLayout()
