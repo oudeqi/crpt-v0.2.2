@@ -33,9 +33,9 @@ function openContactUs() {
 
 
 function openProductDetails() {
-  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      id = _ref2.id,
-      open = _ref2.open;
+  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref4.id,
+      open = _ref4.open;
 
   api.openTabLayout({
     name: 'html/productdetails/win',

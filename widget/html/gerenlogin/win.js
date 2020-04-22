@@ -6,7 +6,7 @@ apiready = function apiready() {
 
   var title = $api.byId('g-title');
   var params = api.pageParam || {};
-  $api.html(title, params.title || '个人登录');
+  $api.html(title, params.userType === 2 ? '企业登录' : '个人登录');
   api.openFrame({
     name: 'html/gerenlogin/frm',
     url: 'widget://html/gerenlogin/frm.html',

@@ -11,13 +11,20 @@ function openReg() {
 } // 注册登录选择
 
 
-function openGerenLogin(pageParam) {
+function openGerenLogin() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$userType = _ref.userType,
+      userType = _ref$userType === void 0 ? 1 : _ref$userType;
+
+  // 2企业 1个人，
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: pageParam
+    pageParam: {
+      userType: userType
+    }
   });
 } // 企业登录
 

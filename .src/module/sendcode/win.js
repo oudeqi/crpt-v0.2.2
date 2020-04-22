@@ -2,8 +2,8 @@ import '../../app.css'
 
 apiready = function() {
   let pageParam = api.pageParam || {}
-  let { loginType } = pageParam
-  if (loginType === 'geren') {
+  let { userType } = pageParam
+  if (userType === 1) {
     $api.byId('title').innerHTML = '个人登录'
   } else {
     $api.byId('title').innerHTML = '企业登录'

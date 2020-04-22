@@ -124,13 +124,20 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openGerenLogin(pageParam) {
+function openGerenLogin() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$userType = _ref.userType,
+      userType = _ref$userType === void 0 ? 1 : _ref$userType;
+
+  // 2企业 1个人，
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: pageParam
+    pageParam: {
+      userType: userType
+    }
   });
 } // 企业登录
 
@@ -449,6 +456,27 @@ var handleLoginSuccess = function handleLoginSuccess(data) {
   $api.setStorage('userinfo', data);
 };
 
+function getAuthStatus(token, cb) {
+  // 认证状态 int
+  // 1：正常
+  // 2：待实名认证
+  // 3：待人脸审核
+  // 4：人脸认证失败，待人工审核
+  // 5：待补充基本信息
+  // 6：人工审核不通过
+  http.get("/crpt-cust/customer/query/authstatus", null, {
+    headers: {
+      token: token
+    }
+  }).then(function (res) {
+    cb(res.data);
+  })["catch"](function (error) {
+    api.toast({
+      msg: error.msg || '获取认证状态失败'
+    });
+  });
+}
+
 apiready = function apiready() {
   var form = {}; // 表单数据
 
@@ -466,8 +494,6 @@ apiready = function apiready() {
   });
 
   if (tel && isPhoneNo(tel)) {
-    var a = tel.substring(0, 3);
-    var b = tel.substr(7, 4);
     $api.byId('tel').innerHTML = phoneNoFormat(tel);
   } else {
     $api.byId('tel').innerHTML = '';
@@ -530,7 +556,6 @@ apiready = function apiready() {
   if (userType === 2) {
     apLoginBtn.onclick = function () {
       openGerenLogin({
-        title: '企业登录',
         userType: 2
       });
     };

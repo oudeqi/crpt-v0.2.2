@@ -79,7 +79,6 @@ apiready = function() {
   }
 
   document.querySelector('#submit').onclick = function () {
-    // openGerenLogin()
     if (submitStatus === 'notsubmit') {
       if (!tel) {
         return api.toast({ msg: '未获取到用户手机号', location: 'middle' })

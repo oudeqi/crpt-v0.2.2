@@ -565,7 +565,6 @@ apiready = function apiready() {
   };
 
   document.querySelector('#submit').onclick = function () {
-    // openGerenLogin()
     if (submitStatus === 'notsubmit') {
       if (!tel) {
         return api.toast({

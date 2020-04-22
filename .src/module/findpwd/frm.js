@@ -61,7 +61,6 @@ apiready = function() {
   }
 
   document.querySelector('#submit').onclick = function () {
-    // openGerenLogin()
     if (submitStatus === 'notsubmit') {
       if (!form['tel'][1]) {
         return api.toast({ msg: '请输入手机号码', location: 'middle' })

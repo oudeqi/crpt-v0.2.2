@@ -4,7 +4,7 @@ import './frm.css'
 import {
   openGerenLogin, openTodoAuthGeren, openTabLayout, openTodoAuthQiye
 } from '../../webview.js'
-import { http, openUIInput, handleLoginSuccess, isPhoneNo, phoneNoFormat } from '../../config.js'
+import { http, openUIInput, handleLoginSuccess, isPhoneNo, phoneNoFormat, getAuthStatus } from '../../config.js'
 
 apiready = function() {
 
@@ -13,18 +13,19 @@ apiready = function() {
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   let pageParam = api.pageParam || {}
   let { tel, userType } = pageParam
+
   openUIInput($api.byId('code'), form, 'code', {
     placeholder: '请输入...',
     keyboardType: 'done',
     maxStringLength: 6
   })
+
   if (tel && isPhoneNo(tel)) {
-    let a = tel.substring(0, 3)
-    let b = tel.substr(7, 4)
     $api.byId('tel').innerHTML = phoneNoFormat(tel)
   } else {
     $api.byId('tel').innerHTML = ''
   }
+
   let apLoginBtn = document.querySelector('#ap_login')
   if (userType === 1) { // 个人登录
     sendCode()
@@ -79,7 +80,7 @@ apiready = function() {
 
   if(userType === 2) {
     apLoginBtn.onclick = function() {
-      openGerenLogin({title: '企业登录', userType: 2})
+      openGerenLogin({ userType: 2 })
     }
   }else {// 个人登录时隐藏账密登录提示
     apLoginBtn.style.display = 'none'

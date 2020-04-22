@@ -94,9 +94,9 @@ apiready = function() {
     postData.addressDetails = value
   })
 
-  // 亲属关系  标记  1-配偶 2-子女 3-父母  4-其他
+  // 亲属关系  标记  1-配偶 2-子女 3-父母
   document.querySelector('#relationship').onclick = function () {
-    let btns = ['配偶', '子女', '父母', '其他']
+    let btns = ['配偶', '子女', '父母']
     ActionSheet('请选择亲属关系', btns, function (index) {
       $api.dom($api.byId('relationship'), 'input').value = btns[index]
       postData.relationship = String(index + 1)

@@ -1256,7 +1256,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"row1\">\n            <span>".concat(item.repaidDate ? item.repaidDate.split(' ')[0] : '', "</span>\n            <span>\u5DF2\u8FD8\uFF1A").concat(item.curRepaidTotalAmount, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u672C\u91D1</span>\n            <span>").concat(item.curRepaidPrincipalAmount, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u8D39\u7528</span>\n            <span>").concat(item.curServiceFee, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u903E\u671F\u7F5A\u606F</span>\n            <span>").concat(item.curRepaidPenaltyAmount, "</span>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"row1\">\n            <span>".concat(item.repaidDate ? item.repaidDate.split(' ')[0] : '', "</span>\n            <span>\u5DF2\u8FD8\uFF1A").concat(numeral(item.curRepaidTotalAmount).format('0,0.00'), "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u672C\u91D1</span>\n            <span>").concat(item.curRepaidPrincipalAmount, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u8D39\u7528</span>\n            <span>").concat(item.curServiceFee, "</span>\n          </div>\n          <div class=\"row2\">\n            <span>\u903E\u671F\u7F5A\u606F</span>\n            <span>").concat(item.curRepaidPenaltyAmount, "</span>\n          </div>\n        </li>\n      "));
     });
   }
 

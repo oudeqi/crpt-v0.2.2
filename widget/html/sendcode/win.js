@@ -1,8 +1,8 @@
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var loginType = pageParam.loginType;
+  var userType = pageParam.userType;
 
-  if (loginType === 'geren') {
+  if (userType === 1) {
     $api.byId('title').innerHTML = '个人登录';
   } else {
     $api.byId('title').innerHTML = '企业登录';

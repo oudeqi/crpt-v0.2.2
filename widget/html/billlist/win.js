@@ -13,13 +13,13 @@ function openRegLogin() {
 
 
 function openBillDetails(id) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      billDate = _ref.billDate,
-      sumRepayTotalAmount = _ref.sumRepayTotalAmount,
-      sumRepayPrincipalAmount = _ref.sumRepayPrincipalAmount,
-      sumServiceFee = _ref.sumServiceFee,
-      sumRepayPenaltyAmount = _ref.sumRepayPenaltyAmount,
-      sumRepayInterestAmount = _ref.sumRepayInterestAmount;
+  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      billDate = _ref3.billDate,
+      sumRepayTotalAmount = _ref3.sumRepayTotalAmount,
+      sumRepayPrincipalAmount = _ref3.sumRepayPrincipalAmount,
+      sumServiceFee = _ref3.sumServiceFee,
+      sumRepayPenaltyAmount = _ref3.sumRepayPenaltyAmount,
+      sumRepayInterestAmount = _ref3.sumRepayInterestAmount;
 
   api.openTabLayout({
     name: 'html/billdetails/win',

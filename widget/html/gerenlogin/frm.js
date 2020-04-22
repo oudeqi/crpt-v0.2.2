@@ -134,13 +134,21 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openSendCode(pageParam) {
+function openSendCode() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      tel = _ref2.tel,
+      userType = _ref2.userType;
+
+  // 个人登录 1, 企业登录 2
   api.openWin({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: pageParam
+    pageParam: {
+      tel: tel,
+      userType: userType
+    }
   });
 } // 找回密码
 
@@ -758,7 +766,6 @@ apiready = function apiready() {
   };
 
   document.querySelector('#login').onclick = function () {
-    // openTabLayout()
     if (submitStatus === 'notsubmit') {
       if (!form['tel'][1]) {
         return api.toast({

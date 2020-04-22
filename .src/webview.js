@@ -199,13 +199,16 @@ function openRegLogin () {
 }
 
 // 个人登录
-function openGerenLogin (pageParam) {
+function openGerenLogin ({ userType = 1 } = {}) {
+  // 2企业 1个人，
   api.openWin({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam
+    pageParam: {
+      userType
+    }
   })
 }
 
@@ -220,13 +223,16 @@ function openQiyeLogin () {
 }
 
 // 电话号码登录
-function openSendCode (pageParam) {
+function openSendCode ({tel, userType} = {}) {
+  // 个人登录 1, 企业登录 2
   api.openWin({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam
+    pageParam: {
+      tel, userType
+    }
   })
 }
 

@@ -47,7 +47,7 @@ apiready = function () {
         <li>
           <div class="row1">
             <span>${item.repaidDate ? item.repaidDate.split(' ')[0] : ''}</span>
-            <span>已还：${item.curRepaidTotalAmount}</span>
+            <span>已还：${numeral(item.curRepaidTotalAmount).format('0,0.00')}</span>
           </div>
           <div class="row2">
             <span>本金</span>
