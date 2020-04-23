@@ -399,14 +399,14 @@ function getAuthStatus (token, cb) {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
+  let headers = {}
+  if (token) {
+    headers = { token }
+  }
   http.get(`/crpt-cust/customer/query/authstatus`, null, {
-    headers: {
-      token
-    }
+    headers
   }).then(res => {
-    $api.setStorage('authStatus', {
-      status: res.data
-    })
+    $api.setStorage('authStatus', { status: res.data })
     cb(res.data)
   }).catch(error => {
     api.toast({
