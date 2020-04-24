@@ -5,7 +5,7 @@ import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
   openFaceAuth, openYuguEdu, openIDcardUpload
 } from '../../webview.js'
-import { http } from '../../config.js'
+import { http, getAndStorageAuthStatus } from '../../config.js'
 
 apiready = function() {
 
@@ -18,7 +18,7 @@ apiready = function() {
       text: '',
       modal: false
     })
-    http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+    getAndStorageAuthStatus(function (status) {
       api.hideProgress()
       api.refreshHeaderLoadDone()
       let mapping = { // 0未通过，1通过，2人工审核，3人工审核不通过
@@ -33,7 +33,6 @@ apiready = function() {
       // 4：人脸认证失败，待人工审核
       // 5：待补充基本信息
       // 6：人工审核不通过
-      let status = res.data
       if (status === 1) { // 认证全部通过
         mapping.realAuth.status = 1
         mapping.faceAuth.status = 1
@@ -51,11 +50,9 @@ apiready = function() {
         mapping.faceAuth.status = 3
       }
       cb(mapping)
-    }).catch(error => {
+    }, function () {
       api.hideProgress()
-      api.toast({
-        msg: error.msg || '获取认证状态失败'
-      })
+      api.refreshHeaderLoadDone()
     })
   }
 

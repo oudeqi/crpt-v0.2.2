@@ -5,8 +5,7 @@ import {
   openReg, openTodoAuthGeren, openFindPwd,
   openSendCode, openTabLayout, openTodoAuthQiye
 } from '../../webview.js'
-import { http, openUIInput, isPhoneNo, handleLoginSuccess, getAuthStatus } from '../../config.js'
-import { Base64 } from 'js-base64'
+import { http, openUIInput, isPhoneNo, loginSuccessCallback, appLogin } from '../../config.js'
 
 apiready = function() {
   // 表单数据
@@ -73,68 +72,21 @@ apiready = function() {
         return api.toast({ msg: '请输入密码' })
       }
       submitStatus = 'submitting'
+      $api.addCls($api.byId('login'), 'loading')
       let body = {
         userType: params.userType || 1, // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         // verification: form['code'][1],
-        password: Base64.encode(form['pwd'][1]),
-        loginDevice: api.deviceId, // 客户手机设备号(android-imei,IOS-??)
-        ipAddress: '',
-        latitude: '',
-        longitude: '',
-        terminal_version: api.systemVersion, // 系统终端版本
-        location: '', // 最近登录地点
-        grant_type: 'password', // 固定传password
-        scope: 'app', // 固定传app
-        client_id: 'client', // client
-        client_secret: 'secret', // 固定传secret
+        password: form['pwd'][1]
       }
-      $api.addCls($api.byId('login'), 'loading')
-      http.post('/auth/oauth/token', {
-        values: body
-      }, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        } 
-      }).then(ret => {
+      appLogin(body, function (userinfo) {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
-        api.toast({
-          msg: '登录成功',
-          location: 'middle',
-          global: true
-        })
-        let userinfo = ret || {}
-        let userType = userinfo.userType
-        let token = userinfo.token_type + ' ' + userinfo.access_token
-        getAuthStatus(token, function (status) {
-          // 认证状态 int
-          // 1：正常
-          // 2：待实名认证
-          // 3：待人脸审核
-          // 4：人脸认证失败，待人工审核
-          // 5：待补充基本信息
-          // 6：人工审核不通过
-          handleLoginSuccess(userinfo)
-          if (status === 1) {
-            openTabLayout()
-          } else {
-            if (userType === '1') {
-              openTodoAuthGeren()
-            } else {
-              openTodoAuthQiye()
-            }
-          }
-        })
-      }).catch(error => {
-        api.toast({
-          msg: error.msg || '登录失败',
-          location: 'middle'
-        })
+        loginSuccessCallback(userinfo)
+      }, function (error) {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
-
       })
     }
   }

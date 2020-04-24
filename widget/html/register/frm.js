@@ -185,286 +185,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://crptuat.liuheco.com';
-var baseUrl =   uat ;
-var hasAlert = false;
-var whiteList = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-
-var ajax = function ajax(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 60 : _ref$timeout;
-
-  var include = whiteList.find(function (value) {
-    return url.includes(value);
-  });
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
-    } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    }
-
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    include ? Authorization = {} : null;
-    api.ajax({
-      url: baseUrl + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
-    }, function (ret, error) {
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          reject(ret);
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert) {
-            hasAlert = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert = false;
-              api.closeWin({
-                name: 'html/register/win'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/win'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/win'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
-        }
-
-        reject(error);
-      }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
-    });
-  });
-};
-
-var http = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
-
-    return ajax('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
-
-    return ajax('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
-
-    return ajax('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
-
-    return ajax('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  }
-}; // 统一ios和android的输入框，下标都从0开始
-// const getUIInputIndex = i => api.systemType === 'ios' ? i - 1 : i
-
-var resetUIInputPosi = function resetUIInputPosi(dom, id) {
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  UIInput.resetPosition({
-    id: id,
-    position: {
-      x: rect.l,
-      y: rect.t
-    }
-  });
-};
-
-var openUIInput = function openUIInput(dom, form, key) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  var cb = arguments.length > 4 ? arguments[4] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    cb && cb(ret.id);
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      form[key] = [ret.id, value && value.msg ? value.msg : ''];
-    });
-  });
-};
-//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
-//   "token_type":"bearer",
-//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
-//   "expires_in":599757,
-//   "scope":"app",
-//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
-//   "code":200,
-//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
-//   "name":"欧威",
-//   "userType":"1",
-//   "makeBy":"nh-cloud",
-//   "userId":"20"
-// }
-
-
-var handleLoginSuccess = function handleLoginSuccess(data) {
-  $api.setStorage('userinfo', data); // 用户信息
-};
-
-function getAuthStatus(token, cb) {
-  // 认证状态 int
-  // 1：正常
-  // 2：待实名认证
-  // 3：待人脸审核
-  // 4：人脸认证失败，待人工审核
-  // 5：待补充基本信息
-  // 6：人工审核不通过
-  var headers = {};
-
-  if (token) {
-    headers = {
-      token: token
-    };
-  }
-
-  http.get("/crpt-cust/customer/query/authstatus", null, {
-    headers: headers
-  }).then(function (res) {
-    $api.setStorage('authStatus', {
-      status: res.data
-    });
-    cb(res.data);
-  })["catch"](function (error) {
-    api.toast({
-      msg: error.msg || '获取认证状态失败'
-    });
-  });
-}
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -683,6 +403,355 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var uat = 'http://crptuat.liuheco.com';
+var baseUrl =   uat ;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert = false;
+
+function ajax(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    api.ajax({
+      url: baseUrl + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
+    }, function (ret, error) {
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          reject(ret);
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              api.closeWin({
+                name: 'html/register/win'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/win'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/win'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+}; // 统一ios和android的输入框，下标都从0开始
+// const getUIInputIndex = i => api.systemType === 'ios' ? i - 1 : i
+
+var resetUIInputPosi = function resetUIInputPosi(dom, id) {
+  var UIInput = api.require('UIInput');
+
+  var rect = $api.offset(dom);
+  UIInput.resetPosition({
+    id: id,
+    position: {
+      x: rect.l,
+      y: rect.t
+    }
+  });
+};
+
+var openUIInput = function openUIInput(dom, form, key) {
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var cb = arguments.length > 4 ? arguments[4] : undefined;
+
+  var UIInput = api.require('UIInput');
+
+  var rect = $api.offset(dom);
+  var maxRows = options.maxRows,
+      maxStringLength = options.maxStringLength,
+      inputType = options.inputType,
+      placeholder = options.placeholder,
+      keyboardType = options.keyboardType,
+      alignment = options.alignment,
+      isCenterVertical = options.isCenterVertical;
+  UIInput.open({
+    rect: {
+      x: rect.l,
+      y: rect.t,
+      w: rect.w,
+      h: rect.h
+    },
+    fixed: false,
+    autoFocus: false,
+    maxRows: maxRows || 1,
+    maxStringLength: maxStringLength,
+    inputType: inputType,
+    placeholder: placeholder,
+    keyboardType: keyboardType,
+    alignment: alignment,
+    isCenterVertical: isCenterVertical,
+    fixedOn: api.frameName,
+    styles: {
+      bgColor: 'rgba(0,0,0,0)',
+      size: 16,
+      color: '#333',
+      placeholder: {
+        color: '#aaa'
+      }
+    }
+  }, function (ret) {
+    cb && cb(ret.id);
+    UIInput.value({
+      id: ret.id
+    }, function (value) {
+      form[key] = [ret.id, value && value.msg ? value.msg : ''];
+    });
+  });
+};
+//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
+//   "token_type":"bearer",
+//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
+//   "expires_in":599757,
+//   "scope":"app",
+//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "code":200,
+//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "name":"欧威",
+//   "userType":"1",
+//   "makeBy":"nh-cloud",
+//   "userId":"20"
+// }
+
+
+function loginSuccessCallback(userinfo) {
+  $api.setStorage('userinfo', userinfo); // 用户信息
+
+  getAndStorageAuthStatus(function (status) {
+    // 认证状态 int
+    // 1：正常
+    // 2：待实名认证
+    // 3：待人脸审核
+    // 4：人脸认证失败，待人工审核
+    // 5：待补充基本信息
+    // 6：人工审核不通过
+    if (status === 1) {
+      openTabLayout();
+    } else {
+      var _ref7 = userinfo || {},
+          userType = _ref7.userType;
+
+      if (userType === '1') {
+        // 1个人用户登录 2企业用户登录
+        openTodoAuthGeren();
+      } else if (userType === '2') {
+        openTodoAuthQiye();
+      }
+    }
+  });
+}
+
+function getAndStorageAuthStatus(successCallback, errorCallback) {
+  // 认证状态 int
+  // 1：正常
+  // 2：待实名认证
+  // 3：待人脸审核
+  // 4：人脸认证失败，待人工审核
+  // 5：待补充基本信息
+  // 6：人工审核不通过
+  http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+    try {
+      $api.setStorage('authStatus', {
+        status: res.data
+      });
+      successCallback && successCallback(res.data);
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    } finally {}
+  })["catch"](function (error) {
+    api.toast({
+      msg: error.msg || '获取认证状态失败'
+    });
+    errorCallback && errorCallback(error);
+  });
+}
+
+function appLogin(options, successCallback, errorCallback) {
+  var pwd = '';
+
+  if (options.verification) {
+    // 在验证码登录的时候，密码必须设置为手机号码
+    pwd = options.username;
+  } else {
+    pwd = base64_1.encode(options.password || '');
+  }
+
+  http.post('/auth/oauth/token', {
+    values: _objectSpread({
+      loginDevice: api.deviceId,
+      // 客户手机设备号(android-imei,IOS-??)
+      ipAddress: '',
+      latitude: '',
+      longitude: '',
+      terminal_version: api.systemVersion,
+      // 系统终端版本
+      location: '',
+      // 最近登录地点
+      grant_type: 'password',
+      // 固定传password
+      scope: 'app',
+      // 固定传app
+      client_id: 'client',
+      // client
+      client_secret: 'secret'
+    }, options, {
+      password: pwd
+    })
+  }, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(function (userinfo) {
+    api.toast({
+      msg: '登录成功',
+      location: 'middle',
+      global: true
+    });
+    successCallback && successCallback(userinfo);
+  })["catch"](function (error) {
+    api.toast({
+      msg: error.msg || '登录失败',
+      location: 'middle'
+    });
+    errorCallback && errorCallback(error);
+  });
+}
+
 apiready = function apiready() {
   var UIInput = api.require('UIInput');
 
@@ -716,49 +785,6 @@ apiready = function apiready() {
     inputType: 'password',
     maxStringLength: 16
   });
-
-  function login(cb) {
-    var body = {
-      userType: type === 'geren' ? 1 : 2,
-      // 1个人用户登录，2企业用户登录
-      username: form['tel'][1],
-      loginType: 1,
-      // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
-      // verification: form['code'][1],
-      password: base64_1.encode(form['pwd'][1]),
-      loginDevice: api.deviceId,
-      // 客户手机设备号(android-imei,IOS-??)
-      ipAddress: '',
-      latitude: '',
-      longitude: '',
-      terminal_version: api.systemVersion,
-      // 系统终端版本
-      location: '',
-      // 最近登录地点
-      grant_type: 'password',
-      // 固定传password
-      scope: 'app',
-      // 固定传app
-      client_id: 'client',
-      // client
-      client_secret: 'secret' // 固定传secret
-
-    };
-    http.post('/auth/oauth/token', {
-      values: body
-    }, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(function (ret) {
-      cb(ret);
-    })["catch"](function (error) {
-      api.toast({
-        msg: error.msg || '登录失败',
-        location: 'middle'
-      });
-    });
-  }
 
   function resetInputPosi() {
     resetUIInputPosi($api.byId('tel'), form['tel'][0]);
@@ -904,8 +930,8 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       var body = {
         phone: form['tel'][1],
-        password: base64_1.encode(form['pwd'][1]),
-        confirmPassword: base64_1.encode(form['repwd'][1]),
+        password: Base64.encode(form['pwd'][1]),
+        confirmPassword: Base64.encode(form['repwd'][1]),
         verification: form['code'][1]
       };
 
@@ -924,30 +950,17 @@ apiready = function apiready() {
           location: 'middle',
           global: true
         });
-        login(function (user) {
-          var userinfo = user || {};
-          var userType = userinfo.userType;
-          var token = userinfo.token_type + ' ' + userinfo.access_token;
-          getAuthStatus(token, function (status) {
-            // 认证状态 int
-            // 1：正常
-            // 2：待实名认证
-            // 3：待人脸审核
-            // 4：人脸认证失败，待人工审核
-            // 5：待补充基本信息
-            // 6：人工审核不通过
-            handleLoginSuccess(userinfo);
-
-            if (status === 1) {
-              openTabLayout();
-            } else {
-              if (userType === '1') {
-                openTodoAuthGeren();
-              } else {
-                openTodoAuthQiye();
-              }
-            }
-          });
+        var body = {
+          userType: type === 'geren' ? 1 : 2,
+          // 1个人用户登录，2企业用户登录
+          username: form['tel'][1],
+          loginType: 1,
+          // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
+          // verification: form['code'][1],
+          password: form['pwd'][1]
+        };
+        appLogin(body, function (userinfo) {
+          loginSuccessCallback(userinfo);
         });
       })["catch"](function (error) {
         api.toast({

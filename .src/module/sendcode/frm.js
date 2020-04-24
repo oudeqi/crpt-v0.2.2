@@ -2,9 +2,13 @@ import '../../app.css'
 import './frm.css'
 
 import {
-  openGerenLogin, openTodoAuthGeren, openTabLayout, openTodoAuthQiye
+  openGerenLogin, openTodoAuthGeren,
+  openTabLayout, openTodoAuthQiye
 } from '../../webview.js'
-import { http, openUIInput, handleLoginSuccess, isPhoneNo, phoneNoFormat, getAuthStatus } from '../../config.js'
+import {
+  http, openUIInput, loginSuccessCallback, isPhoneNo,
+  phoneNoFormat, appLogin
+} from '../../config.js'
 
 apiready = function() {
 
@@ -99,59 +103,13 @@ apiready = function() {
         username: tel,
         loginType: 2, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code,
-        password: tel, // 在验证码登录的时候，密码必须设置为手机号码
-        loginDevice: api.deviceId, // 客户手机设备号(android-imei,IOS-??)
-        ipAddress: '',
-        latitude: '',
-        longitude: '',
-        terminal_version: api.systemVersion, // 系统终端版本
-        location: '', // 最近登录地点
-        grant_type: 'password', // 固定传password
-        scope: 'app', // 固定传app
-        client_id: 'client', // client
-        client_secret: 'secret', // 固定传secret
+        // password: tel, // 在验证码登录的时候，密码必须设置为手机号码
       }
-      http.post('/auth/oauth/token', {
-        values: body
-      }, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        } 
-      }).then(ret => {
+      appLogin(body, function (userinfo) {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
-        api.toast({
-          msg: '登录成功',
-          location: 'middle',
-          global: true
-        })
-        let userinfo = ret || {}
-        let userType = userinfo.userType
-        let token = userinfo.token_type + ' ' + userinfo.access_token
-        getAuthStatus(token, function (status) {
-          // 认证状态 int
-          // 1：正常
-          // 2：待实名认证
-          // 3：待人脸审核
-          // 4：人脸认证失败，待人工审核
-          // 5：待补充基本信息
-          // 6：人工审核不通过
-          handleLoginSuccess(userinfo)
-          if (status === 1) {
-            openTabLayout()
-          } else {
-            if (userType === '1') {
-              openTodoAuthGeren()
-            } else {
-              openTodoAuthQiye()
-            }
-          }
-        })
-      }).catch(error => {
-        api.toast({
-          msg: error.msg || '登录失败',
-          location: 'middle'
-        })
+        loginSuccessCallback(userinfo)
+      }, function (error) {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
       })

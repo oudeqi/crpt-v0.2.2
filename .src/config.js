@@ -1,13 +1,15 @@
-import { openRegLogin } from './webview.js'
+import {
+  openRegLogin,
+  openTabLayout,
+  openTodoAuthGeren,
+  openTodoAuthQiye
+} from './webview.js'
+import { Base64 } from 'js-base64'
 
-// const baseUrl = 'http://crptdev.liuheco.com'
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://crptuat.liuheco.com'
 const prod = 'http://crptuat.liuheco.com'
 const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
-
-let hasAlert = false
-
 const whiteList = [ // 白名单里不带token，否则后端会报错
   '/sms/smsverificationcode',
   '/identification/gainenterprisephone',
@@ -18,15 +20,17 @@ const whiteList = [ // 白名单里不带token，否则后端会报错
   '/auth/oauth/token',
   '/auth/token/' // 退出登录
 ]
-const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} = {}) => {
-  let include = whiteList.find(value => url.includes(value))
+
+let hasAlert = false
+
+function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 30} = {}) {
   return new Promise((resolve, reject) => {
     let token = ''
     if (headers.token) {
       token = headers.token
     } else {
-      let userinfo = $api.getStorage('userinfo')
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
+      const userinfo = $api.getStorage('userinfo')
+      token = userinfo ? (userinfo.token_type + ' ' + userinfo.access_token) : ''
     }
     let contentType = {
       'Content-Type': 'application/json;charset=utf-8'
@@ -35,6 +39,7 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} =
       Authorization: token
     }
     method === 'upload' ? contentType = {} : null
+    const include = whiteList.find(value => url.includes(value))
     include ? Authorization = {} : null
     api.ajax({
       url: baseUrl + url,
@@ -89,8 +94,6 @@ const ajax = (method, url, data = {}, {headers = {}, tag = null, timeout = 60} =
     })
   })
 }
-
-
 
 const http = {
   cancel: tag => api.cancelAjax({ tag }),
@@ -171,25 +174,6 @@ const phoneNoFormat = (tel, tag = '****') => {
   } else {
     return a + tag + b + tag + c
   }
-}
-
-// let userinfo = {
-//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
-//   "token_type":"bearer",
-//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
-//   "expires_in":599757,
-//   "scope":"app",
-//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
-//   "code":200,
-//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
-//   "name":"欧威",
-//   "userType":"1",
-//   "makeBy":"nh-cloud",
-//   "userId":"20"
-// }
-
-const handleLoginSuccess = data => {
-  $api.setStorage('userinfo', data) // 用户信息
 }
 
 function ActionSheet (title, buttons, cb) {
@@ -391,7 +375,44 @@ function initUIInput (dom, options = {}, cb) {
   })
 }
 
-function getAuthStatus (token, cb) {
+// let userinfo = {
+//   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
+//   "token_type":"bearer",
+//   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
+//   "expires_in":599757,
+//   "scope":"app",
+//   "msg":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "code":200,
+//   "data":"6ca22146-008e-4c12-9772-8d72229b731b",
+//   "name":"欧威",
+//   "userType":"1",
+//   "makeBy":"nh-cloud",
+//   "userId":"20"
+// }
+function loginSuccessCallback (userinfo) {
+  $api.setStorage('userinfo', userinfo) // 用户信息
+  getAndStorageAuthStatus(function (status) {
+    // 认证状态 int
+    // 1：正常
+    // 2：待实名认证
+    // 3：待人脸审核
+    // 4：人脸认证失败，待人工审核
+    // 5：待补充基本信息
+    // 6：人工审核不通过
+    if (status === 1) {
+      openTabLayout()
+    } else {
+      const { userType } = userinfo || {}
+      if (userType === '1') { // 1个人用户登录 2企业用户登录
+        openTodoAuthGeren()
+      } else if (userType === '2') {
+        openTodoAuthQiye()
+      }
+    }
+  })
+}
+
+function getAndStorageAuthStatus (successCallback, errorCallback) {
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -399,33 +420,104 @@ function getAuthStatus (token, cb) {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  let headers = {}
-  if (token) {
-    headers = { token }
-  }
-  http.get(`/crpt-cust/customer/query/authstatus`, null, {
-    headers
-  }).then(res => {
-    $api.setStorage('authStatus', { status: res.data })
-    cb(res.data)
+  http.get(`/crpt-cust/customer/query/authstatus`).then(res => {
+    try {
+      $api.setStorage('authStatus', { status: res.data })
+      successCallback && successCallback(res.data)
+    } catch (e) {
+      console.log(JSON.stringify(e))
+    } finally {
+
+    }
   }).catch(error => {
     api.toast({
       msg: error.msg || '获取认证状态失败'
     })
+    errorCallback && errorCallback(error)
   })
 }
 
+
+function setRefreshHeaderInfo (successCallback, errorCallback, options = {}) {
+  api.setRefreshHeaderInfo({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false,
+    ...options
+  }, function (ret, error) {
+    if (error) {
+      errorCallback(error)
+    } else {
+      successCallback(ret)
+    }
+  })
+}
+
+function appLogin (options, successCallback, errorCallback) {
+  let pwd = ''
+  if (options.verification) { // 在验证码登录的时候，密码必须设置为手机号码
+    pwd = options.username
+  } else {
+    pwd = Base64.encode(options.password || '')
+  }
+  http.post('/auth/oauth/token', {
+    values: {
+      loginDevice: api.deviceId, // 客户手机设备号(android-imei,IOS-??)
+      ipAddress: '',
+      latitude: '',
+      longitude: '',
+      terminal_version: api.systemVersion, // 系统终端版本
+      location: '', // 最近登录地点
+      grant_type: 'password', // 固定传password
+      scope: 'app', // 固定传app
+      client_id: 'client', // client
+      client_secret: 'secret', // 固定传secret
+      // userType: params.userType || 1, // 1个人用户登录，2企业用户登录
+      // username: form['tel'][1],
+      // loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
+      // verification: form['code'][1], // 验证码
+      // password: form['pwd'][1] // 在验证码登录的时候，密码必须设置为手机号码
+      ...options,
+      password: pwd,
+    }
+  }, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    } 
+  }).then(function (userinfo) {
+    api.toast({
+      msg: '登录成功',
+      location: 'middle',
+      global: true
+    })
+    successCallback && successCallback(userinfo)
+  }).catch(function (error) {
+    api.toast({
+      msg: error.msg || '登录失败',
+      location: 'middle'
+    })
+    errorCallback && errorCallback(error)
+  })
+}
+
+
 export {
   http,
+  appLogin,
   openUIInput,
   resetUIInputPosi,
   isPhoneNo,
   phoneNoFormat,
-  handleLoginSuccess,
+  loginSuccessCallback,
   ActionSheet,
   CityList,
   CitySelector,
   getPicture,
   initUIInput,
-  getAuthStatus
+  getAndStorageAuthStatus,
+  setRefreshHeaderInfo
 }

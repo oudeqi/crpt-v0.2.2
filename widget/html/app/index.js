@@ -173,6 +173,7 @@ function openTodoAuthQiye() {
 // $api.clearStorage()
 
 apiready = function apiready() {
+  // $api.clearStorage()
   var userinfo = $api.getStorage('userinfo'); // 认证状态 int
   // 1：正常
   // 2：待实名认证

@@ -118,7 +118,7 @@ apiready = function () {
           data.yuqi ? '<span class="warning">未按期还款</span>' : ''
         }</p>` : ''
       }
-      <p>全部待还：<span>${data.repayTotalAmount || '0'}元</span></p>
+      <p>全部待还：<span>${numeral(data.repayTotalAmount).format('0,0.00')}元</span></p>
     `
   }
 
