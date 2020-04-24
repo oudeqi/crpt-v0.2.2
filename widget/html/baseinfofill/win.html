@@ -1,6 +1,7 @@
 <!doctype html>
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" >
@@ -9,11 +10,113 @@
   <link rel="stylesheet" type="text/css" href="../../css/aui.css" >
 
   <link rel="stylesheet" href="./win.css"></head>
+
 <body>
-  <header class="app_header" id="header">
-    <div id="back" tapmode="active"><i class="aui-iconfont aui-icon-left"></i></div>
-    <h1>补充基本信息</h1>
-  </header>
+  <section>
+    <div class="tit">请填写<span id="userType1">***</span>的个人信息</div>
+    <div class="indent">
+      <div class="ipt-box">
+        <div class="label">婚姻状况</div>
+        <div class="ipt" id="marriage">
+          <input type="text" placeholder="请选择" disabled value="">
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <div class="label">子女状况</div>
+        <div class="ipt" id="isChildren">
+          <input type="text" placeholder="请选择" disabled value="">
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <div class="label">教育情况</div>
+        <div class="ipt" id="education">
+          <input type="text" placeholder="请选择" disabled value="">
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <div class="label">户籍地址</div>
+        <div class="ipt" id="permanentAddress">
+          <input type="text" placeholder="请选择" disabled value="">
+        </div>
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-right"></i>
+        </div>
+      </div>
+      <div class="indent-tit">现居住信息</div>
+      <div class="indent">
+        <div class="ipt-box">
+          <div class="label">省市地区</div>
+          <div class="ipt" id="address">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon">
+            <i class="aui-iconfont aui-icon-right"></i>
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">详细地址</div>
+          <div class="ipt" id="addressDetails"></div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="tit">请填写<span id="userType2">***</span>的联系信息</div>
+    <div class="indent">
+      <div class="indent-tit">直属亲属</div>
+      <div class="indent">
+        <div class="ipt-box">
+          <div class="label">亲属关系</div>
+          <div class="ipt" id="relationship">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon">
+            <i class="aui-iconfont aui-icon-right"></i>
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">姓名</div>
+          <div class="ipt" id="relationName"></div>
+          
+        </div>
+        <div class="ipt-box">
+          <div class="label">手机号</div>
+          <div class="ipt" id="relationPhone"></div>
+          
+        </div>
+      </div>
+      <div class="indent-tit">其他联系人</div>
+      <div class="indent">
+        <div class="ipt-box">
+          <div class="label">姓名</div>
+          <div class="ipt" id="otherName"></div>
+          
+        </div>
+        <div class="ipt-box">
+          <div class="label">手机号</div>
+          <div class="ipt" id="otherPhone"></div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="submit">
+    <div class="app_btn" tapmode="active" id="submit">提交</div>
+  </section>
+
   <script type="text/javascript" src="../../script/api.js"></script>
 
   <script src="./win.js"></script></body>

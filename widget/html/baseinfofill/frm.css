@@ -265,16 +265,18 @@ section {
       -ms-flex-pack: center;
           justify-content: center;
   height: 50px;
-  border-bottom: 1px solid #ededed
+  border-bottom: 1px solid #ededed;
+  position: relative
 }
 .ipt-box .label {
-    width: 90px;
+    width: 80px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
     color: #000;
   }
 .ipt-box .ipt {
     height: 100%;
+    /*border: 1px solid red;*/
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
@@ -287,7 +289,8 @@ section {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
-    color: #ccc
+    color: #ccc;
+    margin-right: 80px
   }
 .ipt-box .ipt input {
       font-size: 16px;
@@ -316,6 +319,10 @@ section {
       opacity: 1;
     }
 .ipt-box .icon {
+    position: absolute;
+    /*border: 1px solid red;*/
+    top: 0;
+    right: 0;
     width: 50px;
     height: 100%;
     display: -webkit-box;

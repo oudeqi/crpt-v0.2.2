@@ -5,7 +5,7 @@ import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
   openFaceAuth, openYuguEdu
 } from '../../webview.js'
-import { http, getAndStorageAuthStatus } from '../../config.js'
+import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../config.js'
 
 apiready = function() {
 
@@ -237,15 +237,7 @@ apiready = function() {
     initPage()
   })
 
-  api.setRefreshHeaderInfo({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, function(ret, err) {
+  setRefreshHeaderInfo(function(ret, err) {
     initPage()
   })
 

@@ -12,14 +12,25 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openBaseinfoFill(pageParam) {
-  api.openWin({
-    name: 'html/baseinfofill/win',
-    url: 'widget://html/baseinfofill/win.html',
+function openBaseinfoFill() {
+  api.openTabLayout({
+    name: 'html/baseinfofill/frm',
+    title: '补充基本信息',
+    url: 'widget://html/baseinfofill/frm.html',
     bgColor: '#fff',
+    softInputMode: 'auto',
+    softInputBarEnabled: false,
+    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
-    pageParam: pageParam
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
   });
 } // 打开待认证
 
@@ -30,6 +41,9 @@ function openCompanyInfo() {
     title: '企业实名认证',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
+    softInputMode: 'auto',
+    softInputBarEnabled: false,
+    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
     slidBackEnabled: false,
@@ -514,6 +528,25 @@ function getAndStorageAuthStatus(successCallback, errorCallback) {
   });
 }
 
+function setRefreshHeaderInfo(successCallback, errorCallback) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      errorCallback && errorCallback(error);
+    } else {
+      successCallback && successCallback(ret);
+    }
+  });
+}
+
 apiready = function apiready() {
   var userinfo = $api.getStorage('userinfo');
 
@@ -698,15 +731,7 @@ apiready = function apiready() {
   }, function (ret, err) {
     initPage();
   });
-  api.setRefreshHeaderInfo({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, function (ret, err) {
+  setRefreshHeaderInfo(function (ret, err) {
     initPage();
   });
 };

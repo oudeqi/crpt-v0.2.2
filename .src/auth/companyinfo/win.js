@@ -7,6 +7,18 @@ import { http, initUIInput } from '../../config.js'
 
 apiready = function() {
 
+  api.addEventListener({ // 键盘挡住输入框
+    name:'keyboardshow'
+  }, function(ret, err){
+    document.getElementById('container').style['min-height'] = '105%'
+    document.getElementById('frID').scrollIntoView()
+  })
+  api.addEventListener({
+    name:'keyboardhide'
+  }, function(ret, err){
+    document.getElementById('container').style['min-height'] = '100%'
+  })
+
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   let postData = {
     companyName: '',
@@ -41,7 +53,7 @@ apiready = function() {
 
   initUIInput($api.byId('frID'), {
     placeholder: '请输入...',
-    keyboardType: 'next',
+    keyboardType: 'done',
     maxStringLength: 40
   }, function (value) {
     postData.frID = value

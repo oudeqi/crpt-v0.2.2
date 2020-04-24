@@ -487,9 +487,9 @@ function CitySelector(cb) {
     layout: {
       row: 5,
       col: 3,
-      height: 30,
-      size: 12,
-      sizeActive: 14,
+      height: 40,
+      size: 15,
+      sizeActive: 16,
       rowSpacing: 5,
       colSpacing: 10,
       maskBg: 'rgba(0,0,0,0.2)',
@@ -501,7 +501,7 @@ function CitySelector(cb) {
     animation: true,
     cancel: {
       text: '取消',
-      size: 12,
+      size: 15,
       w: 90,
       h: 35,
       bg: '#fff',
@@ -511,7 +511,7 @@ function CitySelector(cb) {
     },
     ok: {
       text: '确定',
-      size: 12,
+      size: 15,
       w: 90,
       h: 35,
       bg: '#fff',
@@ -521,8 +521,8 @@ function CitySelector(cb) {
     },
     title: {
       text: '请选择',
-      size: 12,
-      h: 44,
+      size: 15,
+      h: 50,
       bg: '#eee',
       color: '#888'
     },

@@ -247,14 +247,25 @@ function openFindPwd () {
 }
 
 // 填写个人信息
-function openBaseinfoFill (pageParam) {
-  api.openWin({
-    name: 'html/baseinfofill/win',
-    url: 'widget://html/baseinfofill/win.html',
+function openBaseinfoFill () {
+  api.openTabLayout({
+    name: 'html/baseinfofill/frm',
+    title: '补充基本信息',
+    url: 'widget://html/baseinfofill/frm.html',
     bgColor: '#fff',
+    softInputMode: 'auto',
+    softInputBarEnabled: false,
+    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
-    pageParam,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
   })
 }
 
@@ -309,6 +320,9 @@ function openCompanyInfo () {
     title: '企业实名认证',
     url: 'widget://html/companyinfo/win.html',
     bgColor: '#fff',
+    softInputMode: 'auto',
+    softInputBarEnabled: false,
+    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
     slidBackEnabled: false,
@@ -795,16 +809,19 @@ function openProductDetails ({id, open} = {}) {
 }
 
 // 城市选择
-function openCityList (pageParam) {
+function openCityList ({ eventName }) {
   api.openTabLayout({
     name: 'html/citylist/win',
     title: '城市选择',
     url: 'widget://html/citylist/win.html',
     bgColor: '#fff',
-    pageParam,
+    pageParam: { eventName },
     slidBackEnabled: true,
+    animation: {
+      type: 'none'
+    },
     navigationBar: {
-      height: 45,
+      height: 44,
       hideBackButton: false,
       background: '#1dc4a2',
       color: '#fff',

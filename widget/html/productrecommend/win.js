@@ -556,6 +556,25 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function setRefreshHeaderInfo(successCallback, errorCallback) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      errorCallback && errorCallback(error);
+    } else {
+      successCallback && successCallback(ret);
+    }
+  });
+}
+
 var numeral = createCommonjsModule(function (module) {
 /*! @preserve
  * numeral.js
@@ -1618,15 +1637,7 @@ apiready = function apiready() {
     });
   }
 
-  api.setRefreshHeaderInfo({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, function (ret, err) {
+  setRefreshHeaderInfo(function (ret, err) {
     refresh();
   });
   api.refreshHeaderLoading();

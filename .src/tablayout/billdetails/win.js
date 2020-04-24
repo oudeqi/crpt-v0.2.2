@@ -1,7 +1,7 @@
 import '../../app.css'
 import './win.css'
 
-import { http } from '../../config.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
 
@@ -90,15 +90,7 @@ apiready = function () {
 
   initPageData()
 
-  api.setRefreshHeaderInfo({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, function(ret, err) {
+  setRefreshHeaderInfo(function(ret, err) {
     initPageData()
   })
 

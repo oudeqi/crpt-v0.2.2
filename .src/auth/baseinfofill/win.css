@@ -46,18 +46,21 @@ section {
   justify-content: center;
   height: 50px;
   border-bottom: 1px solid #ededed;
+  position: relative;
   & .label {
-    width: 90px;
+    width: 80px;
     flex-shrink: 0;
     color: #000;
   }
   & .ipt {
     height: 100%;
+    /*border: 1px solid red;*/
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     color: #ccc;
+    margin-right: 80px;
     & input {
       font-size: 16px;
     }
@@ -74,6 +77,10 @@ section {
     }
   }
   & .icon {
+    position: absolute;
+    /*border: 1px solid red;*/
+    top: 0;
+    right: 0;
     width: 50px;
     height: 100%;
     display: flex;
