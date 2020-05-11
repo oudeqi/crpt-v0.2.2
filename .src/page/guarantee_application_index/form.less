@@ -2,6 +2,9 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    &.top {
+        align-items: flex-start;
+    }
     .fc_label {
         display: flex;
         justify-content: space-around;
@@ -24,6 +27,12 @@
         .fc_c_common {
             display: flex;
             align-items: center;
+            &.hidden {
+                display: none;
+            }
+            &.bd {
+                border-bottom: 1px solid #F5F5F5;
+            }
             // 以下为通用组件最小粒度，包含 input, select, rselect, radio，unit, city等
             .fc_c_input {
                 font-size: 14px;
@@ -80,7 +89,7 @@
                 flex: 1;
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
+                justify-content: center;
                 height: 50px;
                 .fc_c_city_label {
                     font-size:14px;
@@ -88,7 +97,13 @@
                     font-weight:500;
                     color:rgba(102,187,106,1);
                     line-height:20px;
+                    &.selected {
+                        color: #000;
+                    }
                 }
+            }
+            .fc_c_img {
+                width: 50%;
             }
         }
     }

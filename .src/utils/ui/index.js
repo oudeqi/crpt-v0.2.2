@@ -1,4 +1,4 @@
-import setPicker from "./picker";
+import {setPicker, setCityPicker} from "./picker";
 
 /**
  * UI class
@@ -9,5 +9,7 @@ export default class UI {
     setPicker(params) {
         return setPicker(params)
     }
-
+    setCityPicker(params) {
+        return setCityPicker(params)
+    }
 }

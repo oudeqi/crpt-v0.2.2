@@ -1,19 +1,13 @@
-/**
- * @authro liyang
- * @desc 表单单选框picker
- * @params params: { data, success }
- */
-const setPicker = function(params) {
+const openPicker = function(params, options) {
     let UIActionSelector = api.require('UIActionSelector')
     UIActionSelector.open({
-        // datas: 'widget://res/city.json',
         datas: params.data,
         layout: {
-            row: 4,
-            col: 1,
+            row: options.row,
+            col: options.col,
             height: 40,
-            size: 14,
-            sizeActive: 16,
+            size: 18,
+            sizeActive: 18,
             rowSpacing: 5,
             colSpacing: 10,
             maskBg: 'rgba(0,0,0,0.2)',
@@ -58,4 +52,20 @@ const setPicker = function(params) {
     })
     return UIActionSelector
 }
- export default setPicker
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+export const setPicker = function(params) {
+    return openPicker(params, {row: 4, col: 1})
+}
+
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+export const setCityPicker = function(params) {
+    return openPicker(params, {row: 5, col: 3})
+}

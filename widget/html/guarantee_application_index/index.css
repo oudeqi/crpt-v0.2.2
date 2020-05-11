@@ -215,6 +215,11 @@
       -ms-flex-align: center;
           align-items: center;
 }
+.form-cell_shell.top {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
 .form-cell_shell .fc_label {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -253,6 +258,12 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+.form-cell_shell .fc_content .fc_c_common.hidden {
+  display: none;
+}
+.form-cell_shell .fc_content .fc_c_common.bd {
+  border-bottom: 1px solid #F5F5F5;
 }
 .form-cell_shell .fc_content .fc_c_common .fc_c_input {
   font-size: 14px;
@@ -335,9 +346,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 50px;
 }
 .form-cell_shell .fc_content .fc_c_common .fc_c_city .fc_c_city_label {
@@ -346,6 +357,12 @@
   font-weight: 500;
   color: #66bb6a;
   line-height: 20px;
+}
+.form-cell_shell .fc_content .fc_c_common .fc_c_city .fc_c_city_label.selected {
+  color: #000;
+}
+.form-cell_shell .fc_content .fc_c_common .fc_c_img {
+  width: 50%;
 }
 html,
 body {

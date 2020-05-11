@@ -116,23 +116,17 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
-/**
- * @authro liyang
- * @desc 表单单选框picker
- * @params params: { data, success }
- */
-var setPicker = function setPicker(params) {
+var openPicker = function openPicker(params, options) {
   var UIActionSelector = api.require('UIActionSelector');
 
   UIActionSelector.open({
-    // datas: 'widget://res/city.json',
     datas: params.data,
     layout: {
-      row: 4,
-      col: 1,
+      row: options.row,
+      col: options.col,
       height: 40,
-      size: 14,
-      sizeActive: 16,
+      size: 18,
+      sizeActive: 18,
       rowSpacing: 5,
       colSpacing: 10,
       maskBg: 'rgba(0,0,0,0.2)',
@@ -177,6 +171,31 @@ var setPicker = function setPicker(params) {
   });
   return UIActionSelector;
 };
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 4,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
 
 /**
  * UI class
@@ -193,6 +212,11 @@ var UI = /*#__PURE__*/function () {
     key: "setPicker",
     value: function setPicker$1(params) {
       return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
     }
   }]);
 

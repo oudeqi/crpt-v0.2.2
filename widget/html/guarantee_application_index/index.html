@@ -49,6 +49,22 @@
         </div>
       </div>
 
+      <div class="form-cell_shell top">
+        <div class="fc_label">
+          <span class="fc_span">环评材料</span>
+        </div>
+        <div class="fc_content">
+          <div class="fc_c_common">
+            <div class="fc_c_city" id="envReportFile">
+              <span class="fc_c_city_label">上传附件</span>
+            </div>
+          </div>
+          <div id="envReportFile-img-box" class="fc_c_common hidden">
+            <img class="fc_c_img" src="" alt="" id="envReportFile-img">
+          </div>
+        </div>
+      </div>
+
       <div class="form-cell_shell" data-props="farmInfo">
         <div class="fc_label">
           <span class="fc_span">养殖场性质</span>
@@ -126,20 +142,18 @@
         </div>
       </div>
 
-      <div class="form-cell_shell">
+      <div class="form-cell_shell top">
         <div class="fc_label">
           <span class="fc_span">棚舍地址</span>
         </div>
         <div class="fc_content">
-
-
-
-
-
+          <div class="fc_c_common bd">
+            <div class="fc_c_city" id="shedAddress">
+              <span class="fc_c_city_label">选择 城市/区域</span>
+            </div>
+          </div>
           <div class="fc_c_common">
-            <input class="fc_c_input" type="text" id="" placeholder="详细地址" >
-
-
+            <input class="fc_c_input" id="shedAddressDetail" type="text" id="" placeholder="详细地址" >
           </div>
         </div>
       </div>
@@ -158,58 +172,43 @@
         </div>
       </div>
     </div>
-    
+
     <div class="cl-cell">
       <div class="cl-cell_box">
-        <div class="cl-cell_text done">
-          <span class="clt_main">养殖信息</span>
+        <div class="cl-cell_text">
+          <span class="clt_main">房产信息</span>
           <span>
-            养殖、棚舍等信息
+            房产证号、面积等信息
           </span>
         </div>
         <a class="cl-cell_arrow"> > </a>
       </div>
+    </div>
 
-      <div class="form-cell_shell">
-        <div class="fc_label">
-          <span class="fc_span">土地性质</span>
+    <div class="cl-cell">
+      <div class="cl-cell_box">
+        <div class="cl-cell_text">
+          <span class="clt_main">车辆信息</span>
+          <span>
+             车辆品牌、品牌等信息
+          </span>
         </div>
-        <div class="fc_content">
-          <div class="fc_c_common" id="f1-feed2-type">
-            <input class="fc_c_input" type="number" pattern="[0-9/.]*" name="familyNumber"
-                   id="ddfa" placeholder="请输入投资金额" >
-            <div class="fc_unit">万元</div>
-          </div>
+        <a class="cl-cell_arrow"> > </a>
+      </div>
+    </div>
+
+    <div class="cl-cell">
+      <div class="cl-cell_box">
+        <div class="cl-cell_text">
+          <span class="clt_main">家庭成员信息</span>
+          <span>
+             职业、收入、工作单位等信息
+          </span>
         </div>
+        <a class="cl-cell_arrow"> > </a>
       </div>
     </div>
-    <div class="cl-cell">
-      <div class="cl-cell_text">
-        <span class="clt_main">房产信息</span>
-        <span>
-         房产证号、面积等信息
-        </span>
-      </div>
-      <a class="cl-cell_arrow"> > </a>
-    </div>
-    <div class="cl-cell">
-      <div class="cl-cell_text">
-        <span class="clt_main">车辆信息</span>
-        <span>
-        车辆品牌、品牌等信息
-        </span>
-      </div>
-      <a class="cl-cell_arrow"> > </a>
-    </div>
-    <div class="cl-cell">
-      <div class="cl-cell_text">
-        <span class="clt_main">家庭成员信息</span>
-        <span>
-          职业、收入、工作单位等信息
-        </span>
-      </div>
-      <a class="cl-cell_arrow"> > </a>
-    </div>
+
   </div>
   <script type="text/javascript" src="../../script/api.js"></script>
 
