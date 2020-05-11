@@ -8,8 +8,5 @@ class Router {
     constructor() {
         Object.assign(this, rmap)
     }
-    close() {
-
-    }
 }
 export default Router

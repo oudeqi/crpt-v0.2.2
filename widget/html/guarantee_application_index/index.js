@@ -1,8 +1,314 @@
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+var arrayWithHoles = _arrayWithHoles;
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+var iterableToArrayLimit = _iterableToArrayLimit;
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+var arrayLikeToArray = _arrayLikeToArray;
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+var unsupportedIterableToArray = _unsupportedIterableToArray;
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var nonIterableRest = _nonIterableRest;
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+}
+
+var slicedToArray = _slicedToArray;
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
+
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+});
+
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500
+};
+
+/**
+ * 打开授信资料录入页面
+ */
+
+function openPageCreditInformation() {
+  api.openTabLayout({
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 打开担保业务申请表页面
+ */
+
+function openGuaranteeApplicationIndex() {
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    useWKWebView: true,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: navigationBarProfile
+  });
+}
+
+var rmap = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = function Router() {
+  classCallCheck(this, Router);
+
+  _extends_1(this, rmap);
+};
+
+var openPicker = function openPicker(params, options) {
+  var UIActionSelector = api.require('UIActionSelector');
+
+  UIActionSelector.open({
+    datas: params.data,
+    layout: {
+      row: options.row,
+      col: options.col,
+      height: 40,
+      size: 18,
+      sizeActive: 18,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#fff',
+      color: '#333',
+      colorActive: '#f00',
+      colorSelected: '#000'
+    },
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#fff'
+    },
+    ok: {
+      text: '确定',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: 'rgba(102,187,106,1)',
+      bgActive: '#ccc',
+      color: '#fff',
+      colorActive: '#fff'
+    },
+    title: {
+      text: '请选择',
+      size: 15,
+      h: 50,
+      bg: '#eee',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      params.success && params.success(ret.selectedInfo);
+    }
+  });
+  return UIActionSelector;
+};
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 4,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
+
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    classCallCheck(this, UI);
+  }
+
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }]);
+
+  return UI;
+}();
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+};
+
+var Utils$1 = new Utils();
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -216,14 +522,266 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
+function ActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
+  }, function (ret, err) {
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
+    }
+  });
+}
+
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: false,
+    quality: 100,
+    targetWidth: 1000,
+    // targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
+/**
+ * @authro liyang
+ * @desc 担保业务申请表录入页Page 类
+ */
+
+var Page = /*#__PURE__*/function () {
+  function Page(props) {
+    classCallCheck(this, Page);
+
+    //  所有表单域预置信息
+    this.profile = {
+      //  picker类组件json
+      pickers: {
+        landType: [{
+          "name": "一般耕地",
+          "id": "1"
+        }, {
+          "name": "基本农田",
+          "id": "2"
+        }, {
+          "name": "山地",
+          "id": "3"
+        }, {
+          "name": "林地",
+          "id": "4"
+        }, {
+          "name": "草地",
+          "id": "5"
+        }],
+        farmType: [{
+          "name": "鸡",
+          "id": "1"
+        }, {
+          "name": "鸭",
+          "id": "2"
+        }, {
+          "name": "猪",
+          "id": "3"
+        }]
+      },
+      //  select类组件json
+      selects: {
+        envReport: [{
+          "name": "无环评",
+          "id": "1"
+        }, {
+          "name": "环评备案",
+          "id": "2"
+        }, {
+          "name": "环评报告",
+          "id": "3"
+        }],
+        livestockType: [{
+          "name": "自有",
+          "id": "1"
+        }, {
+          "name": "租赁",
+          "id": "2"
+        }],
+        shedStructure: [{
+          "name": "墙体结构",
+          "id": "1"
+        }, {
+          "name": "立柱式",
+          "id": "2"
+        }]
+      },
+      // upload参数
+      uploadImgType: {
+        0: 'camera',
+        1: 'album'
+      }
+    }; //  统一管理数据model data
+
+    this.data = {};
+    this.main(props);
+  } //  执行函数
+
+
+  createClass(Page, [{
+    key: "main",
+    value: function main(props) {
+      this._initData();
+
+      this._bindEvents();
+    } //  事件绑定入口
+
+  }, {
+    key: "_bindEvents",
+    value: function _bindEvents() {
+
+      this._bindPickerEvents(); //  绑定所有select选择框
+
+
+      this._bindSelectEvents(); //  绑定cityPicker
+
+
+      this._bindCityPickerEvents(); //  绑定环评材料上传
+
+
+      this._bindUploadReportFile();
+    }
+  }, {
+    key: "_initData",
+    value: function _initData() {} // 初始化所有picker组件
+
+  }, {
+    key: "_initPicker",
+    value: function _initPicker(name, dom) {
+      var self = this;
+      Utils$1.UI.setPicker({
+        success: function success(selected) {
+          var value = selected[0];
+          self.data[name] = value.name;
+          dom.innerHTML = value.name; // 副作用effects
+          // 1. 环评材料选择为无环保时，需要将环保附件上传栏隐藏
+        },
+        data: self.profile.pickers[name]
+      });
+    } // 绑定所有picker组件的事件
+
+  }, {
+    key: "_bindPickerEvents",
+    value: function _bindPickerEvents() {
+      var self = this;
+      var pickerKeys = Object.keys(this.profile.pickers);
+      pickerKeys.forEach(function (item, i) {
+        document.querySelector("#".concat(item)).onclick = function () {
+          self._initPicker(item, this);
+        };
+      });
+    } // 绑定city picker组件
+
+  }, {
+    key: "_bindCityPickerEvents",
+    value: function _bindCityPickerEvents() {
+      var self = this;
+      var dom = document.querySelector("#shedAddress");
+
+      dom.onclick = function () {
+        Utils$1.UI.setCityPicker({
+          success: function success(selected) {
+            var _selected = slicedToArray(selected, 3),
+                province = _selected[0],
+                city = _selected[1],
+                district = _selected[2];
+
+            self.data.pcd = {
+              province: province.name,
+              city: city.name,
+              district: district.name
+            };
+            dom.innerHTML = "<span class=\"fc_c_city_label selected\">".concat(province.name, " ").concat(city.name, " ").concat(district.name, "</span>");
+          },
+          data: 'widget://res/city.json'
+        });
+      };
+    } // 初始化所有Select组件
+
+  }, {
+    key: "_initSelect",
+    value: function _initSelect() {} // 绑定所有select组件事件
+
+  }, {
+    key: "_bindSelectEvents",
+    value: function _bindSelectEvents() {
+      var self = this;
+      var selectKeys = Object.keys(this.profile.selects);
+      var defaultClassName = 'fc_c_option';
+      var activeClassName = 'active';
+      selectKeys.forEach(function (item, i) {
+        //  由组件级代理
+        var parant = document.querySelector("#".concat(item));
+
+        parant.onclick = function (e) {
+          var list = parant.querySelectorAll(".".concat(defaultClassName));
+          var ev = window.event || e;
+
+          if (ev.target.nodeName === 'SPAN') {
+            for (var _i = 0; _i < list.length; _i++) {
+              list[_i].classList.remove(activeClassName); // list[i].className = defaultClassName;
+
+            }
+
+            ev.target.classList.add(activeClassName);
+            self.data[item] = ev.target.innerHTML; // 副作用effects
+            // 1. 环评材料选择为无环保时，需要将环保附件上传栏隐藏
+          }
+        };
+      });
+    }
+  }, {
+    key: "_bindUploadReportFile",
+    value: function _bindUploadReportFile() {
+      var self = this;
+      var dom = document.querySelector('#envReportFile');
+      var box = document.querySelector('#envReportFile-img-box');
+      var img = document.querySelector('#envReportFile-img');
+
+      dom.onclick = function () {
+        ActionSheet('请选择', ['相机', '相册'], function (index) {
+          getPicture(self.profile.uploadImgType[index], function (res, err) {
+            if (res) {
+              self.envReportFile = res.data;
+
+              if (res.data) {
+                img.src = res.data;
+                box.classList.remove('hidden');
+              } else {
+                api.toast({
+                  msg: '未上传成功',
+                  duration: 2000,
+                  location: 'middle'
+                });
+              }
+            }
+          });
+        });
+      };
+    }
+  }]);
+
+  return Page;
+}();
+
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
-  var id = pageParam.id,
-      type = pageParam.type; // '9939393'
-  // var header = document.querySelector('#header');
-  // $api.fixStatusBar(header);
-
   api.setStatusBarStyle({
     style: 'dark'
   });
+  new Page().main();
 };

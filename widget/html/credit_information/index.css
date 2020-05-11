@@ -205,177 +205,19 @@
       padding-right: 0;
     }
 
-.form-cell_shell {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.form-cell_shell.top {
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-.form-cell_shell .fc_label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 0 5px;
-  height: 50px;
-}
-.form-cell_shell .fc_span {
-  font-size: 14px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 500;
-  color: #303133;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.form-cell_shell .fc_content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  border-bottom: 1px solid #F5F5F5;
-}
-.form-cell_shell .fc_content .fc_c_common {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.form-cell_shell .fc_content .fc_c_common.hidden {
-  display: none;
-}
-.form-cell_shell .fc_content .fc_c_common.bd {
-  border-bottom: 1px solid #F5F5F5;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_input {
-  font-size: 14px;
-  padding: 0 10px;
-  height: 50px;
-  display: inline-block;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_unit {
-  font-size: 14px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 500;
-  color: #303133;
-  -webkit-box-flex: 0;
-      -ms-flex: none;
-          flex: none;
-  padding: 0 10px;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_picker {
-  font-size: 14px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 500;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 10px;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_picker .placeholder {
-  color: #c0c4cc;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_select {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  height: 50px;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_select .fc_c_option {
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 500;
-  color: #303133;
-  background: rgba(144, 147, 153, 0.1);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-left: 16px;
-  -webkit-box-flex: 0;
-      -ms-flex: none;
-          flex: none;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_select .fc_c_option.active {
-  background: #66bb6a;
-  color: #ffffff;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_city {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  height: 50px;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_city .fc_c_city_label {
-  font-size: 14px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 500;
-  color: #66bb6a;
-  line-height: 20px;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_city .fc_c_city_label.selected {
-  color: #000;
-}
-.form-cell_shell .fc_content .fc_c_common .fc_c_img {
-  width: 50%;
-}
 html,
 body {
   background-color: #efefef;
 }
+#credit-list {
+  padding: 0 12px 0 27px;
+}
 .cl-cell {
-  margin: 12px 0;
+  margin: 14px 0;
   border-radius: 5px;
   background: #fff;
-  padding: 21px 12px;
-  position: relative;
-}
-.cl-cell .cl-cell_box {
+  padding: 17px 12px 17px 35px;
+  margin-top: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -385,8 +227,9 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  position: relative;
 }
-.cl-cell .cl-cell_box .cl-cell_text {
+.cl-cell .cl-cell_text {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -398,7 +241,7 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.cl-cell .cl-cell_box .cl-cell_text .cl-cell_index {
+.cl-cell .cl-cell_text .cl-cell_index {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -426,31 +269,31 @@ body {
   font-weight: bold;
   color: #909399;
 }
-.cl-cell .cl-cell_box .cl-cell_text.next .cl-cell_index {
+.cl-cell .cl-cell_text.next .cl-cell_index {
   color: #66bb6a;
   border: 1px solid #66bb6a;
 }
-.cl-cell .cl-cell_box .cl-cell_text.done .cl-cell_index {
+.cl-cell .cl-cell_text.done .cl-cell_index {
   background: #66bb6a;
   border: none;
   color: #fff;
 }
-.cl-cell .cl-cell_box .cl-cell_text.done .clt_main {
+.cl-cell .cl-cell_text.done .clt_main {
   color: #66bb6a;
 }
-.cl-cell .cl-cell_box .cl-cell_text span {
+.cl-cell .cl-cell_text span {
   color: #999;
-  font-size: 14px;
+  font-size: 15px;
   display: block;
 }
-.cl-cell .cl-cell_box .cl-cell_text span.clt_main {
+.cl-cell .cl-cell_text span.clt_main {
   margin-bottom: 9px;
-  font-size: 16px;
+  font-size: 18px;
   color: #303133;
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
 }
-.cl-cell .cl-cell_box .cl-cell_arrow {
+.cl-cell .cl-cell_arrow {
   color: #999;
   -webkit-transform: scaleY(1.6);
           transform: scaleY(1.6);

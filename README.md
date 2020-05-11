@@ -38,3 +38,23 @@
 
 ```
 create-rollup-config rollup-watch
+
+# java启动真机调试服务
+
+
+```bash
+// server start
+java -jar /Users/nardo/WebstormProjects/webStorm-APICloud/wifisync_tools/wifisync.jar /Users/nardo/WebstormProjects /Users/nardo/WebstormProjects/webStorm-APICloud/wifisync_tools
+
+// server ip:port
+java -jar /Users/nardo/WebstormProjects/webStorm-APICloud/wifisyncmanager.jar 1 /Users/nardo/WebstormProjects/webStorm-APICloud/wifisync_tools/config_info
+
+// 全量同步
+java -jar /Users/nardo/WebstormProjects/webStorm-APICloud/wifisyncmanager.jar 2 /Users/nardo/WebstormProjects/webStorm-APICloud/wifisync_tools/config_info /Users/nardo/WebstormProjects/widget /Users/nardo/WebstormProjects
+
+// 增量同步
+java -jar /Users/nardo/WebstormProjects/webStorm-APICloud/wifisyncmanager.jar 3 /Users/nardo/WebstormProjects/webStorm-APICloud/wifisync_tools/config_info /Users/nardo/WebstormProjects/widget /Users/nardo/WebstormProjects
+
+```
+
+`

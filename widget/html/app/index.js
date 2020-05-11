@@ -1,134 +1,54 @@
-// api.lockSlidPane();
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-// 导航布局
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
 
+var classCallCheck = _classCallCheck;
 
-function openTabLayout(index) {
-  api.openTabLayout({
-    name: 'tabLayout',
-    bgColor: '#fff',
-    reload: true,
-    delay: 300,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold' // leftButtons: [{
-      //   // text: '设置',
-      //   // color: '#fff',
-      //   // fontSize: 16,
-      //   iconPath: 'widget://image/avatar.png',
-      // }],
-      // rightButtons: [{
-      //   text: '设置',
-      //   color: '#fff',
-      //   fontSize: 16,
-      //   // iconPath: 'widget://image/settings@2x.png'
-      // }]
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
 
-    },
-    tabBar: {
-      animated: false,
-      scrollEnabled: true,
-      selectedColor: '#1dc4a2',
-      color: '#bfbfbf',
-      index: index || 0,
-      // preload: 4,
-      list: [{
-        text: "首页",
-        iconPath: "widget://image/tablayout/shouye.png",
-        selectedIconPath: "widget://image/tablayout/shouye_active.png"
-      }, {
-        text: "订单",
-        iconPath: "widget://image/tablayout/dingdan.png",
-        selectedIconPath: "widget://image/tablayout/dingdan_active.png"
-      }, {
-        text: "还款",
-        iconPath: "widget://image/tablayout/huankuan.png",
-        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
-      }, {
-        text: "我的",
-        iconPath: "widget://image/tablayout/wode.png",
-        selectedIconPath: "widget://image/tablayout/wode_active.png"
-      }],
-      frames: [{
-        title: "首页",
-        //tab切换时对应的标题
-        name: "tablayout/index",
-        url: "widget://html/index/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-      }, {
-        title: "订单",
-        name: "tablayout/order",
-        url: "widget://html/order/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "还款",
-        name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "我的",
-        name: "tablayout/my",
-        url: "widget://html/my/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }]
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
-  });
-} // 注册
 
+    return target;
+  };
 
-function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
+  return _extends.apply(this, arguments);
+}
 
+module.exports = _extends;
+});
 
-function openTodoAuthGeren() {
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500
+};
+
+/**
+ * 打开授信资料录入页面
+ */
+
+function openPageCreditInformation() {
   api.openTabLayout({
-    name: 'html/todoauthgeren/win',
-    title: '待完成',
-    url: 'widget://html/todoauthgeren/win.html',
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -136,37 +56,187 @@ function openTodoAuthGeren() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 打开担保业务申请表页面
+ */
+
+function openGuaranteeApplicationIndex() {
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    useWKWebView: true,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: navigationBarProfile
   });
 }
 
-function openTodoAuthQiye() {
-  api.openTabLayout({
-    name: 'html/todoauthqiye/win',
-    title: '待完成',
-    url: 'widget://html/todoauthqiye/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
+var rmap = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = function Router() {
+  classCallCheck(this, Router);
+
+  _extends_1(this, rmap);
+};
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
+var openPicker = function openPicker(params, options) {
+  var UIActionSelector = api.require('UIActionSelector');
+
+  UIActionSelector.open({
+    datas: params.data,
+    layout: {
+      row: options.row,
+      col: options.col,
+      height: 40,
+      size: 18,
+      sizeActive: 18,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#fff',
+      color: '#333',
+      colorActive: '#f00',
+      colorSelected: '#000'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#1dc4a2',
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#fff'
+    },
+    ok: {
+      text: '确定',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: 'rgba(102,187,106,1)',
+      bgActive: '#ccc',
       color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
+      colorActive: '#fff'
+    },
+    title: {
+      text: '请选择',
+      size: 15,
+      h: 50,
+      bg: '#eee',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      params.success && params.success(ret.selectedInfo);
     }
   });
-} // 企业信息确认
+  return UIActionSelector;
+};
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 4,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
+
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    classCallCheck(this, UI);
+  }
+
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }]);
+
+  return UI;
+}();
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+};
+
+var Utils$1 = new Utils();
 
 // $api.getStorage()
 // $api.rmStorage()
@@ -184,24 +254,22 @@ apiready = function apiready() {
   // 5：待补充基本信息
   // 6：人工审核不通过
 
-  if (userinfo) {
-    var authStatus = $api.getStorage('authStatus') || {};
-
-    if (authStatus.status === 1) {
-      openTabLayout();
-    } else {
-      var userType = userinfo.userType;
-
-      if (userType === '1') {
-        openTodoAuthGeren();
-      } else {
-        openTodoAuthQiye();
-      }
-    }
-  } else {
-    openRegLogin();
-  } // 云修复完成
-
+  Utils$1.Router.openGuaranteeApplicationIndex(); // if (userinfo) {
+  //   const authStatus = $api.getStorage('authStatus') || {}
+  //   if (authStatus.status === 1) {
+  //     openTabLayout()
+  //   } else {
+  //     const userType = userinfo.userType
+  //     if (userType === '1') {
+  //       openTodoAuthGeren()
+  //     } else {
+  //       openTodoAuthQiye()
+  //     }
+  //   }
+  // } else {
+  //   openRegLogin()
+  // }
+  // 云修复完成
 
   api.addEventListener({
     name: 'smartupdatefinish'
