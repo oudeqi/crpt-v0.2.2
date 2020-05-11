@@ -30,6 +30,7 @@ export function openGuaranteeApplicationIndex() {
         reload: true,
         bounces: true,
         slidBackEnabled: false,
+        useWKWebView: true,
         animation: {
             type: 'none'
         },

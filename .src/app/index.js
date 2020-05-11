@@ -29,7 +29,7 @@ import {
   openProductDetails,
   openProductRecommend
 } from '../webview.js'
-
+import Utils from '../utils'
 // $api.setStorage()
 // $api.getStorage()
 // $api.rmStorage()
@@ -47,21 +47,23 @@ apiready = function () {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  if (userinfo) {
-    const authStatus = $api.getStorage('authStatus') || {}
-    if (authStatus.status === 1) {
-      openTabLayout()
-    } else {
-      const userType = userinfo.userType
-      if (userType === '1') {
-        openTodoAuthGeren()
-      } else {
-        openTodoAuthQiye()
-      }
-    }
-  } else {
-    openRegLogin()
-  }
+
+  Utils.Router.openGuaranteeApplicationIndex()
+  // if (userinfo) {
+  //   const authStatus = $api.getStorage('authStatus') || {}
+  //   if (authStatus.status === 1) {
+  //     openTabLayout()
+  //   } else {
+  //     const userType = userinfo.userType
+  //     if (userType === '1') {
+  //       openTodoAuthGeren()
+  //     } else {
+  //       openTodoAuthQiye()
+  //     }
+  //   }
+  // } else {
+  //   openRegLogin()
+  // }
 
   // 云修复完成
   api.addEventListener({
