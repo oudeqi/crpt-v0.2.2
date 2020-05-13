@@ -1,0 +1,89 @@
+@import '../../../widget/css/form.less';
+
+html, body {
+  background-color: #efefef;
+}
+#credit-list {
+  padding: 0 12px 0 27px;
+}
+.cl-cell{
+  margin: 14px 0;
+  border-radius: 5px;
+  background: #fff;
+  padding: 17px 12px 17px 35px;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  .cl-cell_text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .cl-cell_index {
+      width:30px;
+      height:30px;
+      line-height: 30px;
+      background:rgba(255,255,255,1);
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      border-radius: 50%;
+      position: absolute;
+      flex: none;
+      left: -15px;
+      top: 30px;
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(144,147,153,1);
+    }
+    &.next {
+      .cl-cell_index {
+        color: rgba(102,187,106,1);
+        border:1px solid rgba(102,187,106,1);
+      }
+    }
+    &.done {
+      .cl-cell_index {
+        background:rgba(102,187,106,1);
+        border: none;
+        color: #fff;
+      }
+      .clt_main {
+        color: rgba(102,187,106,1);
+        .yes {
+          display: block;
+        }
+      }
+    }
+    span {
+      color: #999;
+      font-size: 15px;
+      display: block;
+      &.clt_main {
+        margin-bottom: 9px;
+        font-size: 18px;
+        color: rgba(48, 49, 51, 1);
+        font-family:PingFang-SC-Medium,PingFang-SC;
+        font-weight:500;
+        display: flex;
+        align-items: center;
+        .yes {
+          width: 20px;
+          height: 16px;
+          background: url(../../image/guarantee/complete-s.png) no-repeat;
+          background-size: 100% 100%;
+          display: none;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .cl-cell_arrow {
+    color: #999;
+    transform: scaleY(1.6);
+  }
+}
