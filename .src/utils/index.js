@@ -1,5 +1,7 @@
 import Router from './router'
 import UI from './ui'
+import File from './file'
+
 /**
  * Utils class
  * @authro liyang
@@ -9,6 +11,7 @@ class Utils {
     constructor () {
         this.Router = new Router()
         this.UI = new UI()
+        this.File = new File()
     }
 }
 export default new Utils()

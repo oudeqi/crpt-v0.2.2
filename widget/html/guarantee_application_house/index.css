@@ -397,15 +397,14 @@ html,
 body {
   background-color: #efefef;
 }
-#credit-list {
-  padding: 0 12px 0 27px;
-}
 .cl-cell {
-  margin: 14px 0;
+  margin: 12px 0;
   border-radius: 5px;
   background: #fff;
-  padding: 17px 12px 17px 35px;
-  margin-top: 12px;
+  padding: 21px 12px;
+  position: relative;
+}
+.cl-cell .cl-cell_box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -415,9 +414,9 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  position: relative;
 }
-.cl-cell .cl-cell_text {
+.cl-cell .cl-cell_box .cl-cell_text {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -429,7 +428,25 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.cl-cell .cl-cell_text .cl-cell_index {
+.cl-cell .cl-cell_box .cl-cell_text.single {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.cl-cell .cl-cell_box .cl-cell_text .del {
+  color: #66bb6a;
+  font-size: 14px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
+.cl-cell .cl-cell_box .cl-cell_text .cl-cell_index {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -457,49 +474,78 @@ body {
   font-weight: bold;
   color: #909399;
 }
-.cl-cell .cl-cell_text.next .cl-cell_index {
+.cl-cell .cl-cell_box .cl-cell_text.next .cl-cell_index {
   color: #66bb6a;
   border: 1px solid #66bb6a;
 }
-.cl-cell .cl-cell_text.done .cl-cell_index {
+.cl-cell .cl-cell_box .cl-cell_text.done .cl-cell_index {
   background: #66bb6a;
   border: none;
   color: #fff;
 }
-.cl-cell .cl-cell_text.done .clt_main {
+.cl-cell .cl-cell_box .cl-cell_text.done .clt_main {
   color: #66bb6a;
 }
-.cl-cell .cl-cell_text.done .clt_main .yes {
-  display: block;
-}
-.cl-cell .cl-cell_text span {
+.cl-cell .cl-cell_box .cl-cell_text span {
   color: #999;
-  font-size: 15px;
+  font-size: 14px;
   display: block;
+  height: 22px;
 }
-.cl-cell .cl-cell_text span.clt_main {
+.cl-cell .cl-cell_box .cl-cell_text span.clt_main {
   margin-bottom: 9px;
-  font-size: 18px;
+  font-size: 16px;
   color: #303133;
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
-.cl-cell .cl-cell_text span.clt_main .yes {
-  width: 20px;
+.cl-cell .cl-cell_box .cl-cell_arrow {
+  width: 16px;
   height: 16px;
-  background: url(../../image/guarantee/complete-s.png) no-repeat;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  background: url(../../image/guarantee/form-arrow.png) no-repeat;
   background-size: 100% 100%;
-  display: none;
-  margin-left: 5px;
 }
-.cl-cell .cl-cell_arrow {
-  color: #999;
-  -webkit-transform: scaleY(1.6);
-          transform: scaleY(1.6);
+.cl-cell .cl-cell_box .cl-cell_arrow.collapse {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+.cl-cell .cl-cell_box .cl-cell_arrow.rotate {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+.icon_house_scan {
+  width: 17px;
+  height: 17px;
+  background: url(../../image/guarantee/scan.png) no-repeat center;
+  background-size: 100% 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  margin-right: 10px;
+  margin-left: 20px;
+  padding-left: 20px;
+  color: transparent !important;
+}
+.cl_h_bd {
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #C0C4CC;
+}
+.cl_add_btn {
+  height: 50px;
+  background: #ffffff;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #66bb6a;
+  margin-top: 12px;
 }

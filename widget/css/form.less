@@ -1,3 +1,19 @@
+.gt-page {
+    min-height: 100vh;
+    padding-bottom: 30px;
+    position: relative;
+}
+.form-body {
+    //height: auto;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    overflow: auto;
+    &.folder {
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
+}
 .form-cell_shell{
     display: flex;
     justify-content: space-around;
@@ -27,9 +43,7 @@
         .fc_c_common {
             display: flex;
             align-items: center;
-            &.hidden {
-                display: none;
-            }
+
             &.bd {
                 border-bottom: 1px solid #F5F5F5;
             }
@@ -109,4 +123,20 @@
     }
 }
 
+.hidden {
+    display: none;
+}
 
+.cl_c_submit_btn {
+    max-width: 94%;
+    height:50px;
+    line-height: 50px;
+    margin: 50px auto;
+    text-align: center;
+    background:rgba(102,187,106,1);
+    border-radius:25px;
+    font-size:16px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+}

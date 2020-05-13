@@ -205,6 +205,22 @@
       padding-right: 0;
     }
 
+.gt-page {
+  min-height: 100vh;
+  padding-bottom: 30px;
+  position: relative;
+}
+.form-body {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  overflow: auto;
+}
+.form-body.folder {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
 .form-cell_shell {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -258,9 +274,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-.form-cell_shell .fc_content .fc_c_common.hidden {
-  display: none;
 }
 .form-cell_shell .fc_content .fc_c_common.bd {
   border-bottom: 1px solid #F5F5F5;
@@ -364,6 +377,22 @@
 .form-cell_shell .fc_content .fc_c_common .fc_c_img {
   width: 50%;
 }
+.hidden {
+  display: none;
+}
+.cl_c_submit_btn {
+  max-width: 94%;
+  height: 50px;
+  line-height: 50px;
+  margin: 50px auto;
+  text-align: center;
+  background: #66bb6a;
+  border-radius: 25px;
+  font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #ffffff;
+}
 html,
 body {
   background-color: #efefef;
@@ -438,6 +467,9 @@ body {
 .cl-cell .cl-cell_box .cl-cell_text.done .clt_main {
   color: #66bb6a;
 }
+.cl-cell .cl-cell_box .cl-cell_text.done .clt_main .yes {
+  display: block;
+}
 .cl-cell .cl-cell_box .cl-cell_text span {
   color: #999;
   font-size: 14px;
@@ -449,9 +481,39 @@ body {
   color: #303133;
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.cl-cell .cl-cell_box .cl-cell_text span.clt_main .yes {
+  width: 16px;
+  height: 14px;
+  background: url(../../image/guarantee/complete-s.png) no-repeat;
+  background-size: 100% 100%;
+  display: none;
+  margin-left: 5px;
 }
 .cl-cell .cl-cell_box .cl-cell_arrow {
-  color: #999;
-  -webkit-transform: scaleY(1.6);
-          transform: scaleY(1.6);
+  width: 16px;
+  height: 16px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  background: url(../../image/guarantee/form-arrow.png) no-repeat;
+  background-size: 100% 100%;
+}
+.cl-cell .cl-cell_box .cl-cell_arrow.collapse {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+.cl-cell .cl-cell_box .cl-cell_arrow.rotate {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }

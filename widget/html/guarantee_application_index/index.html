@@ -10,70 +10,72 @@
 
   <link rel="stylesheet" href="./index.css"></head>
 <body>
-  <div id="credit-list">
+  <div id="credit-list" class="gt-page">
     
     <div class="cl-cell">
-      <div class="cl-cell_box">
-        <div class="cl-cell_text done">
-          <span class="clt_main">土地信息</span>
+      <div class="cl-cell_box" id="landInfoBox">
+        <div class="cl-cell_text" id="landInfoStatus">
+          <span class="clt_main">土地信息 <b class="yes"></b> </span>
           <span>
             土地性质、环评信息、养殖场性质等
           </span>
         </div>
-        <a class="cl-cell_arrow"> > </a>
+        <a class="cl-cell_arrow collapse"></a>
       </div>
 
-      <div class="form-cell_shell" data-props="landInfo">
-        <div class="fc_label">
-          <span class="fc_span">土地性质</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div id="landType" class="fc_c_picker"><span class="placeholder">请选择</span></div>
+      <div class="form-body folder" data-props="landInfo" id="landInfo">
+        <div class="form-cell_shell" >
+          <div class="fc_label">
+            <span class="fc_span">土地性质</span>
           </div>
-        </div>
-      </div>
-
-      <div class="form-cell_shell">
-        <div class="fc_label">
-          <span class="fc_span">环评材料</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div class="fc_c_select" id="envReport">
-              <span class="fc_c_option active">无环评</span>
-              <span class="fc_c_option">环评备案</span>
-              <span class="fc_c_option">环评报告</span>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div id="landType" class="fc_c_picker"><span class="placeholder">请选择</span></div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-cell_shell top">
-        <div class="fc_label">
-          <span class="fc_span">环评材料</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div class="fc_c_city" id="envReportFile">
-              <span class="fc_c_city_label">上传附件</span>
+        <div class="form-cell_shell">
+          <div class="fc_label">
+            <span class="fc_span">环评材料</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div class="fc_c_select" id="envReport">
+                <span class="fc_c_option active" data-id="1">无环评</span>
+                <span class="fc_c_option" data-id="2">环评备案</span>
+                <span class="fc_c_option" data-id="3">环评报告</span>
+              </div>
             </div>
           </div>
-          <div id="envReportFile-img-box" class="fc_c_common hidden">
-            <img class="fc_c_img" src="" alt="" id="envReportFile-img">
+        </div>
+
+        <div class="form-cell_shell top hidden" id="envEnclosure">
+          <div class="fc_label">
+            <span class="fc_span">环评附件</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div class="fc_c_city" id="envReportFile">
+                <span class="fc_c_city_label">上传附件</span>
+              </div>
+            </div>
+            <div id="envReportFile-img-box" class="fc_c_common hidden">
+              <img class="fc_c_img" src="" alt="" id="envReportFile-img">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-cell_shell" data-props="farmInfo">
-        <div class="fc_label">
-          <span class="fc_span">养殖场性质</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div class="fc_c_select" id="livestockType">
-              <span class="fc_c_option active">自有</span>
-              <span class="fc_c_option">租赁</span>
+        <div class="form-cell_shell" data-props="farmInfo">
+          <div class="fc_label">
+            <span class="fc_span">养殖场性质</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div class="fc_c_select" id="livestockType">
+                <span class="fc_c_option active" data-id="1">自有</span>
+                <span class="fc_c_option" data-id="2">租赁</span>
+              </div>
             </div>
           </div>
         </div>
@@ -82,133 +84,136 @@
 
     
     <div class="cl-cell">
-      <div class="cl-cell_box">
-        <div class="cl-cell_text done">
-          <span class="clt_main">养殖信息</span>
+      <div class="cl-cell_box"  id="farmInfoBox">
+        <div class="cl-cell_text"  id="farmInfoStatus">
+          <span class="clt_main">养殖信息 <b class="yes"></b> </span>
           <span>
             养殖、棚舍等信息
           </span>
         </div>
-        <a class="cl-cell_arrow"> > </a>
+        <a class="cl-cell_arrow collapse"></a>
       </div>
 
-      <div class="form-cell_shell" data-props="farmType">
-        <div class="fc_label">
-          <span class="fc_span">养殖品种</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div id="farmType" class="fc_c_picker"><span class="placeholder">请选择</span></div>
+      <div class="form-body folder" data-props="farmInfo" id="farmInfo">
+        <div class="form-cell_shell" data-props="farmType">
+          <div class="fc_label">
+            <span class="fc_span">养殖品种</span>
           </div>
-        </div>
-      </div>
-
-      <div class="form-cell_shell" data-props="scale">
-        <div class="fc_label">
-          <span class="fc_span">养殖规模</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                   id="scale" placeholder="请输入数量" >
-            <div class="fc_unit">万只</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-cell_shell" data-props="sheds">
-        <div class="fc_label">
-          <span class="fc_span">棚舍数量</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                   id="sheds" placeholder="请输入数量" >
-            <div class="fc_unit">栋</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-cell_shell" data-props="shedArea">
-        <div class="fc_label">
-          <span class="fc_span">棚舍面积</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                   id="shedArea" placeholder="请输入数量" >
-            <div class="fc_unit">平方米</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-cell_shell top">
-        <div class="fc_label">
-          <span class="fc_span">棚舍地址</span>
-        </div>
-        <div class="fc_content">
-          <div class="fc_c_common bd">
-            <div class="fc_c_city" id="shedAddress">
-              <span class="fc_c_city_label">选择 城市/区域</span>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div id="farmType" class="fc_c_picker"><span class="placeholder">请选择</span></div>
             </div>
           </div>
-          <div class="fc_c_common">
-            <input class="fc_c_input" id="shedAddressDetail" type="text" id="" placeholder="详细地址" >
+        </div>
+
+        <div class="form-cell_shell" data-props="scale">
+          <div class="fc_label">
+            <span class="fc_span">养殖规模</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <input class="fc_c_input" type="number" pattern="[0-9/.]*"
+                     id="scale" placeholder="请输入数量" >
+              <div class="fc_unit" id="scaleUnit">万只</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-cell_shell">
-        <div class="fc_label">
-          <span class="fc_span">棚舍结构</span>
+        <div class="form-cell_shell" data-props="sheds">
+          <div class="fc_label">
+            <span class="fc_span">棚舍数量</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <input class="fc_c_input" type="number" pattern="[0-9/.]*"
+                     id="sheds" placeholder="请输入数量" >
+              <div class="fc_unit">栋</div>
+            </div>
+          </div>
         </div>
-        <div class="fc_content">
-          <div class="fc_c_common">
-            <div class="fc_c_select" id="shedStructure">
-              <span class="fc_c_option active">墙体结构</span>
-              <span class="fc_c_option">立柱式</span>
+
+        <div class="form-cell_shell" data-props="shedArea">
+          <div class="fc_label">
+            <span class="fc_span">棚舍面积</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <input class="fc_c_input" type="number" pattern="[0-9/.]*"
+                     id="shedArea" placeholder="请输入数量" >
+              <div class="fc_unit">平方米</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-cell_shell top">
+          <div class="fc_label">
+            <span class="fc_span">棚舍地址</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common bd">
+              <div class="fc_c_city" id="shedAddress">
+                <span class="fc_c_city_label">选择 城市/区域</span>
+              </div>
+            </div>
+            <div class="fc_c_common">
+              <input class="fc_c_input" id="shedAddressDetail" type="text" placeholder="详细地址" >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-cell_shell">
+          <div class="fc_label">
+            <span class="fc_span">棚舍结构</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div class="fc_c_select" id="shedStructure">
+                <span class="fc_c_option active" data-id="1">墙体结构</span>
+                <span class="fc_c_option" data-id="2">立柱式</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="cl-cell">
+    <div class="cl-cell" id="houseInfo">
       <div class="cl-cell_box">
-        <div class="cl-cell_text">
-          <span class="clt_main">房产信息</span>
+        <div class="cl-cell_text" id="houseInfoStatus">
+          <span class="clt_main">房产信息 <b class="yes"></b> </span>
           <span>
             房产证号、面积等信息
           </span>
         </div>
-        <a class="cl-cell_arrow"> > </a>
+        <a class="cl-cell_arrow"></a>
       </div>
     </div>
 
-    <div class="cl-cell">
+    <div class="cl-cell" id="carInfo">
       <div class="cl-cell_box">
-        <div class="cl-cell_text">
-          <span class="clt_main">车辆信息</span>
+        <div class="cl-cell_text" id="carInfoStatus">
+          <span class="clt_main">车辆信息 <b class="yes"></b> </span>
           <span>
              车辆品牌、品牌等信息
           </span>
         </div>
-        <a class="cl-cell_arrow"> > </a>
+        <a class="cl-cell_arrow"></a>
       </div>
     </div>
 
-    <div class="cl-cell">
+    <div class="cl-cell" id="familyInfo">
       <div class="cl-cell_box">
-        <div class="cl-cell_text">
-          <span class="clt_main">家庭成员信息</span>
+        <div class="cl-cell_text" id="familyInfoStatus">
+          <span class="clt_main">家庭成员信息 <b class="yes"></b> </span>
           <span>
              职业、收入、工作单位等信息
           </span>
         </div>
-        <a class="cl-cell_arrow"> > </a>
+        <a class="cl-cell_arrow"></a>
       </div>
     </div>
 
+    <div class="cl_c_submit_btn">提交</div>
   </div>
   <script type="text/javascript" src="../../script/api.js"></script>
 

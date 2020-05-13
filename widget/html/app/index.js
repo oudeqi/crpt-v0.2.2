@@ -52,18 +52,15 @@ function openPageCreditInformation() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
     navigationBar: navigationBarProfile
   });
 }
 /**
- * 打开担保业务申请表页面
+ * 1. 打开担保业务申请表页面
  */
 
-function openGuaranteeApplicationIndex() {
+function openGuaranteeApplicationIndex(_ref) {
+  var pageParam = _ref.pageParam;
   api.openTabLayout({
     title: '担保业务申请表',
     name: 'html/guarantee_application_index/index',
@@ -71,11 +68,64 @@ function openGuaranteeApplicationIndex() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
-    slidBackEnabled: false,
-    useWKWebView: true,
-    animation: {
-      type: 'none'
-    },
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 2. 打开反担保人列表页面
+ */
+
+/**
+ * 3. 文件送达地址列表页面
+ */
+
+/**
+ * 4. 其他附件上传页面
+ */
+
+/**
+ * 1.1 打开房产信息录入页面
+ */
+
+function openGuaranteeApplicationHouse() {
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.2 打开车辆信息录入页面
+ */
+
+function openGuaranteeApplicationCar() {
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.3 打开家庭成员信息录入页面
+ */
+
+function openGuaranteeApplicationFamily() {
+  api.openTabLayout({
+    title: '家庭成员信息',
+    name: 'html/guarantee_application_family/index',
+    url: 'widget://html/guarantee_application_family/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
     navigationBar: navigationBarProfile
   });
 }
@@ -83,7 +133,10 @@ function openGuaranteeApplicationIndex() {
 var rmap = /*#__PURE__*/Object.freeze({
   __proto__: null,
   openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily
 });
 
 /**
@@ -224,6 +277,54 @@ var UI = /*#__PURE__*/function () {
 }();
 
 /**
+ * File class
+ * @author liyang
+ * @desc File类
+ */
+var File = /*#__PURE__*/function () {
+  function File() {
+    classCallCheck(this, File);
+  }
+
+  createClass(File, [{
+    key: "actionSheet",
+    value: function actionSheet(title, buttons, cb) {
+      api.actionSheet({
+        title: title,
+        cancelTitle: '取消',
+        buttons: buttons
+      }, function (ret, err) {
+        var index = ret.buttonIndex; // index 从1开始
+
+        if (index !== buttons.length + 1) {
+          cb(index - 1);
+        }
+      });
+    }
+  }, {
+    key: "getPicture",
+    value: function getPicture(sourceType, cb) {
+      // library         //图片库
+      // camera          //相机
+      // album           //相册
+      api.getPicture({
+        sourceType: sourceType,
+        encodingType: 'png',
+        mediaValue: 'pic',
+        destinationType: 'file',
+        allowEdit: false,
+        quality: 100,
+        targetWidth: 1000,
+        // targetHeight: 300,
+        saveToPhotoAlbum: false
+      }, cb);
+    }
+  }]);
+
+  return File;
+}();
+
+/**
  * Utils class
  * @authro liyang
  * @desc 工具类暴露的顶层api类，注入各class
@@ -234,6 +335,7 @@ var Utils = function Utils() {
 
   this.Router = new Router();
   this.UI = new UI();
+  this.File = new File();
 };
 
 var Utils$1 = new Utils();
@@ -254,7 +356,7 @@ apiready = function apiready() {
   // 5：待补充基本信息
   // 6：人工审核不通过
 
-  Utils$1.Router.openGuaranteeApplicationIndex(); // if (userinfo) {
+  Utils$1.Router.openPageCreditInformation(); // if (userinfo) {
   //   const authStatus = $api.getStorage('authStatus') || {}
   //   if (authStatus.status === 1) {
   //     openTabLayout()

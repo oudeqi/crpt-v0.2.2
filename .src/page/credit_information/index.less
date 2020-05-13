@@ -1,3 +1,5 @@
+@import '../../../widget/css/form.less';
+
 html, body {
   background-color: #efefef;
 }
@@ -52,6 +54,9 @@ html, body {
       }
       .clt_main {
         color: rgba(102,187,106,1);
+        .yes {
+          display: block;
+        }
       }
     }
     span {
@@ -64,6 +69,16 @@ html, body {
         color: rgba(48, 49, 51, 1);
         font-family:PingFang-SC-Medium,PingFang-SC;
         font-weight:500;
+        display: flex;
+        align-items: center;
+        .yes {
+          width: 20px;
+          height: 16px;
+          background: url(../../image/guarantee/complete-s.png) no-repeat;
+          background-size: 100% 100%;
+          display: none;
+          margin-left: 5px;
+        }
       }
     }
   }

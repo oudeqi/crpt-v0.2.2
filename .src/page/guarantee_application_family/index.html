@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+</head>
+<body>
+<div id="credit-list" class="gt-page">
+    <!--  房产信息  -->
+    <div class="cl-cell">
+        <div class="cl-cell_box cl_h_bd" id="houseInfoBox">
+            <div class="cl-cell_text single">
+                <span class="clt_main" >家庭成员<b>一</b></span>
+                <a class="del">删除</a>
+            </div>
+        </div>
+
+        <div class="form-body" data-props="houseInfo" id="name">
+            <div class="form-cell_shell" data-props="houseArea">
+                <div class="fc_label">
+                    <span class="fc_span">姓名</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <input class="fc_c_input" type="text" id="name" placeholder="请输入" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-cell_shell" data-props="housePrice">
+                <div class="fc_label">
+                    <span class="fc_span">联系电话</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
+                               id="phone" placeholder="请输入" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-cell_shell" data-props="housePrice">
+                <div class="fc_label">
+                    <span class="fc_span">每年收入</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
+                               id="income" placeholder="请输入" />
+                        <div class="fc_unit">万元</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-cell_shell" data-props="relation">
+                <div class="fc_label">
+                    <span class="fc_span">亲属关系</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <div id="relation" class="fc_c_picker"><span class="placeholder">请选择</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-cell_shell" data-props="occupation">
+                <div class="fc_label">
+                    <span class="fc_span">职业</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <input class="fc_c_input" type="text"
+                               id="occupation" placeholder="请输入" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-cell_shell" data-props="workplace">
+                <div class="fc_label">
+                    <span class="fc_span">工作单位</span>
+                </div>
+                <div class="fc_content">
+                    <div class="fc_c_common">
+                        <input class="fc_c_input" type="text"
+                               id="workplace" placeholder="请输入" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cl_add_btn">
+        <span>+ </span>添加家庭成员
+    </div>
+    <div class="cl_c_submit_btn">保存</div>
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+</body>
+</html>
