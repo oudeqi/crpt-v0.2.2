@@ -34,7 +34,6 @@ import Utils from '../utils'
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
-
 apiready = function () {
   // openBaseinfoFill()
   // openCompanyInfo()
@@ -47,8 +46,7 @@ apiready = function () {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-
-  Utils.Router.openGuaranteeApplicationIndex()
+  Utils.Router.openPageCreditInformation()
   // if (userinfo) {
   //   const authStatus = $api.getStorage('authStatus') || {}
   //   if (authStatus.status === 1) {

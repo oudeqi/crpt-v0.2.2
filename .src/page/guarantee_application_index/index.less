@@ -1,4 +1,4 @@
-@import './form.less';
+@import '../../../widget/css/form.less';
 
 html, body {
   background-color: #efefef;
@@ -55,7 +55,11 @@ html, body {
               }
               .clt_main {
                   color: rgba(102,187,106,1);
+                  .yes {
+                      display: block;
+                  }
               }
+
           }
           span {
               color: #999;
@@ -67,12 +71,35 @@ html, body {
                   color: rgba(48, 49, 51, 1);
                   font-family:PingFang-SC-Medium,PingFang-SC;
                   font-weight:500;
+                  display: flex;
+                  align-items: center;
+                  .yes {
+                      width: 16px;
+                      height: 14px;
+                      background: url(../../image/guarantee/complete-s.png) no-repeat;
+                      background-size: 100% 100%;
+                      display: none;
+                      margin-left: 5px;
+                  }
               }
           }
       }
       .cl-cell_arrow {
-          color: #999;
-          transform: scaleY(1.6);
+          width: 16px;
+          height: 16px;
+          //color: #999;
+          //transform: scaleY(1.6);
+          transition: all 0.2s ease-in-out;
+          transform-origin: center center;
+          flex: none;
+          background: url(../../image/guarantee/form-arrow.png) no-repeat;
+          background-size: 100% 100%;
+          &.collapse {
+              transform: rotate(90deg);
+          }
+          &.rotate {
+              transform: rotate(-90deg);
+          }
       }
   }
 }
