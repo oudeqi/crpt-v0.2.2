@@ -1,3 +1,116 @@
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var setPrototypeOf = createCommonjsModule(function (module) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+});
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+var inherits = _inherits;
+
+var _typeof_1 = createCommonjsModule(function (module) {
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+});
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var assertThisInitialized = _assertThisInitialized;
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+var possibleConstructorReturn = _possibleConstructorReturn;
+
+var getPrototypeOf = createCommonjsModule(function (module) {
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+});
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
 // api.lockSlidPane();
 /*
 list: [{
@@ -168,12 +281,6 @@ function _defineProperty(obj, key, value) {
 }
 
 var defineProperty = _defineProperty;
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -1585,90 +1692,162 @@ return numeral;
 }));
 });
 
+function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var Service = /*#__PURE__*/function () {
+  function Service() {
+    classCallCheck(this, Service);
+  }
+
+  createClass(Service, [{
+    key: "getData",
+    value: function getData() {
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          custType = _ref.custType;
+
+      return http.get('/crpt-product/product/online/list', {
+        values: {
+          custType: custType
+        }
+      });
+    }
+  }]);
+
+  return Service;
+}();
+
+var PageController = /*#__PURE__*/function (_Service) {
+  inherits(PageController, _Service);
+
+  var _super = _createSuper(PageController);
+
+  function PageController() {
+    var _this;
+
+    classCallCheck(this, PageController);
+
+    _this = _super.apply(this, arguments);
+    _this.state = {
+      pageNo: 1,
+      loading: false,
+      userinfo: $api.getStorage('userinfo'),
+      custType: ($api.getStorage('userinfo') || {}).custType
+    };
+    _this.el = {
+      list: $api.byId('list'),
+      goIndex: document.querySelector('#goIndex')
+    };
+    return _this;
+  } // 事件绑定
+
+
+  createClass(PageController, [{
+    key: "bindEvend",
+    value: function bindEvend() {
+      var _this2 = this;
+
+      // 去下一页
+      this.el.goIndex.onclick = function (event) {
+        openTabLayout();
+      }; // 下拉刷新
+
+
+      setRefreshHeaderInfo(function (ret, err) {
+        _this2.state.pageNo = 1;
+
+        _this2._getPageData(function (data) {
+          _this2.el.list.innerHTML = '';
+
+          _this2._renderList(data);
+
+          $api.byId('btnContainer').style.display = 'block';
+        });
+      }); // 点击列表项目
+
+      this.el.list.onclick = function (event) {
+        var btn = $api.closest(event.target, '.btn');
+        var li = $api.closest(event.target, 'li');
+
+        if (btn) {
+          api.alert({
+            title: '提示',
+            msg: '功能开发中...'
+          });
+        } else if (li) {
+          var id = li.dataset.id;
+
+          if (id) {
+            openProductDetails({
+              id: id,
+              open: 0 // 1 已开通， 0未开通
+
+            });
+          } else {
+            api.toast({
+              msg: 'id 不存在'
+            });
+          }
+        }
+      };
+    } // 生成列表
+
+  }, {
+    key: "_renderList",
+    value: function _renderList(arr) {
+      var _this3 = this;
+
+      arr.forEach(function (item) {
+        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+      });
+      api.parseTapmode();
+    } // 获取页面数据
+
+  }, {
+    key: "_getPageData",
+    value: function _getPageData(cb) {
+      var _this4 = this;
+
+      if (this.state.loading) {
+        return;
+      }
+
+      this.state.loading = true;
+      var custType = this.state.custType;
+      this.getData({
+        custType: custType
+      }).then(function (res) {
+        _this4.state.loading = false;
+        api.refreshHeaderLoadDone();
+
+        if (res && res.data.length > 0) {
+          _this4.state.pageNo++;
+          cb && cb(res.data);
+        } else if (_this4.state.pageNo === 1) {
+          api.toast({
+            msg: '无数据'
+          });
+        } else {
+          api.toast({
+            msg: '无更多数据'
+          });
+        }
+      })["catch"](function (error) {
+        _this4.state.loading = false;
+        api.refreshHeaderLoadDone();
+        api.toast({
+          msg: '数据加载失败'
+        });
+      });
+    }
+  }]);
+
+  return PageController;
+}(Service);
+
 apiready = function apiready() {
-  var pageSize = 20;
-  var pageNo = 1;
-  var loading = false;
-
-  function getPageData(cb) {
-    if (loading) {
-      return;
-    }
-
-    loading = true;
-    http.get("/crpt-product/product/online/list?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
-      loading = false;
-      api.refreshHeaderLoadDone();
-
-      if (res && res.data.length > 0) {
-        pageNo++;
-        cb(res.data);
-      } else if (pageNo === 1) {
-        api.toast({
-          msg: '无数据'
-        });
-      } else {
-        api.toast({
-          msg: '无更多数据'
-        });
-      }
-    })["catch"](function (error) {
-      loading = false;
-      api.refreshHeaderLoadDone();
-      api.toast({
-        msg: '数据加载失败'
-      });
-    });
-  }
-
-  function appendList(data) {
-    data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
-    });
-    api.parseTapmode();
-  }
-
-  function refresh() {
-    pageNo = 1;
-    getPageData(function (data) {
-      $api.byId('list').innerHTML = '';
-      appendList(data);
-      $api.byId('btnContainer').style.display = 'block';
-    });
-  }
-
-  setRefreshHeaderInfo(function (ret, err) {
-    refresh();
-  });
+  var controller = new PageController();
+  controller.bindEvend();
   api.refreshHeaderLoading();
-
-  document.querySelector('#list').onclick = function (event) {
-    var btn = $api.closest(event.target, '.btn');
-    var li = $api.closest(event.target, 'li');
-
-    if (btn) {
-      api.alert({
-        title: '提示',
-        msg: '功能开发中...'
-      });
-    } else if (li) {
-      var id = li.dataset.id;
-
-      if (id) {
-        openProductDetails({
-          id: id,
-          open: 0 // 1 已开通， 0未开通
-
-        });
-      } else {
-        api.toast({
-          msg: 'id 不存在'
-        });
-      }
-    }
-  };
-
-  document.querySelector('#goIndex').onclick = function (event) {
-    openTabLayout();
-  };
 };

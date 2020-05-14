@@ -249,9 +249,9 @@ function openFindPwd () {
 // 填写个人信息
 function openBaseinfoFill () {
   api.openTabLayout({
-    name: 'html/baseinfofill/frm',
+    name: 'html/baseinfofill/win',
     title: '补充基本信息',
-    url: 'widget://html/baseinfofill/frm.html',
+    url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     softInputMode: 'auto',
     softInputBarEnabled: false,

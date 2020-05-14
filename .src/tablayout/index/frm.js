@@ -1,9 +1,102 @@
 import '../../app.css'
 import './frm.css'
-
 import { openLeftPane, openSettings } from '../../webview.js'
+import { http } from './../../config'
+import numeral from 'numeral'
+
+
+class Service {
+  getlist ({custType, status} = {}) {
+    return http.get('/crpt-product/product/query/home/show', {
+      values: {custType, status}
+    })
+  }
+}
+
+
+class PageController extends Service {
+  constructor () {
+    super(...arguments)
+    this.state = {
+      userinfo: $api.getStorage('userinfo'),
+      custType: ($api.getStorage('userinfo') || {}).custType
+    }
+    this.el = {
+      navDanbao: $api.byId('danbao'),
+      navOther: $api.byId('other'),
+      high: $api.byId('high'),
+      low: $api.byId('low'),
+    }
+  }
+
+  // 根据custType显示不同的nav
+  renderNav () {
+    if (this.state.custType === '1') { // 0：通用   1：普惠担保  2：其他
+      this.el.navDanbao.style.display = 'block'
+    } else {
+      this.el.navOther.style.display = 'block'
+    }
+  }
+  // 高额精选
+  _renderHigh (arr) {
+    arr.forEach((item, index) => {
+      const tpl = `
+        <div class="high_item clickBtn">
+          <div class="row1">最高额度(元)</div>
+          <div class="row2">${numeral(item.totalLimit).format('0,0')}</div>
+          <div class="row3">${item.des}</div>
+          <div class="row3">
+            ${item.introduce}
+          </div>
+        </div>
+      `
+      if (index <= 1) {
+        $api.append(this.el.high, tpl)
+      }
+    })
+  }
+  // 利息最低
+  _renderLow (arr) {
+    arr.forEach((item) => {
+      const tpl = `
+        <div class="row clickBtn">
+          <div class="l">
+            <strong>${item.interestRate}%</strong>
+            <span>贷款利率</span>
+          </div>
+          <div class="r">
+            <strong>${item.des}</strong>
+            <span>${item.introduce}</span>
+          </div>
+        </div>
+      `
+      $api.append(this.el.low, tpl)
+    })
+  }
+  // 获取数据
+  renderProduct () {
+    const custType = this.state.custType
+    Promise.all([
+      this.getlist({custType, status: 1}),
+      this.getlist({custType, status: 2}),
+    ]).then(res => {
+      this._renderHigh(res[0].data.list || [])
+      this._renderLow(res[1].data.list || [])
+
+    }).catch(error => {
+      api.toast({
+        msg: error.msg || '获取产品数据失败',
+        location: 'middle'
+      })
+    })
+  }
+}
 
 apiready = function () {
+
+  const controller = new PageController()
+  controller.renderNav()
+  controller.renderProduct()
 
   // api.setTabLayoutAttr({
   //   hideNavigationBar: true

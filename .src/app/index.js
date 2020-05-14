@@ -39,6 +39,12 @@ apiready = function () {
   // openCompanyInfo()
   // // $api.clearStorage()
   const userinfo = $api.getStorage('userinfo')
+
+  if (userinfo) {
+    openBaseinfoFill()
+  } else {
+    alert('meiyou denglu')
+  }
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -46,7 +52,8 @@ apiready = function () {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  Utils.Router.openPageCreditInformation()
+  // Utils.Router.openPageCreditInformation()
+
   // if (userinfo) {
   //   const authStatus = $api.getStorage('authStatus') || {}
   //   if (authStatus.status === 1) {

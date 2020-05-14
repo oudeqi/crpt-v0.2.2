@@ -397,11 +397,15 @@ html, body {
           font-size: 18px;
           color: #444;
           font-weight: normal;
+          display: block;
+          width: 100%;
         }
 
 .low .body .row .r span {
           font-size: 15px;
           color: #888;
+          display: block;
+          width: 100%;
         }
 
 .clickBtn {

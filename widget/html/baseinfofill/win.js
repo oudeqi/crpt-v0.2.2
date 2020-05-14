@@ -1,19 +1,115 @@
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  return obj;
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var defineProperty = _defineProperty;
+var setPrototypeOf = createCommonjsModule(function (module) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+});
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+var inherits = _inherits;
+
+var _typeof_1 = createCommonjsModule(function (module) {
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+});
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var assertThisInitialized = _assertThisInitialized;
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+var possibleConstructorReturn = _possibleConstructorReturn;
+
+var getPrototypeOf = createCommonjsModule(function (module) {
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+});
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
 
 // api.lockSlidPane();
 
@@ -80,11 +176,22 @@ function openCityList(_ref5) {
   });
 } // 产品推荐
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  return obj;
 }
+
+var defineProperty = _defineProperty;
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -590,246 +697,407 @@ function initUIInput(dom) {
   });
 } // let userinfo = {
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-apiready = function apiready() {
-  var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
+var Service = /*#__PURE__*/function () {
+  function Service() {
+    classCallCheck(this, Service);
+  }
 
-  var postData = {
-    marriage: '',
-    isChildren: '',
-    education: '',
-    permanentAddress: '',
-    address: '',
-    addressDetails: '',
-    relationship: '',
-    relationName: '',
-    relationPhone: '',
-    otherName: '',
-    otherPhone: ''
-  };
-  var userinfo = $api.getStorage('userinfo');
-  var userType = userinfo.userType || {};
-  $api.byId('userType1').innerHTML = userType === '1' ? '个人' : '法定代表人';
-  $api.byId('userType2').innerHTML = userType === '1' ? '个人' : '法定代表人'; // 婚姻状况 1：已婚   2：未婚 3：离异
+  createClass(Service, [{
+    key: "submit",
+    value: function submit(url, data) {
+      return http.post(url, {
+        body: data
+      });
+    }
+  }]);
 
-  document.querySelector('#marriage').onclick = function () {
-    var btns = ['已婚', '未婚', '离异 '];
-    ActionSheet('请选择婚姻状况', btns, function (index) {
-      $api.dom($api.byId('marriage'), 'input').value = btns[index];
-      postData.marriage = String(index + 1);
-    });
-  }; // 子女状况  0：无子女 1：有子女
+  return Service;
+}();
 
+var PageController = /*#__PURE__*/function (_Service) {
+  inherits(PageController, _Service);
 
-  document.querySelector('#isChildren').onclick = function () {
-    var btns = ['无子女', '有子女'];
-    ActionSheet('请选择子女状况', btns, function (index) {
-      $api.dom($api.byId('isChildren'), 'input').value = btns[index];
-      postData.isChildren = String(index);
-    });
-  }; // 教育情况 ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学']
+  var _super = _createSuper(PageController);
 
+  function PageController() {
+    var _this;
 
-  document.querySelector('#education').onclick = function () {
-    var btns = ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学'];
-    ActionSheet('请选择教育情况', btns, function (index) {
-      $api.dom($api.byId('education'), 'input').value = btns[index];
-      postData.education = btns[index];
-    });
-  }; // 户籍地址
+    classCallCheck(this, PageController);
 
-
-  function cityListCallback(selected) {
-    console.log(JSON.stringify(selected));
-    $api.dom($api.byId('permanentAddress'), 'input').value = selected.city;
-    postData.permanentAddress = selected.city;
-  } // api.removeEventListener({
-  //   name: 'online'
-  // })
-
-
-  api.addEventListener({
-    name: 'cityListSelected'
-  }, function (ret, err) {
-    cityListCallback(ret.value);
-  });
-
-  document.querySelector('#permanentAddress').onclick = function () {
-    openCityList({
-      eventName: 'cityListSelected'
-    });
-  }; // 现居住信息
-
-
-  document.querySelector('#address').onclick = function () {
-    CitySelector(function (selected) {
-      var a = selected[0];
-      var b = selected[1];
-      var c = selected[2];
-      $api.dom($api.byId('address'), 'input').value = a.name + b.name + c.name;
-      postData.address = a.name + b.name + c.name;
-    });
-  }; // 详细地址
+    _this = _super.apply(this, arguments);
+    _this.state = {
+      userinfo: $api.getStorage('userinfo'),
+      custType: ($api.getStorage('userinfo') || {}).custType,
+      userType: ($api.getStorage('userinfo') || {}).userType,
+      url: '',
+      submitStatus: 'notsubmit',
+      // notsubmit:未提交,submitting:正在提交
+      postData: {
+        marriage: '',
+        isChildren: '',
+        education: '',
+        permanentAddress: '',
+        workCompany: '',
+        // 工作单位
+        animalHusbandryYear: '',
+        // 从事畜牧<br />行业年限
+        addrProvince: '',
+        // String 是 法人居住地址（省）
+        addrProvinceCode: '',
+        // String 是 法人居住地址编号（省）
+        addrCity: '',
+        // String 是 法人居住地址（市）
+        addrCityCode: '',
+        // String 是 法人居住地址编号（市）
+        addrCounty: '',
+        // String 是 法人居住地址（区县）
+        addrCountyCode: '',
+        // String 是 法人居住地址编号（区县）
+        addrDetail: '',
+        // String 是 法人居住地址详细
+        relationship: '',
+        relationName: '',
+        relationPhone: '',
+        otherName: '',
+        otherPhone: ''
+      }
+    };
+    _this.el = {
+      userType1: $api.byId('userType1'),
+      userType2: $api.byId('userType2'),
+      submit: $api.byId('submit')
+    };
+    return _this;
+  } // 初始化计算属性
 
 
-  initUIInput($api.byId('addressDetails'), {
-    placeholder: '请输入',
-    keyboardType: 'next',
-    maxStringLength: 30
-  }, function (value) {
-    postData.addressDetails = value;
-  }); // 亲属关系  标记  1-配偶 2-子女 3-父母
+  createClass(PageController, [{
+    key: "initComputedState",
+    value: function initComputedState() {
+      // 个人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/personinfo/submission
+      // 企业法人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/legalinfo/submission
+      if (this.state.userType === '1') {
+        this.state.url = '/crpt-cust/saas/personinfo/submission';
+      } else {
+        this.state.url = '/crpt-cust/saas/legalinfo/submission';
+      }
+    } // 判断客户类型
 
-  document.querySelector('#relationship').onclick = function () {
-    var btns = ['配偶', '子女', '父母'];
-    ActionSheet('请选择亲属关系', btns, function (index) {
-      $api.dom($api.byId('relationship'), 'input').value = btns[index];
-      postData.relationship = String(index + 1);
-    });
-  }; // 姓名
+  }, {
+    key: "renderUserType",
+    value: function renderUserType() {
+      if (this.state.userType === '1') {
+        this.el.userType1.innerHTML = '个人';
+        this.el.userType2.innerHTML = '个人';
+      } else {
+        this.el.userType1.innerHTML = '法定代表人';
+        this.el.userType2.innerHTML = '法定代表人';
+      }
+    } // 初始化表单
+
+  }, {
+    key: "initForm",
+    value: function initForm() {
+      var _this2 = this;
+
+      // 婚姻状况 1：已婚   2：未婚 3：离异
+      document.querySelector('#marriage').onclick = function () {
+        var btns = ['已婚', '未婚', '离异 '];
+        ActionSheet('请选择婚姻状况', btns, function (index) {
+          $api.dom($api.byId('marriage'), 'input').value = btns[index];
+          _this2.state.postData.marriage = String(index + 1);
+        });
+      }; // 子女状况  0：无子女 1：有子女
 
 
-  initUIInput($api.byId('relationName'), {
-    placeholder: '请输入',
-    keyboardType: 'next',
-    maxStringLength: 10
-  }, function (value) {
-    postData.relationName = value;
-  }); // 手机号
+      document.querySelector('#isChildren').onclick = function () {
+        var btns = ['无子女', '有子女'];
+        ActionSheet('请选择子女状况', btns, function (index) {
+          $api.dom($api.byId('isChildren'), 'input').value = btns[index];
+          _this2.state.postData.isChildren = String(index);
+        });
+      }; // 教育情况 ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学']
 
-  initUIInput($api.byId('relationPhone'), {
-    placeholder: '请输入',
-    keyboardType: 'number',
-    maxStringLength: 11
-  }, function (value) {
-    postData.relationPhone = value;
-  }); // 姓名
 
-  initUIInput($api.byId('otherName'), {
-    placeholder: '请输入',
-    keyboardType: 'next',
-    maxStringLength: 10
-  }, function (value) {
-    postData.otherName = value;
-  }); // 手机号
+      document.querySelector('#education').onclick = function () {
+        var btns = ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学'];
+        ActionSheet('请选择教育情况', btns, function (index) {
+          $api.dom($api.byId('education'), 'input').value = btns[index];
+          _this2.state.postData.education = btns[index];
+        });
+      }; // 户籍地址
 
-  initUIInput($api.byId('otherPhone'), {
-    placeholder: '请输入',
-    keyboardType: 'number',
-    maxStringLength: 11
-  }, function (value) {
-    postData.otherPhone = value;
-  });
 
-  document.querySelector('#submit').onclick = function () {
-    if (submitStatus === 'notsubmit') {
+      api.addEventListener({
+        name: 'cityListSelected'
+      }, function (ret, err) {
+        var selected = ret.value;
+        console.log(JSON.stringify(selected));
+        $api.dom($api.byId('permanentAddress'), 'input').value = selected.city;
+        _this2.state.postData.permanentAddress = selected.city;
+      });
+
+      document.querySelector('#permanentAddress').onclick = function () {
+        openCityList({
+          eventName: 'cityListSelected'
+        });
+      }; // 工作单位 workCompany
+
+
+      initUIInput($api.byId('workCompany'), {
+        placeholder: '请输入',
+        keyboardType: 'next',
+        maxStringLength: 10
+      }, function (value) {
+        _this2.state.postData.workCompany = value;
+      }); // 行业年限 animalHusbandryYear
+
+      initUIInput($api.byId('animalHusbandryYear'), {
+        placeholder: '请输入',
+        keyboardType: 'number',
+        maxStringLength: 2
+      }, function (value) {
+        _this2.state.postData.animalHusbandryYear = value;
+      }); // 现居住信息
+
+      document.querySelector('#address').onclick = function () {
+        CitySelector(function (selected) {
+          console.log(JSON.stringify(selected));
+          var a = selected[0];
+          var b = selected[1];
+          var c = selected[2];
+          $api.dom($api.byId('address'), 'input').value = "".concat(a.name, "/").concat(b.name, "/").concat(c.name);
+          _this2.state.postData.addrProvince = a.name;
+          _this2.state.postData.addrProvinceCode = a.id;
+          _this2.state.postData.addrCity = b.name;
+          _this2.state.postData.addrCityCode = b.id;
+          _this2.state.postData.addrCounty = c.name;
+          _this2.state.postData.addrCountyCode = c.id;
+        });
+      }; // 详细地址
+
+
+      initUIInput($api.byId('addrDetail'), {
+        placeholder: '请输入',
+        keyboardType: 'next',
+        maxStringLength: 30
+      }, function (value) {
+        _this2.state.postData.addrDetail = value;
+      }); // 亲属关系  标记  1-配偶 2-子女 3-父母
+
+      document.querySelector('#relationship').onclick = function () {
+        var btns = ['配偶', '子女', '父母'];
+        ActionSheet('请选择亲属关系', btns, function (index) {
+          $api.dom($api.byId('relationship'), 'input').value = btns[index];
+          _this2.state.postData.relationship = String(index + 1);
+        });
+      }; // 姓名
+
+
+      initUIInput($api.byId('relationName'), {
+        placeholder: '请输入',
+        keyboardType: 'next',
+        maxStringLength: 10
+      }, function (value) {
+        _this2.state.postData.relationName = value;
+      }); // 手机号
+
+      initUIInput($api.byId('relationPhone'), {
+        placeholder: '请输入',
+        keyboardType: 'number',
+        maxStringLength: 11
+      }, function (value) {
+        _this2.state.postData.relationPhone = value;
+      }); // 姓名
+
+      initUIInput($api.byId('otherName'), {
+        placeholder: '请输入',
+        keyboardType: 'next',
+        maxStringLength: 10
+      }, function (value) {
+        _this2.state.postData.otherName = value;
+      }); // 手机号
+
+      initUIInput($api.byId('otherPhone'), {
+        placeholder: '请输入',
+        keyboardType: 'number',
+        maxStringLength: 11
+      }, function (value) {
+        _this2.state.postData.otherPhone = value;
+      });
+    } // 表单验证
+
+  }, {
+    key: "formValidation",
+    value: function formValidation() {
+      var postData = this.state.postData;
+      var valid = true;
+
       if (!postData.marriage) {
-        return api.toast({
+        api.toast({
           msg: '请选择婚姻状况'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.isChildren) {
-        return api.toast({
+        api.toast({
           msg: '请选择子女状况'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.education) {
-        return api.toast({
+        api.toast({
           msg: '请选择教育情况'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.permanentAddress) {
-        return api.toast({
+        api.toast({
           msg: '请选择户籍地址'
         });
+        valid = false;
+        return valid;
       }
 
-      if (!postData.address) {
-        return api.toast({
+      if (!postData.workCompany) {
+        api.toast({
+          msg: '请输入工作单位'
+        });
+        valid = false;
+        return valid;
+      }
+
+      if (!postData.animalHusbandryYear) {
+        api.toast({
+          msg: '请输入从事畜牧行业年限'
+        });
+        valid = false;
+        return valid;
+      }
+
+      if (!postData.addrProvince) {
+        api.toast({
           msg: '请选择居住地省市地区'
         });
+        valid = false;
+        return valid;
       }
 
-      if (!postData.addressDetails) {
-        return api.toast({
+      if (!postData.addrDetail) {
+        api.toast({
           msg: '请选择居住地详细地址'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.relationship) {
-        return api.toast({
+        api.toast({
           msg: '请选择亲属关系'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.relationName) {
-        return api.toast({
+        api.toast({
           msg: '请输入直属亲属姓名'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.relationPhone) {
-        return api.toast({
+        api.toast({
           msg: '请输入直属亲属手机号'
         });
+        valid = false;
+        return valid;
       }
 
       if (!isPhoneNo(postData.relationPhone)) {
-        return api.toast({
+        api.toast({
           msg: '直属亲属手机号格式不正确'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.otherName) {
-        return api.toast({
+        api.toast({
           msg: '请输入其他联系人姓名'
         });
+        valid = false;
+        return valid;
       }
 
       if (!postData.otherPhone) {
-        return api.toast({
+        api.toast({
           msg: '请输入其他联系人手机号'
         });
+        valid = false;
+        return valid;
       }
 
       if (!isPhoneNo(postData.otherPhone)) {
-        return api.toast({
+        api.toast({
           msg: '其他联系人手机号格式不正确'
         });
+        valid = false;
+        return valid;
       }
 
-      submitStatus = 'submitting';
-      $api.addCls($api.byId('submit'), 'loading'); // 个人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/personinfo/submission
-      // 企业法人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/legalinfo/submission
+      return valid;
+    } // 事件绑定
 
-      var url = '/crpt-cust/saas/legalinfo/submission';
+  }, {
+    key: "bindEvent",
+    value: function bindEvent() {
+      var _this3 = this;
 
-      if (userType === '1') {
-        url = '/crpt-cust/saas/personinfo/submission';
-      }
+      this.el.submit.onclick = function () {
+        if (_this3.state.submitStatus === 'notsubmit') {
+          if (!_this3.formValidation()) {
+            return;
+          }
 
-      http.post(url, {
-        body: _objectSpread$1({}, postData, {
-          residentialAddress: postData.address + postData.addressDetails
-        })
-      }).then(function (ret) {
-        submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('submit'), 'loading');
-        openAuthResult('success', '补充基本信息成功', '补充基本信息');
-      })["catch"](function (error) {
-        api.toast({
-          msg: error.msg || '提交失败',
-          location: 'middle'
-        });
-        submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('submit'), 'loading');
-      });
+          _this3.state.submitStatus = 'submitting';
+          $api.addCls(_this3.el.submit, 'loading');
+
+          _this3.submit(_this3.state.url, _this3.state.postData).then(function (ret) {
+            _this3.state.submitStatus = 'notsubmit';
+            $api.removeCls($api.byId('submit'), 'loading');
+            openAuthResult('success', '补充基本信息成功', '补充基本信息');
+          })["catch"](function (error) {
+            api.toast({
+              msg: error.msg || '提交失败',
+              location: 'middle'
+            });
+            _this3.state.submitStatus = 'notsubmit';
+            $api.removeCls($api.byId('submit'), 'loading');
+          });
+        }
+      };
     }
-  };
+  }]);
+
+  return PageController;
+}(Service);
+
+apiready = function apiready() {
+  var controller = new PageController();
+  controller.renderUserType();
+  controller.initComputedState();
+  controller.initForm();
+  controller.bindEvent();
 };

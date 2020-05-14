@@ -55,6 +55,7 @@ export default getPages('.src/**/*.html').map(page => {
         limit: 14336 // (14kb)
       }),
       postcss({
+        extensions: ['.css', '.less'],
         modules: false,
         sourceMap: false,
         extract: true,

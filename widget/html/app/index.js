@@ -1,3 +1,28 @@
+// api.lockSlidPane();
+
+
+function openBaseinfoFill() {
+  api.openTabLayout({
+    name: 'html/baseinfofill/win',
+    title: '补充基本信息',
+    url: 'widget://html/baseinfofill/win.html',
+    bgColor: '#fff',
+    softInputMode: 'auto',
+    softInputBarEnabled: false,
+    softInputDismissMode: ['tap', 'interactive'],
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 打开待认证
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -338,7 +363,7 @@ var Utils = function Utils() {
   this.File = new File();
 };
 
-var Utils$1 = new Utils();
+new Utils();
 
 // $api.getStorage()
 // $api.rmStorage()
@@ -348,15 +373,21 @@ apiready = function apiready() {
   // openBaseinfoFill()
   // openCompanyInfo()
   // // $api.clearStorage()
-  var userinfo = $api.getStorage('userinfo'); // 认证状态 int
+  var userinfo = $api.getStorage('userinfo');
+
+  if (userinfo) {
+    openBaseinfoFill();
+  } else {
+    alert('meiyou denglu');
+  } // 认证状态 int
   // 1：正常
   // 2：待实名认证
   // 3：待人脸审核
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-
-  Utils$1.Router.openPageCreditInformation(); // if (userinfo) {
+  // Utils.Router.openPageCreditInformation()
+  // if (userinfo) {
   //   const authStatus = $api.getStorage('authStatus') || {}
   //   if (authStatus.status === 1) {
   //     openTabLayout()
@@ -372,6 +403,7 @@ apiready = function apiready() {
   //   openRegLogin()
   // }
   // 云修复完成
+
 
   api.addEventListener({
     name: 'smartupdatefinish'
