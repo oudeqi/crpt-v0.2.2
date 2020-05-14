@@ -88,7 +88,8 @@ function openGuaranteeApplicationIndex(_ref) {
  * 1.1 打开房产信息录入页面
  */
 
-function openGuaranteeApplicationHouse() {
+function openGuaranteeApplicationHouse(_ref2) {
+  var pageParam = _ref2.pageParam;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -96,6 +97,7 @@ function openGuaranteeApplicationHouse() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
 }
@@ -103,7 +105,8 @@ function openGuaranteeApplicationHouse() {
  * 1.2 打开车辆信息录入页面
  */
 
-function openGuaranteeApplicationCar() {
+function openGuaranteeApplicationCar(_ref3) {
+  var pageParam = _ref3.pageParam;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -111,6 +114,7 @@ function openGuaranteeApplicationCar() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
 }
@@ -118,7 +122,8 @@ function openGuaranteeApplicationCar() {
  * 1.3 打开家庭成员信息录入页面
  */
 
-function openGuaranteeApplicationFamily() {
+function openGuaranteeApplicationFamily(_ref4) {
+  var pageParam = _ref4.pageParam;
   api.openTabLayout({
     title: '家庭成员信息',
     name: 'html/guarantee_application_family/index',
@@ -126,8 +131,23 @@ function openGuaranteeApplicationFamily() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
+}
+function closeCurrentWinAndRefresh(_ref5) {
+  var winName = _ref5.winName,
+      frameName = _ref5.frameName,
+      script = _ref5.script;
+  //  关闭当前win并刷新指定页面
+  api.execScript({
+    name: winName,
+    frameName: frameName,
+    script: script
+  });
+  setTimeout(function () {
+    api.closeWin();
+  }, 300);
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
@@ -136,7 +156,8 @@ var rmap = /*#__PURE__*/Object.freeze({
   openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
   openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
   openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -250,6 +271,25 @@ var setCityPicker = function setCityPicker(params) {
   });
 };
 
+var showLoading = function showLoading() {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  api.showProgress({
+    title: title,
+    text: '',
+    modal: true
+  });
+};
+var hideLoading = function hideLoading() {
+  api.hideProgress();
+};
+
+var toast = function toast(msg) {
+  api.toast({
+    msg: msg,
+    location: 'middle'
+  });
+};
+
 /**
  * UI class
  * @author liyang
@@ -270,6 +310,21 @@ var UI = /*#__PURE__*/function () {
     key: "setCityPicker",
     value: function setCityPicker$1(params) {
       return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
     }
   }]);
 

@@ -352,6 +352,8 @@ function ajax(method, url) {
               }, 150);
             });
           }
+
+          reject(error);
         }
 
         reject(error);
