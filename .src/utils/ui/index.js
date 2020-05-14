@@ -1,4 +1,6 @@
 import {setPicker, setCityPicker} from "./picker";
+import {showLoading, hideLoading} from './loading'
+import {toast} from './toast'
 
 /**
  * UI class
@@ -11,5 +13,14 @@ export default class UI {
     }
     setCityPicker(params) {
         return setCityPicker(params)
+    }
+    showLoading(params) {
+        return showLoading(params)
+    }
+    hideLoading(params) {
+        return hideLoading(params)
+    }
+    toast(params) {
+        return toast(params)
     }
 }

@@ -1,3 +1,31 @@
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+});
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -67,12 +95,6 @@ function _slicedToArray(arr, i) {
 }
 
 var slicedToArray = _slicedToArray;
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
 
 var runtime_1 = createCommonjsModule(function (module) {
 /**
@@ -952,28 +974,6 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 });
 
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
-
 // 系统顶部导航配置
 var navigationBarProfile = {
   background: '#fff',
@@ -1030,7 +1030,8 @@ function openGuaranteeApplicationIndex(_ref) {
  * 1.1 打开房产信息录入页面
  */
 
-function openGuaranteeApplicationHouse() {
+function openGuaranteeApplicationHouse(_ref2) {
+  var pageParam = _ref2.pageParam;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -1038,6 +1039,7 @@ function openGuaranteeApplicationHouse() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
 }
@@ -1045,7 +1047,8 @@ function openGuaranteeApplicationHouse() {
  * 1.2 打开车辆信息录入页面
  */
 
-function openGuaranteeApplicationCar() {
+function openGuaranteeApplicationCar(_ref3) {
+  var pageParam = _ref3.pageParam;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -1053,6 +1056,7 @@ function openGuaranteeApplicationCar() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
 }
@@ -1060,7 +1064,8 @@ function openGuaranteeApplicationCar() {
  * 1.3 打开家庭成员信息录入页面
  */
 
-function openGuaranteeApplicationFamily() {
+function openGuaranteeApplicationFamily(_ref4) {
+  var pageParam = _ref4.pageParam;
   api.openTabLayout({
     title: '家庭成员信息',
     name: 'html/guarantee_application_family/index',
@@ -1068,17 +1073,33 @@ function openGuaranteeApplicationFamily() {
     bgColor: '#fff',
     reload: true,
     bounces: true,
+    pageParam: pageParam,
     navigationBar: navigationBarProfile
   });
 }
+function closeCurrentWinAndRefresh(_ref5) {
+  var winName = _ref5.winName,
+      frameName = _ref5.frameName,
+      script = _ref5.script;
+  //  关闭当前win并刷新指定页面
+  api.execScript({
+    name: winName,
+    frameName: frameName,
+    script: script
+  });
+  setTimeout(function () {
+    api.closeWin();
+  }, 300);
+}
 
 var rmap = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -1174,6 +1195,25 @@ var setCityPicker = function setCityPicker(params) {
   });
 };
 
+var showLoading = function showLoading() {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  api.showProgress({
+    title: title,
+    text: '',
+    modal: true
+  });
+};
+var hideLoading = function hideLoading() {
+  api.hideProgress();
+};
+
+var toast = function toast(msg) {
+  api.toast({
+    msg: msg,
+    location: 'middle'
+  });
+};
+
 /**
  * UI class
  * @author liyang
@@ -1194,6 +1234,21 @@ var UI = /*#__PURE__*/function () {
     key: "setCityPicker",
     value: function setCityPicker$1(params) {
       return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
     }
   }]);
 
@@ -1586,6 +1641,8 @@ function ajax(method, url) {
               }, 150);
             });
           }
+
+          reject(error);
         }
 
         reject(error);
@@ -1682,7 +1739,8 @@ var Service = /*#__PURE__*/function () {
     this.ajaxUrls = {
       queryGuaranteeMainUrl: '/crpt-guarantee/gt/apply/query',
       queryOperateUrl: '/crpt-guarantee/gt/operate/query',
-      insertOperateUrl: '/crpt-guarantee/gt/operate/save'
+      insertOperateUrl: '/crpt-guarantee/gt/operate/save',
+      updateOperateUrl: '/crpt-guarantee/gt/operate/update'
     };
   }
 
@@ -1710,9 +1768,23 @@ var Service = /*#__PURE__*/function () {
     }
   }, {
     key: "postInsertOperate",
-    value: function postInsertOperate(params) {
-      return http.post(this.ajaxUrls.queryOperateUrl, {
-        values: params
+    value: function postInsertOperate(params, files) {
+      return http.upload(this.ajaxUrls.insertOperateUrl, {
+        values: params,
+        files: files
+      }, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "postUpdateOperate",
+    value: function postUpdateOperate(params, files) {
+      return http.upload(this.ajaxUrls.updateOperateUrl, {
+        values: params,
+        files: files
       }, {
         headers: {
           token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
@@ -1753,56 +1825,56 @@ var PageController = /*#__PURE__*/function (_Service) {
       pickers: {
         landType: [{
           "name": "一般耕地",
-          "id": "1"
+          "id": 1
         }, {
           "name": "基本农田",
-          "id": "2"
+          "id": 2
         }, {
           "name": "山地",
-          "id": "3"
+          "id": 3
         }, {
           "name": "林地",
-          "id": "4"
+          "id": 4
         }, {
           "name": "草地",
-          "id": "5"
+          "id": 5
         }],
         farmType: [{
           "name": "鸡",
-          "id": "1"
+          "id": 1
         }, {
           "name": "鸭",
-          "id": "2"
+          "id": 2
         }, {
           "name": "猪",
-          "id": "3"
+          "id": 3
         }]
       },
       //  select类组件json
       selects: {
         envReport: [{
           "name": "无环评",
-          "id": "1"
+          "id": 1
         }, {
           "name": "环评备案",
-          "id": "2"
+          "id": 2
         }, {
           "name": "环评报告",
-          "id": "3"
+          "id": 3
         }],
         livestockType: [{
           "name": "自有",
-          "id": "1"
+          "id": 1
         }, {
           "name": "租赁",
-          "id": "2"
+          "id": 2
         }],
         shedStructure: [{
           "name": "墙体结构",
-          "id": "1"
+          "id": 1
         }, {
           "name": "立柱式",
-          "id": "2"
+          "id": 2
         }]
       },
       // upload参数
@@ -1815,8 +1887,13 @@ var PageController = /*#__PURE__*/function (_Service) {
     _this.data = {
       gtId: props.pageParam.gtId,
       flowStatus: props.flowStatus,
+      gtCreditId: props.gtCreditId,
       isInsert: true,
-      status: {},
+      farmType: 1,
+      landType: 1,
+      envReport: 1,
+      shedStructure: 1,
+      livestockType: 1,
       pcd: {
         province: {},
         city: {},
@@ -1830,7 +1907,12 @@ var PageController = /*#__PURE__*/function (_Service) {
   createClass(PageController, [{
     key: "main",
     value: function main() {
-      this.initData();
+      Utils$1.UI.showLoading('加载中...');
+      this.initData({
+        callback: function callback() {
+          Utils$1.UI.hideLoading();
+        }
+      });
       this.bindEvents();
     } //  事件绑定入口
 
@@ -1855,17 +1937,21 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "initData",
     value: function () {
-      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, gtId, operateRes;
+      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(_ref) {
+        var callback, self, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, gtId, gtCreditId, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                callback = _ref.callback;
+                self = this; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+
+                _context.prev = 2;
+                _context.next = 5;
                 return this.getQueryGuaranteeMain();
 
-              case 2:
+              case 5:
                 guaranteeRes = _context.sent;
 
                 if (guaranteeRes.data) {
@@ -1873,43 +1959,170 @@ var PageController = /*#__PURE__*/function (_Service) {
                   Boolean(houseFillStatus) && document.querySelector('#houseInfoStatus').classList.add('done');
                   Boolean(carFillStatus) && document.querySelector('#carInfoStatus').classList.add('done');
                   Boolean(socialFillStatus) && document.querySelector('#familyInfoStatus').classList.add('done');
-                } //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
+                }
 
+                _context.next = 12;
+                break;
 
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                Utils$1.UI.toast('服务超时');
+
+              case 12:
+                //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
                 gtId = this.data.gtId;
-                _context.next = 7;
+                gtCreditId = this.data.gtCreditId;
+                _context.prev = 14;
+                _context.next = 17;
                 return this.getQueryOperate({
                   gtId: gtId
                 });
 
-              case 7:
+              case 17:
                 operateRes = _context.sent;
+                // 3. 刷主表土地信息和养殖信息填写状态和字段
+                this.data.isInsert = false;
+                this.data.operateId = operateRes.data.operateId;
+                document.querySelector('#landInfoStatus').classList.add('done');
+                document.querySelector('#farmInfoStatus').classList.add('done'); // key: 土地性质
 
-                //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-                if (operateRes.code === 3005) {
-                  this.data.isInsert = true;
-                } else if (operateRes.code === 200) {
-                  // 土地信息和养殖信息 绿勾
-                  this.data.isInsert = false;
-                  document.querySelector('#landInfoStatus').classList.add('done');
-                  document.querySelector('#farmInfoStatus').classList.add('done');
-                } else {
-                  api.toast({
-                    msg: operateRes.msg,
-                    duration: 1000,
-                    location: 'middle'
+                landTypeProfile = this.profile.pickers.landType.find(function (item, i) {
+                  return operateRes.data.landNature === item.id;
+                });
+
+                if (landTypeProfile) {
+                  document.querySelector('#landType').innerHTML = landTypeProfile.name;
+                  this.data.landType = landTypeProfile.id;
+                } //  key: 环评材料
+
+
+                envReportProfile = this.profile.selects.envReport.find(function (item, i) {
+                  return operateRes.data.envDataType === item.id;
+                });
+
+                if (envReportProfile) {
+                  Array.from(document.querySelector('#envReport').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                    if (Number(item.getAttribute('data-id')) === envReportProfile.id) {
+                      self.data.envReport = envReportProfile.id;
+                      item.classList.add('active');
+                    } else {
+                      item.classList.remove('active');
+                    }
+                  });
+                } // key: 环评附件
+
+
+                if (envReportProfile && envReportProfile.id !== 1) {
+                  imgDom = document.querySelector('#envReportFile-img');
+                  this.data.envDataFileId = operateRes.data.envDataFileId;
+                  imgDom.src = "".concat(baseUrl, "/crpt-file/file/download/").concat(operateRes.data.envDataFileId);
+                  imgDom.classList.remove('hidden');
+                  document.querySelector('#envEnclosure').classList.remove('hidden');
+                } //  key: 养殖场性质
+
+
+                livestockTypeProfile = this.profile.selects.livestockType.find(function (item, i) {
+                  return operateRes.data.farmsNature === item.id;
+                });
+
+                if (livestockTypeProfile) {
+                  Array.from(document.querySelector('#livestockType').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                    if (Number(item.getAttribute('data-id')) === livestockTypeProfile.id) {
+                      self.data.livestockType = livestockTypeProfile.id;
+                      item.classList.add('active');
+                    } else {
+                      item.classList.remove('active');
+                    }
+                  });
+                } // key: 养殖品种
+
+
+                farmTypeProfile = this.profile.pickers.farmType.find(function (item, i) {
+                  return operateRes.data.farmsCategory === item.id;
+                });
+
+                if (farmTypeProfile) {
+                  document.querySelector('#farmType').innerHTML = farmTypeProfile.name;
+                  this.data.farmType = farmTypeProfile.id;
+                } // key: 养殖规模
+
+
+                scale = operateRes.data.farmsSize;
+                this.data.scale = scale;
+                document.querySelector('#scale').value = scale;
+                document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'; // key: 棚舍数量
+
+                sheds = operateRes.data.workshopCount;
+                this.data.sheds = sheds;
+                document.querySelector('#sheds').value = sheds; // key: 棚舍面积
+
+                shedArea = operateRes.data.workshopArea;
+                this.data.shedArea = shedArea;
+                document.querySelector('#shedArea').value = shedArea; // key: 棚舍地址
+
+                _operateRes$data = operateRes.data, workshopProvince = _operateRes$data.workshopProvince, workshopProvinceCode = _operateRes$data.workshopProvinceCode, workshopCity = _operateRes$data.workshopCity, workshopCityCode = _operateRes$data.workshopCityCode, workshopCounty = _operateRes$data.workshopCounty, workshopCountyCode = _operateRes$data.workshopCountyCode;
+                this.data.pcd = {
+                  province: {
+                    name: workshopProvince,
+                    code: workshopProvinceCode
+                  },
+                  city: {
+                    name: workshopCity,
+                    code: workshopCityCode
+                  },
+                  district: {
+                    name: workshopCounty,
+                    code: workshopCountyCode
+                  }
+                };
+                document.querySelector("#shedAddress").innerHTML = "<span class=\"fc_c_city_label selected\">".concat(workshopProvince, " ").concat(workshopCity, " ").concat(workshopCounty, "</span>"); // key: 棚舍面积
+
+                shedAddressDetail = operateRes.data.workshopAddr;
+                this.data.shedArea = shedAddressDetail;
+                document.querySelector('#shedAddressDetail').value = shedAddressDetail; // key: 棚设结构
+
+                shedStructureProfile = this.profile.selects.shedStructure.find(function (item, i) {
+                  return operateRes.data.workshopStruct === item.id;
+                });
+
+                if (shedStructureProfile) {
+                  Array.from(document.querySelector('#shedStructure').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                    if (Number(item.getAttribute('data-id')) === shedStructureProfile.id) {
+                      self.data.shedStructure = shedStructureProfile.id;
+                      item.classList.add('active');
+                    } else {
+                      item.classList.remove('active');
+                    }
                   });
                 }
 
-              case 9:
+                _context.next = 54;
+                break;
+
+              case 51:
+                _context.prev = 51;
+                _context.t1 = _context["catch"](14);
+
+                //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
+                if (_context.t1.code === 3005) {
+                  this.data.isInsert = true;
+                } else {
+                  Utils$1.UI.toast(_context.t1.msg);
+                }
+
+              case 54:
+                callback && callback();
+
+              case 55:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[2, 9], [14, 51]]);
       }));
 
-      function initData() {
+      function initData(_x) {
         return _initData.apply(this, arguments);
       }
 
@@ -2038,17 +2251,14 @@ var PageController = /*#__PURE__*/function (_Service) {
         Utils$1.File.actionSheet('请选择', ['相机', '相册'], function (index) {
           Utils$1.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
             if (res) {
-              self.envReportFile = res.data;
+              self.data.envReportFile = res.data;
 
               if (res.data) {
                 img.src = res.data;
                 box.classList.remove('hidden');
+                Utils$1.UI.toast('上传成功');
               } else {
-                api.toast({
-                  msg: '未上传成功',
-                  duration: 2000,
-                  location: 'middle'
-                });
+                Utils$1.UI.toast('未上传成功');
               }
             }
           });
@@ -2089,15 +2299,21 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "bindEventsPageRouter",
     value: function bindEventsPageRouter() {
       document.querySelector('#familyInfo').onclick = function () {
-        Utils$1.Router.openGuaranteeApplicationFamily();
+        Utils$1.Router.openGuaranteeApplicationFamily({
+          pageParam: api.pageParam
+        });
       };
 
       document.querySelector('#houseInfo').onclick = function () {
-        Utils$1.Router.openGuaranteeApplicationHouse();
+        Utils$1.Router.openGuaranteeApplicationHouse({
+          pageParam: api.pageParam
+        });
       };
 
       document.querySelector('#carInfo').onclick = function () {
-        Utils$1.Router.openGuaranteeApplicationCar();
+        Utils$1.Router.openGuaranteeApplicationCar({
+          pageParam: api.pageParam
+        });
       };
     } // 提交表单
 
@@ -2116,12 +2332,13 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "submitFormData",
     value: function () {
       var _submitFormData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var _this$data, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
+        var self, _this$data, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
 
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                self = this;
                 _this$data = this.data, landType = _this$data.landType, farmType = _this$data.farmType, envReport = _this$data.envReport, livestockType = _this$data.livestockType, shedStructure = _this$data.shedStructure, gtId = _this$data.gtId, envReportFile = _this$data.envReportFile, pcd = _this$data.pcd;
                 farmsSize = document.querySelector('#scale').value;
                 workshopCount = document.querySelector('#sheds').value;
@@ -2145,55 +2362,75 @@ var PageController = /*#__PURE__*/function (_Service) {
                   workshopAddr: workshopAddr,
                   workshopStruct: shedStructure
                 };
-                alert(JSON.stringify(formJSON));
                 isValidate = !Object.values(formJSON).some(function (item, i) {
                   return !item;
-                }); // return
+                });
 
                 if (!isValidate) {
-                  _context2.next = 15;
+                  _context2.next = 34;
                   break;
                 }
 
-                // formJSON.envDataFileStream = envReportFile
-                // test
-                http.upload('/crpt-guarantee/gt/operate/save', {
-                  values: formJSON,
-                  files: {
-                    envDataFileStream: envReportFile
-                  }
-                }).then(function (ret) {
-                  if (ret.data.result === 'NO') {
-                    api.toast({
-                      msg: ret.data.info || '实名认证失败'
-                    });
-                  } else {
-                    openAuthResult('success');
-                  }
-                })["catch"](function (error) {
-                  api.toast({
-                    msg: error.msg || '实名认证失败'
-                  });
-                  $api.removeCls($api.byId('next'), 'loading');
-                });
-                return _context2.abrupt("return");
+                Utils$1.UI.showLoading('保存中...');
+                res = null;
+                _context2.prev = 11;
 
-              case 13:
-                res = _context2.sent;
-
-                if (res.code === 200) {
-                  api.toast({
-                    msg: '提交成功',
-                    location: 'middle'
-                  }); //  退回到上一页
+                if (!self.data.isInsert) {
+                  _context2.next = 20;
+                  break;
                 }
 
+                _context2.next = 15;
+                return this.postInsertOperate(formJSON, {
+                  envDataFileStream: envReportFile
+                });
+
               case 15:
+                res = _context2.sent;
+                //  第一次插入经营新后，存储返回的operateId
+                self.data.operateId = res.data;
+                self.data.isInsert = false;
+                _context2.next = 24;
+                break;
+
+              case 20:
+                _extends_1(formJSON, {
+                  operateId: self.data.operateId
+                });
+
+                _context2.next = 23;
+                return this.postUpdateOperate(formJSON, {
+                  envDataFileStream: envReportFile
+                });
+
+              case 23:
+                res = _context2.sent;
+
+              case 24:
+                Utils$1.UI.toast('提交成功');
+                _context2.next = 31;
+                break;
+
+              case 27:
+                _context2.prev = 27;
+                _context2.t0 = _context2["catch"](11);
+                Utils$1.UI.hideLoading();
+                Utils$1.UI.toast(_context2.t0.msg);
+
+              case 31:
+                Utils$1.UI.hideLoading();
+                _context2.next = 35;
+                break;
+
+              case 34:
+                Utils$1.UI.toast('还有信息未填入');
+
+              case 35:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2, this, [[11, 27]]);
       }));
 
       function submitFormData() {

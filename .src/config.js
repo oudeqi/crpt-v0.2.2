@@ -9,7 +9,7 @@ import { Base64 } from 'js-base64'
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://crptuat.liuheco.com'
 const prod = 'http://crptuat.liuheco.com'
-const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
+export const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
 const whiteList = [ // 白名单里不带token，否则后端会报错
   '/sms/smsverificationcode',
   '/identification/gainenterprisephone',
@@ -77,6 +77,7 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 30}
               }, 150)
             })
           }
+          reject(error)
         }
         reject(error)
       }

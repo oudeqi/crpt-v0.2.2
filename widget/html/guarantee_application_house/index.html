@@ -3,84 +3,21 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <link rel="stylesheet" type="text/css" href="../../css/api.css" >
-    <link rel="stylesheet" type="text/css" href="../../css/aui.css" >
+    <link rel="stylesheet" type="text/css" href="../../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css">
 
   <link rel="stylesheet" href="./index.css"></head>
 <body>
-<div id="credit-list" class="gt-page">
-    
-    <div class="cl-cell">
-        <div class="cl-cell_box cl_h_bd" id="houseInfoBox">
-            <div class="cl-cell_text single">
-                <span class="clt_main" >房产<b>一</b></span>
-                <a class="del">删除</a>
-            </div>
-        </div>
-
-        <div class="form-body" data-props="houseInfo" id="houseNo">
-            <div class="form-cell_shell" data-props="houseNo">
-                <div class="fc_label">
-                    <span class="fc_span">房产证号</span>
-                </div>
-                <div class="fc_content">
-                    <div class="fc_c_common">
-                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                               id="scale" placeholder="请输入">
-                        <div class="fc_unit icon_house_scan" id="houseOCRBtn">hi</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-cell_shell" data-props="houseArea">
-                <div class="fc_label">
-                    <span class="fc_span">建筑面积</span>
-                </div>
-                <div class="fc_content">
-                    <div class="fc_c_common">
-                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                               id="sheds" placeholder="请输入" >
-                        <div class="fc_unit">平方米</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-cell_shell" data-props="housePrice">
-                <div class="fc_label">
-                    <span class="fc_span">房产价值</span>
-                </div>
-                <div class="fc_content">
-                    <div class="fc_c_common">
-                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                               id="shedArea" placeholder="请输入" >
-                        <div class="fc_unit">万元</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-cell_shell top">
-                <div class="fc_label">
-                    <span class="fc_span">房产地址</span>
-                </div>
-                <div class="fc_content">
-                    <div class="fc_c_common bd">
-                        <div class="fc_c_city" id="shedAddress">
-                            <span class="fc_c_city_label">选择 城市/区域</span>
-                        </div>
-                    </div>
-                    <div class="fc_c_common">
-                        <input class="fc_c_input" id="shedAddressDetail" type="text" placeholder="详细地址" >
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="cl_add_btn">
+<div class="gt-page" id="gt-page">
+    <section id="credit-list">
+    </section>
+    <div class="cl_add_btn" id="add-btn">
         <span>+ </span>添加房产
     </div>
-    <div class="cl_c_submit_btn">保存</div>
+    <div class="cl_c_submit_btn" id="save-btn">保存</div>
 </div>
 <script type="text/javascript" src="../../script/api.js"></script>
 

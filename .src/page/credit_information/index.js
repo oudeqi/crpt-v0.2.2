@@ -23,11 +23,17 @@ class PageController extends Service {
     }
 
     async initData() {
-        const res = await this.getQueryGuaranteeMain()
-        const {data} = res
-        this.data.flowStatus = data.flowStatus
-        this.data.gtId = data.gtId
-
+        Utils.UI.showLoading()
+        try {
+            const res = await this.getQueryGuaranteeMain()
+            const {data} = res
+            this.data.flowStatus = data.flowStatus
+            this.data.gtId = data.gtId
+            this.data.gtCreditId = data.gtCreditId
+        }catch(e) {
+            Utils.UI.toast('服务超时')
+        }
+        Utils.UI.hideLoading()
         this.initUIModal()
         this.bindEvents()
     }
@@ -60,7 +66,7 @@ class PageController extends Service {
                 dom.onclick = function () {
                     if (dom.classList.contains('done') || dom.classList.contains('next')) {
                         Utils.Router[dom.getAttribute('data-router')]({
-                            pageParam: {gtId: self.data.gtId, flowStatus: self.data.flowStatus}
+                            pageParam: {gtId: self.data.gtId, flowStatus: self.data.flowStatus, gtCreditId: self.data.gtCreditId}
                         })
                     } else {
                         api.toast({
