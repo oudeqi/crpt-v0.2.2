@@ -42,7 +42,18 @@ export function openGuaranteeApplicationIndex({pageParam}) {
 /**
  * 4. 其他附件上传页面
  */
-
+export function openAttachmentInfo({pageParam}) {
+    api.openTabLayout({
+        title: '附件上传',
+        name: 'html/attachment_info/index',
+        url: 'widget://html/attachment_info/index.html',
+        bgColor: '#fff',
+        reload: true,
+        bounces: true,
+        pageParam: pageParam,
+        navigationBar: navigationBarProfile
+    })
+}
 /**
  * 1.1 打开房产信息录入页面
  */
