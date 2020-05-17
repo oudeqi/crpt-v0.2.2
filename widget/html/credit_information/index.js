@@ -956,12 +956,25 @@ function openGuaranteeApplicationIndex(_ref) {
  * 4. 其他附件上传页面
  */
 
+function openAttachmentInfo(_ref2) {
+  var pageParam = _ref2.pageParam;
+  api.openTabLayout({
+    title: '附件上传',
+    name: 'html/attachment_info/index',
+    url: 'widget://html/attachment_info/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
 /**
  * 1.1 打开房产信息录入页面
  */
 
-function openGuaranteeApplicationHouse(_ref2) {
-  var pageParam = _ref2.pageParam;
+function openGuaranteeApplicationHouse(_ref3) {
+  var pageParam = _ref3.pageParam;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -977,8 +990,8 @@ function openGuaranteeApplicationHouse(_ref2) {
  * 1.2 打开车辆信息录入页面
  */
 
-function openGuaranteeApplicationCar(_ref3) {
-  var pageParam = _ref3.pageParam;
+function openGuaranteeApplicationCar(_ref4) {
+  var pageParam = _ref4.pageParam;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -994,8 +1007,8 @@ function openGuaranteeApplicationCar(_ref3) {
  * 1.3 打开家庭成员信息录入页面
  */
 
-function openGuaranteeApplicationFamily(_ref4) {
-  var pageParam = _ref4.pageParam;
+function openGuaranteeApplicationFamily(_ref5) {
+  var pageParam = _ref5.pageParam;
   api.openTabLayout({
     title: '家庭成员信息',
     name: 'html/guarantee_application_family/index',
@@ -1007,10 +1020,10 @@ function openGuaranteeApplicationFamily(_ref4) {
     navigationBar: navigationBarProfile
   });
 }
-function closeCurrentWinAndRefresh(_ref5) {
-  var winName = _ref5.winName,
-      frameName = _ref5.frameName,
-      script = _ref5.script;
+function closeCurrentWinAndRefresh(_ref6) {
+  var winName = _ref6.winName,
+      frameName = _ref6.frameName,
+      script = _ref6.script;
   //  关闭当前win并刷新指定页面
   api.execScript({
     name: winName,
@@ -1026,6 +1039,7 @@ var rmap = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	openPageCreditInformation: openPageCreditInformation,
 	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
 	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
 	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
 	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
@@ -1667,14 +1681,27 @@ var Service = /*#__PURE__*/function () {
     classCallCheck(this, Service);
 
     this.ajaxUrls = {
-      queryGuaranteeMainUrl: '/crpt-guarantee/gt/apply/query'
+      queryMainUrl: '/crpt-guarantee/gt/apply/query',
+      submitCreditStepUrl: '/crpt-guarantee/gt/apply/submit'
     };
   }
 
   createClass(Service, [{
     key: "getQueryGuaranteeMain",
     value: function getQueryGuaranteeMain() {
-      return http.get(this.ajaxUrls.queryGuaranteeMainUrl, null, {
+      return http.get(this.ajaxUrls.queryMainUrl, null, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "submitCreditStep",
+    value: function submitCreditStep(params) {
+      return http.get(this.ajaxUrls.submitCreditStepUrl, {
+        values: params
+      }, {
         headers: {
           token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
         },
@@ -1725,7 +1752,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, data;
+        var res, data, submitBtn;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -1739,27 +1766,36 @@ var PageController = /*#__PURE__*/function (_Service) {
                 res = _context.sent;
                 data = res.data;
                 this.data.flowStatus = data.flowStatus;
+                this.data.applyStatus = data.applyStatus;
                 this.data.gtId = data.gtId;
-                this.data.gtCreditId = data.gtCreditId;
-                _context.next = 14;
+                this.data.gtCreditId = data.gtCreditId; //   审核中
+
+                if (data.applyStatus === 2) {
+                  submitBtn = document.querySelector('#submit');
+                  submitBtn.innerHTML = '审核中...';
+                  submitBtn.setAttribute('disabled', true);
+                  submitBtn.classList.add('disabled');
+                }
+
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](1);
                 Utils$1.UI.toast('服务超时');
 
-              case 14:
+              case 16:
                 Utils$1.UI.hideLoading();
                 this.initUIModal();
                 this.bindEvents();
 
-              case 17:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 11]]);
+        }, _callee, this, [[1, 13]]);
       }));
 
       function initData() {
@@ -1788,14 +1824,17 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "bindEvents",
     value: function bindEvents() {
       this.bindRouterPage();
+      this.bindSubmitEvents();
     }
   }, {
     key: "bindRouterPage",
     value: function bindRouterPage() {
       var self = this;
-      Array.from(document.querySelectorAll('.cl-cell_text')).forEach(function (dom, i) {
+      Array.from(document.querySelectorAll('.cl-cell')).forEach(function (dom, i) {
+        var domChild = dom.querySelector('.cl-cell_text');
+
         dom.onclick = function () {
-          if (dom.classList.contains('done') || dom.classList.contains('next')) {
+          {
             Utils$1.Router[dom.getAttribute('data-router')]({
               pageParam: {
                 gtId: self.data.gtId,
@@ -1803,16 +1842,76 @@ var PageController = /*#__PURE__*/function (_Service) {
                 gtCreditId: self.data.gtCreditId
               }
             });
-          } else {
-            api.toast({
-              msg: '请先完成上一步',
-              duration: 1000,
-              location: 'middle'
-            });
           }
         };
       });
-    }
+    } // 提交
+
+  }, {
+    key: "bindSubmitEvents",
+    value: function () {
+      var _bindSubmitEvents = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+        var self;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                self = this;
+                document.querySelector('#submit').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+                  var res;
+                  return regenerator.wrap(function _callee2$(_context2) {
+                    while (1) {
+                      switch (_context2.prev = _context2.next) {
+                        case 0:
+                          if (!(self.data.applyStatus === 1)) {
+                            _context2.next = 14;
+                            break;
+                          }
+
+                          Utils$1.UI.showLoading('提交中');
+                          _context2.prev = 2;
+                          _context2.next = 5;
+                          return self.submitCreditStep({
+                            gtId: self.data.gtId
+                          });
+
+                        case 5:
+                          res = _context2.sent;
+                          Utils$1.UI.toast('提交成功');
+                          window.location.reload();
+                          _context2.next = 13;
+                          break;
+
+                        case 10:
+                          _context2.prev = 10;
+                          _context2.t0 = _context2["catch"](2);
+                          Utils$1.UI.toast(_context2.t0.msg);
+
+                        case 13:
+                          Utils$1.UI.hideLoading();
+
+                        case 14:
+                        case "end":
+                          return _context2.stop();
+                      }
+                    }
+                  }, _callee2, null, [[2, 10]]);
+                }));
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function bindSubmitEvents() {
+        return _bindSubmitEvents.apply(this, arguments);
+      }
+
+      return bindSubmitEvents;
+    }()
   }]);
 
   return PageController;

@@ -1026,12 +1026,25 @@ function openGuaranteeApplicationIndex(_ref) {
  * 4. 其他附件上传页面
  */
 
+function openAttachmentInfo(_ref2) {
+  var pageParam = _ref2.pageParam;
+  api.openTabLayout({
+    title: '附件上传',
+    name: 'html/attachment_info/index',
+    url: 'widget://html/attachment_info/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
 /**
  * 1.1 打开房产信息录入页面
  */
 
-function openGuaranteeApplicationHouse(_ref2) {
-  var pageParam = _ref2.pageParam;
+function openGuaranteeApplicationHouse(_ref3) {
+  var pageParam = _ref3.pageParam;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -1047,8 +1060,8 @@ function openGuaranteeApplicationHouse(_ref2) {
  * 1.2 打开车辆信息录入页面
  */
 
-function openGuaranteeApplicationCar(_ref3) {
-  var pageParam = _ref3.pageParam;
+function openGuaranteeApplicationCar(_ref4) {
+  var pageParam = _ref4.pageParam;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -1064,8 +1077,8 @@ function openGuaranteeApplicationCar(_ref3) {
  * 1.3 打开家庭成员信息录入页面
  */
 
-function openGuaranteeApplicationFamily(_ref4) {
-  var pageParam = _ref4.pageParam;
+function openGuaranteeApplicationFamily(_ref5) {
+  var pageParam = _ref5.pageParam;
   api.openTabLayout({
     title: '家庭成员信息',
     name: 'html/guarantee_application_family/index',
@@ -1077,10 +1090,10 @@ function openGuaranteeApplicationFamily(_ref4) {
     navigationBar: navigationBarProfile
   });
 }
-function closeCurrentWinAndRefresh(_ref5) {
-  var winName = _ref5.winName,
-      frameName = _ref5.frameName,
-      script = _ref5.script;
+function closeCurrentWinAndRefresh(_ref6) {
+  var winName = _ref6.winName,
+      frameName = _ref6.frameName,
+      script = _ref6.script;
   //  关闭当前win并刷新指定页面
   api.execScript({
     name: winName,
@@ -1096,6 +1109,7 @@ var rmap = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	openPageCreditInformation: openPageCreditInformation,
 	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
 	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
 	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
 	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,

@@ -1,4 +1,4 @@
-@import '../../../widget/css/form.less';
+@import '../../styles/form.less';
 
 html, body {
   background-color: #efefef;
@@ -16,6 +16,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   position: relative;
+  //background: red;
   .cl-cell_text {
     display: flex;
     flex-direction: column;
@@ -85,5 +86,11 @@ html, body {
   .cl-cell_arrow {
     color: #999;
     transform: scaleY(1.6);
+  }
+}
+.cl_c_submit_btn {
+  &.disabled {
+    color: #fff;
+    background-color: #909399;
   }
 }
