@@ -233,7 +233,7 @@ class PageController extends Service {
                     </div>
                 </div>
             </div>
-            
+
              <div class="form-cell_shell">
                 <div class="fc_label">
                     <span class="fc_span">亲属关系</span>
@@ -244,7 +244,7 @@ class PageController extends Service {
                     </div>
                 </div>
             </div>
-            
+
              <div class="form-cell_shell" data-index="${i}">
                 <div class="fc_label">
                     <span class="fc_span">职业</span>
@@ -256,7 +256,7 @@ class PageController extends Service {
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-cell_shell" data-index="${i}">
                 <div class="fc_label">
                     <span class="fc_span">工作单位</span>

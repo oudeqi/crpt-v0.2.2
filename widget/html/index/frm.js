@@ -124,6 +124,25 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openProductRecommend(pageParam) {
+  api.openTabLayout({
+    name: 'html/productrecommend/win',
+    title: '产品推荐',
+    url: 'widget://html/productrecommend/win.html',
+    bgColor: '#fff',
+    pageParam: pageParam,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 开通担保
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -433,6 +452,8 @@ function ajax(method, url) {
               }, 150);
             });
           }
+
+          reject(error);
         }
 
         reject(error);
@@ -1554,6 +1575,12 @@ var Service = /*#__PURE__*/function () {
           status: status
         }
       });
+    } // 获取担保状态
+
+  }, {
+    key: "queryDanbaoStatus",
+    value: function queryDanbaoStatus() {
+      return http.get('/crpt-guarantee/gt/apply/query');
     }
   }]);
 
@@ -1579,7 +1606,8 @@ var PageController = /*#__PURE__*/function (_Service) {
       navDanbao: $api.byId('danbao'),
       navOther: $api.byId('other'),
       high: $api.byId('high'),
-      low: $api.byId('low')
+      low: $api.byId('low'),
+      danbaoKaitong: $api.byId('kaitong')
     };
     return _this;
   } // 根据custType显示不同的nav
@@ -1594,18 +1622,60 @@ var PageController = /*#__PURE__*/function (_Service) {
       } else {
         this.el.navOther.style.display = 'block';
       }
+    } // 事件绑定
+
+  }, {
+    key: "bindEvent",
+    value: function bindEvent() {
+      var _this2 = this;
+
+      document.querySelector('#body').onclick = function (event) {
+        var clickBtn = $api.closest(event.target, '.clickBtn');
+
+        if (clickBtn) {
+          api.alert({
+            title: '提示',
+            msg: '功能开发中...'
+          });
+        }
+      };
+
+      api.addEventListener({
+        name: 'keyback'
+      }, function (ret, err) {
+        // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+        api.closeWidget({
+          silent: false
+        });
+      });
+
+      this.el.danbaoKaitong.onclick = function () {
+        _this2.queryDanbaoStatus().then(function (res) {
+          console.log(JSON.stringify(res)); // 有担保产品
+        })["catch"](function (error) {
+          if (error.code === 3002) {
+            // 无担保产品
+            openProductRecommend();
+          } else {
+            api.toast({
+              msg: error.msg || '查询担保状态失败',
+              location: 'middle'
+            });
+          }
+        });
+      };
     } // 高额精选
 
   }, {
     key: "_renderHigh",
     value: function _renderHigh(arr) {
-      var _this2 = this;
+      var _this3 = this;
 
       arr.forEach(function (item, index) {
         var tpl = "\n        <div class=\"high_item clickBtn\">\n          <div class=\"row1\">\u6700\u9AD8\u989D\u5EA6(\u5143)</div>\n          <div class=\"row2\">".concat(numeral(item.totalLimit).format('0,0'), "</div>\n          <div class=\"row3\">").concat(item.des, "</div>\n          <div class=\"row3\">\n            ").concat(item.introduce, "\n          </div>\n        </div>\n      ");
 
         if (index <= 1) {
-          $api.append(_this2.el.high, tpl);
+          $api.append(_this3.el.high, tpl);
         }
       });
     } // 利息最低
@@ -1613,18 +1683,18 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "_renderLow",
     value: function _renderLow(arr) {
-      var _this3 = this;
+      var _this4 = this;
 
       arr.forEach(function (item) {
         var tpl = "\n        <div class=\"row clickBtn\">\n          <div class=\"l\">\n            <strong>".concat(item.interestRate, "%</strong>\n            <span>\u8D37\u6B3E\u5229\u7387</span>\n          </div>\n          <div class=\"r\">\n            <strong>").concat(item.des, "</strong>\n            <span>").concat(item.introduce, "</span>\n          </div>\n        </div>\n      ");
-        $api.append(_this3.el.low, tpl);
+        $api.append(_this4.el.low, tpl);
       });
     } // 获取数据
 
   }, {
     key: "renderProduct",
     value: function renderProduct() {
-      var _this4 = this;
+      var _this5 = this;
 
       var custType = this.state.custType;
       Promise.all([this.getlist({
@@ -1634,9 +1704,9 @@ var PageController = /*#__PURE__*/function (_Service) {
         custType: custType,
         status: 2
       })]).then(function (res) {
-        _this4._renderHigh(res[0].data.list || []);
+        _this5._renderHigh(res[0].data.list || []);
 
-        _this4._renderLow(res[1].data.list || []);
+        _this5._renderLow(res[1].data.list || []);
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '获取产品数据失败',
@@ -1652,6 +1722,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 apiready = function apiready() {
   var controller = new PageController();
   controller.renderNav();
+  controller.bindEvent();
   controller.renderProduct(); // api.setTabLayoutAttr({
   //   hideNavigationBar: true
   // })
@@ -1669,26 +1740,7 @@ apiready = function apiready() {
   //     })
   //   }
   // })
-
-  document.querySelector('#body').onclick = function (event) {
-    var clickBtn = $api.closest(event.target, '.clickBtn');
-
-    if (clickBtn) {
-      api.alert({
-        title: '提示',
-        msg: '功能开发中...'
-      });
-    }
-  };
-
-  api.addEventListener({
-    name: 'keyback'
-  }, function (ret, err) {
-    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
-    api.closeWidget({
-      silent: false
-    });
-  }); // api.addEventListener({
+  // api.addEventListener({
   //   name: 'swiperight'
   // }, function(ret, err){
   //   openLeftPane()

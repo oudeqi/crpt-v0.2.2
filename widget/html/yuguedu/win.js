@@ -28,7 +28,7 @@ function openProductRecommend(pageParam) {
       fontWeight: 'bold'
     }
   });
-}
+} // 开通担保
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {

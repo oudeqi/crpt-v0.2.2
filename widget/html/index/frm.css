@@ -1,23 +1,17 @@
 /* aui reset */
-.aui-radio:checked,
-.aui-radio.aui-checked,
-.aui-checkbox:checked,
-.aui-checkbox.aui-checked {
+.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
   background-color: #1dc4a2 !important;
   border: solid 1px #1dc4a2 !important;
 }
-
 .aui-switch:checked {
   border-color: #1dc4a2 !important;
   background-color: #1dc4a2 !important;
 }
-
 /*1cb594 88dbcb 1aa689 5aae9c*/
-
 /*页面头部*/
 .app_header {
   background-color: #1dc4a2;
-  position: relative
+  position: relative;
 }
 .app_header div {
     width: 55px;
@@ -32,7 +26,7 @@
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
-            justify-content: center
+            justify-content: center;
   }
 .app_header div .aui-iconfont {
       color: #fff;
@@ -64,7 +58,6 @@
     height: 44px;
     padding: 0 44px;
   }
-
 /*块状按钮*/
 .app_btn {
   display: -webkit-box;
@@ -82,7 +75,7 @@
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
-  overflow: hidden
+  overflow: hidden;
 }
 .app_btn.sm {
     height: 44px;
@@ -95,10 +88,9 @@
 .app_btn.loading {
     background-color: #88dbcb;
   }
-
 /*输入框组*/
 .app_ipt_group {
-  padding-top: 20px
+  padding-top: 20px;
 }
 .app_ipt_group .item {
     height: 50px;
@@ -111,7 +103,7 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    border-bottom: 1px solid #ededed
+    border-bottom: 1px solid #ededed;
   }
 .app_ipt_group .item .icon {
       width: 50px;
@@ -126,7 +118,7 @@
               align-items: center;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
-              justify-content: center
+              justify-content: center;
     }
 .app_ipt_group .item .icon .aui-iconfont {
         font-size: 22px;
@@ -150,7 +142,7 @@
 .app_ipt_group .item .btn {
       margin-left: 10px;
       padding-right: 4px;
-      color: #333
+      color: #333;
     }
 .app_ipt_group .item .btn.active {
         color: #666;
@@ -159,12 +151,11 @@
 .app_ipt_group .item .btn.loading {
         color: #666;
       }
-
 /*连接按钮*/
 .app_link_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #333
+  color: #333;
 }
 .app_link_btn.active {
     color: #666;
@@ -175,31 +166,27 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2
+  color: #1dc4a2;
 }
 .app_text_btn.active {
     color: #88dbcb;
     padding-left: 1px;
     padding-right: 0px;
   }
-
 .app_agreement {
   text-align: center;
   color: #aaa;
-  font-size: 15px
+  font-size: 15px;
 }
-
 .app_agreement input {
     top: -2px;
   }
-
 .app_agreement strong {
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;
-    padding-right: 1px
+    padding-right: 1px;
   }
-
 .app_agreement strong.active {
       padding-left: 1px;
       padding-right: 0;
@@ -211,7 +198,7 @@ html, body {
 
 .header {
   padding: 12px 10px;
-  position: relative
+  position: relative;
 }
 
 .header .bg {
@@ -235,14 +222,16 @@ html, body {
     width: 100%;
     height: auto;
   }
+
 .nav {
   padding: 10px;
   margin: 0 10px;
   border-radius: 5px;
   background: #fff;
-  overflow: hidden
+  overflow: hidden;
 
 }
+
 .nav .nav-item {
     width: 50%;
     font-size: 13px;
@@ -254,27 +243,33 @@ html, body {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    padding: 8px 0
+    padding: 8px 0;
   }
+
 .nav .nav-item:nth-child(1) {
       border-bottom: 1px solid #f2f2f2;
       border-right: 1px solid #f2f2f2;
     }
+
 .nav .nav-item:nth-child(2) {
       border-bottom: 1px solid #f2f2f2;
       padding-left: 8px;
     }
+
 .nav .nav-item:nth-child(3) {
       border-right: 1px solid #f2f2f2;
     }
+
 .nav .nav-item:nth-child(4) {
       padding-left: 8px;
     }
+
 .nav .nav-item img {
       width: 60px;
       height: 60px;
       display: block;
     }
+
 .nav .nav-item span {
       -webkit-box-flex: 1;
           -ms-flex-positive: 1;
@@ -283,11 +278,13 @@ html, body {
       color: #666;
       padding-left: 6px;
     }
+
 .banner {
   margin: 12px 10px 15px;
   border-radius: 5px;
-  overflow: hidden
+  overflow: hidden;
 }
+
 .banner img {
     display: block;
     width: 100%;
@@ -295,7 +292,7 @@ html, body {
   }
 
 .high {
-  padding-bottom: 15px
+  padding-bottom: 15px;
 }
 
 .high .tit {
@@ -311,7 +308,7 @@ html, body {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    padding: 0 5px
+    padding: 0 5px;
   }
 
 .high .body .high_item {
@@ -320,7 +317,7 @@ html, body {
       background-color: #fff;
       margin: 0 5px;
       border-radius: 4px;
-      padding-bottom: 5px
+      padding-bottom: 5px;
     }
 
 .high .body .high_item .row1 {
@@ -341,7 +338,7 @@ html, body {
       }
 
 .low {
-  padding-bottom: 15px
+  padding-bottom: 15px;
 }
 
 .low .tit {
@@ -351,7 +348,7 @@ html, body {
   }
 
 .low .body {
-    padding: 0 10px
+    padding: 0 10px;
   }
 
 .low .body .row {
@@ -364,7 +361,7 @@ html, body {
       display: flex;
       -webkit-box-align: center;
           -ms-flex-align: center;
-              align-items: center
+              align-items: center;
     }
 
 .low .body .row:last-child {
@@ -374,7 +371,7 @@ html, body {
 .low .body .row .l {
         width: 100px;
         -ms-flex-negative: 0;
-            flex-shrink: 0
+            flex-shrink: 0;
       }
 
 .low .body .row .l strong {
@@ -390,7 +387,7 @@ html, body {
 .low .body .row .r {
         -webkit-box-flex: 1;
             -ms-flex-positive: 1;
-                flex-grow: 1
+                flex-grow: 1;
       }
 
 .low .body .row .r strong {

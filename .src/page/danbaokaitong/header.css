@@ -1,0 +1,223 @@
+.header {
+  height: 216px;
+  background:linear-gradient(360deg,rgba(255,255,255,1) 0%,rgba(102,187,106,1) 53%,rgba(102,187,106,1) 100%);
+}
+.title{
+  padding-top: 33px;
+  padding-left: 17px;
+  padding-right: 17px;
+  display: flex;
+  align-items: center;
+  & .icon {
+    width:42px;
+    height:42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 50%;
+    background:rgba(255,255,255,1);
+    font-size:23px;
+    color:rgba(48,49,51,1);
+    flex-shrink: 0;
+    margin-right: 18px;
+  }
+  & .txt {
+    flex-grow: 1;
+    font-size:20px;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+  }
+}
+.rect {
+  height:100px;
+  border-radius:6px;
+  margin-top: 25px;
+  margin-left: 12px;
+  margin-right: 12px;
+  background-color:rgba(255,255,255,1);
+  position: relative;
+  box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+  text-align: center;
+  color:rgba(48,49,51,1);
+  &.normal span, strong{
+    color:rgba(48,49,51,1);
+  }
+  &.info span, &.info strong {
+    color:rgba(245,166,35,1);
+  }
+  &.primary span, &.primary strong {
+    color:rgba(74,144,226,1);
+  }
+  &.waring span, &.waring strong {
+    color:rgba(255,95,57,1);
+  }
+  & .bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width:152px;
+    height:100px;
+    background-image: url(../../image/danbaoKaitong/card_bg.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  & .top {
+    font-size:16px;
+    font-weight:500;
+    line-height:22px;
+    padding-top: 22px;
+  }
+  & .bottom {
+    margin-top: 13px;
+    & span {
+      display: inline-block;
+      height:22px;
+      line-height:19px;
+      font-size:16px;
+      font-weight:bold;
+    }
+    & strong {
+      display: inline-block;
+      height:28px;
+      line-height:28px;
+      font-size:24px;
+      font-weight:bold;
+    }
+  }
+}
+.step {
+  margin-top: 10px;
+  padding: 0 12px;
+  & .step_list {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  & .step_item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all .3s;
+    &:last-child .icon {
+      margin-right: 0;
+    }
+    & .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width:26px;
+      height:26px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background:rgba(255,255,255,1);
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(192,196,204,1);
+      line-height:24px;
+      font-style: normal;
+    }
+    & .txt {
+      display: none;
+      font-size:18px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      line-height:25px;
+    }
+  }
+  & .line {
+    margin-top: 9px;
+    height:4px;
+    background:rgba(245,245,245,1);
+    border-radius:2px;
+    width: 100%;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height:4px;
+      background:rgba(102,187,106,1);
+      border-radius:2px
+    }
+  }
+}
+
+@define-extend activeIcon {
+  width:26px;
+  height:26px;
+  background:rgba(102,187,106,1);
+  border:1px solid rgba(102,187,106,1);
+  font-size:20px;
+  font-family:DINAlternate-Bold,DINAlternate;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:24px;
+}
+
+@for $i from 1 to 6 {
+	.step.step$(i) {
+    .step_list .step_item:nth-child($i){
+      flex-grow: 1;
+      .icon {
+        @extend activeIcon;
+      }
+      .txt {
+        display: block;
+      }
+    }
+    .line::after {
+      width: calc(16% * $(i));
+    }
+  }
+}
+
+.step.step2 {
+  .step_list .step_item:nth-child(1){
+    .icon {
+      @extend activeIcon;
+    }
+  }
+}
+.step.step3 {
+  @for $i from 1 to 2 {
+    .step_list .step_item:nth-child($i){
+      .icon {
+        @extend activeIcon;
+      }
+    }
+  }
+}
+.step.step4 {
+  @for $i from 1 to 3 {
+    .step_list .step_item:nth-child($i){
+      .icon {
+        @extend activeIcon;
+      }
+    }
+  }
+}
+.step.step5 {
+  @for $i from 1 to 4 {
+    .step_list .step_item:nth-child($i){
+      .icon {
+        @extend activeIcon;
+      }
+    }
+  }
+}
+.step.step6 {
+  @for $i from 1 to 5 {
+    .step_list .step_item:nth-child($i){
+      .icon {
+        @extend activeIcon;
+      }
+    }
+  }
+}

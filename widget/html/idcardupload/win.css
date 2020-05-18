@@ -1,23 +1,17 @@
 /* aui reset */
-.aui-radio:checked,
-.aui-radio.aui-checked,
-.aui-checkbox:checked,
-.aui-checkbox.aui-checked {
+.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
   background-color: #1dc4a2 !important;
   border: solid 1px #1dc4a2 !important;
 }
-
 .aui-switch:checked {
   border-color: #1dc4a2 !important;
   background-color: #1dc4a2 !important;
 }
-
 /*1cb594 88dbcb 1aa689 5aae9c*/
-
 /*页面头部*/
 .app_header {
   background-color: #1dc4a2;
-  position: relative
+  position: relative;
 }
 .app_header div {
     width: 55px;
@@ -32,7 +26,7 @@
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
-            justify-content: center
+            justify-content: center;
   }
 .app_header div .aui-iconfont {
       color: #fff;
@@ -64,7 +58,6 @@
     height: 44px;
     padding: 0 44px;
   }
-
 /*块状按钮*/
 .app_btn {
   display: -webkit-box;
@@ -82,7 +75,7 @@
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
-  overflow: hidden
+  overflow: hidden;
 }
 .app_btn.sm {
     height: 44px;
@@ -95,10 +88,9 @@
 .app_btn.loading {
     background-color: #88dbcb;
   }
-
 /*输入框组*/
 .app_ipt_group {
-  padding-top: 20px
+  padding-top: 20px;
 }
 .app_ipt_group .item {
     height: 50px;
@@ -111,7 +103,7 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    border-bottom: 1px solid #ededed
+    border-bottom: 1px solid #ededed;
   }
 .app_ipt_group .item .icon {
       width: 50px;
@@ -126,7 +118,7 @@
               align-items: center;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
-              justify-content: center
+              justify-content: center;
     }
 .app_ipt_group .item .icon .aui-iconfont {
         font-size: 22px;
@@ -150,7 +142,7 @@
 .app_ipt_group .item .btn {
       margin-left: 10px;
       padding-right: 4px;
-      color: #333
+      color: #333;
     }
 .app_ipt_group .item .btn.active {
         color: #666;
@@ -159,12 +151,11 @@
 .app_ipt_group .item .btn.loading {
         color: #666;
       }
-
 /*连接按钮*/
 .app_link_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #333
+  color: #333;
 }
 .app_link_btn.active {
     color: #666;
@@ -175,31 +166,27 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2
+  color: #1dc4a2;
 }
 .app_text_btn.active {
     color: #88dbcb;
     padding-left: 1px;
     padding-right: 0px;
   }
-
 .app_agreement {
   text-align: center;
   color: #aaa;
-  font-size: 15px
+  font-size: 15px;
 }
-
 .app_agreement input {
     top: -2px;
   }
-
 .app_agreement strong {
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;
-    padding-right: 1px
+    padding-right: 1px;
   }
-
 .app_agreement strong.active {
       padding-left: 1px;
       padding-right: 0;
@@ -216,13 +203,12 @@
   line-height: 1.5;
   padding: 12px 15px;
   font-size: 16px;
-  color: #8d9daa
+  color: #8d9daa;
 }
 .tips strong {
     color: #1dc4a2;
     padding: 0 2px;
   }
-
 .upload.active .inner {
   border: 1px solid #88dbcb;
 }
@@ -234,7 +220,7 @@
   margin-top: 20px;
   overflow: hidden;
   position: relative;
-  border-radius: 3px
+  border-radius: 3px;
 }
 .upload .bg {
     background-color: #f5f5f5;
@@ -282,17 +268,14 @@
   margin-top: 20px;
   font-weight: bold;
 }
-
 ul {
   color: #8d9daa;
-  margin-top: 10px
+  margin-top: 10px;
 }
-
 ul li {
     height: 30px;
-    line-height: 30px
+    line-height: 30px;
   }
-
 ul li strong {
       color: #1dc4a2;
       font-weight: normal;

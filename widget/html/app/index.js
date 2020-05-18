@@ -1,27 +1,39 @@
 // api.lockSlidPane();
 
 
-function openBaseinfoFill() {
-  api.openTabLayout({
-    name: 'html/baseinfofill/win',
-    title: '补充基本信息',
-    url: 'widget://html/baseinfofill/win.html',
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
     bgColor: '#fff',
-    softInputMode: 'auto',
-    softInputBarEnabled: false,
-    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
-    bounces: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
+
+function openDanbaoKaitong() {
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      title = _ref6.title;
+
+  api.openTabLayout({
+    name: 'html/danbaostep1/index',
+    title: title,
+    url: 'widget://html/danbaostep1/index.html',
+    bgColor: '#fff',
+    pageParam: {
+      title: title
+    },
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: '#66BB6A',
       color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
+      fontSize: 16,
+      fontWeight: 'normal'
     }
   });
-} // 打开待认证
+}
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -428,13 +440,7 @@ apiready = function apiready() {
   // openBaseinfoFill()
   // openCompanyInfo()
   // // $api.clearStorage()
-  var userinfo = $api.getStorage('userinfo');
-
-  if (userinfo) {
-    openBaseinfoFill();
-  } else {
-    alert('meiyou denglu');
-  } // 认证状态 int
+  var userinfo = $api.getStorage('userinfo'); // 认证状态 int
   // 1：正常
   // 2：待实名认证
   // 3：待人脸审核
@@ -442,22 +448,24 @@ apiready = function apiready() {
   // 5：待补充基本信息
   // 6：人工审核不通过
   // Utils.Router.openPageCreditInformation()
-  // if (userinfo) {
-  //   const authStatus = $api.getStorage('authStatus') || {}
-  //   if (authStatus.status === 1) {
-  //     openTabLayout()
-  //   } else {
-  //     const userType = userinfo.userType
-  //     if (userType === '1') {
-  //       openTodoAuthGeren()
-  //     } else {
-  //       openTodoAuthQiye()
-  //     }
-  //   }
-  // } else {
-  //   openRegLogin()
-  // }
-  // 云修复完成
+
+  if (userinfo) {
+    openDanbaoKaitong({
+      title: '普惠担保'
+    }); // const authStatus = $api.getStorage('authStatus') || {}
+    // if (authStatus.status === 1) {
+    //   openTabLayout()
+    // } else {
+    //   const userType = userinfo.userType
+    //   if (userType === '1') {
+    //     openTodoAuthGeren()
+    //   } else {
+    //     openTodoAuthQiye()
+    //   }
+    // }
+  } else {
+    openRegLogin();
+  } // 云修复完成
 
 
   api.addEventListener({

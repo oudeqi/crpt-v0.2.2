@@ -1,23 +1,17 @@
 /* aui reset */
-.aui-radio:checked,
-.aui-radio.aui-checked,
-.aui-checkbox:checked,
-.aui-checkbox.aui-checked {
+.aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
   background-color: #1dc4a2 !important;
   border: solid 1px #1dc4a2 !important;
 }
-
 .aui-switch:checked {
   border-color: #1dc4a2 !important;
   background-color: #1dc4a2 !important;
 }
-
 /*1cb594 88dbcb 1aa689 5aae9c*/
-
 /*页面头部*/
 .app_header {
   background-color: #1dc4a2;
-  position: relative
+  position: relative;
 }
 .app_header div {
     width: 55px;
@@ -32,7 +26,7 @@
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
-            justify-content: center
+            justify-content: center;
   }
 .app_header div .aui-iconfont {
       color: #fff;
@@ -64,7 +58,6 @@
     height: 44px;
     padding: 0 44px;
   }
-
 /*块状按钮*/
 .app_btn {
   display: -webkit-box;
@@ -82,7 +75,7 @@
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
-  overflow: hidden
+  overflow: hidden;
 }
 .app_btn.sm {
     height: 44px;
@@ -95,10 +88,9 @@
 .app_btn.loading {
     background-color: #88dbcb;
   }
-
 /*输入框组*/
 .app_ipt_group {
-  padding-top: 20px
+  padding-top: 20px;
 }
 .app_ipt_group .item {
     height: 50px;
@@ -111,7 +103,7 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    border-bottom: 1px solid #ededed
+    border-bottom: 1px solid #ededed;
   }
 .app_ipt_group .item .icon {
       width: 50px;
@@ -126,7 +118,7 @@
               align-items: center;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
-              justify-content: center
+              justify-content: center;
     }
 .app_ipt_group .item .icon .aui-iconfont {
         font-size: 22px;
@@ -150,7 +142,7 @@
 .app_ipt_group .item .btn {
       margin-left: 10px;
       padding-right: 4px;
-      color: #333
+      color: #333;
     }
 .app_ipt_group .item .btn.active {
         color: #666;
@@ -159,12 +151,11 @@
 .app_ipt_group .item .btn.loading {
         color: #666;
       }
-
 /*连接按钮*/
 .app_link_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #333
+  color: #333;
 }
 .app_link_btn.active {
     color: #666;
@@ -175,31 +166,27 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2
+  color: #1dc4a2;
 }
 .app_text_btn.active {
     color: #88dbcb;
     padding-left: 1px;
     padding-right: 0px;
   }
-
 .app_agreement {
   text-align: center;
   color: #aaa;
-  font-size: 15px
+  font-size: 15px;
 }
-
 .app_agreement input {
     top: -2px;
   }
-
 .app_agreement strong {
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;
-    padding-right: 1px
+    padding-right: 1px;
   }
-
 .app_agreement strong.active {
       padding-left: 1px;
       padding-right: 0;
@@ -211,13 +198,11 @@ html, body {
 .container {
   padding: 15px;
 }
-
 .secl {
   background-color: #fff;
   border-radius: 5px;
   overflow: hidden;
 }
-
 .secl_header {
   height: 50px;
   display: -webkit-box;
@@ -225,9 +210,8 @@ html, body {
   display: flex;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
-          align-items: stretch
+          align-items: stretch;
 }
-
 .secl_header .btn {
     -ms-flex-negative: 0;
         flex-shrink: 0;
@@ -242,7 +226,6 @@ html, body {
             justify-content: center;
     width: 80px;
   }
-
 .secl_header .tit {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
@@ -257,34 +240,28 @@ html, body {
         -ms-flex-pack: center;
             justify-content: center;
   }
-
 .active {
   background-color: #aaa;
   color: #fff;
 }
-
 .secl_body {
   text-align: center;
   border-top: 1px solid #f3f3f3;
   padding: 20px;
-  height: 155px
+  height: 155px;
 }
-
 .secl_body p {
     font-size: 16px;
-    color: #999
+    color: #999;
   }
-
 .secl_body p strong {
       color: orange;
       font-size: 30px;
       font-weight: bold;
     }
-
 .secl_body p span {
       color: #999;
     }
-
 .secl_body .warning {
     background-color: orange;
     font-size: 14px;
@@ -301,18 +278,15 @@ html, body {
   color: #999;
   text-align: center;
 }
-
 ul {
   border-radius: 5px;
-  overflow: hidden
+  overflow: hidden;
 }
-
 ul li {
     border-bottom: 1px solid #f3f3f3;
     background: #fff;
     padding: 15px;
   }
-
 .row1 {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -320,31 +294,26 @@ ul li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 100%
+  width: 100%;
 }
-
 .row1 .name {
     color: #333;
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
   }
-
 .row1 .warning {
     color: orange;
     font-size: 14px;
     margin-right: 10px;
   }
-
 .row1 .data {
     color: #999;
-    font-size: 14px
+    font-size: 14px;
   }
-
 .row1 .data.red {
       color: red;
     }
-
 .row2 {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -352,31 +321,26 @@ ul li {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  margin-top: 10px
+  margin-top: 10px;
 }
-
 .row2 .txt {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
-            flex-grow: 1
+            flex-grow: 1;
   }
-
 .row2 .txt strong {
       font-size: 20px;
       margin-right: 10px;
     }
-
 .row2 .txt span {
       color: #999;
       font-size: 14px;
     }
-
 .row2 .txt i {
       color: #999;
       font-size: 15px;
       font-style: normal;
     }
-
 .row2 .btn {
     -ms-flex-negative: 0;
         flex-shrink: 0;
@@ -396,7 +360,6 @@ ul li {
         -ms-flex-pack: center;
             justify-content: center;
   }
-
 .row2 .btn.disabled {
     background-color: #aaa;
   }
@@ -409,7 +372,7 @@ ul li {
 .contactus {
   padding: 40px;
   text-align: center;
-  color: #1dc4a2
+  color: #1dc4a2;
 }
 .contactus span {
     text-decoration: underline;
@@ -424,7 +387,7 @@ ul li {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 20px 10px 8px
+  padding: 20px 10px 8px;
 }
 .listTit strong {
     font-size: 15px;

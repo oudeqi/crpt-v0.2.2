@@ -851,6 +851,25 @@ function openProductRecommend (pageParam) {
 }
 
 
+// 开通担保
+function openDanbaoKaitong ({title} = {}) {
+  api.openTabLayout({
+    name: 'html/danbaostep1/index',
+    title: title,
+    url: 'widget://html/danbaostep1/index.html',
+    bgColor: '#fff',
+    pageParam: { title },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#66BB6A',
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'normal',
+    }
+  })
+}
+
 
 export {
   openLeftPane,
@@ -890,5 +909,6 @@ export {
   openRepayRecord,
   openProductDetails,
   openCityList,
-  openProductRecommend
+  openProductRecommend,
+  openDanbaoKaitong
 }

@@ -1,5 +1,6 @@
 import {
   // openDrawerLayout,
+  openDanbaoKaitong,
   openMsgCenter,
   openTabLayout,
   openRegLogin,
@@ -39,12 +40,6 @@ apiready = function () {
   // openCompanyInfo()
   // // $api.clearStorage()
   const userinfo = $api.getStorage('userinfo')
-
-  if (userinfo) {
-    openBaseinfoFill()
-  } else {
-    alert('meiyou denglu')
-  }
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -54,21 +49,22 @@ apiready = function () {
   // 6：人工审核不通过
   // Utils.Router.openPageCreditInformation()
 
-  // if (userinfo) {
-  //   const authStatus = $api.getStorage('authStatus') || {}
-  //   if (authStatus.status === 1) {
-  //     openTabLayout()
-  //   } else {
-  //     const userType = userinfo.userType
-  //     if (userType === '1') {
-  //       openTodoAuthGeren()
-  //     } else {
-  //       openTodoAuthQiye()
-  //     }
-  //   }
-  // } else {
-  //   openRegLogin()
-  // }
+  if (userinfo) {
+    openDanbaoKaitong({title: '普惠担保'})
+    // const authStatus = $api.getStorage('authStatus') || {}
+    // if (authStatus.status === 1) {
+    //   openTabLayout()
+    // } else {
+    //   const userType = userinfo.userType
+    //   if (userType === '1') {
+    //     openTodoAuthGeren()
+    //   } else {
+    //     openTodoAuthQiye()
+    //   }
+    // }
+  } else {
+    openRegLogin()
+  }
 
   // 云修复完成
   api.addEventListener({

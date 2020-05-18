@@ -38,6 +38,7 @@ apiready = function apiready() {
   api.openFrameGroup({
     name: 'orderFrameGroup',
     index: index,
+    scrollEnabled: false,
     fixedOn: 'ui_window',
     // preload: 3,
     rect: {
