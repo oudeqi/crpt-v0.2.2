@@ -1,3 +1,20 @@
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -25,93 +42,6 @@ function _extends() {
 
 module.exports = _extends;
 });
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-var arrayWithHoles = _arrayWithHoles;
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-var iterableToArrayLimit = _iterableToArrayLimit;
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-var arrayLikeToArray = _arrayLikeToArray;
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-
-var unsupportedIterableToArray = _unsupportedIterableToArray;
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-var nonIterableRest = _nonIterableRest;
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
-}
-
-var slicedToArray = _slicedToArray;
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 var runtime_1 = createCommonjsModule(function (module) {
 /**
@@ -1123,14 +1053,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	openPageCreditInformation: openPageCreditInformation,
-	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-	openAttachmentInfo: openAttachmentInfo,
-	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openAttachmentInfo: openAttachmentInfo,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -1751,15 +1681,19 @@ var Service = /*#__PURE__*/function () {
     classCallCheck(this, Service);
 
     this.ajaxUrls = {
-      postGuaranteeHouseUrl: '/crpt-guarantee/guarantor/house/insert',
-      getGuaranteeHouseUrl: '/crpt-guarantee/guarantor/house/query'
+      getAttachmentUrl: '/crpt-guarantee/gt/attachment/list',
+      deleteAttachmentUrl: '/crpt-guarantee/gt/attachment/delete',
+      saveAttachmentUrl: '/crpt-guarantee/gt/attachment/save',
+      updateAttachmentUrl: '/crpt-guarantee/gt/attachment/update',
+      submitAttachmentUrl: '/crpt-guarantee/gt/attachment/submit',
+      submitInfoUrl: '/crpt-guarantee/gt/attachment/submit'
     };
   }
 
   createClass(Service, [{
-    key: "postGuaranteeHouseList",
-    value: function postGuaranteeHouseList(params) {
-      return http.post(this.ajaxUrls.postGuaranteeHouseUrl, {
+    key: "postAttachment",
+    value: function postAttachment(params) {
+      return http.post(this.ajaxUrls.postAttachmentUrl, {
         body: params
       }, {
         headers: {
@@ -1770,9 +1704,59 @@ var Service = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "getGuaranteeHouseList",
-    value: function getGuaranteeHouseList(params) {
-      return http.get(this.ajaxUrls.getGuaranteeHouseUrl, {
+    key: "getAttachment",
+    value: function getAttachment(params) {
+      return http.get(this.ajaxUrls.getAttachmentUrl, {
+        values: params
+      }, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "deleteAttachment",
+    value: function deleteAttachment(params) {
+      return http.get(this.ajaxUrls.deleteAttachmentUrl, {
+        values: params
+      }, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "saveAttachment",
+    value: function saveAttachment(params, files) {
+      return http.upload(this.ajaxUrls.saveAttachmentUrl, {
+        values: params,
+        files: files
+      }, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "updateAttachment",
+    value: function updateAttachment(params, files) {
+      return http.upload(this.ajaxUrls.updateAttachmentUrl, {
+        values: params,
+        files: files
+      }, {
+        headers: {
+          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "submitInfo",
+    value: function submitInfo(params) {
+      return http.get(this.ajaxUrls.submitInfoUrl, {
         values: params
       }, {
         headers: {
@@ -1816,6 +1800,14 @@ var PageController = /*#__PURE__*/function (_Service) {
       uploadImgType: {
         0: 'camera',
         1: 'album'
+      },
+      remap: {
+        approvalStatus: {
+          0: '刚开始',
+          1: '待审核',
+          2: '已审核',
+          3: '已作废'
+        }
       }
     }; //  统一管理数据model data
 
@@ -1823,17 +1815,18 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
-      houseList: [{
-        houseNo: '',
-        area: '',
-        housePrice: '',
-        addrDetail: '',
-        addrProvince: '',
-        addrProvinceCode: '',
-        addrCity: '',
-        addrCityCode: '',
-        addrCounty: '',
-        addrCountyCode: ''
+      attachmentList: [{
+        attachId: '',
+        // gtId: '',
+        fileId: '',
+        productFileId: '',
+        productFileRequire: '',
+        fileComment: '',
+        fileContentType: '',
+        approvalStatus: '' // approvalPersonName: '',
+        // createDate: '',
+        // updateDate: ''
+
       }]
     };
     return _this;
@@ -1852,7 +1845,11 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function bindEvents() {
       this.bindAddEvents();
       this.bindDelEvents();
-      this.bindSubmitEvents();
+      this.bindImageClickEvents();
+      this.bindSaveBtnClickEvents();
+      this.bindPreviewBoxEvents();
+      this.bindClearPreviewEvents();
+      this.bindSubmitEvents(); // this.bindSubmitEvents()
     }
   }, {
     key: "initData",
@@ -1866,23 +1863,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                 Utils$1.UI.showLoading('加载中');
                 _context.prev = 1;
                 _context.next = 4;
-                return this.getGuaranteeHouseList({
+                return this.getAttachment({
                   gtId: this.data.gtId
                 });
 
               case 4:
                 res = _context.sent;
-                this.data.houseList = res.data.length > 0 ? res.data : [{
-                  houseNo: '',
-                  area: '',
-                  housePrice: '',
-                  addrDetail: '',
-                  addrProvince: '',
-                  addrProvinceCode: '',
-                  addrCity: '',
-                  addrCityCode: '',
-                  addrCounty: '',
-                  addrCountyCode: ''
+                this.data.attachmentList = res.data.length > 0 ? res.data : [{
+                  attachId: '',
+                  // gtId: '',
+                  fileId: '',
+                  productFileId: '',
+                  productFileRequire: '',
+                  fileComment: '',
+                  fileContentType: '',
+                  approvalStatus: '' // approvalPersonName: '',
+                  // createDate: '',
+                  // updateDate: ''
+
                 }];
                 _context.next = 11;
                 break;
@@ -1893,11 +1891,10 @@ var PageController = /*#__PURE__*/function (_Service) {
                 Utils$1.UI.toast('服务超时');
 
               case 11:
-                this.compilerTemplate(this.data.houseList);
-                this.bindCityPickerEvents();
+                this.compilerTemplate(this.data.attachmentList);
                 Utils$1.UI.hideLoading();
 
-              case 14:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -1920,21 +1917,167 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       addBtn.onclick = function () {
         self.searchAllData();
-        self.data.houseList.push({
-          houseNo: '',
-          area: '',
-          housePrice: '',
-          addrDetail: '',
-          addrProvince: '',
-          addrProvinceCode: '',
-          addrCity: '',
-          addrCityCode: '',
-          addrCounty: '',
-          addrCountyCode: ''
+        self.data.attachmentList.push({
+          attachId: '',
+          // gtId: '',
+          fileId: '',
+          productFileId: '',
+          productFileRequire: '',
+          fileComment: '',
+          fileContentType: '',
+          approvalStatus: '' // approvalPersonName: '',
+          // createDate: '',
+          // updateDate: ''
+
         });
-        self.compilerTemplate(self.data.houseList);
-        self.bindCityPickerEvents();
+        self.compilerTemplate(self.data.attachmentList);
       };
+    } //  绑定图片点击事件
+
+  }, {
+    key: "bindImageClickEvents",
+    value: function bindImageClickEvents() {
+      var self = this;
+
+      document.querySelector('#img-bind-doc').onclick = /*#__PURE__*/function () {
+        var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(e) {
+          var ev, _i;
+
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  ev = window.event || e;
+
+                  if (ev.target.classList.contains('a-img-url')) {
+                    _i = ev.target.getAttribute('data-index'); //  1. 如果有图片，则预览
+
+                    if (self.data.attachmentList[_i].fileId) {
+                      document.querySelector('#preview').classList.remove('hidden');
+                      document.querySelector('#pv-img').src = ev.target.getAttribute('src');
+                      self.data.currentPreviewIndex = _i;
+                    } else {
+                      // 上传
+                      Utils$1.File.actionSheet('请选择', ['相机', '相册'], function (index) {
+                        Utils$1.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
+                          if (res) {
+                            if (res.data) {
+                              self.data.attachmentList[_i].fileDataStream = res.data;
+                              ev.target.src = res.data;
+                              Utils$1.UI.toast('上传成功');
+                            } else {
+                              Utils$1.UI.toast('未上传成功');
+                            }
+                          }
+                        });
+                      });
+                    }
+                  }
+
+                case 2:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }();
+    } // 绑定附件保存按钮
+
+  }, {
+    key: "bindSaveBtnClickEvents",
+    value: function bindSaveBtnClickEvents() {
+      var self = this;
+
+      document.querySelector('#save-bind-doc').onclick = /*#__PURE__*/function () {
+        var _ref2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(e) {
+          var ev, _i, res, _res;
+
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  ev = window.event || e;
+
+                  if (!ev.target.classList.contains('update')) {
+                    _context3.next = 28;
+                    break;
+                  }
+
+                  _i = ev.target.getAttribute('data-index'); // 先刷一遍本地离线备份
+
+                  self.searchAllData();
+                  Utils$1.UI.showLoading('提交中...');
+                  _context3.prev = 5;
+
+                  if (!self.data.attachmentList[_i].attachId) {
+                    _context3.next = 15;
+                    break;
+                  }
+
+                  _context3.next = 9;
+                  return self.updateAttachment({
+                    gtId: self.data.gtId,
+                    attachId: self.data.attachmentList[_i].attachId,
+                    fileComment: self.data.attachmentList[_i].fileComment
+                  }, {
+                    fileDataStream: self.data.attachmentList[_i].fileDataStream
+                  });
+
+                case 9:
+                  res = _context3.sent;
+                  self.data.attachmentList[_i].fileId = res.data.fileId;
+                  self.compilerTemplate(self.data.attachmentList);
+                  Utils$1.UI.toast('操作成功');
+                  _context3.next = 22;
+                  break;
+
+                case 15:
+                  _context3.next = 17;
+                  return self.saveAttachment({
+                    gtId: self.data.gtId,
+                    fileContentType: self.data.attachmentList[_i].fileContentType || 0,
+                    fileComment: self.data.attachmentList[_i].fileComment,
+                    productFileId: self.data.attachmentList[_i].productFileId || ''
+                  }, {
+                    fileDataStream: self.data.attachmentList[_i].fileDataStream
+                  });
+
+                case 17:
+                  _res = _context3.sent;
+                  self.data.attachmentList[_i].attachId = _res.data.attachId;
+                  self.data.attachmentList[_i].fileId = _res.data.fileId;
+                  self.compilerTemplate(self.data.attachmentList);
+                  Utils$1.UI.toast('操作成功');
+
+                case 22:
+                  _context3.next = 27;
+                  break;
+
+                case 24:
+                  _context3.prev = 24;
+                  _context3.t0 = _context3["catch"](5);
+                  Utils$1.UI.toast(_context3.t0.msg);
+
+                case 27:
+                  Utils$1.UI.hideLoading();
+
+                case 28:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, null, [[5, 24]]);
+        }));
+
+        return function (_x2) {
+          return _ref2.apply(this, arguments);
+        };
+      }();
     } // 绑定删除事件
 
   }, {
@@ -1942,136 +2085,174 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function bindDelEvents() {
       var self = this;
 
-      document.querySelector('#credit-list').onclick = function (e) {
-        var ev = window.event || e;
+      document.querySelector('#credit-list').onclick = /*#__PURE__*/function () {
+        var _ref3 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4(e) {
+          var ev, index, res, _res2;
 
-        if (ev.target.classList.contains('del')) {
-          //  删除前需将model-tree检出，防止数据直接被抹除
-          self.searchAllData();
-          var index = ev.target.getAttribute('data-index');
-          self.data.houseList.splice(index, 1);
-          self.compilerTemplate(self.data.houseList);
-          self.bindCityPickerEvents();
+          return regenerator.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  ev = window.event || e;
+
+                  if (!ev.target.classList.contains('del')) {
+                    _context4.next = 16;
+                    break;
+                  }
+
+                  //  删除前需将model-tree检出，防止数据直接被抹除
+                  self.searchAllData();
+                  index = ev.target.getAttribute('data-index'); // 分情况进行删除
+                  // 1. 产品自带的附件，删除调用后端接口
+
+                  if (!(self.data.attachmentList[index].fileContentType >= 1)) {
+                    _context4.next = 11;
+                    break;
+                  }
+
+                  _context4.next = 7;
+                  return self.deleteAttachment({
+                    gtId: self.data.gtId,
+                    attachId: self.data.attachmentList[index].attachId
+                  });
+
+                case 7:
+                  res = _context4.sent;
+
+                  // 本地离线备份 重置 reset
+                  _extends_1(self.data.attachmentList[index], {
+                    attachId: '',
+                    fileId: '',
+                    fileComment: '',
+                    approvalStatus: 0
+                  });
+
+                  _context4.next = 15;
+                  break;
+
+                case 11:
+                  _context4.next = 13;
+                  return self.deleteAttachment({
+                    gtId: self.data.gtId,
+                    attachId: self.data.attachmentList[index].attachId
+                  });
+
+                case 13:
+                  _res2 = _context4.sent;
+                  // 本地离线备份直接 delete
+                  self.data.attachmentList.splice(index, 1);
+
+                case 15:
+                  self.compilerTemplate(self.data.attachmentList);
+
+                case 16:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        }));
+
+        return function (_x3) {
+          return _ref3.apply(this, arguments);
+        };
+      }();
+    } // 绑定预览图遮罩事件
+
+  }, {
+    key: "bindPreviewBoxEvents",
+    value: function bindPreviewBoxEvents() {
+      document.querySelector('#preview').onclick = function (e) {
+
+        if (e.target.id === 'preview') {
+          this.classList.add('hidden');
         }
       };
+    } //  绑定清空附件预览图
+
+  }, {
+    key: "bindClearPreviewEvents",
+    value: function bindClearPreviewEvents() {
+      var self = this;
+
+      document.querySelector('#pv-img-del').onclick = function () {
+        _extends_1(self.data.attachmentList[self.data.currentPreviewIndex], {
+          fileId: '',
+          fileDataStream: ''
+        });
+
+        self.searchAllData();
+        self.compilerTemplate(self.data.attachmentList);
+        document.querySelector('#preview').classList.add('hidden');
+      };
+    } //  提交总表单事件
+
+  }, {
+    key: "bindSubmitEvents",
+    value: function bindSubmitEvents() {
+      var self = this;
+      document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
+        var res;
+        return regenerator.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                Utils$1.UI.showLoading('提交中');
+                _context5.prev = 1;
+                _context5.next = 4;
+                return self.submitInfo({
+                  gtId: self.data.gtId
+                });
+
+              case 4:
+                res = _context5.sent;
+                Utils$1.UI.toast('操作成功');
+                Utils$1.Router.closeCurrentWinAndRefresh({
+                  winName: 'html/credit_information/index',
+                  script: 'window.location.reload();'
+                });
+                _context5.next = 12;
+                break;
+
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](1);
+                Utils$1.UI.toast(_context5.t0.msg);
+
+              case 12:
+                Utils$1.UI.hideLoading();
+
+              case 13:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[1, 9]]);
+      }));
     } // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
 
   }, {
     key: "searchAllData",
     value: function searchAllData() {
       var self = this;
-      var newHouseList = self.data.houseList.map(function (item, i) {
+      var newAttachmentList = self.data.attachmentList.map(function (item, i) {
         return _objectSpread$1({}, item, {
-          houseNo: document.querySelector("#houseNo_".concat(i)).value,
-          housePrice: Number(document.querySelector("#housePrice_".concat(i)).value),
-          area: document.querySelector("#area_".concat(i)).value,
-          addrDetail: document.querySelector("#addrDetail_".concat(i)).value
+          fileComment: document.querySelector("#fileComment_".concat(i)).value
         });
       });
-      this.data.houseList = newHouseList;
-    } // 绑定city picker组件
-
-  }, {
-    key: "bindCityPickerEvents",
-    value: function bindCityPickerEvents() {
-      var self = this;
-      Array.from(document.querySelectorAll('.fc_c_city_label')).forEach(function (dom, i) {
-        dom.onclick = function () {
-          Utils$1.UI.setCityPicker({
-            success: function success(selected) {
-              var _selected = slicedToArray(selected, 3),
-                  province = _selected[0],
-                  city = _selected[1],
-                  district = _selected[2]; // const index = dom.getAttribute('data-index')
-
-
-              _extends_1(self.data.houseList[i], {
-                addrProvince: province.name,
-                addrProvinceCode: province.id,
-                addrCity: city.name,
-                addrCityCode: city.id,
-                addrCounty: district.name,
-                addrCountyCode: district.id
-              });
-
-              dom.innerHTML = "".concat(province.name, " ").concat(city.name, " ").concat(district.name);
-              dom.classList.add('selected');
-            },
-            data: 'widget://res/city.json'
-          });
-        };
-      });
-    } //  绑定提交房产信息
-
-  }, {
-    key: "bindSubmitEvents",
-    value: function bindSubmitEvents() {
-      var self = this;
-      document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var isValidate, res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                self.searchAllData(); // 校验是否还有未填写的数据
-
-                isValidate = !self.data.houseList.some(function (item, i) {
-                  return !item.houseNo || !item.housePrice || !item.area || !item.addrDetail || !item.addrProvince;
-                });
-
-                if (isValidate) {
-                  _context2.next = 5;
-                  break;
-                }
-
-                Utils$1.UI.toast('还有信息未填完');
-                return _context2.abrupt("return");
-
-              case 5:
-                Utils$1.UI.showLoading('提交中');
-                _context2.prev = 6;
-                _context2.next = 9;
-                return self.postGuaranteeHouseList({
-                  type: 1,
-                  gtId: self.data.gtId,
-                  gtCreditId: self.data.gtCreditId,
-                  houseList: self.data.houseList
-                });
-
-              case 9:
-                res = _context2.sent;
-                Utils$1.Router.closeCurrentWinAndRefresh({
-                  winName: 'html/guarantee_application_index/index',
-                  script: 'window.location.reload();'
-                });
-                _context2.next = 16;
-                break;
-
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](6);
-                Utils$1.UI.toast('服务超时');
-
-              case 16:
-                Utils$1.UI.hideLoading();
-
-              case 17:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[6, 13]]);
-      }));
+      this.data.attachmentList = newAttachmentList;
     } // 编译html模板
 
   }, {
     key: "compilerTemplate",
     value: function compilerTemplate(list) {
+      var self = this;
+
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u623F\u4EA7<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u8BC1\u53F7</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"houseNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.houseNo || '', "\"/>\n                        <div class=\"fc_unit icon_house_scan\" id=\"OCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u5EFA\u7B51\u9762\u79EF</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\" id=\"area_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.area, "\">\n                        <div class=\"fc_unit\">\u5E73\u65B9\u7C73</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"housePrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.housePrice || '', "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n\n             <div class=\"form-cell_shell top\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u5730\u5740</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common bd\">\n                        <div class=\"fc_c_city\" >\n                            <span id=\"address_").concat(i, "\" class=\"fc_c_city_label ").concat(item.addrProvince && 'selected', "\" data-index=\"").concat(i, "\">\n                            ").concat(item.addrProvince ? item.addrProvince + ' ' + item.addrCity + ' ' + item.addrCounty : '选择 城市/区域', "\n                            </span>\n                        </div>\n                    </div>\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" id=\"addrDetail_").concat(i, "\" value=\"").concat(item.addrDetail || '', "\" type=\"text\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\" />\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\u9644\u4EF6<b>".concat(i + 1, "</b> <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58\u5F53\u524D\u9644\u4EF6</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n<!--                    <span data-url=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" class=\"a-img-bg\" style=\"background: url(").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, ");background-position: center center;background-size: 100% 100%;background-repeat: no-repeat;\"></span>-->\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
-      document.querySelector('#credit-list').innerHTML = _html; // alert(_html)
+      document.querySelector('#credit-list').innerHTML = _html;
     }
   }]);
 

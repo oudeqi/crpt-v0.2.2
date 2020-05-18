@@ -28,8 +28,16 @@ class PageController extends Service {
             const res = await this.getQueryGuaranteeMain()
             const {data} = res
             this.data.flowStatus = data.flowStatus
+            this.data.applyStatus = data.applyStatus
             this.data.gtId = data.gtId
             this.data.gtCreditId = data.gtCreditId
+            //   审核中
+            if(data.applyStatus === 2) {
+                let submitBtn = document.querySelector('#submit')
+                submitBtn.innerHTML = '审核中...'
+                submitBtn.setAttribute('disabled', true)
+                submitBtn.classList.add('disabled')
+            }
         }catch(e) {
             Utils.UI.toast('服务超时')
         }
@@ -40,7 +48,6 @@ class PageController extends Service {
 
     initUIModal() {
         const self = this
-
         Array
             .from(document.querySelectorAll('.cl-cell_text'))
             .forEach((dom, i) => {
@@ -56,15 +63,17 @@ class PageController extends Service {
 
     bindEvents() {
         this.bindRouterPage()
+        this.bindSubmitEvents()
     }
 
     bindRouterPage() {
         const self = this
         Array
-            .from(document.querySelectorAll('.cl-cell_text'))
+            .from(document.querySelectorAll('.cl-cell'))
             .forEach((dom, i) => {
+                let domChild = dom.querySelector('.cl-cell_text')
                 dom.onclick = function () {
-                    if (dom.classList.contains('done') || dom.classList.contains('next')) {
+                    if (true || domChild.classList.contains('done') || domChild.classList.contains('next')) {
                         Utils.Router[dom.getAttribute('data-router')]({
                             pageParam: {gtId: self.data.gtId, flowStatus: self.data.flowStatus, gtCreditId: self.data.gtCreditId}
                         })
@@ -77,6 +86,24 @@ class PageController extends Service {
                     }
                 }
             })
+    }
+    // 提交
+    async bindSubmitEvents() {
+        const self = this
+        document.querySelector('#submit').onclick = async function () {
+            // 未提交才可以修改
+            if(self.data.applyStatus === 1) {
+                Utils.UI.showLoading('提交中')
+                try {
+                    const res = await self.submitCreditStep({gtId: self.data.gtId})
+                    Utils.UI.toast('提交成功')
+                    window.location.reload()
+                }catch(e) {
+                    Utils.UI.toast(e.msg)
+                }
+                Utils.UI.hideLoading()
+            }
+        }
     }
 }
 
