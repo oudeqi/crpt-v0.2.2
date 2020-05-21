@@ -1253,7 +1253,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false

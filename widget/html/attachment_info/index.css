@@ -440,6 +440,12 @@ body {
       -ms-flex-align: center;
           align-items: center;
 }
+.cl-cell .cl-cell_box .cl-cell_text .update {
+  color: #66bb6a;
+  font-size: 14px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
 .cl-cell .cl-cell_box .cl-cell_text .del {
   color: #66bb6a;
   font-size: 14px;
@@ -566,8 +572,21 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: relative;
+}
+.a-img .def {
+  width: 18px;
+  height: 18px;
+  background: url(../../image/guarantee/camera.png) no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 0;
+  left: 35px;
+  top: 35px;
 }
 .a-img .a-img-url {
+  position: relative;
+  z-index: 1;
   height: 100%;
 }
 .a-img .a-img-bg {
@@ -618,7 +637,6 @@ body {
   width: 68px;
   height: 24px;
   line-height: 24px;
-  background: #909399;
   border-radius: 12px;
   font-size: 14px;
   font-family: PingFang-SC-Medium, PingFang-SC;

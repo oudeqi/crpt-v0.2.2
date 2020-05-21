@@ -407,7 +407,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false
@@ -441,8 +441,8 @@ new Utils();
 apiready = function apiready() {
   // openBaseinfoFill()
   // openCompanyInfo()
-  // // $api.clearStorage()
-  var userinfo = $api.getStorage('userinfo');
+  // $api.clearStorage()
+  var userinfo = $api.getStorage('userinfo'); // Utils.Router.openPageCreditInformation()
 
   if (userinfo) {
     openBaseinfoFill();

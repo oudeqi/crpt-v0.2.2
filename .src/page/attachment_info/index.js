@@ -21,7 +21,7 @@ class PageController extends Service {
             },
             remap: {
                 approvalStatus: {
-                    0: '刚开始',
+                    0: '',
                     1: '待审核',
                     2: '已审核',
                     3: '已作废'
@@ -124,6 +124,7 @@ class PageController extends Service {
             if (ev.target.classList.contains('a-img-url')) {
                 let _i = ev.target.getAttribute('data-index')
                 //  1. 如果有图片，则预览
+                // alert(self.data.attachmentList[_i].fileId)
                 if (self.data.attachmentList[_i].fileId) {
                     document.querySelector('#preview').classList.remove('hidden')
                     document.querySelector('#pv-img').src = ev.target.getAttribute('src')
@@ -187,7 +188,7 @@ class PageController extends Service {
                         Utils.UI.toast('操作成功')
                     }
                 } catch (e) {
-                    Utils.UI.toast(e.msg)
+                    Utils.UI.toast(e)
                 }
                 Utils.UI.hideLoading()
             }
@@ -308,8 +309,8 @@ class PageController extends Service {
         <div class="form-body">
             <div class="form-cell_shell" data-index="${i}">
                 <div class="a-img">
+                    <span class="def"></span>
                     <img class="a-img-url" src="${baseUrl}/crpt-file/file/download/${item.fileId}" alt="" id="fileId_${i}" data-index="${i}">
-<!--                    <span data-url="${baseUrl}/crpt-file/file/download/${item.fileId}" class="a-img-bg" style="background: url(${baseUrl}/crpt-file/file/download/${item.fileId});background-position: center center;background-size: 100% 100%;background-repeat: no-repeat;"></span>-->
                 </div>
                 <div class="a-text-box">
                     <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}">${item.fileComment || ''}</textarea>

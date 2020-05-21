@@ -1253,7 +1253,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false
@@ -1803,7 +1803,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       },
       remap: {
         approvalStatus: {
-          0: '刚开始',
+          0: '',
           1: '待审核',
           2: '已审核',
           3: '已作废'
@@ -1951,6 +1951,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                   if (ev.target.classList.contains('a-img-url')) {
                     _i = ev.target.getAttribute('data-index'); //  1. 如果有图片，则预览
+                    // alert(self.data.attachmentList[_i].fileId)
 
                     if (self.data.attachmentList[_i].fileId) {
                       document.querySelector('#preview').classList.remove('hidden');
@@ -2061,7 +2062,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 case 24:
                   _context3.prev = 24;
                   _context3.t0 = _context3["catch"](5);
-                  Utils$1.UI.toast(_context3.t0.msg);
+                  Utils$1.UI.toast(_context3.t0);
 
                 case 27:
                   Utils$1.UI.hideLoading();
@@ -2249,7 +2250,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\u9644\u4EF6<b>".concat(i + 1, "</b> <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58\u5F53\u524D\u9644\u4EF6</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n<!--                    <span data-url=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" class=\"a-img-bg\" style=\"background: url(").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, ");background-position: center center;background-size: 100% 100%;background-repeat: no-repeat;\"></span>-->\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\u9644\u4EF6<b>".concat(i + 1, "</b> <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58\u5F53\u524D\u9644\u4EF6</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <span class=\"def\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html;

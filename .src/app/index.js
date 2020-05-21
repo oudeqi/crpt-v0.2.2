@@ -37,9 +37,10 @@ import Utils from '../utils'
 apiready = function () {
   // openBaseinfoFill()
   // openCompanyInfo()
-  // // $api.clearStorage()
-  const userinfo = $api.getStorage('userinfo')
+  // $api.clearStorage()
 
+  const userinfo = $api.getStorage('userinfo')
+  // Utils.Router.openPageCreditInformation()
   if (userinfo) {
     openBaseinfoFill()
   } else {
@@ -85,7 +86,6 @@ apiready = function () {
       }
     })
   })
-
   // 点击启动页面
   api.addEventListener({
     name:'launchviewclicked'
