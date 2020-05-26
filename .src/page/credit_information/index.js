@@ -32,7 +32,7 @@ class PageController extends Service {
             this.data.gtId = data.gtId
             this.data.gtCreditId = data.gtCreditId
             //   审核中
-            if(data.applyStatus === 2) {
+            if(data.applyStatus === 2 && data.creditStatus === 1) {
                 let submitBtn = document.querySelector('#submit')
                 submitBtn.innerHTML = '审核中...'
                 submitBtn.setAttribute('disabled', true)

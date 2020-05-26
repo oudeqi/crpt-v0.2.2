@@ -1,7 +1,7 @@
 import Router from './router'
 import UI from './ui'
 import File from './file'
-
+import DictFilter from './dict_filter'
 /**
  * Utils class
  * @authro liyang
@@ -12,6 +12,7 @@ class Utils {
         this.Router = new Router()
         this.UI = new UI()
         this.File = new File()
+        this.DictFilter = DictFilter
     }
 }
 export default new Utils()

@@ -96,23 +96,6 @@ function _slicedToArray(arr, i) {
 
 var slicedToArray = _slicedToArray;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 var runtime_1 = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -846,6 +829,23 @@ try {
 
 var regenerator = runtime_1;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -1334,6 +1334,16 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
 /**
  * Utils class
  * @authro liyang
@@ -1346,6 +1356,7 @@ var Utils = function Utils() {
   this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
+  this.DictFilter = codeMapFilter;
 };
 
 var Utils$1 = new Utils();
@@ -1629,7 +1640,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1762,10 +1780,10 @@ var Service = /*#__PURE__*/function () {
       return http.post(this.ajaxUrls.postGuaranteeHouseUrl, {
         body: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
+        //     'Content-Type': 'application/json'
+        // },
         timeout: 3000
       });
     }
@@ -1775,9 +1793,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.getGuaranteeHouseUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1833,7 +1851,8 @@ var PageController = /*#__PURE__*/function (_Service) {
         addrCity: '',
         addrCityCode: '',
         addrCounty: '',
-        addrCountyCode: ''
+        addrCountyCode: '',
+        pictureId: ''
       }]
     };
     return _this;
@@ -1872,7 +1891,11 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 4:
                 res = _context.sent;
-                this.data.houseList = res.data.length > 0 ? res.data : [{
+                this.data.houseList = res.data.length > 0 ? res.data.map(function (item, i) {
+                  return _objectSpread$1({}, item, {
+                    pictureId: item.pictureId || ''
+                  });
+                }) : [{
                   houseNo: '',
                   area: '',
                   housePrice: '',
@@ -1882,7 +1905,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                   addrCity: '',
                   addrCityCode: '',
                   addrCounty: '',
-                  addrCountyCode: ''
+                  addrCountyCode: '',
+                  pictureId: ''
                 }];
                 _context.next = 11;
                 break;
@@ -1930,7 +1954,8 @@ var PageController = /*#__PURE__*/function (_Service) {
           addrCity: '',
           addrCityCode: '',
           addrCounty: '',
-          addrCountyCode: ''
+          addrCountyCode: '',
+          pictureId: ''
         });
         self.compilerTemplate(self.data.houseList);
         self.bindCityPickerEvents();

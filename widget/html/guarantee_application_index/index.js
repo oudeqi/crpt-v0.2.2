@@ -1317,6 +1317,16 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
 /**
  * Utils class
  * @authro liyang
@@ -1329,6 +1339,7 @@ var Utils = function Utils() {
   this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
+  this.DictFilter = codeMapFilter;
 };
 
 var Utils$1 = new Utils();
@@ -1629,7 +1640,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1762,9 +1780,9 @@ var Service = /*#__PURE__*/function () {
     key: "getQueryGuaranteeMain",
     value: function getQueryGuaranteeMain() {
       return http.get(this.ajaxUrls.queryGuaranteeMainUrl, null, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1774,9 +1792,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.queryOperateUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1787,9 +1805,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1800,9 +1818,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -3378,7 +3396,7 @@ var PageController = /*#__PURE__*/function (_Service) {
         el: '#maturityYearDateString',
         format: 'YYYY',
         beginYear: 2020,
-        endYear: 2030,
+        endYear: 2070,
         minStep: 1,
         lang: {
           title: '选择租赁到期时间'
@@ -3438,73 +3456,100 @@ var PageController = /*#__PURE__*/function (_Service) {
                 };
                 isValidate = !Object.values(formJSON).some(function (item, i) {
                   return !item;
-                });
+                }); // validator，后期再抽象
 
+                if (!(formJSON.farmsSize >= 60000000)) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                Utils$1.UI.toast('养殖规模数量超出限制哦');
+                return _context2.abrupt("return");
+
+              case 11:
+                if (!(formJSON.farmsSize >= 10000000)) {
+                  _context2.next = 14;
+                  break;
+                }
+
+                Utils$1.UI.toast('棚舍数量超出限制哦');
+                return _context2.abrupt("return");
+
+              case 14:
+                if (!(formJSON.farmsSize >= 10000000)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                Utils$1.UI.toast('棚舍面积超出限制哦');
+                return _context2.abrupt("return");
+
+              case 17:
                 if (!isValidate) {
-                  _context2.next = 34;
+                  _context2.next = 43;
                   break;
                 }
 
                 Utils$1.UI.showLoading('保存中...');
                 res = null;
-                _context2.prev = 11;
+                _context2.prev = 20;
 
                 if (!self.data.isInsert) {
-                  _context2.next = 20;
+                  _context2.next = 29;
                   break;
                 }
 
-                _context2.next = 15;
+                _context2.next = 24;
                 return this.postInsertOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 15:
+              case 24:
                 res = _context2.sent;
                 //  第一次插入经营新后，存储返回的operateId
                 self.data.operateId = res.data;
                 self.data.isInsert = false;
-                _context2.next = 24;
+                _context2.next = 33;
                 break;
 
-              case 20:
+              case 29:
                 _extends_1(formJSON, {
                   operateId: self.data.operateId
                 });
 
-                _context2.next = 23;
+                _context2.next = 32;
                 return this.postUpdateOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 23:
+              case 32:
                 res = _context2.sent;
 
-              case 24:
+              case 33:
                 Utils$1.UI.toast('提交成功');
-                _context2.next = 31;
+                _context2.next = 40;
                 break;
 
-              case 27:
-                _context2.prev = 27;
-                _context2.t0 = _context2["catch"](11);
+              case 36:
+                _context2.prev = 36;
+                _context2.t0 = _context2["catch"](20);
                 Utils$1.UI.hideLoading();
                 Utils$1.UI.toast(_context2.t0.msg);
 
-              case 31:
+              case 40:
                 Utils$1.UI.hideLoading();
-                _context2.next = 35;
+                _context2.next = 44;
                 break;
 
-              case 34:
+              case 43:
                 Utils$1.UI.toast('还有信息未填入');
 
-              case 35:
+              case 44:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[11, 27]]);
+        }, _callee2, this, [[20, 36]]);
       }));
 
       function submitFormData() {

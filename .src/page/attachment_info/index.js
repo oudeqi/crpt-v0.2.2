@@ -26,7 +26,8 @@ class PageController extends Service {
                     2: '已审核',
                     3: '已作废'
                 }
-            }
+            },
+            fileContentType: {}
         }
         //  统一管理数据model data
         this.data = {
@@ -68,7 +69,19 @@ class PageController extends Service {
     }
 
     async initData() {
+        const self = this
         Utils.UI.showLoading('加载中')
+        // 1. 先获取附件类型字典
+        try {
+            const codeRes = await this.getCodeList({
+                type: "fileContentType",
+                valid: 1
+            })
+            self.profile.fileContentType = Utils.DictFilter(codeRes.data)
+
+        } catch (e) {
+            console.log(e)
+        }
         try {
             const res = await this.getAttachment({
                 gtId: this.data.gtId
@@ -298,7 +311,7 @@ class PageController extends Service {
             return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
-                <span class="clt_main">附件<b>${i + 1}</b> <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
+                <span class="clt_main">${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
                 <div>
                     <a class="update" data-index="${i}">保存当前附件</a>
                     <a class="del" data-index="${i}">删除</a>

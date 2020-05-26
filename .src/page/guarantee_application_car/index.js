@@ -24,7 +24,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
-            carList: [{carNo: '', carPrice: '', brand: ''}]
+            carList: [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
         }
     }
 
@@ -47,7 +47,12 @@ class PageController extends Service {
             const res = await this.getGuaranteeCarList({
                 gtId: this.data.gtId
             })
-            this.data.carList = res.data.length > 0 ? res.data : [{carNo: '', carPrice: '', brand: ''}]
+            this.data.carList = res.data.length > 0 ? res.data.map((item, i) => {
+                return {
+                    ...item,
+                    pictureId: item.pictureId || ''
+                }
+            }) : [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
         } catch (e) {
             Utils.UI.toast('服务超时')
         }
@@ -64,7 +69,8 @@ class PageController extends Service {
             self.data.carList.push({
                 carNo: '',
                 carPrice: '',
-                brand: ''
+                brand: '',
+                pictureId: ''
             })
             self.compilerTemplate((self.data.carList))
         }
@@ -90,6 +96,7 @@ class PageController extends Service {
         const self = this
         const newCarList = self.data.carList.map((item, i) => {
             return {
+                ...item,
                 carNo: document.querySelector(`#carNo_${i}`).value,
                 carPrice: Number(document.querySelector(`#carPrice_${i}`).value),
                 brand: document.querySelector(`#brand_${i}`).value

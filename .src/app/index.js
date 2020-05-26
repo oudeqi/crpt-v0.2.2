@@ -38,14 +38,14 @@ apiready = function () {
   // openBaseinfoFill()
   // openCompanyInfo()
   // $api.clearStorage()
-
   const userinfo = $api.getStorage('userinfo')
-  // Utils.Router.openPageCreditInformation()
-  if (userinfo) {
-    openBaseinfoFill()
-  } else {
-    alert('meiyou denglu')
-  }
+  Utils.Router.openPageCreditInformation()
+
+  // if (userinfo) {
+  //   openBaseinfoFill()
+  // } else {
+  //   alert('meiyou denglu')
+  // }
   // 认证状态 int
   // 1：正常
   // 2：待实名认证

@@ -453,7 +453,7 @@ class PageController extends Service {
             el: '#maturityYearDateString',
             format: 'YYYY',
             beginYear: 2020,
-            endYear: 2030,
+            endYear: 2070,
             minStep:1,
             lang:{title:'选择租赁到期时间'},
             trigger:'tap',
@@ -503,6 +503,21 @@ class PageController extends Service {
         }
 
         let isValidate = !Object.values(formJSON).some((item, i) => !item)
+
+        // validator，后期再抽象
+        if(formJSON.farmsSize >= 60000000) {
+            Utils.UI.toast('养殖规模数量超出限制哦')
+            return
+        }
+        if(formJSON.farmsSize >= 10000000) {
+            Utils.UI.toast('棚舍数量超出限制哦')
+            return
+        }
+        if(formJSON.farmsSize >= 10000000) {
+            Utils.UI.toast('棚舍面积超出限制哦')
+            return
+        }
+
         if (isValidate) {
             Utils.UI.showLoading('保存中...')
             let res = null

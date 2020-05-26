@@ -1264,6 +1264,16 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
 /**
  * Utils class
  * @authro liyang
@@ -1276,6 +1286,7 @@ var Utils = function Utils() {
   this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
+  this.DictFilter = codeMapFilter;
 };
 
 var Utils$1 = new Utils();
@@ -1559,7 +1570,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1692,10 +1710,10 @@ var Service = /*#__PURE__*/function () {
       return http.post(this.ajaxUrls.postGuaranteeFamilyUrl, {
         body: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
+        //     'Content-Type': 'application/json'
+        // },
         timeout: 3000
       });
     }
@@ -1705,9 +1723,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.getGuaranteeFamilyUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1952,9 +1970,23 @@ var PageController = /*#__PURE__*/function (_Service) {
                 return _context2.abrupt("return");
 
               case 5:
+                // 校验手机号是否合法
+                isValidate = self.data.socialrefList.some(function (item, i) {
+                  return !/1\d{10}/.test(item.phone);
+                });
+
+                if (!isValidate) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                Utils$1.UI.toast('手机号格式有误哦');
+                return _context2.abrupt("return");
+
+              case 9:
                 Utils$1.UI.showLoading('提交中');
-                _context2.prev = 6;
-                _context2.next = 9;
+                _context2.prev = 10;
+                _context2.next = 13;
                 return self.postGuaranteeFamilyList({
                   type: 1,
                   gtId: self.data.gtId,
@@ -1962,29 +1994,29 @@ var PageController = /*#__PURE__*/function (_Service) {
                   socialrefList: self.data.socialrefList
                 });
 
-              case 9:
+              case 13:
                 res = _context2.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: 'window.location.reload();'
                 });
-                _context2.next = 16;
+                _context2.next = 20;
                 break;
 
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](6);
+              case 17:
+                _context2.prev = 17;
+                _context2.t0 = _context2["catch"](10);
                 Utils$1.UI.toast('服务超时');
 
-              case 16:
+              case 20:
                 Utils$1.UI.hideLoading();
 
-              case 17:
+              case 21:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[6, 13]]);
+        }, _callee2, null, [[10, 17]]);
       }));
     } // 编译html模板
 

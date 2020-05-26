@@ -737,6 +737,23 @@ try {
 
 var regenerator = runtime_1;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -1247,6 +1264,16 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
 /**
  * Utils class
  * @authro liyang
@@ -1259,26 +1286,10 @@ var Utils = function Utils() {
   this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
+  this.DictFilter = codeMapFilter;
 };
 
 var Utils$1 = new Utils();
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 // api.lockSlidPane();
 
@@ -1559,7 +1570,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1692,10 +1710,10 @@ var Service = /*#__PURE__*/function () {
       return http.post(this.ajaxUrls.postGuaranteeCarUrl, {
         body: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
+        //     'Content-Type': 'application/json'
+        // },
         timeout: 3000
       });
     }
@@ -1705,9 +1723,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.getGuaranteeCarUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1715,6 +1733,10 @@ var Service = /*#__PURE__*/function () {
 
   return Service;
 }();
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -1752,7 +1774,8 @@ var PageController = /*#__PURE__*/function (_Service) {
       carList: [{
         carNo: '',
         carPrice: '',
-        brand: ''
+        brand: '',
+        pictureId: ''
       }]
     };
     return _this;
@@ -1791,10 +1814,15 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 4:
                 res = _context.sent;
-                this.data.carList = res.data.length > 0 ? res.data : [{
+                this.data.carList = res.data.length > 0 ? res.data.map(function (item, i) {
+                  return _objectSpread$1({}, item, {
+                    pictureId: item.pictureId || ''
+                  });
+                }) : [{
                   carNo: '',
                   carPrice: '',
-                  brand: ''
+                  brand: '',
+                  pictureId: ''
                 }];
                 _context.next = 11;
                 break;
@@ -1834,7 +1862,8 @@ var PageController = /*#__PURE__*/function (_Service) {
         self.data.carList.push({
           carNo: '',
           carPrice: '',
-          brand: ''
+          brand: '',
+          pictureId: ''
         });
         self.compilerTemplate(self.data.carList);
       };
@@ -1863,11 +1892,11 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function searchAllData() {
       var self = this;
       var newCarList = self.data.carList.map(function (item, i) {
-        return {
+        return _objectSpread$1({}, item, {
           carNo: document.querySelector("#carNo_".concat(i)).value,
           carPrice: Number(document.querySelector("#carPrice_".concat(i)).value),
           brand: document.querySelector("#brand_".concat(i)).value
-        };
+        });
       });
       this.data.carList = newCarList;
     } //  绑定提交车辆信息

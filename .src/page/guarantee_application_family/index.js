@@ -166,6 +166,15 @@ class PageController extends Service {
                 Utils.UI.toast('还有信息未填完')
                 return
             }
+            // 校验手机号是否合法
+            isValidate = self.data.socialrefList.some((item,i) => {
+                return !/1\d{10}/.test(item.phone)
+            })
+            if(isValidate) {
+                Utils.UI.toast('手机号格式有误哦')
+                return
+            }
+
             Utils.UI.showLoading('提交中')
             try {
                 const res = await self.postGuaranteeFamilyList({

@@ -34,7 +34,8 @@ class PageController extends Service {
                 addrCity: '',
                 addrCityCode: '',
                 addrCounty: '',
-                addrCountyCode: ''
+                addrCountyCode: '',
+                pictureId: ''
             }]
         }
     }
@@ -58,7 +59,12 @@ class PageController extends Service {
             const res = await this.getGuaranteeHouseList({
                 gtId: this.data.gtId
             })
-            this.data.houseList = res.data.length > 0 ? res.data : [{
+            this.data.houseList = res.data.length > 0 ? res.data.map((item, i) => {
+                return {
+                    ...item,
+                    pictureId: item.pictureId || ''
+                }
+            }) : [{
                 houseNo: '',
                 area: '',
                 housePrice: '',
@@ -68,7 +74,8 @@ class PageController extends Service {
                 addrCity: '',
                 addrCityCode: '',
                 addrCounty: '',
-                addrCountyCode: ''
+                addrCountyCode: '',
+                pictureId: ''
             }]
         } catch (e) {
             Utils.UI.toast('服务超时')
@@ -94,7 +101,8 @@ class PageController extends Service {
                 addrCity: '',
                 addrCityCode: '',
                 addrCounty: '',
-                addrCountyCode: ''
+                addrCountyCode: '',
+                pictureId: ''
             })
             self.compilerTemplate((self.data.houseList))
             self.bindCityPickerEvents()

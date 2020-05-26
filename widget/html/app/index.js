@@ -1,28 +1,3 @@
-// api.lockSlidPane();
-
-
-function openBaseinfoFill() {
-  api.openTabLayout({
-    name: 'html/baseinfofill/win',
-    title: '补充基本信息',
-    url: 'widget://html/baseinfofill/win.html',
-    bgColor: '#fff',
-    softInputMode: 'auto',
-    softInputBarEnabled: false,
-    softInputDismissMode: ['tap', 'interactive'],
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
-  });
-} // 打开待认证
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -418,6 +393,16 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
 /**
  * Utils class
  * @authro liyang
@@ -430,9 +415,10 @@ var Utils = function Utils() {
   this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
+  this.DictFilter = codeMapFilter;
 };
 
-new Utils();
+var Utils$1 = new Utils();
 
 // $api.getStorage()
 // $api.rmStorage()
@@ -442,13 +428,13 @@ apiready = function apiready() {
   // openBaseinfoFill()
   // openCompanyInfo()
   // $api.clearStorage()
-  var userinfo = $api.getStorage('userinfo'); // Utils.Router.openPageCreditInformation()
-
-  if (userinfo) {
-    openBaseinfoFill();
-  } else {
-    alert('meiyou denglu');
-  } // 认证状态 int
+  var userinfo = $api.getStorage('userinfo');
+  Utils$1.Router.openPageCreditInformation(); // if (userinfo) {
+  //   openBaseinfoFill()
+  // } else {
+  //   alert('meiyou denglu')
+  // }
+  // 认证状态 int
   // 1：正常
   // 2：待实名认证
   // 3：待人脸审核
@@ -472,7 +458,6 @@ apiready = function apiready() {
   //   openRegLogin()
   // }
   // 云修复完成
-
 
   api.addEventListener({
     name: 'smartupdatefinish'
