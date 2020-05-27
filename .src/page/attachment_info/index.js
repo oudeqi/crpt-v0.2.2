@@ -21,12 +21,13 @@ class PageController extends Service {
             },
             remap: {
                 approvalStatus: {
-                    0: '刚开始',
+                    0: '',
                     1: '待审核',
                     2: '已审核',
                     3: '已作废'
                 }
-            }
+            },
+            fileContentType: {}
         }
         //  统一管理数据model data
         this.data = {
@@ -68,7 +69,19 @@ class PageController extends Service {
     }
 
     async initData() {
+        const self = this
         Utils.UI.showLoading('加载中')
+        // 1. 先获取附件类型字典
+        try {
+            const codeRes = await this.getCodeList({
+                type: "fileContentType",
+                valid: 1
+            })
+            self.profile.fileContentType = Utils.DictFilter(codeRes.data)
+
+        } catch (e) {
+            console.log(e)
+        }
         try {
             const res = await this.getAttachment({
                 gtId: this.data.gtId
@@ -124,6 +137,7 @@ class PageController extends Service {
             if (ev.target.classList.contains('a-img-url')) {
                 let _i = ev.target.getAttribute('data-index')
                 //  1. 如果有图片，则预览
+                // alert(self.data.attachmentList[_i].fileId)
                 if (self.data.attachmentList[_i].fileId) {
                     document.querySelector('#preview').classList.remove('hidden')
                     document.querySelector('#pv-img').src = ev.target.getAttribute('src')
@@ -187,7 +201,7 @@ class PageController extends Service {
                         Utils.UI.toast('操作成功')
                     }
                 } catch (e) {
-                    Utils.UI.toast(e.msg)
+                    Utils.UI.toast(e)
                 }
                 Utils.UI.hideLoading()
             }
@@ -297,7 +311,7 @@ class PageController extends Service {
             return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
-                <span class="clt_main">附件<b>${i + 1}</b> <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
+                <span class="clt_main">${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
                 <div>
                     <a class="update" data-index="${i}">保存当前附件</a>
                     <a class="del" data-index="${i}">删除</a>
@@ -308,8 +322,8 @@ class PageController extends Service {
         <div class="form-body">
             <div class="form-cell_shell" data-index="${i}">
                 <div class="a-img">
+                    <span class="def"></span>
                     <img class="a-img-url" src="${baseUrl}/crpt-file/file/download/${item.fileId}" alt="" id="fileId_${i}" data-index="${i}">
-<!--                    <span data-url="${baseUrl}/crpt-file/file/download/${item.fileId}" class="a-img-bg" style="background: url(${baseUrl}/crpt-file/file/download/${item.fileId});background-position: center center;background-size: 100% 100%;background-repeat: no-repeat;"></span>-->
                 </div>
                 <div class="a-text-box">
                     <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}">${item.fileComment || ''}</textarea>

@@ -31,7 +31,12 @@ html, body {
         justify-content: space-between;
         align-items: center;
       }
-
+      .update {
+        color: rgba(102, 187, 106, 1);
+        font-size: 14px;
+        margin-bottom: 6px;
+        margin-right: 10px;
+      }
       .del {
         color: rgba(102, 187, 106, 1);
         font-size: 14px;
@@ -156,8 +161,22 @@ html, body {
   overflow: hidden;
   display: flex;
   justify-content: center;
+  position: relative;
+  .def {
+    width: 18px;
+    height: 18px;
+    background: url(../../image/guarantee/camera.png) no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    z-index: 0;
+    left: 35px;
+    //right: 0;
+    top: 35px;
+  }
 
   .a-img-url {
+    position: relative;
+    z-index: 1;
     height: 100%;
   }
 
@@ -211,7 +230,7 @@ html, body {
   width: 68px;
   height: 24px;
   line-height: 24px;
-  background: rgba(144, 147, 153, 1);
+  //background: rgba(144, 147, 153, 1);
   border-radius: 12px;
   font-size: 14px;
   font-family: PingFang-SC-Medium, PingFang-SC;

@@ -1147,6 +1147,570 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+});
+
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500
+};
+
+/**
+ * 打开授信资料录入页面
+ */
+
+function openPageCreditInformation() {
+  api.openTabLayout({
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1. 打开担保业务申请表页面
+ */
+
+function openGuaranteeApplicationIndex(_ref) {
+  var pageParam = _ref.pageParam;
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 2. 打开反担保人列表页面
+ */
+
+/**
+ * 3. 文件送达地址列表页面
+ */
+
+/**
+ * 4. 其他附件上传页面
+ */
+
+function openAttachmentInfo(_ref2) {
+  var pageParam = _ref2.pageParam;
+  api.openTabLayout({
+    title: '附件上传',
+    name: 'html/attachment_info/index',
+    url: 'widget://html/attachment_info/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.1 打开房产信息录入页面
+ */
+
+function openGuaranteeApplicationHouse(_ref3) {
+  var pageParam = _ref3.pageParam;
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.2 打开车辆信息录入页面
+ */
+
+function openGuaranteeApplicationCar(_ref4) {
+  var pageParam = _ref4.pageParam;
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.3 打开家庭成员信息录入页面
+ */
+
+function openGuaranteeApplicationFamily(_ref5) {
+  var pageParam = _ref5.pageParam;
+  api.openTabLayout({
+    title: '家庭成员信息',
+    name: 'html/guarantee_application_family/index',
+    url: 'widget://html/guarantee_application_family/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+function closeCurrentWinAndRefresh(_ref6) {
+  var winName = _ref6.winName,
+      frameName = _ref6.frameName,
+      script = _ref6.script;
+  //  关闭当前win并刷新指定页面
+  api.execScript({
+    name: winName,
+    frameName: frameName,
+    script: script
+  });
+  setTimeout(function () {
+    api.closeWin();
+  }, 300);
+}
+
+var rmap = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = function Router() {
+  classCallCheck(this, Router);
+
+  _extends_1(this, rmap);
+};
+
+var openPicker = function openPicker(params, options) {
+  var UIActionSelector = api.require('UIActionSelector');
+
+  UIActionSelector.open({
+    datas: params.data,
+    layout: {
+      row: options.row,
+      col: options.col,
+      height: 40,
+      size: 18,
+      sizeActive: 18,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#fff',
+      color: '#333',
+      colorActive: '#f00',
+      colorSelected: '#000'
+    },
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#fff'
+    },
+    ok: {
+      text: '确定',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: 'rgba(102,187,106,1)',
+      bgActive: '#ccc',
+      color: '#fff',
+      colorActive: '#fff'
+    },
+    title: {
+      text: '请选择',
+      size: 15,
+      h: 50,
+      bg: '#eee',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      params.success && params.success(ret.selectedInfo);
+    }
+  });
+  return UIActionSelector;
+};
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 4,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
+
+var showLoading = function showLoading() {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  api.showProgress({
+    title: title,
+    text: '',
+    modal: true
+  });
+};
+var hideLoading = function hideLoading() {
+  api.hideProgress();
+};
+
+var toast = function toast(msg) {
+  api.toast({
+    msg: msg,
+    location: 'middle'
+  });
+};
+
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    classCallCheck(this, UI);
+  }
+
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
+    }
+  }]);
+
+  return UI;
+}();
+
+/**
+ * File class
+ * @author liyang
+ * @desc File类
+ */
+var File = /*#__PURE__*/function () {
+  function File() {
+    classCallCheck(this, File);
+  }
+
+  createClass(File, [{
+    key: "actionSheet",
+    value: function actionSheet(title, buttons, cb) {
+      api.actionSheet({
+        title: title,
+        cancelTitle: '取消',
+        buttons: buttons
+      }, function (ret, err) {
+        var index = ret.buttonIndex; // index 从1开始
+
+        if (index !== buttons.length + 1) {
+          cb(index - 1);
+        }
+      });
+    }
+  }, {
+    key: "getPicture",
+    value: function getPicture(sourceType, cb) {
+      // library         //图片库
+      // camera          //相机
+      // album           //相册
+      api.getPicture({
+        sourceType: sourceType,
+        encodingType: 'png',
+        mediaValue: 'pic',
+        destinationType: 'file',
+        allowEdit: false,
+        quality: 20,
+        targetWidth: 1000,
+        // targetHeight: 300,
+        saveToPhotoAlbum: false
+      }, cb);
+    }
+  }]);
+
+  return File;
+}();
+
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1201,7 +1765,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {

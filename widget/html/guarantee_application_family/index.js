@@ -1253,7 +1253,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false
@@ -1264,21 +1264,15 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
 };
-
-var Utils$1 = new Utils();
 
 // api.lockSlidPane();
 
@@ -1559,7 +1553,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1676,6 +1677,195 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
@@ -1692,10 +1882,10 @@ var Service = /*#__PURE__*/function () {
       return http.post(this.ajaxUrls.postGuaranteeFamilyUrl, {
         body: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
+        //     'Content-Type': 'application/json'
+        // },
         timeout: 3000
       });
     }
@@ -1705,9 +1895,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.getGuaranteeFamilyUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1772,6 +1962,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      type: props.pageParam.type,
       socialrefList: [{
         name: '',
         phone: '',
@@ -1952,39 +2143,53 @@ var PageController = /*#__PURE__*/function (_Service) {
                 return _context2.abrupt("return");
 
               case 5:
+                // 校验手机号是否合法
+                isValidate = self.data.socialrefList.some(function (item, i) {
+                  return !/1\d{10}/.test(item.phone);
+                });
+
+                if (!isValidate) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                Utils$1.UI.toast('手机号格式有误哦');
+                return _context2.abrupt("return");
+
+              case 9:
                 Utils$1.UI.showLoading('提交中');
-                _context2.prev = 6;
-                _context2.next = 9;
+                _context2.prev = 10;
+                _context2.next = 13;
                 return self.postGuaranteeFamilyList({
-                  type: 1,
+                  type: self.data.type || 1,
                   gtId: self.data.gtId,
                   gtCreditId: self.data.gtCreditId,
                   socialrefList: self.data.socialrefList
                 });
 
-              case 9:
+              case 13:
                 res = _context2.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: 'window.location.reload();'
                 });
-                _context2.next = 16;
+                _context2.next = 20;
                 break;
 
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](6);
+              case 17:
+                _context2.prev = 17;
+                _context2.t0 = _context2["catch"](10);
                 Utils$1.UI.toast('服务超时');
 
-              case 16:
+              case 20:
                 Utils$1.UI.hideLoading();
 
-              case 17:
+              case 21:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[6, 13]]);
+        }, _callee2, null, [[10, 17]]);
       }));
     } // 编译html模板
 

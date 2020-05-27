@@ -43,7 +43,7 @@ import Utils from '../utils'
 apiready = function () {
   // openBaseinfoFill()
   // openCompanyInfo()
-  // // $api.clearStorage()
+  // $api.clearStorage()
   const userinfo = $api.getStorage('userinfo')
   // 认证状态 int
   // 1：正常
@@ -97,7 +97,6 @@ apiready = function () {
       }
     })
   })
-
   // 点击启动页面
   api.addEventListener({
     name:'launchviewclicked'

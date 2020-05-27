@@ -77,7 +77,20 @@
             </div>
           </div>
         </div>
+        <div class="form-cell_shell top hidden" id="maturityYear">
+          <div class="fc_label">
+            <span class="fc_span">租赁到期时间</span>
+          </div>
+          <div class="fc_content">
+            <div class="fc_c_common">
+              <div class="fc_c_city">
+                <span class="fc_c_city_label" id="maturityYearDateString">请选择时间</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
 
     <!--  养殖信息  -->
@@ -111,7 +124,7 @@
           <div class="fc_content">
             <div class="fc_c_common">
               <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                     id="scale" placeholder="请输入数量" />
+                     id="scale" placeholder="请输入数量" maxlength="9"/>
               <div class="fc_unit" id="scaleUnit">万只</div>
             </div>
           </div>
@@ -124,7 +137,7 @@
           <div class="fc_content">
             <div class="fc_c_common">
               <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                     id="sheds" placeholder="请输入数量" />
+                     id="sheds" placeholder="请输入数量" maxlength="9"/>
               <div class="fc_unit">栋</div>
             </div>
           </div>

@@ -1253,7 +1253,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false
@@ -1264,21 +1264,15 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
 };
-
-var Utils$1 = new Utils();
 
 // api.lockSlidPane();
 
@@ -1559,7 +1553,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1676,6 +1677,195 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
@@ -1686,7 +1876,8 @@ var Service = /*#__PURE__*/function () {
       saveAttachmentUrl: '/crpt-guarantee/gt/attachment/save',
       updateAttachmentUrl: '/crpt-guarantee/gt/attachment/update',
       submitAttachmentUrl: '/crpt-guarantee/gt/attachment/submit',
-      submitInfoUrl: '/crpt-guarantee/gt/attachment/submit'
+      submitInfoUrl: '/crpt-guarantee/gt/attachment/submit',
+      getFileContentType: '/crpt-biz/dict/codelist'
     };
   }
 
@@ -1696,10 +1887,10 @@ var Service = /*#__PURE__*/function () {
       return http.post(this.ajaxUrls.postAttachmentUrl, {
         body: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
+        //     'Content-Type': 'application/json'
+        // },
         timeout: 3000
       });
     }
@@ -1709,9 +1900,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.getAttachmentUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1721,9 +1912,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.deleteAttachmentUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1734,9 +1925,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1747,9 +1938,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1759,9 +1950,18 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.submitInfoUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "getCodeList",
+    value: function getCodeList(params) {
+      return http.post(this.ajaxUrls.getFileContentType, {
+        body: params
+      }, {
         timeout: 3000
       });
     }
@@ -1803,12 +2003,13 @@ var PageController = /*#__PURE__*/function (_Service) {
       },
       remap: {
         approvalStatus: {
-          0: '刚开始',
+          0: '',
           1: '待审核',
           2: '已审核',
           3: '已作废'
         }
-      }
+      },
+      fileContentType: {}
     }; //  统一管理数据model data
 
     _this.data = {
@@ -1855,19 +2056,40 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res;
+        var self, codeRes, res;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                Utils$1.UI.showLoading('加载中');
-                _context.prev = 1;
-                _context.next = 4;
+                self = this;
+                Utils$1.UI.showLoading('加载中'); // 1. 先获取附件类型字典
+
+                _context.prev = 2;
+                _context.next = 5;
+                return this.getCodeList({
+                  type: "fileContentType",
+                  valid: 1
+                });
+
+              case 5:
+                codeRes = _context.sent;
+                self.profile.fileContentType = Utils$1.DictFilter(codeRes.data);
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                console.log(_context.t0);
+
+              case 12:
+                _context.prev = 12;
+                _context.next = 15;
                 return this.getAttachment({
                   gtId: this.data.gtId
                 });
 
-              case 4:
+              case 15:
                 res = _context.sent;
                 this.data.attachmentList = res.data.length > 0 ? res.data : [{
                   attachId: '',
@@ -1882,24 +2104,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                   // updateDate: ''
 
                 }];
-                _context.next = 11;
+                _context.next = 22;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 19:
+                _context.prev = 19;
+                _context.t1 = _context["catch"](12);
                 Utils$1.UI.toast('服务超时');
 
-              case 11:
+              case 22:
                 this.compilerTemplate(this.data.attachmentList);
                 Utils$1.UI.hideLoading();
 
-              case 13:
+              case 24:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[2, 9], [12, 19]]);
       }));
 
       function initData() {
@@ -1951,6 +2173,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                   if (ev.target.classList.contains('a-img-url')) {
                     _i = ev.target.getAttribute('data-index'); //  1. 如果有图片，则预览
+                    // alert(self.data.attachmentList[_i].fileId)
 
                     if (self.data.attachmentList[_i].fileId) {
                       document.querySelector('#preview').classList.remove('hidden');
@@ -2061,7 +2284,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 case 24:
                   _context3.prev = 24;
                   _context3.t0 = _context3["catch"](5);
-                  Utils$1.UI.toast(_context3.t0.msg);
+                  Utils$1.UI.toast(_context3.t0);
 
                 case 27:
                   Utils$1.UI.hideLoading();
@@ -2249,7 +2472,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\u9644\u4EF6<b>".concat(i + 1, "</b> <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58\u5F53\u524D\u9644\u4EF6</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n<!--                    <span data-url=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" class=\"a-img-bg\" style=\"background: url(").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, ");background-position: center center;background-size: 100% 100%;background-repeat: no-repeat;\"></span>-->\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">".concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58\u5F53\u524D\u9644\u4EF6</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <span class=\"def\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html;

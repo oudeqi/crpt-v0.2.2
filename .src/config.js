@@ -5,6 +5,7 @@ import {
   openTodoAuthQiye
 } from './webview.js'
 import { Base64 } from 'js-base64'
+import Utils from "./utils";
 
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://crptuat.liuheco.com'
@@ -57,7 +58,14 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 30}
         if (ret.code === 200) {
           resolve(ret)
         } else {
-          reject(ret)
+          // 表单校验未过专属code
+          if(ret.code === 202) {
+            const data = ret.data
+            Utils.UI.toast(data[0].msg)
+            resolve(ret)
+          }else {
+            reject(ret)
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {

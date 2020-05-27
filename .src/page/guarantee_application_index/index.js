@@ -3,6 +3,7 @@ import '../../app.css'
 import './index.less'
 import {http, baseUrl} from "../../config";
 import Service from './service'
+import Rolldate from 'rolldate'
 
 /**
  * @authro liyang
@@ -64,6 +65,7 @@ class PageController extends Service {
             envReport: 1,
             shedStructure: 1,
             livestockType: 1,
+            maturityYear: '',
             pcd: {
                 province: {},
                 city: {},
@@ -101,6 +103,8 @@ class PageController extends Service {
         this.bindEventsPageRouter()
         //  提交表单
         this.bindSubmitEvents()
+
+        this.bindDateEvents()
     }
 
     async initData({callback}) {
@@ -178,6 +182,16 @@ class PageController extends Service {
                             item.classList.remove('active')
                         }
                     })
+            }
+
+            //  租赁到期时间
+            if (operateRes.data.maturityYear) {
+                self.data.maturityYear = operateRes.data.maturityYear
+                const dom = document.querySelector('#maturityYear')
+                if(operateRes.data.farmsNature === 2) {
+                    dom.classList.remove('hidden')
+                    document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear
+                }
             }
 
             // key: 养殖品种
@@ -344,6 +358,15 @@ class PageController extends Service {
                         } else {
                             _dom.classList.remove('hidden')
                         }
+                    }maturityYear
+                    // 2. 养殖场性质为租赁时，展示租赁日期
+                    if (item === 'livestockType') {
+                        let _dom = document.querySelector('#maturityYear')
+                        if (parseInt(ev.target.getAttribute('data-id')) === 1) {
+                            _dom.classList.add('hidden')
+                        } else {
+                            _dom.classList.remove('hidden')
+                        }
                     }
                 }
             }
@@ -423,10 +446,38 @@ class PageController extends Service {
         }
     }
 
+    //  绑定租赁日期选择
+    bindDateEvents() {
+        const self = this
+        const rd = new Rolldate({
+            el: '#maturityYearDateString',
+            format: 'YYYY',
+            beginYear: 2020,
+            endYear: 2070,
+            minStep:1,
+            lang:{title:'选择租赁到期时间'},
+            trigger:'tap',
+            init: function() {
+                console.log('插件开始触发');
+            },
+            moveEnd: function(scroll) {
+                console.log('滚动结束');
+            },
+            confirm: function(date) {
+                self.data.maturityYear = date
+                console.log('确定按钮触发');
+            },
+            cancel: function() {
+                console.log('插件运行取消');
+            }
+        })
+        // rd.show();
+        // rd.hide();
+    }
     //  format 土地信息和养殖信息数据
     async submitFormData() {
         const self = this
-        const {landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd} = this.data
+        const {landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear} = this.data
         const farmsSize = document.querySelector('#scale').value
         const workshopCount = document.querySelector('#sheds').value
         const workshopArea = document.querySelector('#shedArea').value
@@ -447,10 +498,26 @@ class PageController extends Service {
             workshopCounty: pcd.district.name,
             workshopCountyCode: pcd.district.code,
             workshopAddr,
+            maturityYear,
             workshopStruct: shedStructure
         }
 
         let isValidate = !Object.values(formJSON).some((item, i) => !item)
+
+        // validator，后期再抽象
+        if(formJSON.farmsSize >= 60000000) {
+            Utils.UI.toast('养殖规模数量超出限制哦')
+            return
+        }
+        if(formJSON.farmsSize >= 10000000) {
+            Utils.UI.toast('棚舍数量超出限制哦')
+            return
+        }
+        if(formJSON.farmsSize >= 10000000) {
+            Utils.UI.toast('棚舍面积超出限制哦')
+            return
+        }
+
         if (isValidate) {
             Utils.UI.showLoading('保存中...')
             let res = null

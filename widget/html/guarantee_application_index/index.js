@@ -1,3 +1,5 @@
+import Rolldate from 'rolldate';
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -1306,7 +1308,7 @@ var File = /*#__PURE__*/function () {
         mediaValue: 'pic',
         destinationType: 'file',
         allowEdit: false,
-        quality: 100,
+        quality: 20,
         targetWidth: 1000,
         // targetHeight: 300,
         saveToPhotoAlbum: false
@@ -1317,21 +1319,15 @@ var File = /*#__PURE__*/function () {
   return File;
 }();
 
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
 };
-
-var Utils$1 = new Utils();
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1629,7 +1625,14 @@ function ajax(method, url) {
         if (ret.code === 200) {
           resolve(ret);
         } else {
-          reject(ret);
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
@@ -1746,6 +1749,195 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
@@ -1762,9 +1954,9 @@ var Service = /*#__PURE__*/function () {
     key: "getQueryGuaranteeMain",
     value: function getQueryGuaranteeMain() {
       return http.get(this.ajaxUrls.queryGuaranteeMainUrl, null, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1774,9 +1966,9 @@ var Service = /*#__PURE__*/function () {
       return http.get(this.ajaxUrls.queryOperateUrl, {
         values: params
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1787,9 +1979,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1800,9 +1992,9 @@ var Service = /*#__PURE__*/function () {
         values: params,
         files: files
       }, {
-        headers: {
-          token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        },
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
         timeout: 3000
       });
     }
@@ -1908,6 +2100,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       envReport: 1,
       shedStructure: 1,
       livestockType: 1,
+      maturityYear: '',
       pcd: {
         province: {},
         city: {},
@@ -1947,12 +2140,13 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.bindEventsPageRouter(); //  提交表单
 
       this.bindSubmitEvents();
+      this.bindDateEvents();
     }
   }, {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(_ref) {
-        var callback, self, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, gtId, gtCreditId, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
+        var callback, self, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, gtId, gtCreditId, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, dom, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -2049,6 +2243,17 @@ var PageController = /*#__PURE__*/function (_Service) {
                       item.classList.remove('active');
                     }
                   });
+                } //  租赁到期时间
+
+
+                if (operateRes.data.maturityYear) {
+                  self.data.maturityYear = operateRes.data.maturityYear;
+                  dom = document.querySelector('#maturityYear');
+
+                  if (operateRes.data.farmsNature === 2) {
+                    dom.classList.remove('hidden');
+                    document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear;
+                  }
                 } // key: 养殖品种
 
 
@@ -2111,11 +2316,11 @@ var PageController = /*#__PURE__*/function (_Service) {
                   });
                 }
 
-                _context.next = 54;
+                _context.next = 55;
                 break;
 
-              case 51:
-                _context.prev = 51;
+              case 52:
+                _context.prev = 52;
                 _context.t1 = _context["catch"](14);
 
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
@@ -2125,15 +2330,15 @@ var PageController = /*#__PURE__*/function (_Service) {
                   Utils$1.UI.toast(_context.t1.msg);
                 }
 
-              case 54:
+              case 55:
                 callback && callback();
 
-              case 55:
+              case 56:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 9], [14, 51]]);
+        }, _callee, this, [[2, 9], [14, 52]]);
       }));
 
       function initData(_x) {
@@ -2248,6 +2453,18 @@ var PageController = /*#__PURE__*/function (_Service) {
                 _dom.classList.remove('hidden');
               }
             }
+
+            maturityYear; // 2. 养殖场性质为租赁时，展示租赁日期
+
+            if (item === 'livestockType') {
+              var _dom2 = document.querySelector('#maturityYear');
+
+              if (parseInt(ev.target.getAttribute('data-id')) === 1) {
+                _dom2.classList.add('hidden');
+              } else {
+                _dom2.classList.remove('hidden');
+              }
+            }
           }
         };
       });
@@ -2340,20 +2557,51 @@ var PageController = /*#__PURE__*/function (_Service) {
       btn.onclick = function () {
         self.submitFormData();
       };
+    } //  绑定租赁日期选择
+
+  }, {
+    key: "bindDateEvents",
+    value: function bindDateEvents() {
+      var self = this;
+      var rd = new Rolldate({
+        el: '#maturityYearDateString',
+        format: 'YYYY',
+        beginYear: 2020,
+        endYear: 2070,
+        minStep: 1,
+        lang: {
+          title: '选择租赁到期时间'
+        },
+        trigger: 'tap',
+        init: function init() {
+          console.log('插件开始触发');
+        },
+        moveEnd: function moveEnd(scroll) {
+          console.log('滚动结束');
+        },
+        confirm: function confirm(date) {
+          self.data.maturityYear = date;
+          console.log('确定按钮触发');
+        },
+        cancel: function cancel() {
+          console.log('插件运行取消');
+        }
+      }); // rd.show();
+      // rd.hide();
     } //  format 土地信息和养殖信息数据
 
   }, {
     key: "submitFormData",
     value: function () {
       var _submitFormData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var self, _this$data, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
+        var self, _this$data, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
 
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 self = this;
-                _this$data = this.data, landType = _this$data.landType, farmType = _this$data.farmType, envReport = _this$data.envReport, livestockType = _this$data.livestockType, shedStructure = _this$data.shedStructure, gtId = _this$data.gtId, envReportFile = _this$data.envReportFile, pcd = _this$data.pcd;
+                _this$data = this.data, landType = _this$data.landType, farmType = _this$data.farmType, envReport = _this$data.envReport, livestockType = _this$data.livestockType, shedStructure = _this$data.shedStructure, gtId = _this$data.gtId, envReportFile = _this$data.envReportFile, pcd = _this$data.pcd, maturityYear = _this$data.maturityYear;
                 farmsSize = document.querySelector('#scale').value;
                 workshopCount = document.querySelector('#sheds').value;
                 workshopArea = document.querySelector('#shedArea').value;
@@ -2374,77 +2622,105 @@ var PageController = /*#__PURE__*/function (_Service) {
                   workshopCounty: pcd.district.name,
                   workshopCountyCode: pcd.district.code,
                   workshopAddr: workshopAddr,
+                  maturityYear: maturityYear,
                   workshopStruct: shedStructure
                 };
                 isValidate = !Object.values(formJSON).some(function (item, i) {
                   return !item;
-                });
+                }); // validator，后期再抽象
 
+                if (!(formJSON.farmsSize >= 60000000)) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                Utils$1.UI.toast('养殖规模数量超出限制哦');
+                return _context2.abrupt("return");
+
+              case 11:
+                if (!(formJSON.farmsSize >= 10000000)) {
+                  _context2.next = 14;
+                  break;
+                }
+
+                Utils$1.UI.toast('棚舍数量超出限制哦');
+                return _context2.abrupt("return");
+
+              case 14:
+                if (!(formJSON.farmsSize >= 10000000)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                Utils$1.UI.toast('棚舍面积超出限制哦');
+                return _context2.abrupt("return");
+
+              case 17:
                 if (!isValidate) {
-                  _context2.next = 34;
+                  _context2.next = 43;
                   break;
                 }
 
                 Utils$1.UI.showLoading('保存中...');
                 res = null;
-                _context2.prev = 11;
+                _context2.prev = 20;
 
                 if (!self.data.isInsert) {
-                  _context2.next = 20;
+                  _context2.next = 29;
                   break;
                 }
 
-                _context2.next = 15;
+                _context2.next = 24;
                 return this.postInsertOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 15:
+              case 24:
                 res = _context2.sent;
                 //  第一次插入经营新后，存储返回的operateId
                 self.data.operateId = res.data;
                 self.data.isInsert = false;
-                _context2.next = 24;
+                _context2.next = 33;
                 break;
 
-              case 20:
+              case 29:
                 _extends_1(formJSON, {
                   operateId: self.data.operateId
                 });
 
-                _context2.next = 23;
+                _context2.next = 32;
                 return this.postUpdateOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 23:
+              case 32:
                 res = _context2.sent;
 
-              case 24:
+              case 33:
                 Utils$1.UI.toast('提交成功');
-                _context2.next = 31;
+                _context2.next = 40;
                 break;
 
-              case 27:
-                _context2.prev = 27;
-                _context2.t0 = _context2["catch"](11);
+              case 36:
+                _context2.prev = 36;
+                _context2.t0 = _context2["catch"](20);
                 Utils$1.UI.hideLoading();
                 Utils$1.UI.toast(_context2.t0.msg);
 
-              case 31:
+              case 40:
                 Utils$1.UI.hideLoading();
-                _context2.next = 35;
+                _context2.next = 44;
                 break;
 
-              case 34:
+              case 43:
                 Utils$1.UI.toast('还有信息未填入');
 
-              case 35:
+              case 44:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[11, 27]]);
+        }, _callee2, this, [[20, 36]]);
       }));
 
       function submitFormData() {
