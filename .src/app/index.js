@@ -26,8 +26,6 @@ import {
   openAuthResult,
   openBillList,
   openBillDetails,
-  openOrderList,
-  openOrderTodo,
   openMyProduct,
   openMyQuota,
   openSettings,

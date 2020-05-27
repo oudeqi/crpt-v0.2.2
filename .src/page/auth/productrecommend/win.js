@@ -70,8 +70,10 @@ class PageController extends Service {
   // 去担保开通页面
   _goDanbao (id, name) {
     this.queryDanbaoStatus().then(res => {
-      console.log(JSON.stringify(res))
-      // 有担保产品
+      api.toast({
+        msg: '已有开通的担保产品',
+        location: 'middle'
+      })
     }).catch(error => {
       if (error.code === 3002) { // 无担保产品
         openDanbaoKaitong({
