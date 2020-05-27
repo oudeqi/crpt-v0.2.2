@@ -1,13 +1,14 @@
 html, body {
-  background-color: #efefef;
+  background-color: #fff;
 }
-body {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  height: 100vh;
+* {
+  white-space: normal !important;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+span {
+  display: inline !important;
 }
 .container {
-  background-color: #fff;
-  height: 100%;
-  width: 100%;
+  padding: 12px;
 }

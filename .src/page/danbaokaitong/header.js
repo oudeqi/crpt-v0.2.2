@@ -26,6 +26,7 @@ export default class HeaderController extends Service {
     super(...arguments)
     const { step } = api.pageParam || {}
     this.step = step
+    this.danbaoStatus = null
     this.applyStatusMap = {
       0: 'xxx', // int	无申请
       1: 'demandMoney', //	int	担保开通申请
@@ -55,16 +56,19 @@ export default class HeaderController extends Service {
       const res = await this.queryDanbaoStatus()
       if (res.code === 200) {
         const data = res.data
+        this.danbaoStatus = data
         $api.byId('amount').innerHTML = numeral(res.data[this.applyStatusMap[data.applyStatus]] || 0).format('0,0.00')
         $api.byId('desc').innerHTML = `您正在申请${res.data.productName}产品`
       }
     } catch (error) {
-      api.toast({ msg: error.msg || '出错啦', location: 'middle' })
+      if (this.step !== 1) {
+        api.toast({ msg: error.msg || '出错啦', location: 'middle' })
+      }
     }
   }
 
-  async renderHeader () {
+  async renderHeaderAndGetDanbaoStatus () {
     this._renderStep()
-    this._getDanbaoStatus()
+    await this._getDanbaoStatus()
   }
 }

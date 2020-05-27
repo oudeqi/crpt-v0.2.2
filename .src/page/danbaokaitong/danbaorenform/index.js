@@ -259,11 +259,12 @@ class pageController extends Service {
           const res = await this[callMethod](postData)
           if (res && res.code === 200) {
             if (isUpdate) {
-              api.toast({ msg: '更新担保人成功', location: 'middle' })
+              api.toast({ msg: '更新担保人成功', location: 'middle', global: true})
             } else {
               this.initData.gtCounterId = res.data.gtCounterId
-              api.toast({ msg: '新增担保人成功', location: 'middle' })
+              api.toast({ msg: '新增担保人成功', location: 'middle', global: true})
             }
+            api.closeWin()
           }
         } catch (error) {
           api.toast({ msg: error.msg, location: 'middle' })

@@ -50,6 +50,10 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
   }
+  input:disabled ~ span {
+    background-color: #aaa;
+    border-radius: 50%;
+  }
 }
 
 @define-extend arrow {

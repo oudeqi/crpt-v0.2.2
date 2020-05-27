@@ -4,7 +4,7 @@ import './index.css'
 import HeaderController from '../header.js'
 import { Validation, NumberLimit } from '../form.js'
 import { setRefreshHeaderInfo } from '../../../config.js'
-import { openDanbaoKaitong } from '../../../webview.js'
+import { openDanbaoKaitong, openAgreement } from '../../../webview.js'
 
 class PageController extends HeaderController {
   constructor() {
@@ -17,9 +17,15 @@ class PageController extends HeaderController {
   async getProduct () {
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
-      const res = await this.queryProductById(this.productId)
-      if (res.code === 200) {
-        const data = res.data
+      await this.renderHeaderAndGetDanbaoStatus()
+      if (this.danbaoStatus) {
+        const data = this.danbaoStatus
+        document.querySelector('[name="buildType"][value="'+data.buildType+'"]').checked = true
+        $api.byId('expectInveste').value = data.expectInveste
+        $api.byId('demandMoney').value = data.demandMoney
+        $api.byId('timeLimit').value = data.timeLimit
+        $api.byId('agreement').checked = true
+        $api.removeAttr($api.byId('save'), 'disabled')
         this.productId = data.productId
         this.productName = data.productName
         this.rate = data.rate
@@ -28,6 +34,19 @@ class PageController extends HeaderController {
         $api.byId('product').value = data.productName
         $api.byId('rate').value = data.rate
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
+      } else {
+        const res = await this.queryProductById(this.productId)
+        if (res.code === 200) {
+          const data = res.data
+          this.productId = data.productId
+          this.productName = data.productName
+          this.rate = data.rate
+          let product = $api.byId('product')
+          let rate = $api.byId('rate')
+          $api.byId('product').value = data.productName
+          $api.byId('rate').value = data.rate
+          $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
+        }
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -116,7 +135,6 @@ class PageController extends HeaderController {
 
 apiready = function () {
   const pageController = new PageController()
-  pageController.renderHeader()
   pageController.getProduct()
   // 下拉刷新
   setRefreshHeaderInfo(function(ret, err) {
@@ -144,6 +162,10 @@ apiready = function () {
 
   document.querySelector('#save').onclick = function () {
     pageController.save()
+  }
+
+  document.querySelector('#protocol').onclick = function () {
+    openAgreement(4)
   }
 
 }

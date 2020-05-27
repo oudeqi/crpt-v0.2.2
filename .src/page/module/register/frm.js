@@ -1,7 +1,7 @@
 import '../../../app.css'
 import './frm.css'
 
-import { openTabLayout, openTodoAuthGeren, openTodoAuthQiye } from '../../../webview.js'
+import { openTabLayout, openTodoAuthGeren, openTodoAuthQiye, openAgreement } from '../../../webview.js'
 import {
   http, openUIInput, resetUIInputPosi,
   loginSuccessCallback, appLogin
@@ -57,10 +57,7 @@ apiready = function() {
   document.querySelector('#geren').onclick = radioOnChange
   document.querySelector('#qiye').onclick = radioOnChange
   document.querySelector('#agreement').onclick = function () {
-    api.alert({
-      title: '消息',
-      msg: '功能开发中...',
-    })
+    openAgreement(1)
   }
 
   function countDown () {

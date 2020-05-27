@@ -3,7 +3,7 @@ import '../form.css'
 import './index.css'
 import HeaderController from '../header.js'
 import { setRefreshHeaderInfo } from '../../../config.js'
-import { openSignOnline } from '../../../webview.js'
+import { openSignOnline, openDanbaoKaitong } from '../../../webview.js'
 
 
 class PageController extends HeaderController {
@@ -30,6 +30,7 @@ class PageController extends HeaderController {
   async getPageData () {
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
+      await this.renderHeaderAndGetDanbaoStatus()
       const status = await this.queryDanbaoStatus()
       console.log('JSON.stringify(status)')
       console.log(JSON.stringify(status))
@@ -51,7 +52,6 @@ class PageController extends HeaderController {
 apiready = function () {
 
   const pageController = new PageController()
-  pageController.renderHeader()
   pageController.getPageData()
   setRefreshHeaderInfo(function(ret, err) {
     pageController.getPageData()
@@ -62,4 +62,9 @@ apiready = function () {
       openSignOnline()
     }
   }
+
+  $api.byId('next').onclick = function () {
+    openDanbaoKaitong({step: 4})
+  }
+
 }

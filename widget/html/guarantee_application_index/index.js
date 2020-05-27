@@ -1572,7 +1572,6 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1626,8 +1625,8 @@ function ajax(method, url) {
         } else {
           // 表单校验未过专属code
           if (ret.code === 202) {
-            var _data = ret.data; // Utils.UI.toast(data[0].msg)
-
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
             resolve(ret);
           } else {
             reject(ret);
@@ -2175,9 +2174,9 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                 if (guaranteeRes.data) {
                   _guaranteeRes$data = guaranteeRes.data, houseFillStatus = _guaranteeRes$data.houseFillStatus, carFillStatus = _guaranteeRes$data.carFillStatus, socialFillStatus = _guaranteeRes$data.socialFillStatus;
-                  Boolean(houseFillStatus) && document.querySelector('#houseInfoStatus').classList.add('done');
-                  Boolean(carFillStatus) && document.querySelector('#carInfoStatus').classList.add('done');
-                  Boolean(socialFillStatus) && document.querySelector('#familyInfoStatus').classList.add('done');
+                  houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done');
+                  carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done');
+                  socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done');
                 }
 
                 _context.next = 12;
@@ -2668,7 +2667,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 17:
                 if (!isValidate) {
-                  _context2.next = 43;
+                  _context2.next = 44;
                   break;
                 }
 
@@ -2709,29 +2708,33 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 33:
                 Utils$1.UI.toast('提交成功');
-                _context2.next = 40;
+                Utils$1.Router.closeCurrentWinAndRefresh({
+                  winName: 'html/danbaostep2/index',
+                  script: 'window.location.reload();'
+                });
+                _context2.next = 41;
                 break;
 
-              case 36:
-                _context2.prev = 36;
+              case 37:
+                _context2.prev = 37;
                 _context2.t0 = _context2["catch"](20);
                 Utils$1.UI.hideLoading();
                 Utils$1.UI.toast(_context2.t0.msg);
 
-              case 40:
+              case 41:
                 Utils$1.UI.hideLoading();
-                _context2.next = 44;
+                _context2.next = 45;
                 break;
 
-              case 43:
+              case 44:
                 Utils$1.UI.toast('还有信息未填入');
 
-              case 44:
+              case 45:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[20, 36]]);
+        }, _callee2, this, [[20, 37]]);
       }));
 
       function submitFormData() {

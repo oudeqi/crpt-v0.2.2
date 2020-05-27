@@ -998,14 +998,14 @@ function openSignOnline (id) {
 }
 
 // 协议
-function openAgreement (id) {
+function openAgreement (useNode) {
   api.openTabLayout({
     name: 'html/agreement/index',
     title: '协议',
     url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: { id },
+    pageParam: { useNode },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

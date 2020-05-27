@@ -114,9 +114,9 @@ class PageController extends Service {
             const guaranteeRes = await this.getQueryGuaranteeMain()
             if (guaranteeRes.data) {
                 const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
-                Boolean(houseFillStatus) && document.querySelector('#houseInfoStatus').classList.add('done')
-                Boolean(carFillStatus) && document.querySelector('#carInfoStatus').classList.add('done')
-                Boolean(socialFillStatus) && document.querySelector('#familyInfoStatus').classList.add('done')
+                houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
+                carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
+                socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
             }
         } catch (e) {
             Utils.UI.toast('服务超时')
@@ -188,7 +188,7 @@ class PageController extends Service {
             if (operateRes.data.maturityYear) {
                 self.data.maturityYear = operateRes.data.maturityYear
                 const dom = document.querySelector('#maturityYear')
-                if(operateRes.data.farmsNature === 2) {
+                if (operateRes.data.farmsNature === 2) {
                     dom.classList.remove('hidden')
                     document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear
                 }
@@ -358,7 +358,8 @@ class PageController extends Service {
                         } else {
                             _dom.classList.remove('hidden')
                         }
-                    }maturityYear
+                    }
+                    maturityYear
                     // 2. 养殖场性质为租赁时，展示租赁日期
                     if (item === 'livestockType') {
                         let _dom = document.querySelector('#maturityYear')
@@ -454,26 +455,27 @@ class PageController extends Service {
             format: 'YYYY',
             beginYear: 2020,
             endYear: 2070,
-            minStep:1,
-            lang:{title:'选择租赁到期时间'},
-            trigger:'tap',
-            init: function() {
+            minStep: 1,
+            lang: {title: '选择租赁到期时间'},
+            trigger: 'tap',
+            init: function () {
                 console.log('插件开始触发');
             },
-            moveEnd: function(scroll) {
+            moveEnd: function (scroll) {
                 console.log('滚动结束');
             },
-            confirm: function(date) {
+            confirm: function (date) {
                 self.data.maturityYear = date
                 console.log('确定按钮触发');
             },
-            cancel: function() {
+            cancel: function () {
                 console.log('插件运行取消');
             }
         })
         // rd.show();
         // rd.hide();
     }
+
     //  format 土地信息和养殖信息数据
     async submitFormData() {
         const self = this
@@ -505,15 +507,15 @@ class PageController extends Service {
         let isValidate = !Object.values(formJSON).some((item, i) => !item)
 
         // validator，后期再抽象
-        if(formJSON.farmsSize >= 60000000) {
+        if (formJSON.farmsSize >= 60000000) {
             Utils.UI.toast('养殖规模数量超出限制哦')
             return
         }
-        if(formJSON.farmsSize >= 10000000) {
+        if (formJSON.farmsSize >= 10000000) {
             Utils.UI.toast('棚舍数量超出限制哦')
             return
         }
-        if(formJSON.farmsSize >= 10000000) {
+        if (formJSON.farmsSize >= 10000000) {
             Utils.UI.toast('棚舍面积超出限制哦')
             return
         }
@@ -532,6 +534,10 @@ class PageController extends Service {
                     res = await this.postUpdateOperate(formJSON, {envDataFileStream: envReportFile})
                 }
                 Utils.UI.toast('提交成功')
+                Utils.Router.closeCurrentWinAndRefresh({
+                    winName: 'html/danbaostep2/index',
+                    script: 'window.location.reload();'
+                })
             } catch (e) {
                 Utils.UI.hideLoading()
                 Utils.UI.toast(e.msg)

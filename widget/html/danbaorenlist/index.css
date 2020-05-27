@@ -66,6 +66,11 @@ body {
     background-repeat: no-repeat;
   }
 
+.checkbox input:disabled ~ span {
+    background-color: #aaa;
+    border-radius: 50%;
+  }
+
 .collapse .collapse-header .cont:after, .collapse .collapse-body .collapse-item .cont:after {
   content: "";
   display: block;

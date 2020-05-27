@@ -1,6 +1,7 @@
 import './index.css'
 import { http, setRefreshHeaderInfo } from '../../../config'
 import { openDanbaoRenForm } from '../../../webview.js'
+import Utils from '../../../utils'
 
 class Service {
   // 担保列表查询
@@ -62,12 +63,12 @@ class pageController extends Service {
       return `
         <li class="collapse-item">
           <label class="checkbox">
-            <input type="checkbox" data-id="${item.gtCounterId}" data-phone="${item.phone || ''}" checkbox-trigger="body">
+            <input ${item.status === 1 ? '' : 'disabled'} type="checkbox" data-id="${item.gtCounterId}" data-phone="${item.phone || ''}" checkbox-trigger="body">
             <span></span>
           </label>
           <div class="cont" click-trigger="item" data-id="${item.gtCounterId}" data-type="${key}">
             <span class="txt">担保人${index + 1}</span>
-            <span class="tag ${statusMap[item.status] && statusMap[item.status][1]}">${statusMap[item.status] && statusMap[item.status][0]}</span>
+            <span data-status="${item.status}" class="tag ${statusMap[item.status] && statusMap[item.status][1]}">${statusMap[item.status] && statusMap[item.status][0]}</span>
           </div>
         </li>
       `
@@ -148,7 +149,9 @@ class pageController extends Service {
         const collapse = $api.closest(event.target, '.collapse')
         const bodyCheckbox = $api.domAll(collapse, '[checkbox-trigger="body"]')
         for (key of Object.keys(bodyCheckbox)) {
-          bodyCheckbox[key].checked = headerCheckbox.checked
+          if (!bodyCheckbox[key].disabled) {
+            bodyCheckbox[key].checked = headerCheckbox.checked
+          }
         }
         this._resetAllCheckbox()
       }
@@ -159,7 +162,9 @@ class pageController extends Service {
       const bottomCheckbox = event.target
       const allBodyCheckbox = $api.domAll(document.querySelector('body'), '[checkbox-trigger="body"]')
       for (key of Object.keys(allBodyCheckbox)) {
-        allBodyCheckbox[key].checked = bottomCheckbox.checked
+        if (!allBodyCheckbox[key].disabled) {
+          allBodyCheckbox[key].checked = bottomCheckbox.checked
+        }
       }
       const allHeaderCheckbox = $api.domAll(document.querySelector('body'), '[checkbox-trigger="header"]')
       for (key of Object.keys(allHeaderCheckbox)) {
@@ -253,13 +258,23 @@ class pageController extends Service {
   }
 
   async save () {
+    const allTag = Array.from(document.querySelectorAll('.tag'))
+    const allSigned = allTag.every(item => item.dataset.status === 5 || item.dataset.status === '5')
+    if (!allSigned) {
+      api.toast({ msg: '请确保所有的担保人已经签约', location: 'middle' })
+      return
+    }
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
       const { gtCreditId, gtId } = this.initData
       let postData = { gtCreditId, gtId }
       const res = await this.saveDanbaoren(postData)
       if (res.code === 200) {
-        api.toast({ msg: '保存成功', location: 'middle' })
+        api.toast({ msg: '保存成功', location: 'middle', global: true })
+        Utils.Router.closeCurrentWinAndRefresh({
+            winName: 'html/danbaostep2/index',
+            script: 'window.location.reload();'
+        })
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -287,6 +302,7 @@ class pageController extends Service {
         const res = await this.sendDanbaoren(postData)
         if (res.code === 200) {
           api.toast({ msg: '短信发送成功', location: 'middle' })
+          this.getPageDate()
         }
       } catch (error) {
         api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -297,6 +313,7 @@ class pageController extends Service {
 }
 
 apiready = function () {
+
   const ctrl = new pageController()
   ctrl.bindEvent()
   ctrl.getPageDate()
@@ -311,5 +328,19 @@ apiready = function () {
   $api.byId('save').onclick = function () {
     ctrl.save()
   }
+
+  api.addEventListener({
+    name: 'navitembtn'
+  }, (ret, err) => {
+    if (ret.type === 'left') {
+      api.closeWin()
+    }
+  })
+
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
+    ctrl.getPageDate()
+  })
 
 }

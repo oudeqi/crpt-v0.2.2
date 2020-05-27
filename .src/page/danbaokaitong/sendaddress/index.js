@@ -2,11 +2,12 @@ import './index.css'
 import '../form.css'
 import { http, CitySelector, setRefreshHeaderInfo } from '../../../config.js'
 import { Validation, NumberLimit } from '../form.js'
+import Utils from '../../../utils'
 
 class Service {
   // 担保业务申请-文书送达地址查询
   querySendAddress (gtCreditId) {
-    return http.get('/crpt-guarantee/guarantor/document/address/query?gtCreditId=' + gtCreditId, null)
+    return http.get('/crpt-guarantee/guarantor/document/address/query?gtCreditId=' + gtCreditId)
   }
   // 担保业务申请-文书送达地址保存
   saveApply (params) {
@@ -27,7 +28,7 @@ class PageController extends Service {
 
   _renderBaseDocument (data) {
     $api.byId('custName').value = data.custName || ''
-    $api.byId('address').value = `${data.addrProvince}/${data.addrCity}/${data.addrCounty}`
+    $api.byId('address').value = data.addrProvince ? `${data.addrProvince}/${data.addrCity}/${data.addrCounty}` : ''
     $api.byId('address').dataset.province = data.addrProvince || ''
     $api.byId('address').dataset.provinceCode = data.addrProvinceCode || ''
     $api.byId('address').dataset.city = data.addrCity || ''
@@ -38,7 +39,7 @@ class PageController extends Service {
     $api.byId('custAddresseeName').value = data.custAddresseeName || ''
     $api.byId('custAddresseePhone').value = data.custAddresseePhone || ''
     $api.byId('custSpouseName').value = data.custSpouseName || ''
-    $api.byId('peiouAddress').value = `${data.spAddrProvince}/${data.spAddrCity}/${data.spAddrCounty}`
+    $api.byId('peiouAddress').value = data.spAddrProvince ? `${data.spAddrProvince}/${data.spAddrCity}/${data.spAddrCounty}` : ''
     $api.byId('peiouAddress').dataset.province = data.spAddrProvince || ''
     $api.byId('peiouAddress').dataset.provinceCode = data.spAddrProvinceCode || ''
     $api.byId('peiouAddress').dataset.city = data.spAddrCity || ''
@@ -68,7 +69,7 @@ class PageController extends Service {
                   <div class="form-label">担保人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" select-trigger="name" value="${item.gtName}" placeholder="请输入">
+                      <input type="text" select-trigger="name" value="${item.gtName || ''}" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -83,7 +84,7 @@ class PageController extends Service {
                         data-city-code="${item.gtAddrCityCode}"
                         data-county="${item.gtAddrCounty}"
                         data-county-code="${item.gtAddrCountyCode}"
-                        value="${item.gtAddrProvince}/${item.gtAddrCity}/${item.gtAddrCounty}"
+                        value="${item.gtAddrProvince ? `${item.gtAddrProvince}/${item.gtAddrCity}/${item.gtAddrCounty}` : ''}"
                         click-trigger="address" select-trigger="address" readonly placeholder="城市/区域">
                       <span></span>
                     </div>
@@ -93,7 +94,7 @@ class PageController extends Service {
                   <div class="form-label"></div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddrDetail}" select-trigger="addressDetail" placeholder="详细地址">
+                      <input type="text" value="${item.gtAddrDetail || ''}" select-trigger="addressDetail" placeholder="详细地址">
                     </div>
                   </div>
                 </div>
@@ -101,7 +102,7 @@ class PageController extends Service {
                   <div class="form-label">收件人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddresseeName}" select-trigger="receiveName" placeholder="请输入">
+                      <input type="text" value="${item.gtAddresseeName || ''}" select-trigger="receiveName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -109,7 +110,7 @@ class PageController extends Service {
                   <div class="form-label">联系电话</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddresseePhone}" select-trigger="phone" placeholder="请输入">
+                      <input type="text" value="${item.gtAddresseePhone || ''}" select-trigger="phone" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -124,7 +125,7 @@ class PageController extends Service {
                   <div class="form-label">担保人配偶</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseName}" select-trigger="peiouName" placeholder="请输入">
+                      <input type="text" value="${item.gtSpouseName || ''}" select-trigger="peiouName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -139,7 +140,7 @@ class PageController extends Service {
                         data-city-code="${item.gtSpAddrCityCode}"
                         data-county="${item.gtSpAddrCounty}"
                         data-county-code="${item.gtSpAddrCountyCode}"
-                        value="${item.gtSpAddrProvince}/${item.gtSpAddrCity}/${item.gtSpAddrCounty}"
+                        value="${item.gtSpAddrProvince ? `${item.gtSpAddrProvince}/${item.gtSpAddrCity}/${item.gtSpAddrCounty}` : ''}"
                         click-trigger="address" select-trigger="peiouAddress" readonly placeholder="城市/区域">
                       <span></span>
                     </div>
@@ -149,7 +150,7 @@ class PageController extends Service {
                   <div class="form-label"></div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpAddrDetail}" select-trigger="peiouAddressDetail" placeholder="详细地址">
+                      <input type="text" value="${item.gtSpAddrDetail || ''}" select-trigger="peiouAddressDetail" placeholder="详细地址">
                     </div>
                   </div>
                 </div>
@@ -157,7 +158,7 @@ class PageController extends Service {
                   <div class="form-label">收件人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseAddresseeName}" select-trigger="peiouReceiveName" placeholder="请输入">
+                      <input type="text" value="${item.gtSpouseAddresseeName || ''}" select-trigger="peiouReceiveName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -165,7 +166,7 @@ class PageController extends Service {
                   <div class="form-label">联系电话</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseAddresseePhone}" select-trigger="peiouPhone" placeholder="请输入">
+                      <input type="text" value="${item.gtSpouseAddresseePhone || ''}" select-trigger="peiouPhone" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -220,6 +221,7 @@ class PageController extends Service {
     document.querySelector('body').addEventListener('click', e => {
       const address = $api.closest(event.target, '[click-trigger="address"]')
       if (address) {
+        console.log(JSON.stringify(address))
         CitySelector(selected => {
           console.log(JSON.stringify(selected))
           let a = selected[0]
@@ -478,6 +480,10 @@ class PageController extends Service {
           const res = await this.saveApply(sendData)
           if (res.code === 200) {
             api.toast({ msg: '保存成功', location: 'middle' })
+            Utils.Router.closeCurrentWinAndRefresh({
+                winName: 'html/danbaostep2/index',
+                script: 'window.location.reload();'
+            })
           }
         } catch (error) {
           api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -494,6 +500,7 @@ apiready = function () {
   const ctrl = new PageController()
   ctrl.bindEvent()
   ctrl.getPageData()
+
   setRefreshHeaderInfo(function(ret, err) {
     ctrl.getPageData()
   })
@@ -501,5 +508,13 @@ apiready = function () {
   $api.byId('save').onclick = function () {
     ctrl.submit()
   }
+
+  api.addEventListener({
+    name: 'navitembtn'
+  }, (ret, err) => {
+    if (ret.type === 'left') {
+      api.closeWin()
+    }
+  })
 
 }

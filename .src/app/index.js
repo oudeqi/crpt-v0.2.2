@@ -53,6 +53,9 @@ apiready = function () {
   // Utils.Router.openPageCreditInformation()
 
   if (userinfo) {
+
+    // openIDcardInfo(2)
+
     // openSendAddress({
     //   gtCreditId: '1258945510237147136',
     //   gtId: '1263411018323742721'
@@ -65,6 +68,7 @@ apiready = function () {
     // })
     // openProductRecommend()
     // openDanbaoKaitong({step: 3, productId: '2'})
+
     const authStatus = $api.getStorage('authStatus') || {}
     if (authStatus.status === 1) {
       openTabLayout()
@@ -76,6 +80,7 @@ apiready = function () {
         openTodoAuthQiye()
       }
     }
+
   } else {
     openRegLogin()
   }

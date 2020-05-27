@@ -1578,7 +1578,6 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1632,8 +1631,8 @@ function ajax(method, url) {
         } else {
           // 表单校验未过专属code
           if (ret.code === 202) {
-            var _data = ret.data; // Utils.UI.toast(data[0].msg)
-
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
             resolve(ret);
           } else {
             reject(ret);
@@ -1941,7 +1940,7 @@ var Utils = function Utils() {
   this.OCR = OCR;
 };
 
-new Utils();
+var Utils$1 = new Utils();
 
 // $api.getStorage()
 // $api.rmStorage()
@@ -1961,6 +1960,7 @@ apiready = function apiready() {
   // Utils.Router.openPageCreditInformation()
 
   if (userinfo) {
+    // openIDcardInfo(2)
     // openSendAddress({
     //   gtCreditId: '1258945510237147136',
     //   gtId: '1263411018323742721'

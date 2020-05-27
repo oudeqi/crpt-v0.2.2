@@ -1,7 +1,7 @@
 import '../../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
+import { openRegLogin, openBaseinfoFill, openAgreement,
 openIDcardUpload, openIDcardInfo, openAuthResult } from '../../../webview.js'
 import { http, initUIInput } from '../../../config.js'
 
@@ -61,6 +61,9 @@ apiready = function() {
 
   document.querySelector('#retry').onclick = function () {
     api.closeWin()
+  }
+  document.querySelector('#agreement').onclick = function () {
+    openAgreement(2)
   }
 
   document.querySelector('#next').onclick = function () {
