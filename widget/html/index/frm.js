@@ -143,6 +143,36 @@ function openProductRecommend(pageParam) {
   });
 } // 开通担保
 
+
+function openDanbaoKaitong() {
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref6$step = _ref6.step,
+      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      _ref6$title = _ref6.title,
+      title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
+      productId = _ref6.productId;
+
+  api.openTabLayout({
+    name: "html/danbaostep".concat(step, "/index"),
+    title: title,
+    url: "widget://html/danbaostep".concat(step, "/index.html"),
+    bgColor: '#fff',
+    pageParam: {
+      title: title,
+      step: step,
+      productId: productId
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#66BB6A',
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'normal'
+    }
+  });
+} // 担保人列表
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -2971,7 +3001,13 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "goDanbao",
     value: function goDanbao() {
       this.queryDanbaoStatus().then(function (res) {
-        console.log(JSON.stringify(res)); // 有担保产品
+        var _res$data = res.data,
+            applyStatus = _res$data.applyStatus,
+            productId = _res$data.productId;
+        openDanbaoKaitong({
+          step: applyStatus + 1,
+          productId: productId
+        });
       })["catch"](function (error) {
         if (error.code === 3002) {
           // 无担保产品

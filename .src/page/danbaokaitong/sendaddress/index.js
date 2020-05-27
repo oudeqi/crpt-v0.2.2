@@ -6,21 +6,11 @@ import { Validation, NumberLimit } from '../form.js'
 class Service {
   // 担保业务申请-文书送达地址查询
   querySendAddress (gtCreditId) {
-    return http.get('/crpt-guarantee/guarantor/document/address/query?gtCreditId=' + gtCreditId, null, {
-      headers: {
-        token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-      },
-      timeout: 3000
-    })
+    return http.get('/crpt-guarantee/guarantor/document/address/query?gtCreditId=' + gtCreditId, null)
   }
   // 担保业务申请-文书送达地址保存
   saveApply (params) {
-    return http.post('/crpt-guarantee/guarantor/document/address/insert', { body: params }, {
-      headers: {
-        token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-      },
-      timeout: 3000
-    })
+    return http.post('/crpt-guarantee/guarantor/document/address/insert', { body: params })
   }
 }
 

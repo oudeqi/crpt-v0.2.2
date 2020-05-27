@@ -107,8 +107,7 @@ class PageController extends HeaderController {
             openDanbaoKaitong({step: 2})
           }
         } catch (error) {
-          console.log(JSON.stringify(error))
-          api.toast({ msg: error.msg, location: 'middle' })
+          api.toast({ msg: error.msg || '出错啦', location: 'middle' })
         }
       }
     })

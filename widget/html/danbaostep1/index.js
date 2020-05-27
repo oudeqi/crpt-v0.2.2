@@ -3508,19 +3508,18 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                                 });
                               }
 
-                              _context2.next = 11;
+                              _context2.next = 10;
                               break;
 
                             case 7:
                               _context2.prev = 7;
                               _context2.t0 = _context2["catch"](0);
-                              console.log(JSON.stringify(_context2.t0));
                               api.toast({
-                                msg: _context2.t0.msg,
+                                msg: _context2.t0.msg || '出错啦',
                                 location: 'middle'
                               });
 
-                            case 11:
+                            case 10:
                             case "end":
                               return _context2.stop();
                           }

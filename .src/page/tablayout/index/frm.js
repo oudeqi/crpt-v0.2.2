@@ -1,6 +1,6 @@
 import '../../../app.css'
 import './frm.css'
-import { openLeftPane, openSettings, openProductRecommend } from '../../../webview.js'
+import { openLeftPane, openSettings, openProductRecommend, openDanbaoKaitong } from '../../../webview.js'
 import { http } from '../../../config'
 import numeral from 'numeral'
 
@@ -47,8 +47,8 @@ class PageController extends Service {
   // 担保开通
   goDanbao () {
     this.queryDanbaoStatus().then(res => {
-      console.log(JSON.stringify(res))
-      // 有担保产品
+      const { applyStatus, productId } = res.data
+      openDanbaoKaitong({step: applyStatus + 1, productId})
     }).catch(error => {
       if (error.code === 3002) { // 无担保产品
         openProductRecommend()
