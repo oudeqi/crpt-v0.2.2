@@ -24,12 +24,13 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            type: props.pageParam.type,
             carList: [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
         }
     }
 
     //  执行函数
-    main(props) {
+    async main(props) {
         this.initData()
         this.bindEvents()
     }
@@ -39,6 +40,7 @@ class PageController extends Service {
         this.bindAddEvents()
         this.bindDelEvents()
         this.bindSubmitEvents()
+        this.bindOCREvents()
     }
 
     async initData() {
@@ -121,7 +123,7 @@ class PageController extends Service {
             Utils.UI.showLoading('提交中')
             try {
                 const res = await self.postGuaranteeCarList({
-                    type: 1,
+                    type: self.data.type || 1,
                     gtId: self.data.gtId,
                     gtCreditId: self.data.gtCreditId,
                     carList: self.data.carList
@@ -134,6 +136,59 @@ class PageController extends Service {
                 Utils.UI.toast('服务超时')
             }
             Utils.UI.hideLoading()
+        }
+    }
+
+    // 绑定ocr
+    bindOCREvents() {
+        const self = this
+        document.querySelector('#car-page').onclick = function (e) {
+            let ev = window.event || e;
+            if (ev.target.classList.contains('icon_house_scan')) {
+                const _index = ev.target.getAttribute('data-index')
+                // ocr传图
+                Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
+                    Utils.File.getPicture(self.profile.uploadImgType[index], async function (res, err) {
+                        if (res) {
+                            let fileStream = res.data
+                            Utils.UI.showLoading('正在识别中...')
+                            try {
+                                const response = await Utils.OCR.Baidu.CarVerify({carFile: fileStream});
+                                if (response.code === 200) {
+                                    // 先检出数据
+                                    self.searchAllData()
+                                    const data = response.data
+                                    // self.data.carList.splice(index, 1)
+                                    const {carNo, carBrand} = data
+                                    self.data.carList[_index].carNo = carNo
+                                    self.data.carList[_index].brand = carBrand
+                                    self.compilerTemplate(self.data.carList)
+
+                                    // 后台保存上传的附件
+                                    try {
+                                        const attachRes = await self.saveAttachment({gtId: self.data.gtId}, {pictureFile: fileStream})
+                                        if(attachRes.code === 200) {
+                                            const pictureId = attachRes.data.pictureId
+                                            self.data.carList[_index].pictureId = pictureId
+                                        }
+                                    } catch (e) {
+
+                                    }
+                                } else {
+                                    Utils.UI.toast(response.msg)
+                                }
+                            } catch (e) {
+
+                            }
+                            Utils.UI.hideLoading()
+                        }
+                    })
+                })
+                // self.searchAllData()
+                // let index = ev.target.getAttribute('data-index')
+                // self.data.carList.splice(index, 1)
+                // self.compilerTemplate(self.data.carList)
+            }
         }
     }
 
@@ -155,8 +210,7 @@ class PageController extends Service {
                 </div>
                 <div class="fc_content">
                     <div class="fc_c_common">
-                        <input class="fc_c_input" type="number" pattern="[0-9/.]*"
-                               id="carNo_${i}" placeholder="请输入" data-index="${i}" value="${item.carNo}"/>
+                        <input class="fc_c_input" type="text" id="carNo_${i}" placeholder="请输入" data-index="${i}" value="${item.carNo}"/>
                         <div class="fc_unit icon_house_scan" id="carOCRBtn_${i}" data-index="${i}">hi</div>
                     </div>
                 </div>

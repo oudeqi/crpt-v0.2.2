@@ -39,6 +39,7 @@ apiready = function () {
   // openCompanyInfo()
   // $api.clearStorage()
   const userinfo = $api.getStorage('userinfo')
+
   Utils.Router.openPageCreditInformation()
 
   // if (userinfo) {

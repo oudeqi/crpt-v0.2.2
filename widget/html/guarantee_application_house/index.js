@@ -1344,23 +1344,6 @@ var codeMapFilter = function codeMapFilter(list) {
   return codeMap;
 };
 
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-};
-
-var Utils$1 = new Utils();
-
 // api.lockSlidPane();
 
 
@@ -1764,6 +1747,195 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
@@ -1841,6 +2013,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      type: props.pageParam.type,
       houseList: [{
         houseNo: '',
         area: '',
@@ -2093,7 +2266,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "compilerTemplate",
     value: function compilerTemplate(list) {
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u623F\u4EA7<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u8BC1\u53F7</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"houseNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.houseNo || '', "\"/>\n                        <div class=\"fc_unit icon_house_scan\" id=\"OCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u5EFA\u7B51\u9762\u79EF</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\" id=\"area_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.area, "\">\n                        <div class=\"fc_unit\">\u5E73\u65B9\u7C73</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"housePrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.housePrice || '', "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n            \n             <div class=\"form-cell_shell top\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u5730\u5740</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common bd\">\n                        <div class=\"fc_c_city\" >\n                            <span id=\"address_").concat(i, "\" class=\"fc_c_city_label ").concat(item.addrProvince && 'selected', "\" data-index=\"").concat(i, "\">\n                            ").concat(item.addrProvince ? item.addrProvince + ' ' + item.addrCity + ' ' + item.addrCounty : '选择 城市/区域', "\n                            </span>\n                        </div>\n                    </div>\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" id=\"addrDetail_").concat(i, "\" value=\"").concat(item.addrDetail || '', "\" type=\"text\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\" />\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u623F\u4EA7<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u8BC1\u53F7</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"houseNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.houseNo || '', "\"/>\n<!--                        <div class=\"fc_unit icon_house_scan\" id=\"OCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>-->\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u5EFA\u7B51\u9762\u79EF</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\" id=\"area_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.area, "\">\n                        <div class=\"fc_unit\">\u5E73\u65B9\u7C73</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"housePrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.housePrice || '', "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n            \n             <div class=\"form-cell_shell top\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u623F\u4EA7\u5730\u5740</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common bd\">\n                        <div class=\"fc_c_city\" >\n                            <span id=\"address_").concat(i, "\" class=\"fc_c_city_label ").concat(item.addrProvince && 'selected', "\" data-index=\"").concat(i, "\">\n                            ").concat(item.addrProvince ? item.addrProvince + ' ' + item.addrCity + ' ' + item.addrCounty : '选择 城市/区域', "\n                            </span>\n                        </div>\n                    </div>\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" id=\"addrDetail_").concat(i, "\" value=\"").concat(item.addrDetail || '', "\" type=\"text\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\" />\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html; // alert(_html)

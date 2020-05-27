@@ -1,3 +1,20 @@
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -737,23 +754,6 @@ try {
 
 var regenerator = runtime_1;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -1053,14 +1053,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	openPageCreditInformation: openPageCreditInformation,
-	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-	openAttachmentInfo: openAttachmentInfo,
-	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openAttachmentInfo: openAttachmentInfo,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -1273,23 +1273,6 @@ var codeMapFilter = function codeMapFilter(list) {
   });
   return codeMap;
 };
-
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-};
-
-var Utils$1 = new Utils();
 
 // api.lockSlidPane();
 
@@ -1694,13 +1677,203 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
+                  certFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return BaiduSDK.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
+                  bankcardFile: params.file,
+                  accessToken: res.data.accessToken
+                }), // formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(res));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+var obj2FormData = function obj2FormData(info) {
+  var formData = new FormData();
+  Object.keys(info).forEach(function (k, i) {
+    formData.append(k, info[k]);
+  });
+  return formData;
+};
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
 
     this.ajaxUrls = {
       postGuaranteeCarUrl: '/crpt-guarantee/guarantor/car/insert',
-      getGuaranteeCarUrl: '/crpt-guarantee/guarantor/car/query'
+      getGuaranteeCarUrl: '/crpt-guarantee/guarantor/car/query',
+      saveAttachmentUrl: '/crpt-guarantee/guarantor/attachment/save'
     };
   }
 
@@ -1722,6 +1895,19 @@ var Service = /*#__PURE__*/function () {
     value: function getGuaranteeCarList(params) {
       return http.get(this.ajaxUrls.getGuaranteeCarUrl, {
         values: params
+      }, {
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
+        timeout: 3000
+      });
+    }
+  }, {
+    key: "saveAttachment",
+    value: function saveAttachment(params, files) {
+      return http.upload(this.ajaxUrls.saveAttachmentUrl, {
+        values: params,
+        files: files
       }, {
         // headers: {
         //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
@@ -1771,6 +1957,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      type: props.pageParam.type,
       carList: [{
         carNo: '',
         carPrice: '',
@@ -1784,10 +1971,29 @@ var PageController = /*#__PURE__*/function (_Service) {
 
   createClass(PageController, [{
     key: "main",
-    value: function main(props) {
-      this.initData();
-      this.bindEvents();
-    } //  事件绑定入口
+    value: function () {
+      var _main = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(props) {
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.initData();
+                this.bindEvents();
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function main(_x) {
+        return _main.apply(this, arguments);
+      }
+
+      return main;
+    }() //  事件绑定入口
 
   }, {
     key: "bindEvents",
@@ -1795,25 +2001,26 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.bindAddEvents();
       this.bindDelEvents();
       this.bindSubmitEvents();
+      this.bindOCREvents();
     }
   }, {
     key: "initData",
     value: function () {
-      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
         var res;
-        return regenerator.wrap(function _callee$(_context) {
+        return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 Utils$1.UI.showLoading('加载中');
-                _context.prev = 1;
-                _context.next = 4;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return this.getGuaranteeCarList({
                   gtId: this.data.gtId
                 });
 
               case 4:
-                res = _context.sent;
+                res = _context2.sent;
                 this.data.carList = res.data.length > 0 ? res.data.map(function (item, i) {
                   return _objectSpread$1({}, item, {
                     pictureId: item.pictureId || ''
@@ -1824,12 +2031,12 @@ var PageController = /*#__PURE__*/function (_Service) {
                   brand: '',
                   pictureId: ''
                 }];
-                _context.next = 11;
+                _context2.next = 11;
                 break;
 
               case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
                 Utils$1.UI.toast('服务超时');
 
               case 11:
@@ -1838,10 +2045,10 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 13:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee2, this, [[1, 8]]);
       }));
 
       function initData() {
@@ -1905,11 +2112,11 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "bindSubmitEvents",
     value: function bindSubmitEvents() {
       var self = this;
-      document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+      document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
         var isValidate, res;
-        return regenerator.wrap(function _callee2$(_context2) {
+        return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 self.searchAllData(); // 校验是否还有未填写的数据
 
@@ -1918,36 +2125,36 @@ var PageController = /*#__PURE__*/function (_Service) {
                 });
 
                 if (isValidate) {
-                  _context2.next = 5;
+                  _context3.next = 5;
                   break;
                 }
 
                 Utils$1.UI.toast('还有信息未填完');
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 5:
                 Utils$1.UI.showLoading('提交中');
-                _context2.prev = 6;
-                _context2.next = 9;
+                _context3.prev = 6;
+                _context3.next = 9;
                 return self.postGuaranteeCarList({
-                  type: 1,
+                  type: self.data.type || 1,
                   gtId: self.data.gtId,
                   gtCreditId: self.data.gtCreditId,
                   carList: self.data.carList
                 });
 
               case 9:
-                res = _context2.sent;
+                res = _context3.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: 'window.location.reload();'
                 });
-                _context2.next = 16;
+                _context3.next = 16;
                 break;
 
               case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](6);
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](6);
                 Utils$1.UI.toast('服务超时');
 
               case 16:
@@ -1955,18 +2162,129 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 17:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[6, 13]]);
+        }, _callee3, null, [[6, 13]]);
       }));
+    } // 绑定ocr
+
+  }, {
+    key: "bindOCREvents",
+    value: function bindOCREvents() {
+      var self = this;
+
+      document.querySelector('#car-page').onclick = function (e) {
+        var ev = window.event || e;
+
+        if (ev.target.classList.contains('icon_house_scan')) {
+          var _index = ev.target.getAttribute('data-index'); // ocr传图
+
+
+          Utils$1.File.actionSheet('请选择', ['相机', '相册'], function (index) {
+            Utils$1.File.getPicture(self.profile.uploadImgType[index], /*#__PURE__*/function () {
+              var _ref2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4(res, err) {
+                var fileStream, response, data, carNo, carBrand, attachRes, pictureId;
+                return regenerator.wrap(function _callee4$(_context4) {
+                  while (1) {
+                    switch (_context4.prev = _context4.next) {
+                      case 0:
+                        if (!res) {
+                          _context4.next = 31;
+                          break;
+                        }
+
+                        fileStream = res.data;
+                        Utils$1.UI.showLoading('正在识别中...');
+                        _context4.prev = 3;
+                        _context4.next = 6;
+                        return Utils$1.OCR.Baidu.CarVerify({
+                          carFile: fileStream
+                        });
+
+                      case 6:
+                        response = _context4.sent;
+
+                        if (!(response.code === 200)) {
+                          _context4.next = 25;
+                          break;
+                        }
+
+                        // 先检出数据
+                        self.searchAllData();
+                        data = response.data; // self.data.carList.splice(index, 1)
+
+                        carNo = data.carNo, carBrand = data.carBrand;
+                        self.data.carList[_index].carNo = carNo;
+                        self.data.carList[_index].brand = carBrand;
+                        self.compilerTemplate(self.data.carList); // 后台保存上传的附件
+
+                        _context4.prev = 14;
+                        _context4.next = 17;
+                        return self.saveAttachment({
+                          gtId: self.data.gtId
+                        }, {
+                          pictureFile: fileStream
+                        });
+
+                      case 17:
+                        attachRes = _context4.sent;
+
+                        if (attachRes.code === 200) {
+                          pictureId = attachRes.data.pictureId;
+                          self.data.carList[_index].pictureId = pictureId;
+                        }
+
+                        _context4.next = 23;
+                        break;
+
+                      case 21:
+                        _context4.prev = 21;
+                        _context4.t0 = _context4["catch"](14);
+
+                      case 23:
+                        _context4.next = 26;
+                        break;
+
+                      case 25:
+                        Utils$1.UI.toast(response.msg);
+
+                      case 26:
+                        _context4.next = 30;
+                        break;
+
+                      case 28:
+                        _context4.prev = 28;
+                        _context4.t1 = _context4["catch"](3);
+
+                      case 30:
+                        Utils$1.UI.hideLoading();
+
+                      case 31:
+                      case "end":
+                        return _context4.stop();
+                    }
+                  }
+                }, _callee4, null, [[3, 28], [14, 21]]);
+              }));
+
+              return function (_x2, _x3) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
+          }); // self.searchAllData()
+          // let index = ev.target.getAttribute('data-index')
+          // self.data.carList.splice(index, 1)
+          // self.compilerTemplate(self.data.carList)
+        }
+      };
     } // 编译html模板
 
   }, {
     key: "compilerTemplate",
     value: function compilerTemplate(list) {
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u8F66\u8F86<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u53F7\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"carNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carNo, "\"/>\n                        <div class=\"fc_unit icon_house_scan\" id=\"carOCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u54C1\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\" id=\"brand_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.brand, "\">\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"carPrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carPrice, "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u8F66\u8F86<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u53F7\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\" id=\"carNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carNo, "\"/>\n                        <div class=\"fc_unit icon_house_scan\" id=\"carOCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u54C1\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\" id=\"brand_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.brand, "\">\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"carPrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carPrice, "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html; // alert(_html)

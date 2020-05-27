@@ -38,6 +38,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            type: props.pageParam.type,
             socialrefList: [{
                 name: '',
                 phone: '',
@@ -178,7 +179,7 @@ class PageController extends Service {
             Utils.UI.showLoading('提交中')
             try {
                 const res = await self.postGuaranteeFamilyList({
-                    type: 1,
+                    type: self.data.type || 1,
                     gtId: self.data.gtId,
                     gtCreditId: self.data.gtCreditId,
                     socialrefList: self.data.socialrefList

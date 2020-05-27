@@ -24,6 +24,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            type: props.pageParam.type,
             houseList: [{
                 houseNo: '',
                 area: '',
@@ -218,7 +219,7 @@ class PageController extends Service {
                     <div class="fc_c_common">
                         <input class="fc_c_input" type="text"
                                id="houseNo_${i}" placeholder="请输入" data-index="${i}" value="${item.houseNo || ''}"/>
-                        <div class="fc_unit icon_house_scan" id="OCRBtn_${i}" data-index="${i}">hi</div>
+<!--                        <div class="fc_unit icon_house_scan" id="OCRBtn_${i}" data-index="${i}">hi</div>-->
                     </div>
                 </div>
             </div>
