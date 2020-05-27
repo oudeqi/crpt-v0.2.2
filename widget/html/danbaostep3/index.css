@@ -1,0 +1,769 @@
+.header {
+  height: 216px;
+  background:-webkit-gradient(linear,left bottom, left top,from(rgba(255,255,255,1)),color-stop(53%, rgba(102,187,106,1)),to(rgba(102,187,106,1)));
+  background:linear-gradient(360deg,rgba(255,255,255,1) 0%,rgba(102,187,106,1) 53%,rgba(102,187,106,1) 100%);
+}
+.title{
+  padding-top: 33px;
+  padding-left: 17px;
+  padding-right: 17px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.title .icon {
+    width:42px;
+    height:42px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    line-height: 1;
+    border-radius: 50%;
+    background:rgba(255,255,255,1);
+    font-size:23px;
+    color:rgba(48,49,51,1);
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    margin-right: 18px;
+  }
+.title .txt {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    font-size:20px;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+  }
+.rect {
+  height:100px;
+  border-radius:6px;
+  margin-top: 25px;
+  margin-left: 12px;
+  margin-right: 12px;
+  background-color:rgba(255,255,255,1);
+  position: relative;
+  -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+          box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+  text-align: center;
+  color:rgba(48,49,51,1);
+}
+.rect.normal span, .rect strong{
+    color:rgba(48,49,51,1);
+  }
+.rect.info span, .rect.info strong {
+    color:rgba(245,166,35,1);
+  }
+.rect.primary span, .rect.primary strong {
+    color:rgba(74,144,226,1);
+  }
+.rect.waring span, .rect.waring strong {
+    color:rgba(255,95,57,1);
+  }
+.rect:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width:152px;
+    height:100px;
+    background-image: url(../../image/danbaoKaitong/card_bg.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+.rect .top {
+    font-size:16px;
+    font-weight:500;
+    line-height:22px;
+    padding-top: 22px;
+  }
+.rect .bottom {
+    margin-top: 13px;
+  }
+.rect .bottom span {
+      display: inline-block;
+      height:22px;
+      line-height:19px;
+      font-size:16px;
+      font-weight:bold;
+    }
+.rect .bottom strong {
+      display: inline-block;
+      height:28px;
+      line-height:28px;
+      font-size:24px;
+      font-weight:bold;
+    }
+.step {
+  margin-top: 10px;
+  padding: 0 12px;
+}
+.step .step_list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    overflow: hidden;
+  }
+.step .step_item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+.step .step_item:last-child .icon {
+      margin-right: 0;
+    }
+.step .step_item .icon {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      width:26px;
+      height:26px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background:rgba(255,255,255,1);
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(192,196,204,1);
+      line-height:24px;
+      font-style: normal;
+    }
+.step .step_item .txt {
+      display: none;
+      font-size:18px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      line-height:25px;
+    }
+.step .line {
+    margin-top: 9px;
+    height:4px;
+    background:rgba(245,245,245,1);
+    border-radius:2px;
+    width: 100%;
+    position: relative;
+  }
+.step .line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height:4px;
+      background:rgba(102,187,106,1);
+      border-radius:2px
+    }
+.step.step1 .step_list .step_item:nth-child(1) .icon, .step.step2 .step_list .step_item:nth-child(2) .icon, .step.step3 .step_list .step_item:nth-child(3) .icon, .step.step4 .step_list .step_item:nth-child(4) .icon, .step.step5 .step_list .step_item:nth-child(5) .icon, .step.step6 .step_list .step_item:nth-child(6) .icon, .step.step2 .step_list .step_item:nth-child(1) .icon, .step.step3 .step_list .step_item:nth-child(1) .icon, .step.step3 .step_list .step_item:nth-child(2) .icon, .step.step4 .step_list .step_item:nth-child(1) .icon, .step.step4 .step_list .step_item:nth-child(2) .icon, .step.step4 .step_list .step_item:nth-child(3) .icon, .step.step5 .step_list .step_item:nth-child(1) .icon, .step.step5 .step_list .step_item:nth-child(2) .icon, .step.step5 .step_list .step_item:nth-child(3) .icon, .step.step5 .step_list .step_item:nth-child(4) .icon, .step.step6 .step_list .step_item:nth-child(1) .icon, .step.step6 .step_list .step_item:nth-child(2) .icon, .step.step6 .step_list .step_item:nth-child(3) .icon, .step.step6 .step_list .step_item:nth-child(4) .icon, .step.step6 .step_list .step_item:nth-child(5) .icon {
+  width:26px;
+  height:26px;
+  background:rgba(102,187,106,1);
+  border:1px solid rgba(102,187,106,1);
+  font-size:20px;
+  font-family:DINAlternate-Bold,DINAlternate;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:24px;
+}
+.step.step1 .step_list .step_item:nth-child(1){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step1 .step_list .step_item:nth-child(1) .txt {
+        display: block;
+      }
+.step.step1 .line::after {
+      width: 16%;
+    }
+.step.step2 .step_list .step_item:nth-child(2){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step2 .step_list .step_item:nth-child(2) .txt {
+        display: block;
+      }
+.step.step2 .line::after {
+      width: 32%;
+    }
+.step.step3 .step_list .step_item:nth-child(3){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step3 .step_list .step_item:nth-child(3) .txt {
+        display: block;
+      }
+.step.step3 .line::after {
+      width: 48%;
+    }
+.step.step4 .step_list .step_item:nth-child(4){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step4 .step_list .step_item:nth-child(4) .txt {
+        display: block;
+      }
+.step.step4 .line::after {
+      width: 64%;
+    }
+.step.step5 .step_list .step_item:nth-child(5){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step5 .step_list .step_item:nth-child(5) .txt {
+        display: block;
+      }
+.step.step5 .line::after {
+      width: 80%;
+    }
+.step.step6 .step_list .step_item:nth-child(6){
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+    }
+.step.step6 .step_list .step_item:nth-child(6) .txt {
+        display: block;
+      }
+.step.step6 .line::after {
+      width: 96%;
+    }
+
+.form .form-item .form-label, .form .form-item .form-crtl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.form input {
+    border: 0;
+  }
+
+.form .form-item {
+    height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+  }
+
+.form .form-item .form-label {
+      width: 70px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+    }
+
+.form .form-item .required {
+      font-size:24px;
+      font-weight:bold;
+      color:rgba(255,95,57,1);
+      margin-right: 10px;
+      position: relative;
+      top: 3px;
+    }
+
+.form .form-item .form-crtl {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      border-bottom: 1px solid rgba(245,245,245,1);
+    }
+
+.inline-select span, .city-select span {
+  display: inline-block;
+  width:16px;
+  height:16px;
+  background-image: url(../../image/danbaokaitong/arrow.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.txt-input, .scan-input, .inline-select, .city-select {
+  height: 100%;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.txt-input input, .scan-input input, .inline-select input, .city-select input {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  font-size:14px;
+  font-weight:500;
+  color:rgba(48,49,51,1);
+  padding: 5px 0;
+}
+
+.txt-input span {
+    display: block;
+    margin-left: 10px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height: 1;
+  }
+
+.scan-input span {
+    display: inline-block;
+    width:20px;
+    height:20px;
+    background-image: url(../../image/danbaokaitong/scan.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+.inline-select input {
+    text-align: center;
+  }
+
+.inline-select input:disabled {
+      background-color: #fff;
+      opacity: 1;
+    }
+
+.city-select input {
+    text-align: center;
+  }
+
+.city-select input::-webkit-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::-moz-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input:-ms-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::-ms-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input:disabled {
+      background-color: #fff;
+      opacity: 1;
+    }
+
+.block-select {
+  height: 100%;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.block-select label {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 16px;
+    line-height: 1;
+  }
+
+.block-select label span {
+      display: block;
+      padding: 6px 19px;
+      background:rgba(144,147,153,0.1);
+      border-radius:6px;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+    }
+
+.block-select label input {
+      display: none;
+    }
+
+.block-select label input:checked ~ span {
+        background:rgba(102,187,106,1);
+        color:rgba(255,255,255,1);
+      }
+
+.checkbox span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(144,147,153,1);
+  }
+
+.checkbox input {
+    display: none;
+  }
+
+.checkbox input:checked ~ span {
+    background-image: url(../../image/danbaokaitong/checked.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+.agreement {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.agreement .checkbox {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+  }
+
+.agreement .txt{
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    margin-left: 11px;
+    font-size:14px;
+    font-weight:500;
+    line-height:20px;
+    color:rgba(144,147,153,1);
+  }
+
+.agreement .txt span {
+      color: rgba(102,187,106,1);
+      display: inline;
+    }
+
+.inline-btn {
+  height:50px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background:rgba(102,187,106,1);
+  border-radius:25px;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  padding: 0 25px;
+}
+
+.inline-btn.active {
+    background:rgba(102,187,106,0.7);
+  }
+
+.inline-btn[disabled] {
+    background:rgba(245,245,245,1);
+    color:rgba(192,196,204,1);
+  }
+
+.block-btn {
+  height:50px;
+  background:rgba(102,187,106,1);
+  border-radius:25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+
+.block-btn.active {
+    background:rgba(102,187,106,0.7);
+  }
+
+.block-btn[disabled] {
+    background:rgba(220,224,232,1);
+  }
+
+.block-btn[loading] {
+    background:rgba(102,187,106,0.5);
+  }
+
+.block-btn[loading]:before {
+    content: "...";
+    display: block;
+    margin-right: 10px;
+  }
+
+.container {
+  padding: 0 12px;
+}
+  .container .tit {
+    height:42px;
+    line-height: 42px;
+    font-size:30px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    margin-top: 24px;
+  }
+  .container .desc {
+    margin-top: 9px;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height:22px;
+  }
+  .container .cont {
+    margin-top: 16px;
+    background:rgba(255,255,255,1);
+    border-radius:6px;
+    border:1px solid rgba(220,224,232,1);
+    padding: 16px;
+    position: relative;
+  }
+  .container .cont p {
+      margin-bottom: 8px;
+      height:20px;
+      line-height:20px;
+      font-size:14px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+    }
+  .container .cont p:last-child {
+        margin-bottom: 0;
+      }
+  .container .cont p span {
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        color:rgba(144,147,153,1);
+        font-weight:500;
+      }
+  .container .cont p strong {
+        -ms-flex-negative: 0;
+            flex-shrink: 0;
+        color:rgba(48,49,51,1);
+        font-weight:500;
+      }
+  .container .cont p strong i {
+          font-style: normal;
+        }
+  .container .cont:after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 300px;
+      height:150px;
+      background-image: url(../../image/danbaoKaitong/card_bg2.png);
+      background-position: right bottom;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+.contract {
+  margin-top: 24px;
+}
+
+.contract h2 {
+    width:140px;
+    height:20px;
+    font-size:14px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height:20px;
+  }
+
+.contract ul {
+    margin-top: 16px;
+  }
+
+.contract ul li {
+      margin-bottom: 12px;
+      height:60px;
+      border-radius:6px;
+      border:2px solid rgba(245,245,245,1);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      position: relative;
+    }
+
+.contract.step1 li:nth-child(1) {
+    background:rgba(102,187,106,0.1);
+    -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+            box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+    border:2px solid rgba(102,187,106,1);
+    color:rgba(102,187,106,1);
+  }
+
+.contract.step1 li:nth-child(1):after {
+      content: "";
+      width:32px;
+      height:32px;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      background-image: url(../../image/danbaokaitong/checked.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+.contract.step2 li:nth-child(2) {
+    background:rgba(102,187,106,0.1);
+    -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+            box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+    border:2px solid rgba(102,187,106,1);
+    color:rgba(102,187,106,1);
+  }
+
+.contract.step2 li:nth-child(2):after {
+      content: "";
+      width:32px;
+      height:32px;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      background-image: url(../../image/danbaokaitong/checked.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+.contract.step3 li:nth-child(3) {
+    background:rgba(102,187,106,0.1);
+    -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+            box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+    border:2px solid rgba(102,187,106,1);
+    color:rgba(102,187,106,1);
+  }
+
+.contract.step3 li:nth-child(3):after {
+      content: "";
+      width:32px;
+      height:32px;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      background-image: url(../../image/danbaokaitong/checked.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+.contract.step4 li:nth-child(4) {
+    background:rgba(102,187,106,0.1);
+    -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+            box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+    border:2px solid rgba(102,187,106,1);
+    color:rgba(102,187,106,1);
+  }
+
+.contract.step4 li:nth-child(4):after {
+      content: "";
+      width:32px;
+      height:32px;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      background-image: url(../../image/danbaokaitong/checked.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+.block-btn {
+  margin: 12px;
+  margin-top: 90px;
+  margin-bottom: 26px;
+}

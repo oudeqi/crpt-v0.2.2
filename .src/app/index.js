@@ -1,6 +1,11 @@
 import {
   // openDrawerLayout,
+  openAgreement,
+  openLoanConfirm,
+  openSendAddress,
   openDanbaoKaitong,
+  openDanbaoRenList,
+  openDanbaoRenForm,
   openMsgCenter,
   openTabLayout,
   openRegLogin,
@@ -50,18 +55,29 @@ apiready = function () {
   // Utils.Router.openPageCreditInformation()
 
   if (userinfo) {
-    openDanbaoKaitong({title: '普惠担保'})
-    // const authStatus = $api.getStorage('authStatus') || {}
-    // if (authStatus.status === 1) {
-    //   openTabLayout()
-    // } else {
-    //   const userType = userinfo.userType
-    //   if (userType === '1') {
-    //     openTodoAuthGeren()
-    //   } else {
-    //     openTodoAuthQiye()
-    //   }
-    // }
+    // openSendAddress({
+    //   gtCreditId: '1258945510237147136',
+    //   gtId: '1263411018323742721'
+    // })
+    // openDanbaoRenList({
+    //   gtCreditId: '1260492247898374145',
+    //   productId: '1',
+    //   demandMoney: '40',
+    //   gtId: '1263411018323742721'
+    // })
+    // openProductRecommend()
+    // openDanbaoKaitong({step: 3, productId: '2'})
+    const authStatus = $api.getStorage('authStatus') || {}
+    if (authStatus.status === 1) {
+      openTabLayout()
+    } else {
+      const userType = userinfo.userType
+      if (userType === '1') {
+        openTodoAuthGeren()
+      } else {
+        openTodoAuthQiye()
+      }
+    }
   } else {
     openRegLogin()
   }

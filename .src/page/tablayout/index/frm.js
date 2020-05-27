@@ -7,6 +7,8 @@ import numeral from 'numeral'
 
 class Service {
   getlist ({custType, status} = {}) {
+    // custType 0：通用   1：普惠担保  2：其他
+    // status 查询状态 1-按产品额度降序 2-按产品利率升序
     return http.get('/crpt-product/product/query/home/show', {
       values: {custType, status}
     })
@@ -30,7 +32,6 @@ class PageController extends Service {
       navOther: $api.byId('other'),
       high: $api.byId('high'),
       low: $api.byId('low'),
-      danbaoKaitong: $api.byId('kaitong'),
     }
   }
 
@@ -42,41 +43,24 @@ class PageController extends Service {
       this.el.navOther.style.display = 'block'
     }
   }
-  // 事件绑定
-  bindEvent () {
-    document.querySelector('#body').onclick = function (event) {
-      let clickBtn = $api.closest(event.target, '.clickBtn')
-      if (clickBtn) {
-        api.alert({
-          title: '提示',
-          msg: '功能开发中...',
+
+  // 担保开通
+  goDanbao () {
+    this.queryDanbaoStatus().then(res => {
+      console.log(JSON.stringify(res))
+      // 有担保产品
+    }).catch(error => {
+      if (error.code === 3002) { // 无担保产品
+        openProductRecommend()
+      } else {
+        api.toast({
+          msg: error.msg || '查询担保状态失败',
+          location: 'middle'
         })
       }
-    }
-    api.addEventListener({
-      name: 'keyback'
-    }, function (ret, err) {
-      // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
-      api.closeWidget({
-        silent: false
-      })
     })
-    this.el.danbaoKaitong.onclick = () => {
-      this.queryDanbaoStatus().then(res => {
-        console.log(JSON.stringify(res))
-        // 有担保产品
-      }).catch(error => {
-        if (error.code === 3002) { // 无担保产品
-          openProductRecommend()
-        } else {
-          api.toast({
-            msg: error.msg || '查询担保状态失败',
-            location: 'middle'
-          })
-        }
-      })
-    }
   }
+
   // 高额精选
   _renderHigh (arr) {
     arr.forEach((item, index) => {
@@ -95,6 +79,7 @@ class PageController extends Service {
       }
     })
   }
+
   // 利息最低
   _renderLow (arr) {
     arr.forEach((item) => {
@@ -113,6 +98,7 @@ class PageController extends Service {
       $api.append(this.el.low, tpl)
     })
   }
+
   // 获取数据
   renderProduct () {
     const custType = this.state.custType
@@ -133,9 +119,30 @@ class PageController extends Service {
 
 apiready = function () {
 
+  document.querySelector('#body').onclick = function (event) {
+    let clickBtn = $api.closest(event.target, '.clickBtn')
+    if (clickBtn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...',
+      })
+    }
+  }
+
+  api.addEventListener({
+    name: 'keyback'
+  }, function (ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    })
+  })
+
   const controller = new PageController()
+  $api.byId('kaitong').onclick = () => {
+    controller.goDanbao()
+  }
   controller.renderNav()
-  controller.bindEvent()
   controller.renderProduct()
 
   // api.setTabLayoutAttr({

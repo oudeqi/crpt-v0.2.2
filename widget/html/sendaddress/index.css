@@ -1,0 +1,382 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding-bottom: 20px;
+}
+
+.collapse .collapse-header:after {
+  content: "";
+  display: block;
+  width:16px;
+  height:16px;
+  background-image: url(../../image/danbaokaitong/arrow.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
+.collapse {
+  padding: 0 12px;
+  margin-top: 12px;
+  background: #fff;
+}
+
+.collapse .collapse-header {
+    height: 70px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: relative;
+  }
+
+.collapse .collapse-header:after {
+      -webkit-transform: translateY(-50%) rotateZ(-90deg);
+              transform: translateY(-50%) rotateZ(-90deg);
+    }
+
+.collapse .collapse-body {
+    border-top: 1px dashed #DCE0E8;
+    padding-top: 8px;
+    padding-bottom: 12px;
+  }
+
+.collapse .collapse-body .form .form-label {
+      width: 96px;
+    }
+
+.collapse[collapse="hide"] .cont:after {
+    -webkit-transform: translateY(-50%) rotateZ(90deg);
+            transform: translateY(-50%) rotateZ(90deg);
+  }
+
+.collapse[collapse="hide"] .collapse-body {
+    display: none;
+  }
+
+.btn-box {
+  padding: 0 12px;
+  margin-top: 40px;
+}
+
+.list .item .item-header {
+      background-color: lightgreen;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+.list .item .item-body .collapse {
+        margin-top: 0;
+        margin-bottom: 12px;
+      }
+
+.form .form-item .form-label, .form .form-item .form-crtl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.form input {
+    border: 0;
+  }
+
+.form .form-item {
+    height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+  }
+
+.form .form-item .form-label {
+      width: 70px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+    }
+
+.form .form-item .required {
+      font-size:24px;
+      font-weight:bold;
+      color:rgba(255,95,57,1);
+      margin-right: 10px;
+      position: relative;
+      top: 3px;
+    }
+
+.form .form-item .form-crtl {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      border-bottom: 1px solid rgba(245,245,245,1);
+    }
+
+.inline-select span, .city-select span {
+  display: inline-block;
+  width:16px;
+  height:16px;
+  background-image: url(../../image/danbaokaitong/arrow.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.txt-input, .scan-input, .inline-select, .city-select {
+  height: 100%;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.txt-input input, .scan-input input, .inline-select input, .city-select input {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  font-size:14px;
+  font-weight:500;
+  color:rgba(48,49,51,1);
+  padding: 5px 0;
+}
+
+.txt-input span {
+    display: block;
+    margin-left: 10px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height: 1;
+  }
+
+.scan-input span {
+    display: inline-block;
+    width:20px;
+    height:20px;
+    background-image: url(../../image/danbaokaitong/scan.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+.inline-select input {
+    text-align: center;
+  }
+
+.inline-select input:disabled {
+      background-color: #fff;
+      opacity: 1;
+    }
+
+.city-select input {
+    text-align: center;
+  }
+
+.city-select input::-webkit-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::-moz-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input:-ms-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::-ms-input-placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input::placeholder {
+      color:rgba(102,187,106,1);
+    }
+
+.city-select input:disabled {
+      background-color: #fff;
+      opacity: 1;
+    }
+
+.block-select {
+  height: 100%;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.block-select label {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-left: 16px;
+    line-height: 1;
+  }
+
+.block-select label span {
+      display: block;
+      padding: 6px 19px;
+      background:rgba(144,147,153,0.1);
+      border-radius:6px;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+    }
+
+.block-select label input {
+      display: none;
+    }
+
+.block-select label input:checked ~ span {
+        background:rgba(102,187,106,1);
+        color:rgba(255,255,255,1);
+      }
+
+.checkbox span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(144,147,153,1);
+  }
+
+.checkbox input {
+    display: none;
+  }
+
+.checkbox input:checked ~ span {
+    background-image: url(../../image/danbaokaitong/checked.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+.agreement {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.agreement .checkbox {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+  }
+
+.agreement .txt{
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    margin-left: 11px;
+    font-size:14px;
+    font-weight:500;
+    line-height:20px;
+    color:rgba(144,147,153,1);
+  }
+
+.agreement .txt span {
+      color: rgba(102,187,106,1);
+      display: inline;
+    }
+
+.inline-btn {
+  height:50px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background:rgba(102,187,106,1);
+  border-radius:25px;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  padding: 0 25px;
+}
+
+.inline-btn.active {
+    background:rgba(102,187,106,0.7);
+  }
+
+.inline-btn[disabled] {
+    background:rgba(245,245,245,1);
+    color:rgba(192,196,204,1);
+  }
+
+.block-btn {
+  height:50px;
+  background:rgba(102,187,106,1);
+  border-radius:25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+
+.block-btn.active {
+    background:rgba(102,187,106,0.7);
+  }
+
+.block-btn[disabled] {
+    background:rgba(220,224,232,1);
+  }
+
+.block-btn[loading] {
+    background:rgba(102,187,106,0.5);
+  }
+
+.block-btn[loading]:before {
+    content: "...";
+    display: block;
+    margin-right: 10px;
+  }

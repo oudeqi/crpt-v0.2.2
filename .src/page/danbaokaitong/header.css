@@ -52,14 +52,16 @@
   &.waring span, &.waring strong {
     color:rgba(255,95,57,1);
   }
-  & .bg {
+  &:after {
+    content: "";
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
     width:152px;
     height:100px;
     background-image: url(../../image/danbaoKaitong/card_bg.png);
-    background-position: right top;
+    background-position: top right;
     background-repeat: no-repeat;
     background-size: cover;
   }

@@ -2,7 +2,7 @@ import '../../../app.css'
 import './frm.css'
 
 import { openLeftPane, openMsgCenter, openBillList,
-openOrderList, openMyQuota, openMyProduct, openSettings,
+openMyLoan, openMyQuota, openMyProduct, openSettings,
 openContactUs } from '../../../webview.js'
 import { http } from '../../../config.js'
 
@@ -68,8 +68,8 @@ apiready = function () {
     openBillList()
   }
 
-  document.querySelector('#orderlist').onclick = function () {
-    openOrderList()
+  document.querySelector('#myLoan').onclick = function () {
+    openMyLoan()
   }
 
   document.querySelector('#myquota').onclick = function () {

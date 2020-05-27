@@ -95,10 +95,10 @@ function openTabLayout (index) {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: 'normal',
       // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
@@ -125,9 +125,9 @@ function openTabLayout (index) {
           iconPath: "widget://image/tablayout/shouye.png",
           selectedIconPath: "widget://image/tablayout/shouye_active.png"
         }, {
-          text: "订单",
-          iconPath: "widget://image/tablayout/dingdan.png",
-          selectedIconPath: "widget://image/tablayout/dingdan_active.png"
+          text: "贷款",
+          iconPath: "widget://image/tablayout/loan.png",
+          selectedIconPath: "widget://image/tablayout/loan_active.png"
         }, {
           text: "还款",
           iconPath: "widget://image/tablayout/huankuan.png",
@@ -148,9 +148,9 @@ function openTabLayout (index) {
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
-          title: "订单",
-          name: "tablayout/order",
-          url: "widget://html/order/frm.html",
+          title: "待申请",
+          name: "tablayout/loan",
+          url: "widget://html/loan/index.html",
           bounces: true,
           reload: true,
           scrollToTop: true,
@@ -582,12 +582,12 @@ function openBillDetails (id, {
   })
 }
 
-// 订单列表
-function openOrderList () {
+// 我的贷款
+function openMyLoan () {
   api.openTabLayout({
-    name: 'html/orderlist/win',
-    title: '我的订单',
-    url: 'widget://html/orderlist/win.html',
+    name: 'html/myloan/win',
+    title: '我的贷款',
+    url: 'widget://html/myloan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -623,12 +623,12 @@ function openOrderDetails (id) {
   })
 }
 
-// 待支付订单
-function openOrderTodo (id) {
+// 贷款申请
+function openLoanApplication (id) {
   api.openTabLayout({
-    name: 'html/ordertodo/win',
-    title: '待支付订单',
-    url: 'widget://html/ordertodo/win.html',
+    name: 'html/loanapplication/index',
+    title: '待申请',
+    url: 'widget://html/loanapplication/index.html',
     bgColor: '#fff',
     reload: true,
     pageParam: { id },
@@ -636,10 +636,31 @@ function openOrderTodo (id) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: 'normal',
+    }
+  })
+}
+
+// 贷款确认
+function openLoanConfirm (id) {
+  api.openTabLayout({
+    name: 'html/loanconfirm/index',
+    title: '贷款确认',
+    url: 'widget://html/loanconfirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: { id },
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'normal',
     }
   })
 }
@@ -852,19 +873,146 @@ function openProductRecommend (pageParam) {
 
 
 // 开通担保
-function openDanbaoKaitong ({title} = {}) {
+function openDanbaoKaitong ({step = 1, title = '普惠担保', productId} = {}) {
   api.openTabLayout({
-    name: 'html/danbaostep1/index',
+    name: `html/danbaostep${step}/index`,
     title: title,
-    url: 'widget://html/danbaostep1/index.html',
+    url: `widget://html/danbaostep${step}/index.html`,
     bgColor: '#fff',
-    pageParam: { title },
+    pageParam: { title, step, productId },
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
       background: '#66BB6A',
       color: '#fff',
       fontSize: 16,
+      fontWeight: 'normal',
+    }
+  })
+}
+
+// 担保人列表
+function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
+  api.openTabLayout({
+    name: `html/danbaorenlist/index`,
+    title: '担保人列表',
+    url: `widget://html/danbaorenlist/index.html`,
+    bgColor: 'rgba(245,245,245,1)',
+    pageParam: {
+      gtCreditId, // 担保授信id
+      productId, // 产品id
+      demandMoney, // 资金需求
+      gtId, // 担保id
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
+      fontSize: 18,
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '返回',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green.png',
+      }],
+    }
+  })
+}
+
+// 担保人信息录入
+function openDanbaoRenForm ({gtCreditId, gtCounterId, type}) {
+  api.openTabLayout({
+    name: `html/danbaorenform/index`,
+    title: '担保人调查表',
+    url: `widget://html/danbaorenform/index.html`,
+    bgColor: 'rgba(245,245,245,1)',
+    pageParam: {
+      gtCreditId, // 授信id
+      gtCounterId, // 担保人id
+      type, // 反担保人类别
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
+      fontSize: 18,
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '返回',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green.png',
+      }],
+    }
+  })
+}
+
+// 文书送达地址
+function openSendAddress ({gtId, gtCreditId}) {
+  api.openTabLayout({
+    name: `html/sendaddress/index`,
+    title: '文书送达地址',
+    url: `widget://html/sendaddress/index.html`,
+    bgColor: 'rgba(245,245,245,1)',
+    pageParam: {
+      gtId, // 担保申请的id
+      gtCreditId // 担保授信id
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
+      fontSize: 18,
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '返回',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green.png',
+      }],
+    }
+  })
+}
+
+
+// 在线签约
+function openSignOnline (id) {
+  api.openTabLayout({
+    name: 'html/signonline/index',
+    title: '在线签约',
+    url: 'widget://html/signonline/index.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: { id },
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'normal',
+    }
+  })
+}
+
+// 协议
+function openAgreement (id) {
+  api.openTabLayout({
+    name: 'html/agreement/index',
+    title: '协议',
+    url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: { id },
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
       fontWeight: 'normal',
     }
   })
@@ -897,9 +1045,10 @@ export {
   openMsgDetails,
   openBillList,
   openBillDetails,
-  openOrderList,
+  openMyLoan,
   openOrderDetails,
-  openOrderTodo,
+  openLoanApplication,
+  openLoanConfirm,
   openMyQuota,
   openMyProduct,
   openSettings,
@@ -910,5 +1059,10 @@ export {
   openProductDetails,
   openCityList,
   openProductRecommend,
-  openDanbaoKaitong
+  openDanbaoKaitong,
+  openDanbaoRenList,
+  openDanbaoRenForm,
+  openSignOnline,
+  openSendAddress,
+  openAgreement
 }

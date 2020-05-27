@@ -1,0 +1,151 @@
+html, body {
+  background-color: #efefef;
+}
+body {
+  padding-bottom: 100px;
+}
+.bg {
+  height: 110px;
+  background:rgba(102,187,106,1);
+}
+.card {
+  height:116px;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+  border-radius:0px 0px 6px 6px;
+  margin: 0 12px;
+  margin-top: -50px;
+  padding-top: 28px;
+  padding-left: 12px;
+  border-radius: 0 0 6px 6px;
+  position: relative;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:12px;
+    background:linear-gradient(180deg,rgba(102,187,106,0.4) 0%,rgba(255,255,255,0) 100%);
+  }
+  .txt {
+    height:20px;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height:20px;
+  }
+  .num {
+    margin-top: 5px;
+    height:35px;
+    font-size:30px;
+    font-weight:bold;
+    color:rgba(48,49,51,1);
+    line-height:35px;
+  }
+}
+
+
+.card-list {
+  background:rgba(255,255,255,1);
+  box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
+  border-radius:6px;
+  margin: 12px;
+  padding: 0 12px;
+  .card-item {
+    .card-header {
+      border-bottom: 1px solid rgba(245,245,245,1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      span {
+        height:22px;
+        font-size:16px;
+        font-family:PingFangSC-Medium,PingFang SC;
+        font-weight:500;
+        color:rgba(48,49,51,1);
+        line-height:22px;
+      }
+    }
+    .card-body {
+      padding-bottom: 20px;
+      .card-body-item {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+        input {
+          display: none;
+        }
+        input:checked + .radio-box:after {
+          background-image: url(../../image/danbaokaitong/checked2.png);
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+        .radio-box {
+          width: 100%;
+          height:80px;
+          background:rgba(102,187,106,0.1);
+          border-radius:6px;
+          padding: 16px 12px;
+          position: relative;
+          &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            margin-top: -8px;
+            width: 16px;
+            height: 16px;
+            background-image: url(../../image/danbaokaitong/unchecked2.png);
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+          .desc {
+            height:22px;
+            font-size:16px;
+            font-weight:500;
+            color:rgba(48,49,51,1);
+            line-height:22px;
+          }
+          .tip {
+            height:20px;
+            font-size:14px;
+            font-weight:500;
+            color:rgba(102,187,106,1);
+            line-height:20px;
+            margin-top: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.fixed-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  .btn {
+    height:50px;
+    background:rgba(102,187,106,1);
+    border-radius:25px;
+    font-size:16px;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.active {
+      background:rgba(102,187,106,0.7);
+    }
+  }
+}

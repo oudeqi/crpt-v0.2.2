@@ -25,6 +25,11 @@ apiready = function() {
   document.querySelector('#register').onclick = function () {
     openReg()
   }
+  document.querySelector('#pwd_login').onclick = function () {
+    openGerenLogin({userType: 2})
+  }
+
+
 
   document.querySelector('#tel_login').onclick = function () {
     if (submitStatus === 'notsubmit') {

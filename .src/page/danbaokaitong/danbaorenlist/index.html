@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+</head>
+<body>
+  <div class="nav">
+    <div class="nav-item active">自然人担保</div>
+    <div class="nav-item">公司担保</div>
+  </div>
+  <div id="teacher"></div>
+  <div id="doctor"></div>
+  <div id="civilServant"></div>
+  <div id="employeesSOE"></div>
+  <div id="individualBusiness"></div>
+  <div id="others"></div>
+
+  <!-- collapse show hide-->
+  <!-- wait confirmed confirming disabled -->
+
+  <!-- <div class="collapse" collapse="show">
+    <div class="collapse-header">
+      <label class="checkbox">
+        <input type="checkbox" checkbox-trigger="header">
+        <span></span>
+      </label>
+      <div class="cont" click-trigger="header">
+        <span>教师</span>
+        <span>1/3人</span>
+      </div>
+    </div>
+    <ul class="collapse-body">
+      <li class="collapse-item">
+        <label class="checkbox">
+          <input type="checkbox" checkbox-trigger="body">
+          <span></span>
+        </label>
+        <div class="cont">
+          <span class="txt">王某某</span>
+          <span class="tag wait">已确认</span>
+        </div>
+      </li>
+      <li class="collapse-item">
+        <label class="checkbox">
+          <input type="checkbox" checkbox-trigger="body">
+          <span></span>
+        </label>
+        <div class="cont">
+          <span class="txt">王某某</span>
+          <span class="del">删除</span>
+          <span class="tag wait">已确认</span>
+        </div>
+      </li>
+      <li class="collapse-item">
+        <label class="checkbox">
+          <input type="checkbox" checkbox-trigger="body">
+          <span></span>
+        </label>
+        <div class="cont">
+          <span class="txt">王某某</span>
+          <span class="del">删除</span>
+          <span class="tag confirmed">已确认</span>
+        </div>
+      </li>
+    </ul>
+  </div> -->
+
+
+  <div class="add-btn" id="add">
+    增加担保人
+  </div>
+
+  <div class="fixed-footer">
+    <label class="checkbox">
+      <input type="checkbox" id="allChecked" checkbox-trigger="all"><span></span>全选
+    </label>
+    <div class="inline-btn" tapmode="active" id="send" disabled>发送担保人</div>
+    <div class="inline-btn" tapmode="active" id="save">保存</div>
+  </div>
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+</body>
+
+</html>

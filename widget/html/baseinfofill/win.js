@@ -499,7 +499,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -744,7 +744,7 @@ var PageController = /*#__PURE__*/function (_Service) {
         education: '',
         permanentAddress: '',
         workCompany: '',
-        // 工作单位
+        // 工作单位 选填
         animalHusbandryYear: '',
         // 从事畜牧<br />行业年限
         addrProvince: '',
@@ -966,14 +966,6 @@ var PageController = /*#__PURE__*/function (_Service) {
       if (!postData.permanentAddress) {
         api.toast({
           msg: '请选择户籍地址'
-        });
-        valid = false;
-        return valid;
-      }
-
-      if (!postData.workCompany) {
-        api.toast({
-          msg: '请输入工作单位'
         });
         valid = false;
         return valid;

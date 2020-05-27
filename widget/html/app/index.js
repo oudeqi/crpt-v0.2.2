@@ -1,4 +1,116 @@
 // api.lockSlidPane();
+/*
+list: [{
+  text: '',
+  iconPath: 'widget://image/tabLayout/index.png',
+  selectedIconPath: 'widget://image/tabLayout/index_active.png'
+}, {
+  text: '订单',
+  iconPath: 'widget://image/tabLayout/order.png',
+  selectedIconPath: 'widget://image/tabLayout/order_active.png'
+}, {
+  text: '还款',
+  iconPath: 'widget://image/tabLayout/repay.png',
+  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
+}, {
+  text: '我的',
+  iconPath: 'widget://image/tabLayout/mine.png',
+  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
+}],
+*/
+// 导航布局
+
+
+function openTabLayout(index) {
+  api.openTabLayout({
+    name: 'tabLayout',
+    bgColor: '#fff',
+    reload: true,
+    delay: 300,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'normal' // leftButtons: [{
+      //   // text: '设置',
+      //   // color: '#fff',
+      //   // fontSize: 16,
+      //   iconPath: 'widget://image/avatar.png',
+      // }],
+      // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      //   // iconPath: 'widget://image/settings@2x.png'
+      // }]
+
+    },
+    tabBar: {
+      animated: false,
+      scrollEnabled: true,
+      selectedColor: '#1dc4a2',
+      color: '#bfbfbf',
+      index: index || 0,
+      // preload: 4,
+      list: [{
+        text: "首页",
+        iconPath: "widget://image/tablayout/shouye.png",
+        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+      }, {
+        text: "贷款",
+        iconPath: "widget://image/tablayout/loan.png",
+        selectedIconPath: "widget://image/tablayout/loan_active.png"
+      }, {
+        text: "还款",
+        iconPath: "widget://image/tablayout/huankuan.png",
+        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+      }, {
+        text: "我的",
+        iconPath: "widget://image/tablayout/wode.png",
+        selectedIconPath: "widget://image/tablayout/wode_active.png"
+      }],
+      frames: [{
+        title: "首页",
+        //tab切换时对应的标题
+        name: "tablayout/index",
+        url: "widget://html/index/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "待申请",
+        name: "tablayout/loan",
+        url: "widget://html/loan/index.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "还款",
+        name: "tablayout/repay",
+        url: "widget://html/repay/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "我的",
+        name: "tablayout/my",
+        url: "widget://html/my/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }]
+    }
+  });
+} // 注册
 
 
 function openRegLogin() {
@@ -12,28 +124,49 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openDanbaoKaitong() {
-  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      title = _ref6.title;
-
+function openTodoAuthGeren() {
   api.openTabLayout({
-    name: 'html/danbaostep1/index',
-    title: title,
-    url: 'widget://html/danbaostep1/index.html',
+    name: 'html/todoauthgeren/win',
+    title: '待完成',
+    url: 'widget://html/todoauthgeren/win.html',
     bgColor: '#fff',
-    pageParam: {
-      title: title
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
     },
-    slidBackEnabled: true,
     navigationBar: {
-      hideBackButton: false,
-      background: '#66BB6A',
+      hideBackButton: true,
+      background: '#1dc4a2',
       color: '#fff',
-      fontSize: 16,
-      fontWeight: 'normal'
+      fontSize: 18,
+      fontWeight: 'bold'
     }
   });
 }
+
+function openTodoAuthQiye() {
+  api.openTabLayout({
+    name: 'html/todoauthqiye/win',
+    title: '待完成',
+    url: 'widget://html/todoauthqiye/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 企业信息确认
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -464,19 +597,31 @@ apiready = function apiready() {
   // Utils.Router.openPageCreditInformation()
 
   if (userinfo) {
-    openDanbaoKaitong({
-      title: '普惠担保'
-    }); // const authStatus = $api.getStorage('authStatus') || {}
-    // if (authStatus.status === 1) {
-    //   openTabLayout()
-    // } else {
-    //   const userType = userinfo.userType
-    //   if (userType === '1') {
-    //     openTodoAuthGeren()
-    //   } else {
-    //     openTodoAuthQiye()
-    //   }
-    // }
+    // openSendAddress({
+    //   gtCreditId: '1258945510237147136',
+    //   gtId: '1263411018323742721'
+    // })
+    // openDanbaoRenList({
+    //   gtCreditId: '1260492247898374145',
+    //   productId: '1',
+    //   demandMoney: '40',
+    //   gtId: '1263411018323742721'
+    // })
+    // openProductRecommend()
+    // openDanbaoKaitong({step: 3, productId: '2'})
+    var authStatus = $api.getStorage('authStatus') || {};
+
+    if (authStatus.status === 1) {
+      openTabLayout();
+    } else {
+      var userType = userinfo.userType;
+
+      if (userType === '1') {
+        openTodoAuthGeren();
+      } else {
+        openTodoAuthQiye();
+      }
+    }
   } else {
     openRegLogin();
   } // 云修复完成

@@ -33,10 +33,10 @@ function openTabLayout(index) {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold' // leftButtons: [{
+      fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
       //   // fontSize: 16,
@@ -62,9 +62,9 @@ function openTabLayout(index) {
         iconPath: "widget://image/tablayout/shouye.png",
         selectedIconPath: "widget://image/tablayout/shouye_active.png"
       }, {
-        text: "订单",
-        iconPath: "widget://image/tablayout/dingdan.png",
-        selectedIconPath: "widget://image/tablayout/dingdan_active.png"
+        text: "贷款",
+        iconPath: "widget://image/tablayout/loan.png",
+        selectedIconPath: "widget://image/tablayout/loan_active.png"
       }, {
         text: "还款",
         iconPath: "widget://image/tablayout/huankuan.png",
@@ -84,9 +84,9 @@ function openTabLayout(index) {
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
-        title: "订单",
-        name: "tablayout/order",
-        url: "widget://html/order/frm.html",
+        title: "待申请",
+        name: "tablayout/loan",
+        url: "widget://html/loan/index.html",
         bounces: true,
         reload: true,
         scrollToTop: true //其他继承自openFrame的参数
@@ -536,7 +536,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -789,7 +789,9 @@ apiready = function apiready() {
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
   //  根据传参确定登录接口的userType类型和是否隐藏
 
-  var params = api.pageParam;
+  var _ref = api.pageParam || {},
+      userType = _ref.userType;
+
   openUIInput($api.byId('tel'), form, 'tel', {
     placeholder: '请输入手机号码',
     keyboardType: 'number',
@@ -814,7 +816,7 @@ apiready = function apiready() {
   // }
   //  企业登录，屏蔽短信验证码按钮
 
-  if (params.userType === 2) {
+  if (userType === 2) {
     document.querySelector('#tel_login').style.display = 'none';
   }
 
@@ -862,7 +864,7 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       $api.addCls($api.byId('login'), 'loading');
       var body = {
-        userType: params.userType || 1,
+        userType: userType || 1,
         // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1,

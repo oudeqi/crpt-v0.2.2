@@ -52,11 +52,11 @@ function openBillList() {
 } // 账单详情
 
 
-function openOrderList() {
+function openMyLoan() {
   api.openTabLayout({
-    name: 'html/orderlist/win',
-    title: '我的订单',
-    url: 'widget://html/orderlist/win.html',
+    name: 'html/myloan/win',
+    title: '我的贷款',
+    url: 'widget://html/myloan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -480,7 +480,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -619,8 +619,8 @@ apiready = function apiready() {
     openBillList();
   };
 
-  document.querySelector('#orderlist').onclick = function () {
-    openOrderList();
+  document.querySelector('#myLoan').onclick = function () {
+    openMyLoan();
   };
 
   document.querySelector('#myquota').onclick = function () {

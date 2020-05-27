@@ -9,14 +9,20 @@
 # 实名认证和企业认证除了要判断code===200，还要判断，result为true
 
 
-# 九宫格接收验证码
-
 # 账号
 ``` bash
 
 18989193368 123456 企业名称 新兴县渔悦水产养殖有限公司1 智道新喜科技有限公司
 13602145280 123456
 15982303824 1
+
+10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46
+Bearer 71107506-5eb5-420f-ab3a-3e6f750c350b
+
+1	13279930000	123456	Authorization: Bearer e74f20c2-cdce-425b-af24-a9d356c30dcf
+4	13279930003	123456	Authorization: Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46
+
+
 
 # 企业名称 四川东雄农业科技有限公司
 # 法定代表人 万国东
@@ -38,6 +44,8 @@
 
 # 何婷婷 00008030-000E2CDE2600802E
 # 王安才 1118030392205ce5cfc0afa46b30bf468b6884f7
+
+ {"code":200,"msg":"","data":{"documentBase":{"code":"20200525174106WSDZ1309","custName":"zhangsan","custAddress":"北京市 市辖区 东城区 asdas ","addrProvince":"北京市","addrProvinceCode":"110000","addrCity":"市辖区","addrCityCode":"110100","addrCounty":"东城区","addrCountyCode":"110101","addrDetail":"asdas ","custAddresseeName":"zczx","custAddresseePhone":"18776767777","custSpouseName":"asda","custSpouseAddress":"北京市 市辖区 东城区 asdas","spAddrProvince":"北京市","spAddrProvinceCode":"110000","spAddrCity":"市辖区","spAddrCityCode":"110100","spAddrCounty":"东城区","spAddrCountyCode":"110101","spAddrDetail":"asdas","custSpouseAddresseeName":"asdas","custSpouseAddresseePhone":"18776767777","updateDate":"2020-05-25 17:41:07"},"gtCounterList":[{"gtName":"zxczx","gtAddress":"北京市 市辖区 东城区 sadkfd","gtAddrProvince":"北京市","gtAddrProvinceCode":"110000","gtAddrCity":"市辖区","gtAddrCityCode":"110100","gtAddrCounty":"东城区","gtAddrCountyCode":"110101","gtAddrDetail":"sadkfd","gtAddresseeName":"sadfasd","gtAddresseePhone":"18989776666","gtSpouseName":"asdfads","gtSpouseAddress":"北京市 市辖区 东城区 sadfasd","gtSpAddrProvince":"北京市","gtSpAddrProvinceCode":"110000","gtSpAddrCity":"市辖区","gtSpAddrCityCode":"110100","gtSpAddrCounty":"东城区","gtSpAddrCountyCode":"110101","gtSpAddrDetail":"sadfasd","gtSpouseAddresseeName":"sdfsad","gtSpouseAddresseePhone":"18787888888"}]}}
 
 ```
 create-rollup-config rollup-watch

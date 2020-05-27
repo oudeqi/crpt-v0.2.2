@@ -1669,7 +1669,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));

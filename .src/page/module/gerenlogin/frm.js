@@ -12,7 +12,7 @@ apiready = function() {
   let form = {}
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   //  根据传参确定登录接口的userType类型和是否隐藏
-  const params = api.pageParam
+  const { userType } = api.pageParam || {}
   openUIInput($api.byId('tel'), form, 'tel', {
     placeholder: '请输入手机号码',
     keyboardType: 'number',
@@ -38,7 +38,7 @@ apiready = function() {
   //   }
   // }
   //  企业登录，屏蔽短信验证码按钮
-  if(params.userType === 2) {
+  if(userType === 2) {
     document.querySelector('#tel_login').style.display = 'none'
   }
   document.querySelector('#forget').onclick = function () {
@@ -74,7 +74,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
-        userType: params.userType || 1, // 1个人用户登录，2企业用户登录
+        userType: userType || 1, // 1个人用户登录，2企业用户登录
         username: form['tel'][1],
         loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         // verification: form['code'][1],

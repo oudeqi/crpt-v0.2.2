@@ -1,0 +1,45 @@
+.container {
+  padding: 12px;
+  margin-top: 12px;
+  .link_btn {
+    height:60px;
+    background:rgba(255,255,255,1);
+    border-radius:6px;
+    border:1px solid rgba(220,224,232,1);
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 15px;
+      width: 24px;
+      height: 24px;
+      background-image: url(../../image/danbaokaitong/sign.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      right: 15px;
+      width: 16px;
+      height: 16px;
+      background-image: url(../../image/danbaokaitong/arrow.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+  .block-btn {
+    margin-top: 100px;
+  }
+}

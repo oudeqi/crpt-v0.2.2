@@ -1,0 +1,136 @@
+<!doctype html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+  <link rel="stylesheet" href="./index_copy.css"></head>
+<body>
+
+  <div class="header">
+    <div class="title">
+      <div class="icon">猪</div>
+      <div class="txt">您正在申请猪场设备贷产品</div>
+    </div>
+    <div class="rect">
+      
+      <div class="top">您的<span>授信额度</span>为</div>
+      <div class="bottom">
+        <span>¥</span><strong>0.00</strong>
+      </div>
+    </div>
+  </div>
+  <div class="step" id=step>
+    <div class="step_list">
+      <div class="step_item">
+        <i class="icon">1</i>
+        <span class="txt">担保开通申请</span>
+      </div>
+      <div class="step_item">
+        <i class="icon">2</i>
+        <span class="txt">授信资料录入</span>
+      </div>
+      <div class="step_item">
+        <i class="icon">3</i>
+        <span class="txt">守信确认及签约</span>
+      </div>
+      <div class="step_item">
+        <i class="icon">4</i>
+        <span class="txt">绑定银行卡</span>
+      </div>
+      <div class="step_item">
+        <i class="icon">5</i>
+        <span class="txt">资方审核及签约</span>
+      </div>
+      <div class="step_item">
+        <i class="icon">6</i>
+        <span class="txt">贷款支用</span>
+      </div>
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="form">
+
+    <div class="form-item form-block">
+      <div class="form-label" style="width: 96px;">场地变化</div>
+      <div class="form-crtl">
+        <div class="block-select">
+          <label><input type="radio" name="buildType" value="1"><span>新建</span></label>
+          <label><input type="radio" name="buildType" value="2"><span>改建</span></label>
+          <label><input type="radio" name="buildType" checked value="3"><span>扩建</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-label" style="width: 96px;">建厂预计投入</div>
+      <div class="form-crtl">
+        <div class="txt-input">
+          <input type="text" id="expectInveste" max="100" decimal-keeps="2" placeholder="请输入">
+          <span>万元</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item form-block">
+      <div class="form-label">担保产品</div>
+      <div class="form-crtl">
+        <div class="txt-input">
+          <input type="text" id="product" disabled placeholder="请输入" name="product" value="">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-label">综合费率</div>
+      <div class="form-crtl">
+        <div class="txt-input">
+          <input type="text" id="rate" disabled placeholder="请输入" name="rate" value="">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-label">资金需求</div>
+      <div class="form-crtl">
+        <div class="txt-input">
+          <input type="text" id="demandMoney" placeholder="请输入" name="demandMoney" value="">
+          <span>万元</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-label">用款期限</div>
+      <div class="form-crtl">
+        <div class="txt-input">
+          <input type="text" id="timeLimit" placeholder="请输入" name="timeLimit" value="">
+          <span>个月</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="agreement">
+    <label class="checkbox">
+      <input type="checkbox" id="agreement">
+      <span class="icon"></span>
+    </label>
+    <div class="txt">
+      已阅读并同意
+      <span>《用户服务协议》、《个人银行账户服务协议》、《百信银行隐私政策》</span>
+      ，并承诺本人仅为中国税收居民
+    </div>
+  </div>
+
+  <div class="block-btn" id="save" disabled tapmode="active" >下一步</div>
+  
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+
+  <script src="./index_copy.js"></script></body>
+
+</html>

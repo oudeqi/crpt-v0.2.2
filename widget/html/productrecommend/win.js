@@ -146,10 +146,10 @@ function openTabLayout(index) {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold' // leftButtons: [{
+      fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
       //   // fontSize: 16,
@@ -175,9 +175,9 @@ function openTabLayout(index) {
         iconPath: "widget://image/tablayout/shouye.png",
         selectedIconPath: "widget://image/tablayout/shouye_active.png"
       }, {
-        text: "订单",
-        iconPath: "widget://image/tablayout/dingdan.png",
-        selectedIconPath: "widget://image/tablayout/dingdan_active.png"
+        text: "贷款",
+        iconPath: "widget://image/tablayout/loan.png",
+        selectedIconPath: "widget://image/tablayout/loan_active.png"
       }, {
         text: "还款",
         iconPath: "widget://image/tablayout/huankuan.png",
@@ -197,9 +197,9 @@ function openTabLayout(index) {
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
-        title: "订单",
-        name: "tablayout/order",
-        url: "widget://html/order/frm.html",
+        title: "待申请",
+        name: "tablayout/loan",
+        url: "widget://html/loan/index.html",
         bounces: true,
         reload: true,
         scrollToTop: true //其他继承自openFrame的参数
@@ -264,6 +264,36 @@ function openProductDetails() {
     }
   });
 } // 城市选择
+
+
+function openDanbaoKaitong() {
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref6$step = _ref6.step,
+      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      _ref6$title = _ref6.title,
+      title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
+      productId = _ref6.productId;
+
+  api.openTabLayout({
+    name: "html/danbaostep".concat(step, "/index"),
+    title: title,
+    url: "widget://html/danbaostep".concat(step, "/index.html"),
+    bgColor: '#fff',
+    pageParam: {
+      title: title,
+      step: step,
+      productId: productId
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#66BB6A',
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'normal'
+    }
+  });
+} // 担保人列表
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -588,7 +618,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -1714,6 +1744,12 @@ var Service = /*#__PURE__*/function () {
           custType: custType
         }
       });
+    } // 获取担保状态
+
+  }, {
+    key: "queryDanbaoStatus",
+    value: function queryDanbaoStatus() {
+      return http.get('/crpt-guarantee/gt/apply/query');
     }
   }]);
 
@@ -1773,16 +1809,16 @@ var PageController = /*#__PURE__*/function (_Service) {
         var li = $api.closest(event.target, 'li');
 
         if (btn) {
-          api.alert({
-            title: '提示',
-            msg: '功能开发中...'
-          });
-        } else if (li) {
+          var name = li.dataset.name;
           var id = li.dataset.id;
 
-          if (id) {
+          _this2._goDanbao(id, name);
+        } else if (li) {
+          var _id = li.dataset.id;
+
+          if (_id) {
             openProductDetails({
-              id: id,
+              id: _id,
               open: 0 // 1 已开通， 0未开通
 
             });
@@ -1793,6 +1829,27 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         }
       };
+    } // 去担保开通页面
+
+  }, {
+    key: "_goDanbao",
+    value: function _goDanbao(id, name) {
+      this.queryDanbaoStatus().then(function (res) {
+        console.log(JSON.stringify(res)); // 有担保产品
+      })["catch"](function (error) {
+        if (error.code === 3002) {
+          // 无担保产品
+          openDanbaoKaitong({
+            step: 1,
+            productId: id
+          });
+        } else {
+          api.toast({
+            msg: error.msg || '查询担保状态失败',
+            location: 'middle'
+          });
+        }
+      });
     } // 生成列表
 
   }, {
@@ -1801,7 +1858,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this3 = this;
 
       arr.forEach(function (item) {
-        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n              <p class=\"otw\">").concat(item.des || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
       });
       api.parseTapmode();
     } // 获取页面数据

@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding-bottom: 20px;
+}
+
+@define-extend arrow {
+  content: "";
+  display: block;
+  width:16px;
+  height:16px;
+  background-image: url(../../image/danbaokaitong/arrow.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+.form-block {
+  margin-top: 22px;
+}
+.collapse {
+  padding: 0 12px;
+  margin-top: 12px;
+  background: #fff;
+  .collapse-header {
+    height: 88px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    position: relative;
+    h2 {
+      font-size:16px;
+      font-weight:500;
+      height: 22px;
+      line-height: 22px;
+      color:rgba(48,49,51,1);
+    }
+    p {
+      margin-top: 4px;
+      height:20px;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+    &:after {
+      @extend arrow;
+      transform: translateY(-50%) rotateZ(-90deg);
+    }
+  }
+  .collapse-body {
+    border-top: 1px dashed #DCE0E8;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    .form .form-label {
+      width: 96px;
+    }
+  }
+}
+
+.collapse[collapse="hide"] {
+  .cont:after {
+    transform: translateY(-50%) rotateZ(90deg);
+  }
+  .collapse-body {
+    display: none;
+  }
+}
+
+.link {
+  padding: 0 12px;
+  margin-top: 12px;
+  background: #fff;
+  .inner {
+    height: 88px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    position: relative;
+    h2 {
+      font-size:16px;
+      font-weight:500;
+      height: 22px;
+      line-height: 22px;
+      color:rgba(48,49,51,1);
+    }
+    p {
+      margin-top: 4px;
+      height:20px;
+      font-size:14px;
+      font-weight:500;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+    &:after {
+      @extend arrow;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.btn-box {
+  padding: 0 12px;
+  margin-top: 40px;
+}

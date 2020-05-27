@@ -428,7 +428,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -553,7 +553,21 @@ apiready = function apiready() {
   var userinfo = $api.getStorage('userinfo');
 
   var _ref = userinfo || {},
-      userType = _ref.userType;
+      userType = _ref.userType,
+      access_token = _ref.access_token;
+
+  function logout(cb) {
+    http["delete"]("/auth/token/".concat(access_token)).then(function (res) {
+      $api.removeCls($api.byId('logout'), 'loading');
+      cb();
+    })["catch"](function (error) {
+      $api.removeCls($api.byId('logout'), 'loading');
+      api.toast({
+        msg: error.msg || '操作失败',
+        location: 'middle'
+      });
+    });
+  }
 
   function getStatus(cb) {
     api.showProgress({
@@ -733,6 +747,45 @@ apiready = function apiready() {
   }, function (ret, err) {
     initPage();
   });
+
+  $api.byId('logout').onclick = function () {
+    api.confirm({
+      title: '提示',
+      msg: '确定要退出登录吗？',
+      buttons: ['确定', '取消']
+    }, function (ret, err) {
+      if (ret.buttonIndex === 1) {
+        $api.addCls($api.byId('logout'), 'loading');
+        logout(function () {
+          api.toast({
+            msg: '退出登录成功',
+            duration: 2000,
+            location: 'middle',
+            global: true
+          });
+          var windows = api.windows();
+
+          if (windows && windows.length > 0) {
+            // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
+            windows.forEach(function (win) {
+              // 关闭非root、非登录注册页、非本页
+              if (win.name !== 'root' && win.name !== 'html/reglogin/win' && win.name !== 'html/settings/win') {
+                api.closeWin({
+                  name: win.name
+                });
+              }
+            });
+          }
+
+          setTimeout(function () {
+            $api.clearStorage();
+            openRegLogin();
+          }, 150);
+        });
+      }
+    });
+  };
+
   setRefreshHeaderInfo(function (ret, err) {
     initPage();
   });

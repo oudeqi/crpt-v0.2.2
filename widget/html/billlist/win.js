@@ -46,7 +46,7 @@ function openBillDetails(id) {
       fontWeight: 'bold'
     }
   });
-} // 订单列表
+} // 我的贷款
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -377,7 +377,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));

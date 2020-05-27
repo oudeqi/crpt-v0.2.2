@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+</head>
+<body>
+  <!-- collapse="hide" show -->
+  <div class="collapse" collapse="show">
+    <div class="collapse-header" id="collapse">
+      <h2>担保人信息</h2>
+      <p>身份、职业、配偶等信息</p>
+    </div>
+    <div class="collapse-body">
+      <div class="form">
+
+        <div class="form-item">
+          <div class="form-label">担保人姓名</div>
+          <div class="form-crtl">
+            <span class="required">*</span>
+            <div class="txt-input">
+              <input type="text" id="name" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">联系电话</div>
+          <div class="form-crtl">
+            <span class="required">*</span>
+            <div class="txt-input">
+              <input type="tel" id="phone" maxlength="11" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">身份证号</div>
+          <div class="form-crtl">
+            <div class="scan-input">
+              <input type="text" id="certNo" data-picture="" placeholder="请输入" >
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">与借款人关系</div>
+          <div class="form-crtl">
+            <div class="inline-select">
+              <input type="text" id="relationship" readonly placeholder="请选择">
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- form-block -->
+        <div class="form-item form-block">
+          <div class="form-label">婚姻状况</div>
+          <div class="form-crtl">
+            <div class="inline-select">
+              <input type="text" id="marriage" readonly placeholder="请选择">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">学历</div>
+          <div class="form-crtl">
+            <div class="inline-select">
+              <input type="text" id="education" readonly placeholder="请选择">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">户口性质</div>
+          <div class="form-crtl">
+            <div class="block-select">
+              <label><input type="radio" name="accountNature" value="1"><span>常住户</span></label>
+              <label><input type="radio" name="accountNature" value="2"><span>临时户</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">送达地址</div>
+          <div class="form-crtl">
+            <div class="city-select">
+              <input type="text" id="address" readonly placeholder="城市/区域">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label"></div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="addrDetail" placeholder="详细地址">
+            </div>
+          </div>
+        </div>
+
+        <!-- form-block -->
+        <div class="form-item form-block">
+          <div class="form-label">职业</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="occupation" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">工作地址</div>
+          <div class="form-crtl">
+            <div class="city-select">
+              <input type="text" id="workAddress" readonly placeholder="城市/区域">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label"></div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="workAddrDetail" placeholder="详细地址">
+            </div>
+          </div>
+        </div>
+
+        <!-- form-block -->
+        <div class="form-item form-block">
+          <div class="form-label">银行名称</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="bankName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">银行卡号</div>
+          <div class="form-crtl">
+            <div class="scan-input">
+              <input type="text" id="bankCardNo" placeholder="请输入">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">开户行</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="openBank" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+
+        <!-- form-block -->
+        <div class="form-item form-block">
+          <div class="form-label">配偶姓名</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="spouseName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">配偶电话</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="spousePhone" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">配偶年收入</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="number" id="spouseIncome" max="9999999999" decimal-keeps="2" placeholder="请输入">
+              <span>万元</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">配偶职业</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="spouseOccupation" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">配偶工作单位</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="spouseWorkCompany" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="link">
+    <div class="inner">
+      <h2>房产信息</h2>
+      <p>房产证号、面积等信息</p>
+    </div>
+  </div>
+
+  <div class="link">
+    <div class="inner">
+      <h2>车辆信息</h2>
+      <p>车辆号牌、品牌等信息</p>
+    </div>
+  </div>
+
+  <div class="btn-box">
+    <div class="block-btn" tapmode="active" id="submit">
+      保存
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+</body>
+
+</html>

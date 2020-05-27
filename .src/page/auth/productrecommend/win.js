@@ -1,7 +1,7 @@
 import '../../../app.css'
 import './win.css'
 
-import { openProductDetails, openTabLayout } from '../../../webview.js'
+import { openProductDetails, openTabLayout, openDanbaoKaitong } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
 import numeral from 'numeral'
 
@@ -11,6 +11,10 @@ class Service {
     return http.get('/crpt-product/product/online/list', {
       values: { custType }
     })
+  }
+  // 获取担保状态
+  queryDanbaoStatus () {
+     return http.get('/crpt-guarantee/gt/apply/query')
   }
 }
 
@@ -43,14 +47,13 @@ class PageController extends Service {
       })
     })
     // 点击列表项目
-    this.el.list.onclick = function (event) {
+    this.el.list.onclick = (event) => {
       let btn = $api.closest(event.target, '.btn')
       let li = $api.closest(event.target, 'li')
       if (btn) {
-        api.alert({
-          title: '提示',
-          msg: '功能开发中...',
-        })
+        let name = li.dataset.name
+        let id = li.dataset.id
+        this._goDanbao(id, name)
       } else if (li) {
         let id = li.dataset.id
         if (id) {
@@ -63,6 +66,25 @@ class PageController extends Service {
         }
       }
     }
+  }
+  // 去担保开通页面
+  _goDanbao (id, name) {
+    this.queryDanbaoStatus().then(res => {
+      console.log(JSON.stringify(res))
+      // 有担保产品
+    }).catch(error => {
+      if (error.code === 3002) { // 无担保产品
+        openDanbaoKaitong({
+          step: 1,
+          productId: id,
+        })
+      } else {
+        api.toast({
+          msg: error.msg || '查询担保状态失败',
+          location: 'middle'
+        })
+      }
+    })
   }
   // 生成列表
   _renderList (arr) {
@@ -88,7 +110,7 @@ class PageController extends Service {
               <p class="otw">${item.des || ''}</p>
             </div>
           </div>
-          <div class="btn" tapmode="active" data-id="${item.id || ''}">立即开通</div>
+          <div class="btn" tapmode="active" data-id="${item.id || ''}" data-name="${item.name || ''}">立即开通</div>
         </li>
       `)
     })

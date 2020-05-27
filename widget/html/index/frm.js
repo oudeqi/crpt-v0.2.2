@@ -466,7 +466,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -1569,6 +1569,8 @@ var Service = /*#__PURE__*/function () {
           custType = _ref.custType,
           status = _ref.status;
 
+      // custType 0：通用   1：普惠担保  2：其他
+      // status 查询状态 1-按产品额度降序 2-按产品利率升序
       return http.get('/crpt-product/product/query/home/show', {
         values: {
           custType: custType,
@@ -1606,8 +1608,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       navDanbao: $api.byId('danbao'),
       navOther: $api.byId('other'),
       high: $api.byId('high'),
-      low: $api.byId('low'),
-      danbaoKaitong: $api.byId('kaitong')
+      low: $api.byId('low')
     };
     return _this;
   } // 根据custType显示不同的nav
@@ -1622,60 +1623,36 @@ var PageController = /*#__PURE__*/function (_Service) {
       } else {
         this.el.navOther.style.display = 'block';
       }
-    } // 事件绑定
+    } // 担保开通
 
   }, {
-    key: "bindEvent",
-    value: function bindEvent() {
-      var _this2 = this;
-
-      document.querySelector('#body').onclick = function (event) {
-        var clickBtn = $api.closest(event.target, '.clickBtn');
-
-        if (clickBtn) {
-          api.alert({
-            title: '提示',
-            msg: '功能开发中...'
+    key: "goDanbao",
+    value: function goDanbao() {
+      this.queryDanbaoStatus().then(function (res) {
+        console.log(JSON.stringify(res)); // 有担保产品
+      })["catch"](function (error) {
+        if (error.code === 3002) {
+          // 无担保产品
+          openProductRecommend();
+        } else {
+          api.toast({
+            msg: error.msg || '查询担保状态失败',
+            location: 'middle'
           });
         }
-      };
-
-      api.addEventListener({
-        name: 'keyback'
-      }, function (ret, err) {
-        // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
-        api.closeWidget({
-          silent: false
-        });
       });
-
-      this.el.danbaoKaitong.onclick = function () {
-        _this2.queryDanbaoStatus().then(function (res) {
-          console.log(JSON.stringify(res)); // 有担保产品
-        })["catch"](function (error) {
-          if (error.code === 3002) {
-            // 无担保产品
-            openProductRecommend();
-          } else {
-            api.toast({
-              msg: error.msg || '查询担保状态失败',
-              location: 'middle'
-            });
-          }
-        });
-      };
     } // 高额精选
 
   }, {
     key: "_renderHigh",
     value: function _renderHigh(arr) {
-      var _this3 = this;
+      var _this2 = this;
 
       arr.forEach(function (item, index) {
         var tpl = "\n        <div class=\"high_item clickBtn\">\n          <div class=\"row1\">\u6700\u9AD8\u989D\u5EA6(\u5143)</div>\n          <div class=\"row2\">".concat(numeral(item.totalLimit).format('0,0'), "</div>\n          <div class=\"row3\">").concat(item.des, "</div>\n          <div class=\"row3\">\n            ").concat(item.introduce, "\n          </div>\n        </div>\n      ");
 
         if (index <= 1) {
-          $api.append(_this3.el.high, tpl);
+          $api.append(_this2.el.high, tpl);
         }
       });
     } // 利息最低
@@ -1683,18 +1660,18 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "_renderLow",
     value: function _renderLow(arr) {
-      var _this4 = this;
+      var _this3 = this;
 
       arr.forEach(function (item) {
         var tpl = "\n        <div class=\"row clickBtn\">\n          <div class=\"l\">\n            <strong>".concat(item.interestRate, "%</strong>\n            <span>\u8D37\u6B3E\u5229\u7387</span>\n          </div>\n          <div class=\"r\">\n            <strong>").concat(item.des, "</strong>\n            <span>").concat(item.introduce, "</span>\n          </div>\n        </div>\n      ");
-        $api.append(_this4.el.low, tpl);
+        $api.append(_this3.el.low, tpl);
       });
     } // 获取数据
 
   }, {
     key: "renderProduct",
     value: function renderProduct() {
-      var _this5 = this;
+      var _this4 = this;
 
       var custType = this.state.custType;
       Promise.all([this.getlist({
@@ -1704,9 +1681,9 @@ var PageController = /*#__PURE__*/function (_Service) {
         custType: custType,
         status: 2
       })]).then(function (res) {
-        _this5._renderHigh(res[0].data.list || []);
+        _this4._renderHigh(res[0].data.list || []);
 
-        _this5._renderLow(res[1].data.list || []);
+        _this4._renderLow(res[1].data.list || []);
       })["catch"](function (error) {
         api.toast({
           msg: error.msg || '获取产品数据失败',
@@ -1720,9 +1697,32 @@ var PageController = /*#__PURE__*/function (_Service) {
 }(Service);
 
 apiready = function apiready() {
+  document.querySelector('#body').onclick = function (event) {
+    var clickBtn = $api.closest(event.target, '.clickBtn');
+
+    if (clickBtn) {
+      api.alert({
+        title: '提示',
+        msg: '功能开发中...'
+      });
+    }
+  };
+
+  api.addEventListener({
+    name: 'keyback'
+  }, function (ret, err) {
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
+    api.closeWidget({
+      silent: false
+    });
+  });
   var controller = new PageController();
+
+  $api.byId('kaitong').onclick = function () {
+    controller.goDanbao();
+  };
+
   controller.renderNav();
-  controller.bindEvent();
   controller.renderProduct(); // api.setTabLayoutAttr({
   //   hideNavigationBar: true
   // })

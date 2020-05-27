@@ -1,0 +1,21 @@
+.container {
+  padding: 0 12px;
+  .tit {
+    height:42px;
+    line-height: 42px;
+    font-size:30px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    margin-top: 24px;
+  }
+  .desc {
+    margin-top: 9px;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height:22px;
+  }
+  .block-btn {
+    margin-top: 100px;
+  }
+}

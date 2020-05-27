@@ -26,7 +26,7 @@ class PageController extends Service {
         isChildren: '',
         education: '',
         permanentAddress: '',
-        workCompany: '', // 工作单位
+        workCompany: '', // 工作单位 选填
         animalHusbandryYear: '', // 从事畜牧<br />行业年限
         addrProvince: '', // String 是 法人居住地址（省）
         addrProvinceCode: '', // String 是 法人居住地址编号（省）
@@ -210,11 +210,6 @@ class PageController extends Service {
     }
     if (!postData.permanentAddress) {
       api.toast({ msg: '请选择户籍地址' })
-      valid = false
-      return valid
-    }
-    if (!postData.workCompany) {
-      api.toast({ msg: '请输入工作单位' })
       valid = false
       return valid
     }

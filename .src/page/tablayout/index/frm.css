@@ -7,7 +7,7 @@ html, body {
   position: relative;
   & .bg {
     height: 120px;
-    background-color: #1dc4a2;
+    background:rgba(102,187,106,1);
     position: absolute;
     top: 0;
     left: 0;

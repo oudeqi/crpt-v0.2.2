@@ -1,0 +1,127 @@
+<!doctype html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+  <link rel="stylesheet" href="./index.css"></head>
+<body>
+  
+  <div class="collapse" collapse="show">
+    <div class="collapse-header" click-trigger="header">借款人地址</div>
+    <div class="collapse-body">
+      <div class="form">
+        <div class="form-item">
+          <div class="form-label">借款人</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">送达地址</div>
+          <div class="form-crtl">
+            <div class="city-select">
+              <input type="text" id="address" click-trigger="address" readonly placeholder="城市/区域">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label"></div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="addrDetail" placeholder="详细地址">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">收件人</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custAddresseeName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">联系电话</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custAddresseePhone" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="collapse" collapse="show">
+    <div class="collapse-header" click-trigger="header">借款人配偶地址</div>
+    <div class="collapse-body">
+      <div class="form">
+        <div class="form-item">
+          <div class="form-label">配偶姓名</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custSpouseName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">送达地址</div>
+          <div class="form-crtl">
+            <div class="city-select">
+              <input type="text" id="peiouAddress" click-trigger="address" readonly placeholder="城市/区域">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label"></div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="spAddrDetail" placeholder="详细地址">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">收件人</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custSpouseAddresseeName" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-label">联系电话</div>
+          <div class="form-crtl">
+            <div class="txt-input">
+              <input type="text" id="custSpouseAddresseePhone" placeholder="请输入">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="list" id="list">
+    
+
+  </div>
+
+  <div class="btn-box">
+    <div class="block-btn" id="save" tapmode="active">
+      保存
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+
+  <script src="./index.js"></script></body>
+
+</html>

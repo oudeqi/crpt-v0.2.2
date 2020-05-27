@@ -3,7 +3,7 @@ html, body {
 }
 .top {
   height: 120px;
-  background: #1dc4a2;
+  background:rgba(102,187,106,1);
   padding-left: 30px;
   color: #fff;
   border-top: 1px solid #88dbcb;

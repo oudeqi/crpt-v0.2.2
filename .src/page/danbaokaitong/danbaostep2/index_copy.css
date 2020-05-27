@@ -1,0 +1,136 @@
+.checking {
+  margin-top: 129px;
+  p {
+    font-size:16px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    text-align: center;
+    margin-top: 15px;
+  }
+  .btn {
+    width:160px;
+    margin: 0 auto;
+    margin-top: 20px;
+    height:40px;
+    background:rgba(102,187,106,1);
+    border-radius:20px;
+    font-size:16px;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.active {
+      background:rgba(102,187,106,0.7);
+    }
+  }
+}
+
+
+.list {
+  margin-top: 24px;
+  padding-left: 27px;
+  padding-right: 12px;
+  .item {
+    margin-top: 12px;
+    height:88px;
+    border-radius:6px;
+    border:1px solid rgba(220,224,232,1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 32px;
+    padding-right: 12px;
+    .order {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: -15px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:rgba(255,255,255,1);
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(144,147,153,1);
+      border-radius: 50%;
+    }
+    .main {
+      flex-grow: 1;
+      h2 {
+        font-size:18px;
+        font-weight:500;
+        color:rgba(48,49,51,1);
+      }
+      p {
+        font-size:14px;
+        margin-top: 9px;
+        font-weight:500;
+        color:rgba(144,147,153,1);
+      }
+    }
+    &:after {
+      content: "";
+      display: block;
+      width:16px;
+      height:16px;
+      background-image: url(../../image/danbaokaitong/arrow.png);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+
+@define-extend activeItem {
+  border:1px solid rgba(102,187,106,1);
+  background:rgba(102,187,106,0.1);
+}
+@define-extend activeOrder {
+  color: rgba(102,187,106,1);
+  border:1px solid rgba(102,187,106,1);
+}
+@define-extend activeIcon {
+  content: "";
+  display: block;
+  width:32px;
+  height:32px;
+  background-image: url(../../image/danbaokaitong/checked.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 50%;
+  right: 39px;
+  transform: translateY(-50%);
+}
+@define-mixin activeItem $index {
+  .list.step$(index) .item:nth-child($index) {
+    @extend activeItem;
+    .order {
+      @extend activeOrder;
+    }
+    &:before {
+      @extend activeIcon;
+    }
+  }
+}
+
+@for $i from 1 to 4 {
+  @mixin activeItem $i;
+}
+
+
+.block-btn {
+  margin: 12px;
+  margin-top: 50px;
+}

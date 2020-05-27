@@ -3,11 +3,11 @@ module.exports = {
     require('postcss-import'),
     require('postcss-for'), // 必须运行在postcss-nested和postcss-simple-vars插件之前
     require('postcss-each'),
+    require('postcss-mixins'),
     require('postcss-nested'),
     require('postcss-simple-vars'),
     require('postcss-conditionals'),
     require('postcss-calc'),
-    require('postcss-mixins'), // 必须运行在postcss-nested和postcss-simple-vars插件之后
     require('postcss-extend'),
     require('postcss-preset-env')({
       stage: 0,

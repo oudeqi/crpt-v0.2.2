@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding-bottom: 20px;
+}
+
+@define-extend arrow {
+  content: "";
+  display: block;
+  width:16px;
+  height:16px;
+  background-image: url(../../image/danbaokaitong/arrow.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
+.collapse {
+  padding: 0 12px;
+  margin-top: 12px;
+  background: #fff;
+  .collapse-header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    &:after {
+      @extend arrow;
+      transform: translateY(-50%) rotateZ(-90deg);
+    }
+  }
+  .collapse-body {
+    border-top: 1px dashed #DCE0E8;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    .form .form-label {
+      width: 96px;
+    }
+  }
+}
+
+.collapse[collapse="hide"] {
+  .cont:after {
+    transform: translateY(-50%) rotateZ(90deg);
+  }
+  .collapse-body {
+    display: none;
+  }
+}
+
+.btn-box {
+  padding: 0 12px;
+  margin-top: 40px;
+}
+
+.list {
+  .item {
+    .item-header {
+      background-color: lightgreen;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .item-body {
+      .collapse {
+        margin-top: 0;
+        margin-bottom: 12px;
+      }
+    }
+  }
+}

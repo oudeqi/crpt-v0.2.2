@@ -22,6 +22,24 @@ function openRegLogin() {
 } // 个人登录
 
 
+function openGerenLogin() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$userType = _ref.userType,
+      userType = _ref$userType === void 0 ? 1 : _ref$userType;
+
+  // 2企业 1个人，
+  api.openWin({
+    name: 'html/gerenlogin/win',
+    url: 'widget://html/gerenlogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: {
+      userType: userType
+    }
+  });
+} // 企业登录
+
+
 function openSendCode() {
   var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       tel = _ref2.tel,
@@ -369,7 +387,7 @@ function ajax(method, url) {
           console.log('/************* ERROR. ************/');
         }
 
-        console.log('__URL ==> ' + baseUrl + url);
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
         console.log('__TOKEN ==> ' + token);
         console.log('__BODY ==> ' + JSON.stringify(data));
         console.log('__DATA ==> ' + JSON.stringify(ret || error));
@@ -1091,6 +1109,12 @@ apiready = function apiready() {
 
   document.querySelector('#register').onclick = function () {
     openReg();
+  };
+
+  document.querySelector('#pwd_login').onclick = function () {
+    openGerenLogin({
+      userType: 2
+    });
   };
 
   document.querySelector('#tel_login').onclick = function () {
