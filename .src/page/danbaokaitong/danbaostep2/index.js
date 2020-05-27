@@ -4,7 +4,8 @@ import './index.less'
 import Utils from '../../../utils'
 import Service from './service'
 import HeaderController from '../header.js'
-import { setRefreshHeaderInfo } from '../../../config.js'
+import {setRefreshHeaderInfo} from '../../../config.js'
+import {openDanbaoRenList, openSendAddress} from '../../../webview.js'
 
 /**
  * @author liyang
@@ -34,14 +35,16 @@ class PageController extends Service {
             this.data.applyStatus = data.applyStatus
             this.data.gtId = data.gtId
             this.data.gtCreditId = data.gtCreditId
+            this.data.productId = data.productId
+            this.data.demandMoney = data.demandMoney
             //   审核中
-            if(data.applyStatus === 2) {
+            if (data.applyStatus === 2) {
                 let submitBtn = document.querySelector('#submit')
                 submitBtn.innerHTML = '审核中...'
                 submitBtn.setAttribute('disabled', true)
                 submitBtn.classList.add('disabled')
             }
-        }catch(e) {
+        } catch (e) {
             Utils.UI.toast('服务超时')
         }
         Utils.UI.hideLoading()
@@ -77,10 +80,25 @@ class PageController extends Service {
             .forEach((dom, i) => {
                 let domChild = dom.querySelector('.cl-cell_text')
                 dom.onclick = function () {
-                    if (true || domChild.classList.contains('done') || domChild.classList.contains('next')) {
-                        Utils.Router[dom.getAttribute('data-router')]({
-                            pageParam: {gtId: self.data.gtId, flowStatus: self.data.flowStatus, gtCreditId: self.data.gtCreditId}
-                        })
+                    if (domChild.classList.contains('done') || domChild.classList.contains('next')) {
+                        if (i === 1) {
+                            openDanbaoRenList({
+                                gtCreditId: self.data.gtCreditId,
+                                gtId: self.data.gtId,
+                                productId: self.data.productId,
+                                demandMoney: self.data.demandMoney
+                            } = {})
+                        } else if (i === 2) {
+                            openSendAddress({gtId: self.data.gtId, gtCreditId: self.data.gtCreditId})
+                        } else {
+                            Utils.Router[dom.getAttribute('data-router')]({
+                                pageParam: {
+                                    gtId: self.data.gtId,
+                                    flowStatus: self.data.flowStatus,
+                                    gtCreditId: self.data.gtCreditId
+                                }
+                            })
+                        }
                     } else {
                         api.toast({
                             msg: '请先完成上一步',
@@ -91,18 +109,19 @@ class PageController extends Service {
                 }
             })
     }
+
     // 提交
     async bindSubmitEvents() {
         const self = this
         document.querySelector('#submit').onclick = async function () {
             // 未提交才可以修改
-            if(self.data.applyStatus === 1) {
+            if (self.data.applyStatus === 1) {
                 Utils.UI.showLoading('提交中')
                 try {
                     const res = await self.submitCreditStep({gtId: self.data.gtId})
                     Utils.UI.toast('提交成功')
                     window.location.reload()
-                }catch(e) {
+                } catch (e) {
                     Utils.UI.toast(e.msg)
                 }
                 Utils.UI.hideLoading()
@@ -126,9 +145,9 @@ apiready = function () {
     const headerController = new HeaderController()
     headerController.renderHeader()
     // 下拉刷新
-    setRefreshHeaderInfo(function(ret, err) {
-      pageController.main()
-      headerController.renderHeader()
+    setRefreshHeaderInfo(function (ret, err) {
+        pageController.main()
+        headerController.renderHeader()
 
     })
 

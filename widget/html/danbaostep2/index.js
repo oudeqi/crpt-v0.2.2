@@ -1287,6 +1287,76 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openDanbaoRenList() {
+  var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      gtCreditId = _ref7.gtCreditId,
+      gtId = _ref7.gtId,
+      productId = _ref7.productId,
+      demandMoney = _ref7.demandMoney;
+
+  api.openTabLayout({
+    name: "html/danbaorenlist/index",
+    title: '担保人列表',
+    url: "widget://html/danbaorenlist/index.html",
+    bgColor: 'rgba(245,245,245,1)',
+    pageParam: {
+      gtCreditId: gtCreditId,
+      // 担保授信id
+      productId: productId,
+      // 产品id
+      demandMoney: demandMoney,
+      // 资金需求
+      gtId: gtId // 担保id
+
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
+      fontSize: 18,
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '返回',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green.png'
+      }]
+    }
+  });
+} // 担保人信息录入
+
+
+function openSendAddress(_ref9) {
+  var gtId = _ref9.gtId,
+      gtCreditId = _ref9.gtCreditId;
+  api.openTabLayout({
+    name: "html/sendaddress/index",
+    title: '文书送达地址',
+    url: "widget://html/sendaddress/index.html",
+    bgColor: 'rgba(245,245,245,1)',
+    pageParam: {
+      gtId: gtId,
+      // 担保申请的id
+      gtCreditId: gtCreditId // 担保授信id
+
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
+      fontSize: 18,
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '返回',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green.png'
+      }]
+    }
+  });
+} // 在线签约
+
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
      module.exports = factory(global)
@@ -3146,7 +3216,9 @@ var PageController = /*#__PURE__*/function (_Service) {
                 this.data.flowStatus = data.flowStatus;
                 this.data.applyStatus = data.applyStatus;
                 this.data.gtId = data.gtId;
-                this.data.gtCreditId = data.gtCreditId; //   审核中
+                this.data.gtCreditId = data.gtCreditId;
+                this.data.productId = data.productId;
+                this.data.demandMoney = data.demandMoney; //   审核中
 
                 if (data.applyStatus === 2) {
                   submitBtn = document.querySelector('#submit');
@@ -3155,26 +3227,26 @@ var PageController = /*#__PURE__*/function (_Service) {
                   submitBtn.classList.add('disabled');
                 }
 
-                _context.next = 16;
+                _context.next = 18;
                 break;
 
-              case 13:
-                _context.prev = 13;
+              case 15:
+                _context.prev = 15;
                 _context.t0 = _context["catch"](1);
                 Utils$1.UI.toast('服务超时');
 
-              case 16:
+              case 18:
                 Utils$1.UI.hideLoading();
                 api.refreshHeaderLoadDone();
                 this.initUIModal();
                 this.bindEvents();
 
-              case 20:
+              case 22:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 13]]);
+        }, _callee, this, [[1, 15]]);
       }));
 
       function initData() {
@@ -3213,13 +3285,30 @@ var PageController = /*#__PURE__*/function (_Service) {
         var domChild = dom.querySelector('.cl-cell_text');
 
         dom.onclick = function () {
-          {
-            Utils$1.Router[dom.getAttribute('data-router')]({
-              pageParam: {
+          if (domChild.classList.contains('done') || domChild.classList.contains('next')) {
+            if (i === 1) {
+              var _ref;
+
+              openDanbaoRenList((_ref = {}, self.data.gtCreditId = _ref.gtCreditId, self.data.gtId = _ref.gtId, self.data.productId = _ref.productId, self.data.demandMoney = _ref.demandMoney, _ref));
+            } else if (i === 2) {
+              openSendAddress({
                 gtId: self.data.gtId,
-                flowStatus: self.data.flowStatus,
                 gtCreditId: self.data.gtCreditId
-              }
+              });
+            } else {
+              Utils$1.Router[dom.getAttribute('data-router')]({
+                pageParam: {
+                  gtId: self.data.gtId,
+                  flowStatus: self.data.flowStatus,
+                  gtCreditId: self.data.gtCreditId
+                }
+              });
+            }
+          } else {
+            api.toast({
+              msg: '请先完成上一步',
+              duration: 1000,
+              location: 'middle'
             });
           }
         };
