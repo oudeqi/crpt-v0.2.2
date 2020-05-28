@@ -1657,6 +1657,10 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 <<<<<<< HEAD
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+=======
+<<<<<<< HEAD
 var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
 var baseUrl =   uat ;
 =======
@@ -1665,6 +1669,7 @@ var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var hasAlert = false;
 >>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
+>>>>>>> b1f01f8801a3deb95667510b83ee36ae8ecddefe
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];

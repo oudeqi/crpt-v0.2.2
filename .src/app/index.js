@@ -1,40 +1,11 @@
 import {
-<<<<<<< HEAD
-  // openDrawerLayout,
-  openAgreement,
-  openLoanConfirm,
-  openSendAddress,
-  openDanbaoKaitong,
-  openDanbaoRenList,
-  openDanbaoRenForm,
-  openMsgCenter,
-  openTabLayout,
-  openRegLogin,
-  openReg,
-  openGerenLogin,
-  openQiyeLogin,
-  openSendCode,
-  openFindPwd,
-  openBaseinfoFill,
-  openTodoAuthGeren,
-  openTodoAuthQiye,
-  openCompanyInfo,
-  openIDcardUpload,
-  openIDcardInfo,
-  openFaceAuth,
-  openFaceUpload,
-  openYuguEdu,
-  openAuthResult,
-  openBillList,
-  openBillDetails,
-  openMyProduct,
-  openMyQuota,
-  openSettings,
-  openContactUs,
-  openProductDetails,
-  openProductRecommend
-=======
     // openDrawerLayout,
+    openAgreement,
+    openLoanConfirm,
+    openSendAddress,
+    openDanbaoKaitong,
+    openDanbaoRenList,
+    openDanbaoRenForm,
     openMsgCenter,
     openTabLayout,
     openRegLogin,
@@ -55,71 +26,22 @@ import {
     openAuthResult,
     openBillList,
     openBillDetails,
-    openOrderList,
-    openOrderTodo,
     openMyProduct,
     openMyQuota,
     openSettings,
     openContactUs,
     openProductDetails,
     openProductRecommend
->>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 } from '../webview.js'
 import Utils from '../utils'
 // $api.setStorage()
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
-<<<<<<< HEAD
 apiready = function () {
-  // openBaseinfoFill()
-  // openCompanyInfo()
-  // $api.clearStorage()
-  const userinfo = $api.getStorage('userinfo')
-  // 认证状态 int
-  // 1：正常
-  // 2：待实名认证
-  // 3：待人脸审核
-  // 4：人脸认证失败，待人工审核
-  // 5：待补充基本信息
-  // 6：人工审核不通过
-  // Utils.Router.openPageCreditInformation()
-
-  if (userinfo) {
-
-    // openIDcardInfo(2)
-
-    // openSendAddress({
-    //   gtCreditId: '1258945510237147136',
-    //   gtId: '1263411018323742721'
-    // })
-    // openDanbaoRenList({
-    //   gtCreditId: '1260492247898374145',
-    //   productId: '1',
-    //   demandMoney: '40',
-    //   gtId: '1263411018323742721'
-    // })
-    // openProductRecommend()
-    // openDanbaoKaitong({step: 7, productId: '2', creditStatus: 1})
-    // return
-    const authStatus = $api.getStorage('authStatus') || {}
-    if (authStatus.status === 1) {
-      openTabLayout()
-    } else {
-      const userType = userinfo.userType
-      if (userType === '1') {
-        openTodoAuthGeren()
-      } else {
-        openTodoAuthQiye()
-      }
-    }
-
-  } else {
-    openRegLogin()
-  }
-=======
-
-apiready = function() {
+    // openBaseinfoFill()
+    // openCompanyInfo()
+    // $api.clearStorage()
     const userinfo = $api.getStorage('userinfo')
     // 认证状态 int
     // 1：正常
@@ -128,27 +50,44 @@ apiready = function() {
     // 4：人脸认证失败，待人工审核
     // 5：待补充基本信息
     // 6：人工审核不通过
+    // Utils.Router.openPageCreditInformation()
 
-    Utils.Router.openGuaranteeApplicationIndex()
->>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
+    if (userinfo) {
 
-    //   const authStatus = $api.getStorage('authStatus') || {}
-    //   if (authStatus.status === 1) {
-    //     openTabLayout()
-    //   } else {
-    //     const userType = userinfo.userType
-    //     if (userType === '1') {
-    //       openTodoAuthGeren()
-    //     } else {
-    //       openTodoAuthQiye()
-    //     }
-    //   }
-    // } else {
-    //   openRegLogin()
-    // }
+        // openIDcardInfo(2)
+
+        // openSendAddress({
+        //   gtCreditId: '1258945510237147136',
+        //   gtId: '1263411018323742721'
+        // })
+        // openDanbaoRenList({
+        //   gtCreditId: '1260492247898374145',
+        //   productId: '1',
+        //   demandMoney: '40',
+        //   gtId: '1263411018323742721'
+        // })
+        // openProductRecommend()
+        // openDanbaoKaitong({step: 2, productId: '2', creditStatus: 2})
+        // return
+        const authStatus = $api.getStorage('authStatus') || {}
+        if (authStatus.status === 1) {
+            openTabLayout()
+        } else {
+            const userType = userinfo.userType
+            if (userType === '1') {
+                openTodoAuthGeren()
+            } else {
+                openTodoAuthQiye()
+            }
+        }
+
+    } else {
+        openRegLogin()
+    }
+
     // 云修复完成
     api.addEventListener({
-        name: 'smartupdatefinish'
+        name:'smartupdatefinish'
     }, (ret, err) => {
         api.confirm({
             title: '提示',
@@ -161,24 +100,13 @@ apiready = function() {
             }
         })
     })
-<<<<<<< HEAD
-  })
-  // 点击启动页面
-  api.addEventListener({
-    name:'launchviewclicked'
-  }, (ret,err) => {
-    api.alert({
-      msg:ret.value
-=======
-
     // 点击启动页面
     api.addEventListener({
-        name: 'launchviewclicked'
-    }, (ret, err) => {
+        name:'launchviewclicked'
+    }, (ret,err) => {
         api.alert({
-            msg: ret.value
+            msg:ret.value
         })
->>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
     })
 
 }
