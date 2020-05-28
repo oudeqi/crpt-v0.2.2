@@ -1,33 +1,67 @@
-<<<<<<< HEAD
- <widget id="A6039969190486"  version="0.2.0">  <name>IndustryFinance</name>
-  <description>
-    Example For APICloud.
-  </description>
-  <author email="developer@apicloud.com" href="http://www.apicloud.com">
-    Developer
-  </author>
-  <content src="html/app/index.html"/>
-  <access origin="*" />  <permission name="UIInput"/>  <preference name="pageBounce" value="true"/>  <preference name="softInputMode" value="auto"/>  <preference name="softInputBarEnabled" value="false" />
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
-	<preference name="hScrollBarEnabled" value="false"/>
-	<preference name="vScrollBarEnabled" value="false"/>
-	<preference name="autoLaunch" value="true"/>
-	<preference name="fullScreen" value="false"/>
-	<preference name="autoUpdate" value="true" />
-	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>
-	<permission name="readPhoneState" />
-	<permission name="camera" />
-	<permission name="record" />
-	<permission name="location" />
-	<permission name="fileSystem" />
-	<permission name="internet" />
-	<permission name="bootCompleted" />
-	<permission name="hardware" />  <preference name="useWKWebView" value="true" />  <preference name="WKWebViewRecoveryMode" value="reload"/>
-</widget>
-=======
- <widget id="A6038689491241"  version="0.0.1">  <name>IndustryFinance</name>  <description>    Example For APICloud.  </description>  <author email="developer@apicloud.com" href="http://www.apicloud.com">    Developer  </author>  <content src="html/app/index.html"/>  <access origin="*" />  <permission name="UIInput"/>  <preference name="pageBounce" value="true"/>  <preference name="softInputMode" value="auto"/>  <preference name="softInputBarEnabled" value="true" />	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>	<preference name="hScrollBarEnabled" value="false"/>	<preference name="vScrollBarEnabled" value="false"/>	<preference name="autoLaunch" value="true"/>	<preference name="fullScreen" value="false"/>	<preference name="autoUpdate" value="true" />	<preference name="smartUpdate" value="false" />	<preference name="debug" value="true"/>	<preference name="statusBarAppearance" value="true"/>	<permission name="readPhoneState" />	<permission name="camera" />	<permission name="record" />	<permission name="location" />	<permission name="fileSystem" />	<permission name="internet" />	<permission name="bootCompleted" />	<permission name="hardware" />  <preference name="useWKWebView" value="true" />  <preference name="WKWebViewRecoveryMode" value="reload"/></widget>
->>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
+ <widget id="A6039969190486"  version="0.2.0">
+
+  <name>IndustryFinance</name>
+
+  <description>
+
+    Example For APICloud.
+
+  </description>
+
+  <author email="developer@apicloud.com" href="http://www.apicloud.com">
+
+    Developer
+
+  </author>
+
+  <content src="html/app/index.html"/>
+
+  <access origin="*" />
+
+  <permission name="UIInput"/>
+  <preference name="pageBounce" value="true"/>
+  <preference name="softInputMode" value="auto"/>
+  <preference name="softInputBarEnabled" value="false" />
+
+	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="hScrollBarEnabled" value="false"/>
+
+	<preference name="vScrollBarEnabled" value="false"/>
+
+	<preference name="autoLaunch" value="true"/>
+
+	<preference name="fullScreen" value="false"/>
+
+	<preference name="autoUpdate" value="true" />
+
+	<preference name="smartUpdate" value="false" />
+
+	<preference name="debug" value="true"/>
+
+	<preference name="statusBarAppearance" value="true"/>
+
+	<permission name="readPhoneState" />
+
+	<permission name="camera" />
+
+	<permission name="record" />
+
+	<permission name="location" />
+
+	<permission name="fileSystem" />
+
+	<permission name="internet" />
+
+	<permission name="bootCompleted" />
+
+	<permission name="hardware" />
+  <preference name="useWKWebView" value="true" />
+  <preference name="WKWebViewRecoveryMode" value="reload"/>
+
+</widget>
+
