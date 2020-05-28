@@ -500,11 +500,13 @@ class PageController extends Service {
             workshopCounty: pcd.district.name,
             workshopCountyCode: pcd.district.code,
             workshopAddr,
-            maturityYear,
             workshopStruct: shedStructure
         }
-
+        console.log(JSON.stringify(formJSON))
         let isValidate = !Object.values(formJSON).some((item, i) => !item)
+
+        // 挂载租赁时间不校验
+        formJSON.maturityYear = maturityYear || '2020'
 
         // validator，后期再抽象
         if (formJSON.farmsSize >= 60000000) {
@@ -533,11 +535,13 @@ class PageController extends Service {
                     Object.assign(formJSON, {operateId: self.data.operateId})
                     res = await this.postUpdateOperate(formJSON, {envDataFileStream: envReportFile})
                 }
-                Utils.UI.toast('提交成功')
-                Utils.Router.closeCurrentWinAndRefresh({
-                    winName: 'html/danbaostep2/index',
-                    script: 'window.location.reload();'
-                })
+                if(res.code === 200) {
+                    Utils.UI.toast('提交成功')
+                    Utils.Router.closeCurrentWinAndRefresh({
+                        winName: 'html/danbaostep2/index',
+                        script: 'window.location.reload();'
+                    })
+                }
             } catch (e) {
                 Utils.UI.hideLoading()
                 Utils.UI.toast(e.msg)
