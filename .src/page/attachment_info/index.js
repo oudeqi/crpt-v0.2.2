@@ -183,6 +183,7 @@ class PageController extends Service {
                             fileDataStream: self.data.attachmentList[_i].fileDataStream
                         })
                         self.data.attachmentList[_i].fileId = res.data.fileId
+                        self.data.attachmentList[_i].approvalStatus = 1
                         self.compilerTemplate(self.data.attachmentList)
                         Utils.UI.toast('操作成功')
 
@@ -197,6 +198,7 @@ class PageController extends Service {
                         })
                         self.data.attachmentList[_i].attachId = res.data.attachId
                         self.data.attachmentList[_i].fileId = res.data.fileId
+                        self.data.attachmentList[_i].approvalStatus = 1
                         self.compilerTemplate(self.data.attachmentList)
                         Utils.UI.toast('操作成功')
                     }
@@ -318,7 +320,8 @@ class PageController extends Service {
             return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
-                <span class="clt_main">${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
+                <span class="clt_main">${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} <b class="b-status s_${item.
+            || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
                 <div>
                     <a class="update" data-index="${i}">保存当前附件</a>
                     <a class="del" data-index="${i}">删除</a>
