@@ -87,6 +87,7 @@ apiready = function() {
       }, function (error) {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('login'), 'loading')
+        $api.clearStorage()
       })
     }
   }

@@ -33,12 +33,14 @@ apiready = function () {
     if (loading) {
       return
     }
+    $api.byId('totalnum').style.display = 'none'
     loading = true
     // 订单状态：1-未支付 2-支付成功3-支付失败4-退货5-过期失效6-已撤销
     http.get(`/crpt-order/order/list/currentuser?status=1&pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {
+        $api.byId('totalnum').style.display = 'block'
         pageNo++
         $api.byId('total').innerHTML = numeral(res.data.totalAmount || 0).format('0,0.00')
         if (res.data.count) {
