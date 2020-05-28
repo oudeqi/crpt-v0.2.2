@@ -915,8 +915,7 @@ function openRegLogin() {
 
 function openDanbaoKaitong() {
   var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref6$step = _ref6.step,
-      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      step = _ref6.step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
       productId = _ref6.productId,
@@ -924,8 +923,18 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (step === 3 && creditStatus && creditStatus !== 2) {
-    i = i - 1;
+  if (step === 0) {
+    i = 1;
+  } else if (step === 1) {
+    i = 2;
+  } else if (step === 2) {
+    if (creditStatus && creditStatus === 2) {
+      i = 3;
+    } else {
+      i = 2;
+    }
+  } else if (step >= 7) {
+    i = 6;
   }
 
   api.openTabLayout({
@@ -1769,7 +1778,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -3010,9 +3019,11 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     _this = _super.apply(this, arguments);
 
     var _ref = api.pageParam || {},
-        step = _ref.step;
+        step = _ref.step,
+        creditStatus = _ref.creditStatus;
 
     _this.step = step;
+    _this.creditStatus = creditStatus;
     _this.danbaoStatus = null;
     _this.applyStatusMap = {
       0: 'xxx',
@@ -3041,15 +3052,29 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_renderStep",
     value: function _renderStep() {
       var el = $api.byId('step');
-      var step = this.step; // if (this.danbaoStatus && this.danbaoStatus.creditStatus !== 2) {
-      //   step = step - 1
-      // }
+      var creditStatus = this.creditStatus;
+      var step = this.step;
+      var i = step;
 
-      var prevStep = step - 1;
+      if (step === 0) {
+        i = 1;
+      } else if (step === 1) {
+        i = 2;
+      } else if (step === 2) {
+        if (creditStatus === 2) {
+          i = 3;
+        } else {
+          i = 2;
+        }
+      } else if (step >= 7) {
+        i = 6;
+      }
+
+      var prevStep = i - 1;
       $api.addCls(el, "step".concat(prevStep));
       setTimeout(function () {
         $api.removeCls(el, "step".concat(prevStep));
-        $api.addCls(el, "step".concat(step));
+        $api.addCls(el, "step".concat(i));
       }, 300);
     }
   }, {
@@ -3111,11 +3136,10 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return this._getDanbaoStatus();
-
-              case 2:
                 this._renderStep();
+
+                _context2.next = 3;
+                return this._getDanbaoStatus();
 
               case 3:
               case "end":
@@ -3570,7 +3594,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   },
                   success: function () {
                     var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(data) {
-                      var res;
+                      var res, creditStatus;
                       return regenerator.wrap(function _callee2$(_context2) {
                         while (1) {
                           switch (_context2.prev = _context2.next) {
@@ -3585,8 +3609,10 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                               res = _context2.sent;
 
                               if (res.code === 200) {
+                                creditStatus = _this2.danbaoStatus || {};
                                 openDanbaoKaitong({
-                                  step: 2
+                                  step: 2,
+                                  creditStatus: creditStatus
                                 });
                               }
 

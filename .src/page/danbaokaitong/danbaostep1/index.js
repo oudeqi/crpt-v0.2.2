@@ -125,7 +125,8 @@ class PageController extends HeaderController {
             ...data, productId: this.productId
           })
           if (res.code === 200) {
-            openDanbaoKaitong({step: 2})
+            const creditStatus = this.danbaoStatus || {}
+            openDanbaoKaitong({step: 2, creditStatus})
           }
         } catch (error) {
           api.toast({ msg: error.msg || '出错啦', location: 'middle' })

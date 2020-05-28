@@ -1594,7 +1594,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1972,7 +1972,7 @@ apiready = function apiready() {
     //   gtId: '1263411018323742721'
     // })
     // openProductRecommend()
-    // openDanbaoKaitong({step: 2, productId: '2'})
+    // openDanbaoKaitong({step: 7, productId: '2', creditStatus: 1})
     // return
     var authStatus = $api.getStorage('authStatus') || {};
 

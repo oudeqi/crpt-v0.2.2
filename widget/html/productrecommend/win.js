@@ -268,8 +268,7 @@ function openProductDetails() {
 
 function openDanbaoKaitong() {
   var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref6$step = _ref6.step,
-      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      step = _ref6.step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
       productId = _ref6.productId,
@@ -277,8 +276,18 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (step === 3 && creditStatus && creditStatus !== 2) {
-    i = i - 1;
+  if (step === 0) {
+    i = 1;
+  } else if (step === 1) {
+    i = 2;
+  } else if (step === 2) {
+    if (creditStatus && creditStatus === 2) {
+      i = 3;
+    } else {
+      i = 2;
+    }
+  } else if (step >= 7) {
+    i = 6;
   }
 
   api.openTabLayout({
@@ -1887,7 +1896,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';

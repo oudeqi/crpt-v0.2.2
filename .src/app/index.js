@@ -67,7 +67,7 @@ apiready = function () {
     //   gtId: '1263411018323742721'
     // })
     // openProductRecommend()
-    // openDanbaoKaitong({step: 2, productId: '2'})
+    // openDanbaoKaitong({step: 7, productId: '2', creditStatus: 1})
     // return
     const authStatus = $api.getStorage('authStatus') || {}
     if (authStatus.status === 1) {

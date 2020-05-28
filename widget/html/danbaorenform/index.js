@@ -1707,7 +1707,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2295,7 +2295,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       var address = $api.byId('address');
       var workAddress = $api.byId('workAddress');
-      address.value = "".concat(data.addrProvince || '', "/").concat(data.addrCity || '', "/").concat(data.addrCounty || '');
+      address.value = data.addrProvince ? "".concat(data.addrProvince, "/").concat(data.addrCity, "/").concat(data.addrCounty) : '';
       address.dataset.province = data.addrProvince || ''; // 常住地址（省）
 
       address.dataset.provinceCode = data.addrProvinceCode || ''; // 常住地址编号（省）
@@ -2310,7 +2310,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       $api.byId('addrDetail').value = data.addrDetail || ''; // 常住地址详细
 
-      workAddress.value = "".concat(data.workAddrProvince || '', "/").concat(data.workAddrCity || '', "/").concat(data.workAddrCounty || '');
+      workAddress.value = data.workAddrProvince ? "".concat(data.workAddrProvince, "/").concat(data.workAddrCity, "/").concat(data.workAddrCounty) : '';
       workAddress.dataset.province = data.workAddrProvince || ''; // 工作地址（省）
 
       workAddress.dataset.provinceCode = data.workAddrProvinceCode || ''; // 工作地址编号（省）

@@ -146,8 +146,7 @@ function openProductRecommend(pageParam) {
 
 function openDanbaoKaitong() {
   var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref6$step = _ref6.step,
-      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      step = _ref6.step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
       productId = _ref6.productId,
@@ -155,8 +154,18 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (step === 3 && creditStatus && creditStatus !== 2) {
-    i = i - 1;
+  if (step === 0) {
+    i = 1;
+  } else if (step === 1) {
+    i = 2;
+  } else if (step === 2) {
+    if (creditStatus && creditStatus === 2) {
+      i = 3;
+    } else {
+      i = 2;
+    }
+  } else if (step >= 7) {
+    i = 6;
   }
 
   api.openTabLayout({
@@ -1765,7 +1774,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1923,6 +1932,25 @@ var http = {
     });
   }
 }; // 统一ios和android的输入框，下标都从0开始
+
+function setRefreshHeaderInfo(successCallback, errorCallback) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      errorCallback && errorCallback(error);
+    } else {
+      successCallback && successCallback(ret);
+    }
+  });
+}
 
 var numeral = createCommonjsModule(function (module) {
 /*! @preserve
@@ -3004,22 +3032,30 @@ var PageController = /*#__PURE__*/function (_Service) {
       } else {
         this.el.navOther.style.display = 'block';
       }
-    } // 担保开通
+    } // 点击担保开通
 
   }, {
     key: "goDanbao",
     value: function goDanbao() {
+      api.showProgress({
+        title: '加载中...',
+        text: '',
+        modal: false
+      });
       this.queryDanbaoStatus().then(function (res) {
+        api.hideProgress();
         var _res$data = res.data,
             applyStatus = _res$data.applyStatus,
             productId = _res$data.productId,
             creditStatus = _res$data.creditStatus;
         openDanbaoKaitong({
-          step: applyStatus + 1,
+          step: applyStatus,
           productId: productId,
           creditStatus: creditStatus
         });
       })["catch"](function (error) {
+        api.hideProgress();
+
         if (error.code === 3002) {
           // 无担保产品
           openProductRecommend();
@@ -3070,10 +3106,13 @@ var PageController = /*#__PURE__*/function (_Service) {
         custType: custType,
         status: 2
       })]).then(function (res) {
+        api.refreshHeaderLoadDone();
+
         _this4._renderHigh(res[0].data.list || []);
 
         _this4._renderLow(res[1].data.list || []);
       })["catch"](function (error) {
+        api.refreshHeaderLoadDone();
         api.toast({
           msg: error.msg || '获取产品数据失败',
           location: 'middle'
@@ -3112,7 +3151,11 @@ apiready = function apiready() {
   };
 
   controller.renderNav();
-  controller.renderProduct(); // api.setTabLayoutAttr({
+  controller.renderProduct();
+  setRefreshHeaderInfo(function (ret, err) {
+    controller.renderNav();
+    controller.renderProduct();
+  }); // api.setTabLayoutAttr({
   //   hideNavigationBar: true
   // })
   //

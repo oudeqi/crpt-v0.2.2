@@ -79,7 +79,7 @@ class pageController extends Service {
 
     const address = $api.byId('address')
     const workAddress = $api.byId('workAddress')
-    address.value = `${data.addrProvince || ''}/${data.addrCity || ''}/${data.addrCounty || ''}`
+    address.value = data.addrProvince ? `${data.addrProvince}/${data.addrCity}/${data.addrCounty}` : ''
     address.dataset.province = data.addrProvince || '' // 常住地址（省）
     address.dataset.provinceCode = data.addrProvinceCode || '' // 常住地址编号（省）
     address.dataset.city = data.addrCity || '' // 常住地址（市）
@@ -88,7 +88,7 @@ class pageController extends Service {
     address.dataset.countyCode = data.addrCountyCode || '' //  常住地址编号（区县）
     $api.byId('addrDetail').value = data.addrDetail || '' // 常住地址详细
 
-    workAddress.value = `${data.workAddrProvince || ''}/${data.workAddrCity || ''}/${data.workAddrCounty || ''}`
+    workAddress.value = data.workAddrProvince ? `${data.workAddrProvince}/${data.workAddrCity}/${data.workAddrCounty}` : ''
     workAddress.dataset.province = data.workAddrProvince || '' // 工作地址（省）
     workAddress.dataset.provinceCode = data.workAddrProvinceCode || '' // 工作地址编号（省）
     workAddress.dataset.city = data.workAddrCity || '' // 工作地址（市）
