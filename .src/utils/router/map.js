@@ -11,6 +11,7 @@ export function openPageCreditInformation() {
         bgColor: '#fff',
         reload: true,
         bounces: true,
+<<<<<<< HEAD
         navigationBar: navigationBarProfile
     })
 }
@@ -19,6 +20,19 @@ export function openPageCreditInformation() {
  * 1. 打开担保业务申请表页面
  */
 export function openGuaranteeApplicationIndex({pageParam}) {
+=======
+        slidBackEnabled: false,
+        animation: {
+            type: 'none'
+        },
+        navigationBar: navigationBarProfile
+    })
+}
+/**
+ * 打开担保业务申请表页面
+ */
+export function openGuaranteeApplicationIndex() {
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
     api.openTabLayout({
         title: '担保业务申请表',
         name: 'html/guarantee_application_index/index',
@@ -26,6 +40,7 @@ export function openGuaranteeApplicationIndex({pageParam}) {
         bgColor: '#fff',
         reload: true,
         bounces: true,
+<<<<<<< HEAD
         pageParam: pageParam,
         navigationBar: navigationBarProfile
     })
@@ -112,3 +127,12 @@ export function closeCurrentWinAndRefresh({winName, frameName, script}) {
         api.closeWin()
     }, 300)
 }
+=======
+        slidBackEnabled: false,
+        animation: {
+            type: 'none'
+        },
+        navigationBar: navigationBarProfile
+    })
+}
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c

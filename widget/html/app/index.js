@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // api.lockSlidPane();
 /*
 list: [{
@@ -108,27 +109,77 @@ function openTabLayout(index) {
         scrollToTop: true //其他继承自openFrame的参数
 
       }]
+=======
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
     }
-  });
-} // 注册
 
+    return target;
+  };
 
-function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
+  return _extends.apply(this, arguments);
+}
 
+module.exports = _extends;
+});
 
-function openTodoAuthGeren() {
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500
+};
+
+/**
+ * 打开授信资料录入页面
+ */
+
+function openPageCreditInformation() {
   api.openTabLayout({
-    name: 'html/todoauthgeren/win',
-    title: '待完成',
-    url: 'widget://html/todoauthgeren/win.html',
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -136,37 +187,63 @@ function openTodoAuthGeren() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 打开担保业务申请表页面
+ */
+
+function openGuaranteeApplicationIndex() {
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: navigationBarProfile
   });
 }
 
-function openTodoAuthQiye() {
-  api.openTabLayout({
-    name: 'html/todoauthqiye/win',
-    title: '待完成',
-    url: 'widget://html/todoauthqiye/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
-  });
-} // 企业信息确认
+var rmap = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = /*#__PURE__*/function () {
+  function Router() {
+    classCallCheck(this, Router);
+
+    _extends_1(this, rmap);
+  }
+
+  createClass(Router, [{
+    key: "close",
+    value: function close() {}
+  }]);
+
+  return Router;
+}();
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+};
+
+var Utils$1 = new Utils();
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -1959,6 +2036,7 @@ apiready = function apiready() {
   // 6：人工审核不通过
   // Utils.Router.openPageCreditInformation()
 
+<<<<<<< HEAD
   if (userinfo) {
     // openIDcardInfo(2)
     // openSendAddress({
@@ -1991,6 +2069,23 @@ apiready = function apiready() {
     openRegLogin();
   } // 云修复完成
 
+=======
+  Utils$1.Router.openGuaranteeApplicationIndex(); //   const authStatus = $api.getStorage('authStatus') || {}
+  //   if (authStatus.status === 1) {
+  //     openTabLayout()
+  //   } else {
+  //     const userType = userinfo.userType
+  //     if (userType === '1') {
+  //       openTodoAuthGeren()
+  //     } else {
+  //       openTodoAuthQiye()
+  //     }
+  //   }
+  // } else {
+  //   openRegLogin()
+  // }
+  // 云修复完成
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 
   api.addEventListener({
     name: 'smartupdatefinish'

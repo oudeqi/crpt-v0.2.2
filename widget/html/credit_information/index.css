@@ -1,17 +1,38 @@
 /* aui reset */
+<<<<<<< HEAD
 .aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
   background-color: #1dc4a2 !important;
   border: solid 1px #1dc4a2 !important;
 }
+=======
+.aui-radio:checked,
+.aui-radio.aui-checked,
+.aui-checkbox:checked,
+.aui-checkbox.aui-checked {
+  background-color: #1dc4a2 !important;
+  border: solid 1px #1dc4a2 !important;
+}
+
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 .aui-switch:checked {
   border-color: #1dc4a2 !important;
   background-color: #1dc4a2 !important;
 }
+<<<<<<< HEAD
 /*1cb594 88dbcb 1aa689 5aae9c*/
 /*页面头部*/
 .app_header {
   background-color: #1dc4a2;
   position: relative;
+=======
+
+/*1cb594 88dbcb 1aa689 5aae9c*/
+
+/*页面头部*/
+.app_header {
+  background-color: #1dc4a2;
+  position: relative
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .app_header div {
     width: 55px;
@@ -26,7 +47,11 @@
             align-items: center;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
+<<<<<<< HEAD
             justify-content: center;
+=======
+            justify-content: center
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
   }
 .app_header div .aui-iconfont {
       color: #fff;
@@ -58,6 +83,10 @@
     height: 44px;
     padding: 0 44px;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 /*块状按钮*/
 .app_btn {
   display: -webkit-box;
@@ -75,7 +104,11 @@
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
+<<<<<<< HEAD
   overflow: hidden;
+=======
+  overflow: hidden
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .app_btn.sm {
     height: 44px;
@@ -88,9 +121,16 @@
 .app_btn.loading {
     background-color: #88dbcb;
   }
+<<<<<<< HEAD
 /*输入框组*/
 .app_ipt_group {
   padding-top: 20px;
+=======
+
+/*输入框组*/
+.app_ipt_group {
+  padding-top: 20px
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .app_ipt_group .item {
     height: 50px;
@@ -103,7 +143,11 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+<<<<<<< HEAD
     border-bottom: 1px solid #ededed;
+=======
+    border-bottom: 1px solid #ededed
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
   }
 .app_ipt_group .item .icon {
       width: 50px;
@@ -118,7 +162,11 @@
               align-items: center;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
+<<<<<<< HEAD
               justify-content: center;
+=======
+              justify-content: center
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
     }
 .app_ipt_group .item .icon .aui-iconfont {
         font-size: 22px;
@@ -142,7 +190,11 @@
 .app_ipt_group .item .btn {
       margin-left: 10px;
       padding-right: 4px;
+<<<<<<< HEAD
       color: #333;
+=======
+      color: #333
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
     }
 .app_ipt_group .item .btn.active {
         color: #666;
@@ -151,11 +203,19 @@
 .app_ipt_group .item .btn.loading {
         color: #666;
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 /*连接按钮*/
 .app_link_btn {
   padding-left: 0;
   padding-right: 1px;
+<<<<<<< HEAD
   color: #333;
+=======
+  color: #333
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .app_link_btn.active {
     color: #666;
@@ -166,13 +226,18 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
+<<<<<<< HEAD
   color: #1dc4a2;
+=======
+  color: #1dc4a2
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .app_text_btn.active {
     color: #88dbcb;
     padding-left: 1px;
     padding-right: 0px;
   }
+<<<<<<< HEAD
 .app_agreement {
   text-align: center;
   color: #aaa;
@@ -181,17 +246,37 @@
 .app_agreement input {
     top: -2px;
   }
+=======
+
+.app_agreement {
+  text-align: center;
+  color: #aaa;
+  font-size: 15px
+}
+
+.app_agreement input {
+    top: -2px;
+  }
+
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 .app_agreement strong {
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;
+<<<<<<< HEAD
     padding-right: 1px;
   }
+=======
+    padding-right: 1px
+  }
+
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 .app_agreement strong.active {
       padding-left: 1px;
       padding-right: 0;
     }
 
+<<<<<<< HEAD
 .gt-page {
   min-height: 100vh;
   padding-bottom: 30px;
@@ -381,6 +466,10 @@
   color: #ffffff;
 }
 html, body {
+=======
+html,
+body {
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
   background-color: #efefef;
 }
 #credit-list {
@@ -455,9 +544,12 @@ html, body {
 .cl-cell .cl-cell_text.done .clt_main {
   color: #66bb6a;
 }
+<<<<<<< HEAD
 .cl-cell .cl-cell_text.done .clt_main .yes {
   display: block;
 }
+=======
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 .cl-cell .cl-cell_text span {
   color: #999;
   font-size: 15px;
@@ -469,6 +561,7 @@ html, body {
   color: #303133;
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
+<<<<<<< HEAD
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -483,13 +576,18 @@ html, body {
   background-size: 100% 100%;
   display: none;
   margin-left: 5px;
+=======
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 }
 .cl-cell .cl-cell_arrow {
   color: #999;
   -webkit-transform: scaleY(1.6);
           transform: scaleY(1.6);
 }
+<<<<<<< HEAD
 .cl_c_submit_btn.disabled {
   color: #fff;
   background-color: #909399;
 }
+=======
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c

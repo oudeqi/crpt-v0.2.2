@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -2116,4 +2117,16 @@ apiready = function apiready() {
       type = pageParam.type; // '9939393'
 
   new PageController().main();
+=======
+apiready = function apiready() {
+  var pageParam = api.pageParam || {};
+  var id = pageParam.id,
+      type = pageParam.type; // '9939393'
+  // var header = document.querySelector('#header');
+  // $api.fixStatusBar(header);
+
+  api.setStatusBarStyle({
+    style: 'dark'
+  });
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
 };
