@@ -277,7 +277,7 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (creditStatus && creditStatus !== 2) {
+  if (step === 3 && creditStatus && creditStatus !== 2) {
     i = i - 1;
   }
 

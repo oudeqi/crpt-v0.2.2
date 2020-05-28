@@ -924,7 +924,7 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (creditStatus && creditStatus !== 2) {
+  if (step === 3 && creditStatus && creditStatus !== 2) {
     i = i - 1;
   }
 
@@ -3041,11 +3041,9 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_renderStep",
     value: function _renderStep() {
       var el = $api.byId('step');
-      var step = this.step;
-
-      if (this.danbaoStatus.creditStatus !== 2) {
-        step = step - 1;
-      }
+      var step = this.step; // if (this.danbaoStatus && this.danbaoStatus.creditStatus !== 2) {
+      //   step = step - 1
+      // }
 
       var prevStep = step - 1;
       $api.addCls(el, "step".concat(prevStep));
@@ -3411,8 +3409,18 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 return this.renderHeaderAndGetDanbaoStatus();
 
               case 4:
+                _context.next = 8;
+                break;
+
+              case 6:
+                _context.prev = 6;
+                _context.t0 = _context["catch"](1);
+
+              case 8:
+                _context.prev = 8;
+
                 if (!this.danbaoStatus) {
-                  _context.next = 22;
+                  _context.next = 27;
                   break;
                 }
 
@@ -3431,14 +3439,14 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 $api.byId('product').value = data.productName;
                 $api.byId('rate').value = data.rate;
                 $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1");
-                _context.next = 26;
+                _context.next = 31;
                 break;
 
-              case 22:
-                _context.next = 24;
+              case 27:
+                _context.next = 29;
                 return this.queryProductById(this.productId);
 
-              case 24:
+              case 29:
                 res = _context.sent;
 
                 if (res.code === 200) {
@@ -3453,28 +3461,28 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(_data.productName, "\u4EA7\u54C1");
                 }
 
-              case 26:
-                _context.next = 31;
+              case 31:
+                _context.next = 36;
                 break;
 
-              case 28:
-                _context.prev = 28;
-                _context.t0 = _context["catch"](1);
+              case 33:
+                _context.prev = 33;
+                _context.t1 = _context["catch"](8);
                 api.toast({
-                  msg: _context.t0.msg || '出错啦',
+                  msg: _context.t1.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 31:
+              case 36:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 33:
+              case 38:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 28]]);
+        }, _callee, this, [[1, 6], [8, 33]]);
       }));
 
       function getProduct() {

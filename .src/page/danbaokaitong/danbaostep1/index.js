@@ -18,6 +18,8 @@ class PageController extends HeaderController {
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
       await this.renderHeaderAndGetDanbaoStatus()
+    } catch (error) {}
+    try {
       if (this.danbaoStatus) {
         const data = this.danbaoStatus
         document.querySelector('[name="buildType"][value="'+data.buildType+'"]').checked = true

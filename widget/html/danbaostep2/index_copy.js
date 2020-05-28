@@ -2960,11 +2960,9 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_renderStep",
     value: function _renderStep() {
       var el = $api.byId('step');
-      var step = this.step;
-
-      if (this.danbaoStatus.creditStatus !== 2) {
-        step = step - 1;
-      }
+      var step = this.step; // if (this.danbaoStatus && this.danbaoStatus.creditStatus !== 2) {
+      //   step = step - 1
+      // }
 
       var prevStep = step - 1;
       $api.addCls(el, "step".concat(prevStep));

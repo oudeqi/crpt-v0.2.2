@@ -43,9 +43,9 @@ export default class HeaderController extends Service {
   _renderStep () {
     const el = $api.byId('step')
     let step = this.step
-    if (this.danbaoStatus.creditStatus !== 2) {
-      step = step - 1
-    }
+    // if (this.danbaoStatus && this.danbaoStatus.creditStatus !== 2) {
+    //   step = step - 1
+    // }
     const prevStep = step - 1
     $api.addCls(el, `step${prevStep}`)
     setTimeout(() => {
