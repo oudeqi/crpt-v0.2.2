@@ -268,8 +268,7 @@ function openProductDetails() {
 
 function openDanbaoKaitong() {
   var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref6$step = _ref6.step,
-      step = _ref6$step === void 0 ? 1 : _ref6$step,
+      step = _ref6.step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
       productId = _ref6.productId,
@@ -277,8 +276,18 @@ function openDanbaoKaitong() {
 
   var i = step;
 
-  if (step === 3 && creditStatus && creditStatus !== 2) {
-    i = i - 1;
+  if (step === 0) {
+    i = 1;
+  } else if (step === 1) {
+    i = 2;
+  } else if (step === 2) {
+    if (creditStatus && creditStatus === 2) {
+      i = 3;
+    } else {
+      i = 2;
+    }
+  } else if (step >= 7) {
+    i = 6;
   }
 
   api.openTabLayout({
@@ -1871,8 +1880,20 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+<<<<<<< HEAD
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
+=======
+<<<<<<< HEAD
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
+=======
+
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+var hasAlert = false;
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
+>>>>>>> b1f01f8801a3deb95667510b83ee36ae8ecddefe
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1887,7 +1908,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';

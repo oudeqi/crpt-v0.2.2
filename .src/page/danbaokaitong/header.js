@@ -24,8 +24,9 @@ export default class HeaderController extends Service {
 
   constructor () {
     super(...arguments)
-    const { step } = api.pageParam || {}
+    const { step, creditStatus } = api.pageParam || {}
     this.step = step
+    this.creditStatus = creditStatus
     this.danbaoStatus = null
     this.applyStatusMap = {
       0: 'xxx', // int	无申请
@@ -42,15 +43,27 @@ export default class HeaderController extends Service {
 
   _renderStep () {
     const el = $api.byId('step')
+    let creditStatus = this.creditStatus
     let step = this.step
-    // if (this.danbaoStatus && this.danbaoStatus.creditStatus !== 2) {
-    //   step = step - 1
-    // }
-    const prevStep = step - 1
+    let i = step
+    if (step === 0) {
+      i = 1
+    } else if (step === 1) {
+      i = 2
+    } else if (step === 2) {
+      if (creditStatus === 2) {
+        i = 3
+      } else {
+        i = 2
+      }
+    } else if (step >= 7) {
+      i = 6
+    }
+    const prevStep = i - 1
     $api.addCls(el, `step${prevStep}`)
     setTimeout(() => {
       $api.removeCls(el, `step${prevStep}`)
-      $api.addCls(el, `step${step}`)
+      $api.addCls(el, `step${i}`)
     }, 300)
   }
 
@@ -71,7 +84,7 @@ export default class HeaderController extends Service {
   }
 
   async renderHeaderAndGetDanbaoStatus () {
-    await this._getDanbaoStatus()
     this._renderStep()
+    await this._getDanbaoStatus()
   }
 }

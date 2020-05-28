@@ -1,7 +1,7 @@
 import '../../../app.css'
 import './frm.css'
 import { openLeftPane, openSettings, openProductRecommend, openDanbaoKaitong } from '../../../webview.js'
-import { http } from '../../../config'
+import { http, setRefreshHeaderInfo } from '../../../config'
 import numeral from 'numeral'
 
 
@@ -44,12 +44,15 @@ class PageController extends Service {
     }
   }
 
-  // 担保开通
+  // 点击担保开通
   goDanbao () {
+    api.showProgress({ title: '加载中...', text: '', modal: false })
     this.queryDanbaoStatus().then(res => {
+      api.hideProgress()
       const { applyStatus, productId, creditStatus } = res.data
-      openDanbaoKaitong({step: applyStatus + 1, productId, creditStatus})
+      openDanbaoKaitong({step: applyStatus, productId, creditStatus})
     }).catch(error => {
+      api.hideProgress()
       if (error.code === 3002) { // 无担保产品
         openProductRecommend()
       } else {
@@ -106,9 +109,11 @@ class PageController extends Service {
       this.getlist({custType, status: 1}),
       this.getlist({custType, status: 2}),
     ]).then(res => {
+      api.refreshHeaderLoadDone()
       this._renderHigh(res[0].data.list || [])
       this._renderLow(res[1].data.list || [])
     }).catch(error => {
+      api.refreshHeaderLoadDone()
       api.toast({
         msg: error.msg || '获取产品数据失败',
         location: 'middle'
@@ -144,6 +149,11 @@ apiready = function () {
   }
   controller.renderNav()
   controller.renderProduct()
+
+  setRefreshHeaderInfo((ret, err) => {
+    controller.renderNav()
+    controller.renderProduct()
+  })
 
   // api.setTabLayoutAttr({
   //   hideNavigationBar: true

@@ -1,3 +1,13 @@
+<<<<<<< HEAD
 [
 
 ]
+=======
+{
+    "indentSize": 4,
+    "tabSize": 4,
+    "insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+    "placeOpenBraceOnNewLineForFunctions": false,
+    "placeOpenBraceOnNewLineForControlBlocks": false
+}
+>>>>>>> c8ac6dbe75536b43ec11782d2f6bad6ae1517b0c
