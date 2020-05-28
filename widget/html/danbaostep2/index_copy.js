@@ -2938,7 +2938,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
       // int	无申请
       1: 'demandMoney',
       //	int	担保开通申请
-      2: 'xxx',
+      2: 'demandMoney',
       //	int	授信资料录入
       3: 'xxx',
       //	int	授信确认及签约
@@ -2961,6 +2961,11 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     value: function _renderStep() {
       var el = $api.byId('step');
       var step = this.step;
+
+      if (this.danbaoStatus.creditStatus !== 2) {
+        step = step - 1;
+      }
+
       var prevStep = step - 1;
       $api.addCls(el, "step".concat(prevStep));
       setTimeout(function () {
@@ -3027,10 +3032,11 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                this._renderStep();
-
-                _context2.next = 3;
+                _context2.next = 2;
                 return this._getDanbaoStatus();
+
+              case 2:
+                this._renderStep();
 
               case 3:
               case "end":

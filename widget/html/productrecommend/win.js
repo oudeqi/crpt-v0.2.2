@@ -272,17 +272,26 @@ function openDanbaoKaitong() {
       step = _ref6$step === void 0 ? 1 : _ref6$step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
-      productId = _ref6.productId;
+      productId = _ref6.productId,
+      creditStatus = _ref6.creditStatus;
+
+  var i = step;
+
+  if (creditStatus && creditStatus !== 2) {
+    i = i - 1;
+  }
 
   api.openTabLayout({
-    name: "html/danbaostep".concat(step, "/index"),
+    name: "html/danbaostep".concat(i, "/index"),
     title: title,
-    url: "widget://html/danbaostep".concat(step, "/index.html"),
+    url: "widget://html/danbaostep".concat(i, "/index.html"),
     bgColor: '#fff',
     pageParam: {
       title: title,
       step: step,
-      productId: productId
+      productId: productId,
+      creditStatus: creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
+
     },
     slidBackEnabled: true,
     navigationBar: {

@@ -150,17 +150,26 @@ function openDanbaoKaitong() {
       step = _ref6$step === void 0 ? 1 : _ref6$step,
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
-      productId = _ref6.productId;
+      productId = _ref6.productId,
+      creditStatus = _ref6.creditStatus;
+
+  var i = step;
+
+  if (creditStatus && creditStatus !== 2) {
+    i = i - 1;
+  }
 
   api.openTabLayout({
-    name: "html/danbaostep".concat(step, "/index"),
+    name: "html/danbaostep".concat(i, "/index"),
     title: title,
-    url: "widget://html/danbaostep".concat(step, "/index.html"),
+    url: "widget://html/danbaostep".concat(i, "/index.html"),
     bgColor: '#fff',
     pageParam: {
       title: title,
       step: step,
-      productId: productId
+      productId: productId,
+      creditStatus: creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
+
     },
     slidBackEnabled: true,
     navigationBar: {
@@ -2941,7 +2950,7 @@ var Service = /*#__PURE__*/function () {
           custType = _ref.custType,
           status = _ref.status;
 
-      // custType 0：通用   1：普惠担保  2：其他
+      // custType // 1：通用   2：普惠担保  3：其他
       // status 查询状态 1-按产品额度降序 2-按产品利率升序
       return http.get('/crpt-product/product/query/home/show', {
         values: {
@@ -2989,8 +2998,8 @@ var PageController = /*#__PURE__*/function (_Service) {
   createClass(PageController, [{
     key: "renderNav",
     value: function renderNav() {
-      if (this.state.custType === '1') {
-        // 0：通用   1：普惠担保  2：其他
+      if (this.state.custType === '2') {
+        // 1：通用   2：普惠担保  3：其他
         this.el.navDanbao.style.display = 'block';
       } else {
         this.el.navOther.style.display = 'block';
@@ -3003,10 +3012,12 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.queryDanbaoStatus().then(function (res) {
         var _res$data = res.data,
             applyStatus = _res$data.applyStatus,
-            productId = _res$data.productId;
+            productId = _res$data.productId,
+            creditStatus = _res$data.creditStatus;
         openDanbaoKaitong({
           step: applyStatus + 1,
-          productId: productId
+          productId: productId,
+          creditStatus: creditStatus
         });
       })["catch"](function (error) {
         if (error.code === 3002) {

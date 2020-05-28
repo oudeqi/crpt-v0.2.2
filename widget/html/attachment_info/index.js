@@ -2284,7 +2284,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 case 24:
                   _context3.prev = 24;
                   _context3.t0 = _context3["catch"](5);
-                  Utils$1.UI.toast(_context3.t0);
+                  Utils$1.UI.toast(_context3.t0.msg || '出错啦');
 
                 case 27:
                   Utils$1.UI.hideLoading();
@@ -2319,7 +2319,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('del')) {
-                    _context4.next = 16;
+                    _context4.next = 24;
                     break;
                   }
 
@@ -2328,18 +2328,21 @@ var PageController = /*#__PURE__*/function (_Service) {
                   index = ev.target.getAttribute('data-index'); // 分情况进行删除
                   // 1. 产品自带的附件，删除调用后端接口
 
+                  Utils$1.UI.showLoading('正在删除...');
+                  _context4.prev = 5;
+
                   if (!(self.data.attachmentList[index].fileContentType >= 1)) {
-                    _context4.next = 11;
+                    _context4.next = 13;
                     break;
                   }
 
-                  _context4.next = 7;
+                  _context4.next = 9;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 7:
+                case 9:
                   res = _context4.sent;
 
                   // 本地离线备份 重置 reset
@@ -2350,30 +2353,43 @@ var PageController = /*#__PURE__*/function (_Service) {
                     approvalStatus: 0
                   });
 
-                  _context4.next = 15;
+                  _context4.next = 17;
                   break;
 
-                case 11:
-                  _context4.next = 13;
+                case 13:
+                  _context4.next = 15;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 13:
+                case 15:
                   _res2 = _context4.sent;
                   // 本地离线备份直接 delete
                   self.data.attachmentList.splice(index, 1);
 
-                case 15:
+                case 17:
                   self.compilerTemplate(self.data.attachmentList);
+                  _context4.next = 23;
+                  break;
 
-                case 16:
+                case 20:
+                  _context4.prev = 20;
+                  _context4.t0 = _context4["catch"](5);
+                  api.toast({
+                    msg: _context4.t0.msg || '保存成功',
+                    location: 'middle'
+                  });
+
+                case 23:
+                  Utils$1.UI.hideLoading();
+
+                case 24:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4);
+          }, _callee4, null, [[5, 20]]);
         }));
 
         return function (_x3) {

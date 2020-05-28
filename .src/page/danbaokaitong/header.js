@@ -30,7 +30,7 @@ export default class HeaderController extends Service {
     this.applyStatusMap = {
       0: 'xxx', // int	无申请
       1: 'demandMoney', //	int	担保开通申请
-      2: 'xxx', //	int	授信资料录入
+      2: 'demandMoney', //	int	授信资料录入
       3: 'xxx', //	int	授信确认及签约
       4: 'xxx', //	int	绑定银行卡
       5: 'xxx', //	int	资方审核及签约
@@ -42,7 +42,10 @@ export default class HeaderController extends Service {
 
   _renderStep () {
     const el = $api.byId('step')
-    const step = this.step
+    let step = this.step
+    if (this.danbaoStatus.creditStatus !== 2) {
+      step = step - 1
+    }
     const prevStep = step - 1
     $api.addCls(el, `step${prevStep}`)
     setTimeout(() => {
@@ -68,7 +71,7 @@ export default class HeaderController extends Service {
   }
 
   async renderHeaderAndGetDanbaoStatus () {
-    this._renderStep()
     await this._getDanbaoStatus()
+    this._renderStep()
   }
 }

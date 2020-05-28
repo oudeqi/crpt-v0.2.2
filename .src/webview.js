@@ -873,13 +873,22 @@ function openProductRecommend (pageParam) {
 
 
 // 开通担保
-function openDanbaoKaitong ({step = 1, title = '普惠担保', productId} = {}) {
+function openDanbaoKaitong ({step = 1, title = '普惠担保', productId, creditStatus} = {}) {
+  let i = step
+  if (creditStatus && creditStatus !== 2) {
+    i = i - 1
+  }
   api.openTabLayout({
-    name: `html/danbaostep${step}/index`,
+    name: `html/danbaostep${i}/index`,
     title: title,
-    url: `widget://html/danbaostep${step}/index.html`,
+    url: `widget://html/danbaostep${i}/index.html`,
     bgColor: '#fff',
-    pageParam: { title, step, productId },
+    pageParam: {
+      title,
+      step,
+      productId,
+      creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
+    },
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,

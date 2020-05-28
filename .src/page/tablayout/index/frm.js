@@ -7,7 +7,7 @@ import numeral from 'numeral'
 
 class Service {
   getlist ({custType, status} = {}) {
-    // custType 0：通用   1：普惠担保  2：其他
+    // custType // 1：通用   2：普惠担保  3：其他
     // status 查询状态 1-按产品额度降序 2-按产品利率升序
     return http.get('/crpt-product/product/query/home/show', {
       values: {custType, status}
@@ -37,7 +37,7 @@ class PageController extends Service {
 
   // 根据custType显示不同的nav
   renderNav () {
-    if (this.state.custType === '1') { // 0：通用   1：普惠担保  2：其他
+    if (this.state.custType === '2') { // 1：通用   2：普惠担保  3：其他
       this.el.navDanbao.style.display = 'block'
     } else {
       this.el.navOther.style.display = 'block'
@@ -47,8 +47,8 @@ class PageController extends Service {
   // 担保开通
   goDanbao () {
     this.queryDanbaoStatus().then(res => {
-      const { applyStatus, productId } = res.data
-      openDanbaoKaitong({step: applyStatus + 1, productId})
+      const { applyStatus, productId, creditStatus } = res.data
+      openDanbaoKaitong({step: applyStatus + 1, productId, creditStatus})
     }).catch(error => {
       if (error.code === 3002) { // 无担保产品
         openProductRecommend()

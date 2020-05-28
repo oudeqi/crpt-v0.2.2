@@ -201,7 +201,7 @@ class PageController extends Service {
                         Utils.UI.toast('操作成功')
                     }
                 } catch (e) {
-                    Utils.UI.toast(e)
+                    Utils.UI.toast(e.msg || '出错啦')
                 }
                 Utils.UI.hideLoading()
             }
@@ -219,29 +219,36 @@ class PageController extends Service {
                 let index = ev.target.getAttribute('data-index')
                 // 分情况进行删除
                 // 1. 产品自带的附件，删除调用后端接口
-                if (self.data.attachmentList[index].fileContentType >= 1) {
-                    // 数据库 delte
-                    const res = await self.deleteAttachment({
-                        gtId: self.data.gtId,
-                        attachId: self.data.attachmentList[index].attachId
-                    })
-                    // 本地离线备份 重置 reset
-                    Object.assign(self.data.attachmentList[index], {
-                        attachId: '',
-                        fileId: '',
-                        fileComment: '',
-                        approvalStatus: 0
-                    })
-                } else { // 2. 自定义附件，直接删除本地数据和dom，并调用后端删除接口
-                    // 数据库 delete
-                    const res = await self.deleteAttachment({
-                        gtId: self.data.gtId,
-                        attachId: self.data.attachmentList[index].attachId
-                    })
-                    // 本地离线备份直接 delete
-                    self.data.attachmentList.splice(index, 1)
+                Utils.UI.showLoading('正在删除...')
+                try {
+                  if (self.data.attachmentList[index].fileContentType >= 1) {
+                      // 数据库 delte
+                      const res = await self.deleteAttachment({
+                          gtId: self.data.gtId,
+                          attachId: self.data.attachmentList[index].attachId
+                      })
+                      // 本地离线备份 重置 reset
+                      Object.assign(self.data.attachmentList[index], {
+                          attachId: '',
+                          fileId: '',
+                          fileComment: '',
+                          approvalStatus: 0
+                      })
+                  } else { // 2. 自定义附件，直接删除本地数据和dom，并调用后端删除接口
+                      // 数据库 delete
+                      const res = await self.deleteAttachment({
+                          gtId: self.data.gtId,
+                          attachId: self.data.attachmentList[index].attachId
+                      })
+                      // 本地离线备份直接 delete
+                      self.data.attachmentList.splice(index, 1)
+                  }
+                  self.compilerTemplate(self.data.attachmentList)
+                } catch (error) {
+                  api.toast({ msg: error.msg || '保存成功', location: 'middle' })
+
                 }
-                self.compilerTemplate(self.data.attachmentList)
+                Utils.UI.hideLoading()
             }
         }
     }
