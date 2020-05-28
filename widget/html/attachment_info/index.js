@@ -1502,8 +1502,8 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2146,7 +2146,7 @@ var PageController = /*#__PURE__*/function (_Service) {
           productFileId: '',
           productFileRequire: '',
           fileComment: '',
-          fileContentType: '',
+          fileContentType: 0,
           approvalStatus: '' // approvalPersonName: '',
           // createDate: '',
           // updateDate: ''
@@ -2227,7 +2227,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('update')) {
-                    _context3.next = 28;
+                    _context3.next = 30;
                     break;
                   }
 
@@ -2238,7 +2238,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   _context3.prev = 5;
 
                   if (!self.data.attachmentList[_i].attachId) {
-                    _context3.next = 15;
+                    _context3.next = 16;
                     break;
                   }
 
@@ -2254,13 +2254,14 @@ var PageController = /*#__PURE__*/function (_Service) {
                 case 9:
                   res = _context3.sent;
                   self.data.attachmentList[_i].fileId = res.data.fileId;
+                  self.data.attachmentList[_i].approvalStatus = 1;
                   self.compilerTemplate(self.data.attachmentList);
                   Utils$1.UI.toast('操作成功');
-                  _context3.next = 22;
+                  _context3.next = 24;
                   break;
 
-                case 15:
-                  _context3.next = 17;
+                case 16:
+                  _context3.next = 18;
                   return self.saveAttachment({
                     gtId: self.data.gtId,
                     fileContentType: self.data.attachmentList[_i].fileContentType || 0,
@@ -2270,31 +2271,32 @@ var PageController = /*#__PURE__*/function (_Service) {
                     fileDataStream: self.data.attachmentList[_i].fileDataStream
                   });
 
-                case 17:
+                case 18:
                   _res = _context3.sent;
                   self.data.attachmentList[_i].attachId = _res.data.attachId;
                   self.data.attachmentList[_i].fileId = _res.data.fileId;
+                  self.data.attachmentList[_i].approvalStatus = 1;
                   self.compilerTemplate(self.data.attachmentList);
                   Utils$1.UI.toast('操作成功');
 
-                case 22:
-                  _context3.next = 27;
+                case 24:
+                  _context3.next = 29;
                   break;
 
-                case 24:
-                  _context3.prev = 24;
+                case 26:
+                  _context3.prev = 26;
                   _context3.t0 = _context3["catch"](5);
                   Utils$1.UI.toast(_context3.t0.msg || '出错啦');
 
-                case 27:
+                case 29:
                   Utils$1.UI.hideLoading();
 
-                case 28:
+                case 30:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[5, 24]]);
+          }, _callee3, null, [[5, 26]]);
         }));
 
         return function (_x2) {
@@ -2319,30 +2321,41 @@ var PageController = /*#__PURE__*/function (_Service) {
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('del')) {
-                    _context4.next = 24;
+                    _context4.next = 28;
                     break;
                   }
 
                   //  删除前需将model-tree检出，防止数据直接被抹除
                   self.searchAllData();
-                  index = ev.target.getAttribute('data-index'); // 分情况进行删除
-                  // 1. 产品自带的附件，删除调用后端接口
+                  index = ev.target.getAttribute('data-index');
 
-                  Utils$1.UI.showLoading('正在删除...');
-                  _context4.prev = 5;
-
-                  if (!(self.data.attachmentList[index].fileContentType >= 1)) {
-                    _context4.next = 13;
+                  if (!(!self.data.attachmentList[index].attachId && self.data.attachmentList[index].fileContentType === 0)) {
+                    _context4.next = 8;
                     break;
                   }
 
-                  _context4.next = 9;
+                  self.data.attachmentList.splice(index, 1);
+                  self.compilerTemplate(self.data.attachmentList);
+                  return _context4.abrupt("return");
+
+                case 8:
+                  // 分情况进行删除
+                  // 1. 产品自带的附件，删除调用后端接口
+                  Utils$1.UI.showLoading('正在删除...');
+                  _context4.prev = 9;
+
+                  if (!(self.data.attachmentList[index].fileContentType >= 1)) {
+                    _context4.next = 17;
+                    break;
+                  }
+
+                  _context4.next = 13;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 9:
+                case 13:
                   res = _context4.sent;
 
                   // 本地离线备份 重置 reset
@@ -2353,43 +2366,43 @@ var PageController = /*#__PURE__*/function (_Service) {
                     approvalStatus: 0
                   });
 
-                  _context4.next = 17;
+                  _context4.next = 21;
                   break;
 
-                case 13:
-                  _context4.next = 15;
+                case 17:
+                  _context4.next = 19;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 15:
+                case 19:
                   _res2 = _context4.sent;
                   // 本地离线备份直接 delete
                   self.data.attachmentList.splice(index, 1);
 
-                case 17:
+                case 21:
                   self.compilerTemplate(self.data.attachmentList);
-                  _context4.next = 23;
+                  _context4.next = 27;
                   break;
 
-                case 20:
-                  _context4.prev = 20;
-                  _context4.t0 = _context4["catch"](5);
+                case 24:
+                  _context4.prev = 24;
+                  _context4.t0 = _context4["catch"](9);
                   api.toast({
                     msg: _context4.t0.msg || '保存成功',
                     location: 'middle'
                   });
 
-                case 23:
+                case 27:
                   Utils$1.UI.hideLoading();
 
-                case 24:
+                case 28:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4, null, [[5, 20]]);
+          }, _callee4, null, [[9, 24]]);
         }));
 
         return function (_x3) {
@@ -2447,7 +2460,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 res = _context5.sent;
                 Utils$1.UI.toast('操作成功');
                 Utils$1.Router.closeCurrentWinAndRefresh({
-                  winName: 'html/credit_information/index',
+                  winName: 'html/danbaostep2/index',
                   script: 'window.location.reload();'
                 });
                 _context5.next = 12;

@@ -69,6 +69,7 @@ apiready = function () {
     // openProductRecommend()
     // openDanbaoKaitong({step: 2, productId: '2'})
     // return
+
     const authStatus = $api.getStorage('authStatus') || {}
     if (authStatus.status === 1) {
       openTabLayout()
