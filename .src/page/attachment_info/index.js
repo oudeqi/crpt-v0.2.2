@@ -182,11 +182,14 @@ class PageController extends Service {
                         }, {
                             fileDataStream: self.data.attachmentList[_i].fileDataStream
                         })
-                        self.data.attachmentList[_i].fileId = res.data.fileId
-                        self.data.attachmentList[_i].approvalStatus = 1
-                        self.compilerTemplate(self.data.attachmentList)
-                        Utils.UI.toast('操作成功')
-
+                        if (res.code === 202) {
+                            Utils.UI.toast(res.data[0].msg)
+                        } else if (res.code === 200) {
+                            self.data.attachmentList[_i].fileId = res.data.fileId
+                            self.data.attachmentList[_i].approvalStatus = 1
+                            self.compilerTemplate(self.data.attachmentList)
+                            Utils.UI.toast('操作成功')
+                        }
                     } else { // 2. 否则为新建
                         const res = await self.saveAttachment({
                             gtId: self.data.gtId,
@@ -196,11 +199,15 @@ class PageController extends Service {
                         }, {
                             fileDataStream: self.data.attachmentList[_i].fileDataStream
                         })
-                        self.data.attachmentList[_i].attachId = res.data.attachId
-                        self.data.attachmentList[_i].fileId = res.data.fileId
-                        self.data.attachmentList[_i].approvalStatus = 1
-                        self.compilerTemplate(self.data.attachmentList)
-                        Utils.UI.toast('操作成功')
+                        if (res.code === 202) {
+                            Utils.UI.toast(res.data[0].msg)
+                        } else if (res.code === 200) {
+                            self.data.attachmentList[_i].attachId = res.data.attachId
+                            self.data.attachmentList[_i].fileId = res.data.fileId
+                            self.data.attachmentList[_i].approvalStatus = 1
+                            self.compilerTemplate(self.data.attachmentList)
+                            Utils.UI.toast('操作成功')
+                        }
                     }
                 } catch (e) {
                     Utils.UI.toast(e.msg || '出错啦')
@@ -220,7 +227,7 @@ class PageController extends Service {
                 self.searchAllData()
                 let index = ev.target.getAttribute('data-index')
 
-                if(!self.data.attachmentList[index].attachId && self.data.attachmentList[index].fileContentType === 0) {
+                if (!self.data.attachmentList[index].attachId && self.data.attachmentList[index].fileContentType === 0) {
                     self.data.attachmentList.splice(index, 1)
                     self.compilerTemplate(self.data.attachmentList)
                     return
@@ -229,31 +236,31 @@ class PageController extends Service {
                 // 1. 产品自带的附件，删除调用后端接口
                 Utils.UI.showLoading('正在删除...')
                 try {
-                  if (self.data.attachmentList[index].fileContentType >= 1) {
-                      // 数据库 delte
-                      const res = await self.deleteAttachment({
-                          gtId: self.data.gtId,
-                          attachId: self.data.attachmentList[index].attachId
-                      })
-                      // 本地离线备份 重置 reset
-                      Object.assign(self.data.attachmentList[index], {
-                          attachId: '',
-                          fileId: '',
-                          fileComment: '',
-                          approvalStatus: 0
-                      })
-                  } else { // 2. 自定义附件，直接删除本地数据和dom，并调用后端删除接口
-                      // 数据库 delete
-                      const res = await self.deleteAttachment({
-                          gtId: self.data.gtId,
-                          attachId: self.data.attachmentList[index].attachId
-                      })
-                      // 本地离线备份直接 delete
-                      self.data.attachmentList.splice(index, 1)
-                  }
-                  self.compilerTemplate(self.data.attachmentList)
+                    if (self.data.attachmentList[index].fileContentType >= 1) {
+                        // 数据库 delte
+                        const res = await self.deleteAttachment({
+                            gtId: self.data.gtId,
+                            attachId: self.data.attachmentList[index].attachId
+                        })
+                        // 本地离线备份 重置 reset
+                        Object.assign(self.data.attachmentList[index], {
+                            attachId: '',
+                            fileId: '',
+                            fileComment: '',
+                            approvalStatus: 0
+                        })
+                    } else { // 2. 自定义附件，直接删除本地数据和dom，并调用后端删除接口
+                        // 数据库 delete
+                        const res = await self.deleteAttachment({
+                            gtId: self.data.gtId,
+                            attachId: self.data.attachmentList[index].attachId
+                        })
+                        // 本地离线备份直接 delete
+                        self.data.attachmentList.splice(index, 1)
+                    }
+                    self.compilerTemplate(self.data.attachmentList)
                 } catch (error) {
-                  api.toast({ msg: error.msg || '保存成功', location: 'middle' })
+                    api.toast({msg: error.msg || '保存成功', location: 'middle'})
 
                 }
                 Utils.UI.hideLoading()
@@ -326,10 +333,12 @@ class PageController extends Service {
             return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
-                <span class="clt_main">${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} <b class="b-status s_${item.approvalStatus
-            || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
+                <span class="clt_main">
+                ${!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>"} 
+                ${!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>"} 
+                <b class="b-status s_${item.approvalStatus || 0}">${self.profile.remap.approvalStatus[item.approvalStatus || 0]}</b> </span>
                 <div>
-                    <a class="update" data-index="${i}">保存当前附件</a>
+                    <a class="update" data-index="${i}">保存</a>
                     <a class="del" data-index="${i}">删除</a>
                 </div>
             </div>
