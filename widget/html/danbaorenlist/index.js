@@ -1999,6 +1999,12 @@ var pageController = /*#__PURE__*/function (_Service) {
   createClass(pageController, [{
     key: "_renderList",
     value: function _renderList(key, arr) {
+      $api.byId('teacher').innerHTML = '';
+      $api.byId('doctor').innerHTML = '';
+      $api.byId('civilServant').innerHTML = '';
+      $api.byId('employeesSOE').innerHTML = '';
+      $api.byId('individualBusiness').innerHTML = '';
+      $api.byId('others').innerHTML = '';
       var category = this.category;
       var confirmed = arr.find(function (item) {
         return item.status === 3;

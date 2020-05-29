@@ -73,11 +73,12 @@ export default class HeaderController extends Service {
       if (res.code === 200) {
         const data = res.data
         this.danbaoStatus = data
-        $api.byId('amount').innerHTML = numeral(res.data[this.applyStatusMap[data.applyStatus]] || 0).format('0,0.00')
+        let num = res.data[this.applyStatusMap[data.applyStatus]] || 0
+        $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00')
         $api.byId('desc').innerHTML = `您正在申请${res.data.productName}产品`
       }
     } catch (error) {
-      if (this.step !== 1) {
+      if (this.step !== 0) {
         api.toast({ msg: error.msg || '出错啦', location: 'middle' })
       }
     }

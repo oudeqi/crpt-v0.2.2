@@ -3107,7 +3107,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_getDanbaoStatus",
     value: function () {
       var _getDanbaoStatus2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, data;
+        var res, data, num;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3122,7 +3122,8 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                 if (res.code === 200) {
                   data = res.data;
                   this.danbaoStatus = data;
-                  $api.byId('amount').innerHTML = numeral(res.data[this.applyStatusMap[data.applyStatus]] || 0).format('0,0.00');
+                  num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
+                  $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
                 }
 
@@ -3133,7 +3134,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                if (this.step !== 1) {
+                if (this.step !== 0) {
                   api.toast({
                     msg: _context.t0.msg || '出错啦',
                     location: 'middle'
