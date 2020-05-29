@@ -109,6 +109,9 @@ class PageController extends Service {
 
     async initData({callback}) {
         const self = this
+        const gtId = this.data.gtId
+        const gtCreditId = this.data.gtCreditId
+
         //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
         try {
             const guaranteeRes = await this.getQueryGuaranteeMain()
@@ -123,11 +126,26 @@ class PageController extends Service {
         }
 
         //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
-        const gtId = this.data.gtId
-        const gtCreditId = this.data.gtCreditId
         let operateRes
+        // 有缓存，则读取缓存并销毁
+        if ($api.getStorage('operateInfo')) {
+            operateRes = {
+                data: JSON.parse($api.getStorage('operateInfo'))
+            }
+            $api.rmStorage('operateInfo')
+        } else {
+            try {
+                operateRes = await this.getQueryOperate({gtId})
+            } catch (e) {
+                //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
+                if (err.code === 3005) {
+                    this.data.isInsert = true
+                } else {
+                    Utils.UI.toast(err.msg)
+                }
+            }
+        }
         try {
-            operateRes = await this.getQueryOperate({gtId})
             // 3. 刷主表土地信息和养殖信息填写状态和字段
             this.data.isInsert = false
             this.data.operateId = operateRes.data.operateId
@@ -135,14 +153,14 @@ class PageController extends Service {
             document.querySelector('#farmInfoStatus').classList.add('done')
 
             // key: 土地性质
-            const landTypeProfile = this.profile.pickers.landType.find((item, i) => operateRes.data.landNature === item.id)
+            const landTypeProfile = this.profile.pickers.landType.find((item, i) => Number(operateRes.data.landNature) === item.id)
             if (landTypeProfile) {
                 document.querySelector('#landType').innerHTML = landTypeProfile.name
                 this.data.landType = landTypeProfile.id
             }
 
             //  key: 环评材料
-            const envReportProfile = this.profile.selects.envReport.find((item, i) => operateRes.data.envDataType === item.id)
+            const envReportProfile = this.profile.selects.envReport.find((item, i) => Number(operateRes.data.envDataType) === item.id)
             if (envReportProfile) {
                 Array
                     .from(document
@@ -168,7 +186,7 @@ class PageController extends Service {
             }
 
             //  key: 养殖场性质
-            const livestockTypeProfile = this.profile.selects.livestockType.find((item, i) => operateRes.data.farmsNature === item.id)
+            const livestockTypeProfile = this.profile.selects.livestockType.find((item, i) => Number(operateRes.data.farmsNature) === item.id)
             if (livestockTypeProfile) {
                 Array
                     .from(document
@@ -195,7 +213,7 @@ class PageController extends Service {
             }
 
             // key: 养殖品种
-            const farmTypeProfile = this.profile.pickers.farmType.find((item, i) => operateRes.data.farmsCategory === item.id)
+            const farmTypeProfile = this.profile.pickers.farmType.find((item, i) => Number(operateRes.data.farmsCategory) === item.id)
             if (farmTypeProfile) {
                 document.querySelector('#farmType').innerHTML = farmTypeProfile.name
                 this.data.farmType = farmTypeProfile.id
@@ -241,7 +259,7 @@ class PageController extends Service {
             document.querySelector('#shedAddressDetail').value = shedAddressDetail
 
             // key: 棚设结构
-            const shedStructureProfile = this.profile.selects.shedStructure.find((item, i) => operateRes.data.workshopStruct === item.id)
+            const shedStructureProfile = this.profile.selects.shedStructure.find((item, i) => Number(operateRes.data.workshopStruct) === item.id)
             if (shedStructureProfile) {
                 Array
                     .from(document
@@ -256,14 +274,7 @@ class PageController extends Service {
                         }
                     })
             }
-        } catch (err) {
-            //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-            if (err.code === 3005) {
-                this.data.isInsert = true
-            } else {
-                Utils.UI.toast(err.msg)
-            }
-        }
+        } catch (e) {}
         callback && callback()
     }
 
@@ -359,7 +370,6 @@ class PageController extends Service {
                             _dom.classList.remove('hidden')
                         }
                     }
-                    maturityYear
                     // 2. 养殖场性质为租赁时，展示租赁日期
                     if (item === 'livestockType') {
                         let _dom = document.querySelector('#maturityYear')
@@ -427,15 +437,51 @@ class PageController extends Service {
 
     //  跳转至房产、车辆、家庭成员录入页
     bindEventsPageRouter() {
+        const self = this
         document.querySelector('#familyInfo').onclick = function () {
+            self.cacheOperateInfo()
             Utils.Router.openGuaranteeApplicationFamily({pageParam: api.pageParam})
         }
         document.querySelector('#houseInfo').onclick = function () {
+            self.cacheOperateInfo()
             Utils.Router.openGuaranteeApplicationHouse({pageParam: api.pageParam})
         }
         document.querySelector('#carInfo').onclick = function () {
+            self.cacheOperateInfo()
             Utils.Router.openGuaranteeApplicationCar({pageParam: api.pageParam})
         }
+    }
+
+    // 跳转子页面前缓存主表经营信息
+    cacheOperateInfo() {
+        const self = this
+        const {landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, envDataFileId} = this.data
+        const farmsSize = document.querySelector('#scale').value
+        const workshopCount = document.querySelector('#sheds').value
+        const workshopArea = document.querySelector('#shedArea').value
+        const workshopAddr = document.querySelector('#shedAddressDetail').value
+        const formJSON = {
+            gtId,
+            landNature: landType,
+            envDataType: envReport,
+            farmsNature: livestockType,
+            farmsCategory: farmType,
+            farmsSize,
+            workshopCount,
+            workshopArea,
+            workshopProvince: pcd.province.name,
+            workshopProvinceCode: pcd.province.code,
+            workshopCity: pcd.city.name,
+            workshopCityCode: pcd.city.code,
+            workshopCounty: pcd.district.name,
+            workshopCountyCode: pcd.district.code,
+            workshopAddr,
+            workshopStruct: shedStructure,
+            maturityYear: maturityYear || '2020',
+            envDataFileId: envDataFileId
+        }
+        $api.setStorage('operateInfo', JSON.stringify(formJSON));
+        // $api.setStorage('operateInfoEnvReportFile', envReportFile);
     }
 
     // 提交表单
@@ -503,24 +549,13 @@ class PageController extends Service {
             workshopStruct: shedStructure
         }
         console.log(JSON.stringify(formJSON))
-        let isValidate = !Object.values(formJSON).some((item, i) => !item)
+
+        let isValidate = this.validate(formJSON)
+
+        // let isValidate = !Object.values(formJSON).some((item, i) => !item)
 
         // 挂载租赁时间不校验
         formJSON.maturityYear = maturityYear || '2020'
-
-        // validator，后期再抽象
-        if (formJSON.farmsSize >= 60000000) {
-            Utils.UI.toast('养殖规模数量超出限制哦')
-            return
-        }
-        if (formJSON.farmsSize >= 10000000) {
-            Utils.UI.toast('棚舍数量超出限制哦')
-            return
-        }
-        if (formJSON.farmsSize >= 10000000) {
-            Utils.UI.toast('棚舍面积超出限制哦')
-            return
-        }
 
         if (isValidate) {
             Utils.UI.showLoading('保存中...')
@@ -535,7 +570,7 @@ class PageController extends Service {
                     Object.assign(formJSON, {operateId: self.data.operateId})
                     res = await this.postUpdateOperate(formJSON, {envDataFileStream: envReportFile})
                 }
-                if(res.code === 200) {
+                if (res.code === 200) {
                     Utils.UI.toast('提交成功')
                     Utils.Router.closeCurrentWinAndRefresh({
                         winName: 'html/danbaostep2/index',
@@ -547,9 +582,115 @@ class PageController extends Service {
                 Utils.UI.toast(e.msg)
             }
             Utils.UI.hideLoading()
-        } else {
-            Utils.UI.toast('还有信息未填入')
         }
+    }
+
+    validate(formData) {
+        const self = this
+        let rules = {
+            landNature: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择土地性质'
+            },
+            envDataType: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择环评材料'
+            },
+            farmsNature: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择养殖场性质'
+            },
+            farmsCategory: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择养殖品种'
+            },
+            farmsSize: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请输入养殖规模'
+            },
+            workshopCount: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请输入棚舍数量'
+            },
+            workshopArea: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请输入棚舍面积'
+            },
+            workshopProvince: {
+                type: 'string',
+                length: 1,
+                message: '请选择棚舍地址'
+            },
+            workshopProvinceCode: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择棚舍地址'
+            },
+            workshopCity: {
+                type: 'string',
+                length: 1,
+                message: '请选择棚舍地址'
+            },
+            workshopCityCode: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择棚舍地址'
+            },
+            workshopCounty: {
+                type: 'string',
+                length: 1,
+                message: '请选择棚舍地址'
+            },
+            workshopCountyCode: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择棚舍地址'
+            },
+            workshopAddr: {
+                type: 'string',
+                length: 1,
+                message: '请填写棚舍详细地址'
+            },
+            workshopStruct: {
+                type: 'regexp',
+                rule: /\w+/g,
+                message: '请选择棚设结构'
+            }
+        }
+        return this._validator(formData, rules)
+    }
+
+    _validator(formData, rules) {
+        let isValidate = true
+        let keys = Object.keys(formData)
+        for (let i = 0; i < keys.length; i++) {
+            let K = keys[i]
+            if (rules[K]) {
+                if (rules[K].type === 'regexp') {
+                    if (!rules[K].rule.test(formData[K])) {
+                        Utils.UI.toast(rules[K].message)
+                        isValidate = false
+                        return false
+                    }
+                } else if (rules[K].type === 'string') {
+                    if ((formData[K] + '').trim().length < rules[K].length) {
+                        Utils.UI.toast(rules[K].message)
+                        isValidate = false
+                        return false
+                    }
+                }
+            }
+
+
+        }
+        return isValidate
     }
 }
 

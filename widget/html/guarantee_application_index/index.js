@@ -1572,8 +1572,8 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -3147,20 +3147,22 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(_ref) {
-        var callback, self, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, gtId, gtCreditId, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, dom, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
+        var callback, self, gtId, gtCreditId, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, dom, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 callback = _ref.callback;
-                self = this; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+                self = this;
+                gtId = this.data.gtId;
+                gtCreditId = this.data.gtCreditId; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
 
-                _context.prev = 2;
-                _context.next = 5;
+                _context.prev = 4;
+                _context.next = 7;
                 return this.getQueryGuaranteeMain();
 
-              case 5:
+              case 7:
                 guaranteeRes = _context.sent;
 
                 if (guaranteeRes.data) {
@@ -3170,176 +3172,188 @@ var PageController = /*#__PURE__*/function (_Service) {
                   socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done');
                 }
 
-                _context.next = 12;
+                _context.next = 14;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](2);
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](4);
                 Utils$1.UI.toast('服务超时');
 
-              case 12:
-                //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
-                gtId = this.data.gtId;
-                gtCreditId = this.data.gtCreditId;
-                _context.prev = 14;
-                _context.next = 17;
+              case 14:
+                if (!$api.getStorage('operateInfo')) {
+                  _context.next = 19;
+                  break;
+                }
+
+                operateRes = {
+                  data: JSON.parse($api.getStorage('operateInfo'))
+                };
+                $api.rmStorage('operateInfo');
+                _context.next = 28;
+                break;
+
+              case 19:
+                _context.prev = 19;
+                _context.next = 22;
                 return this.getQueryOperate({
                   gtId: gtId
                 });
 
-              case 17:
+              case 22:
                 operateRes = _context.sent;
-                // 3. 刷主表土地信息和养殖信息填写状态和字段
-                this.data.isInsert = false;
-                this.data.operateId = operateRes.data.operateId;
-                document.querySelector('#landInfoStatus').classList.add('done');
-                document.querySelector('#farmInfoStatus').classList.add('done'); // key: 土地性质
-
-                landTypeProfile = this.profile.pickers.landType.find(function (item, i) {
-                  return operateRes.data.landNature === item.id;
-                });
-
-                if (landTypeProfile) {
-                  document.querySelector('#landType').innerHTML = landTypeProfile.name;
-                  this.data.landType = landTypeProfile.id;
-                } //  key: 环评材料
-
-
-                envReportProfile = this.profile.selects.envReport.find(function (item, i) {
-                  return operateRes.data.envDataType === item.id;
-                });
-
-                if (envReportProfile) {
-                  Array.from(document.querySelector('#envReport').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
-                    if (Number(item.getAttribute('data-id')) === envReportProfile.id) {
-                      self.data.envReport = envReportProfile.id;
-                      item.classList.add('active');
-                    } else {
-                      item.classList.remove('active');
-                    }
-                  });
-                } // key: 环评附件
-
-
-                if (envReportProfile && envReportProfile.id !== 1) {
-                  imgDom = document.querySelector('#envReportFile-img');
-                  this.data.envDataFileId = operateRes.data.envDataFileId;
-                  imgDom.src = "".concat(baseUrl, "/crpt-file/file/download/").concat(operateRes.data.envDataFileId);
-                  imgDom.classList.remove('hidden');
-                  document.querySelector('#envEnclosure').classList.remove('hidden');
-                } //  key: 养殖场性质
-
-
-                livestockTypeProfile = this.profile.selects.livestockType.find(function (item, i) {
-                  return operateRes.data.farmsNature === item.id;
-                });
-
-                if (livestockTypeProfile) {
-                  Array.from(document.querySelector('#livestockType').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
-                    if (Number(item.getAttribute('data-id')) === livestockTypeProfile.id) {
-                      self.data.livestockType = livestockTypeProfile.id;
-                      item.classList.add('active');
-                    } else {
-                      item.classList.remove('active');
-                    }
-                  });
-                } //  租赁到期时间
-
-
-                if (operateRes.data.maturityYear) {
-                  self.data.maturityYear = operateRes.data.maturityYear;
-                  dom = document.querySelector('#maturityYear');
-
-                  if (operateRes.data.farmsNature === 2) {
-                    dom.classList.remove('hidden');
-                    document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear;
-                  }
-                } // key: 养殖品种
-
-
-                farmTypeProfile = this.profile.pickers.farmType.find(function (item, i) {
-                  return operateRes.data.farmsCategory === item.id;
-                });
-
-                if (farmTypeProfile) {
-                  document.querySelector('#farmType').innerHTML = farmTypeProfile.name;
-                  this.data.farmType = farmTypeProfile.id;
-                } // key: 养殖规模
-
-
-                scale = operateRes.data.farmsSize;
-                this.data.scale = scale;
-                document.querySelector('#scale').value = scale;
-                document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'; // key: 棚舍数量
-
-                sheds = operateRes.data.workshopCount;
-                this.data.sheds = sheds;
-                document.querySelector('#sheds').value = sheds; // key: 棚舍面积
-
-                shedArea = operateRes.data.workshopArea;
-                this.data.shedArea = shedArea;
-                document.querySelector('#shedArea').value = shedArea; // key: 棚舍地址
-
-                _operateRes$data = operateRes.data, workshopProvince = _operateRes$data.workshopProvince, workshopProvinceCode = _operateRes$data.workshopProvinceCode, workshopCity = _operateRes$data.workshopCity, workshopCityCode = _operateRes$data.workshopCityCode, workshopCounty = _operateRes$data.workshopCounty, workshopCountyCode = _operateRes$data.workshopCountyCode;
-                this.data.pcd = {
-                  province: {
-                    name: workshopProvince,
-                    code: workshopProvinceCode
-                  },
-                  city: {
-                    name: workshopCity,
-                    code: workshopCityCode
-                  },
-                  district: {
-                    name: workshopCounty,
-                    code: workshopCountyCode
-                  }
-                };
-                document.querySelector("#shedAddress").innerHTML = "<span class=\"fc_c_city_label selected\">".concat(workshopProvince, " ").concat(workshopCity, " ").concat(workshopCounty, "</span>"); // key: 棚舍面积
-
-                shedAddressDetail = operateRes.data.workshopAddr;
-                this.data.shedArea = shedAddressDetail;
-                document.querySelector('#shedAddressDetail').value = shedAddressDetail; // key: 棚设结构
-
-                shedStructureProfile = this.profile.selects.shedStructure.find(function (item, i) {
-                  return operateRes.data.workshopStruct === item.id;
-                });
-
-                if (shedStructureProfile) {
-                  Array.from(document.querySelector('#shedStructure').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
-                    if (Number(item.getAttribute('data-id')) === shedStructureProfile.id) {
-                      self.data.shedStructure = shedStructureProfile.id;
-                      item.classList.add('active');
-                    } else {
-                      item.classList.remove('active');
-                    }
-                  });
-                }
-
-                _context.next = 55;
+                _context.next = 28;
                 break;
 
-              case 52:
-                _context.prev = 52;
-                _context.t1 = _context["catch"](14);
+              case 25:
+                _context.prev = 25;
+                _context.t1 = _context["catch"](19);
 
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-                if (_context.t1.code === 3005) {
+                if (err.code === 3005) {
                   this.data.isInsert = true;
                 } else {
-                  Utils$1.UI.toast(_context.t1.msg);
+                  Utils$1.UI.toast(err.msg);
                 }
 
-              case 55:
+              case 28:
+                try {
+                  // 3. 刷主表土地信息和养殖信息填写状态和字段
+                  this.data.isInsert = false;
+                  this.data.operateId = operateRes.data.operateId;
+                  document.querySelector('#landInfoStatus').classList.add('done');
+                  document.querySelector('#farmInfoStatus').classList.add('done'); // key: 土地性质
+
+                  landTypeProfile = this.profile.pickers.landType.find(function (item, i) {
+                    return Number(operateRes.data.landNature) === item.id;
+                  });
+
+                  if (landTypeProfile) {
+                    document.querySelector('#landType').innerHTML = landTypeProfile.name;
+                    this.data.landType = landTypeProfile.id;
+                  } //  key: 环评材料
+
+
+                  envReportProfile = this.profile.selects.envReport.find(function (item, i) {
+                    return Number(operateRes.data.envDataType) === item.id;
+                  });
+
+                  if (envReportProfile) {
+                    Array.from(document.querySelector('#envReport').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                      if (Number(item.getAttribute('data-id')) === envReportProfile.id) {
+                        self.data.envReport = envReportProfile.id;
+                        item.classList.add('active');
+                      } else {
+                        item.classList.remove('active');
+                      }
+                    });
+                  } // key: 环评附件
+
+
+                  if (envReportProfile && envReportProfile.id !== 1) {
+                    imgDom = document.querySelector('#envReportFile-img');
+                    this.data.envDataFileId = operateRes.data.envDataFileId;
+                    imgDom.src = "".concat(baseUrl, "/crpt-file/file/download/").concat(operateRes.data.envDataFileId);
+                    imgDom.classList.remove('hidden');
+                    document.querySelector('#envEnclosure').classList.remove('hidden');
+                  } //  key: 养殖场性质
+
+
+                  livestockTypeProfile = this.profile.selects.livestockType.find(function (item, i) {
+                    return Number(operateRes.data.farmsNature) === item.id;
+                  });
+
+                  if (livestockTypeProfile) {
+                    Array.from(document.querySelector('#livestockType').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                      if (Number(item.getAttribute('data-id')) === livestockTypeProfile.id) {
+                        self.data.livestockType = livestockTypeProfile.id;
+                        item.classList.add('active');
+                      } else {
+                        item.classList.remove('active');
+                      }
+                    });
+                  } //  租赁到期时间
+
+
+                  if (operateRes.data.maturityYear) {
+                    self.data.maturityYear = operateRes.data.maturityYear;
+                    dom = document.querySelector('#maturityYear');
+
+                    if (operateRes.data.farmsNature === 2) {
+                      dom.classList.remove('hidden');
+                      document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear;
+                    }
+                  } // key: 养殖品种
+
+
+                  farmTypeProfile = this.profile.pickers.farmType.find(function (item, i) {
+                    return Number(operateRes.data.farmsCategory) === item.id;
+                  });
+
+                  if (farmTypeProfile) {
+                    document.querySelector('#farmType').innerHTML = farmTypeProfile.name;
+                    this.data.farmType = farmTypeProfile.id;
+                  } // key: 养殖规模
+
+
+                  scale = operateRes.data.farmsSize;
+                  this.data.scale = scale;
+                  document.querySelector('#scale').value = scale;
+                  document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'; // key: 棚舍数量
+
+                  sheds = operateRes.data.workshopCount;
+                  this.data.sheds = sheds;
+                  document.querySelector('#sheds').value = sheds; // key: 棚舍面积
+
+                  shedArea = operateRes.data.workshopArea;
+                  this.data.shedArea = shedArea;
+                  document.querySelector('#shedArea').value = shedArea; // key: 棚舍地址
+
+                  _operateRes$data = operateRes.data, workshopProvince = _operateRes$data.workshopProvince, workshopProvinceCode = _operateRes$data.workshopProvinceCode, workshopCity = _operateRes$data.workshopCity, workshopCityCode = _operateRes$data.workshopCityCode, workshopCounty = _operateRes$data.workshopCounty, workshopCountyCode = _operateRes$data.workshopCountyCode;
+                  this.data.pcd = {
+                    province: {
+                      name: workshopProvince,
+                      code: workshopProvinceCode
+                    },
+                    city: {
+                      name: workshopCity,
+                      code: workshopCityCode
+                    },
+                    district: {
+                      name: workshopCounty,
+                      code: workshopCountyCode
+                    }
+                  };
+                  document.querySelector("#shedAddress").innerHTML = "<span class=\"fc_c_city_label selected\">".concat(workshopProvince, " ").concat(workshopCity, " ").concat(workshopCounty, "</span>"); // key: 棚舍面积
+
+                  shedAddressDetail = operateRes.data.workshopAddr;
+                  this.data.shedArea = shedAddressDetail;
+                  document.querySelector('#shedAddressDetail').value = shedAddressDetail; // key: 棚设结构
+
+                  shedStructureProfile = this.profile.selects.shedStructure.find(function (item, i) {
+                    return Number(operateRes.data.workshopStruct) === item.id;
+                  });
+
+                  if (shedStructureProfile) {
+                    Array.from(document.querySelector('#shedStructure').querySelectorAll('.fc_c_option')).forEach(function (item, i) {
+                      if (Number(item.getAttribute('data-id')) === shedStructureProfile.id) {
+                        self.data.shedStructure = shedStructureProfile.id;
+                        item.classList.add('active');
+                      } else {
+                        item.classList.remove('active');
+                      }
+                    });
+                  }
+                } catch (e) {}
+
                 callback && callback();
 
-              case 56:
+              case 30:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 9], [14, 52]]);
+        }, _callee, this, [[4, 11], [19, 25]]);
       }));
 
       function initData(_x) {
@@ -3453,9 +3467,8 @@ var PageController = /*#__PURE__*/function (_Service) {
               } else {
                 _dom.classList.remove('hidden');
               }
-            }
+            } // 2. 养殖场性质为租赁时，展示租赁日期
 
-            maturityYear; // 2. 养殖场性质为租赁时，展示租赁日期
 
             if (item === 'livestockType') {
               var _dom2 = document.querySelector('#maturityYear');
@@ -3530,23 +3543,69 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "bindEventsPageRouter",
     value: function bindEventsPageRouter() {
+      var self = this;
+
       document.querySelector('#familyInfo').onclick = function () {
+        self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationFamily({
           pageParam: api.pageParam
         });
       };
 
       document.querySelector('#houseInfo').onclick = function () {
+        self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationHouse({
           pageParam: api.pageParam
         });
       };
 
       document.querySelector('#carInfo').onclick = function () {
+        self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationCar({
           pageParam: api.pageParam
         });
       };
+    } // 跳转子页面前缓存主表经营信息
+
+  }, {
+    key: "cacheOperateInfo",
+    value: function cacheOperateInfo() {
+      var _this$data = this.data,
+          landType = _this$data.landType,
+          farmType = _this$data.farmType,
+          envReport = _this$data.envReport,
+          livestockType = _this$data.livestockType,
+          shedStructure = _this$data.shedStructure,
+          gtId = _this$data.gtId,
+          envReportFile = _this$data.envReportFile,
+          pcd = _this$data.pcd,
+          maturityYear = _this$data.maturityYear,
+          envDataFileId = _this$data.envDataFileId;
+      var farmsSize = document.querySelector('#scale').value;
+      var workshopCount = document.querySelector('#sheds').value;
+      var workshopArea = document.querySelector('#shedArea').value;
+      var workshopAddr = document.querySelector('#shedAddressDetail').value;
+      var formJSON = {
+        gtId: gtId,
+        landNature: landType,
+        envDataType: envReport,
+        farmsNature: livestockType,
+        farmsCategory: farmType,
+        farmsSize: farmsSize,
+        workshopCount: workshopCount,
+        workshopArea: workshopArea,
+        workshopProvince: pcd.province.name,
+        workshopProvinceCode: pcd.province.code,
+        workshopCity: pcd.city.name,
+        workshopCityCode: pcd.city.code,
+        workshopCounty: pcd.district.name,
+        workshopCountyCode: pcd.district.code,
+        workshopAddr: workshopAddr,
+        workshopStruct: shedStructure,
+        maturityYear: maturityYear || '2020',
+        envDataFileId: envDataFileId
+      };
+      $api.setStorage('operateInfo', JSON.stringify(formJSON)); // $api.setStorage('operateInfoEnvReportFile', envReportFile);
     } // 提交表单
 
   }, {
@@ -3595,14 +3654,14 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "submitFormData",
     value: function () {
       var _submitFormData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var self, _this$data, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
+        var self, _this$data2, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
 
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 self = this;
-                _this$data = this.data, landType = _this$data.landType, farmType = _this$data.farmType, envReport = _this$data.envReport, livestockType = _this$data.livestockType, shedStructure = _this$data.shedStructure, gtId = _this$data.gtId, envReportFile = _this$data.envReportFile, pcd = _this$data.pcd, maturityYear = _this$data.maturityYear;
+                _this$data2 = this.data, landType = _this$data2.landType, farmType = _this$data2.farmType, envReport = _this$data2.envReport, livestockType = _this$data2.livestockType, shedStructure = _this$data2.shedStructure, gtId = _this$data2.gtId, envReportFile = _this$data2.envReportFile, pcd = _this$data2.pcd, maturityYear = _this$data2.maturityYear;
                 farmsSize = document.querySelector('#scale').value;
                 workshopCount = document.querySelector('#sheds').value;
                 workshopArea = document.querySelector('#shedArea').value;
@@ -3626,80 +3685,52 @@ var PageController = /*#__PURE__*/function (_Service) {
                   workshopStruct: shedStructure
                 };
                 console.log(JSON.stringify(formJSON));
-                isValidate = !Object.values(formJSON).some(function (item, i) {
-                  return !item;
-                }); // 挂载租赁时间不校验
+                isValidate = this.validate(formJSON); // let isValidate = !Object.values(formJSON).some((item, i) => !item)
+                // 挂载租赁时间不校验
 
-                formJSON.maturityYear = maturityYear || '2020'; // validator，后期再抽象
+                formJSON.maturityYear = maturityYear || '2020';
 
-                if (!(formJSON.farmsSize >= 60000000)) {
-                  _context2.next = 13;
-                  break;
-                }
-
-                Utils$1.UI.toast('养殖规模数量超出限制哦');
-                return _context2.abrupt("return");
-
-              case 13:
-                if (!(formJSON.farmsSize >= 10000000)) {
-                  _context2.next = 16;
-                  break;
-                }
-
-                Utils$1.UI.toast('棚舍数量超出限制哦');
-                return _context2.abrupt("return");
-
-              case 16:
-                if (!(formJSON.farmsSize >= 10000000)) {
-                  _context2.next = 19;
-                  break;
-                }
-
-                Utils$1.UI.toast('棚舍面积超出限制哦');
-                return _context2.abrupt("return");
-
-              case 19:
                 if (!isValidate) {
-                  _context2.next = 45;
+                  _context2.next = 34;
                   break;
                 }
 
                 Utils$1.UI.showLoading('保存中...');
                 res = null;
-                _context2.prev = 22;
+                _context2.prev = 13;
 
                 if (!self.data.isInsert) {
-                  _context2.next = 31;
+                  _context2.next = 22;
                   break;
                 }
 
-                _context2.next = 26;
+                _context2.next = 17;
                 return this.postInsertOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 26:
+              case 17:
                 res = _context2.sent;
                 //  第一次插入经营新后，存储返回的operateId
                 self.data.operateId = res.data;
                 self.data.isInsert = false;
-                _context2.next = 35;
+                _context2.next = 26;
                 break;
 
-              case 31:
+              case 22:
                 _extends_1(formJSON, {
                   operateId: self.data.operateId
                 });
 
-                _context2.next = 34;
+                _context2.next = 25;
                 return this.postUpdateOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
-              case 34:
+              case 25:
                 res = _context2.sent;
 
-              case 35:
+              case 26:
                 if (res.code === 200) {
                   Utils$1.UI.toast('提交成功');
                   Utils$1.Router.closeCurrentWinAndRefresh({
@@ -3708,29 +3739,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                   });
                 }
 
-                _context2.next = 42;
+                _context2.next = 33;
                 break;
 
-              case 38:
-                _context2.prev = 38;
-                _context2.t0 = _context2["catch"](22);
+              case 29:
+                _context2.prev = 29;
+                _context2.t0 = _context2["catch"](13);
                 Utils$1.UI.hideLoading();
                 Utils$1.UI.toast(_context2.t0.msg);
 
-              case 42:
+              case 33:
                 Utils$1.UI.hideLoading();
-                _context2.next = 46;
-                break;
 
-              case 45:
-                Utils$1.UI.toast('还有信息未填入');
-
-              case 46:
+              case 34:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[22, 38]]);
+        }, _callee2, this, [[13, 29]]);
       }));
 
       function submitFormData() {
@@ -3739,6 +3765,116 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       return submitFormData;
     }()
+  }, {
+    key: "validate",
+    value: function validate(formData) {
+      var rules = {
+        landNature: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择土地性质'
+        },
+        envDataType: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择环评材料'
+        },
+        farmsNature: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择养殖场性质'
+        },
+        farmsCategory: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择养殖品种'
+        },
+        farmsSize: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请输入养殖规模'
+        },
+        workshopCount: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请输入棚舍数量'
+        },
+        workshopArea: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请输入棚舍面积'
+        },
+        workshopProvince: {
+          type: 'string',
+          length: 1,
+          message: '请选择棚舍地址'
+        },
+        workshopProvinceCode: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择棚舍地址'
+        },
+        workshopCity: {
+          type: 'string',
+          length: 1,
+          message: '请选择棚舍地址'
+        },
+        workshopCityCode: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择棚舍地址'
+        },
+        workshopCounty: {
+          type: 'string',
+          length: 1,
+          message: '请选择棚舍地址'
+        },
+        workshopCountyCode: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择棚舍地址'
+        },
+        workshopAddr: {
+          type: 'string',
+          length: 1,
+          message: '请填写棚舍详细地址'
+        },
+        workshopStruct: {
+          type: 'regexp',
+          rule: /\w+/g,
+          message: '请选择棚设结构'
+        }
+      };
+      return this._validator(formData, rules);
+    }
+  }, {
+    key: "_validator",
+    value: function _validator(formData, rules) {
+      var isValidate = true;
+      var keys = Object.keys(formData);
+
+      for (var i = 0; i < keys.length; i++) {
+        var K = keys[i];
+
+        if (rules[K]) {
+          if (rules[K].type === 'regexp') {
+            if (!rules[K].rule.test(formData[K])) {
+              Utils$1.UI.toast(rules[K].message);
+              isValidate = false;
+              return false;
+            }
+          } else if (rules[K].type === 'string') {
+            if ((formData[K] + '').trim().length < rules[K].length) {
+              Utils$1.UI.toast(rules[K].message);
+              isValidate = false;
+              return false;
+            }
+          }
+        }
+      }
+
+      return isValidate;
+    }
   }]);
 
   return PageController;
