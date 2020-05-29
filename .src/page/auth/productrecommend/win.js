@@ -77,7 +77,7 @@ class PageController extends Service {
     }).catch(error => {
       if (error.code === 3002) { // 无担保产品
         openDanbaoKaitong({
-          step: 1,
+          step: 0,
           productId: id,
         })
       } else {

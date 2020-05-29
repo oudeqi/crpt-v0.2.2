@@ -46,6 +46,12 @@ class pageController extends Service {
   }
 
   _renderList (key, arr) {
+    $api.byId('teacher').innerHTML = ''
+    $api.byId('doctor').innerHTML = ''
+    $api.byId('civilServant').innerHTML = ''
+    $api.byId('employeesSOE').innerHTML = ''
+    $api.byId('individualBusiness').innerHTML = ''
+    $api.byId('others').innerHTML = ''
     const category = this.category
     const confirmed = arr.find(item => item.status === 3) || []
     const confirmedLength = confirmed.length

@@ -3203,7 +3203,7 @@ var PageController = /*#__PURE__*/function (_Service) {
         if (error.code === 3002) {
           // 无担保产品
           openDanbaoKaitong({
-            step: 1,
+            step: 0,
             productId: id
           });
         } else {
