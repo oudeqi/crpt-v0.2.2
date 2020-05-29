@@ -1999,17 +1999,11 @@ var pageController = /*#__PURE__*/function (_Service) {
   createClass(pageController, [{
     key: "_renderList",
     value: function _renderList(key, arr) {
-      $api.byId('teacher').innerHTML = '';
-      $api.byId('doctor').innerHTML = '';
-      $api.byId('civilServant').innerHTML = '';
-      $api.byId('employeesSOE').innerHTML = '';
-      $api.byId('individualBusiness').innerHTML = '';
-      $api.byId('others').innerHTML = '';
       var category = this.category;
-      var confirmed = arr.find(function (item) {
-        return item.status === 3;
+      var signed = arr.filter(function (item) {
+        return item.status === 5;
       }) || [];
-      var confirmedLength = confirmed.length;
+      var signedLength = signed.length;
       var collapseBodyTpl = arr.map(function (item, index) {
         var statusMap = {
           0: ['未填写信息', 'wait'],
@@ -2024,7 +2018,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
       });
-      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span>").concat(confirmedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
+      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span id=\"othersNum\">").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
       $api.byId(key).innerHTML = collapseTpl;
     }
   }, {
@@ -2050,6 +2044,13 @@ var pageController = /*#__PURE__*/function (_Service) {
                 res = _context.sent;
 
                 if (res.code === 200) {
+                  $api.byId('teacher').innerHTML = '';
+                  $api.byId('doctor').innerHTML = '';
+                  $api.byId('civilServant').innerHTML = '';
+                  $api.byId('employeesSOE').innerHTML = '';
+                  $api.byId('individualBusiness').innerHTML = '';
+                  $api.byId('others').innerHTML = '';
+
                   for (_i = 0, _Object$keys = Object.keys(res.data); _i < _Object$keys.length; _i++) {
                     key = _Object$keys[_i];
 
@@ -2185,6 +2186,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       document.querySelector('#add').onclick = function () {
         var othersBody = $api.byId('others-body');
+        console.log($api.byId('othersNum'));
 
         if (!othersBody) {
           var collapseTpl = "\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\">\n              <label class=\"checkbox\">\n                <input type=\"checkbox\" checkbox-trigger=\"header\">\n                <span></span>\n              </label>\n              <div class=\"cont\" click-trigger=\"header\">\n                <span>\u5176\u4ED6</span>\n                <span id=\"othersNum\">0/0\u4EBA</span>\n              </div>\n            </div>\n            <ul class=\"collapse-body\" id=\"others-body\"></ul>\n          </div>\n        ";

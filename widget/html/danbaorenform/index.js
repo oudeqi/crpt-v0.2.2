@@ -912,6 +912,58 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openFangchan(_ref10) {
+  var gtId = _ref10.gtId,
+      flowStatus = _ref10.flowStatus,
+      gtCreditId = _ref10.gtCreditId;
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: {
+      gtId: gtId,
+      flowStatus: flowStatus,
+      gtCreditId: gtCreditId
+    },
+    navigationBar: {
+      background: '#fff',
+      color: '#303133',
+      fontSize: 18,
+      fontWeight: 500
+    }
+  });
+} // 车辆信息
+
+
+function openCheliang(_ref11) {
+  var gtId = _ref11.gtId,
+      flowStatus = _ref11.flowStatus,
+      gtCreditId = _ref11.gtCreditId;
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: {
+      gtId: gtId,
+      flowStatus: flowStatus,
+      gtCreditId: gtCreditId
+    },
+    navigationBar: {
+      background: '#fff',
+      color: '#303133',
+      fontSize: 18,
+      fontWeight: 500
+    }
+  });
+}
+
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
      module.exports = factory(global)
@@ -2192,8 +2244,14 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
+    key: "queryDanbaoStatus",
+    // 获取担保状态
+    value: function queryDanbaoStatus() {
+      return http.get('/crpt-guarantee/gt/apply/query');
+    } // 反担保人新增
+
+  }, {
     key: "addDanbaoRen",
-    // 反担保人新增
     value: function addDanbaoRen(params) {
       return http.post('/crpt-guarantee/guarantor/counter/insert', {
         body: params
@@ -2475,11 +2533,62 @@ var pageController = /*#__PURE__*/function (_Service) {
       };
     }
   }, {
+    key: "_bindGoFangchanAndCheliang",
+    value: function _bindGoFangchanAndCheliang() {
+      var _this2 = this;
+
+      $api.byId('fangchan').onclick = function () {
+        _this2.queryDanbaoStatus().then(function (res) {
+          if (res.code === 200) {
+            var _ref2 = res.data || {},
+                gtId = _ref2.gtId,
+                flowStatus = _ref2.flowStatus,
+                gtCreditId = _ref2.gtCreditId;
+
+            openFangchan({
+              gtId: gtId,
+              flowStatus: flowStatus,
+              gtCreditId: gtCreditId
+            });
+          }
+        })["catch"](function (error) {
+          api.toast({
+            msg: error.msg || '出错啦',
+            location: 'middle'
+          });
+        });
+      };
+
+      $api.byId('cheliang').onclick = function () {
+        _this2.queryDanbaoStatus().then(function (res) {
+          if (res.code === 200) {
+            var _ref3 = res.data || {},
+                gtId = _ref3.gtId,
+                flowStatus = _ref3.flowStatus,
+                gtCreditId = _ref3.gtCreditId;
+
+            openCheliang({
+              gtId: gtId,
+              flowStatus: flowStatus,
+              gtCreditId: gtCreditId
+            });
+          }
+        })["catch"](function (error) {
+          api.toast({
+            msg: error.msg || '出错啦',
+            location: 'middle'
+          });
+        });
+      };
+    }
+  }, {
     key: "bindEvent",
     value: function bindEvent() {
       this._bindNavBtnEvent();
 
       this._bindCollapseEvent();
+
+      this._bindGoFangchanAndCheliang();
     }
   }, {
     key: "_getOtherParams",
@@ -2548,7 +2657,7 @@ var pageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "submit",
     value: function submit() {
-      var _this2 = this;
+      var _this3 = this;
 
       this._initValidation().validate({
         error: function error(msg) {
@@ -2559,16 +2668,16 @@ var pageController = /*#__PURE__*/function (_Service) {
         },
         success: function () {
           var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(data) {
-            var _this2$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
+            var _this3$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
 
             return regenerator.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
                   case 0:
                     _context2.prev = 0;
-                    _this2$initData = _this2.initData, gtCreditId = _this2$initData.gtCreditId, gtCounterId = _this2$initData.gtCounterId, type = _this2$initData.type;
+                    _this3$initData = _this3.initData, gtCreditId = _this3$initData.gtCreditId, gtCounterId = _this3$initData.gtCounterId, type = _this3$initData.type;
                     isUpdate = gtCounterId;
-                    postData = _objectSpread$1({}, data, {}, _this2._getOtherParams(), {
+                    postData = _objectSpread$1({}, data, {}, _this3._getOtherParams(), {
                       type: type,
                       gtCreditId: gtCreditId // 担保授信id
 
@@ -2586,7 +2695,7 @@ var pageController = /*#__PURE__*/function (_Service) {
                     }
 
                     _context2.next = 8;
-                    return _this2[callMethod](postData);
+                    return _this3[callMethod](postData);
 
                   case 8:
                     res = _context2.sent;
@@ -2599,7 +2708,7 @@ var pageController = /*#__PURE__*/function (_Service) {
                           global: true
                         });
                       } else {
-                        _this2.initData.gtCounterId = res.data.gtCounterId;
+                        _this3.initData.gtCounterId = res.data.gtCounterId;
                         api.toast({
                           msg: '新增担保人成功',
                           location: 'middle',
@@ -2640,11 +2749,11 @@ var pageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "_InitRelationship",
     value: function _InitRelationship() {
-      var _this3 = this;
+      var _this4 = this;
 
       $api.byId('relationship').onclick = function (e) {
-        ActionSheet('与借款人关系', _this3.relationship, function (index) {
-          e.target.value = _this3.relationship[index];
+        ActionSheet('与借款人关系', _this4.relationship, function (index) {
+          e.target.value = _this4.relationship[index];
           e.target.dataset.value = index + 1;
         });
       };
@@ -2652,11 +2761,11 @@ var pageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "_InitMarriage",
     value: function _InitMarriage() {
-      var _this4 = this;
+      var _this5 = this;
 
       $api.byId('marriage').onclick = function (e) {
-        ActionSheet('婚姻状况', _this4.marriage, function (index) {
-          e.target.value = _this4.relationship[index];
+        ActionSheet('婚姻状况', _this5.marriage, function (index) {
+          e.target.value = _this5.relationship[index];
           e.target.dataset.value = index + 1;
         });
       };
@@ -2664,12 +2773,12 @@ var pageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "_InitEducation",
     value: function _InitEducation() {
-      var _this5 = this;
+      var _this6 = this;
 
       $api.byId('education').onclick = function (e) {
-        ActionSheet('请选择学历', _this5.education, function (index) {
-          e.target.value = _this5.relationship[index];
-          e.target.dataset.value = btns[index];
+        ActionSheet('请选择学历', _this6.education, function (index) {
+          e.target.value = _this6.education[index];
+          e.target.dataset.value = _this6.education[index];
         });
       };
     }

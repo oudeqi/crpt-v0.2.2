@@ -130,6 +130,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -564,6 +565,7 @@
 * {
   margin: 0;
   padding: 0;
+  cursor: pointer;
 }
 .form {
   padding: 12px;

@@ -1,6 +1,9 @@
 html, body {
   background-color: #efefef;
 }
+* {
+  cursor: pointer;
+}
 body {
   padding-top: 12px;
   padding-bottom: 62px;

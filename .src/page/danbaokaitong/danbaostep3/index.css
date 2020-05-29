@@ -1,3 +1,6 @@
+* {
+  cursor: pointer;
+}
 .container {
   padding: 0 12px;
   .tit {

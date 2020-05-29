@@ -45,25 +45,25 @@ export default class HeaderController extends Service {
     const el = $api.byId('step')
     let creditStatus = this.creditStatus
     let step = this.step
-    let i = step
-    if (step === 0) {
-      i = 1
-    } else if (step === 1) {
-      i = 2
-    } else if (step === 2) {
-      if (creditStatus === 2) {
-        i = 3
-      } else {
-        i = 2
-      }
-    } else if (step >= 7) {
-      i = 6
-    }
-    const prevStep = i - 1
+    // let i = step
+    // if (step === 0) {
+    //   i = 1
+    // } else if (step === 1) {
+    //   i = 2
+    // } else if (step === 2) {
+    //   if (creditStatus === 2) {
+    //     i = 3
+    //   } else {
+    //     i = 2
+    //   }
+    // } else if (step >= 7) {
+    //   i = 6
+    // }
+    const prevStep = step - 1
     $api.addCls(el, `step${prevStep}`)
     setTimeout(() => {
       $api.removeCls(el, `step${prevStep}`)
-      $api.addCls(el, `step${i}`)
+      $api.addCls(el, `step${step}`)
     }, 300)
   }
 

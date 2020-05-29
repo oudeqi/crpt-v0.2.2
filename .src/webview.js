@@ -895,7 +895,7 @@ function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStat
     bgColor: '#fff',
     pageParam: {
       title,
-      step,
+      step: i,
       productId,
       creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
     },
@@ -1037,6 +1037,47 @@ function openAgreement (useNode) {
   })
 }
 
+// 房产信息
+function openFangchan ({gtId, flowStatus, gtCreditId}) {
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: {
+      gtId, flowStatus, gtCreditId
+    },
+    navigationBar: {
+      background: '#fff',
+      color: '#303133',
+      fontSize: 18,
+      fontWeight: 500,
+    }
+  })
+}
+// 车辆信息
+function openCheliang ({gtId, flowStatus, gtCreditId}) {
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: {
+      gtId, flowStatus, gtCreditId
+    },
+    navigationBar: {
+      background: '#fff',
+      color: '#303133',
+      fontSize: 18,
+      fontWeight: 500,
+    }
+})
+}
+
 
 export {
   openLeftPane,
@@ -1083,5 +1124,7 @@ export {
   openDanbaoRenForm,
   openSignOnline,
   openSendAddress,
-  openAgreement
+  openAgreement,
+  openCheliang,
+  openFangchan
 }

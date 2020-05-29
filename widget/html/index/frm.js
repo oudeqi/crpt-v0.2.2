@@ -175,7 +175,7 @@ function openDanbaoKaitong() {
     bgColor: '#fff',
     pageParam: {
       title: title,
-      step: step,
+      step: i,
       productId: productId,
       creditStatus: creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
 

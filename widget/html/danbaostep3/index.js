@@ -944,7 +944,7 @@ function openDanbaoKaitong() {
     bgColor: '#fff',
     pageParam: {
       title: title,
-      step: step,
+      step: i,
       productId: productId,
       creditStatus: creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
 
@@ -3053,28 +3053,26 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     value: function _renderStep() {
       var el = $api.byId('step');
       var creditStatus = this.creditStatus;
-      var step = this.step;
-      var i = step;
+      var step = this.step; // let i = step
+      // if (step === 0) {
+      //   i = 1
+      // } else if (step === 1) {
+      //   i = 2
+      // } else if (step === 2) {
+      //   if (creditStatus === 2) {
+      //     i = 3
+      //   } else {
+      //     i = 2
+      //   }
+      // } else if (step >= 7) {
+      //   i = 6
+      // }
 
-      if (step === 0) {
-        i = 1;
-      } else if (step === 1) {
-        i = 2;
-      } else if (step === 2) {
-        if (creditStatus === 2) {
-          i = 3;
-        } else {
-          i = 2;
-        }
-      } else if (step >= 7) {
-        i = 6;
-      }
-
-      var prevStep = i - 1;
+      var prevStep = step - 1;
       $api.addCls(el, "step".concat(prevStep));
       setTimeout(function () {
         $api.removeCls(el, "step".concat(prevStep));
-        $api.addCls(el, "step".concat(i));
+        $api.addCls(el, "step".concat(step));
       }, 300);
     }
   }, {

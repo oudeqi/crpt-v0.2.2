@@ -130,6 +130,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -561,11 +562,14 @@
     margin-right: 10px;
   }
 
+* {
+  cursor: pointer;
+}
 .container {
   padding: 12px;
   margin-top: 12px;
 }
-  .container .link_btn {
+.container .link_btn {
     height:60px;
     background:rgba(255,255,255,1);
     border-radius:6px;
@@ -579,7 +583,7 @@
             align-items: center;
     position: relative;
   }
-  .container .link_btn:before {
+.container .link_btn:before {
       content: "";
       display: block;
       position: absolute;
@@ -594,7 +598,7 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-  .container .link_btn:after {
+.container .link_btn:after {
       content: "";
       display: block;
       position: absolute;
@@ -609,6 +613,6 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-  .container .block-btn {
+.container .block-btn {
     margin-top: 100px;
   }

@@ -130,6 +130,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -561,10 +562,13 @@
     margin-right: 10px;
   }
 
+* {
+  cursor: pointer;
+}
 .container {
   padding: 0 12px;
 }
-  .container .tit {
+.container .tit {
     height:42px;
     line-height: 42px;
     font-size:30px;
@@ -572,13 +576,13 @@
     color:rgba(48,49,51,1);
     margin-top: 24px;
   }
-  .container .desc {
+.container .desc {
     margin-top: 9px;
     font-size:14px;
     font-weight:500;
     color:rgba(48,49,51,1);
     line-height:22px;
   }
-  .container .block-btn {
+.container .block-btn {
     margin-top: 100px;
   }

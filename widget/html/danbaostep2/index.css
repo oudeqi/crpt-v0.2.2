@@ -324,6 +324,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -641,6 +642,9 @@
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
   color: #ffffff;
+}
+* {
+  cursor: pointer;
 }
 html, body {
   background-color: #fff;

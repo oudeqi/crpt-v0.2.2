@@ -189,7 +189,7 @@ function openAgreement(useNode) {
       fontWeight: 'normal'
     }
   });
-}
+} // 房产信息
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
