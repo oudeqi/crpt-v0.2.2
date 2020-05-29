@@ -1,13 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-  cursor: pointer;
 }
 
 body {
   padding-bottom: 120px;
 }
-
+body * {
+  cursor: pointer;
+}
 .nav {
   height:56px;
   background:rgba(255,255,255,1);

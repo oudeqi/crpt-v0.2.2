@@ -1,13 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-  cursor: pointer;
 }
 
 body {
   padding-bottom: 20px;
 }
-
+body * {
+  cursor: pointer;
+}
 @define-extend arrow {
   content: "";
   display: block;

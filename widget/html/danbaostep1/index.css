@@ -17,23 +17,15 @@
 .title .icon {
     width:42px;
     height:42px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    line-height: 1;
     border-radius: 50%;
     background:rgba(255,255,255,1);
-    font-size:23px;
-    color:rgba(48,49,51,1);
     -ms-flex-negative: 0;
         flex-shrink: 0;
     margin-right: 18px;
+    background-image: url(../../image/danbaoKaitong/product_logo.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 .title .txt {
     -webkit-box-flex: 1;
@@ -259,6 +251,49 @@
       }
 .step.step6 .line::after {
       width: 96%;
+    }
+.btn-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 56px 6px 25px 6px;
+}
+.btn-box .btn {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    margin: 0 6px;
+    border-radius:25px;
+    height:50px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(102,187,106,1);
+    font-size:16px;
+    font-weight:500;
+    color:rgba(102,187,106,1);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+.btn-box .btn:last-child {
+      background:rgba(102,187,106,1);
+      color: #fff;
+    }
+.btn-box .btn.active {
+      opacity: 0.7;
     }
 
 .form .form-item .form-label, .form .form-item .form-crtl {
@@ -565,6 +600,8 @@
 * {
   margin: 0;
   padding: 0;
+}
+body * {
   cursor: pointer;
 }
 .form {

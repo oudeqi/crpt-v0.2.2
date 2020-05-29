@@ -899,9 +899,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-// api.lockSlidPane();
-
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -2018,7 +2015,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
       });
-      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span id=\"othersNum\">").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
+      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span>").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
       $api.byId(key).innerHTML = collapseTpl;
     }
   }, {
@@ -2186,14 +2183,13 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       document.querySelector('#add').onclick = function () {
         var othersBody = $api.byId('others-body');
-        console.log($api.byId('othersNum'));
 
         if (!othersBody) {
           var collapseTpl = "\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\">\n              <label class=\"checkbox\">\n                <input type=\"checkbox\" checkbox-trigger=\"header\">\n                <span></span>\n              </label>\n              <div class=\"cont\" click-trigger=\"header\">\n                <span>\u5176\u4ED6</span>\n                <span id=\"othersNum\">0/0\u4EBA</span>\n              </div>\n            </div>\n            <ul class=\"collapse-body\" id=\"others-body\"></ul>\n          </div>\n        ";
           $api.byId('others').innerHTML = collapseTpl;
+          othersBody = $api.byId('others-body');
         }
 
-        othersBody = $api.byId('others-body');
         var others = $api.domAll(othersBody, '.collapse-item');
         var length = Object.keys(others).length;
         var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
@@ -2212,22 +2208,24 @@ var pageController = /*#__PURE__*/function (_Service) {
           var item = $api.closest(event.target, '.collapse-item');
 
           if (item) {
-            $api.remove(item);
             var othersBody = $api.byId('others-body');
+
+            _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
+
+            _this2._resetAllCheckbox();
+
+            $api.remove(item);
             var others = $api.domAll(othersBody, '.collapse-item');
             var length = Object.keys(others).length;
 
             if (length > 0) {
-              $api.byId('othersNum').innerHTML = "0/".concat(length, "\u4EBA");
+              var txt = $api.byId('othersNum').innerHTML.split('/')[0];
+              $api.byId('othersNum').innerHTML = "".concat(txt, "/").concat(length, "\u4EBA");
             }
 
             if (length === 0) {
               $api.byId('others').innerHTML = '';
             }
-
-            _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
-
-            _this2._resetAllCheckbox();
           }
         } else {
           // 去下一页

@@ -1,4 +1,20 @@
-// api.lockSlidPane();
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 /*
 list: [{
   text: '',
@@ -1346,23 +1362,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
      module.exports = factory(global)
@@ -1972,7 +1971,7 @@ apiready = function apiready() {
     //   gtId: '1263411018323742721'
     // })
     // openProductRecommend()
-    // openDanbaoKaitong({step: 2, productId: '2', creditStatus: 2})
+    // openDanbaoKaitong({step: 6, creditStatus: 2})
     // return
     var authStatus = $api.getStorage('authStatus') || {};
 

@@ -27,18 +27,28 @@ class PageController extends HeaderController {
     $api.byId('relaManagerPhone').innerHTML = data.relaManagerPhone ? `(${data.relaManagerPhone})` : ''
   }
 
+  _renderContract (arr) {
+    let li = arr.map(item => {
+      return `<li class="sign">《${item.contractTitle}》</li>`
+    })
+    $api.byId('contractList').innerHTML = `
+    <h2>点击合同进入在线签约</h2>
+    <ul>
+      ${li.join('')}
+    </ul>
+    `
+  }
+
   async getPageData () {
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
       await this.renderHeaderAndGetDanbaoStatus()
-      const status = await this.queryDanbaoStatus()
-      console.log('JSON.stringify(status)')
-      console.log(JSON.stringify(status))
-      if (status.code === 200) {
-        const gtCreditId = status.data.gtCreditId
+      if (this.danbaoStatus) {
+        const gtCreditId = this.danbaoStatus.gtCreditId
         const res = await this.queryComfirmInfo(gtCreditId)
         if (res.code === 200) {
           this._renderDom(res.data)
+          this._renderContract(res.data.contractList || [])
         }
       }
     } catch (error) {

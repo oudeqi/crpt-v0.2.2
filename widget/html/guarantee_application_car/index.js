@@ -1274,9 +1274,6 @@ var codeMapFilter = function codeMapFilter(list) {
   return codeMap;
 };
 
-// api.lockSlidPane();
-
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',

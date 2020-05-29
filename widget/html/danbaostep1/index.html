@@ -11,7 +11,7 @@
 
   <div class="header">
     <div class="title">
-      <div class="icon">猪</div>
+      <div class="icon"></div>
       <div class="txt" id="desc">您正在申请***产品</div>
     </div>
     <div class="rect">
@@ -58,9 +58,9 @@
       <div class="form-label" style="width: 96px;">场地变化</div>
       <div class="form-crtl">
         <div class="block-select">
-          <label><input type="radio" name="buildType" value="1"><span>新建</span></label>
-          <label><input type="radio" name="buildType" value="2"><span>改建</span></label>
-          <label><input type="radio" name="buildType" value="3"><span>扩建</span></label>
+          <label><input type="radio" name="buildType" disabled value="1"><span>新建</span></label>
+          <label><input type="radio" name="buildType" disabled value="2"><span>改建</span></label>
+          <label><input type="radio" name="buildType" disabled value="3"><span>扩建</span></label>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@
       <div class="form-label" style="width: 96px;">建厂预计投入</div>
       <div class="form-crtl">
         <div class="txt-input">
-          <input type="text" id="expectInveste" max="9999" decimal-keeps="2" placeholder="请输入">
+          <input type="text" id="expectInveste" max="9999" disabled decimal-keeps="2" placeholder="请输入">
           <span>万元</span>
         </div>
       </div>
@@ -97,7 +97,7 @@
       <div class="form-label">资金需求</div>
       <div class="form-crtl">
         <div class="txt-input">
-          <input type="text" id="demandMoney" placeholder="请输入" name="demandMoney" value="">
+          <input type="text" id="demandMoney" disabled placeholder="请输入" name="demandMoney" value="">
           <span>万元</span>
         </div>
       </div>
@@ -107,7 +107,7 @@
       <div class="form-label">用款期限</div>
       <div class="form-crtl">
         <div class="txt-input">
-          <input type="text" id="timeLimit" placeholder="请输入" name="timeLimit" value="">
+          <input type="text" id="timeLimit" disabled placeholder="请输入" name="timeLimit" value="">
           <span>个月</span>
         </div>
       </div>
@@ -116,7 +116,7 @@
 
   <div class="agreement">
     <label class="checkbox">
-      <input type="checkbox" id="agreement">
+      <input type="checkbox" id="agreement" disabled>
       <span class="icon"></span>
     </label>
     <div class="txt">

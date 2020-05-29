@@ -606,7 +606,7 @@ function openMyLoan () {
 function openOrderDetails (id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
-    title: '订单详情',
+    title: '贷款详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
     reload: true,
@@ -873,7 +873,7 @@ function openProductRecommend (pageParam) {
 
 
 // 开通担保
-function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStatus} = {}) {
+function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStatus, back = false} = {}) {
   let i = step
   if (step === 0) {
     i = 1
@@ -887,6 +887,17 @@ function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStat
     }
   } else if (step >= 7) {
     i = 6
+  }
+  let animation = back ? {
+    animation: {
+      type: 'push',
+      subType: 'from_left',
+    }
+  } : {
+    animation: {
+      type: 'push',
+      subType: 'from_right',
+    }
   }
   api.openTabLayout({
     name: `html/danbaostep${i}/index`,
@@ -906,7 +917,8 @@ function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStat
       color: '#fff',
       fontSize: 16,
       fontWeight: 'normal',
-    }
+    },
+    ...animation
   })
 }
 

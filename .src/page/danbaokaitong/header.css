@@ -11,16 +11,14 @@
   & .icon {
     width:42px;
     height:42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
     border-radius: 50%;
     background:rgba(255,255,255,1);
-    font-size:23px;
-    color:rgba(48,49,51,1);
     flex-shrink: 0;
     margin-right: 18px;
+    background-image: url(../../image/danbaoKaitong/product_logo.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   & .txt {
     flex-grow: 1;
@@ -221,6 +219,35 @@
       .icon {
         @extend activeIcon;
       }
+    }
+  }
+}
+
+.btn-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 6px 25px 6px;
+  .btn {
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin: 0 6px;
+    border-radius:25px;
+    height:50px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(102,187,106,1);
+    font-size:16px;
+    font-weight:500;
+    color:rgba(102,187,106,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:last-child {
+      background:rgba(102,187,106,1);
+      color: #fff;
+    }
+    &.active {
+      opacity: 0.7;
     }
   }
 }

@@ -10,7 +10,7 @@
 
   <div class="header">
     <div class="title">
-      <div class="icon">猪</div>
+      <div class="icon"></div>
       <div class="txt" id="desc">您正在申请***产品</div>
     </div>
     <div class="rect info">
@@ -68,20 +68,21 @@
       <p><span>客户经理</span><strong><i id="relaManagerName"></i><i id="relaManagerPhone"></i></strong></p>
     </div>
     <!-- step3 -->
-    <div class="contract">
-      <h2>点击合同进入在线签约</h2>
+    <div class="contract" id="contractList">
+      <!-- <h2>点击合同进入在线签约</h2>
       <ul>
         <li class="sign">《委托担保凭证》</li>
         <li class="sign">《最高额反担保合同》</li>
         <li class="sign">《委托担保凭证》</li>
         <li class="sign">《最高额反担保合同》</li>
-      </ul>
+      </ul> -->
     </div>
-
-    <div class="block-btn" tapmode="active" id="next" >下一步</div>
+  </div>
+  <div class="btn-box">
+    <div class="btn" tapmode="active" id="prev">上一步</div>
+    <div class="btn" tapmode="active" id="next">下一步</div>
     <!-- disabled loading -->
   </div>
-
 
   <script type="text/javascript" src="../../script/api.js"></script>
 </body>

@@ -899,7 +899,9 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 });
 
-// api.lockSlidPane();
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 function openRegLogin() {
@@ -919,7 +921,9 @@ function openDanbaoKaitong() {
       _ref6$title = _ref6.title,
       title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
       productId = _ref6.productId,
-      creditStatus = _ref6.creditStatus;
+      creditStatus = _ref6.creditStatus,
+      _ref6$back = _ref6.back,
+      back = _ref6$back === void 0 ? false : _ref6$back;
 
   var i = step;
 
@@ -937,7 +941,18 @@ function openDanbaoKaitong() {
     i = 6;
   }
 
-  api.openTabLayout({
+  var animation = back ? {
+    animation: {
+      type: 'push',
+      subType: 'from_left'
+    }
+  } : {
+    animation: {
+      type: 'push',
+      subType: 'from_right'
+    }
+  };
+  api.openTabLayout(_objectSpread({
     name: "html/danbaostep".concat(i, "/index"),
     title: title,
     url: "widget://html/danbaostep".concat(i, "/index.html"),
@@ -957,7 +972,7 @@ function openDanbaoKaitong() {
       fontSize: 16,
       fontWeight: 'normal'
     }
-  });
+  }, animation));
 } // 担保人列表
 
 
@@ -1759,9 +1774,9 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
 var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1807,7 +1822,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       if (ret) {
         if (ret.code === 200) {
@@ -1939,7 +1954,7 @@ var http = {
 
 function setRefreshHeaderInfo(successCallback, errorCallback) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread({
+  api.setRefreshHeaderInfo(_objectSpread$1({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
     textColor: '#bfbfbf',
@@ -3053,21 +3068,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     value: function _renderStep() {
       var el = $api.byId('step');
       var creditStatus = this.creditStatus;
-      var step = this.step; // let i = step
-      // if (step === 0) {
-      //   i = 1
-      // } else if (step === 1) {
-      //   i = 2
-      // } else if (step === 2) {
-      //   if (creditStatus === 2) {
-      //     i = 3
-      //   } else {
-      //     i = 2
-      //   }
-      // } else if (step >= 7) {
-      //   i = 6
-      // }
-
+      var step = this.step;
       var prevStep = step - 1;
       $api.addCls(el, "step".concat(prevStep));
       setTimeout(function () {
@@ -3084,11 +3085,12 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                console.log('Pppppppppppppppp');
+                _context.prev = 1;
+                _context.next = 4;
                 return this.queryDanbaoStatus();
 
-              case 3:
+              case 4:
                 res = _context.sent;
 
                 if (res.code === 200) {
@@ -3099,12 +3101,12 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
                 }
 
-                _context.next = 10;
+                _context.next = 11;
                 break;
 
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
 
                 if (this.step !== 0) {
                   api.toast({
@@ -3113,12 +3115,12 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                   });
                 }
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee, this, [[1, 8]]);
       }));
 
       function _getDanbaoStatus() {
@@ -3127,6 +3129,32 @@ var HeaderController = /*#__PURE__*/function (_Service) {
 
       return _getDanbaoStatus;
     }()
+  }, {
+    key: "_bindPrev",
+    value: function _bindPrev() {
+      var _this2 = this;
+
+      var prev = $api.byId('prev');
+
+      if (!prev) {
+        return;
+      }
+
+      prev.onclick = function () {
+        var step = _this2.step;
+
+        if (step === 2) {
+          step = 0;
+        } else {
+          step--;
+        }
+
+        openDanbaoKaitong({
+          step: step,
+          back: true
+        });
+      };
+    }
   }, {
     key: "renderHeaderAndGetDanbaoStatus",
     value: function () {
@@ -3137,10 +3165,15 @@ var HeaderController = /*#__PURE__*/function (_Service) {
               case 0:
                 this._renderStep();
 
-                _context2.next = 3;
+                this._bindPrev();
+
+                _context2.next = 4;
                 return this._getDanbaoStatus();
 
-              case 3:
+              case 4:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -3383,9 +3416,9 @@ var NumberLimit = function NumberLimit(el) {
   };
 };
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _createSuper$1(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$1()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -3416,7 +3449,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
     key: "getProduct",
     value: function () {
       var _getProduct = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var data, product, rate, res, _data, _product, _rate;
+        var data, product, rate, res, _data, _product, _rate, buildType;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -3481,7 +3514,16 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   _rate = $api.byId('rate');
                   $api.byId('product').value = _data.productName;
                   $api.byId('rate').value = _data.rate;
-                  $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(_data.productName, "\u4EA7\u54C1");
+                  $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(_data.productName, "\u4EA7\u54C1"); // 可编辑
+
+                  buildType = Array.from(document.querySelectorAll('[name="buildType"]'));
+                  buildType.forEach(function (item) {
+                    $api.removeAttr(item, 'disabled');
+                  });
+                  $api.removeAttr($api.byId('expectInveste'), 'disabled');
+                  $api.removeAttr($api.byId('demandMoney'), 'disabled');
+                  $api.removeAttr($api.byId('timeLimit'), 'disabled');
+                  $api.removeAttr($api.byId('agreement'), 'disabled');
                 }
 
               case 31:
@@ -3598,13 +3640,24 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                         while (1) {
                           switch (_context2.prev = _context2.next) {
                             case 0:
-                              _context2.prev = 0;
-                              _context2.next = 3;
-                              return _this2.saveApply(_objectSpread$1({}, data, {
+                              if (!(_this2.danbaoStatus && _this2.danbaoStatus.applyStatus > 0)) {
+                                _context2.next = 3;
+                                break;
+                              }
+
+                              openDanbaoKaitong({
+                                step: 2
+                              });
+                              return _context2.abrupt("return");
+
+                            case 3:
+                              _context2.prev = 3;
+                              _context2.next = 6;
+                              return _this2.saveApply(_objectSpread$2({}, data, {
                                 productId: _this2.productId
                               }));
 
-                            case 3:
+                            case 6:
                               res = _context2.sent;
 
                               if (res.code === 200) {
@@ -3615,23 +3668,23 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                                 });
                               }
 
-                              _context2.next = 10;
+                              _context2.next = 13;
                               break;
 
-                            case 7:
-                              _context2.prev = 7;
-                              _context2.t0 = _context2["catch"](0);
+                            case 10:
+                              _context2.prev = 10;
+                              _context2.t0 = _context2["catch"](3);
                               api.toast({
                                 msg: _context2.t0.msg || '出错啦',
                                 location: 'middle'
                               });
 
-                            case 10:
+                            case 13:
                             case "end":
                               return _context2.stop();
                           }
                         }
-                      }, _callee2, null, [[0, 7]]);
+                      }, _callee2, null, [[3, 10]]);
                     }));
 
                     function success(_x) {

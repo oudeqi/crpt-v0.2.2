@@ -111,8 +111,22 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
-// api.lockSlidPane();
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+}
+
+var defineProperty = _defineProperty;
 
 function openRegLogin() {
   api.openWin({
@@ -175,23 +189,6 @@ function openCityList(_ref5) {
     }
   });
 } // 产品推荐
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {

@@ -15,9 +15,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-// api.lockSlidPane();
-
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -32,7 +29,7 @@ function openRegLogin() {
 function openOrderDetails(id) {
   api.openTabLayout({
     name: 'html/orderdetails/win',
-    title: '订单详情',
+    title: '贷款详情',
     url: 'widget://html/orderdetails/win.html',
     bgColor: '#fff',
     reload: true,

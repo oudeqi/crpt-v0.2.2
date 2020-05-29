@@ -899,9 +899,6 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
-// api.lockSlidPane();
-
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',

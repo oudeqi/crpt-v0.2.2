@@ -1,5 +1,19 @@
-// api.lockSlidPane();
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+}
+
+var defineProperty = _defineProperty;
 
 function openRegLogin() {
   api.openWin({
@@ -33,23 +47,6 @@ function openLoanApplication(id) {
     }
   });
 } // 贷款确认
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2884,12 +2881,14 @@ apiready = function apiready() {
       } else if (pageNo === 1) {
         emptyBox.className = "".concat(emptyBox.className, " showing");
         api.toast({
-          msg: '无数据'
+          msg: '无数据',
+          location: 'middle'
         });
       } else {
         emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '');
         api.toast({
-          msg: '无更多数据'
+          msg: '无更多数据',
+          location: 'middle'
         });
       }
     })["catch"](function (error) {
@@ -2897,14 +2896,15 @@ apiready = function apiready() {
       api.refreshHeaderLoadDone();
       emptyBox.className = "".concat(emptyBox.className, " showing");
       api.toast({
-        msg: '数据加载失败'
+        msg: error.msg || '数据加载失败',
+        location: 'middle'
       });
     });
   }
 
   function appendList(data) {
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"row1\">\n            <span>").concat(item.orderTime || '', "</span>\n            <span>").concat(statusMap[item.status], "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"l\">\n              <span>\u5F85\u7533\u8BF7\u91D1\u989D(\u5143)</span>\n              <strong>").concat(numeral(item.payAmount || '').format('0,0.00'), "</strong>\n            </div>\n            ").concat(item.status === 1 || item.status === 2 ? "<div tapmode=\"active\" class=\"btn\" data-id=\"".concat(item.orderNo || '', "\">\u7EE7\u7EED\u7533\u8BF7</div>") : "<div tapmode=\"active\" class=\"btn\" data-id=\"".concat(item.orderNo || '', "\">\u7ACB\u5373\u7533\u8BF7</div>"), "\n          </div>\n          <div class=\"row3\">\n            <div class=\"l\">\n              <strong>\u6536\u6B3E\u65B9").concat(item.saleCustName || '', "</strong>\n              <span>\u4E1A\u52A1\u5355\u53F7 ").concat(item.orderNo || '', "</span>\n            </div>\n            ").concat(item.status === 11 ? "<div tapmode=\"active\" class=\"txt-btn\" data-id=\"".concat(item.orderNo || '', "\">\u53D6\u6D88</div>") : '', "\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"row1\">\n            <span>").concat(item.orderTime || '', "</span>\n            <span>").concat(statusMap[item.status], "</span>\n          </div>\n          <div class=\"row2\">\n            <div class=\"l\">\n              <span>\u5F85\u7533\u8BF7\u91D1\u989D(\u5143)</span>\n              <strong>").concat(numeral(item.payAmount || '').format('0,0.00'), "</strong>\n            </div>\n            ").concat(item.status === 1 || item.status === 2 ? "<div tapmode=\"active\" class=\"btn\" data-id=\"".concat(item.orderNo || '', "\">\u7EE7\u7EED\u7533\u8BF7</div>") : "<div tapmode=\"active\" class=\"btn\" data-id=\"".concat(item.orderNo || '', "\">\u7ACB\u5373\u7533\u8BF7</div>"), "\n          </div>\n          <div class=\"row3\">\n            <div class=\"l\">\n              <strong>\u6536\u6B3E\u65B9 ").concat(item.saleCustName || '', "</strong>\n              <span>\u4E1A\u52A1\u5355\u53F7 ").concat(item.orderNo || '', "</span>\n            </div>\n            ").concat(item.status === 11 ? "<div tapmode=\"active\" class=\"txt-btn\" data-id=\"".concat(item.orderNo || '', "\">\u53D6\u6D88</div>") : '', "\n          </div>\n        </li>\n      "));
     });
     api.parseTapmode();
   }
