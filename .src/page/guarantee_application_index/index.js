@@ -136,7 +136,7 @@ class PageController extends Service {
         } else {
             try {
                 operateRes = await this.getQueryOperate({gtId})
-            } catch (e) {
+            } catch (err) {
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
                 if (err.code === 3005) {
                     this.data.isInsert = true
