@@ -7,6 +7,10 @@ body {
   padding-bottom: 20px;
 }
 
+body * {
+  cursor: pointer;
+}
+
 .collapse .collapse-header:after, .link .inner:after {
   content: "";
   display: block;

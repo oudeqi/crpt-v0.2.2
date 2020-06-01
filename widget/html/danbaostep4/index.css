@@ -15,25 +15,16 @@
           align-items: center;
 }
 .title .icon {
+    display: block;
     width:42px;
     height:42px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    line-height: 1;
-    border-radius: 50%;
-    background:rgba(255,255,255,1);
-    font-size:23px;
-    color:rgba(48,49,51,1);
     -ms-flex-negative: 0;
         flex-shrink: 0;
     margin-right: 18px;
+    background-image: url(../../image/danbaokaitong/product_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 .title .txt {
     -webkit-box-flex: 1;
@@ -76,7 +67,7 @@
     right: 0;
     width:152px;
     height:100px;
-    background-image: url(../../image/danbaoKaitong/card_bg.png);
+    background-image: url(../../image/danbaokaitong/card_bg.png);
     background-position: top right;
     background-repeat: no-repeat;
     background-size: cover;
@@ -130,6 +121,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -258,6 +250,49 @@
       }
 .step.step6 .line::after {
       width: 96%;
+    }
+.btn-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 56px 6px 25px 6px;
+}
+.btn-box .btn {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    margin: 0 6px;
+    border-radius:25px;
+    height:50px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(102,187,106,1);
+    font-size:16px;
+    font-weight:500;
+    color:rgba(102,187,106,1);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+.btn-box .btn:last-child {
+      background:rgba(102,187,106,1);
+      color: #fff;
+    }
+.btn-box .btn.active {
+      opacity: 0.7;
     }
 
 .form .form-item .form-label, .form .form-item .form-crtl {
@@ -561,12 +596,15 @@
     margin-right: 10px;
   }
 
+body * {
+  cursor: pointer;
+}
 .container {
   padding: 12px;
   margin-top: 12px;
   padding-bottom: 20px;
 }
-  .container .btn {
+.container .btn {
     height:195px;
     background:rgba(255,255,255,1);
     -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
@@ -583,19 +621,19 @@
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .container .btn i {
+.container .btn i {
       font-style: normal;
       font-size:20px;
       font-weight:500;
       color:rgba(48,49,51,1);
     }
-  .container .btn span {
+.container .btn span {
       font-size:20px;
       font-weight:500;
       color:rgba(48,49,51,1);
       margin-left: 11px;
     }
-  .container .card {
+.container .card {
     height:195px;
     background:-webkit-gradient(linear,right top, left top,from(rgba(50,94,189,1)),to(rgba(52,140,206,1)));
     background:linear-gradient(270deg,rgba(50,94,189,1) 0%,rgba(52,140,206,1) 100%);
@@ -604,7 +642,7 @@
     border-radius:6px;
     position: relative;
   }
-  .container .card .head {
+.container .card .head {
       position: absolute;
       top: 0;
       left: 0;
@@ -618,7 +656,7 @@
       padding-left: 16px;
       padding-top: 13px;
     }
-  .container .card .head i {
+.container .card .head i {
         width:45px;
         height:45px;
         display: block;
@@ -627,14 +665,14 @@
         background-repeat: no-repeat;
         background-size: contain;
       }
-  .container .card .head span {
+.container .card .head span {
         margin-left: 11px;
         font-size:20px;
         font-family:PingFangSC-Medium,PingFang SC;
         font-weight:500;
         color:rgba(255,255,255,1);
       }
-  .container .card .card_no {
+.container .card .card_no {
       padding-top: 90px;
       width: 100%;
       text-align: center;
@@ -643,7 +681,7 @@
       font-weight:bold;
       color:rgba(255,255,255,1);
     }
-  .container .card:after {
+.container .card:after {
       content: "";
       display: block;
       position: absolute;
@@ -656,6 +694,6 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
-  .container .block-btn {
+.container .block-btn {
     margin-top: 50px;
   }

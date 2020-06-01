@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
 }
+body * {
+  cursor: pointer;
+}
 .form {
   padding: 12px;
   .form-block {

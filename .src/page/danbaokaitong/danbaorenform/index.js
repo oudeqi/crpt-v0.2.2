@@ -2,10 +2,15 @@ import './index.css'
 import '../form.css'
 
 import { http, ActionSheet, CitySelector, setRefreshHeaderInfo } from '../../../config'
-import { openDanbaoRenForm } from '../../../webview.js'
+import { openDanbaoRenForm, openCheliang, openFangchan } from '../../../webview.js'
 import { Validation, NumberLimit } from '../form.js'
 
 class Service {
+
+  // 获取担保状态
+  queryDanbaoStatus () {
+    return http.get('/crpt-guarantee/gt/apply/query')
+  }
 
   // 反担保人新增
   addDanbaoRen (params) {
@@ -188,9 +193,33 @@ class pageController extends Service {
     }
   }
 
+  _bindGoFangchanAndCheliang () {
+    $api.byId('fangchan').onclick = () => {
+      this.queryDanbaoStatus().then(res => {
+        if (res.code === 200) {
+          const {gtId, flowStatus, gtCreditId} = res.data || {}
+          openFangchan({gtId, flowStatus, gtCreditId})
+        }
+      }).catch(error => {
+        api.toast({ msg: error.msg || '出错啦', location: 'middle' })
+      })
+    }
+    $api.byId('cheliang').onclick = () => {
+      this.queryDanbaoStatus().then(res => {
+        if (res.code === 200) {
+          const {gtId, flowStatus, gtCreditId} = res.data || {}
+          openCheliang({gtId, flowStatus, gtCreditId})
+        }
+      }).catch(error => {
+        api.toast({ msg: error.msg || '出错啦', location: 'middle' })
+      })
+    }
+  }
+
   bindEvent () {
     this._bindNavBtnEvent()
     this._bindCollapseEvent()
+    this._bindGoFangchanAndCheliang()
   }
 
   _getOtherParams () {
@@ -294,8 +323,8 @@ class pageController extends Service {
   _InitEducation () {
     $api.byId('education').onclick = (e) => {
       ActionSheet('请选择学历', this.education, (index) => {
-        e.target.value = this.relationship[index]
-        e.target.dataset.value = btns[index]
+        e.target.value = this.education[index]
+        e.target.dataset.value = this.education[index]
       })
     }
   }

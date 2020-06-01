@@ -46,16 +46,10 @@ class pageController extends Service {
   }
 
   _renderList (key, arr) {
-    $api.byId('teacher').innerHTML = ''
-    $api.byId('doctor').innerHTML = ''
-    $api.byId('civilServant').innerHTML = ''
-    $api.byId('employeesSOE').innerHTML = ''
-    $api.byId('individualBusiness').innerHTML = ''
-    $api.byId('others').innerHTML = ''
     const category = this.category
-    const confirmed = arr.find(item => item.status === 3) || []
-    const confirmedLength = confirmed.length
-    const collapseBodyTpl = arr.map((item, index) => {
+    const signed = arr.filter(item => item.status === 5) || []
+    const signedLength = signed.length
+    let collapseBodyTpl = arr.map((item, index) => {
       let statusMap = {
         0: ['未填写信息', 'wait'],
         1: ['待发送', 'wait'],
@@ -88,7 +82,7 @@ class pageController extends Service {
           </label>
           <div class="cont" click-trigger="header">
             <span>${category[key]}</span>
-            <span>${confirmedLength}/${arr.length}人</span>
+            <span>${signedLength}/${arr.length}人</span>
           </div>
         </div>
         <ul class="collapse-body" id="${key}-body">
@@ -104,6 +98,12 @@ class pageController extends Service {
     try {
       const res = await this.queryList(this.initData)
       if (res.code === 200) {
+        $api.byId('teacher').innerHTML = ''
+        $api.byId('doctor').innerHTML = ''
+        $api.byId('civilServant').innerHTML = ''
+        $api.byId('employeesSOE').innerHTML = ''
+        $api.byId('individualBusiness').innerHTML = ''
+        $api.byId('others').innerHTML = ''
         for (key of Object.keys(res.data)) {
           this._renderList(key, res.data[key])
         }
@@ -207,8 +207,8 @@ class pageController extends Service {
           </div>
         `
         $api.byId('others').innerHTML = collapseTpl
+        othersBody = $api.byId('others-body')
       }
-      othersBody = $api.byId('others-body')
       let others = $api.domAll(othersBody, '.collapse-item')
       let length = Object.keys(others).length
       const tpl = `
@@ -236,18 +236,19 @@ class pageController extends Service {
       if ($api.attr(event.target, 'click-trigger') === 'del') {
         const item = $api.closest(event.target, '.collapse-item')
         if (item) {
-          $api.remove(item)
           const othersBody = $api.byId('others-body')
+          this._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
+          this._resetAllCheckbox()
+          $api.remove(item)
           const others = $api.domAll(othersBody, '.collapse-item')
           const length = Object.keys(others).length
           if (length > 0) {
-            $api.byId('othersNum').innerHTML = `0/${length}人`
+            let txt = $api.byId('othersNum').innerHTML.split('/')[0]
+            $api.byId('othersNum').innerHTML = `${txt}/${length}人`
           }
           if (length === 0) {
             $api.byId('others').innerHTML = ''
           }
-          this._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
-          this._resetAllCheckbox()
         }
       } else { // 去下一页
         const item = $api.closest(event.target, '[click-trigger="item"]')

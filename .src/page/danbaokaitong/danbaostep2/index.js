@@ -144,6 +144,7 @@ apiready = function () {
     // 头部
     const headerController = new HeaderController()
     headerController.renderHeaderAndGetDanbaoStatus()
+
     // 下拉刷新
     setRefreshHeaderInfo(function (ret, err) {
         pageController.main()

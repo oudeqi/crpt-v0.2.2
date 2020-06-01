@@ -1,6 +1,3 @@
-// api.lockSlidPane();
-
-
 function openMsgList(title) {
   api.openTabLayout({
     name: 'html/msglist/win',

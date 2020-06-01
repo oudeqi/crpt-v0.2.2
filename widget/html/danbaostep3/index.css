@@ -15,25 +15,16 @@
           align-items: center;
 }
 .title .icon {
+    display: block;
     width:42px;
     height:42px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    line-height: 1;
-    border-radius: 50%;
-    background:rgba(255,255,255,1);
-    font-size:23px;
-    color:rgba(48,49,51,1);
     -ms-flex-negative: 0;
         flex-shrink: 0;
     margin-right: 18px;
+    background-image: url(../../image/danbaokaitong/product_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 .title .txt {
     -webkit-box-flex: 1;
@@ -76,7 +67,7 @@
     right: 0;
     width:152px;
     height:100px;
-    background-image: url(../../image/danbaoKaitong/card_bg.png);
+    background-image: url(../../image/danbaokaitong/card_bg.png);
     background-position: top right;
     background-repeat: no-repeat;
     background-size: cover;
@@ -130,6 +121,7 @@
         flex-shrink: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    cursor: pointer;
   }
 .step .step_item:last-child .icon {
       margin-right: 0;
@@ -258,6 +250,49 @@
       }
 .step.step6 .line::after {
       width: 96%;
+    }
+.btn-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 56px 6px 25px 6px;
+}
+.btn-box .btn {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    margin: 0 6px;
+    border-radius:25px;
+    height:50px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(102,187,106,1);
+    font-size:16px;
+    font-weight:500;
+    color:rgba(102,187,106,1);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+.btn-box .btn:last-child {
+      background:rgba(102,187,106,1);
+      color: #fff;
+    }
+.btn-box .btn.active {
+      opacity: 0.7;
     }
 
 .form .form-item .form-label, .form .form-item .form-crtl {
@@ -561,10 +596,13 @@
     margin-right: 10px;
   }
 
+body * {
+  cursor: pointer;
+}
 .container {
   padding: 0 12px;
 }
-  .container .tit {
+.container .tit {
     height:42px;
     line-height: 42px;
     font-size:30px;
@@ -572,14 +610,14 @@
     color:rgba(48,49,51,1);
     margin-top: 24px;
   }
-  .container .desc {
+.container .desc {
     margin-top: 9px;
     font-size:14px;
     font-weight:500;
     color:rgba(48,49,51,1);
     line-height:22px;
   }
-  .container .cont {
+.container .cont {
     margin-top: 16px;
     background:rgba(255,255,255,1);
     border-radius:6px;
@@ -587,7 +625,7 @@
     padding: 16px;
     position: relative;
   }
-  .container .cont p {
+.container .cont p {
       margin-bottom: 8px;
       height:20px;
       line-height:20px;
@@ -599,26 +637,26 @@
           -ms-flex-align: center;
               align-items: center;
     }
-  .container .cont p:last-child {
+.container .cont p:last-child {
         margin-bottom: 0;
       }
-  .container .cont p span {
+.container .cont p span {
         -webkit-box-flex: 1;
             -ms-flex-positive: 1;
                 flex-grow: 1;
         color:rgba(144,147,153,1);
         font-weight:500;
       }
-  .container .cont p strong {
+.container .cont p strong {
         -ms-flex-negative: 0;
             flex-shrink: 0;
         color:rgba(48,49,51,1);
         font-weight:500;
       }
-  .container .cont p strong i {
+.container .cont p strong i {
           font-style: normal;
         }
-  .container .cont:after {
+.container .cont:after {
       content: "";
       display: block;
       position: absolute;
@@ -631,11 +669,9 @@
       background-repeat: no-repeat;
       background-size: contain;
     }
-
 .contract {
   margin-top: 24px;
 }
-
 .contract h2 {
     width:140px;
     height:20px;
@@ -645,11 +681,9 @@
     color:rgba(48,49,51,1);
     line-height:20px;
   }
-
 .contract ul {
     margin-top: 16px;
   }
-
 .contract ul li {
       margin-bottom: 12px;
       height:60px;
@@ -669,7 +703,6 @@
       color:rgba(48,49,51,1);
       position: relative;
     }
-
 .contract.step1 li:nth-child(1) {
     background:rgba(102,187,106,0.1);
     -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
@@ -677,7 +710,6 @@
     border:2px solid rgba(102,187,106,1);
     color:rgba(102,187,106,1);
   }
-
 .contract.step1 li:nth-child(1):after {
       content: "";
       width:32px;
@@ -692,7 +724,6 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-
 .contract.step2 li:nth-child(2) {
     background:rgba(102,187,106,0.1);
     -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
@@ -700,7 +731,6 @@
     border:2px solid rgba(102,187,106,1);
     color:rgba(102,187,106,1);
   }
-
 .contract.step2 li:nth-child(2):after {
       content: "";
       width:32px;
@@ -715,7 +745,6 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-
 .contract.step3 li:nth-child(3) {
     background:rgba(102,187,106,0.1);
     -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
@@ -723,7 +752,6 @@
     border:2px solid rgba(102,187,106,1);
     color:rgba(102,187,106,1);
   }
-
 .contract.step3 li:nth-child(3):after {
       content: "";
       width:32px;
@@ -738,7 +766,6 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-
 .contract.step4 li:nth-child(4) {
     background:rgba(102,187,106,0.1);
     -webkit-box-shadow:0px 4px 6px 0px rgba(162,177,163,0.1);
@@ -746,7 +773,6 @@
     border:2px solid rgba(102,187,106,1);
     color:rgba(102,187,106,1);
   }
-
 .contract.step4 li:nth-child(4):after {
       content: "";
       width:32px;
@@ -761,9 +787,3 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
-
-.block-btn {
-  margin: 12px;
-  margin-top: 90px;
-  margin-bottom: 26px;
-}

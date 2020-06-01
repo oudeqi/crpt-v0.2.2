@@ -1,4 +1,20 @@
-// api.lockSlidPane();
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 /*
 list: [{
   text: '',
@@ -1346,23 +1362,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
      module.exports = factory(global)
@@ -1578,8 +1577,8 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1972,7 +1971,7 @@ apiready = function apiready() {
     //   gtId: '1263411018323742721'
     // })
     // openProductRecommend()
-    // openDanbaoKaitong({step: 2, productId: '2', creditStatus: 2})
+    // openDanbaoKaitong({step: 6, creditStatus: 2})
     // return
     var authStatus = $api.getStorage('authStatus') || {};
 

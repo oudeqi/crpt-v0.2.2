@@ -195,16 +195,23 @@
 html, body {
   background-color: #efefef;
 }
+
 body {
   padding-top: 12px;
   padding-bottom: 62px;
   height: 100vh;
 }
+
+body * {
+  cursor: pointer;
+}
+
 .container {
   background-color: #fff;
   height: 100%;
   width: 100%;
 }
+
 .fixed-btn {
   position: fixed;
   bottom: 0;
@@ -218,6 +225,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
 }
+
 .fixed-btn .btn {
     height:50px;
     width: 50%;
@@ -233,10 +241,12 @@ body {
     font-size:16px;
     font-weight:500;
   }
+
 .fixed-btn .btn:first-child {
       background:rgba(255,255,255,1);
       color:rgba(102,187,106,1);
     }
+
 .fixed-btn .btn:last-child {
       background-color: rgba(102,187,106,1);
       color: rgba(255,255,255,1);

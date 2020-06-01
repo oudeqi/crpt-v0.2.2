@@ -50,16 +50,16 @@ apiready = function () {
         cb(res.data.list)
       } else if (pageNo === 1) {
         emptyBox.className = `${emptyBox.className} showing`
-        api.toast({ msg: '无数据'})
+        api.toast({ msg: '无数据', location: 'middle' })
       } else {
         emptyBox.className = emptyBox.className.replace(/\s.showing\s./g, '')
-        api.toast({ msg: '无更多数据'})
+        api.toast({ msg: '无更多数据', location: 'middle' })
       }
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
       emptyBox.className = `${emptyBox.className} showing`
-      api.toast({ msg: '数据加载失败' })
+      api.toast({ msg: error.msg || '数据加载失败', location: 'middle' })
     })
   }
 
@@ -84,7 +84,7 @@ apiready = function () {
           </div>
           <div class="row3">
             <div class="l">
-              <strong>收款方${item.saleCustName || ''}</strong>
+              <strong>收款方 ${item.saleCustName || ''}</strong>
               <span>业务单号 ${item.orderNo || ''}</span>
             </div>
             ${

@@ -7,6 +7,7 @@ import { setRefreshHeaderInfo } from '../../../config.js'
 import { openDanbaoKaitong, openAgreement } from '../../../webview.js'
 
 class PageController extends HeaderController {
+
   constructor() {
     super(...arguments)
     const { productId, productName } = api.pageParam || {}
@@ -48,6 +49,15 @@ class PageController extends HeaderController {
           $api.byId('product').value = data.productName
           $api.byId('rate').value = data.rate
           $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
+          // 可编辑
+          let buildType = Array.from(document.querySelectorAll('[name="buildType"]'))
+          buildType.forEach(item => {
+            $api.removeAttr(item, 'disabled')
+          })
+          $api.removeAttr($api.byId('expectInveste'), 'disabled')
+          $api.removeAttr($api.byId('demandMoney'), 'disabled')
+          $api.removeAttr($api.byId('timeLimit'), 'disabled')
+          $api.removeAttr($api.byId('agreement'), 'disabled')
         }
       }
     } catch (error) {
@@ -120,6 +130,10 @@ class PageController extends HeaderController {
         api.toast({ msg, location: 'middle' })
       },
       success: async (data) => {
+        if (this.danbaoStatus && this.danbaoStatus.applyStatus > 0) {
+          openDanbaoKaitong({step: 2})
+          return
+        }
         try {
           const res = await this.saveApply({
             ...data, productId: this.productId

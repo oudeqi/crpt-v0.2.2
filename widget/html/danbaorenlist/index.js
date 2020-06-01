@@ -899,9 +899,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-// api.lockSlidPane();
-
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -1725,8 +1722,8 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1999,17 +1996,11 @@ var pageController = /*#__PURE__*/function (_Service) {
   createClass(pageController, [{
     key: "_renderList",
     value: function _renderList(key, arr) {
-      $api.byId('teacher').innerHTML = '';
-      $api.byId('doctor').innerHTML = '';
-      $api.byId('civilServant').innerHTML = '';
-      $api.byId('employeesSOE').innerHTML = '';
-      $api.byId('individualBusiness').innerHTML = '';
-      $api.byId('others').innerHTML = '';
       var category = this.category;
-      var confirmed = arr.find(function (item) {
-        return item.status === 3;
+      var signed = arr.filter(function (item) {
+        return item.status === 5;
       }) || [];
-      var confirmedLength = confirmed.length;
+      var signedLength = signed.length;
       var collapseBodyTpl = arr.map(function (item, index) {
         var statusMap = {
           0: ['未填写信息', 'wait'],
@@ -2024,7 +2015,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
       });
-      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span>").concat(confirmedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
+      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span>").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
       $api.byId(key).innerHTML = collapseTpl;
     }
   }, {
@@ -2050,6 +2041,13 @@ var pageController = /*#__PURE__*/function (_Service) {
                 res = _context.sent;
 
                 if (res.code === 200) {
+                  $api.byId('teacher').innerHTML = '';
+                  $api.byId('doctor').innerHTML = '';
+                  $api.byId('civilServant').innerHTML = '';
+                  $api.byId('employeesSOE').innerHTML = '';
+                  $api.byId('individualBusiness').innerHTML = '';
+                  $api.byId('others').innerHTML = '';
+
                   for (_i = 0, _Object$keys = Object.keys(res.data); _i < _Object$keys.length; _i++) {
                     key = _Object$keys[_i];
 
@@ -2189,9 +2187,9 @@ var pageController = /*#__PURE__*/function (_Service) {
         if (!othersBody) {
           var collapseTpl = "\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\">\n              <label class=\"checkbox\">\n                <input type=\"checkbox\" checkbox-trigger=\"header\">\n                <span></span>\n              </label>\n              <div class=\"cont\" click-trigger=\"header\">\n                <span>\u5176\u4ED6</span>\n                <span id=\"othersNum\">0/0\u4EBA</span>\n              </div>\n            </div>\n            <ul class=\"collapse-body\" id=\"others-body\"></ul>\n          </div>\n        ";
           $api.byId('others').innerHTML = collapseTpl;
+          othersBody = $api.byId('others-body');
         }
 
-        othersBody = $api.byId('others-body');
         var others = $api.domAll(othersBody, '.collapse-item');
         var length = Object.keys(others).length;
         var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
@@ -2210,22 +2208,24 @@ var pageController = /*#__PURE__*/function (_Service) {
           var item = $api.closest(event.target, '.collapse-item');
 
           if (item) {
-            $api.remove(item);
             var othersBody = $api.byId('others-body');
+
+            _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
+
+            _this2._resetAllCheckbox();
+
+            $api.remove(item);
             var others = $api.domAll(othersBody, '.collapse-item');
             var length = Object.keys(others).length;
 
             if (length > 0) {
-              $api.byId('othersNum').innerHTML = "0/".concat(length, "\u4EBA");
+              var txt = $api.byId('othersNum').innerHTML.split('/')[0];
+              $api.byId('othersNum').innerHTML = "".concat(txt, "/").concat(length, "\u4EBA");
             }
 
             if (length === 0) {
               $api.byId('others').innerHTML = '';
             }
-
-            _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
-
-            _this2._resetAllCheckbox();
           }
         } else {
           // 去下一页

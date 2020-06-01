@@ -1,5 +1,6 @@
 import { http } from '../../config'
 import numeral from 'numeral'
+import { openDanbaoKaitong } from '../../webview.js'
 
 class Service {
   // 获取担保状态
@@ -45,29 +46,16 @@ export default class HeaderController extends Service {
     const el = $api.byId('step')
     let creditStatus = this.creditStatus
     let step = this.step
-    let i = step
-    if (step === 0) {
-      i = 1
-    } else if (step === 1) {
-      i = 2
-    } else if (step === 2) {
-      if (creditStatus === 2) {
-        i = 3
-      } else {
-        i = 2
-      }
-    } else if (step >= 7) {
-      i = 6
-    }
-    const prevStep = i - 1
+    const prevStep = step - 1
     $api.addCls(el, `step${prevStep}`)
     setTimeout(() => {
       $api.removeCls(el, `step${prevStep}`)
-      $api.addCls(el, `step${i}`)
+      $api.addCls(el, `step${step}`)
     }, 300)
   }
 
   async _getDanbaoStatus () {
+    console.log('Pppppppppppppppp')
     try {
       const res = await this.queryDanbaoStatus()
       if (res.code === 200) {
@@ -84,8 +72,26 @@ export default class HeaderController extends Service {
     }
   }
 
+  _bindPrev () {
+    let prev = $api.byId('prev')
+    if (!prev) {
+      return
+    }
+    prev.onclick = () => {
+      let step = this.step
+      if (step === 2) {
+        step = 0
+      } else {
+        step--
+      }
+      openDanbaoKaitong({ step, back: true })
+    }
+  }
+
   async renderHeaderAndGetDanbaoStatus () {
     this._renderStep()
-    await this._getDanbaoStatus()
+    this._bindPrev()
+    return await this._getDanbaoStatus()
   }
+
 }

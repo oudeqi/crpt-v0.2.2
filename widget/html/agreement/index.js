@@ -882,19 +882,6 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
-// api.lockSlidPane();
-
-
-function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -911,6 +898,16 @@ function _defineProperty(obj, key, value) {
 }
 
 var defineProperty = _defineProperty;
+
+function openRegLogin() {
+  api.openWin({
+    name: 'html/reglogin/win',
+    url: 'widget://html/reglogin/win.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -1691,8 +1688,8 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
