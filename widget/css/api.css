@@ -1,3 +1,6 @@
+* {
+	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
 html{
 	font-family: sans-serif;
 }
@@ -75,7 +78,7 @@ td,th {
 	background: url(../image/loading_more.gif) no-repeat center;
 	-webkit-background-size: contain;
 	background-size: contain;
-} 
+}
 .loading_more:after {
-	content: '加载更多';	
+	content: '加载更多';
 }
