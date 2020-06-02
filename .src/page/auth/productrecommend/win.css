@@ -25,18 +25,18 @@ li {
     flex-shrink: 0;
     flex-grow: 1;
     & .col1 {
-      width: 30%;
+      width: 40%;
     }
     & .col2 {
-      width: 70%;
-      text-align: center;
+      width: 60%;
+      text-align: left;
     }
   }
 }
 
 .otw {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /*overflow: hidden;
+  text-overflow: ellipsis;*/
   white-space: nowrap;
   width: 100%;
 }

@@ -1740,8 +1740,8 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2762,7 +2762,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       $api.byId('marriage').onclick = function (e) {
         ActionSheet('婚姻状况', _this5.marriage, function (index) {
-          e.target.value = _this5.relationship[index];
+          e.target.value = _this5.marriage[index];
           e.target.dataset.value = index + 1;
         });
       };

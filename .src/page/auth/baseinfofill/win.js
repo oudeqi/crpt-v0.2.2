@@ -112,15 +112,15 @@ class PageController extends Service {
     initUIInput($api.byId('workCompany'), {
       placeholder: '请输入',
       keyboardType: 'next',
-      maxStringLength: 10
+      maxStringLength: 100
     }, (value) => {
       this.state.postData.workCompany = value
     })
     // 行业年限 animalHusbandryYear
     initUIInput($api.byId('animalHusbandryYear'), {
       placeholder: '请输入',
-      keyboardType: 'number',
-      maxStringLength: 2
+      keyboardType: 'decimal',
+      maxStringLength: 4
     }, (value) => {
       this.state.postData.animalHusbandryYear = value
     })
@@ -215,6 +215,11 @@ class PageController extends Service {
     }
     if (!postData.animalHusbandryYear) {
       api.toast({ msg: '请输入从事畜牧行业年限' })
+      valid = false
+      return valid
+    }
+    if (isNaN(postData.animalHusbandryYear)) {
+      api.toast({ msg: '从事畜牧行业年限只能输入数字' })
       valid = false
       return valid
     }

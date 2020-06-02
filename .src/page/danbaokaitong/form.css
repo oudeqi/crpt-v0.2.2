@@ -140,6 +140,8 @@
     line-height: 1;
     span {
       display: block;
+      flex-shrink: 0;
+      white-space: nowrap;
       padding: 6px 19px;
       background:rgba(144,147,153,0.1);
       border-radius:6px;
