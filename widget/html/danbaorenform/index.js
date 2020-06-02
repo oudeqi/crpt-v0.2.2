@@ -2339,7 +2339,7 @@ var pageController = /*#__PURE__*/function (_Service) {
       marriage.dataset.value = data.marriage || ''; // 婚姻状况 1：未婚  :2：已婚、  3：已婚有子女、  4：离异后未再婚
 
       var education = $api.byId('education');
-      education.value = this.education[(parseInt(data.education) || 100) - 1] || '';
+      education.value = data.education || '';
       education.dataset.value = data.education || ''; // 学历
 
       var checkedAccountNature = document.querySelector("[name=\"accountNature\"][value=\"".concat(data.accountNature, "\"]"));

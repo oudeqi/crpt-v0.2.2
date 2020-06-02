@@ -3,7 +3,7 @@ import '../form.css'
 import './index.css'
 import HeaderController from '../header.js'
 import { Validation, NumberLimit } from '../form.js'
-import { setRefreshHeaderInfo } from '../../../config.js'
+import { setRefreshHeaderInfo, getProtocolFromStorage } from '../../../config.js'
 import { openDanbaoKaitong, openAgreement } from '../../../webview.js'
 
 class PageController extends HeaderController {
@@ -181,8 +181,17 @@ apiready = function () {
     pageController.save()
   }
 
+  let userinfo = $api.getStorage('userinfo') || {}
+  let protocol = getProtocolFromStorage(userinfo.userType, 4)
+  if (protocol) {
+    $api.byId('protocol').innerHTML = protocol.protocolName
+  }
   document.querySelector('#protocol').onclick = function () {
-    openAgreement(4)
+    if (protocol) {
+      openAgreement(protocol.protocolFileId)
+    } else {
+      api.toast({ msg: '协议不存在', location: 'middle' })
+    }
   }
 
 }

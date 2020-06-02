@@ -38,12 +38,10 @@ import Utils from '../utils'
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
-apiready = function () {
-    // openBaseinfoFill()
-    // openCompanyInfo()
-    // $api.clearStorage()
 
-    const userinfo = $api.getStorage('userinfo')
+class PageController {
+
+  openPage () {
     // 认证状态 int
     // 1：正常
     // 2：待实名认证
@@ -51,65 +49,74 @@ apiready = function () {
     // 4：人脸认证失败，待人工审核
     // 5：待补充基本信息
     // 6：人工审核不通过
+    // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
-
+    const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
-
-        // openIDcardInfo(2)
-
-        // openSendAddress({
-        //   gtCreditId: '1258945510237147136',
-        //   gtId: '1263411018323742721'
-        // })
-        // openDanbaoRenList({
-        //   gtCreditId: '1260492247898374145',
-        //   productId: '1',
-        //   demandMoney: '40',
-        //   gtId: '1263411018323742721'
-        // })
-        // openBaseinfoFill()
-        // return
-        // openDanbaoKaitong({step: 6, creditStatus: 2})
-        // return
-
-        const authStatus = $api.getStorage('authStatus') || {}
-        if (authStatus.status === 1) {
-            openTabLayout()
+      // openIDcardUpload()
+      // openSendAddress({
+      //   gtCreditId: '1258945510237147136',
+      //   gtId: '1263411018323742721'
+      // })
+      // openDanbaoRenList({
+      //   gtCreditId: '1260492247898374145',
+      //   productId: '1',
+      //   demandMoney: '40',
+      //   gtId: '1263411018323742721'
+      // })
+      // openProductRecommend()
+      // return
+      // openDanbaoKaitong({step: 0, creditStatus: 2})
+      // return
+      const authStatus = $api.getStorage('authStatus') || {}
+      if (authStatus.status === 1) {
+        openTabLayout()
+      } else {
+        const userType = userinfo.userType
+        if (userType === '1') {
+          openTodoAuthGeren()
         } else {
-            const userType = userinfo.userType
-            if (userType === '1') {
-                openTodoAuthGeren()
-            } else {
-                openTodoAuthQiye()
-            }
+          openTodoAuthQiye()
         }
-
+      }
     } else {
-        openRegLogin()
+      openRegLogin()
     }
+  }
 
+  bindEvent () {
     // 云修复完成
     api.addEventListener({
-        name:'smartupdatefinish'
+      name:'smartupdatefinish'
     }, (ret, err) => {
-        api.confirm({
-            title: '提示',
-            msg: '云修复完成，是否需要重启应用？',
-            buttons: ['确定', '取消']
-        }, (ret, err) => {
-            var index = ret.buttonIndex
-            if (index === 1) {
-                api.rebootApp()
-            }
-        })
+      api.confirm({
+        title: '提示',
+        msg: '云修复完成，是否需要重启应用？',
+        buttons: ['确定', '取消']
+      }, (ret, err) => {
+        var index = ret.buttonIndex
+        if (index === 1) {
+          api.rebootApp()
+        }
+      })
     })
     // 点击启动页面
     api.addEventListener({
-        name:'launchviewclicked'
+      name:'launchviewclicked'
     }, (ret,err) => {
-        api.alert({
-            msg:ret.value
-        })
+      api.alert({
+        msg:ret.value
+      })
     })
+  }
+
+}
+
+
+apiready = function () {
+
+  const ctrl = new PageController()
+  ctrl.openPage()
+  ctrl.bindEvent()
 
 }

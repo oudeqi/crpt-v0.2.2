@@ -52,7 +52,7 @@ function openAuthResult(status, message, title) {
 } // 消息中心
 
 
-function openAgreement(useNode) {
+function openAgreement(id) {
   api.openTabLayout({
     name: 'html/agreement/index',
     title: '协议',
@@ -60,7 +60,7 @@ function openAgreement(useNode) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      useNode: useNode
+      id: id
     },
     bounces: true,
     slidBackEnabled: true,
@@ -1881,6 +1881,22 @@ function initUIInput(dom) {
   });
 } // let userinfo = {
 
+function getProtocolFromStorage(protocolType, useNode) {
+  var protocol = $api.getStorage('protocol');
+
+  if (protocol) {
+    var key = protocolType + '_' + useNode;
+
+    if (protocol[key]) {
+      return protocol[key];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
 apiready = function apiready() {
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
   // let idcard = {
@@ -1941,8 +1957,24 @@ apiready = function apiready() {
     api.closeWin();
   };
 
+  var userinfo = $api.getStorage('userinfo') || {};
+  var protocol = getProtocolFromStorage(userinfo.userType, 2);
+
+  if (protocol) {
+    $api.byId('agreement').innerHTML = protocol.protocolName;
+  }
+
   document.querySelector('#agreement').onclick = function () {
-    openAgreement(2);
+    var protocol = getProtocolFromStorage(userinfo.userType, 2);
+
+    if (protocol) {
+      openAgreement(protocol.protocolFileId);
+    } else {
+      api.toast({
+        msg: '协议不存在',
+        location: 'middle'
+      });
+    }
   };
 
   document.querySelector('#next').onclick = function () {

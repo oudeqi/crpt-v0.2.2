@@ -1,3 +1,29 @@
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -184,14 +210,6 @@ function openTodoAuthQiye() {
   });
 } // 企业信息确认
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var classCallCheck = _classCallCheck;
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -373,24 +391,6 @@ var Router = function Router() {
 
   _extends_1(this, rmap);
 };
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
 
 var openPicker = function openPicker(params, options) {
   var UIActionSelector = api.require('UIActionSelector');
@@ -1945,74 +1945,93 @@ var Utils$1 = new Utils();
 // $api.rmStorage()
 // $api.clearStorage()
 
-apiready = function apiready() {
-  // openBaseinfoFill()
-  // openCompanyInfo()
-  // $api.clearStorage()
-  var userinfo = $api.getStorage('userinfo'); // 认证状态 int
-  // 1：正常
-  // 2：待实名认证
-  // 3：待人脸审核
-  // 4：人脸认证失败，待人工审核
-  // 5：待补充基本信息
-  // 6：人工审核不通过
-  // Utils.Router.openPageCreditInformation()
+var PageController = /*#__PURE__*/function () {
+  function PageController() {
+    classCallCheck(this, PageController);
+  }
 
-  if (userinfo) {
-    // openIDcardInfo(2)
-    // openSendAddress({
-    //   gtCreditId: '1258945510237147136',
-    //   gtId: '1263411018323742721'
-    // })
-    // openDanbaoRenList({
-    //   gtCreditId: '1260492247898374145',
-    //   productId: '1',
-    //   demandMoney: '40',
-    //   gtId: '1263411018323742721'
-    // })
-    // openBaseinfoFill()
-    // return
-    // openDanbaoKaitong({step: 6, creditStatus: 2})
-    // return
-    var authStatus = $api.getStorage('authStatus') || {};
+  createClass(PageController, [{
+    key: "openPage",
+    value: function openPage() {
+      // 认证状态 int
+      // 1：正常
+      // 2：待实名认证
+      // 3：待人脸审核
+      // 4：人脸认证失败，待人工审核
+      // 5：待补充基本信息
+      // 6：人工审核不通过
+      // $api.clearStorage()
+      // Utils.Router.openPageCreditInformation()
+      var userinfo = $api.getStorage('userinfo');
 
-    if (authStatus.status === 1) {
-      openTabLayout();
-    } else {
-      var userType = userinfo.userType;
+      if (userinfo) {
+        // openIDcardUpload()
+        // openSendAddress({
+        //   gtCreditId: '1258945510237147136',
+        //   gtId: '1263411018323742721'
+        // })
+        // openDanbaoRenList({
+        //   gtCreditId: '1260492247898374145',
+        //   productId: '1',
+        //   demandMoney: '40',
+        //   gtId: '1263411018323742721'
+        // })
+        // openProductRecommend()
+        // return
+        // openDanbaoKaitong({step: 0, creditStatus: 2})
+        // return
+        var authStatus = $api.getStorage('authStatus') || {};
 
-      if (userType === '1') {
-        openTodoAuthGeren();
+        if (authStatus.status === 1) {
+          openTabLayout();
+        } else {
+          var userType = userinfo.userType;
+
+          if (userType === '1') {
+            openTodoAuthGeren();
+          } else {
+            openTodoAuthQiye();
+          }
+        }
       } else {
-        openTodoAuthQiye();
+        openRegLogin();
       }
     }
-  } else {
-    openRegLogin();
-  } // 云修复完成
+  }, {
+    key: "bindEvent",
+    value: function bindEvent() {
+      // 云修复完成
+      api.addEventListener({
+        name: 'smartupdatefinish'
+      }, function (ret, err) {
+        api.confirm({
+          title: '提示',
+          msg: '云修复完成，是否需要重启应用？',
+          buttons: ['确定', '取消']
+        }, function (ret, err) {
+          var index = ret.buttonIndex;
 
+          if (index === 1) {
+            api.rebootApp();
+          }
+        });
+      }); // 点击启动页面
 
-  api.addEventListener({
-    name: 'smartupdatefinish'
-  }, function (ret, err) {
-    api.confirm({
-      title: '提示',
-      msg: '云修复完成，是否需要重启应用？',
-      buttons: ['确定', '取消']
-    }, function (ret, err) {
-      var index = ret.buttonIndex;
+      api.addEventListener({
+        name: 'launchviewclicked'
+      }, function (ret, err) {
+        api.alert({
+          msg: ret.value
+        });
+      });
+    }
+  }]);
 
-      if (index === 1) {
-        api.rebootApp();
-      }
-    });
-  }); // 点击启动页面
+  return PageController;
+}();
 
-  api.addEventListener({
-    name: 'launchviewclicked'
-  }, function (ret, err) {
-    api.alert({
-      msg: ret.value
-    });
-  });
+apiready = function apiready() {
+  var ctrl = new PageController();
+  ctrl.openPage();
+  ctrl.bindEvent();
 };

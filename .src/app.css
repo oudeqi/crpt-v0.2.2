@@ -154,10 +154,17 @@
   text-align: center;
   color: #aaa;
   font-size: 15px;
+  & label {
+    display: inline;
+  }
   & input {
     top: -2px;
   }
+  & span {
+    display: inline;
+  }
   & strong {
+    display: inline;
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;

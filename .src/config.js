@@ -502,8 +502,34 @@ function appLogin (options, successCallback, errorCallback) {
   })
 }
 
+function saveProtocolToStorage (arr = []) {
+  let map = {}
+  arr.forEach(item => {
+    // protocolType 1-个人，2-企业，3-通用
+    // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
+    map[item.protocolType + '_' + item.useNode] = item
+  })
+  $api.setStorage('protocol', map)
+}
+
+function getProtocolFromStorage (protocolType, useNode) {
+  let protocol = $api.getStorage('protocol')
+  if (protocol) {
+    let key = protocolType + '_' +useNode
+    if (protocol[key]) {
+      return protocol[key]
+    } else {
+      return null
+    }
+  } else {
+    return null
+  }
+}
+
 
 export {
+  saveProtocolToStorage,
+  getProtocolFromStorage,
   http,
   appLogin,
   openUIInput,

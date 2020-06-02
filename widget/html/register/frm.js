@@ -185,7 +185,7 @@ function openTodoAuthQiye() {
 } // 企业信息确认
 
 
-function openAgreement(useNode) {
+function openAgreement(id) {
   api.openTabLayout({
     name: 'html/agreement/index',
     title: '协议',
@@ -193,7 +193,7 @@ function openAgreement(useNode) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      useNode: useNode
+      id: id
     },
     bounces: true,
     slidBackEnabled: true,
@@ -2144,6 +2144,22 @@ function appLogin(options, successCallback, errorCallback) {
   });
 }
 
+function getProtocolFromStorage(protocolType, useNode) {
+  var protocol = $api.getStorage('protocol');
+
+  if (protocol) {
+    var key = protocolType + '_' + useNode;
+
+    if (protocol[key]) {
+      return protocol[key];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
 apiready = function apiready() {
   var UIInput = api.require('UIInput');
 
@@ -2187,6 +2203,7 @@ apiready = function apiready() {
 
   function radioOnChange() {
     if (this.dataset.type === 'geren') {
+      showProtocol(1);
       $api.byId('companyName').style.display = 'none';
       UIInput.hide({
         id: form['name'][0]
@@ -2194,6 +2211,7 @@ apiready = function apiready() {
       type = 'geren';
       resetInputPosi();
     } else {
+      showProtocol(2);
       $api.byId('companyName').style.display = 'block';
       type = 'qiye';
       setTimeout(function () {
@@ -2218,8 +2236,33 @@ apiready = function apiready() {
   document.querySelector('#geren').onclick = radioOnChange;
   document.querySelector('#qiye').onclick = radioOnChange;
 
+  function showProtocol(type) {
+    var protocol = getProtocolFromStorage(type, 1);
+
+    if (protocol) {
+      $api.byId('agreement').innerHTML = protocol.protocolName;
+    }
+  }
+
+  showProtocol(1);
+
   document.querySelector('#agreement').onclick = function () {
-    openAgreement(1);
+    var protocol = null;
+
+    if (type === 'geren') {
+      protocol = getProtocolFromStorage(1, 1);
+    } else {
+      protocol = getProtocolFromStorage(2, 1);
+    }
+
+    if (protocol) {
+      openAgreement(protocol.protocolFileId);
+    } else {
+      api.toast({
+        msg: '协议不存在',
+        location: 'middle'
+      });
+    }
   };
 
   function countDown() {

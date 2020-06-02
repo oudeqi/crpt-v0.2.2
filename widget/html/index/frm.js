@@ -3093,6 +3093,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function _renderHigh(arr) {
       var _this2 = this;
 
+      this.el.high.innerHTML = '';
       arr.forEach(function (item, index) {
         var tpl = "\n        <div class=\"high_item clickBtn\">\n          <div class=\"row1\">\u6700\u9AD8\u989D\u5EA6(\u5143)</div>\n          <div class=\"row2\">".concat(numeral(item.totalLimit).format('0,0'), "</div>\n          <div class=\"row3\">").concat(item.des, "</div>\n          <div class=\"row3\">\n            ").concat(item.introduce, "\n          </div>\n        </div>\n      ");
 
@@ -3107,6 +3108,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function _renderLow(arr) {
       var _this3 = this;
 
+      this.el.low.innerHTML = '';
       arr.forEach(function (item) {
         var tpl = "\n        <div class=\"row clickBtn\">\n          <div class=\"l\">\n            <strong>".concat(item.interestRate, "%</strong>\n            <span>\u8D37\u6B3E\u5229\u7387</span>\n          </div>\n          <div class=\"r\">\n            <strong>").concat(item.des, "</strong>\n            <span>").concat(item.introduce, "</span>\n          </div>\n        </div>\n      ");
         $api.append(_this3.el.low, tpl);

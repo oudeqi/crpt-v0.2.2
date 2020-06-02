@@ -8,6 +8,7 @@ import {
 import { http, openUIInput, isPhoneNo, loginSuccessCallback, appLogin } from '../../../config.js'
 
 apiready = function() {
+
   // 表单数据
   let form = {}
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交

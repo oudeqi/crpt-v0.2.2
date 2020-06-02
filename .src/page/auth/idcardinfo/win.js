@@ -3,7 +3,7 @@ import './win.css'
 
 import { openRegLogin, openBaseinfoFill, openAgreement,
 openIDcardUpload, openIDcardInfo, openAuthResult } from '../../../webview.js'
-import { http, initUIInput } from '../../../config.js'
+import { http, initUIInput, getProtocolFromStorage } from '../../../config.js'
 
 apiready = function() {
 
@@ -62,8 +62,20 @@ apiready = function() {
   document.querySelector('#retry').onclick = function () {
     api.closeWin()
   }
+
+  const userinfo = $api.getStorage('userinfo') || {}
+  let protocol = getProtocolFromStorage(userinfo.userType, 2)
+  if (protocol) {
+    $api.byId('agreement').innerHTML = protocol.protocolName
+  }
+
   document.querySelector('#agreement').onclick = function () {
-    openAgreement(2)
+    let protocol = getProtocolFromStorage(userinfo.userType, 2)
+    if (protocol) {
+      openAgreement(protocol.protocolFileId)
+    } else {
+      api.toast({ msg: '协议不存在', location: 'middle' })
+    }
   }
 
   document.querySelector('#next').onclick = function () {

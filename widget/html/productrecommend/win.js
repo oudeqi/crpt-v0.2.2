@@ -3184,10 +3184,19 @@ var PageController = /*#__PURE__*/function (_Service) {
         var li = $api.closest(event.target, 'li');
 
         if (btn) {
-          var name = li.dataset.name;
-          var id = li.dataset.id;
+          var name = btn.dataset.name;
+          var type = btn.dataset.type; // 产品类型：1-信用贷款 2-担保贷款
 
-          _this2._goDanbao(id, name);
+          var id = btn.dataset.id;
+
+          if (type === '2' || type === 2) {
+            _this2._goDanbao(id, name);
+          } else {
+            api.alert({
+              title: '提示',
+              msg: '功能开发中...'
+            });
+          }
         } else if (li) {
           var _id = li.dataset.id;
 
@@ -3236,7 +3245,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this3 = this;
 
       arr.forEach(function (item) {
-        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.des || '', "</p>\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.des || '', "</p>\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-type=\"").concat(item.type || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
       });
       api.parseTapmode();
     } // 获取页面数据

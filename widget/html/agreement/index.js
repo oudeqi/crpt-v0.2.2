@@ -1873,11 +1873,6 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
-    key: "queryArgument",
-    value: function queryArgument(gtCreditId) {
-      return http.get('/crpt-biz/biz/platform/protocol/app/query');
-    }
-  }, {
     key: "docx2html",
     value: function docx2html(id) {
       return http.get('/crpt-file/file/docx2html?id=' + id);
@@ -1906,37 +1901,23 @@ var PageController = /*#__PURE__*/function (_Service) {
     _this = _super.apply(this, arguments);
 
     var _ref = api.pageParam || {},
-        useNode = _ref.useNode;
+        id = _ref.id;
 
-    _this.useNode = useNode;
+    _this.id = id;
     return _this;
   }
 
   createClass(PageController, [{
-    key: "_pageDataFillBack",
-    value: function _pageDataFillBack(data) {
-      if (data.count > 0) {
-        var map = {};
-        data.list.forEach(function (item) {
-          map[item.useNode] = item.protocolFileId;
-        });
-        this.useNodeMap = map;
-      }
-    }
-  }, {
-    key: "_getAndRenderHtml",
+    key: "getPageData",
     value: function () {
-      var _getAndRenderHtml2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var id, res;
+      var _getPageData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        var res;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                id = this.useNodeMap[this.useNode];
-
-                if (id) {
-                  _context.next = 5;
+                if (this.id) {
+                  _context.next = 3;
                   break;
                 }
 
@@ -1946,9 +1927,15 @@ var PageController = /*#__PURE__*/function (_Service) {
                 });
                 return _context.abrupt("return");
 
-              case 5:
+              case 3:
+                api.showProgress({
+                  title: '加载中...',
+                  text: '',
+                  modal: false
+                });
+                _context.prev = 4;
                 _context.next = 7;
-                return this.docx2html(id);
+                return this.docx2html(this.id);
 
               case 7:
                 res = _context.sent;
@@ -1967,74 +1954,22 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 11:
                 _context.prev = 11;
-                _context.t0 = _context["catch"](0);
+                _context.t0 = _context["catch"](4);
                 api.toast({
                   msg: _context.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
               case 14:
+                api.hideProgress();
+                api.refreshHeaderLoadDone();
+
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 11]]);
-      }));
-
-      function _getAndRenderHtml() {
-        return _getAndRenderHtml2.apply(this, arguments);
-      }
-
-      return _getAndRenderHtml;
-    }()
-  }, {
-    key: "getPageData",
-    value: function () {
-      var _getPageData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                api.showProgress({
-                  title: '加载中...',
-                  text: '',
-                  modal: false
-                });
-                _context2.prev = 1;
-                _context2.next = 4;
-                return this.queryArgument();
-
-              case 4:
-                res = _context2.sent;
-
-                if (res.code === 200) {
-                  this._pageDataFillBack(res.data);
-
-                  this._getAndRenderHtml();
-                }
-
-                _context2.next = 11;
-                break;
-
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
-                api.toast({
-                  msg: _context2.t0.msg || '出错啦',
-                  location: 'middle'
-                });
-
-              case 11:
-                api.hideProgress();
-                api.refreshHeaderLoadDone();
-
-              case 13:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[1, 8]]);
+        }, _callee, this, [[4, 11]]);
       }));
 
       function getPageData() {

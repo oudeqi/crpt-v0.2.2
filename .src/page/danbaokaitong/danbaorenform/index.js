@@ -75,7 +75,7 @@ class pageController extends Service {
     marriage.dataset.value = data.marriage || '' // 婚姻状况 1：未婚  :2：已婚、  3：已婚有子女、  4：离异后未再婚
 
     const education = $api.byId('education')
-    education.value = this.education[(parseInt(data.education) || 100) - 1] || ''
+    education.value = data.education || ''
     education.dataset.value = data.education || '' // 学历
     const checkedAccountNature = document.querySelector(`[name="accountNature"][value="${data.accountNature}"]`)
     if (checkedAccountNature) {

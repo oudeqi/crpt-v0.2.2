@@ -55,7 +55,6 @@ export default class HeaderController extends Service {
   }
 
   async _getDanbaoStatus () {
-    console.log('Pppppppppppppppp')
     try {
       const res = await this.queryDanbaoStatus()
       if (res.code === 200) {
@@ -66,7 +65,7 @@ export default class HeaderController extends Service {
         $api.byId('desc').innerHTML = `您正在申请${res.data.productName}产品`
       }
     } catch (error) {
-      if (this.step !== 0) {
+      if (this.step !== 1) {
         api.toast({ msg: error.msg || '出错啦', location: 'middle' })
       }
     }

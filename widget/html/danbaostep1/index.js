@@ -976,7 +976,7 @@ function openDanbaoKaitong() {
 } // 担保人列表
 
 
-function openAgreement(useNode) {
+function openAgreement(id) {
   api.openTabLayout({
     name: 'html/agreement/index',
     title: '协议',
@@ -984,7 +984,7 @@ function openAgreement(useNode) {
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      useNode: useNode
+      id: id
     },
     bounces: true,
     slidBackEnabled: true,
@@ -1969,6 +1969,22 @@ function setRefreshHeaderInfo(successCallback, errorCallback) {
       successCallback && successCallback(ret);
     }
   });
+}
+
+function getProtocolFromStorage(protocolType, useNode) {
+  var protocol = $api.getStorage('protocol');
+
+  if (protocol) {
+    var key = protocolType + '_' + useNode;
+
+    if (protocol[key]) {
+      return protocol[key];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
 }
 
 var numeral = createCommonjsModule(function (module) {
@@ -3085,12 +3101,11 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('Pppppppppppppppp');
-                _context.prev = 1;
-                _context.next = 4;
+                _context.prev = 0;
+                _context.next = 3;
                 return this.queryDanbaoStatus();
 
-              case 4:
+              case 3:
                 res = _context.sent;
 
                 if (res.code === 200) {
@@ -3101,26 +3116,26 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
                 }
 
-                _context.next = 11;
+                _context.next = 10;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
 
-                if (this.step !== 0) {
+                if (this.step !== 1) {
                   api.toast({
                     msg: _context.t0.msg || '出错啦',
                     location: 'middle'
                   });
                 }
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[0, 7]]);
       }));
 
       function _getDanbaoStatus() {
@@ -3748,7 +3763,21 @@ apiready = function apiready() {
     pageController.save();
   };
 
+  var userinfo = $api.getStorage('userinfo') || {};
+  var protocol = getProtocolFromStorage(userinfo.userType, 4);
+
+  if (protocol) {
+    $api.byId('protocol').innerHTML = protocol.protocolName;
+  }
+
   document.querySelector('#protocol').onclick = function () {
-    openAgreement(4);
+    if (protocol) {
+      openAgreement(protocol.protocolFileId);
+    } else {
+      api.toast({
+        msg: '协议不存在',
+        location: 'middle'
+      });
+    }
   };
 };

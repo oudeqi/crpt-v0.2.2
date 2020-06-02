@@ -178,10 +178,17 @@
   color: #aaa;
   font-size: 15px;
 }
+.app_agreement label {
+    display: inline;
+  }
 .app_agreement input {
     top: -2px;
   }
+.app_agreement span {
+    display: inline;
+  }
 .app_agreement strong {
+    display: inline;
     color: #1dc4a2;
     font-weight: normal;
     padding-left: 0;

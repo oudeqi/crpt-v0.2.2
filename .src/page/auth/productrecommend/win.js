@@ -51,9 +51,17 @@ class PageController extends Service {
       let btn = $api.closest(event.target, '.btn')
       let li = $api.closest(event.target, 'li')
       if (btn) {
-        let name = li.dataset.name
-        let id = li.dataset.id
-        this._goDanbao(id, name)
+        let name = btn.dataset.name
+        let type = btn.dataset.type // 产品类型：1-信用贷款 2-担保贷款
+        let id = btn.dataset.id
+        if (type === '2' || type === 2) {
+          this._goDanbao(id, name)
+        } else {
+          api.alert({
+            title: '提示',
+            msg: '功能开发中...',
+          })
+        }
       } else if (li) {
         let id = li.dataset.id
         if (id) {
@@ -112,7 +120,7 @@ class PageController extends Service {
               <p class="otw">${item.introduce || ''}</p>
             </div>
           </div>
-          <div class="btn" tapmode="active" data-id="${item.id || ''}" data-name="${item.name || ''}">立即开通</div>
+          <div class="btn" tapmode="active" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
         </li>
       `)
     })

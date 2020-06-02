@@ -68,6 +68,7 @@ class PageController extends Service {
 
   // 高额精选
   _renderHigh (arr) {
+    this.el.high.innerHTML = ''
     arr.forEach((item, index) => {
       const tpl = `
         <div class="high_item clickBtn">
@@ -87,6 +88,7 @@ class PageController extends Service {
 
   // 利息最低
   _renderLow (arr) {
+    this.el.low.innerHTML = ''
     arr.forEach((item) => {
       const tpl = `
         <div class="row clickBtn">
