@@ -26,6 +26,23 @@ function _extends() {
 module.exports = _extends;
 });
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -1327,23 +1344,6 @@ var codeMapFilter = function codeMapFilter(list) {
   return codeMap;
 };
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -1569,8 +1569,8 @@ var base64_1 = base64.Base64;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -3001,6 +3001,10 @@ var rolldate_min = createCommonjsModule(function (module, exports) {
   });
 });
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
@@ -3092,7 +3096,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.flowStatus,
       gtCreditId: props.gtCreditId,
-      isInsert: true,
+      isInsert: false,
       farmType: 1,
       landType: 1,
       envReport: 1,
@@ -3119,6 +3123,7 @@ var PageController = /*#__PURE__*/function (_Service) {
         }
       });
       this.bindEvents();
+      return this;
     } //  事件绑定入口
 
   }, {
@@ -3141,25 +3146,23 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.bindDateEvents();
     }
   }, {
-    key: "initData",
+    key: "initFormStatus",
     value: function () {
-      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(_ref) {
-        var callback, self, gtId, gtCreditId, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, dom, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
+      var _initFormStatus = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        var gtId, gtCreditId, guaranteeRes, _guaranteeRes$data, houseFillStatus, carFillStatus, socialFillStatus;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                callback = _ref.callback;
-                self = this;
                 gtId = this.data.gtId;
                 gtCreditId = this.data.gtCreditId; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
 
-                _context.prev = 4;
-                _context.next = 7;
+                _context.prev = 3;
+                _context.next = 6;
                 return this.getQueryGuaranteeMain();
 
-              case 7:
+              case 6:
                 guaranteeRes = _context.sent;
 
                 if (guaranteeRes.data) {
@@ -3169,17 +3172,58 @@ var PageController = /*#__PURE__*/function (_Service) {
                   socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done');
                 }
 
-                _context.next = 14;
+                _context.next = 13;
                 break;
 
-              case 11:
-                _context.prev = 11;
-                _context.t0 = _context["catch"](4);
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](3);
                 Utils$1.UI.toast('服务超时');
 
-              case 14:
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[3, 10]]);
+      }));
+
+      function initFormStatus() {
+        return _initFormStatus.apply(this, arguments);
+      }
+
+      return initFormStatus;
+    }()
+  }, {
+    key: "initData",
+    value: function () {
+      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(_ref) {
+        var callback, self, gtId, gtCreditId, operateRes, landTypeProfile, envReportProfile, imgDom, livestockTypeProfile, dom, farmTypeProfile, scale, sheds, shedArea, _operateRes$data, workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode, shedAddressDetail, shedStructureProfile;
+
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                callback = _ref.callback;
+                self = this;
+                gtId = this.data.gtId;
+                gtCreditId = this.data.gtCreditId; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+
+                this.initFormStatus(); // try {
+                //     const guaranteeRes = await this.getQueryGuaranteeMain()
+                //     if (guaranteeRes.data) {
+                //         const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
+                //         houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
+                //         carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
+                //         socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
+                //     }
+                // } catch (e) {
+                //     Utils.UI.toast('服务超时')
+                // }
+                //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
+
                 if (!$api.getStorage('operateInfo')) {
-                  _context.next = 19;
+                  _context2.next = 10;
                   break;
                 }
 
@@ -3187,36 +3231,36 @@ var PageController = /*#__PURE__*/function (_Service) {
                   data: JSON.parse($api.getStorage('operateInfo'))
                 };
                 $api.rmStorage('operateInfo');
-                _context.next = 28;
+                _context2.next = 19;
                 break;
 
-              case 19:
-                _context.prev = 19;
-                _context.next = 22;
+              case 10:
+                _context2.prev = 10;
+                _context2.next = 13;
                 return this.getQueryOperate({
                   gtId: gtId
                 });
 
-              case 22:
-                operateRes = _context.sent;
-                _context.next = 28;
+              case 13:
+                operateRes = _context2.sent;
+                _context2.next = 19;
                 break;
 
-              case 25:
-                _context.prev = 25;
-                _context.t1 = _context["catch"](19);
+              case 16:
+                _context2.prev = 16;
+                _context2.t0 = _context2["catch"](10);
 
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-                if (_context.t1.code === 3005) {
+                if (_context2.t0.code === 3005) {
                   this.data.isInsert = true;
                 } else {
-                  Utils$1.UI.toast(_context.t1.msg);
+                  Utils$1.UI.toast(_context2.t0.msg);
                 }
 
-              case 28:
+              case 19:
                 try {
                   // 3. 刷主表土地信息和养殖信息填写状态和字段
-                  this.data.isInsert = false;
+                  // this.data.isInsert = false
                   this.data.operateId = operateRes.data.operateId;
                   document.querySelector('#landInfoStatus').classList.add('done');
                   document.querySelector('#farmInfoStatus').classList.add('done'); // key: 土地性质
@@ -3345,12 +3389,12 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                 callback && callback();
 
-              case 30:
+              case 21:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[4, 11], [19, 25]]);
+        }, _callee2, this, [[10, 16]]);
       }));
 
       function initData(_x) {
@@ -3541,25 +3585,32 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "bindEventsPageRouter",
     value: function bindEventsPageRouter() {
       var self = this;
+      var _cbScriptString = 'window.Page && window.Page.initFormStatus();';
 
       document.querySelector('#familyInfo').onclick = function () {
         self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationFamily({
-          pageParam: api.pageParam
+          pageParam: _objectSpread$1({}, api.pageParam, {
+            _cb: _cbScriptString
+          })
         });
       };
 
       document.querySelector('#houseInfo').onclick = function () {
         self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationHouse({
-          pageParam: api.pageParam
+          pageParam: _objectSpread$1({}, api.pageParam, {
+            _cb: _cbScriptString
+          })
         });
       };
 
       document.querySelector('#carInfo').onclick = function () {
         self.cacheOperateInfo();
         Utils$1.Router.openGuaranteeApplicationCar({
-          pageParam: api.pageParam
+          pageParam: _objectSpread$1({}, api.pageParam, {
+            _cb: _cbScriptString
+          })
         });
       };
     } // 跳转子页面前缓存主表经营信息
@@ -3650,12 +3701,12 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "submitFormData",
     value: function () {
-      var _submitFormData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+      var _submitFormData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
         var self, _this$data2, landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, farmsSize, workshopCount, workshopArea, workshopAddr, formJSON, isValidate, res;
 
-        return regenerator.wrap(function _callee2$(_context2) {
+        return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 self = this;
                 _this$data2 = this.data, landType = _this$data2.landType, farmType = _this$data2.farmType, envReport = _this$data2.envReport, livestockType = _this$data2.livestockType, shedStructure = _this$data2.shedStructure, gtId = _this$data2.gtId, envReportFile = _this$data2.envReportFile, pcd = _this$data2.pcd, maturityYear = _this$data2.maturityYear;
@@ -3688,30 +3739,30 @@ var PageController = /*#__PURE__*/function (_Service) {
                 formJSON.maturityYear = maturityYear || '2020';
 
                 if (!isValidate) {
-                  _context2.next = 34;
+                  _context3.next = 34;
                   break;
                 }
 
                 Utils$1.UI.showLoading('保存中...');
                 res = null;
-                _context2.prev = 13;
+                _context3.prev = 13;
 
                 if (!self.data.isInsert) {
-                  _context2.next = 22;
+                  _context3.next = 22;
                   break;
                 }
 
-                _context2.next = 17;
+                _context3.next = 17;
                 return this.postInsertOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
               case 17:
-                res = _context2.sent;
+                res = _context3.sent;
                 //  第一次插入经营新后，存储返回的operateId
                 self.data.operateId = res.data;
                 self.data.isInsert = false;
-                _context2.next = 26;
+                _context3.next = 26;
                 break;
 
               case 22:
@@ -3719,13 +3770,13 @@ var PageController = /*#__PURE__*/function (_Service) {
                   operateId: self.data.operateId
                 });
 
-                _context2.next = 25;
+                _context3.next = 25;
                 return this.postUpdateOperate(formJSON, {
                   envDataFileStream: envReportFile
                 });
 
               case 25:
-                res = _context2.sent;
+                res = _context3.sent;
 
               case 26:
                 if (res.code === 200) {
@@ -3736,24 +3787,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                   });
                 }
 
-                _context2.next = 33;
+                _context3.next = 33;
                 break;
 
               case 29:
-                _context2.prev = 29;
-                _context2.t0 = _context2["catch"](13);
+                _context3.prev = 29;
+                _context3.t0 = _context3["catch"](13);
                 Utils$1.UI.hideLoading();
-                Utils$1.UI.toast(_context2.t0.msg);
+                Utils$1.UI.toast(_context3.t0.msg);
 
               case 33:
                 Utils$1.UI.hideLoading();
 
               case 34:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[13, 29]]);
+        }, _callee3, this, [[13, 29]]);
       }));
 
       function submitFormData() {
@@ -3882,7 +3933,7 @@ apiready = function apiready() {
   api.setStatusBarStyle({
     style: 'dark'
   });
-  new PageController({
+  window.Page = new PageController({
     pageParam: pageParam
   }).main();
 };

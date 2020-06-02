@@ -42,6 +42,7 @@ apiready = function () {
     // openBaseinfoFill()
     // openCompanyInfo()
     // $api.clearStorage()
+
     const userinfo = $api.getStorage('userinfo')
     // 认证状态 int
     // 1：正常
