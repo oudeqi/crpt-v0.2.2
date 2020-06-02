@@ -24,8 +24,9 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            gtCounterId: props.pageParam.gtCounterId,
             _cb: props.pageParam._cb,
-            type: props.pageParam.type,
+            type: props.pageParam.type || 1,
             carList: [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
         }
     }
@@ -46,10 +47,17 @@ class PageController extends Service {
 
     async initData() {
         Utils.UI.showLoading('加载中')
+        const self = this
         try {
-            const res = await this.getGuaranteeCarList({
-                gtId: this.data.gtId
-            })
+            let params = {}
+            // 担保人则传gtId
+            if (self.data.type === 1) {
+                params.gtId = self.data.gtId
+            } else {
+                // 反担保人传gtCounterId
+                params.gtCounterId = self.data.gtCounterId
+            }
+            const res = await this.getGuaranteeCarList(params)
             this.data.carList = res.data.length > 0 ? res.data.map((item, i) => {
                 return {
                     ...item,
@@ -123,12 +131,19 @@ class PageController extends Service {
             }
             Utils.UI.showLoading('提交中')
             try {
-                const res = await self.postGuaranteeCarList({
+                let params = {
                     type: self.data.type || 1,
-                    gtId: self.data.gtId,
                     gtCreditId: self.data.gtCreditId,
                     carList: self.data.carList
-                })
+                }
+                // 担保人则传gtId
+                if (params.type === 1) {
+                    params.gtId = self.data.gtId
+                } else {
+                    // 反担保人传gtCounterId
+                    params.gtCounterId = self.data.gtCounterId
+                }
+                const res = await self.postGuaranteeCarList(params)
                 Utils.Router.closeCurrentWinAndRefresh({
                     winName: 'html/guarantee_application_index/index',
                     script: self.data._cb || 'window.location.reload'
@@ -168,7 +183,7 @@ class PageController extends Service {
                                     // 后台保存上传的附件
                                     try {
                                         const attachRes = await self.saveAttachment({gtId: self.data.gtId}, {pictureFile: fileStream})
-                                        if(attachRes.code === 200) {
+                                        if (attachRes.code === 200) {
                                             const pictureId = attachRes.data.pictureId
                                             self.data.carList[_index].pictureId = pictureId
                                         }

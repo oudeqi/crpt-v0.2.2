@@ -3222,33 +3222,20 @@ var PageController = /*#__PURE__*/function (_Service) {
                 // }
                 //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
 
-                if (!$api.getStorage('operateInfo')) {
-                  _context2.next = 10;
-                  break;
-                }
-
-                operateRes = {
-                  data: JSON.parse($api.getStorage('operateInfo'))
-                };
-                $api.rmStorage('operateInfo');
-                _context2.next = 19;
-                break;
-
-              case 10:
-                _context2.prev = 10;
-                _context2.next = 13;
+                _context2.prev = 5;
+                _context2.next = 8;
                 return this.getQueryOperate({
                   gtId: gtId
                 });
 
-              case 13:
+              case 8:
                 operateRes = _context2.sent;
-                _context2.next = 19;
+                _context2.next = 14;
                 break;
 
-              case 16:
-                _context2.prev = 16;
-                _context2.t0 = _context2["catch"](10);
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](5);
 
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
                 if (_context2.t0.code === 3005) {
@@ -3257,7 +3244,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   Utils$1.UI.toast(_context2.t0.msg);
                 }
 
-              case 19:
+              case 14:
                 try {
                   // 3. 刷主表土地信息和养殖信息填写状态和字段
                   // this.data.isInsert = false
@@ -3389,12 +3376,12 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                 callback && callback();
 
-              case 21:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[10, 16]]);
+        }, _callee2, this, [[5, 11]]);
       }));
 
       function initData(_x) {

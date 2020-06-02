@@ -24,8 +24,9 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            gtCounterId: props.pageParam.gtCounterId,
             _cb: props.pageParam._cb,
-            type: props.pageParam.type,
+            type: props.pageParam.type || 1,
             houseList: [{
                 houseNo: '',
                 area: '',
@@ -57,10 +58,17 @@ class PageController extends Service {
 
     async initData() {
         Utils.UI.showLoading('加载中')
+        const self = this
         try {
-            const res = await this.getGuaranteeHouseList({
-                gtId: this.data.gtId
-            })
+            let params = {}
+            // 担保人则传gtId
+            if (self.data.type === 1) {
+                params.gtId = self.data.gtId
+            } else {
+                // 反担保人传gtCounterId
+                params.gtCounterId = self.data.gtCounterId
+            }
+            const res = await this.getGuaranteeHouseList(params)
             this.data.houseList = res.data.length > 0 ? res.data.map((item, i) => {
                 return {
                     ...item,
@@ -183,12 +191,19 @@ class PageController extends Service {
             }
             Utils.UI.showLoading('提交中')
             try {
-                const res = await self.postGuaranteeHouseList({
-                    type: 1,
-                    gtId: self.data.gtId,
+                let params = {
+                    type: self.data.type || 1,
                     gtCreditId: self.data.gtCreditId,
                     houseList: self.data.houseList
-                })
+                }
+                // 担保人则传gtId
+                if (params.type === 1) {
+                    params.gtId = self.data.gtId
+                } else {
+                    // 反担保人传gtCounterId
+                    params.gtCounterId = self.data.gtCounterId
+                }
+                const res = await self.postGuaranteeHouseList(params)
                 Utils.Router.closeCurrentWinAndRefresh({
                     winName: 'html/guarantee_application_index/index',
                     script: self.data._cb || 'window.location.reload'
