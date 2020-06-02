@@ -2010,6 +2010,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      _cb: props.pageParam._cb,
       type: props.pageParam.type,
       houseList: [{
         houseNo: '',
@@ -2237,7 +2238,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 res = _context2.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
-                  script: 'window.location.reload();'
+                  script: self.data._cb || 'window.location.reload'
                 });
                 _context2.next = 16;
                 break;

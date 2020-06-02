@@ -24,6 +24,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            _cb: props.pageParam._cb,
             type: props.pageParam.type,
             carList: [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
         }
@@ -130,7 +131,7 @@ class PageController extends Service {
                 })
                 Utils.Router.closeCurrentWinAndRefresh({
                     winName: 'html/guarantee_application_index/index',
-                    script: 'window.location.reload();'
+                    script: self.data._cb || 'window.location.reload'
                 })
             } catch (e) {
                 Utils.UI.toast('服务超时')

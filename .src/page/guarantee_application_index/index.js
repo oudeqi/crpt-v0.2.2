@@ -59,7 +59,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.flowStatus,
             gtCreditId: props.gtCreditId,
-            isInsert: true,
+            isInsert: false,
             farmType: 1,
             landType: 1,
             envReport: 1,
@@ -83,7 +83,7 @@ class PageController extends Service {
             }
         })
         this.bindEvents()
-
+        return this
     }
 
     //  事件绑定入口
@@ -107,7 +107,7 @@ class PageController extends Service {
         this.bindDateEvents()
     }
 
-    async initData({callback}) {
+    async initFormStatus() {
         const self = this
         const gtId = this.data.gtId
         const gtCreditId = this.data.gtCreditId
@@ -124,7 +124,26 @@ class PageController extends Service {
         } catch (e) {
             Utils.UI.toast('服务超时')
         }
+    }
 
+    async initData({callback}) {
+        const self = this
+        const gtId = this.data.gtId
+        const gtCreditId = this.data.gtCreditId
+
+        //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+        this.initFormStatus()
+        // try {
+        //     const guaranteeRes = await this.getQueryGuaranteeMain()
+        //     if (guaranteeRes.data) {
+        //         const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
+        //         houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
+        //         carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
+        //         socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
+        //     }
+        // } catch (e) {
+        //     Utils.UI.toast('服务超时')
+        // }
         //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
         let operateRes
         // 有缓存，则读取缓存并销毁
@@ -147,7 +166,7 @@ class PageController extends Service {
         }
         try {
             // 3. 刷主表土地信息和养殖信息填写状态和字段
-            this.data.isInsert = false
+            // this.data.isInsert = false
             this.data.operateId = operateRes.data.operateId
             document.querySelector('#landInfoStatus').classList.add('done')
             document.querySelector('#farmInfoStatus').classList.add('done')
@@ -274,7 +293,8 @@ class PageController extends Service {
                         }
                     })
             }
-        } catch (e) {}
+        } catch (e) {
+        }
         callback && callback()
     }
 
@@ -438,17 +458,18 @@ class PageController extends Service {
     //  跳转至房产、车辆、家庭成员录入页
     bindEventsPageRouter() {
         const self = this
+        let _cbScriptString = 'window.Page && window.Page.initFormStatus();'
         document.querySelector('#familyInfo').onclick = function () {
             self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationFamily({pageParam: api.pageParam})
+            Utils.Router.openGuaranteeApplicationFamily({pageParam: {...api.pageParam, _cb: _cbScriptString}})
         }
         document.querySelector('#houseInfo').onclick = function () {
             self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationHouse({pageParam: api.pageParam})
+            Utils.Router.openGuaranteeApplicationHouse({pageParam: {...api.pageParam, _cb: _cbScriptString}})
         }
         document.querySelector('#carInfo').onclick = function () {
             self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationCar({pageParam: api.pageParam})
+            Utils.Router.openGuaranteeApplicationCar({pageParam: {...api.pageParam, _cb: _cbScriptString}})
         }
     }
 
@@ -699,5 +720,5 @@ apiready = function () {
     api.setStatusBarStyle({
         style: 'dark'
     });
-    new PageController({pageParam}).main()
+    window.Page = new PageController({pageParam}).main()
 };
