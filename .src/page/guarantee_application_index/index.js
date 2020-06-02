@@ -146,22 +146,24 @@ class PageController extends Service {
         // }
         //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
         let operateRes
-        // 有缓存，则读取缓存并销毁
-        if ($api.getStorage('operateInfo')) {
-            operateRes = {
-                data: JSON.parse($api.getStorage('operateInfo'))
-            }
-            $api.rmStorage('operateInfo')
-        } else {
-            try {
-                operateRes = await this.getQueryOperate({gtId})
-            } catch (err) {
-                //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-                if (err.code === 3005) {
-                    this.data.isInsert = true
-                } else {
-                    Utils.UI.toast(err.msg)
-                }
+        // // 有缓存，则读取缓存并销毁
+        // 2020.6.2 暂时去掉storage缓存，真机上出现了缓存清不掉的情况，改成用动态刷子表状态接口
+        // if ($api.getStorage('operateInfo')) {
+        //     operateRes = {
+        //         data: JSON.parse($api.getStorage('operateInfo'))
+        //     }
+        //     $api.rmStorage('operateInfo')
+        // } else {
+        //
+        // }
+        try {
+            operateRes = await this.getQueryOperate({gtId})
+        } catch (err) {
+            //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
+            if (err.code === 3005) {
+                this.data.isInsert = true
+            } else {
+                Utils.UI.toast(err.msg)
             }
         }
         try {

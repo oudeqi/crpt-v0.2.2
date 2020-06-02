@@ -2010,8 +2010,9 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      gtCounterId: props.pageParam.gtCounterId,
       _cb: props.pageParam._cb,
-      type: props.pageParam.type,
+      type: props.pageParam.type || 1,
       houseList: [{
         houseNo: '',
         area: '',
@@ -2048,19 +2049,27 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res;
+        var self, params, res;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 Utils$1.UI.showLoading('加载中');
-                _context.prev = 1;
-                _context.next = 4;
-                return this.getGuaranteeHouseList({
-                  gtId: this.data.gtId
-                });
+                self = this;
+                _context.prev = 2;
+                params = {}; // 担保人则传gtId
 
-              case 4:
+                if (self.data.type === 1) {
+                  params.gtId = self.data.gtId;
+                } else {
+                  // 反担保人传gtCounterId
+                  params.gtCounterId = self.data.gtCounterId;
+                }
+
+                _context.next = 7;
+                return this.getGuaranteeHouseList(params);
+
+              case 7:
                 res = _context.sent;
                 this.data.houseList = res.data.length > 0 ? res.data.map(function (item, i) {
                   return _objectSpread$1({}, item, {
@@ -2079,25 +2088,25 @@ var PageController = /*#__PURE__*/function (_Service) {
                   addrCountyCode: '',
                   pictureId: ''
                 }];
-                _context.next = 11;
+                _context.next = 14;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](2);
                 Utils$1.UI.toast('服务超时');
 
-              case 11:
+              case 14:
                 this.compilerTemplate(this.data.houseList);
                 this.bindCityPickerEvents();
                 Utils$1.UI.hideLoading();
 
-              case 14:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[2, 11]]);
       }));
 
       function initData() {
@@ -2204,7 +2213,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function bindSubmitEvents() {
       var self = this;
       document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var isValidate, res;
+        var isValidate, params, res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2226,37 +2235,45 @@ var PageController = /*#__PURE__*/function (_Service) {
               case 5:
                 Utils$1.UI.showLoading('提交中');
                 _context2.prev = 6;
-                _context2.next = 9;
-                return self.postGuaranteeHouseList({
-                  type: 1,
-                  gtId: self.data.gtId,
+                params = {
+                  type: self.data.type || 1,
                   gtCreditId: self.data.gtCreditId,
                   houseList: self.data.houseList
-                });
+                }; // 担保人则传gtId
 
-              case 9:
+                if (params.type === 1) {
+                  params.gtId = self.data.gtId;
+                } else {
+                  // 反担保人传gtCounterId
+                  params.gtCounterId = self.data.gtCounterId;
+                }
+
+                _context2.next = 11;
+                return self.postGuaranteeHouseList(params);
+
+              case 11:
                 res = _context2.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: self.data._cb || 'window.location.reload'
                 });
-                _context2.next = 16;
+                _context2.next = 18;
                 break;
 
-              case 13:
-                _context2.prev = 13;
+              case 15:
+                _context2.prev = 15;
                 _context2.t0 = _context2["catch"](6);
                 Utils$1.UI.toast('服务超时');
 
-              case 16:
+              case 18:
                 Utils$1.UI.hideLoading();
 
-              case 17:
+              case 19:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[6, 13]]);
+        }, _callee2, null, [[6, 15]]);
       }));
     } // 编译html模板
 

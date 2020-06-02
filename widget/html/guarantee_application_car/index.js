@@ -1954,8 +1954,9 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      gtCounterId: props.pageParam.gtCounterId,
       _cb: props.pageParam._cb,
-      type: props.pageParam.type,
+      type: props.pageParam.type || 1,
       carList: [{
         carNo: '',
         carPrice: '',
@@ -2005,19 +2006,27 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var res;
+        var self, params, res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 Utils$1.UI.showLoading('加载中');
-                _context2.prev = 1;
-                _context2.next = 4;
-                return this.getGuaranteeCarList({
-                  gtId: this.data.gtId
-                });
+                self = this;
+                _context2.prev = 2;
+                params = {}; // 担保人则传gtId
 
-              case 4:
+                if (self.data.type === 1) {
+                  params.gtId = self.data.gtId;
+                } else {
+                  // 反担保人传gtCounterId
+                  params.gtCounterId = self.data.gtCounterId;
+                }
+
+                _context2.next = 7;
+                return this.getGuaranteeCarList(params);
+
+              case 7:
                 res = _context2.sent;
                 this.data.carList = res.data.length > 0 ? res.data.map(function (item, i) {
                   return _objectSpread$1({}, item, {
@@ -2029,24 +2038,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                   brand: '',
                   pictureId: ''
                 }];
-                _context2.next = 11;
+                _context2.next = 14;
                 break;
 
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](2);
                 Utils$1.UI.toast('服务超时');
 
-              case 11:
+              case 14:
                 this.compilerTemplate(this.data.carList);
                 Utils$1.UI.hideLoading('加载中');
 
-              case 13:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 8]]);
+        }, _callee2, this, [[2, 11]]);
       }));
 
       function initData() {
@@ -2111,7 +2120,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function bindSubmitEvents() {
       var self = this;
       document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-        var isValidate, res;
+        var isValidate, params, res;
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2133,37 +2142,45 @@ var PageController = /*#__PURE__*/function (_Service) {
               case 5:
                 Utils$1.UI.showLoading('提交中');
                 _context3.prev = 6;
-                _context3.next = 9;
-                return self.postGuaranteeCarList({
+                params = {
                   type: self.data.type || 1,
-                  gtId: self.data.gtId,
                   gtCreditId: self.data.gtCreditId,
                   carList: self.data.carList
-                });
+                }; // 担保人则传gtId
 
-              case 9:
+                if (params.type === 1) {
+                  params.gtId = self.data.gtId;
+                } else {
+                  // 反担保人传gtCounterId
+                  params.gtCounterId = self.data.gtCounterId;
+                }
+
+                _context3.next = 11;
+                return self.postGuaranteeCarList(params);
+
+              case 11:
                 res = _context3.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: self.data._cb || 'window.location.reload'
                 });
-                _context3.next = 16;
+                _context3.next = 18;
                 break;
 
-              case 13:
-                _context3.prev = 13;
+              case 15:
+                _context3.prev = 15;
                 _context3.t0 = _context3["catch"](6);
                 Utils$1.UI.toast('服务超时');
 
-              case 16:
+              case 18:
                 Utils$1.UI.hideLoading();
 
-              case 17:
+              case 19:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[6, 13]]);
+        }, _callee3, null, [[6, 15]]);
       }));
     } // 绑定ocr
 
