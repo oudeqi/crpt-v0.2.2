@@ -2417,8 +2417,12 @@ var pageController = /*#__PURE__*/function (_Service) {
 apiready = function apiready() {
   var ctrl = new pageController();
   ctrl.bindEvent();
-  ctrl.getPageDate();
   setRefreshHeaderInfo(function () {
+    ctrl.getPageDate();
+  });
+  api.addEventListener({
+    name: 'viewappear'
+  }, function (ret, err) {
     ctrl.getPageDate();
   });
 
@@ -2436,10 +2440,5 @@ apiready = function apiready() {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  });
-  api.addEventListener({
-    name: 'viewappear'
-  }, function (ret, err) {
-    ctrl.getPageDate();
   });
 };

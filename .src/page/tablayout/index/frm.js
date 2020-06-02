@@ -39,8 +39,10 @@ class PageController extends Service {
   renderNav () {
     if (this.state.custType === '2') { // 1：通用   2：普惠担保  3：其他
       this.el.navDanbao.style.display = 'block'
-    } else {
+    } else if (this.state.custType === '1' || this.state.custType === '3') {
       this.el.navOther.style.display = 'block'
+    } else {
+      api.toast({ msg: '未知的客户类型', location: 'middle' })
     }
   }
 
@@ -145,6 +147,9 @@ apiready = function () {
 
   const controller = new PageController()
   $api.byId('kaitong').onclick = () => {
+    controller.goDanbao()
+  }
+  $api.byId('danbaofuwu').onclick = () => {
     controller.goDanbao()
   }
   controller.renderNav()

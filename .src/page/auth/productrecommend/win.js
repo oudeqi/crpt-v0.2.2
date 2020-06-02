@@ -108,8 +108,8 @@ class PageController extends Service {
             }
             </div>
             <div class="col2">
-              <p class="otw">${item.introduce || ''}</p>
               <p class="otw">${item.des || ''}</p>
+              <p class="otw">${item.introduce || ''}</p>
             </div>
           </div>
           <div class="btn" tapmode="active" data-id="${item.id || ''}" data-name="${item.name || ''}">立即开通</div>

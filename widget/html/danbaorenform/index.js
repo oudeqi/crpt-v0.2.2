@@ -2762,7 +2762,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
       $api.byId('marriage').onclick = function (e) {
         ActionSheet('婚姻状况', _this5.marriage, function (index) {
-          e.target.value = _this5.relationship[index];
+          e.target.value = _this5.marriage[index];
           e.target.dataset.value = index + 1;
         });
       };

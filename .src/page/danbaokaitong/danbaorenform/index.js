@@ -314,7 +314,7 @@ class pageController extends Service {
   _InitMarriage () {
     $api.byId('marriage').onclick = (e) => {
       ActionSheet('婚姻状况', this.marriage, (index) => {
-        e.target.value = this.relationship[index]
+        e.target.value = this.marriage[index]
         e.target.dataset.value = index + 1
       })
     }

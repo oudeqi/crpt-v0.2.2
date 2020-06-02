@@ -1970,7 +1970,8 @@ apiready = function apiready() {
     //   demandMoney: '40',
     //   gtId: '1263411018323742721'
     // })
-    // openProductRecommend()
+    // openBaseinfoFill()
+    // return
     // openDanbaoKaitong({step: 6, creditStatus: 2})
     // return
     var authStatus = $api.getStorage('authStatus') || {};

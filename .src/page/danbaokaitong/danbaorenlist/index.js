@@ -323,8 +323,12 @@ apiready = function () {
 
   const ctrl = new pageController()
   ctrl.bindEvent()
-  ctrl.getPageDate()
   setRefreshHeaderInfo(function () {
+    ctrl.getPageDate()
+  })
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
     ctrl.getPageDate()
   })
 
@@ -342,12 +346,6 @@ apiready = function () {
     if (ret.type === 'left') {
       api.closeWin()
     }
-  })
-
-  api.addEventListener({
-    name:'viewappear'
-  }, function(ret, err){
-    ctrl.getPageDate()
   })
 
 }

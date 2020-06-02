@@ -3044,8 +3044,13 @@ var PageController = /*#__PURE__*/function (_Service) {
       if (this.state.custType === '2') {
         // 1：通用   2：普惠担保  3：其他
         this.el.navDanbao.style.display = 'block';
-      } else {
+      } else if (this.state.custType === '1' || this.state.custType === '3') {
         this.el.navOther.style.display = 'block';
+      } else {
+        api.toast({
+          msg: '未知的客户类型',
+          location: 'middle'
+        });
       }
     } // 点击担保开通
 
@@ -3162,6 +3167,10 @@ apiready = function apiready() {
   var controller = new PageController();
 
   $api.byId('kaitong').onclick = function () {
+    controller.goDanbao();
+  };
+
+  $api.byId('danbaofuwu').onclick = function () {
     controller.goDanbao();
   };
 
