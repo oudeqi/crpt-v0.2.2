@@ -2088,19 +2088,16 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 15:
                 res = _context.sent;
-                this.data.attachmentList = res.data.length > 0 ? res.data : [{
-                  attachId: '',
-                  // gtId: '',
-                  fileId: '',
-                  productFileId: '',
-                  productFileRequire: '',
-                  fileComment: '',
-                  fileContentType: '',
-                  approvalStatus: '' // approvalPersonName: '',
-                  // createDate: '',
-                  // updateDate: ''
-
-                }];
+                // this.data.attachmentList = res.data.length > 0 ? res.data : [{
+                //     attachId: '',
+                //     fileId: '',
+                //     productFileId: '',
+                //     productFileRequire: '',
+                //     fileComment: '',
+                //     fileContentType: '',
+                //     approvalStatus: '',
+                // }]
+                this.data.attachmentList = res.data.length > 0 ? res.data : [];
                 _context.next = 22;
                 break;
 
@@ -2224,22 +2221,41 @@ var PageController = /*#__PURE__*/function (_Service) {
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('update')) {
-                    _context3.next = 23;
+                    _context3.next = 29;
                     break;
                   }
 
                   _i = ev.target.getAttribute('data-index'); // 先刷一遍本地离线备份
 
-                  self.searchAllData();
-                  Utils$1.UI.showLoading('提交中...');
-                  _context3.prev = 5;
+                  self.searchAllData(); // 校验
 
-                  if (!self.data.attachmentList[_i].attachId) {
-                    _context3.next = 13;
+                  if (!(!self.data.attachmentList[_i].attachId && !self.data.attachmentList[_i].fileDataStream)) {
+                    _context3.next = 7;
                     break;
                   }
 
-                  _context3.next = 9;
+                  Utils$1.UI.toast('请上传图片');
+                  return _context3.abrupt("return");
+
+                case 7:
+                  if (self.data.attachmentList[_i].fileComment) {
+                    _context3.next = 10;
+                    break;
+                  }
+
+                  Utils$1.UI.toast('请填写附件描述');
+                  return _context3.abrupt("return");
+
+                case 10:
+                  Utils$1.UI.showLoading('提交中...');
+                  _context3.prev = 11;
+
+                  if (!self.data.attachmentList[_i].attachId) {
+                    _context3.next = 19;
+                    break;
+                  }
+
+                  _context3.next = 15;
                   return self.updateAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[_i].attachId,
@@ -2248,7 +2264,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     fileDataStream: self.data.attachmentList[_i].fileDataStream
                   });
 
-                case 9:
+                case 15:
                   res = _context3.sent;
 
                   if (res.code === 202) {
@@ -2260,11 +2276,11 @@ var PageController = /*#__PURE__*/function (_Service) {
                     Utils$1.UI.toast('操作成功');
                   }
 
-                  _context3.next = 17;
+                  _context3.next = 23;
                   break;
 
-                case 13:
-                  _context3.next = 15;
+                case 19:
+                  _context3.next = 21;
                   return self.saveAttachment({
                     gtId: self.data.gtId,
                     fileContentType: self.data.attachmentList[_i].fileContentType || 0,
@@ -2274,7 +2290,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     fileDataStream: self.data.attachmentList[_i].fileDataStream
                   });
 
-                case 15:
+                case 21:
                   _res = _context3.sent;
 
                   if (_res.code === 202) {
@@ -2287,24 +2303,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                     Utils$1.UI.toast('操作成功');
                   }
 
-                case 17:
-                  _context3.next = 22;
+                case 23:
+                  _context3.next = 28;
                   break;
 
-                case 19:
-                  _context3.prev = 19;
-                  _context3.t0 = _context3["catch"](5);
+                case 25:
+                  _context3.prev = 25;
+                  _context3.t0 = _context3["catch"](11);
                   Utils$1.UI.toast(_context3.t0.msg || '出错啦');
 
-                case 22:
+                case 28:
                   Utils$1.UI.hideLoading();
 
-                case 23:
+                case 29:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[5, 19]]);
+          }, _callee3, null, [[11, 25]]);
         }));
 
         return function (_x2) {
@@ -2509,7 +2525,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\n                ".concat(!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>", " \n                ").concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " \n                <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <span class=\"def\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\n                ".concat(!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>", " \n                ").concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " \n                <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <span class=\"def\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\" maxlength=\"50\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html;

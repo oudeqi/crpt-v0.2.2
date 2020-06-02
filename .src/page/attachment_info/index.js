@@ -86,19 +86,16 @@ class PageController extends Service {
             const res = await this.getAttachment({
                 gtId: this.data.gtId
             })
-            this.data.attachmentList = res.data.length > 0 ? res.data : [{
-                attachId: '',
-                // gtId: '',
-                fileId: '',
-                productFileId: '',
-                productFileRequire: '',
-                fileComment: '',
-                fileContentType: '',
-                approvalStatus: '',
-                // approvalPersonName: '',
-                // createDate: '',
-                // updateDate: ''
-            }]
+            // this.data.attachmentList = res.data.length > 0 ? res.data : [{
+            //     attachId: '',
+            //     fileId: '',
+            //     productFileId: '',
+            //     productFileRequire: '',
+            //     fileComment: '',
+            //     fileContentType: '',
+            //     approvalStatus: '',
+            // }]
+            this.data.attachmentList = res.data.length > 0 ? res.data : []
         } catch (e) {
             Utils.UI.toast('服务超时')
         }
@@ -171,6 +168,17 @@ class PageController extends Service {
                 let _i = ev.target.getAttribute('data-index')
                 // 先刷一遍本地离线备份
                 self.searchAllData()
+
+                // 校验
+                if (!self.data.attachmentList[_i].attachId && !self.data.attachmentList[_i].fileDataStream) {
+                    Utils.UI.toast('请上传图片')
+                    return
+                }
+                if (!self.data.attachmentList[_i].fileComment) {
+                    Utils.UI.toast('请填写附件描述')
+                    return
+                }
+
                 Utils.UI.showLoading('提交中...')
                 try {
                     //  1. 如果有attachId，则为更新
@@ -351,7 +359,7 @@ class PageController extends Service {
                     <img class="a-img-url" src="${baseUrl}/crpt-file/file/download/${item.fileId}" alt="" id="fileId_${i}" data-index="${i}">
                 </div>
                 <div class="a-text-box">
-                    <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}">${item.fileComment || ''}</textarea>
+                    <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}" maxlength="50">${item.fileComment || ''}</textarea>
                     <span class="a-count">${item.fileComment && item.fileComment.length || 0}/50</span>
                 </div>
             </div>
