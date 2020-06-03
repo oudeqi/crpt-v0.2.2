@@ -610,6 +610,7 @@ class PageController extends Service {
 
     validate(formData) {
         const self = this
+        const { farmsCategory } = formData
         let rules = {
             landNature: {
                 type: 'regexp',
@@ -633,13 +634,13 @@ class PageController extends Service {
             },
             farmsSize: {
                 type: 'regexp',
-                rule: /\w+/g,
-                message: '请输入养殖规模'
+                rule: farmsCategory === 3 ? /^[-\+]?\d+$/g : /^[-\+]?\d+(\.\d+)?$/g,
+                message: '请输入合法的养殖规模数量'
             },
             workshopCount: {
                 type: 'regexp',
-                rule: /\w+/g,
-                message: '请输入棚舍数量'
+                rule: /^[-\+]?\d+$/g,
+                message: '请输入合法的棚舍数量'
             },
             workshopArea: {
                 type: 'regexp',

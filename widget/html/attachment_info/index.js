@@ -2165,7 +2165,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 case 0:
                   ev = window.event || e;
 
-                  if (ev.target.classList.contains('a-img-url')) {
+                  if (ev.target.classList.contains('a-img-url') || ev.target.classList.contains('a-img') || ev.target.classList.contains('def')) {
                     _i = ev.target.getAttribute('data-index'); //  1. 如果有图片，则预览
                     // alert(self.data.attachmentList[_i].fileId)
 
@@ -2180,11 +2180,14 @@ var PageController = /*#__PURE__*/function (_Service) {
                           if (res) {
                             if (res.data) {
                               self.data.attachmentList[_i].fileDataStream = res.data;
-                              ev.target.src = res.data;
+                              Array.from(document.querySelectorAll('.a-img-url'))[_i].src = res.data; // ev.target.src = res.data;
+
                               Utils$1.UI.toast('上传成功');
                             } else {
                               Utils$1.UI.toast('未上传成功');
                             }
+                          } else {
+                            console.log(err);
                           }
                         });
                       });
@@ -2345,7 +2348,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('del')) {
-                    _context4.next = 28;
+                    _context4.next = 31;
                     break;
                   }
 
@@ -2363,23 +2366,31 @@ var PageController = /*#__PURE__*/function (_Service) {
                   return _context4.abrupt("return");
 
                 case 8:
-                  // 分情况进行删除
-                  // 1. 产品自带的附件，删除调用后端接口
-                  Utils$1.UI.showLoading('正在删除...');
-                  _context4.prev = 9;
+                  _context4.prev = 8;
 
                   if (!(self.data.attachmentList[index].fileContentType >= 1)) {
-                    _context4.next = 17;
+                    _context4.next = 20;
                     break;
                   }
 
-                  _context4.next = 13;
+                  if (self.data.attachmentList[index].attachId) {
+                    _context4.next = 13;
+                    break;
+                  }
+
+                  Utils$1.UI.toast('还未保存过附件，无法删除');
+                  return _context4.abrupt("return");
+
+                case 13:
+                  Utils$1.UI.showLoading('正在删除...'); // 数据库 delte
+
+                  _context4.next = 16;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 13:
+                case 16:
                   res = _context4.sent;
 
                   // 本地离线备份 重置 reset
@@ -2390,43 +2401,43 @@ var PageController = /*#__PURE__*/function (_Service) {
                     approvalStatus: 0
                   });
 
-                  _context4.next = 21;
+                  _context4.next = 24;
                   break;
 
-                case 17:
-                  _context4.next = 19;
+                case 20:
+                  _context4.next = 22;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 19:
+                case 22:
                   _res2 = _context4.sent;
                   // 本地离线备份直接 delete
                   self.data.attachmentList.splice(index, 1);
 
-                case 21:
+                case 24:
                   self.compilerTemplate(self.data.attachmentList);
-                  _context4.next = 27;
+                  _context4.next = 30;
                   break;
 
-                case 24:
-                  _context4.prev = 24;
-                  _context4.t0 = _context4["catch"](9);
+                case 27:
+                  _context4.prev = 27;
+                  _context4.t0 = _context4["catch"](8);
                   api.toast({
                     msg: _context4.t0.msg || '保存成功',
                     location: 'middle'
                   });
 
-                case 27:
+                case 30:
                   Utils$1.UI.hideLoading();
 
-                case 28:
+                case 31:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4, null, [[9, 24]]);
+          }, _callee4, null, [[8, 27]]);
         }));
 
         return function (_x3) {
@@ -2517,6 +2528,18 @@ var PageController = /*#__PURE__*/function (_Service) {
         });
       });
       this.data.attachmentList = newAttachmentList;
+    } // textarea事件绑定
+
+  }, {
+    key: "bindTextareaChangeEvents",
+    value: function bindTextareaChangeEvents() {
+      Array.from(document.querySelectorAll('.a-desc')).forEach(function (dom, i) {
+        dom.onkeyup = function (event) {
+          var _index = event.target.getAttribute('data-index');
+
+          Array.from(document.querySelectorAll('.current_length'))[_index].innerHTML = event.target.value.length;
+        };
+      });
     } // 编译html模板
 
   }, {
@@ -2525,10 +2548,11 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\n                ".concat(!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>", " \n                ").concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " \n                <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\">\n                    <span class=\"def\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\" maxlength=\"50\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\">").concat(item.fileComment && item.fileComment.length || 0, "/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
+        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\n                ".concat(!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>", " \n                ").concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " \n                <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\"  data-index=\"").concat(i, "\">\n                    <span class=\"def\"  data-index=\"").concat(i, "\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\" maxlength=\"50\" onchange=\"\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\"><b class=\"current_length\">").concat(item.fileComment && item.fileComment.length || 0, "</b>/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html;
+      self.bindTextareaChangeEvents();
     }
   }]);
 
