@@ -131,7 +131,7 @@ class PageController extends Service {
         const self = this
         document.querySelector('#img-bind-doc').onclick = async function (e) {
             let ev = window.event || e;
-            if (ev.target.classList.contains('a-img-url')) {
+            if (ev.target.classList.contains('a-img-url') || ev.target.classList.contains('a-img') || ev.target.classList.contains('def')) {
                 let _i = ev.target.getAttribute('data-index')
                 //  1. 如果有图片，则预览
                 // alert(self.data.attachmentList[_i].fileId)
@@ -146,11 +146,14 @@ class PageController extends Service {
                             if (res) {
                                 if (res.data) {
                                     self.data.attachmentList[_i].fileDataStream = res.data
-                                    ev.target.src = res.data;
+                                    Array.from(document.querySelectorAll('.a-img-url'))[_i].src = res.data
+                                    // ev.target.src = res.data;
                                     Utils.UI.toast('上传成功')
                                 } else {
                                     Utils.UI.toast('未上传成功')
                                 }
+                            }else {
+                                console.log(err)
                             }
                         })
                     })
@@ -242,9 +245,14 @@ class PageController extends Service {
                 }
                 // 分情况进行删除
                 // 1. 产品自带的附件，删除调用后端接口
-                Utils.UI.showLoading('正在删除...')
                 try {
                     if (self.data.attachmentList[index].fileContentType >= 1) {
+                        if(!self.data.attachmentList[index].attachId) {
+                            Utils.UI.toast('还未保存过附件，无法删除')
+                            return
+                        }
+
+                        Utils.UI.showLoading('正在删除...')
                         // 数据库 delte
                         const res = await self.deleteAttachment({
                             gtId: self.data.gtId,
@@ -333,6 +341,15 @@ class PageController extends Service {
         this.data.attachmentList = newAttachmentList
     }
 
+    // textarea事件绑定
+    bindTextareaChangeEvents() {
+        Array.from(document.querySelectorAll('.a-desc')).forEach((dom,i) => {
+            dom.onkeyup = function(event) {
+                let _index = event.target.getAttribute('data-index')
+                Array.from(document.querySelectorAll('.current_length'))[_index].innerHTML = event.target.value.length
+            }
+        })
+    }
 
     // 编译html模板
     compilerTemplate(list) {
@@ -354,19 +371,20 @@ class PageController extends Service {
 
         <div class="form-body">
             <div class="form-cell_shell" data-index="${i}">
-                <div class="a-img">
-                    <span class="def"></span>
+                <div class="a-img"  data-index="${i}">
+                    <span class="def"  data-index="${i}"></span>
                     <img class="a-img-url" src="${baseUrl}/crpt-file/file/download/${item.fileId}" alt="" id="fileId_${i}" data-index="${i}">
                 </div>
                 <div class="a-text-box">
-                    <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}" maxlength="50">${item.fileComment || ''}</textarea>
-                    <span class="a-count">${item.fileComment && item.fileComment.length || 0}/50</span>
+                    <textarea class="a-desc" name="" id="fileComment_${i}" cols="30" rows="10" data-index="${i}" maxlength="50" onchange="">${item.fileComment || ''}</textarea>
+                    <span class="a-count"><b class="current_length">${item.fileComment && item.fileComment.length || 0}</b>/50</span>
                 </div>
             </div>
         </div>
     </div>`
         }, '')
         document.querySelector('#credit-list').innerHTML = _html
+        self.bindTextareaChangeEvents()
     }
 }
 
