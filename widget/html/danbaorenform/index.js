@@ -959,7 +959,7 @@ function openCheliang(_ref11) {
       fontWeight: 500
     }
   });
-}
+} // 产品列表
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -2314,9 +2314,9 @@ var pageController = /*#__PURE__*/function (_Service) {
 
     _this.relationship = ['配偶', '父母', '同事', '朋友', '亲戚']; // 婚姻状况 1：未婚  :2：已婚、  3：已婚有子女、  4：离异后未再婚
 
-    _this.marriage = ['未婚', '已婚', '已婚有子女', '离异后未再婚']; // 学历 ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学']
+    _this.marriage = ['未婚', '已婚', '已婚有子女', '离异后未再婚']; // 【本科及以上、大专、中专或高中、初中或以下】
 
-    _this.education = ['博士后', '博士研究生', '硕士研究生', '本科', '专科', '中专/高中', '初中', '小学'];
+    _this.education = ['本科及以上', '大专', '中专或高中', '初中或以下'];
     return _this;
   }
 

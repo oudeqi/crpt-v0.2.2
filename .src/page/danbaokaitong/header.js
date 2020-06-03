@@ -83,7 +83,10 @@ export default class HeaderController extends Service {
       } else {
         step--
       }
+      let winName = api.winName
+      api.closeWin({ name: winName })
       openDanbaoKaitong({ step, back: true })
+
     }
   }
 

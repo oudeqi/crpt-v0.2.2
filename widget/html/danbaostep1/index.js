@@ -3164,6 +3164,10 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           step--;
         }
 
+        var winName = api.winName;
+        api.closeWin({
+          name: winName
+        });
         openDanbaoKaitong({
           step: step,
           back: true
@@ -3508,7 +3512,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 product = $api.byId('product');
                 rate = $api.byId('rate');
                 $api.byId('product').value = data.productName;
-                $api.byId('rate').value = data.rate;
+                $api.byId('rate').value = "".concat(data.rate || '0', "\u2030");
                 $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1");
                 _context.next = 31;
                 break;
@@ -3528,7 +3532,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   _product = $api.byId('product');
                   _rate = $api.byId('rate');
                   $api.byId('product').value = _data.productName;
-                  $api.byId('rate').value = _data.rate;
+                  $api.byId('rate').value = "".concat(_data.rate || '0', "\u2030");
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(_data.productName, "\u4EA7\u54C1"); // 可编辑
 
                   buildType = Array.from(document.querySelectorAll('[name="buildType"]'));

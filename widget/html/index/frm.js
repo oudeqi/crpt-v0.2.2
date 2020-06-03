@@ -144,25 +144,6 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openProductRecommend(pageParam) {
-  api.openTabLayout({
-    name: 'html/productrecommend/win',
-    title: '产品推荐',
-    url: 'widget://html/productrecommend/win.html',
-    bgColor: '#fff',
-    pageParam: pageParam,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#1dc4a2',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold'
-    }
-  });
-} // 开通担保
-
-
 function openDanbaoKaitong() {
   var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       step = _ref6.step,
@@ -222,6 +203,28 @@ function openDanbaoKaitong() {
     }
   }, animation));
 } // 担保人列表
+
+
+function openProductList(type) {
+  // 1-信用贷款 2-担保贷款
+  api.openTabLayout({
+    name: 'html/productlist/win',
+    title: '产品推荐',
+    url: 'widget://html/productlist/index.html',
+    bgColor: '#fff',
+    pageParam: {
+      type: type
+    },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+}
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -3078,7 +3081,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
         if (error.code === 3002) {
           // 无担保产品
-          openProductRecommend();
+          openProductList(2); // 产品类型：1-信用贷款 2-担保贷款
         } else {
           api.toast({
             msg: error.msg || '查询担保状态失败',
@@ -3173,7 +3176,7 @@ apiready = function apiready() {
   };
 
   $api.byId('danbaofuwu').onclick = function () {
-    controller.goDanbao();
+    openProductList(1); // 产品类型：1-信用贷款 2-担保贷款
   };
 
   controller.renderNav();

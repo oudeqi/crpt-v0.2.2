@@ -1879,14 +1879,10 @@ function getAndStorageAuthStatus(successCallback, errorCallback) {
   // 5：待补充基本信息
   // 6：人工审核不通过
   http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
-    try {
-      $api.setStorage('authStatus', {
-        status: res.data
-      });
-      successCallback && successCallback(res.data);
-    } catch (e) {
-      console.log(JSON.stringify(e));
-    } finally {}
+    $api.setStorage('authStatus', {
+      status: res.data
+    });
+    successCallback && successCallback(res.data);
   })["catch"](function (error) {
     api.toast({
       msg: error.msg || '获取认证状态失败'

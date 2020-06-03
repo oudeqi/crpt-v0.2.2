@@ -2416,9 +2416,11 @@ var PageController = /*#__PURE__*/function (_Service) {
           $api.addCls(_this3.el.submit, 'loading');
 
           _this3.submit(_this3.state.url, _this3.state.postData).then(function (ret) {
-            _this3.state.submitStatus = 'notsubmit';
-            $api.removeCls($api.byId('submit'), 'loading');
-            openAuthResult('success', '补充基本信息成功', '补充基本信息');
+            if (res.code === 200) {
+              _this3.state.submitStatus = 'notsubmit';
+              $api.removeCls($api.byId('submit'), 'loading');
+              openAuthResult('success', '补充基本信息成功', '补充基本信息');
+            }
           })["catch"](function (error) {
             api.toast({
               msg: error.msg || '提交失败',

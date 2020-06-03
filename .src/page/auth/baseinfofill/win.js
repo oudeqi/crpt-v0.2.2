@@ -274,15 +274,15 @@ class PageController extends Service {
   bindEvent () {
     this.el.submit.onclick = () => {
       if (this.state.submitStatus === 'notsubmit') {
-        if (!this.formValidation()) {
-          return
-        }
+        if (!this.formValidation()) { return }
         this.state.submitStatus = 'submitting'
         $api.addCls(this.el.submit, 'loading')
         this.submit(this.state.url, this.state.postData).then(ret => {
-          this.state.submitStatus = 'notsubmit'
-          $api.removeCls($api.byId('submit'), 'loading')
+          if (res.code === 200) {
+            this.state.submitStatus = 'notsubmit'
+            $api.removeCls($api.byId('submit'), 'loading')
             openAuthResult('success', '补充基本信息成功', '补充基本信息')
+          }
         }).catch(error => {
           api.toast({
             msg: error.msg || '提交失败',
