@@ -35,7 +35,7 @@ class PageController extends HeaderController {
         let product = $api.byId('product')
         let rate = $api.byId('rate')
         $api.byId('product').value = data.productName
-        $api.byId('rate').value = data.rate
+        $api.byId('rate').value = `${data.rate || '0'}‰`
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
       } else {
         const res = await this.queryProductById(this.productId)
@@ -47,7 +47,7 @@ class PageController extends HeaderController {
           let product = $api.byId('product')
           let rate = $api.byId('rate')
           $api.byId('product').value = data.productName
-          $api.byId('rate').value = data.rate
+          $api.byId('rate').value = `${data.rate || '0'}‰`
           $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
           // 可编辑
           let buildType = Array.from(document.querySelectorAll('[name="buildType"]'))

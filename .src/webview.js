@@ -1087,7 +1087,26 @@ function openCheliang ({gtId, flowStatus, gtCreditId}) {
       fontSize: 18,
       fontWeight: 500,
     }
-})
+  })
+}
+
+// 产品列表
+function openProductList (type) { // 1-信用贷款 2-担保贷款
+  api.openTabLayout({
+    name: 'html/productlist/win',
+    title: '产品推荐',
+    url: 'widget://html/productlist/index.html',
+    bgColor: '#fff',
+    pageParam: { type },
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    }
+  })
 }
 
 
@@ -1138,5 +1157,6 @@ export {
   openSendAddress,
   openAgreement,
   openCheliang,
-  openFangchan
+  openFangchan,
+  openProductList,
 }

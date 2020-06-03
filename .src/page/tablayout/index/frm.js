@@ -1,6 +1,6 @@
 import '../../../app.css'
 import './frm.css'
-import { openLeftPane, openSettings, openProductRecommend, openDanbaoKaitong } from '../../../webview.js'
+import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config'
 import numeral from 'numeral'
 
@@ -56,7 +56,7 @@ class PageController extends Service {
     }).catch(error => {
       api.hideProgress()
       if (error.code === 3002) { // 无担保产品
-        openProductRecommend()
+        openProductList(2) // 产品类型：1-信用贷款 2-担保贷款
       } else {
         api.toast({
           msg: error.msg || '查询担保状态失败',
@@ -152,7 +152,7 @@ apiready = function () {
     controller.goDanbao()
   }
   $api.byId('danbaofuwu').onclick = () => {
-    controller.goDanbao()
+    openProductList(1) // 产品类型：1-信用贷款 2-担保贷款
   }
   controller.renderNav()
   controller.renderProduct()

@@ -775,32 +775,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var classCallCheck = _classCallCheck;
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
-
 var setPrototypeOf = createCommonjsModule(function (module) {
 function _setPrototypeOf(o, p) {
   module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
@@ -882,6 +856,32 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 });
 
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -913,6 +913,35 @@ function openRegLogin() {
     slidBackEnabled: false
   });
 } // 个人登录
+
+
+function openProductDetails() {
+  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref4.id,
+      open = _ref4.open;
+
+  api.openTabLayout({
+    name: 'html/productdetails/win',
+    title: '产品详情',
+    url: 'widget://html/productdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: {
+      id: id,
+      open: open
+    },
+    // open 1 已开通， 0未开通
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#1dc4a2',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  });
+} // 城市选择
 
 
 function openDanbaoKaitong() {
@@ -974,29 +1003,6 @@ function openDanbaoKaitong() {
     }
   }, animation));
 } // 担保人列表
-
-
-function openSignOnline(id) {
-  api.openTabLayout({
-    name: 'html/signonline/index',
-    title: '在线签约',
-    url: 'widget://html/signonline/index.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: {
-      id: id
-    },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal'
-    }
-  });
-} // 协议
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -1777,8 +1783,8 @@ var Utils$1 = new Utils();
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2991,218 +2997,32 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
+    key: "getData",
+    value: function getData() {
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          custType = _ref.custType;
+
+      return http.get('/crpt-product/product/online/list', {
+        values: {
+          custType: custType
+        }
+      });
+    } // 获取担保状态
+
+  }, {
     key: "queryDanbaoStatus",
-    // 获取担保状态
     value: function queryDanbaoStatus() {
       return http.get('/crpt-guarantee/gt/apply/query');
-    } // 保存担保申请
-
-  }, {
-    key: "saveApply",
-    value: function saveApply(params) {
-      return http.post('/crpt-guarantee/gt/apply/save', {
-        body: params
-      });
-    } // 获取产品信息
-
-  }, {
-    key: "queryProductById",
-    value: function queryProductById(productId) {
-      return http.get('/crpt-guarantee/gt/apply/queryProductInfo?productId=' + productId);
-    } // 授信信息确认查询接口
-
-  }, {
-    key: "queryComfirmInfo",
-    value: function queryComfirmInfo(gtCreditId) {
-      return http.get('/crpt-guarantee/gt/credit/confirm/query?gtCreditId=' + gtCreditId);
     }
   }]);
 
   return Service;
 }();
 
-var HeaderController = /*#__PURE__*/function (_Service) {
-  inherits(HeaderController, _Service);
+var PageController = /*#__PURE__*/function (_Service) {
+  inherits(PageController, _Service);
 
-  var _super = _createSuper(HeaderController);
-
-  function HeaderController() {
-    var _this;
-
-    classCallCheck(this, HeaderController);
-
-    _this = _super.apply(this, arguments);
-
-    var _ref = api.pageParam || {},
-        step = _ref.step,
-        creditStatus = _ref.creditStatus;
-
-    _this.step = step;
-    _this.creditStatus = creditStatus;
-    _this.danbaoStatus = null;
-    _this.applyStatusMap = {
-      0: 'xxx',
-      // int	无申请
-      1: 'demandMoney',
-      //	int	担保开通申请
-      2: 'demandMoney',
-      //	int	授信资料录入
-      3: 'xxx',
-      //	int	授信确认及签约
-      4: 'xxx',
-      //	int	绑定银行卡
-      5: 'xxx',
-      //	int	资方审核及签约
-      6: 'xxx',
-      //	int	预存担保费
-      7: 'xxx',
-      //	int	贷款支用
-      100: 'xxx' //	int	已终结
-
-    };
-    return _this;
-  }
-
-  createClass(HeaderController, [{
-    key: "_renderStep",
-    value: function _renderStep() {
-      var el = $api.byId('step');
-      var creditStatus = this.creditStatus;
-      var step = this.step;
-      var prevStep = step - 1;
-      $api.addCls(el, "step".concat(prevStep));
-      setTimeout(function () {
-        $api.removeCls(el, "step".concat(prevStep));
-        $api.addCls(el, "step".concat(step));
-      }, 300);
-    }
-  }, {
-    key: "_getDanbaoStatus",
-    value: function () {
-      var _getDanbaoStatus2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, data, num;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return this.queryDanbaoStatus();
-
-              case 3:
-                res = _context.sent;
-
-                if (res.code === 200) {
-                  data = res.data;
-                  this.danbaoStatus = data;
-                  num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
-                  $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
-                  $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
-                }
-
-                _context.next = 10;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-
-                if (this.step !== 1) {
-                  api.toast({
-                    msg: _context.t0.msg || '出错啦',
-                    location: 'middle'
-                  });
-                }
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[0, 7]]);
-      }));
-
-      function _getDanbaoStatus() {
-        return _getDanbaoStatus2.apply(this, arguments);
-      }
-
-      return _getDanbaoStatus;
-    }()
-  }, {
-    key: "_bindPrev",
-    value: function _bindPrev() {
-      var _this2 = this;
-
-      var prev = $api.byId('prev');
-
-      if (!prev) {
-        return;
-      }
-
-      prev.onclick = function () {
-        var step = _this2.step;
-
-        if (step === 2) {
-          step = 0;
-        } else {
-          step--;
-        }
-
-        var winName = api.winName;
-        api.closeWin({
-          name: winName
-        });
-        openDanbaoKaitong({
-          step: step,
-          back: true
-        });
-      };
-    }
-  }, {
-    key: "renderHeaderAndGetDanbaoStatus",
-    value: function () {
-      var _renderHeaderAndGetDanbaoStatus = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                this._renderStep();
-
-                this._bindPrev();
-
-                _context2.next = 4;
-                return this._getDanbaoStatus();
-
-              case 4:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function renderHeaderAndGetDanbaoStatus() {
-        return _renderHeaderAndGetDanbaoStatus.apply(this, arguments);
-      }
-
-      return renderHeaderAndGetDanbaoStatus;
-    }()
-  }]);
-
-  return HeaderController;
-}(Service);
-
-function _createSuper$1(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$1()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-var PageController = /*#__PURE__*/function (_HeaderController) {
-  inherits(PageController, _HeaderController);
-
-  var _super = _createSuper$1(PageController);
+  var _super = _createSuper(PageController);
 
   function PageController() {
     var _this;
@@ -3210,97 +3030,167 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
     classCallCheck(this, PageController);
 
     _this = _super.apply(this, arguments);
+    _this.state = {
+      pageNo: 1,
+      loading: false,
+      userinfo: $api.getStorage('userinfo'),
+      custType: ($api.getStorage('userinfo') || {}).custType,
+      type: api.pageParam.type // 产品类型：1-信用贷款 2-担保贷款
 
-    var _ref = api.pageParam || {},
-        productId = _ref.productId,
-        productName = _ref.productName;
-
-    _this.productId = productId;
-    _this.productName = productName;
+    };
+    _this.el = {
+      list: $api.byId('list')
+    };
     return _this;
-  }
+  } // 事件绑定
+
 
   createClass(PageController, [{
-    key: "_renderDom",
-    value: function _renderDom(data) {
-      $api.byId('productName').innerHTML = data.productName || '';
-      $api.byId('productName2').innerHTML = data.productName || '';
-      $api.byId('custName').innerHTML = data.custName || '';
-      $api.byId('custPhone').innerHTML = data.custPhone ? "(".concat(data.custPhone, ")") : '';
-      $api.byId('creditQuota').innerHTML = data.creditQuota || '';
-      $api.byId('effectiveNum').innerHTML = data.effectiveNum ? "".concat(data.effectiveNum, "\u6708") : '';
-      $api.byId('applyBeginDate').innerHTML = data.applyBeginDate ? data.applyBeginDate.split(' ')[0] : '';
-      $api.byId('applyEndDate').innerHTML = data.applyEndDate ? data.applyEndDate.split(' ')[0] : '';
-      $api.byId('relaManagerName').innerHTML = data.relaManagerName || '';
-      $api.byId('relaManagerPhone').innerHTML = data.relaManagerPhone ? "(".concat(data.relaManagerPhone, ")") : '';
-    }
+    key: "bindEvend",
+    value: function bindEvend() {
+      var _this2 = this;
+
+      // 下拉刷新
+      setRefreshHeaderInfo(function () {
+        _this2.getPageData();
+      }); // 点击列表项目
+
+      this.el.list.onclick = function (event) {
+        var btn = $api.closest(event.target, '.btn');
+        var li = $api.closest(event.target, 'li');
+
+        if (btn) {
+          var name = btn.dataset.name;
+          var type = btn.dataset.type; // 产品类型：1-信用贷款 2-担保贷款
+
+          var id = btn.dataset.id;
+
+          if (type === '2' || type === 2) {
+            _this2.__goDanbao(id, name);
+          } else {
+            api.alert({
+              title: '提示',
+              msg: '功能开发中...'
+            });
+          }
+        } else if (li) {
+          var _id = li.dataset.id;
+
+          if (_id) {
+            openProductDetails({
+              id: _id,
+              open: 0 // 1 已开通， 0未开通
+
+            });
+          } else {
+            api.toast({
+              msg: 'id 不存在'
+            });
+          }
+        }
+      };
+    } // 去担保开通页面
+
   }, {
-    key: "_renderContract",
-    value: function _renderContract(arr) {
-      var li = arr.map(function (item) {
-        return "<li class=\"sign\">\u300A".concat(item.contractTitle, "\u300B</li>");
+    key: "__goDanbao",
+    value: function __goDanbao(id, name) {
+      this.queryDanbaoStatus().then(function (res) {
+        api.toast({
+          msg: '已有开通的担保产品',
+          location: 'middle'
+        });
+      })["catch"](function (error) {
+        if (error.code === 3002) {
+          // 无担保产品
+          openDanbaoKaitong({
+            step: 0,
+            productId: id
+          });
+        } else {
+          api.toast({
+            msg: error.msg || '查询担保状态失败',
+            location: 'middle'
+          });
+        }
       });
-      $api.byId('contractList').innerHTML = "\n    <h2>\u70B9\u51FB\u5408\u540C\u8FDB\u5165\u5728\u7EBF\u7B7E\u7EA6</h2>\n    <ul>\n      ".concat(li.join(''), "\n    </ul>\n    ");
-    }
+    } // 生成列表
+
+  }, {
+    key: "__renderList",
+    value: function __renderList(arr) {
+      var _this3 = this;
+
+      this.el.list.innerHTML = '';
+      arr.forEach(function (item) {
+        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.des || '', "</p>\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-type=\"").concat(item.type || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+      });
+      api.parseTapmode();
+    } // 获取页面数据
+
   }, {
     key: "getPageData",
     value: function () {
       var _getPageData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var gtCreditId, res;
+        var _this4 = this;
+
+        var custType, res, data, list;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                api.showProgress({
-                  title: '加载中...',
-                  text: '',
-                  modal: false
-                });
-                _context.prev = 1;
-                _context.next = 4;
-                return this.renderHeaderAndGetDanbaoStatus();
-
-              case 4:
-                if (!this.danbaoStatus) {
-                  _context.next = 10;
+                if (!this.state.loading) {
+                  _context.next = 2;
                   break;
                 }
 
-                gtCreditId = this.danbaoStatus.gtCreditId;
-                _context.next = 8;
-                return this.queryComfirmInfo(gtCreditId);
+                return _context.abrupt("return");
 
-              case 8:
-                res = _context.sent;
-
-                if (res.code === 200) {
-                  this._renderDom(res.data);
-
-                  this._renderContract(res.data.contractList || []);
-                }
-
-              case 10:
-                _context.next = 15;
-                break;
-
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](1);
-                api.toast({
-                  msg: _context.t0.msg || '出错啦',
-                  location: 'middle'
+              case 2:
+                this.state.loading = true;
+                custType = this.state.custType;
+                _context.prev = 4;
+                _context.next = 7;
+                return this.getData({
+                  custType: custType
                 });
 
-              case 15:
-                api.hideProgress();
+              case 7:
+                res = _context.sent;
+                data = res.data || [];
+                list = data.filter(function (item) {
+                  return item.type === _this4.state.type;
+                });
+
+                if (res.code === 200 && list.length > 0) {
+                  $api.byId('list-box').style.display = 'block';
+                  $api.byId('nodata').style.display = 'none';
+
+                  this.__renderList(list);
+                } else {
+                  $api.byId('list-box').style.display = 'none';
+                  $api.byId('nodata').style.display = 'block';
+                }
+
+                _context.next = 16;
+                break;
+
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](4);
+                api.toast({
+                  msg: _context.t0.meaasge || '数据加载失败'
+                });
+
+              case 16:
+                this.state.loading = false;
                 api.refreshHeaderLoadDone();
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 12]]);
+        }, _callee, this, [[4, 13]]);
       }));
 
       function getPageData() {
@@ -3312,24 +3202,10 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
   }]);
 
   return PageController;
-}(HeaderController);
+}(Service);
 
 apiready = function apiready() {
-  var pageController = new PageController();
-  pageController.getPageData();
-  setRefreshHeaderInfo(function (ret, err) {
-    pageController.getPageData();
-  });
-
-  document.querySelector('body').onclick = function (e) {
-    if (e.target.className.includes('sign')) {
-      openSignOnline();
-    }
-  };
-
-  $api.byId('next').onclick = function () {
-    openDanbaoKaitong({
-      step: 4
-    });
-  };
+  var ctrl = new PageController();
+  ctrl.bindEvend();
+  ctrl.getPageData();
 };
