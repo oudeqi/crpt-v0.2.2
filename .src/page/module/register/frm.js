@@ -5,7 +5,7 @@ import { openTabLayout, openTodoAuthGeren, openTodoAuthQiye, openAgreement } fro
 import {
   http, openUIInput, resetUIInputPosi,
   loginSuccessCallback, appLogin,
-  getProtocolFromStorage
+  getNodeProtocolFromStorage, getProtocolFromNode
 } from '../../../config.js'
 
 apiready = function() {
@@ -61,23 +61,27 @@ apiready = function() {
   document.querySelector('#qiye').onclick = radioOnChange
 
   function showProtocol (type) {
-    let protocol = getProtocolFromStorage(type, 1)
-    if (protocol) {
-      $api.byId('agreement').innerHTML = protocol.protocolName
-    }
-  }
-  showProtocol(1)
-  document.querySelector('#agreement').onclick = function () {
-    let protocol = null
-    if (type === 'geren') {
-      protocol = getProtocolFromStorage(1, 1)
-    } else {
-      protocol = getProtocolFromStorage(2, 1)
-    }
-    if (protocol) {
-      openAgreement(protocol.protocolFileId)
-    } else {
+    let node = getNodeProtocolFromStorage(1)
+    if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
+      return
+    }
+    let tyeeNode = getProtocolFromNode(node, type)
+    if (!tyeeNode) {
+      api.toast({ msg: '协议不存在', location: 'middle' })
+      return
+    }
+    let tpl = tyeeNode.map(item => {
+      return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
+    })
+    $api.byId('agreement').innerHTML = tpl.join('，')
+  }
+
+  showProtocol(1) // protocolType 1-个人，2-企业，3-通用
+  document.querySelector('#agreement').onclick = (e) => {
+    let strong = $api.closest(e.target, 'strong')
+    if (strong) {
+      openAgreement(strong.dataset.id, strong.dataset.name)
     }
   }
 

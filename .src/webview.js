@@ -1029,14 +1029,14 @@ function openSignOnline (id) {
 }
 
 // 协议
-function openAgreement (id) {
+function openAgreement (id, name) {
   api.openTabLayout({
     name: 'html/agreement/index',
-    title: '协议',
+    title: name || '协议',
     url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: { id },
+    pageParam: { id, name },
     bounces: true,
     slidBackEnabled: true,
     navigationBar: {

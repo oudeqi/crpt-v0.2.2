@@ -235,6 +235,9 @@ html, body {
 .agreement-box {
   margin-top: 40px;
 }
+.agreement-list {
+  display: inline;
+}
 .submit {
   margin-top: 20px;
 }

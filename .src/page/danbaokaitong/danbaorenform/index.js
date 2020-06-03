@@ -1,11 +1,21 @@
 import './index.css'
 import '../form.css'
 
-import { http, ActionSheet, CitySelector, setRefreshHeaderInfo } from '../../../config'
+import { http, ActionSheet, CitySelector, getPicture, setRefreshHeaderInfo } from '../../../config'
 import { openDanbaoRenForm, openCheliang, openFangchan } from '../../../webview.js'
 import { Validation, NumberLimit } from '../form.js'
+import baiduOCR from '../../../utils/ocr/baidu'
 
 class Service {
+
+  //
+  ocrRead (url, data) {
+    return http.upload(url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
 
   // 获取担保状态
   queryDanbaoStatus () {
@@ -32,7 +42,7 @@ class Service {
   }
 }
 
-class pageController extends Service {
+class PageController extends Service {
 
   constructor() {
     super(...arguments)
@@ -58,7 +68,7 @@ class pageController extends Service {
     this.education = ['本科及以上', '大专', '中专或高中', '初中或以下']
   }
 
-  _pageDataFillBack (data) {
+  __pageDataFillBack (data) {
     $api.byId('name').value = data.name || ''
     $api.byId('phone').value = data.phone || ''
     $api.byId('spousePhone').value = data.spousePhone || ''
@@ -112,26 +122,7 @@ class pageController extends Service {
     $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || '' // 配偶工作单位
   }
 
-  async getPageDate () {
-    const gtCounterId = this.initData.gtCounterId
-    if (!gtCounterId) {
-      api.refreshHeaderLoadDone()
-      return false
-    }
-    api.showProgress({ title: '加载中...', text: '', modal: false })
-    try {
-      const res = await this.queryDanbaoRenMsgById(gtCounterId)
-      if (res.code === 200) {
-        this._pageDataFillBack(res.data)
-      }
-    } catch (error) {
-      api.toast({ msg: error.msg || '出错啦', location: 'middle' })
-    }
-    api.hideProgress()
-    api.refreshHeaderLoadDone()
-  }
-
-  _initValidation () {
+  __initValidation () {
     const cfg = {
       name: {
         valid: {
@@ -170,17 +161,18 @@ class pageController extends Service {
     return new Validation(cfg)
   }
 
-  _bindNavBtnEvent () {
+  __bindNavBtnEvent () {
     api.addEventListener({
       name: 'navitembtn'
     }, (ret, err) => {
+      console.log(JSON.stringify(ret))
       if (ret.type === 'left') {
         api.closeWin()
       }
     })
   }
 
-  _bindCollapseEvent () {
+  __bindCollapseEvent () {
     $api.byId('collapse').onclick = e => {
       const collapse = $api.closest(event.target, '.collapse')
       let visiable = $api.attr(collapse, 'collapse')
@@ -193,7 +185,7 @@ class pageController extends Service {
     }
   }
 
-  _bindGoFangchanAndCheliang () {
+  __bindGoFangchanAndCheliang () {
     $api.byId('fangchan').onclick = () => {
       this.queryDanbaoStatus().then(res => {
         if (res.code === 200) {
@@ -216,13 +208,7 @@ class pageController extends Service {
     }
   }
 
-  bindEvent () {
-    this._bindNavBtnEvent()
-    this._bindCollapseEvent()
-    this._bindGoFangchanAndCheliang()
-  }
-
-  _getOtherParams () {
+  __getOtherParams () {
     const accountNature = document.querySelector('[name="accountNature"]:checked')
     const address = $api.byId('address')
     const workAddress = $api.byId('workAddress')
@@ -261,8 +247,194 @@ class pageController extends Service {
     return params
   }
 
+  __InitRelationship () {
+    $api.byId('relationship').onclick = (e) => {
+      ActionSheet('与借款人关系', this.relationship, (index) => {
+        e.target.value = this.relationship[index]
+        e.target.dataset.value = index + 1
+      })
+    }
+  }
+
+  __InitMarriage () {
+    $api.byId('marriage').onclick = (e) => {
+      ActionSheet('婚姻状况', this.marriage, (index) => {
+        e.target.value = this.marriage[index]
+        e.target.dataset.value = index + 1
+      })
+    }
+  }
+
+  __InitEducation () {
+    $api.byId('education').onclick = (e) => {
+      ActionSheet('请选择学历', this.education, (index) => {
+        e.target.value = this.education[index]
+        e.target.dataset.value = this.education[index]
+      })
+    }
+  }
+
+  __initAddress () {
+    $api.byId('address').onclick = (e) => {
+      CitySelector(selected => {
+        console.log(JSON.stringify(selected))
+        let a = selected[0]
+        let b = selected[1]
+        let c = selected[2]
+        e.target.value = `${a.name}/${b.name}/${c.name}`
+        e.target.dataset.province = a.name
+        e.target.dataset.provinceCode = a.id
+        e.target.dataset.city = b.name
+        e.target.dataset.cityCode = b.id
+        e.target.dataset.county  = c.name
+        e.target.dataset.countyCode = c.id
+      })
+    }
+  }
+
+  __initWorkAddress () {
+    $api.byId('workAddress').onclick = (e) => {
+      CitySelector(selected => {
+        console.log(JSON.stringify(selected))
+        let a = selected[0]
+        let b = selected[1]
+        let c = selected[2]
+        e.target.value = `${a.name}/${b.name}/${c.name}`
+        e.target.dataset.province = a.name
+        e.target.dataset.provinceCode = a.id
+        e.target.dataset.city = b.name
+        e.target.dataset.cityCode = b.id
+        e.target.dataset.county  = c.name
+        e.target.dataset.countyCode = c.id
+      })
+    }
+  }
+
+  async __readIDCard (pic) {
+    try {
+      api.showProgress({ title: '识别中...', text: '' })
+      const OCR = new baiduOCR()
+      let tokenRes = await OCR.getToken()
+      if (tokenRes.code !== 200) {
+        throw new Error('token获取失败')
+      }
+      let res = await this.ocrRead(OCR.ajaxUrls.URL_IDCARD_INFO, {
+        values: { accessToken: tokenRes.data.accessToken },
+        files: { certFile: pic }
+      })
+      if (res.code === 200) {
+        $api.byId('certNo').value = res.data.number || ''
+      } else {
+        $api.byId('certNo').value = ''
+        throw new Error('读取失败')
+      }
+      api.toast({ msg: '识别成功', location: 'middle' })
+    } catch (error) {
+      api.toast({ msg: error.message || '出错啦', location: 'middle' })
+    }
+    api.hideProgress()
+  }
+
+  async __bindIDCardOcr () {
+    $api.byId('idCardOcrBtn').onclick = () => {
+      let btns = ['相机', '相册']
+      let sourceType = ''
+      ActionSheet('请选择', btns, index => {
+        if (index === 0) {
+          sourceType = 'camera'
+        } else {
+          sourceType = 'album'
+        }
+        getPicture(sourceType, (ret, err) => {
+          if (ret) {
+            this.__readIDCard(ret.data)
+          }
+        })
+      })
+    }
+  }
+
+  async __readBank (pic) {
+    try {
+      api.showProgress({ title: '识别中...', text: '' })
+      const OCR = new baiduOCR()
+      let tokenRes = await OCR.getToken()
+      if (tokenRes.code !== 200) {
+        throw new Error('token获取失败')
+      }
+      let res = await this.ocrRead(OCR.ajaxUrls.URL_BANK_INFO, {
+        values: { accessToken: tokenRes.data.accessToken },
+        files: { bankcardFile: pic }
+      })
+      if (res.code === 200) {
+        $api.byId('bankCardNo').value = res.data.bank_card_number || ''
+      } else {
+        $api.byId('bankCardNo').value = ''
+        throw new Error('读取失败')
+      }
+      api.toast({ msg: '识别成功', location: 'middle' })
+    } catch (error) {
+      api.toast({ msg: error.message || '出错啦', location: 'middle' })
+    }
+    api.hideProgress()
+  }
+
+  async __bindBankOcr () {
+    $api.byId('bankOcrBtn').onclick = () => {
+      let btns = ['相机', '相册']
+      let sourceType = ''
+      ActionSheet('请选择', btns, index => {
+        if (index === 0) {
+          sourceType = 'camera'
+        } else {
+          sourceType = 'album'
+        }
+        getPicture(sourceType, (ret, err) => {
+          if (ret) {
+            this.__readBank(ret.data)
+          }
+        })
+      })
+    }
+  }
+
+  initForm () {
+    this.__InitRelationship()
+    this.__InitMarriage()
+    this.__InitEducation()
+    this.__initAddress()
+    this.__initWorkAddress()
+  }
+
+  bindEvent () {
+    this.__bindNavBtnEvent()
+    this.__bindCollapseEvent()
+    this.__bindGoFangchanAndCheliang()
+    this.__bindIDCardOcr()
+    this.__bindBankOcr()
+  }
+
+  async getPageDate () {
+    const gtCounterId = this.initData.gtCounterId
+    if (!gtCounterId) {
+      api.refreshHeaderLoadDone()
+      return false
+    }
+    api.showProgress({ title: '加载中...', text: '', modal: false })
+    try {
+      const res = await this.queryDanbaoRenMsgById(gtCounterId)
+      if (res.code === 200) {
+        this.__pageDataFillBack(res.data)
+      }
+    } catch (error) {
+      api.toast({ msg: error.msg || '出错啦', location: 'middle' })
+    }
+    api.hideProgress()
+    api.refreshHeaderLoadDone()
+  }
+
   submit () {
-    this._initValidation().validate({
+    this.__initValidation().validate({
       error: function (msg) {
         api.toast({ msg, location: 'middle' })
       },
@@ -272,7 +444,7 @@ class pageController extends Service {
           const isUpdate = gtCounterId
           const postData = {
             ...data,
-            ...this._getOtherParams(),
+            ...this.__getOtherParams(),
             type,
             gtCreditId, // 担保授信id
           }
@@ -302,83 +474,12 @@ class pageController extends Service {
     })
   }
 
-  _InitRelationship () {
-    $api.byId('relationship').onclick = (e) => {
-      ActionSheet('与借款人关系', this.relationship, (index) => {
-        e.target.value = this.relationship[index]
-        e.target.dataset.value = index + 1
-      })
-    }
-  }
-
-  _InitMarriage () {
-    $api.byId('marriage').onclick = (e) => {
-      ActionSheet('婚姻状况', this.marriage, (index) => {
-        e.target.value = this.marriage[index]
-        e.target.dataset.value = index + 1
-      })
-    }
-  }
-
-  _InitEducation () {
-    $api.byId('education').onclick = (e) => {
-      ActionSheet('请选择学历', this.education, (index) => {
-        e.target.value = this.education[index]
-        e.target.dataset.value = this.education[index]
-      })
-    }
-  }
-
-  _initAddress () {
-    $api.byId('address').onclick = (e) => {
-      CitySelector(selected => {
-        console.log(JSON.stringify(selected))
-        let a = selected[0]
-        let b = selected[1]
-        let c = selected[2]
-        e.target.value = `${a.name}/${b.name}/${c.name}`
-        e.target.dataset.province = a.name
-        e.target.dataset.provinceCode = a.id
-        e.target.dataset.city = b.name
-        e.target.dataset.cityCode = b.id
-        e.target.dataset.county  = c.name
-        e.target.dataset.countyCode = c.id
-      })
-    }
-  }
-
-  _initWorkAddress () {
-    $api.byId('workAddress').onclick = (e) => {
-      CitySelector(selected => {
-        console.log(JSON.stringify(selected))
-        let a = selected[0]
-        let b = selected[1]
-        let c = selected[2]
-        e.target.value = `${a.name}/${b.name}/${c.name}`
-        e.target.dataset.province = a.name
-        e.target.dataset.provinceCode = a.id
-        e.target.dataset.city = b.name
-        e.target.dataset.cityCode = b.id
-        e.target.dataset.county  = c.name
-        e.target.dataset.countyCode = c.id
-      })
-    }
-  }
-
-
-  initForm () {
-    this._InitRelationship()
-    this._InitMarriage()
-    this._InitEducation()
-    this._initAddress()
-    this._initWorkAddress()
-  }
-
 }
+
 apiready = function () {
 
   new NumberLimit($api.byId('spouseIncome')) // 限制配偶年收入输入
-  const ctrl = new pageController()
+  const ctrl = new PageController()
   ctrl.bindEvent()
   ctrl.initForm()
   ctrl.getPageDate()

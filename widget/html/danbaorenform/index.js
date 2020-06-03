@@ -1984,6 +1984,23 @@ function CitySelector(cb) {
   });
 }
 
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: false,
+    quality: 100,
+    targetWidth: 1000,
+    // targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
 function setRefreshHeaderInfo(successCallback, errorCallback) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   api.setRefreshHeaderInfo(_objectSpread({
@@ -2241,8 +2258,18 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
+    key: "ocrRead",
+    //
+    value: function ocrRead(url, data) {
+      return http.upload(url, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    } // 获取担保状态
+
+  }, {
     key: "queryDanbaoStatus",
-    // 获取担保状态
     value: function queryDanbaoStatus() {
       return http.get('/crpt-guarantee/gt/apply/query');
     } // 反担保人新增
@@ -2273,15 +2300,15 @@ var Service = /*#__PURE__*/function () {
   return Service;
 }();
 
-var pageController = /*#__PURE__*/function (_Service) {
-  inherits(pageController, _Service);
+var PageController = /*#__PURE__*/function (_Service) {
+  inherits(PageController, _Service);
 
-  var _super = _createSuper(pageController);
+  var _super = _createSuper(PageController);
 
-  function pageController() {
+  function PageController() {
     var _this;
 
-    classCallCheck(this, pageController);
+    classCallCheck(this, PageController);
 
     _this = _super.apply(this, arguments);
 
@@ -2320,9 +2347,9 @@ var pageController = /*#__PURE__*/function (_Service) {
     return _this;
   }
 
-  createClass(pageController, [{
-    key: "_pageDataFillBack",
-    value: function _pageDataFillBack(data) {
+  createClass(PageController, [{
+    key: "__pageDataFillBack",
+    value: function __pageDataFillBack(data) {
       $api.byId('name').value = data.name || '';
       $api.byId('phone').value = data.phone || '';
       $api.byId('spousePhone').value = data.spousePhone || '';
@@ -2397,73 +2424,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || ''; // 配偶工作单位
     }
   }, {
-    key: "getPageDate",
-    value: function () {
-      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var gtCounterId, res;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                gtCounterId = this.initData.gtCounterId;
-
-                if (gtCounterId) {
-                  _context.next = 4;
-                  break;
-                }
-
-                api.refreshHeaderLoadDone();
-                return _context.abrupt("return", false);
-
-              case 4:
-                api.showProgress({
-                  title: '加载中...',
-                  text: '',
-                  modal: false
-                });
-                _context.prev = 5;
-                _context.next = 8;
-                return this.queryDanbaoRenMsgById(gtCounterId);
-
-              case 8:
-                res = _context.sent;
-
-                if (res.code === 200) {
-                  this._pageDataFillBack(res.data);
-                }
-
-                _context.next = 15;
-                break;
-
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](5);
-                api.toast({
-                  msg: _context.t0.msg || '出错啦',
-                  location: 'middle'
-                });
-
-              case 15:
-                api.hideProgress();
-                api.refreshHeaderLoadDone();
-
-              case 17:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[5, 12]]);
-      }));
-
-      function getPageDate() {
-        return _getPageDate.apply(this, arguments);
-      }
-
-      return getPageDate;
-    }()
-  }, {
-    key: "_initValidation",
-    value: function _initValidation() {
+    key: "__initValidation",
+    value: function __initValidation() {
       var cfg = {
         name: {
           valid: {
@@ -2503,19 +2465,21 @@ var pageController = /*#__PURE__*/function (_Service) {
       return new Validation(cfg);
     }
   }, {
-    key: "_bindNavBtnEvent",
-    value: function _bindNavBtnEvent() {
+    key: "__bindNavBtnEvent",
+    value: function __bindNavBtnEvent() {
       api.addEventListener({
         name: 'navitembtn'
       }, function (ret, err) {
+        console.log(JSON.stringify(ret));
+
         if (ret.type === 'left') {
           api.closeWin();
         }
       });
     }
   }, {
-    key: "_bindCollapseEvent",
-    value: function _bindCollapseEvent() {
+    key: "__bindCollapseEvent",
+    value: function __bindCollapseEvent() {
       $api.byId('collapse').onclick = function (e) {
         var collapse = $api.closest(event.target, '.collapse');
         var visiable = $api.attr(collapse, 'collapse');
@@ -2530,8 +2494,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       };
     }
   }, {
-    key: "_bindGoFangchanAndCheliang",
-    value: function _bindGoFangchanAndCheliang() {
+    key: "__bindGoFangchanAndCheliang",
+    value: function __bindGoFangchanAndCheliang() {
       var _this2 = this;
 
       $api.byId('fangchan').onclick = function () {
@@ -2579,17 +2543,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       };
     }
   }, {
-    key: "bindEvent",
-    value: function bindEvent() {
-      this._bindNavBtnEvent();
-
-      this._bindCollapseEvent();
-
-      this._bindGoFangchanAndCheliang();
-    }
-  }, {
-    key: "_getOtherParams",
-    value: function _getOtherParams() {
+    key: "__getOtherParams",
+    value: function __getOtherParams() {
       var accountNature = document.querySelector('[name="accountNature"]:checked');
       var address = $api.byId('address');
       var workAddress = $api.byId('workAddress');
@@ -2652,136 +2607,44 @@ var pageController = /*#__PURE__*/function (_Service) {
       return params;
     }
   }, {
-    key: "submit",
-    value: function submit() {
+    key: "__InitRelationship",
+    value: function __InitRelationship() {
       var _this3 = this;
 
-      this._initValidation().validate({
-        error: function error(msg) {
-          api.toast({
-            msg: msg,
-            location: 'middle'
-          });
-        },
-        success: function () {
-          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(data) {
-            var _this3$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
-
-            return regenerator.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    _context2.prev = 0;
-                    _this3$initData = _this3.initData, gtCreditId = _this3$initData.gtCreditId, gtCounterId = _this3$initData.gtCounterId, type = _this3$initData.type;
-                    isUpdate = gtCounterId;
-                    postData = _objectSpread$1({}, data, {}, _this3._getOtherParams(), {
-                      type: type,
-                      gtCreditId: gtCreditId // 担保授信id
-
-                    });
-                    callMethod = '';
-
-                    if (isUpdate) {
-                      callMethod = 'updateDanbaoRen';
-                      postData.gtCounterId = gtCounterId; // 反担保人id
-                    } else {
-                      callMethod = 'addDanbaoRen';
-                      postData.responseLimitTime = 3; // 担保人响应时效 1：6小时 2：12 小时3：24小时，默认为： 3：24小时
-
-                      postData.isNecessary = 0; // 是否必输： 1-是  0-否，默认： 0-否
-                    }
-
-                    _context2.next = 8;
-                    return _this3[callMethod](postData);
-
-                  case 8:
-                    res = _context2.sent;
-
-                    if (res && res.code === 200) {
-                      if (isUpdate) {
-                        api.toast({
-                          msg: '更新担保人成功',
-                          location: 'middle',
-                          global: true
-                        });
-                      } else {
-                        _this3.initData.gtCounterId = res.data.gtCounterId;
-                        api.toast({
-                          msg: '新增担保人成功',
-                          location: 'middle',
-                          global: true
-                        });
-                      }
-
-                      api.closeWin();
-                    }
-
-                    _context2.next = 15;
-                    break;
-
-                  case 12:
-                    _context2.prev = 12;
-                    _context2.t0 = _context2["catch"](0);
-                    api.toast({
-                      msg: _context2.t0.msg,
-                      location: 'middle'
-                    });
-
-                  case 15:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, null, [[0, 12]]);
-          }));
-
-          function success(_x) {
-            return _success.apply(this, arguments);
-          }
-
-          return success;
-        }()
-      });
+      $api.byId('relationship').onclick = function (e) {
+        ActionSheet('与借款人关系', _this3.relationship, function (index) {
+          e.target.value = _this3.relationship[index];
+          e.target.dataset.value = index + 1;
+        });
+      };
     }
   }, {
-    key: "_InitRelationship",
-    value: function _InitRelationship() {
+    key: "__InitMarriage",
+    value: function __InitMarriage() {
       var _this4 = this;
 
-      $api.byId('relationship').onclick = function (e) {
-        ActionSheet('与借款人关系', _this4.relationship, function (index) {
-          e.target.value = _this4.relationship[index];
+      $api.byId('marriage').onclick = function (e) {
+        ActionSheet('婚姻状况', _this4.marriage, function (index) {
+          e.target.value = _this4.marriage[index];
           e.target.dataset.value = index + 1;
         });
       };
     }
   }, {
-    key: "_InitMarriage",
-    value: function _InitMarriage() {
+    key: "__InitEducation",
+    value: function __InitEducation() {
       var _this5 = this;
 
-      $api.byId('marriage').onclick = function (e) {
-        ActionSheet('婚姻状况', _this5.marriage, function (index) {
-          e.target.value = _this5.marriage[index];
-          e.target.dataset.value = index + 1;
-        });
-      };
-    }
-  }, {
-    key: "_InitEducation",
-    value: function _InitEducation() {
-      var _this6 = this;
-
       $api.byId('education').onclick = function (e) {
-        ActionSheet('请选择学历', _this6.education, function (index) {
-          e.target.value = _this6.education[index];
-          e.target.dataset.value = _this6.education[index];
+        ActionSheet('请选择学历', _this5.education, function (index) {
+          e.target.value = _this5.education[index];
+          e.target.dataset.value = _this5.education[index];
         });
       };
     }
   }, {
-    key: "_initAddress",
-    value: function _initAddress() {
+    key: "__initAddress",
+    value: function __initAddress() {
       $api.byId('address').onclick = function (e) {
         CitySelector(function (selected) {
           console.log(JSON.stringify(selected));
@@ -2799,8 +2662,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       };
     }
   }, {
-    key: "_initWorkAddress",
-    value: function _initWorkAddress() {
+    key: "__initWorkAddress",
+    value: function __initWorkAddress() {
       $api.byId('workAddress').onclick = function (e) {
         CitySelector(function (selected) {
           console.log(JSON.stringify(selected));
@@ -2818,27 +2681,457 @@ var pageController = /*#__PURE__*/function (_Service) {
       };
     }
   }, {
+    key: "__readIDCard",
+    value: function () {
+      var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(pic) {
+        var OCR, tokenRes, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                api.showProgress({
+                  title: '识别中...',
+                  text: ''
+                });
+                OCR = new BaiduSDK();
+                _context.next = 5;
+                return OCR.getToken();
+
+              case 5:
+                tokenRes = _context.sent;
+
+                if (!(tokenRes.code !== 200)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                throw new Error('token获取失败');
+
+              case 8:
+                _context.next = 10;
+                return this.ocrRead(OCR.ajaxUrls.URL_IDCARD_INFO, {
+                  values: {
+                    accessToken: tokenRes.data.accessToken
+                  },
+                  files: {
+                    certFile: pic
+                  }
+                });
+
+              case 10:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 15;
+                  break;
+                }
+
+                $api.byId('certNo').value = res.data.number || '';
+                _context.next = 17;
+                break;
+
+              case 15:
+                $api.byId('certNo').value = '';
+                throw new Error('读取失败');
+
+              case 17:
+                api.toast({
+                  msg: '识别成功',
+                  location: 'middle'
+                });
+                _context.next = 23;
+                break;
+
+              case 20:
+                _context.prev = 20;
+                _context.t0 = _context["catch"](0);
+                api.toast({
+                  msg: _context.t0.message || '出错啦',
+                  location: 'middle'
+                });
+
+              case 23:
+                api.hideProgress();
+
+              case 24:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 20]]);
+      }));
+
+      function __readIDCard(_x) {
+        return _readIDCard.apply(this, arguments);
+      }
+
+      return __readIDCard;
+    }()
+  }, {
+    key: "__bindIDCardOcr",
+    value: function () {
+      var _bindIDCardOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+        var _this6 = this;
+
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                $api.byId('idCardOcrBtn').onclick = function () {
+                  var btns = ['相机', '相册'];
+                  var sourceType = '';
+                  ActionSheet('请选择', btns, function (index) {
+                    if (index === 0) {
+                      sourceType = 'camera';
+                    } else {
+                      sourceType = 'album';
+                    }
+
+                    getPicture(sourceType, function (ret, err) {
+                      if (ret) {
+                        _this6.__readIDCard(ret.data);
+                      }
+                    });
+                  });
+                };
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function __bindIDCardOcr() {
+        return _bindIDCardOcr.apply(this, arguments);
+      }
+
+      return __bindIDCardOcr;
+    }()
+  }, {
+    key: "__readBank",
+    value: function () {
+      var _readBank = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(pic) {
+        var OCR, tokenRes, res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                api.showProgress({
+                  title: '识别中...',
+                  text: ''
+                });
+                OCR = new BaiduSDK();
+                _context3.next = 5;
+                return OCR.getToken();
+
+              case 5:
+                tokenRes = _context3.sent;
+
+                if (!(tokenRes.code !== 200)) {
+                  _context3.next = 8;
+                  break;
+                }
+
+                throw new Error('token获取失败');
+
+              case 8:
+                _context3.next = 10;
+                return this.ocrRead(OCR.ajaxUrls.URL_BANK_INFO, {
+                  values: {
+                    accessToken: tokenRes.data.accessToken
+                  },
+                  files: {
+                    bankcardFile: pic
+                  }
+                });
+
+              case 10:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 15;
+                  break;
+                }
+
+                $api.byId('bankCardNo').value = res.data.bank_card_number || '';
+                _context3.next = 17;
+                break;
+
+              case 15:
+                $api.byId('bankCardNo').value = '';
+                throw new Error('读取失败');
+
+              case 17:
+                api.toast({
+                  msg: '识别成功',
+                  location: 'middle'
+                });
+                _context3.next = 23;
+                break;
+
+              case 20:
+                _context3.prev = 20;
+                _context3.t0 = _context3["catch"](0);
+                api.toast({
+                  msg: _context3.t0.message || '出错啦',
+                  location: 'middle'
+                });
+
+              case 23:
+                api.hideProgress();
+
+              case 24:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 20]]);
+      }));
+
+      function __readBank(_x2) {
+        return _readBank.apply(this, arguments);
+      }
+
+      return __readBank;
+    }()
+  }, {
+    key: "__bindBankOcr",
+    value: function () {
+      var _bindBankOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+        var _this7 = this;
+
+        return regenerator.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                $api.byId('bankOcrBtn').onclick = function () {
+                  var btns = ['相机', '相册'];
+                  var sourceType = '';
+                  ActionSheet('请选择', btns, function (index) {
+                    if (index === 0) {
+                      sourceType = 'camera';
+                    } else {
+                      sourceType = 'album';
+                    }
+
+                    getPicture(sourceType, function (ret, err) {
+                      if (ret) {
+                        _this7.__readBank(ret.data);
+                      }
+                    });
+                  });
+                };
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function __bindBankOcr() {
+        return _bindBankOcr.apply(this, arguments);
+      }
+
+      return __bindBankOcr;
+    }()
+  }, {
     key: "initForm",
     value: function initForm() {
-      this._InitRelationship();
+      this.__InitRelationship();
 
-      this._InitMarriage();
+      this.__InitMarriage();
 
-      this._InitEducation();
+      this.__InitEducation();
 
-      this._initAddress();
+      this.__initAddress();
 
-      this._initWorkAddress();
+      this.__initWorkAddress();
+    }
+  }, {
+    key: "bindEvent",
+    value: function bindEvent() {
+      this.__bindNavBtnEvent();
+
+      this.__bindCollapseEvent();
+
+      this.__bindGoFangchanAndCheliang();
+
+      this.__bindIDCardOcr();
+
+      this.__bindBankOcr();
+    }
+  }, {
+    key: "getPageDate",
+    value: function () {
+      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
+        var gtCounterId, res;
+        return regenerator.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                gtCounterId = this.initData.gtCounterId;
+
+                if (gtCounterId) {
+                  _context5.next = 4;
+                  break;
+                }
+
+                api.refreshHeaderLoadDone();
+                return _context5.abrupt("return", false);
+
+              case 4:
+                api.showProgress({
+                  title: '加载中...',
+                  text: '',
+                  modal: false
+                });
+                _context5.prev = 5;
+                _context5.next = 8;
+                return this.queryDanbaoRenMsgById(gtCounterId);
+
+              case 8:
+                res = _context5.sent;
+
+                if (res.code === 200) {
+                  this.__pageDataFillBack(res.data);
+                }
+
+                _context5.next = 15;
+                break;
+
+              case 12:
+                _context5.prev = 12;
+                _context5.t0 = _context5["catch"](5);
+                api.toast({
+                  msg: _context5.t0.msg || '出错啦',
+                  location: 'middle'
+                });
+
+              case 15:
+                api.hideProgress();
+                api.refreshHeaderLoadDone();
+
+              case 17:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[5, 12]]);
+      }));
+
+      function getPageDate() {
+        return _getPageDate.apply(this, arguments);
+      }
+
+      return getPageDate;
+    }()
+  }, {
+    key: "submit",
+    value: function submit() {
+      var _this8 = this;
+
+      this.__initValidation().validate({
+        error: function error(msg) {
+          api.toast({
+            msg: msg,
+            location: 'middle'
+          });
+        },
+        success: function () {
+          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6(data) {
+            var _this8$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
+
+            return regenerator.wrap(function _callee6$(_context6) {
+              while (1) {
+                switch (_context6.prev = _context6.next) {
+                  case 0:
+                    _context6.prev = 0;
+                    _this8$initData = _this8.initData, gtCreditId = _this8$initData.gtCreditId, gtCounterId = _this8$initData.gtCounterId, type = _this8$initData.type;
+                    isUpdate = gtCounterId;
+                    postData = _objectSpread$1({}, data, {}, _this8.__getOtherParams(), {
+                      type: type,
+                      gtCreditId: gtCreditId // 担保授信id
+
+                    });
+                    callMethod = '';
+
+                    if (isUpdate) {
+                      callMethod = 'updateDanbaoRen';
+                      postData.gtCounterId = gtCounterId; // 反担保人id
+                    } else {
+                      callMethod = 'addDanbaoRen';
+                      postData.responseLimitTime = 3; // 担保人响应时效 1：6小时 2：12 小时3：24小时，默认为： 3：24小时
+
+                      postData.isNecessary = 0; // 是否必输： 1-是  0-否，默认： 0-否
+                    }
+
+                    _context6.next = 8;
+                    return _this8[callMethod](postData);
+
+                  case 8:
+                    res = _context6.sent;
+
+                    if (res && res.code === 200) {
+                      if (isUpdate) {
+                        api.toast({
+                          msg: '更新担保人成功',
+                          location: 'middle',
+                          global: true
+                        });
+                      } else {
+                        _this8.initData.gtCounterId = res.data.gtCounterId;
+                        api.toast({
+                          msg: '新增担保人成功',
+                          location: 'middle',
+                          global: true
+                        });
+                      }
+
+                      api.closeWin();
+                    }
+
+                    _context6.next = 15;
+                    break;
+
+                  case 12:
+                    _context6.prev = 12;
+                    _context6.t0 = _context6["catch"](0);
+                    api.toast({
+                      msg: _context6.t0.msg,
+                      location: 'middle'
+                    });
+
+                  case 15:
+                  case "end":
+                    return _context6.stop();
+                }
+              }
+            }, _callee6, null, [[0, 12]]);
+          }));
+
+          function success(_x3) {
+            return _success.apply(this, arguments);
+          }
+
+          return success;
+        }()
+      });
     }
   }]);
 
-  return pageController;
+  return PageController;
 }(Service);
 
 apiready = function apiready() {
   new NumberLimit($api.byId('spouseIncome')); // 限制配偶年收入输入
 
-  var ctrl = new pageController();
+  var ctrl = new PageController();
   ctrl.bindEvent();
   ctrl.initForm();
   ctrl.getPageDate();

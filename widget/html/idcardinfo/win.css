@@ -328,6 +328,9 @@ html, body {
 .agreement-box {
   margin-top: 30px;
 }
+.agreement-list {
+  display: inline;
+}
 .btn-box {
   margin-top: 10px;
 }

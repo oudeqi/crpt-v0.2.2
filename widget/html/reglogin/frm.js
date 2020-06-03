@@ -1905,9 +1905,12 @@ function saveProtocolToStorage() {
   var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var map = {};
   arr.forEach(function (item) {
-    // protocolType 1-个人，2-企业，3-通用
-    // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
-    map[item.protocolType + '_' + item.useNode] = item;
+    if (map[item.useNode]) {
+      map[item.useNode].push(item);
+    } else {
+      map[item.useNode] = [];
+      map[item.useNode].push(item);
+    }
   });
   $api.setStorage('protocol', map);
 }

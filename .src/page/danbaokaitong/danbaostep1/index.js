@@ -3,7 +3,7 @@ import '../form.css'
 import './index.css'
 import HeaderController from '../header.js'
 import { Validation, NumberLimit } from '../form.js'
-import { setRefreshHeaderInfo, getProtocolFromStorage } from '../../../config.js'
+import { setRefreshHeaderInfo, getNodeProtocolFromStorage } from '../../../config.js'
 import { openDanbaoKaitong, openAgreement } from '../../../webview.js'
 
 class PageController extends HeaderController {
@@ -181,16 +181,22 @@ apiready = function () {
     pageController.save()
   }
 
-  let userinfo = $api.getStorage('userinfo') || {}
-  let protocol = getProtocolFromStorage(userinfo.userType, 4)
-  if (protocol) {
-    $api.byId('protocol').innerHTML = protocol.protocolName
-  }
-  document.querySelector('#protocol').onclick = function () {
-    if (protocol) {
-      openAgreement(protocol.protocolFileId)
-    } else {
+  function showProtocol () {
+    let node = getNodeProtocolFromStorage(4)
+    if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
+      return
+    }
+    let tpl = node.map(item => {
+      return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
+    })
+    $api.byId('protocol').innerHTML = tpl.join('、')
+  }
+  showProtocol()
+  document.querySelector('#protocol').onclick = (e) => {
+    let strong = $api.closest(e.target, 'strong')
+    if (strong) {
+      openAgreement(strong.dataset.id, strong.dataset.name)
     }
   }
 

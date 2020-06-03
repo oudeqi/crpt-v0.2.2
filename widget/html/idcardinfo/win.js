@@ -52,15 +52,16 @@ function openAuthResult(status, message, title) {
 } // 消息中心
 
 
-function openAgreement(id) {
+function openAgreement(id, name) {
   api.openTabLayout({
     name: 'html/agreement/index',
-    title: '协议',
+    title: name || '协议',
     url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id
+      id: id,
+      name: name
     },
     bounces: true,
     slidBackEnabled: true,
@@ -1881,17 +1882,31 @@ function initUIInput(dom) {
   });
 } // let userinfo = {
 
-function getProtocolFromStorage(protocolType, useNode) {
-  var protocol = $api.getStorage('protocol');
+function getNodeProtocolFromStorage(useNode) {
+  // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
+  var protocol = $api.getStorage('protocol') || {};
 
-  if (protocol) {
-    var key = protocolType + '_' + useNode;
+  if (protocol[useNode] && protocol[useNode].length > 0) {
+    return protocol[useNode];
+  } else {
+    return null;
+  }
+}
 
-    if (protocol[key]) {
-      return protocol[key];
+function getProtocolFromNode(nodeArr, protocolType) {
+  // protocolType 1-个人，2-企业，3-通用
+  var map = {};
+  nodeArr.forEach(function (item) {
+    if (map[item.protocolType]) {
+      map[item.protocolType].push(item);
     } else {
-      return null;
+      map[item.protocolType] = [];
+      map[item.protocolType].push(item);
     }
+  });
+
+  if (map[protocolType] && map[protocolType].length > 0) {
+    return map[protocolType];
   } else {
     return null;
   }
@@ -1957,23 +1972,41 @@ apiready = function apiready() {
     api.closeWin();
   };
 
-  var userinfo = $api.getStorage('userinfo') || {};
-  var protocol = getProtocolFromStorage(userinfo.userType, 2);
+  function showProtocol() {
+    var userinfo = $api.getStorage('userinfo') || {};
+    var node = getNodeProtocolFromStorage(2);
 
-  if (protocol) {
-    $api.byId('agreement').innerHTML = protocol.protocolName;
-  }
-
-  document.querySelector('#agreement').onclick = function () {
-    var protocol = getProtocolFromStorage(userinfo.userType, 2);
-
-    if (protocol) {
-      openAgreement(protocol.protocolFileId);
-    } else {
+    if (!node) {
       api.toast({
         msg: '协议不存在',
         location: 'middle'
       });
+      return;
+    }
+
+    var tyeeNode = getProtocolFromNode(node, userinfo.userType);
+
+    if (!tyeeNode) {
+      api.toast({
+        msg: '协议不存在',
+        location: 'middle'
+      });
+      return;
+    }
+
+    var tpl = tyeeNode.map(function (item) {
+      return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
+    });
+    $api.byId('agreement').innerHTML = tpl.join('，');
+  }
+
+  showProtocol();
+
+  document.querySelector('#agreement').onclick = function (e) {
+    var strong = $api.closest(e.target, 'strong');
+
+    if (strong) {
+      openAgreement(strong.dataset.id, strong.dataset.name);
     }
   };
 

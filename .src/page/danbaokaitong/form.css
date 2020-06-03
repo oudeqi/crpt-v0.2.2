@@ -195,6 +195,10 @@
       color: rgba(102,187,106,1);
       display: inline;
     }
+    strong {
+      color: rgba(102,187,106,1);
+      display: inline;
+    }
   }
 }
 

@@ -311,6 +311,11 @@ body {
       display: inline;
     }
 
+.agreement .txt strong {
+      color: rgba(102,187,106,1);
+      display: inline;
+    }
+
 .inline-btn {
   height:50px;
   display: -webkit-inline-box;

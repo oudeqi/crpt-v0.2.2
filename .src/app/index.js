@@ -64,7 +64,7 @@ class PageController {
       //   demandMoney: '40',
       //   gtId: '1263411018323742721'
       // })
-      // openProductRecommend()
+      // openDanbaoRenForm()
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return

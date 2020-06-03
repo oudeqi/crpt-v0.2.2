@@ -3148,10 +3148,6 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           step--;
         }
 
-        var winName = api.winName;
-        api.closeWin({
-          name: winName
-        });
         openDanbaoKaitong({
           step: step,
           back: true

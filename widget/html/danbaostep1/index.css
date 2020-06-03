@@ -535,6 +535,11 @@
       display: inline;
     }
 
+.agreement .txt strong {
+      color: rgba(102,187,106,1);
+      display: inline;
+    }
+
 .inline-btn {
   height:50px;
   display: -webkit-inline-box;
@@ -612,6 +617,9 @@
 .agreement {
   margin-top: 28px;
   padding: 0 16px;
+}
+.protocol-list {
+  display: inline;
 }
 .block-btn {
   margin: 12px;

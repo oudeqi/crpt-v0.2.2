@@ -976,15 +976,16 @@ function openDanbaoKaitong() {
 } // 担保人列表
 
 
-function openAgreement(id) {
+function openAgreement(id, name) {
   api.openTabLayout({
     name: 'html/agreement/index',
-    title: '协议',
+    title: name || '协议',
     url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      id: id
+      id: id,
+      name: name
     },
     bounces: true,
     slidBackEnabled: true,
@@ -1971,17 +1972,12 @@ function setRefreshHeaderInfo(successCallback, errorCallback) {
   });
 }
 
-function getProtocolFromStorage(protocolType, useNode) {
-  var protocol = $api.getStorage('protocol');
+function getNodeProtocolFromStorage(useNode) {
+  // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
+  var protocol = $api.getStorage('protocol') || {};
 
-  if (protocol) {
-    var key = protocolType + '_' + useNode;
-
-    if (protocol[key]) {
-      return protocol[key];
-    } else {
-      return null;
-    }
+  if (protocol[useNode] && protocol[useNode].length > 0) {
+    return protocol[useNode];
   } else {
     return null;
   }
@@ -3164,10 +3160,6 @@ var HeaderController = /*#__PURE__*/function (_Service) {
           step--;
         }
 
-        var winName = api.winName;
-        api.closeWin({
-          name: winName
-        });
         openDanbaoKaitong({
           step: step,
           back: true
@@ -3767,21 +3759,30 @@ apiready = function apiready() {
     pageController.save();
   };
 
-  var userinfo = $api.getStorage('userinfo') || {};
-  var protocol = getProtocolFromStorage(userinfo.userType, 4);
+  function showProtocol() {
+    var node = getNodeProtocolFromStorage(4);
 
-  if (protocol) {
-    $api.byId('protocol').innerHTML = protocol.protocolName;
-  }
-
-  document.querySelector('#protocol').onclick = function () {
-    if (protocol) {
-      openAgreement(protocol.protocolFileId);
-    } else {
+    if (!node) {
       api.toast({
         msg: '协议不存在',
         location: 'middle'
       });
+      return;
+    }
+
+    var tpl = node.map(function (item) {
+      return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
+    });
+    $api.byId('protocol').innerHTML = tpl.join('、');
+  }
+
+  showProtocol();
+
+  document.querySelector('#protocol').onclick = function (e) {
+    var strong = $api.closest(e.target, 'strong');
+
+    if (strong) {
+      openAgreement(strong.dataset.id, strong.dataset.name);
     }
   };
 };

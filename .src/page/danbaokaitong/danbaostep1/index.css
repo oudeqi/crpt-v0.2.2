@@ -12,6 +12,9 @@
   margin-top: 28px;
   padding: 0 16px;
 }
+.protocol-list {
+  display: inline;
+}
 .block-btn {
   margin: 12px;
   margin-top: 25px;
