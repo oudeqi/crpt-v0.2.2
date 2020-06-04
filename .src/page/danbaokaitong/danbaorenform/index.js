@@ -4,16 +4,14 @@ import '../form.css'
 import { http, ActionSheet, CitySelector, getPicture, setRefreshHeaderInfo } from '../../../config'
 import { openDanbaoRenForm, openCheliang, openFangchan } from '../../../webview.js'
 import { Validation, NumberLimit } from '../form.js'
-import baiduOCR from '../../../utils/ocr/baidu'
+import Utils from '../../../utils'
 
 class Service {
 
-  //
-  ocrRead (url, data) {
-    return http.upload(url, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+  // 保存身份证图片
+  saveIDCardPic (params) {
+    return http.upload('/crpt-guarante/guarantor/attachment/save', {
+      body: params
     })
   }
 
@@ -313,15 +311,7 @@ class PageController extends Service {
   async __readIDCard (pic) {
     try {
       api.showProgress({ title: '识别中...', text: '' })
-      const OCR = new baiduOCR()
-      let tokenRes = await OCR.getToken()
-      if (tokenRes.code !== 200) {
-        throw new Error('token获取失败')
-      }
-      let res = await this.ocrRead(OCR.ajaxUrls.URL_IDCARD_INFO, {
-        values: { accessToken: tokenRes.data.accessToken },
-        files: { certFile: pic }
-      })
+      const res = await Utils.OCR.Baidu.IdcardVerify({certFile: pic})
       if (res.code === 200) {
         $api.byId('certNo').value = res.data.number || ''
       } else {
@@ -329,7 +319,18 @@ class PageController extends Service {
         throw new Error('读取失败')
       }
       api.toast({ msg: '识别成功', location: 'middle' })
+      // TODO
+      let res2 = await this.saveIDCardPic({
+        pictureFile: pic,
+        gtId: this.initData.gtCreditId // 授信id
+      })
+      if (res2.code === 200) {
+        $api.byId('certNo').dataset.picture = res2.data.pictureId
+      } else {
+        throw new Error('保存身份证图片失败')
+      }
     } catch (error) {
+      console.log(error.message)
       api.toast({ msg: error.message || '出错啦', location: 'middle' })
     }
     api.hideProgress()
@@ -357,19 +358,13 @@ class PageController extends Service {
   async __readBank (pic) {
     try {
       api.showProgress({ title: '识别中...', text: '' })
-      const OCR = new baiduOCR()
-      let tokenRes = await OCR.getToken()
-      if (tokenRes.code !== 200) {
-        throw new Error('token获取失败')
-      }
-      let res = await this.ocrRead(OCR.ajaxUrls.URL_BANK_INFO, {
-        values: { accessToken: tokenRes.data.accessToken },
-        files: { bankcardFile: pic }
-      })
+      const res = await Utils.OCR.Baidu.BankVerify({bankcardFile: pic})
       if (res.code === 200) {
         $api.byId('bankCardNo').value = res.data.bank_card_number || ''
+        $api.byId('bankName').value = res.data.bank_name || ''
       } else {
         $api.byId('bankCardNo').value = ''
+        $api.byId('bankName').value = ''
         throw new Error('读取失败')
       }
       api.toast({ msg: '识别成功', location: 'middle' })

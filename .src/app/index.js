@@ -59,12 +59,13 @@ class PageController {
       //   gtId: '1263411018323742721'
       // })
       // openDanbaoRenList({
-      //   gtCreditId: '1260492247898374145',
-      //   productId: '1',
-      //   demandMoney: '40',
-      //   gtId: '1263411018323742721'
+      //   gtCreditId: '1268076050915659776',
+      //   productId: '4',
+      //   demandMoney: '50',
+      //   gtId: '1268076050995986433'
       // })
-      // openDanbaoRenForm()
+      // return
+      // openGerenLogin()
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return

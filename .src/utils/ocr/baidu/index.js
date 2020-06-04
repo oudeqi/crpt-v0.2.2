@@ -32,40 +32,31 @@ export default class BaiduSDK {
         return Promise.reject(res)
     }
 
-    async IdcardVerify(params) {
-        const res = await BaiduSDK.getToken();
+    async IdcardVerify(files) {
+        const self = this
+        const res = await this.getToken();
         if (res.code === 200) {
-            return http.post(
-                BaiduSDK.URL_IDCARD_INFO,
-                obj2FormData({
-                    certFile: params.file,
-                    accessToken: res.data.accessToken
-                }),
-                // formData,
+            return http.upload(
+                `${this.ajaxUrls.URL_IDCARD_INFO}?accessToken=${res.data.accessToken}`,
+                {files},
                 {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
+                    headers: {},
+                    timeout: 3000
                 }
             );
         }
     }
 
-    async BankVerify(params) {
+    async BankVerify(files) {
         const res = await BaiduSDK.getToken();
         if (res.code === 200) {
             return http.post(
-                BaiduSDK.URL_BANK_INFO,
-                obj2FormData({
-                    bankcardFile: params.file,
-                    accessToken: res.data.accessToken
-                }),
-                // formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
+              `${this.ajaxUrls.URL_BANK_INFO}?accessToken=${res.data.accessToken}`,
+              {files},
+              {
+                  headers: {},
+                  timeout: 3000
+              }
             );
         }
         return Promise.reject(res)

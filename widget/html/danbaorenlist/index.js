@@ -1597,39 +1597,36 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "IdcardVerify",
     value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
         var res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return BaiduSDK.getToken();
+                _context2.next = 3;
+                return this.getToken();
 
-              case 2:
+              case 3:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 5;
+                  _context2.next = 6;
                   break;
                 }
 
-                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
-                  certFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this);
       }));
 
       function IdcardVerify(_x2) {
@@ -1641,7 +1638,7 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "BankVerify",
     value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
         var res;
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
@@ -1658,14 +1655,11 @@ var BaiduSDK = /*#__PURE__*/function () {
                   break;
                 }
 
-                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
-                  bankcardFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
               case 5:
@@ -1676,7 +1670,7 @@ var BaiduSDK = /*#__PURE__*/function () {
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, this);
       }));
 
       function BankVerify(_x3) {
@@ -1689,13 +1683,6 @@ var BaiduSDK = /*#__PURE__*/function () {
 
   return BaiduSDK;
 }();
-var obj2FormData = function obj2FormData(info) {
-  var formData = new FormData();
-  Object.keys(info).forEach(function (k, i) {
-    formData.append(k, info[k]);
-  });
-  return formData;
-};
 
 var OCR = {
   Baidu: new BaiduSDK()
@@ -2015,7 +2002,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
       });
-      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span>").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
+      var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span id=\"").concat(key, "Num\">").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
       $api.byId(key).innerHTML = collapseTpl;
     }
   }, {
@@ -2194,6 +2181,7 @@ var pageController = /*#__PURE__*/function (_Service) {
         var length = Object.keys(others).length;
         var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
         $api.append(othersBody, tpl);
+        console.log(JSON.stringify($api.byId('othersNum')));
         $api.byId('othersNum').innerHTML = "0/".concat(length + 1, "\u4EBA");
 
         _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));

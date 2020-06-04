@@ -1665,39 +1665,36 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "IdcardVerify",
     value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
         var res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return BaiduSDK.getToken();
+                _context2.next = 3;
+                return this.getToken();
 
-              case 2:
+              case 3:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 5;
+                  _context2.next = 6;
                   break;
                 }
 
-                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
-                  certFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this);
       }));
 
       function IdcardVerify(_x2) {
@@ -1709,7 +1706,7 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "BankVerify",
     value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
         var res;
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
@@ -1726,14 +1723,11 @@ var BaiduSDK = /*#__PURE__*/function () {
                   break;
                 }
 
-                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
-                  bankcardFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
               case 5:
@@ -1744,7 +1738,7 @@ var BaiduSDK = /*#__PURE__*/function () {
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, this);
       }));
 
       function BankVerify(_x3) {
@@ -1757,13 +1751,6 @@ var BaiduSDK = /*#__PURE__*/function () {
 
   return BaiduSDK;
 }();
-var obj2FormData = function obj2FormData(info) {
-  var formData = new FormData();
-  Object.keys(info).forEach(function (k, i) {
-    formData.append(k, info[k]);
-  });
-  return formData;
-};
 
 var OCR = {
   Baidu: new BaiduSDK()
@@ -2259,8 +2246,18 @@ apiready = function apiready() {
     }
 
     var tyeeNode = getProtocolFromNode(node, type);
+    var tyeeNode3 = getProtocolFromNode(node, 3);
+    var nodes = [];
 
-    if (!tyeeNode) {
+    if (tyeeNode) {
+      nodes = nodes.concat(tyeeNode);
+    }
+
+    if (tyeeNode3) {
+      nodes = nodes.concat(tyeeNode3);
+    }
+
+    if (nodes.length === 0) {
       api.toast({
         msg: '协议不存在',
         location: 'middle'
@@ -2268,7 +2265,7 @@ apiready = function apiready() {
       return;
     }
 
-    var tpl = tyeeNode.map(function (item) {
+    var tpl = nodes.map(function (item) {
       return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
     });
     $api.byId('agreement').innerHTML = tpl.join('，');

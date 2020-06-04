@@ -1615,39 +1615,36 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "IdcardVerify",
     value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(params) {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
         var res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return BaiduSDK.getToken();
+                _context2.next = 3;
+                return this.getToken();
 
-              case 2:
+              case 3:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 5;
+                  _context2.next = 6;
                   break;
                 }
 
-                return _context2.abrupt("return", http.post(BaiduSDK.URL_IDCARD_INFO, obj2FormData({
-                  certFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this);
       }));
 
       function IdcardVerify(_x2) {
@@ -1659,7 +1656,7 @@ var BaiduSDK = /*#__PURE__*/function () {
   }, {
     key: "BankVerify",
     value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(params) {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
         var res;
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
@@ -1676,14 +1673,11 @@ var BaiduSDK = /*#__PURE__*/function () {
                   break;
                 }
 
-                return _context3.abrupt("return", http.post(BaiduSDK.URL_BANK_INFO, obj2FormData({
-                  bankcardFile: params.file,
-                  accessToken: res.data.accessToken
-                }), // formData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
+                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
 
               case 5:
@@ -1694,7 +1688,7 @@ var BaiduSDK = /*#__PURE__*/function () {
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, this);
       }));
 
       function BankVerify(_x3) {
@@ -1707,13 +1701,6 @@ var BaiduSDK = /*#__PURE__*/function () {
 
   return BaiduSDK;
 }();
-var obj2FormData = function obj2FormData(info) {
-  var formData = new FormData();
-  Object.keys(info).forEach(function (k, i) {
-    formData.append(k, info[k]);
-  });
-  return formData;
-};
 
 var OCR = {
   Baidu: new BaiduSDK()
@@ -2258,13 +2245,11 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
-    key: "ocrRead",
-    //
-    value: function ocrRead(url, data) {
-      return http.upload(url, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+    key: "saveIDCardPic",
+    // 保存身份证图片
+    value: function saveIDCardPic(params) {
+      return http.upload('/crpt-guarante/guarantor/attachment/save', {
+        body: params
       });
     } // 获取担保状态
 
@@ -2684,7 +2669,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "__readIDCard",
     value: function () {
       var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(pic) {
-        var OCR, tokenRes, res;
+        var res, res2;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2694,72 +2679,77 @@ var PageController = /*#__PURE__*/function (_Service) {
                   title: '识别中...',
                   text: ''
                 });
-                OCR = new BaiduSDK();
-                _context.next = 5;
-                return OCR.getToken();
-
-              case 5:
-                tokenRes = _context.sent;
-
-                if (!(tokenRes.code !== 200)) {
-                  _context.next = 8;
-                  break;
-                }
-
-                throw new Error('token获取失败');
-
-              case 8:
-                _context.next = 10;
-                return this.ocrRead(OCR.ajaxUrls.URL_IDCARD_INFO, {
-                  values: {
-                    accessToken: tokenRes.data.accessToken
-                  },
-                  files: {
-                    certFile: pic
-                  }
+                _context.next = 4;
+                return Utils$1.OCR.Baidu.IdcardVerify({
+                  certFile: pic
                 });
 
-              case 10:
+              case 4:
                 res = _context.sent;
 
                 if (!(res.code === 200)) {
-                  _context.next = 15;
+                  _context.next = 9;
                   break;
                 }
 
                 $api.byId('certNo').value = res.data.number || '';
-                _context.next = 17;
+                _context.next = 11;
                 break;
 
-              case 15:
+              case 9:
                 $api.byId('certNo').value = '';
                 throw new Error('读取失败');
 
-              case 17:
+              case 11:
                 api.toast({
                   msg: '识别成功',
                   location: 'middle'
+                }); // TODO
+
+                _context.next = 14;
+                return this.saveIDCardPic({
+                  pictureFile: pic,
+                  gtId: this.initData.gtCreditId // 授信id
+
                 });
-                _context.next = 23;
+
+              case 14:
+                res2 = _context.sent;
+
+                if (!(res2.code === 200)) {
+                  _context.next = 19;
+                  break;
+                }
+
+                $api.byId('certNo').dataset.picture = res2.data.pictureId;
+                _context.next = 20;
                 break;
 
+              case 19:
+                throw new Error('保存身份证图片失败');
+
               case 20:
-                _context.prev = 20;
+                _context.next = 26;
+                break;
+
+              case 22:
+                _context.prev = 22;
                 _context.t0 = _context["catch"](0);
+                console.log(_context.t0.message);
                 api.toast({
                   msg: _context.t0.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 23:
+              case 26:
                 api.hideProgress();
 
-              case 24:
+              case 27:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 20]]);
+        }, _callee, this, [[0, 22]]);
       }));
 
       function __readIDCard(_x) {
@@ -2814,7 +2804,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "__readBank",
     value: function () {
       var _readBank = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(pic) {
-        var OCR, tokenRes, res;
+        var res;
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2824,72 +2814,54 @@ var PageController = /*#__PURE__*/function (_Service) {
                   title: '识别中...',
                   text: ''
                 });
-                OCR = new BaiduSDK();
-                _context3.next = 5;
-                return OCR.getToken();
-
-              case 5:
-                tokenRes = _context3.sent;
-
-                if (!(tokenRes.code !== 200)) {
-                  _context3.next = 8;
-                  break;
-                }
-
-                throw new Error('token获取失败');
-
-              case 8:
-                _context3.next = 10;
-                return this.ocrRead(OCR.ajaxUrls.URL_BANK_INFO, {
-                  values: {
-                    accessToken: tokenRes.data.accessToken
-                  },
-                  files: {
-                    bankcardFile: pic
-                  }
+                _context3.next = 4;
+                return Utils$1.OCR.Baidu.BankVerify({
+                  bankcardFile: pic
                 });
 
-              case 10:
+              case 4:
                 res = _context3.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 15;
+                  _context3.next = 10;
                   break;
                 }
 
                 $api.byId('bankCardNo').value = res.data.bank_card_number || '';
-                _context3.next = 17;
+                $api.byId('bankName').value = res.data.bank_name || '';
+                _context3.next = 13;
                 break;
 
-              case 15:
+              case 10:
                 $api.byId('bankCardNo').value = '';
+                $api.byId('bankName').value = '';
                 throw new Error('读取失败');
 
-              case 17:
+              case 13:
                 api.toast({
                   msg: '识别成功',
                   location: 'middle'
                 });
-                _context3.next = 23;
+                _context3.next = 19;
                 break;
 
-              case 20:
-                _context3.prev = 20;
+              case 16:
+                _context3.prev = 16;
                 _context3.t0 = _context3["catch"](0);
                 api.toast({
                   msg: _context3.t0.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 23:
+              case 19:
                 api.hideProgress();
 
-              case 24:
+              case 20:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 20]]);
+        }, _callee3, null, [[0, 16]]);
       }));
 
       function __readBank(_x2) {

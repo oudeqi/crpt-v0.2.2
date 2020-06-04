@@ -152,7 +152,7 @@ apiready = function () {
     controller.goDanbao()
   }
   $api.byId('danbaofuwu').onclick = () => {
-    openProductList(1) // 产品类型：1-信用贷款 2-担保贷款
+    openProductList(2) // 产品类型：1-信用贷款 2-担保贷款
   }
   controller.renderNav()
   controller.renderProduct()

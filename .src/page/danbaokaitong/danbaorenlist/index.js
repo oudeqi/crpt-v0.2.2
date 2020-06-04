@@ -82,7 +82,7 @@ class pageController extends Service {
           </label>
           <div class="cont" click-trigger="header">
             <span>${category[key]}</span>
-            <span>${signedLength}/${arr.length}人</span>
+            <span id="${key}Num">${signedLength}/${arr.length}人</span>
           </div>
         </div>
         <ul class="collapse-body" id="${key}-body">
@@ -225,6 +225,7 @@ class pageController extends Service {
       </li>
       `
       $api.append(othersBody, tpl)
+      console.log(JSON.stringify($api.byId('othersNum')))
       $api.byId('othersNum').innerHTML = `0/${length + 1}人`
       this._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
       this._resetAllCheckbox()

@@ -4,6 +4,7 @@ import './index.css'
 import HeaderController from '../header.js'
 import { setRefreshHeaderInfo } from '../../../config.js'
 import { openSignOnline, openDanbaoKaitong } from '../../../webview.js'
+import numeral from 'numeral'
 
 
 class PageController extends HeaderController {
@@ -19,7 +20,7 @@ class PageController extends HeaderController {
     $api.byId('productName2').innerHTML = data.productName || ''
     $api.byId('custName').innerHTML = data.custName || ''
     $api.byId('custPhone').innerHTML = data.custPhone ? `(${data.custPhone})` : ''
-    $api.byId('creditQuota').innerHTML = data.creditQuota || ''
+    $api.byId('creditQuota').innerHTML = numeral(data.creditQuota || 0).format('0,0.00')
     $api.byId('effectiveNum').innerHTML = data.effectiveNum ? `${data.effectiveNum}月` : ''
     $api.byId('applyBeginDate').innerHTML = data.applyBeginDate ? data.applyBeginDate.split(' ')[0] : ''
     $api.byId('applyEndDate').innerHTML = data.applyEndDate ? data.applyEndDate.split(' ')[0] : ''
