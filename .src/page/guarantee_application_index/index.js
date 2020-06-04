@@ -241,7 +241,13 @@ class PageController extends Service {
             }
 
             // key: 养殖规模
-            const scale = operateRes.data.farmsSize
+            let scale
+            if(this.data.farmType === 3 && operateRes.data.farmsSize) {
+                scale = operateRes.data.farmsSize.replace(/\.\d+/g,'')
+            }else {
+                // 猪需要去除小数
+                scale = operateRes.data.farmsSize
+            }
             this.data.scale = scale
             document.querySelector('#scale').value = scale
             document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'
