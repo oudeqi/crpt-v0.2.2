@@ -8,6 +8,7 @@ import numeral from 'numeral'
 
 
 class PageController extends HeaderController {
+
   constructor() {
     super(...arguments)
     const { productId, productName } = api.pageParam || {}
@@ -15,7 +16,7 @@ class PageController extends HeaderController {
     this.productName = productName
   }
 
-  _renderDom (data) {
+  __renderBodyDom (data) {
     $api.byId('productName').innerHTML = data.productName || ''
     $api.byId('productName2').innerHTML = data.productName || ''
     $api.byId('custName').innerHTML = data.custName || ''
@@ -28,16 +29,21 @@ class PageController extends HeaderController {
     $api.byId('relaManagerPhone').innerHTML = data.relaManagerPhone ? `(${data.relaManagerPhone})` : ''
   }
 
-  _renderContract (arr) {
+  __renderContract (arr) {
     let li = arr.map(item => {
       return `<li class="sign">《${item.contractTitle}》</li>`
     })
     $api.byId('contractList').innerHTML = `
-    <h2>点击合同进入在线签约</h2>
-    <ul>
-      ${li.join('')}
-    </ul>
+      <h2>点击合同进入在线签约</h2>
+      <ul>
+        ${li.join('')}
+      </ul>
     `
+  }
+
+  __renderHeaderDom (data) {
+    $api.byId('amount').innerHTML = numeral(data.creditQuota || 0).format('0,0.00')
+    $api.byId('desc').innerHTML = `您正在开通${data.productName}产品`
   }
 
   async getPageData () {
@@ -48,8 +54,9 @@ class PageController extends HeaderController {
         const gtCreditId = this.danbaoStatus.gtCreditId
         const res = await this.queryComfirmInfo(gtCreditId)
         if (res.code === 200) {
-          this._renderDom(res.data)
-          this._renderContract(res.data.contractList || [])
+          this.__renderBodyDom(res.data)
+          this.__renderContract(res.data.contractList || [])
+          this.__renderHeaderDom(res.data)
         }
       }
     } catch (error) {
@@ -58,24 +65,27 @@ class PageController extends HeaderController {
     api.hideProgress()
     api.refreshHeaderLoadDone()
   }
+
+  bindEvent () {
+    document.querySelector('body').onclick = function (e) {
+      if (e.target.className.includes('sign')) {
+        openSignOnline()
+      }
+    }
+    $api.byId('next').onclick = function () {
+      openDanbaoKaitong({step: 4})
+    }
+  }
 }
 
 apiready = function () {
 
-  const pageController = new PageController()
-  pageController.getPageData()
+  const ctrl = new PageController()
+  ctrl.bindEvent()
+  ctrl.getPageData()
+
   setRefreshHeaderInfo(function(ret, err) {
-    pageController.getPageData()
+    ctrl.getPageData()
   })
-
-  document.querySelector('body').onclick = function (e) {
-    if (e.target.className.includes('sign')) {
-      openSignOnline()
-    }
-  }
-
-  $api.byId('next').onclick = function () {
-    openDanbaoKaitong({step: 4})
-  }
 
 }

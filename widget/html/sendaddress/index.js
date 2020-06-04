@@ -1611,7 +1611,7 @@ var BaiduSDK = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return BaiduSDK.getToken();
+                return this.getToken();
 
               case 2:
                 res = _context3.sent;
@@ -1987,24 +1987,28 @@ var Validation = /*#__PURE__*/function () {
   }
 
   createClass(Validation, [{
-    key: "_commonValidate",
-    value: function _commonValidate(currentConfig, error) {
+    key: "__commonValidate",
+    value: function __commonValidate(currentConfig, error) {
       var currentValidConfig = currentConfig.valid || {};
       var currentValue = currentConfig.get();
+      var condition = currentConfig.condition; // 决定是否校验
 
       for (var _i = 0, _Object$keys = Object.keys(currentValidConfig); _i < _Object$keys.length; _i++) {
         k = _Object$keys[_i];
         var fnMap = this.fnMap;
-        fnMap[k](currentValidConfig, currentValue, error);
 
-        if (!this.isValid) {
-          break;
+        if (!condition || typeof condition === 'function' && condition()) {
+          fnMap[k](currentValidConfig, currentValue, error);
+
+          if (!this.isValid) {
+            break;
+          }
         }
       }
     }
   }, {
-    key: "_shapeAttrValidate",
-    value: function _shapeAttrValidate(currentConfig, value, error) {
+    key: "__shapeAttrValidate",
+    value: function __shapeAttrValidate(currentConfig, value, error) {
       for (var _i2 = 0, _Object$keys2 = Object.keys(currentConfig); _i2 < _Object$keys2.length; _i2++) {
         k = _Object$keys2[_i2];
         var fnMap = this.fnMap;
@@ -2016,8 +2020,8 @@ var Validation = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "_shapeValidate",
-    value: function _shapeValidate(shape, value, error) {
+    key: "__shapeValidate",
+    value: function __shapeValidate(shape, value, error) {
       var _this2 = this;
 
       value.forEach(function (currentValue) {
@@ -2026,7 +2030,7 @@ var Validation = /*#__PURE__*/function () {
           // TODO
           var currentConfig = shape[key];
 
-          _this2._shapeAttrValidate(shape[k], currentValue[k], error);
+          _this2.__shapeAttrValidate(shape[k], currentValue[k], error);
 
           if (!_this2.isValid) {
             break;
@@ -2035,8 +2039,8 @@ var Validation = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "_validate",
-    value: function _validate(error) {
+    key: "__validate",
+    value: function __validate(error) {
       var config = this.config;
 
       for (var _i4 = 0, _Object$keys4 = Object.keys(config); _i4 < _Object$keys4.length; _i4++) {
@@ -2044,9 +2048,9 @@ var Validation = /*#__PURE__*/function () {
         var currentConfig = config[key] || {};
 
         if (currentConfig.shape) {
-          this._shapeValidate(currentConfig.shape || {}, currentConfig.get(), error);
+          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error);
         } else {
-          this._commonValidate(currentConfig, error);
+          this.__commonValidate(currentConfig, error);
         }
 
         if (!this.isValid) {
@@ -2060,15 +2064,22 @@ var Validation = /*#__PURE__*/function () {
       var error = _ref.error,
           success = _ref.success;
 
-      this._validate(error);
+      this.__validate(error);
 
       if (this.isValid) {
         var res = {};
 
         for (var _i5 = 0, _Object$keys5 = Object.keys(this.config); _i5 < _Object$keys5.length; _i5++) {
           key = _Object$keys5[_i5];
+          var revert = this.config[key].revert;
 
-          if (!this.config[key].noRevert) {
+          if (typeof revert === 'function') {
+            revert = revert();
+          } else if (typeof revert !== 'boolean') {
+            revert = true;
+          }
+
+          if (revert) {
             res[key] = this.config[key].get();
           }
         }

@@ -1567,7 +1567,7 @@ var BaiduSDK = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return BaiduSDK.getToken();
+                return this.getToken();
 
               case 2:
                 res = _context3.sent;

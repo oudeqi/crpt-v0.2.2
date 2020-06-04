@@ -14,7 +14,7 @@
     </div>
     <div class="rect">
       <!-- normal info primary waring -->
-      <div class="top">您的<span>授信额度</span>为</div>
+      <div class="top">您的<span>期盼额度</span>为</div>
       <div class="bottom">
         <span>¥</span><strong id="amount">0.00</strong>
       </div>
@@ -52,23 +52,25 @@
 
   <div class="form">
 
-    <div class="form-item form-block">
-      <div class="form-label" style="width: 96px;">场地变化</div>
-      <div class="form-crtl">
-        <div class="block-select">
-          <label><input type="radio" name="buildType" disabled value="1"><span>新建</span></label>
-          <label><input type="radio" name="buildType" disabled value="2"><span>改建</span></label>
-          <label><input type="radio" name="buildType" disabled value="3"><span>扩建</span></label>
+    <!-- 只有设备贷才有 style="display: none;" -->
+    <div id="shebeidai_container" style="display: none;">
+      <div class="form-item form-block">
+        <div class="form-label" style="width: 96px;">场地变化</div>
+        <div class="form-crtl">
+          <div class="block-select">
+            <label><input type="radio" name="buildType" disabled value="1"><span>新建</span></label>
+            <label><input type="radio" name="buildType" disabled value="2"><span>改建</span></label>
+            <label><input type="radio" name="buildType" disabled value="3"><span>扩建</span></label>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="form-item">
-      <div class="form-label" style="width: 96px;">建厂预计投入</div>
-      <div class="form-crtl">
-        <div class="txt-input">
-          <input type="text" id="expectInveste" max="9999" disabled decimal-keeps="2" placeholder="请输入">
-          <span>万元</span>
+      <div class="form-item">
+        <div class="form-label" style="width: 96px;">建厂预计投入</div>
+        <div class="form-crtl">
+          <div class="txt-input">
+            <input type="text" id="expectInveste" max="9999" disabled decimal-keeps="2" placeholder="请输入">
+            <span>万元</span>
+          </div>
         </div>
       </div>
     </div>

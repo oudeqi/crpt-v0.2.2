@@ -49,18 +49,21 @@ export class Validation {
       },
     }
   }
-  _commonValidate (currentConfig, error) {
+  __commonValidate (currentConfig, error) {
     const currentValidConfig = currentConfig.valid || {}
     const currentValue = currentConfig.get()
+    const condition = currentConfig.condition // 决定是否校验
     for (k of Object.keys(currentValidConfig)) {
       const fnMap = this.fnMap
-      fnMap[k](currentValidConfig, currentValue, error)
-      if (!this.isValid) {
-        break
+      if (!condition || (typeof condition === 'function' && condition())) {
+        fnMap[k](currentValidConfig, currentValue, error)
+        if (!this.isValid) {
+          break
+        }
       }
     }
   }
-  _shapeAttrValidate (currentConfig, value, error) {
+  __shapeAttrValidate (currentConfig, value, error) {
     for (k of Object.keys(currentConfig)) {
       const fnMap = this.fnMap
       fnMap[k](currentConfig, value, error)
@@ -69,26 +72,26 @@ export class Validation {
       }
     }
   }
-  _shapeValidate (shape, value, error) {
+  __shapeValidate (shape, value, error) {
     value.forEach(currentValue => {
       for (k of Object.keys(shape)) {
         // TODO
         let currentConfig = shape[key]
-        this._shapeAttrValidate(shape[k], currentValue[k], error)
+        this.__shapeAttrValidate(shape[k], currentValue[k], error)
         if (!this.isValid) {
           break
         }
       }
     })
   }
-  _validate (error) {
+  __validate (error) {
     const config = this.config
     for (key of Object.keys(config)) {
       let currentConfig = config[key] || {}
       if (currentConfig.shape) {
-        this._shapeValidate(currentConfig.shape || {}, currentConfig.get(), error)
+        this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error)
       } else {
-        this._commonValidate(currentConfig, error)
+        this.__commonValidate(currentConfig, error)
       }
       if (!this.isValid) {
         break
@@ -96,11 +99,17 @@ export class Validation {
     }
   }
   validate ({error, success}) {
-    this._validate(error)
+    this.__validate(error)
     if (this.isValid) {
       const res = {}
       for (key of Object.keys(this.config)) {
-        if (!this.config[key].noRevert) {
+        let revert = this.config[key].revert
+        if (typeof revert === 'function') {
+          revert = revert()
+        } else if (typeof revert !== 'boolean') {
+          revert = true
+        }
+        if (revert) {
           res[key] = this.config[key].get()
         }
       }

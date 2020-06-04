@@ -26,8 +26,8 @@ export default class HeaderController extends Service {
   constructor () {
     super(...arguments)
     const { step, creditStatus } = api.pageParam || {}
-    this.step = step
-    this.creditStatus = creditStatus
+    this.step = step // step 是当前页面的步骤
+    this.creditStatus = creditStatus // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
     this.danbaoStatus = null
     this.applyStatusMap = {
       0: 'xxx', // int	无申请
@@ -60,9 +60,12 @@ export default class HeaderController extends Service {
       if (res.code === 200) {
         const data = res.data
         this.danbaoStatus = data
-        let num = res.data[this.applyStatusMap[data.applyStatus]] || 0
-        $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00')
-        $api.byId('desc').innerHTML = `您正在申请${res.data.productName}产品`
+        let step = this.step
+        if (step < 3) {
+          let num = res.data[this.applyStatusMap[data.applyStatus]] || 0
+          $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00')
+          $api.byId('desc').innerHTML = `您正在申请${res.data.productName}产品`
+        }
       }
     } catch (error) {
       if (this.step !== 1) {

@@ -15,14 +15,32 @@ class PageController extends HeaderController {
     this.productName = productName
   }
 
+  // 隐藏设备贷
+  __hideShebeiDai () {
+    $api.byId('shebeidai_container').style.display = 'none'
+  }
+
+  // 根据产品id，显示或者隐藏设备贷
+  __isShebeiDaiShow (productId) {
+    $api.byId('shebeidai_container').style.display = 'block'
+    // if (productId === '6' || productId === 6) {
+    //   $api.byId('shebeidai_container').style.display = 'block'
+    // } else {
+    //   $api.byId('shebeidai_container').style.display = 'none'
+    // }
+  }
+
+  // 获取产品信息
   async getProduct () {
     api.showProgress({ title: '加载中...', text: '', modal: false })
+    this.__setDisabled()
     try {
       await this.renderHeaderAndGetDanbaoStatus()
     } catch (error) {}
     try {
       if (this.danbaoStatus) {
         const data = this.danbaoStatus
+        this.__isShebeiDaiShow(data.productId)
         document.querySelector('[name="buildType"][value="'+data.buildType+'"]').checked = true
         $api.byId('expectInveste').value = data.expectInveste
         $api.byId('demandMoney').value = data.demandMoney
@@ -37,7 +55,9 @@ class PageController extends HeaderController {
         $api.byId('product').value = data.productName
         $api.byId('rate').value = `${data.rate || '0'}‰`
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
+// this.__removeDisabled()
       } else {
+        this.__isShebeiDaiShow(this.productId)
         const res = await this.queryProductById(this.productId)
         if (res.code === 200) {
           const data = res.data
@@ -49,15 +69,7 @@ class PageController extends HeaderController {
           $api.byId('product').value = data.productName
           $api.byId('rate').value = `${data.rate || '0'}‰`
           $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
-          // 可编辑
-          let buildType = Array.from(document.querySelectorAll('[name="buildType"]'))
-          buildType.forEach(item => {
-            $api.removeAttr(item, 'disabled')
-          })
-          $api.removeAttr($api.byId('expectInveste'), 'disabled')
-          $api.removeAttr($api.byId('demandMoney'), 'disabled')
-          $api.removeAttr($api.byId('timeLimit'), 'disabled')
-          $api.removeAttr($api.byId('agreement'), 'disabled')
+          this.__removeDisabled()
         }
       }
     } catch (error) {
@@ -67,10 +79,32 @@ class PageController extends HeaderController {
     api.refreshHeaderLoadDone()
   }
 
-  _initValidation () {
+  __setDisabled () {// 不可编辑
+    let buildType = Array.from(document.querySelectorAll('[name="buildType"]'))
+    buildType.forEach(item => {
+      $api.attr(item, 'disabled', true)
+    })
+    $api.attr($api.byId('expectInveste'), 'disabled', true)
+    $api.attr($api.byId('demandMoney'), 'disabled', true)
+    $api.attr($api.byId('timeLimit'), 'disabled', true)
+    $api.attr($api.byId('agreement'), 'disabled', true)
+  }
+
+  __removeDisabled () { // 可编辑
+    let buildType = Array.from(document.querySelectorAll('[name="buildType"]'))
+    buildType.forEach(item => {
+      $api.removeAttr(item, 'disabled')
+    })
+    $api.removeAttr($api.byId('expectInveste'), 'disabled')
+    $api.removeAttr($api.byId('demandMoney'), 'disabled')
+    $api.removeAttr($api.byId('timeLimit'), 'disabled')
+    $api.removeAttr($api.byId('agreement'), 'disabled')
+  }
+
+  __initValidation () {
     const cfg = {
       agreement: {
-        noRevert: true, // 不返回该字段，默认返回
+        revert: false, // 不返回该字段，默认返回
         valid: {
           checked: '请仔细阅读协议，并同意'
         },
@@ -82,6 +116,8 @@ class PageController extends HeaderController {
         valid: {
           required: '请选择场地变化类型'
         },
+        revert: () => { return true },
+        condition: () => { return true },
         get: function () {
           const checkedRadio = document.querySelector('[name="buildType"]:checked')
           return checkedRadio ? checkedRadio.value : ''
@@ -91,6 +127,8 @@ class PageController extends HeaderController {
         valid: {
           max: [9999, '建厂预计投入不能超过9999'],
         },
+        revert: () => { return true },
+        condition: () => { return true },
         get: function () {
           return $api.byId('expectInveste').value
         }
@@ -123,13 +161,14 @@ class PageController extends HeaderController {
     return new Validation(cfg)
   }
 
-  async save () {
-    const validation = this._initValidation()
+  async __save () {
+    const validation = this.__initValidation()
     validation.validate({
       error: function (msg) {
         api.toast({ msg, location: 'middle' })
       },
       success: async (data) => {
+        // console.log(JSON.stringify(data))
         if (this.danbaoStatus && this.danbaoStatus.applyStatus > 0) {
           openDanbaoKaitong({step: 2})
           return
@@ -148,39 +187,9 @@ class PageController extends HeaderController {
       }
     })
   }
-}
 
-apiready = function () {
-  const pageController = new PageController()
-  pageController.getProduct()
-
-  // 选填，客户录入（4位数）
-  new NumberLimit($api.byId('expectInveste'))
-
-  $api.byId('agreement').onchange = function (e) {
-    let el = document.querySelector('#save')
-    if ((e.target.checked)) {
-      $api.removeAttr(el, 'disabled')
-    } else {
-      $api.attr(el, 'disabled', true)
-    }
-  }
-  // 资金需求 可修改小额度
-  $api.byId('demandMoney').oninput = function (e) {
-    console.log(e.target.value)
-  }
-  // 用款期限 可修改小额度
-  $api.byId('timeLimit').oninput = function (e) {
-    console.log(e.target.value)
-  }
-
-  document.querySelector('#save').onclick = function () {
-    pageController.save()
-  }
-
-  function showProtocol () {
+  showProtocol () {
     let node = getNodeProtocolFromStorage(4)
-    console.log(JSON.stringify(node))
     if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
@@ -190,18 +199,57 @@ apiready = function () {
     })
     $api.byId('protocol').innerHTML = tpl.join('、')
   }
-  
-  showProtocol()
-  document.querySelector('#protocol').onclick = (e) => {
-    let strong = $api.closest(e.target, 'strong')
-    if (strong) {
-      openAgreement(strong.dataset.id, strong.dataset.name)
+
+  bindEvent () {
+    // 选填，客户录入（4位数）
+    new NumberLimit($api.byId('expectInveste'))
+    // 协议
+    $api.byId('agreement').onchange = function (e) {
+      let el = document.querySelector('#save')
+      if ((e.target.checked)) {
+        $api.removeAttr(el, 'disabled')
+      } else {
+        $api.attr(el, 'disabled', true)
+      }
+    }
+    // 资金需求 可修改小额度
+    $api.byId('demandMoney').oninput = function (e) {
+      console.log(e.target.value)
+    }
+    // 用款期限 可修改小额度
+    $api.byId('timeLimit').oninput = function (e) {
+      console.log(e.target.value)
+    }
+    // 保存
+    document.querySelector('#save').onclick = () => {
+      this.__save()
+    }
+    document.querySelector('#protocol').onclick = e => {
+      let strong = $api.closest(e.target, 'strong')
+      if (strong) {
+        openAgreement(strong.dataset.id, strong.dataset.name)
+      }
     }
   }
+}
+
+apiready = function () {
+  const ctrl = new PageController()
+  ctrl.bindEvent()
+  ctrl.showProtocol()
+  ctrl.getProduct()
+
   // 下拉刷新
   setRefreshHeaderInfo(function(ret, err) {
-    pageController.getProduct()
-    showProtocol()
+    ctrl.showProtocol()
+    ctrl.getProduct()
+  })
+
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
+    ctrl.showProtocol()
+    ctrl.getProduct()
   })
 
 }

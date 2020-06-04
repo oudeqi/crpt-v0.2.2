@@ -939,7 +939,17 @@ function openDanbaoKaitong() {
     }
   } else if (step >= 7) {
     i = 6;
-  }
+  } // back 当页面是返回时传递true
+  // productId 只在第一步会用到
+  // creditStatus 在第二步或者第三步会用到
+  // step 在3以及三之后，就是当前页面的步骤，2以及2之前是当前的担保申请状态
+  // 想去第一步，step传0
+  // 想去第二步，step传1、或者step传2，creditStatus非2
+  // 想去第三步，step传3、或者step传2，creditStatus传2
+  // 想去第四步，step传4
+  // 想去第五步，step传5
+  // 想去第六步，step传6
+
 
   var animation = back ? {
     animation: {
@@ -1677,7 +1687,7 @@ var BaiduSDK = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return BaiduSDK.getToken();
+                return this.getToken();
 
               case 2:
                 res = _context3.sent;
@@ -2982,8 +2992,10 @@ var HeaderController = /*#__PURE__*/function (_Service) {
         step = _ref.step,
         creditStatus = _ref.creditStatus;
 
-    _this.step = step;
-    _this.creditStatus = creditStatus;
+    _this.step = step; // step 是当前页面的步骤
+
+    _this.creditStatus = creditStatus; // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
+
     _this.danbaoStatus = null;
     _this.applyStatusMap = {
       0: 'xxx',
@@ -3025,7 +3037,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_getDanbaoStatus",
     value: function () {
       var _getDanbaoStatus2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, data, num;
+        var res, data, step, num;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3040,9 +3052,13 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                 if (res.code === 200) {
                   data = res.data;
                   this.danbaoStatus = data;
-                  num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
-                  $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
-                  $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
+                  step = this.step;
+
+                  if (step < 3) {
+                    num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
+                    $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
+                    $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
+                  }
                 }
 
                 _context.next = 10;

@@ -939,7 +939,17 @@ function openDanbaoKaitong() {
     }
   } else if (step >= 7) {
     i = 6;
-  }
+  } // back 当页面是返回时传递true
+  // productId 只在第一步会用到
+  // creditStatus 在第二步或者第三步会用到
+  // step 在3以及三之后，就是当前页面的步骤，2以及2之前是当前的担保申请状态
+  // 想去第一步，step传0
+  // 想去第二步，step传1、或者step传2，creditStatus非2
+  // 想去第三步，step传3、或者step传2，creditStatus传2
+  // 想去第四步，step传4
+  // 想去第五步，step传5
+  // 想去第六步，step传6
+
 
   var animation = back ? {
     animation: {
@@ -1700,7 +1710,7 @@ var BaiduSDK = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return BaiduSDK.getToken();
+                return this.getToken();
 
               case 2:
                 res = _context3.sent;
@@ -3024,8 +3034,10 @@ var HeaderController = /*#__PURE__*/function (_Service) {
         step = _ref.step,
         creditStatus = _ref.creditStatus;
 
-    _this.step = step;
-    _this.creditStatus = creditStatus;
+    _this.step = step; // step 是当前页面的步骤
+
+    _this.creditStatus = creditStatus; // 授信资料审核状态 1、审核中 2、授信成功 3、授信失败
+
     _this.danbaoStatus = null;
     _this.applyStatusMap = {
       0: 'xxx',
@@ -3067,7 +3079,7 @@ var HeaderController = /*#__PURE__*/function (_Service) {
     key: "_getDanbaoStatus",
     value: function () {
       var _getDanbaoStatus2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, data, num;
+        var res, data, step, num;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3082,9 +3094,13 @@ var HeaderController = /*#__PURE__*/function (_Service) {
                 if (res.code === 200) {
                   data = res.data;
                   this.danbaoStatus = data;
-                  num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
-                  $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
-                  $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
+                  step = this.step;
+
+                  if (step < 3) {
+                    num = res.data[this.applyStatusMap[data.applyStatus]] || 0;
+                    $api.byId('amount').innerHTML = numeral(num).multiply(10000).format('0,0.00');
+                    $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(res.data.productName, "\u4EA7\u54C1");
+                  }
                 }
 
                 _context.next = 10;
@@ -3204,8 +3220,8 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
   }
 
   createClass(PageController, [{
-    key: "_renderDom",
-    value: function _renderDom(data) {
+    key: "__renderBodyDom",
+    value: function __renderBodyDom(data) {
       $api.byId('productName').innerHTML = data.productName || '';
       $api.byId('productName2').innerHTML = data.productName || '';
       $api.byId('custName').innerHTML = data.custName || '';
@@ -3218,12 +3234,18 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       $api.byId('relaManagerPhone').innerHTML = data.relaManagerPhone ? "(".concat(data.relaManagerPhone, ")") : '';
     }
   }, {
-    key: "_renderContract",
-    value: function _renderContract(arr) {
+    key: "__renderContract",
+    value: function __renderContract(arr) {
       var li = arr.map(function (item) {
         return "<li class=\"sign\">\u300A".concat(item.contractTitle, "\u300B</li>");
       });
-      $api.byId('contractList').innerHTML = "\n    <h2>\u70B9\u51FB\u5408\u540C\u8FDB\u5165\u5728\u7EBF\u7B7E\u7EA6</h2>\n    <ul>\n      ".concat(li.join(''), "\n    </ul>\n    ");
+      $api.byId('contractList').innerHTML = "\n      <h2>\u70B9\u51FB\u5408\u540C\u8FDB\u5165\u5728\u7EBF\u7B7E\u7EA6</h2>\n      <ul>\n        ".concat(li.join(''), "\n      </ul>\n    ");
+    }
+  }, {
+    key: "__renderHeaderDom",
+    value: function __renderHeaderDom(data) {
+      $api.byId('amount').innerHTML = numeral(data.creditQuota || 0).format('0,0.00');
+      $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u5F00\u901A".concat(data.productName, "\u4EA7\u54C1");
     }
   }, {
     key: "getPageData",
@@ -3257,9 +3279,11 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 res = _context.sent;
 
                 if (res.code === 200) {
-                  this._renderDom(res.data);
+                  this.__renderBodyDom(res.data);
 
-                  this._renderContract(res.data.contractList || []);
+                  this.__renderContract(res.data.contractList || []);
+
+                  this.__renderHeaderDom(res.data);
                 }
 
               case 10:
@@ -3292,27 +3316,31 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
 
       return getPageData;
     }()
+  }, {
+    key: "bindEvent",
+    value: function bindEvent() {
+      document.querySelector('body').onclick = function (e) {
+        if (e.target.className.includes('sign')) {
+          openSignOnline();
+        }
+      };
+
+      $api.byId('next').onclick = function () {
+        openDanbaoKaitong({
+          step: 4
+        });
+      };
+    }
   }]);
 
   return PageController;
 }(HeaderController);
 
 apiready = function apiready() {
-  var pageController = new PageController();
-  pageController.getPageData();
+  var ctrl = new PageController();
+  ctrl.bindEvent();
+  ctrl.getPageData();
   setRefreshHeaderInfo(function (ret, err) {
-    pageController.getPageData();
+    ctrl.getPageData();
   });
-
-  document.querySelector('body').onclick = function (e) {
-    if (e.target.className.includes('sign')) {
-      openSignOnline();
-    }
-  };
-
-  $api.byId('next').onclick = function () {
-    openDanbaoKaitong({
-      step: 4
-    });
-  };
 };

@@ -168,7 +168,17 @@ function openDanbaoKaitong() {
     }
   } else if (step >= 7) {
     i = 6;
-  }
+  } // back 当页面是返回时传递true
+  // productId 只在第一步会用到
+  // creditStatus 在第二步或者第三步会用到
+  // step 在3以及三之后，就是当前页面的步骤，2以及2之前是当前的担保申请状态
+  // 想去第一步，step传0
+  // 想去第二步，step传1、或者step传2，creditStatus非2
+  // 想去第三步，step传3、或者step传2，creditStatus传2
+  // 想去第四步，step传4
+  // 想去第五步，step传5
+  // 想去第六步，step传6
+
 
   var animation = back ? {
     animation: {
@@ -1699,7 +1709,7 @@ var BaiduSDK = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return BaiduSDK.getToken();
+                return this.getToken();
 
               case 2:
                 res = _context3.sent;
