@@ -40,7 +40,11 @@ class PageController extends Service {
             //   审核中
             if (data.applyStatus === 2) {
                 let submitBtn = document.querySelector('#submit')
-                submitBtn.innerHTML = '审核中...'
+                if(data.creditStatus === 1) {
+                    submitBtn.innerHTML = '审核中...'
+                }else if(data.creditStatus === 2){
+                    submitBtn.innerHTML = '审核通过'
+                }
                 submitBtn.setAttribute('disabled', true)
                 submitBtn.classList.add('disabled')
             }
