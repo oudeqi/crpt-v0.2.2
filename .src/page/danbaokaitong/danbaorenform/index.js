@@ -9,10 +9,15 @@ import Utils from '../../../utils'
 class Service {
 
   // 保存身份证图片
-  saveIDCardPic (params) {
-    return http.upload('/crpt-guarante/guarantor/attachment/save', {
-      body: params
-    })
+  async saveIDCardPic(gtId, files) {
+      return http.upload(
+          '/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId,
+          {files},
+          {
+              headers: {},
+              timeout: 3000
+          }
+      );
   }
 
   // 获取担保状态
@@ -54,7 +59,9 @@ class PageController extends Service {
       others: 6, // '其他',
     }
     this.initData = {
-      gtCreditId, // 授信id
+      // gtId	int	担保申请id
+      // gtCreditId	int	担保授信id
+      gtCreditId, // 担保授信id
       gtCounterId, // 担保人id
       type: typeMap[type]
     }
@@ -187,8 +194,23 @@ class PageController extends Service {
     $api.byId('fangchan').onclick = () => {
       this.queryDanbaoStatus().then(res => {
         if (res.code === 200) {
+          // gtId	int	担保申请id
+          // gtCreditId	int	担保授信id
+          // flowStatus: props.pageParam.flowStatus, 资料录入状态
+          // 0 无填写 1	int	担保业务申请填写 2	int	反担保人列表 3	int	文书送达地址 4	int	其他附件上传
+          // type: props.pageParam.type, 反担保人传 2
+          // gtCounterId: props.pageParam.gtCounterId, 担保人id
+          // _cb: props.pageParam._cb, 字符串的回调函数
           const {gtId, flowStatus, gtCreditId} = res.data || {}
-          openFangchan({gtId, flowStatus, gtCreditId})
+          const { gtCounterId } = this.initData
+          openFangchan({
+            gtId,
+            flowStatus,
+            gtCreditId,
+            gtCounterId,
+            type: 2,
+            _cb: 'location.reload();'
+          })
         }
       }).catch(error => {
         api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -198,7 +220,15 @@ class PageController extends Service {
       this.queryDanbaoStatus().then(res => {
         if (res.code === 200) {
           const {gtId, flowStatus, gtCreditId} = res.data || {}
-          openCheliang({gtId, flowStatus, gtCreditId})
+          const { gtCounterId } = this.initData
+          openCheliang({
+            gtId,
+            flowStatus,
+            gtCreditId,
+            gtCounterId,
+            type: 2,
+            _cb: 'location.reload();'
+          })
         }
       }).catch(error => {
         api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -319,21 +349,20 @@ class PageController extends Service {
         throw new Error('读取失败')
       }
       api.toast({ msg: '识别成功', location: 'middle' })
-      // TODO
-      let res2 = await this.saveIDCardPic({
-        pictureFile: pic,
-        gtId: this.initData.gtCreditId // 授信id
-      })
+    } catch (error) {
+      api.toast({ msg: error.message || '出错啦', location: 'middle' })
+    }
+    api.hideProgress()
+    try {
+      let res2 = await this.saveIDCardPic(this.initData.gtCreditId, { pictureFile: pic })
       if (res2.code === 200) {
         $api.byId('certNo').dataset.picture = res2.data.pictureId
       } else {
         throw new Error('保存身份证图片失败')
       }
     } catch (error) {
-      console.log(error.message)
       api.toast({ msg: error.message || '出错啦', location: 'middle' })
     }
-    api.hideProgress()
   }
 
   async __bindIDCardOcr () {

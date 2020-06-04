@@ -2121,10 +2121,8 @@ apiready = function apiready() {
             });
           }
 
-          setTimeout(function () {
-            $api.clearStorage();
-            openRegLogin();
-          }, 150);
+          $api.clearStorage();
+          openRegLogin();
         });
       }
     });

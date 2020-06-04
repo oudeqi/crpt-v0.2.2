@@ -21,6 +21,87 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
+var setPrototypeOf = createCommonjsModule(function (module) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+});
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+var inherits = _inherits;
+
+var _typeof_1 = createCommonjsModule(function (module) {
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+});
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var assertThisInitialized = _assertThisInitialized;
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+var possibleConstructorReturn = _possibleConstructorReturn;
+
+var getPrototypeOf = createCommonjsModule(function (module) {
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+});
+
 var runtime_1 = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -792,87 +873,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-var setPrototypeOf = createCommonjsModule(function (module) {
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-module.exports = _setPrototypeOf;
-});
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-var inherits = _inherits;
-
-var _typeof_1 = createCommonjsModule(function (module) {
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-});
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-var assertThisInitialized = _assertThisInitialized;
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-var possibleConstructorReturn = _possibleConstructorReturn;
-
-var getPrototypeOf = createCommonjsModule(function (module) {
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-});
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -913,7 +913,10 @@ function openRegLogin() {
 function openFangchan(_ref10) {
   var gtId = _ref10.gtId,
       flowStatus = _ref10.flowStatus,
-      gtCreditId = _ref10.gtCreditId;
+      gtCreditId = _ref10.gtCreditId,
+      type = _ref10.type,
+      gtCounterId = _ref10.gtCounterId,
+      _cb = _ref10._cb;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -924,7 +927,10 @@ function openFangchan(_ref10) {
     pageParam: {
       gtId: gtId,
       flowStatus: flowStatus,
-      gtCreditId: gtCreditId
+      gtCreditId: gtCreditId,
+      type: type,
+      gtCounterId: gtCounterId,
+      _cb: _cb
     },
     navigationBar: {
       background: '#fff',
@@ -939,7 +945,10 @@ function openFangchan(_ref10) {
 function openCheliang(_ref11) {
   var gtId = _ref11.gtId,
       flowStatus = _ref11.flowStatus,
-      gtCreditId = _ref11.gtCreditId;
+      gtCreditId = _ref11.gtCreditId,
+      type = _ref11.type,
+      gtCounterId = _ref11.gtCounterId,
+      _cb = _ref11._cb;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -950,7 +959,10 @@ function openCheliang(_ref11) {
     pageParam: {
       gtId: gtId,
       flowStatus: flowStatus,
-      gtCreditId: gtCreditId
+      gtCreditId: gtCreditId,
+      type: type,
+      gtCounterId: gtCounterId,
+      _cb: _cb
     },
     navigationBar: {
       background: '#fff',
@@ -2247,11 +2259,33 @@ var Service = /*#__PURE__*/function () {
   createClass(Service, [{
     key: "saveIDCardPic",
     // 保存身份证图片
-    value: function saveIDCardPic(params) {
-      return http.upload('/crpt-guarante/guarantor/attachment/save', {
-        body: params
-      });
-    } // 获取担保状态
+    value: function () {
+      var _saveIDCardPic = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(gtId, files) {
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt("return", http.upload('/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId, {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function saveIDCardPic(_x, _x2) {
+        return _saveIDCardPic.apply(this, arguments);
+      }
+
+      return saveIDCardPic;
+    }() // 获取担保状态
 
   }, {
     key: "queryDanbaoStatus",
@@ -2317,8 +2351,10 @@ var PageController = /*#__PURE__*/function (_Service) {
 
     };
     _this.initData = {
+      // gtId	int	担保申请id
+      // gtCreditId	int	担保授信id
       gtCreditId: gtCreditId,
-      // 授信id
+      // 担保授信id
       gtCounterId: gtCounterId,
       // 担保人id
       type: typeMap[type]
@@ -2486,15 +2522,26 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('fangchan').onclick = function () {
         _this2.queryDanbaoStatus().then(function (res) {
           if (res.code === 200) {
+            // gtId	int	担保申请id
+            // gtCreditId	int	担保授信id
+            // flowStatus: props.pageParam.flowStatus, 资料录入状态
+            // 0 无填写 1	int	担保业务申请填写 2	int	反担保人列表 3	int	文书送达地址 4	int	其他附件上传
+            // type: props.pageParam.type, 反担保人传 2
+            // gtCounterId: props.pageParam.gtCounterId, 担保人id
+            // _cb: props.pageParam._cb, 字符串的回调函数
             var _ref2 = res.data || {},
                 gtId = _ref2.gtId,
                 flowStatus = _ref2.flowStatus,
                 gtCreditId = _ref2.gtCreditId;
 
+            var gtCounterId = _this2.initData.gtCounterId;
             openFangchan({
               gtId: gtId,
               flowStatus: flowStatus,
-              gtCreditId: gtCreditId
+              gtCreditId: gtCreditId,
+              gtCounterId: gtCounterId,
+              type: 2,
+              _cb: 'location.reload();'
             });
           }
         })["catch"](function (error) {
@@ -2513,10 +2560,14 @@ var PageController = /*#__PURE__*/function (_Service) {
                 flowStatus = _ref3.flowStatus,
                 gtCreditId = _ref3.gtCreditId;
 
+            var gtCounterId = _this2.initData.gtCounterId;
             openCheliang({
               gtId: gtId,
               flowStatus: flowStatus,
-              gtCreditId: gtCreditId
+              gtCreditId: gtCreditId,
+              gtCounterId: gtCounterId,
+              type: 2,
+              _cb: 'location.reload();'
             });
           }
         })["catch"](function (error) {
@@ -2668,32 +2719,32 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__readIDCard",
     value: function () {
-      var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(pic) {
+      var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(pic) {
         var res, res2;
-        return regenerator.wrap(function _callee$(_context) {
+        return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.prev = 0;
+                _context2.prev = 0;
                 api.showProgress({
                   title: '识别中...',
                   text: ''
                 });
-                _context.next = 4;
+                _context2.next = 4;
                 return Utils$1.OCR.Baidu.IdcardVerify({
                   certFile: pic
                 });
 
               case 4:
-                res = _context.sent;
+                res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context.next = 9;
+                  _context2.next = 9;
                   break;
                 }
 
                 $api.byId('certNo').value = res.data.number || '';
-                _context.next = 11;
+                _context2.next = 11;
                 break;
 
               case 9:
@@ -2704,55 +2755,62 @@ var PageController = /*#__PURE__*/function (_Service) {
                 api.toast({
                   msg: '识别成功',
                   location: 'middle'
-                }); // TODO
-
-                _context.next = 14;
-                return this.saveIDCardPic({
-                  pictureFile: pic,
-                  gtId: this.initData.gtCreditId // 授信id
-
                 });
+                _context2.next = 17;
+                break;
 
               case 14:
-                res2 = _context.sent;
+                _context2.prev = 14;
+                _context2.t0 = _context2["catch"](0);
+                api.toast({
+                  msg: _context2.t0.message || '出错啦',
+                  location: 'middle'
+                });
+
+              case 17:
+                api.hideProgress();
+                _context2.prev = 18;
+                _context2.next = 21;
+                return this.saveIDCardPic(this.initData.gtCreditId, {
+                  pictureFile: pic
+                });
+
+              case 21:
+                res2 = _context2.sent;
 
                 if (!(res2.code === 200)) {
-                  _context.next = 19;
+                  _context2.next = 26;
                   break;
                 }
 
                 $api.byId('certNo').dataset.picture = res2.data.pictureId;
-                _context.next = 20;
+                _context2.next = 27;
                 break;
 
-              case 19:
+              case 26:
                 throw new Error('保存身份证图片失败');
 
-              case 20:
-                _context.next = 26;
+              case 27:
+                _context2.next = 32;
                 break;
 
-              case 22:
-                _context.prev = 22;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0.message);
+              case 29:
+                _context2.prev = 29;
+                _context2.t1 = _context2["catch"](18);
                 api.toast({
-                  msg: _context.t0.message || '出错啦',
+                  msg: _context2.t1.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 26:
-                api.hideProgress();
-
-              case 27:
+              case 32:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[0, 22]]);
+        }, _callee2, this, [[0, 14], [18, 29]]);
       }));
 
-      function __readIDCard(_x) {
+      function __readIDCard(_x3) {
         return _readIDCard.apply(this, arguments);
       }
 
@@ -2761,12 +2819,12 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__bindIDCardOcr",
     value: function () {
-      var _bindIDCardOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+      var _bindIDCardOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
         var _this6 = this;
 
-        return regenerator.wrap(function _callee2$(_context2) {
+        return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 $api.byId('idCardOcrBtn').onclick = function () {
                   var btns = ['相机', '相册'];
@@ -2788,10 +2846,10 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }));
 
       function __bindIDCardOcr() {
@@ -2803,33 +2861,33 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__readBank",
     value: function () {
-      var _readBank = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(pic) {
+      var _readBank = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4(pic) {
         var res;
-        return regenerator.wrap(function _callee3$(_context3) {
+        return regenerator.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
+                _context4.prev = 0;
                 api.showProgress({
                   title: '识别中...',
                   text: ''
                 });
-                _context3.next = 4;
+                _context4.next = 4;
                 return Utils$1.OCR.Baidu.BankVerify({
                   bankcardFile: pic
                 });
 
               case 4:
-                res = _context3.sent;
+                res = _context4.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 10;
+                  _context4.next = 10;
                   break;
                 }
 
                 $api.byId('bankCardNo').value = res.data.bank_card_number || '';
                 $api.byId('bankName').value = res.data.bank_name || '';
-                _context3.next = 13;
+                _context4.next = 13;
                 break;
 
               case 10:
@@ -2842,14 +2900,14 @@ var PageController = /*#__PURE__*/function (_Service) {
                   msg: '识别成功',
                   location: 'middle'
                 });
-                _context3.next = 19;
+                _context4.next = 19;
                 break;
 
               case 16:
-                _context3.prev = 16;
-                _context3.t0 = _context3["catch"](0);
+                _context4.prev = 16;
+                _context4.t0 = _context4["catch"](0);
                 api.toast({
-                  msg: _context3.t0.message || '出错啦',
+                  msg: _context4.t0.message || '出错啦',
                   location: 'middle'
                 });
 
@@ -2858,13 +2916,13 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 20:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, null, [[0, 16]]);
+        }, _callee4, null, [[0, 16]]);
       }));
 
-      function __readBank(_x2) {
+      function __readBank(_x4) {
         return _readBank.apply(this, arguments);
       }
 
@@ -2873,12 +2931,12 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__bindBankOcr",
     value: function () {
-      var _bindBankOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+      var _bindBankOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
         var _this7 = this;
 
-        return regenerator.wrap(function _callee4$(_context4) {
+        return regenerator.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 $api.byId('bankOcrBtn').onclick = function () {
                   var btns = ['相机', '相册'];
@@ -2900,10 +2958,10 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 1:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
       function __bindBankOcr() {
@@ -2941,21 +2999,21 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "getPageDate",
     value: function () {
-      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
+      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
         var gtCounterId, res;
-        return regenerator.wrap(function _callee5$(_context5) {
+        return regenerator.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 gtCounterId = this.initData.gtCounterId;
 
                 if (gtCounterId) {
-                  _context5.next = 4;
+                  _context6.next = 4;
                   break;
                 }
 
                 api.refreshHeaderLoadDone();
-                return _context5.abrupt("return", false);
+                return _context6.abrupt("return", false);
 
               case 4:
                 api.showProgress({
@@ -2963,25 +3021,25 @@ var PageController = /*#__PURE__*/function (_Service) {
                   text: '',
                   modal: false
                 });
-                _context5.prev = 5;
-                _context5.next = 8;
+                _context6.prev = 5;
+                _context6.next = 8;
                 return this.queryDanbaoRenMsgById(gtCounterId);
 
               case 8:
-                res = _context5.sent;
+                res = _context6.sent;
 
                 if (res.code === 200) {
                   this.__pageDataFillBack(res.data);
                 }
 
-                _context5.next = 15;
+                _context6.next = 15;
                 break;
 
               case 12:
-                _context5.prev = 12;
-                _context5.t0 = _context5["catch"](5);
+                _context6.prev = 12;
+                _context6.t0 = _context6["catch"](5);
                 api.toast({
-                  msg: _context5.t0.msg || '出错啦',
+                  msg: _context6.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
@@ -2991,10 +3049,10 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 17:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[5, 12]]);
+        }, _callee6, this, [[5, 12]]);
       }));
 
       function getPageDate() {
@@ -3016,14 +3074,14 @@ var PageController = /*#__PURE__*/function (_Service) {
           });
         },
         success: function () {
-          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6(data) {
+          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee7(data) {
             var _this8$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
 
-            return regenerator.wrap(function _callee6$(_context6) {
+            return regenerator.wrap(function _callee7$(_context7) {
               while (1) {
-                switch (_context6.prev = _context6.next) {
+                switch (_context7.prev = _context7.next) {
                   case 0:
-                    _context6.prev = 0;
+                    _context7.prev = 0;
                     _this8$initData = _this8.initData, gtCreditId = _this8$initData.gtCreditId, gtCounterId = _this8$initData.gtCounterId, type = _this8$initData.type;
                     isUpdate = gtCounterId;
                     postData = _objectSpread$1({}, data, {}, _this8.__getOtherParams(), {
@@ -3043,11 +3101,11 @@ var PageController = /*#__PURE__*/function (_Service) {
                       postData.isNecessary = 0; // 是否必输： 1-是  0-否，默认： 0-否
                     }
 
-                    _context6.next = 8;
+                    _context7.next = 8;
                     return _this8[callMethod](postData);
 
                   case 8:
-                    res = _context6.sent;
+                    res = _context7.sent;
 
                     if (res && res.code === 200) {
                       if (isUpdate) {
@@ -3068,26 +3126,26 @@ var PageController = /*#__PURE__*/function (_Service) {
                       api.closeWin();
                     }
 
-                    _context6.next = 15;
+                    _context7.next = 15;
                     break;
 
                   case 12:
-                    _context6.prev = 12;
-                    _context6.t0 = _context6["catch"](0);
+                    _context7.prev = 12;
+                    _context7.t0 = _context7["catch"](0);
                     api.toast({
-                      msg: _context6.t0.msg,
+                      msg: _context7.t0.msg,
                       location: 'middle'
                     });
 
                   case 15:
                   case "end":
-                    return _context6.stop();
+                    return _context7.stop();
                 }
               }
-            }, _callee6, null, [[0, 12]]);
+            }, _callee7, null, [[0, 12]]);
           }));
 
-          function success(_x3) {
+          function success(_x5) {
             return _success.apply(this, arguments);
           }
 

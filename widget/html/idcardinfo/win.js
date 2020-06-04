@@ -1972,8 +1972,18 @@ apiready = function apiready() {
     }
 
     var tyeeNode = getProtocolFromNode(node, userinfo.userType);
+    var tyeeNode3 = getProtocolFromNode(node, 3);
+    var nodes = [];
 
-    if (!tyeeNode) {
+    if (tyeeNode) {
+      nodes = nodes.concat(tyeeNode);
+    }
+
+    if (tyeeNode3) {
+      nodes = nodes.concat(tyeeNode3);
+    }
+
+    if (nodes.length === 0) {
       api.toast({
         msg: '协议不存在',
         location: 'middle'
@@ -1981,7 +1991,7 @@ apiready = function apiready() {
       return;
     }
 
-    var tpl = tyeeNode.map(function (item) {
+    var tpl = nodes.map(function (item) {
       return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
     });
     $api.byId('agreement').innerHTML = tpl.join('，');

@@ -71,11 +71,19 @@ apiready = function() {
       return
     }
     let tyeeNode = getProtocolFromNode(node, userinfo.userType)
-    if (!tyeeNode) {
+    let tyeeNode3 = getProtocolFromNode(node, 3)
+    let nodes = []
+    if (tyeeNode) {
+      nodes = nodes.concat(tyeeNode)
+    }
+    if (tyeeNode3) {
+      nodes = nodes.concat(tyeeNode3)
+    }
+    if (nodes.length === 0) {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
     }
-    let tpl = tyeeNode.map(item => {
+    let tpl = nodes.map(item => {
       return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
     })
     $api.byId('agreement').innerHTML = tpl.join('，')

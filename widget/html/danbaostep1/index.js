@@ -3714,11 +3714,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
 
 apiready = function apiready() {
   var pageController = new PageController();
-  pageController.getProduct(); // 下拉刷新
-
-  setRefreshHeaderInfo(function (ret, err) {
-    pageController.getProduct();
-  }); // 选填，客户录入（4位数）
+  pageController.getProduct(); // 选填，客户录入（4位数）
 
   new NumberLimit($api.byId('expectInveste'));
 
@@ -3748,6 +3744,7 @@ apiready = function apiready() {
 
   function showProtocol() {
     var node = getNodeProtocolFromStorage(4);
+    console.log(JSON.stringify(node));
 
     if (!node) {
       api.toast({
@@ -3771,5 +3768,11 @@ apiready = function apiready() {
     if (strong) {
       openAgreement(strong.dataset.id, strong.dataset.name);
     }
-  };
+  }; // 下拉刷新
+
+
+  setRefreshHeaderInfo(function (ret, err) {
+    pageController.getProduct();
+    showProtocol();
+  });
 };

@@ -276,10 +276,8 @@ apiready = function() {
               }
             })
           }
-          setTimeout(() => {
-            $api.clearStorage()
-            openRegLogin()
-          }, 150)
+          $api.clearStorage()
+          openRegLogin()
         })
       }
     })
