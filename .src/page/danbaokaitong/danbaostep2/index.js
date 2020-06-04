@@ -5,7 +5,7 @@ import Utils from '../../../utils'
 import Service from './service'
 import HeaderController from '../header.js'
 import {setRefreshHeaderInfo} from '../../../config.js'
-import {openDanbaoRenList, openSendAddress} from '../../../webview.js'
+import {openDanbaoRenList, openSendAddress, openDanbaoKaitong} from '../../../webview.js'
 
 /**
  * @author liyang
@@ -127,6 +127,8 @@ class PageController extends Service {
                     Utils.UI.toast(e.msg)
                 }
                 Utils.UI.hideLoading()
+            }else if(self.data.applyStatus >= 2) {
+                openDanbaoKaitong({step: 3})
             }
         }
     }

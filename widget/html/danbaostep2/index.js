@@ -1635,8 +1635,8 @@ var base64_1 = base64.Base64;
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -3429,7 +3429,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                       switch (_context2.prev = _context2.next) {
                         case 0:
                           if (!(self.data.applyStatus === 1)) {
-                            _context2.next = 14;
+                            _context2.next = 16;
                             break;
                           }
 
@@ -3454,8 +3454,17 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                         case 13:
                           Utils$1.UI.hideLoading();
+                          _context2.next = 17;
+                          break;
 
-                        case 14:
+                        case 16:
+                          if (self.data.applyStatus >= 2) {
+                            openDanbaoKaitong({
+                              step: 3
+                            });
+                          }
+
+                        case 17:
                         case "end":
                           return _context2.stop();
                       }
