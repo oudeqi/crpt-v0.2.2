@@ -3316,12 +3316,9 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                   if (data.creditStatus === 1) {
                     submitBtn.innerHTML = '审核中...';
-                  } else if (data.creditStatus === 2) {
-                    submitBtn.innerHTML = '审核通过';
+                    submitBtn.setAttribute('disabled', true);
+                    submitBtn.classList.add('disabled');
                   }
-
-                  submitBtn.setAttribute('disabled', true);
-                  submitBtn.classList.add('disabled');
                 }
 
                 _context.next = 18;

@@ -42,11 +42,9 @@ class PageController extends Service {
                 let submitBtn = document.querySelector('#submit')
                 if(data.creditStatus === 1) {
                     submitBtn.innerHTML = '审核中...'
-                }else if(data.creditStatus === 2){
-                    submitBtn.innerHTML = '审核通过'
+                    submitBtn.setAttribute('disabled', true)
+                    submitBtn.classList.add('disabled')
                 }
-                submitBtn.setAttribute('disabled', true)
-                submitBtn.classList.add('disabled')
             }
         } catch (e) {
             Utils.UI.toast('服务超时')
