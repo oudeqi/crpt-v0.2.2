@@ -1675,8 +1675,8 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2139,8 +2139,8 @@ var PageController = /*#__PURE__*/function (_Service) {
   }
 
   createClass(PageController, [{
-    key: "_renderBaseDocument",
-    value: function _renderBaseDocument(data) {
+    key: "__renderBaseDocument",
+    value: function __renderBaseDocument(data) {
       $api.byId('custName').value = data.custName || '';
       $api.byId('address').value = data.addrProvince ? "".concat(data.addrProvince, "/").concat(data.addrCity, "/").concat(data.addrCounty) : '';
       $api.byId('address').dataset.province = data.addrProvince || '';
@@ -2165,8 +2165,8 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('custSpouseAddresseePhone').value = data.custSpouseAddresseePhone || '';
     }
   }, {
-    key: "_renderListDocument",
-    value: function _renderListDocument(array) {
+    key: "__renderListDocument",
+    value: function __renderListDocument(array) {
       var list = $api.byId('list');
       list.innerHTML = '';
       array.forEach(function (item, index) {
@@ -2175,15 +2175,15 @@ var PageController = /*#__PURE__*/function (_Service) {
       });
     }
   }, {
-    key: "_pageDataFillBack",
-    value: function _pageDataFillBack(data) {
+    key: "__pageDataFillBack",
+    value: function __pageDataFillBack(data) {
       var _ref2 = data || {},
           documentBase = _ref2.documentBase,
           gtCounterList = _ref2.gtCounterList;
 
-      this._renderBaseDocument(documentBase || {});
+      this.__renderBaseDocument(documentBase || {});
 
-      this._renderListDocument(gtCounterList || []);
+      this.__renderListDocument(gtCounterList || []);
     }
   }, {
     key: "getPageData",
@@ -2207,7 +2207,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 res = _context.sent;
 
                 if (res.code === 200) {
-                  this._pageDataFillBack(res.data);
+                  this.__pageDataFillBack(res.data);
                 }
 
                 _context.next = 11;
@@ -2240,8 +2240,8 @@ var PageController = /*#__PURE__*/function (_Service) {
       return getPageData;
     }()
   }, {
-    key: "_bindCollapseEvent",
-    value: function _bindCollapseEvent() {
+    key: "__bindCollapseEvent",
+    value: function __bindCollapseEvent() {
       document.querySelector('body').addEventListener('click', function (e) {
         var header = $api.closest(event.target, '[click-trigger="header"]');
 
@@ -2263,13 +2263,12 @@ var PageController = /*#__PURE__*/function (_Service) {
       });
     }
   }, {
-    key: "_initAddress",
-    value: function _initAddress() {
+    key: "__initAddress",
+    value: function __initAddress() {
       document.querySelector('body').addEventListener('click', function (e) {
         var address = $api.closest(event.target, '[click-trigger="address"]');
 
         if (address) {
-          console.log(JSON.stringify(address));
           CitySelector(function (selected) {
             console.log(JSON.stringify(selected));
             var a = selected[0];
@@ -2289,13 +2288,13 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "bindEvent",
     value: function bindEvent() {
-      this._initAddress();
+      this.__initAddress();
 
-      this._bindCollapseEvent();
+      this.__bindCollapseEvent();
     }
   }, {
-    key: "_initValidation",
-    value: function _initValidation() {
+    key: "__initValidation",
+    value: function __initValidation() {
       var cfg = {
         custName: {
           valid: {
@@ -2369,17 +2368,17 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         },
         custSpouseName: {
-          valid: {
-            required: '请填写借款人配偶姓名'
-          },
+          // valid: {
+          //   required: '请填写借款人配偶姓名',
+          // },
           get: function get() {
             return $api.byId('custSpouseName').value;
           }
         },
         peiouAddress: {
-          valid: {
-            required: '请选择借款人配偶文书送达地址'
-          },
+          // valid: {
+          //   required: '请选择借款人配偶文书送达地址',
+          // },
           get: function get() {
             return $api.byId('peiouAddress').value;
           }
@@ -2415,25 +2414,25 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         },
         spAddrDetail: {
-          valid: {
-            required: '请填写借款人配偶文书送达详细地址'
-          },
+          // valid: {
+          //   required: '请填写借款人配偶文书送达详细地址',
+          // },
           get: function get() {
             return $api.byId('spAddrDetail').value;
           }
         },
         custSpouseAddresseeName: {
-          valid: {
-            required: '请填写借款人配偶收件姓名'
-          },
+          // valid: {
+          //   required: '请填写借款人配偶收件姓名',
+          // },
           get: function get() {
             return $api.byId('custSpouseAddresseeName').value;
           }
         },
         custSpouseAddresseePhone: {
           valid: {
-            required: '请填写借款人配偶收件联系电话',
-            pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确']
+            // required: '请填写借款人配偶收件联系电话',
+            pattern: [/^1[3456789]\d{9}$/, '借款人配偶手机号码格式不正确']
           },
           get: function get() {
             return $api.byId('custSpouseAddresseePhone').value;
@@ -2457,21 +2456,21 @@ var PageController = /*#__PURE__*/function (_Service) {
               required: '请填写担保人收件联系电话',
               pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确']
             },
-            gtSpouseName: {
-              required: '请填写担保人配偶姓名'
-            },
-            gtSpAddress: {
-              required: '请选择担保人配偶文书送达地址'
-            },
-            gtSpAddrDetail: {
-              required: '请填写担保人配偶文书送达详细地址'
-            },
-            gtSpouseAddresseeName: {
-              required: '请填写担保人配偶收件姓名'
-            },
+            // gtSpouseName: {
+            //   required: '请填写担保人配偶姓名'
+            // },
+            // gtSpAddress: {
+            //   required: '请选择担保人配偶文书送达地址'
+            // },
+            // gtSpAddrDetail: {
+            //   required: '请填写担保人配偶文书送达详细地址'
+            // },
+            // gtSpouseAddresseeName: {
+            //   required: '请填写担保人配偶收件姓名'
+            // },
             gtSpouseAddresseePhone: {
-              required: '请填写担保人配偶收件联系电话',
-              pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确']
+              // required: '请填写担保人配偶收件联系电话',
+              pattern: [/^1[3456789]\d{9}$/, '担保人配偶手机号码格式不正确']
             }
           },
           get: function get() {
@@ -2520,7 +2519,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function submit() {
       var _this2 = this;
 
-      this._initValidation().validate({
+      this.__initValidation().validate({
         error: function error(msg) {
           api.toast({
             msg: msg,

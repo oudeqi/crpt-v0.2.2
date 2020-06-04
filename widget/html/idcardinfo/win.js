@@ -1644,8 +1644,8 @@ var Utils$1 = new Utils();
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1972,8 +1972,18 @@ apiready = function apiready() {
     }
 
     var tyeeNode = getProtocolFromNode(node, userinfo.userType);
+    var tyeeNode3 = getProtocolFromNode(node, 3);
+    var nodes = [];
 
-    if (!tyeeNode) {
+    if (tyeeNode) {
+      nodes = nodes.concat(tyeeNode);
+    }
+
+    if (tyeeNode3) {
+      nodes = nodes.concat(tyeeNode3);
+    }
+
+    if (nodes.length === 0) {
       api.toast({
         msg: '协议不存在',
         location: 'middle'
@@ -1981,7 +1991,7 @@ apiready = function apiready() {
       return;
     }
 
-    var tpl = tyeeNode.map(function (item) {
+    var tpl = nodes.map(function (item) {
       return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
     });
     $api.byId('agreement').innerHTML = tpl.join('，');

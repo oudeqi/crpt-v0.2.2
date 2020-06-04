@@ -1050,7 +1050,14 @@ function openAgreement (id, name) {
 }
 
 // 房产信息
-function openFangchan ({gtId, flowStatus, gtCreditId}) {
+function openFangchan ({
+  gtId, // 担保申请id
+  flowStatus,
+  gtCreditId, // 担保授信id
+  type, // 反担保人传 2 其他穿1
+  gtCounterId, // 担保人id
+  _cb, // 字符串的回调函数
+}) {
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -1059,7 +1066,12 @@ function openFangchan ({gtId, flowStatus, gtCreditId}) {
     reload: true,
     bounces: true,
     pageParam: {
-      gtId, flowStatus, gtCreditId
+      gtId,
+      flowStatus,
+      gtCreditId,
+      type,
+      gtCounterId,
+      _cb,
     },
     navigationBar: {
       background: '#fff',
@@ -1070,7 +1082,14 @@ function openFangchan ({gtId, flowStatus, gtCreditId}) {
   })
 }
 // 车辆信息
-function openCheliang ({gtId, flowStatus, gtCreditId}) {
+function openCheliang ({
+  gtId, // 担保申请id
+  flowStatus,
+  gtCreditId, // 担保授信id
+  type, // 反担保人传 2 其他穿1
+  gtCounterId, // 担保人id
+  _cb, // 字符串的回调函数
+}) {
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -1079,7 +1098,12 @@ function openCheliang ({gtId, flowStatus, gtCreditId}) {
     reload: true,
     bounces: true,
     pageParam: {
-      gtId, flowStatus, gtCreditId
+      gtId,
+      flowStatus,
+      gtCreditId,
+      type,
+      gtCounterId,
+      _cb,
     },
     navigationBar: {
       background: '#fff',

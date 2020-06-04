@@ -153,10 +153,7 @@ class PageController extends HeaderController {
 apiready = function () {
   const pageController = new PageController()
   pageController.getProduct()
-  // 下拉刷新
-  setRefreshHeaderInfo(function(ret, err) {
-    pageController.getProduct()
-  })
+
   // 选填，客户录入（4位数）
   new NumberLimit($api.byId('expectInveste'))
 
@@ -183,6 +180,7 @@ apiready = function () {
 
   function showProtocol () {
     let node = getNodeProtocolFromStorage(4)
+    console.log(JSON.stringify(node))
     if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
@@ -192,6 +190,7 @@ apiready = function () {
     })
     $api.byId('protocol').innerHTML = tpl.join('、')
   }
+  
   showProtocol()
   document.querySelector('#protocol').onclick = (e) => {
     let strong = $api.closest(e.target, 'strong')
@@ -199,5 +198,10 @@ apiready = function () {
       openAgreement(strong.dataset.id, strong.dataset.name)
     }
   }
+  // 下拉刷新
+  setRefreshHeaderInfo(function(ret, err) {
+    pageController.getProduct()
+    showProtocol()
+  })
 
 }

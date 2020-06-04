@@ -26,7 +26,7 @@ class PageController extends Service {
     }
   }
 
-  _renderBaseDocument (data) {
+  __renderBaseDocument (data) {
     $api.byId('custName').value = data.custName || ''
     $api.byId('address').value = data.addrProvince ? `${data.addrProvince}/${data.addrCity}/${data.addrCounty}` : ''
     $api.byId('address').dataset.province = data.addrProvince || ''
@@ -51,7 +51,7 @@ class PageController extends Service {
     $api.byId('custSpouseAddresseePhone').value = data.custSpouseAddresseePhone || ''
   }
 
-  _renderListDocument (array) {
+  __renderListDocument (array) {
     const list = $api.byId('list')
     list.innerHTML = ''
     array.forEach((item, index) => {
@@ -180,10 +180,10 @@ class PageController extends Service {
     })
   }
 
-  _pageDataFillBack (data) {
+  __pageDataFillBack (data) {
     const { documentBase, gtCounterList } = data || {}
-    this._renderBaseDocument(documentBase || {})
-    this._renderListDocument(gtCounterList || [])
+    this.__renderBaseDocument(documentBase || {})
+    this.__renderListDocument(gtCounterList || [])
   }
 
   async getPageData () {
@@ -191,7 +191,7 @@ class PageController extends Service {
     try {
       const res = await this.querySendAddress(this.initData.gtCreditId)
       if (res.code === 200) {
-        this._pageDataFillBack(res.data)
+        this.__pageDataFillBack(res.data)
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -200,7 +200,7 @@ class PageController extends Service {
     api.refreshHeaderLoadDone()
   }
 
-  _bindCollapseEvent () {
+  __bindCollapseEvent () {
     document.querySelector('body').addEventListener('click', e => {
       const header = $api.closest(event.target, '[click-trigger="header"]')
       if (header) {
@@ -217,11 +217,10 @@ class PageController extends Service {
       }
     })
   }
-  _initAddress () {
+  __initAddress () {
     document.querySelector('body').addEventListener('click', e => {
       const address = $api.closest(event.target, '[click-trigger="address"]')
       if (address) {
-        console.log(JSON.stringify(address))
         CitySelector(selected => {
           console.log(JSON.stringify(selected))
           let a = selected[0]
@@ -240,11 +239,11 @@ class PageController extends Service {
   }
 
   bindEvent () {
-    this._initAddress()
-    this._bindCollapseEvent()
+    this.__initAddress()
+    this.__bindCollapseEvent()
   }
 
-  _initValidation () {
+  __initValidation () {
     const cfg = {
       custName: {
         valid: {
@@ -318,17 +317,17 @@ class PageController extends Service {
         }
       },
       custSpouseName: {
-        valid: {
-          required: '请填写借款人配偶姓名',
-        },
+        // valid: {
+        //   required: '请填写借款人配偶姓名',
+        // },
         get: function () {
           return $api.byId('custSpouseName').value
         }
       },
       peiouAddress: {
-        valid: {
-          required: '请选择借款人配偶文书送达地址',
-        },
+        // valid: {
+        //   required: '请选择借款人配偶文书送达地址',
+        // },
         get: function () {
           return $api.byId('peiouAddress').value
         }
@@ -364,25 +363,25 @@ class PageController extends Service {
         }
       },
       spAddrDetail: {
-        valid: {
-          required: '请填写借款人配偶文书送达详细地址',
-        },
+        // valid: {
+        //   required: '请填写借款人配偶文书送达详细地址',
+        // },
         get: function () {
           return $api.byId('spAddrDetail').value
         }
       },
       custSpouseAddresseeName: {
-        valid: {
-          required: '请填写借款人配偶收件姓名',
-        },
+        // valid: {
+        //   required: '请填写借款人配偶收件姓名',
+        // },
         get: function () {
           return $api.byId('custSpouseAddresseeName').value
         }
       },
       custSpouseAddresseePhone: {
         valid: {
-          required: '请填写借款人配偶收件联系电话',
-          pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确'],
+          // required: '请填写借款人配偶收件联系电话',
+          pattern: [/^1[3456789]\d{9}$/, '借款人配偶手机号码格式不正确'],
         },
         get: function () {
           return $api.byId('custSpouseAddresseePhone').value
@@ -406,21 +405,21 @@ class PageController extends Service {
             required: '请填写担保人收件联系电话',
             pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确'],
           },
-          gtSpouseName: {
-            required: '请填写担保人配偶姓名'
-          },
-          gtSpAddress: {
-            required: '请选择担保人配偶文书送达地址'
-          },
-          gtSpAddrDetail: {
-            required: '请填写担保人配偶文书送达详细地址'
-          },
-          gtSpouseAddresseeName: {
-            required: '请填写担保人配偶收件姓名'
-          },
+          // gtSpouseName: {
+          //   required: '请填写担保人配偶姓名'
+          // },
+          // gtSpAddress: {
+          //   required: '请选择担保人配偶文书送达地址'
+          // },
+          // gtSpAddrDetail: {
+          //   required: '请填写担保人配偶文书送达详细地址'
+          // },
+          // gtSpouseAddresseeName: {
+          //   required: '请填写担保人配偶收件姓名'
+          // },
           gtSpouseAddresseePhone: {
-            required: '请填写担保人配偶收件联系电话',
-            pattern: [/^1[3456789]\d{9}$/, '手机号码格式不正确'],
+            // required: '请填写担保人配偶收件联系电话',
+            pattern: [/^1[3456789]\d{9}$/, '担保人配偶手机号码格式不正确'],
           },
         },
         get: function () {
@@ -465,7 +464,7 @@ class PageController extends Service {
   }
 
   submit () {
-    this._initValidation().validate({
+    this.__initValidation().validate({
       error: function (msg) {
         api.toast({ msg, location: 'middle' })
       },
