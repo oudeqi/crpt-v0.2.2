@@ -1974,7 +1974,7 @@ var BaiduSDK = /*#__PURE__*/function () {
                 }
 
                 _context3.next = 6;
-                return http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},

@@ -49,7 +49,7 @@ export default class BaiduSDK {
     async BankVerify(files) {
         const res = await this.getToken();
         if (res.code === 200) {
-            return await http.post(
+            return await http.upload(
               `${this.ajaxUrls.URL_BANK_INFO}?accessToken=${res.data.accessToken}`,
               {files},
               {
