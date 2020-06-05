@@ -2818,62 +2818,49 @@ var PageController = /*#__PURE__*/function (_Service) {
                 throw new Error('读取失败');
 
               case 11:
+                _context2.next = 13;
+                return this.saveIDCardPic(this.initData.gtCreditId, {
+                  pictureFile: pic
+                });
+
+              case 13:
+                res2 = _context2.sent;
+
+                if (!(res2.code === 200)) {
+                  _context2.next = 18;
+                  break;
+                }
+
+                $api.byId('certNo').dataset.picture = res2.data.pictureId;
+                _context2.next = 19;
+                break;
+
+              case 18:
+                throw new Error('保存身份证图片失败');
+
+              case 19:
+                api.hideProgress();
                 api.toast({
                   msg: '识别成功',
                   location: 'middle'
                 });
-                _context2.next = 17;
+                _context2.next = 26;
                 break;
 
-              case 14:
-                _context2.prev = 14;
+              case 23:
+                _context2.prev = 23;
                 _context2.t0 = _context2["catch"](0);
                 api.toast({
                   msg: _context2.t0.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 17:
-                api.hideProgress();
-                _context2.prev = 18;
-                _context2.next = 21;
-                return this.saveIDCardPic(this.initData.gtCreditId, {
-                  pictureFile: pic
-                });
-
-              case 21:
-                res2 = _context2.sent;
-
-                if (!(res2.code === 200)) {
-                  _context2.next = 26;
-                  break;
-                }
-
-                $api.byId('certNo').dataset.picture = res2.data.pictureId;
-                _context2.next = 27;
-                break;
-
               case 26:
-                throw new Error('保存身份证图片失败');
-
-              case 27:
-                _context2.next = 32;
-                break;
-
-              case 29:
-                _context2.prev = 29;
-                _context2.t1 = _context2["catch"](18);
-                api.toast({
-                  msg: _context2.t1.message || '出错啦',
-                  location: 'middle'
-                });
-
-              case 32:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 14], [18, 29]]);
+        }, _callee2, this, [[0, 23]]);
       }));
 
       function __readIDCard(_x3) {
@@ -2962,30 +2949,31 @@ var PageController = /*#__PURE__*/function (_Service) {
                 throw new Error('读取失败');
 
               case 13:
+                api.hideProgress();
                 api.toast({
                   msg: '识别成功',
                   location: 'middle'
                 });
-                _context4.next = 19;
+                _context4.next = 20;
                 break;
 
-              case 16:
-                _context4.prev = 16;
+              case 17:
+                _context4.prev = 17;
                 _context4.t0 = _context4["catch"](0);
                 api.toast({
                   msg: _context4.t0.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 19:
+              case 20:
                 api.hideProgress();
 
-              case 20:
+              case 21:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 16]]);
+        }, _callee4, null, [[0, 17]]);
       }));
 
       function __readBank(_x4) {

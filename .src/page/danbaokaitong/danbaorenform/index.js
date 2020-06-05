@@ -366,18 +366,14 @@ class PageController extends Service {
         $api.byId('certNo').value = ''
         throw new Error('读取失败')
       }
-      api.toast({ msg: '识别成功', location: 'middle' })
-    } catch (error) {
-      api.toast({ msg: error.message || '出错啦', location: 'middle' })
-    }
-    api.hideProgress()
-    try {
       let res2 = await this.saveIDCardPic(this.initData.gtCreditId, { pictureFile: pic })
       if (res2.code === 200) {
         $api.byId('certNo').dataset.picture = res2.data.pictureId
       } else {
         throw new Error('保存身份证图片失败')
       }
+      api.hideProgress()
+      api.toast({ msg: '识别成功', location: 'middle' })
     } catch (error) {
       api.toast({ msg: error.message || '出错啦', location: 'middle' })
     }
@@ -414,6 +410,7 @@ class PageController extends Service {
         $api.byId('bankName').value = ''
         throw new Error('读取失败')
       }
+      api.hideProgress()
       api.toast({ msg: '识别成功', location: 'middle' })
     } catch (error) {
       api.toast({ msg: error.message || '出错啦', location: 'middle' })
