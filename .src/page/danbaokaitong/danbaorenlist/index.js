@@ -66,7 +66,7 @@ class pageController extends Service {
             <input ${item.status === 1 ? '' : 'disabled'} type="checkbox" data-id="${item.gtCounterId}" data-phone="${item.phone || ''}" checkbox-trigger="body">
             <span></span>
           </label>
-          <div class="cont" click-trigger="item" data-id="${item.gtCounterId}" data-type="${key}">
+          <div class="cont" click-trigger="item" data-status="${item.status}" data-id="${item.gtCounterId}" data-type="${key}">
             <span class="txt">担保人${index + 1}</span>
             <span data-status="${item.status}" class="tag ${statusMap[item.status] && statusMap[item.status][1]}">${statusMap[item.status] && statusMap[item.status][0]}</span>
           </div>
@@ -258,6 +258,7 @@ class pageController extends Service {
             gtCreditId: this.initData.gtCreditId,
             gtCounterId: item.dataset.id,
             type: item.dataset.type,
+            status: item.dataset.status,
           })
         }
       }

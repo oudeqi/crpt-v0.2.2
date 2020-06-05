@@ -4,12 +4,14 @@ import '../form.css'
 import { http, ActionSheet, CitySelector, getPicture, setRefreshHeaderInfo } from '../../../config'
 import { openDanbaoRenForm, openCheliang, openFangchan } from '../../../webview.js'
 import { Validation, NumberLimit } from '../form.js'
-import Utils from '../../../utils'
+import BaiduSDK from '../../../utils/ocr/baidu'
+
+const baidu = new BaiduSDK()
 
 class Service {
 
   // 保存身份证图片
-  async saveIDCardPic(gtId, files) {
+  saveIDCardPic(gtId, files) {
     return http.upload(
       '/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId,
       {files},
@@ -49,7 +51,7 @@ class PageController extends Service {
 
   constructor() {
     super(...arguments)
-    const { gtCreditId, gtCounterId, type } = api.pageParam || {}
+    const { gtCreditId, gtCounterId, type, status } = api.pageParam || {}
     const typeMap = {
       teacher: 1, // '教师',
       doctor: 2, // '医生',
@@ -63,7 +65,10 @@ class PageController extends Service {
       // gtCreditId	int	担保授信id
       gtCreditId, // 担保授信id
       gtCounterId, // 担保人id
-      type: typeMap[type]
+      type: typeMap[type],
+      status, // status 反担保人状态
+      // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+
     }
     // 1： 配偶、 2：父母、 3：同事、 4：朋友、 5：亲戚
     this.relationship = ['配偶', '父母', '同事', '朋友', '亲戚']
@@ -357,26 +362,21 @@ class PageController extends Service {
   }
 
   async __readIDCard (pic) {
+    api.showProgress({ title: '识别中...', text: '' })
     try {
-      api.showProgress({ title: '识别中...', text: '' })
-      const res = await Utils.OCR.Baidu.IdcardVerify({certFile: pic})
-      if (res.code === 200) {
+      const res = await baidu.IdcardVerify({certFile: pic})
+      const res2 = await this.saveIDCardPic(this.initData.gtCreditId, { pictureFile: pic })
+      if (res.code === 200 && res2.code === 200) {
         $api.byId('certNo').value = res.data.number || ''
-      } else {
-        $api.byId('certNo').value = ''
-        throw new Error('读取失败')
+        $api.byId('certNo').dataset.picture = res2.data.pictureId || ''
+        api.toast({ msg: '识别成功', location: 'middle' })
       }
-      let res2 = await this.saveIDCardPic(this.initData.gtCreditId, { pictureFile: pic })
-      if (res2.code === 200) {
-        $api.byId('certNo').dataset.picture = res2.data.pictureId
-      } else {
-        throw new Error('保存身份证图片失败')
-      }
-      api.hideProgress()
-      api.toast({ msg: '识别成功', location: 'middle' })
     } catch (error) {
-      api.toast({ msg: error.message || '出错啦', location: 'middle' })
+      $api.byId('certNo').value = ''
+      $api.byId('certNo').dataset.picture = ''
+      api.toast({ msg: error.msg || '出错啦', location: 'middle' })
     }
+    api.hideProgress()
   }
 
   async __bindIDCardOcr () {
@@ -389,7 +389,7 @@ class PageController extends Service {
         } else {
           sourceType = 'album'
         }
-        getPicture(sourceType, (ret, err) => {
+        getPicture(sourceType, async (ret, err) => {
           if (ret) {
             this.__readIDCard(ret.data)
           }
@@ -399,20 +399,17 @@ class PageController extends Service {
   }
 
   async __readBank (pic) {
+    api.showProgress({ title: '识别中...', text: '' })
     try {
-      api.showProgress({ title: '识别中...', text: '' })
-      const res = await Utils.OCR.Baidu.BankVerify({bankcardFile: pic})
+      const res = await baidu.BankVerify({bankcardFile: pic})
       if (res.code === 200) {
         $api.byId('bankCardNo').value = res.data.bank_card_number || ''
         $api.byId('bankName').value = res.data.bank_name || ''
-      } else {
-        $api.byId('bankCardNo').value = ''
-        $api.byId('bankName').value = ''
-        throw new Error('读取失败')
+        api.toast({ msg: '识别成功', location: 'middle' })
       }
-      api.hideProgress()
-      api.toast({ msg: '识别成功', location: 'middle' })
     } catch (error) {
+      $api.byId('bankCardNo').value = ''
+      $api.byId('bankName').value = ''
       api.toast({ msg: error.message || '出错啦', location: 'middle' })
     }
     api.hideProgress()
@@ -454,6 +451,8 @@ class PageController extends Service {
   }
 
   async getPageDate () {
+    const btnEl = $api.byId('submit')
+    $api.attr(btnEl, 'disabled', true)
     const gtCounterId = this.initData.gtCounterId
     if (!gtCounterId) {
       api.refreshHeaderLoadDone()
@@ -464,6 +463,7 @@ class PageController extends Service {
       const res = await this.queryDanbaoRenMsgById(gtCounterId)
       if (res.code === 200) {
         this.__pageDataFillBack(res.data)
+        $api.removeAttr(btnEl, 'disabled')
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -473,6 +473,14 @@ class PageController extends Service {
   }
 
   submit () {
+    let status = parseInt(this.initData.status)
+    if (!isNaN(status) && status >=3) {
+      api.toast({ msg: '担保人状态为已经确认', location: 'middle' })
+      return
+    }
+    if ($api.attr($api.byId('submit'), 'disabled')) {
+      return
+    }
     this.__initValidation().validate({
       error: function (msg) {
         api.toast({ msg, location: 'middle' })

@@ -1686,25 +1686,29 @@ var BaiduSDK = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 3;
+                _context2.next = 2;
                 return this.getToken();
 
-              case 3:
+              case 2:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
-                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
+                });
 
               case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -1734,21 +1738,22 @@ var BaiduSDK = /*#__PURE__*/function () {
                 res = _context3.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
-                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context3.next = 6;
+                return http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
-
-              case 5:
-                return _context3.abrupt("return", Promise.reject(res));
+                });
 
               case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -1808,7 +1813,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1831,6 +1836,7 @@ function ajax(method, url) {
       return url.includes(value);
     });
     include ? Authorization = {} : null;
+    var start = new Date().getTime();
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -1839,6 +1845,10 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
       if (ret) {
         if (ret.code === 200) {
           resolve(ret);

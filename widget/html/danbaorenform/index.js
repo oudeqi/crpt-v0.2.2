@@ -21,87 +21,6 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var setPrototypeOf = createCommonjsModule(function (module) {
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-module.exports = _setPrototypeOf;
-});
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-var inherits = _inherits;
-
-var _typeof_1 = createCommonjsModule(function (module) {
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-});
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-var assertThisInitialized = _assertThisInitialized;
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-var possibleConstructorReturn = _possibleConstructorReturn;
-
-var getPrototypeOf = createCommonjsModule(function (module) {
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-});
-
 var runtime_1 = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -873,6 +792,87 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
+var setPrototypeOf = createCommonjsModule(function (module) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+});
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+var inherits = _inherits;
+
+var _typeof_1 = createCommonjsModule(function (module) {
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+});
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var assertThisInitialized = _assertThisInitialized;
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+var possibleConstructorReturn = _possibleConstructorReturn;
+
+var getPrototypeOf = createCommonjsModule(function (module) {
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+});
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1633,25 +1633,29 @@ var BaiduSDK = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 3;
+                _context2.next = 2;
                 return this.getToken();
 
-              case 3:
+              case 2:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
-                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
+                });
 
               case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -1681,21 +1685,22 @@ var BaiduSDK = /*#__PURE__*/function () {
                 res = _context3.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
-                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context3.next = 6;
+                return http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
-
-              case 5:
-                return _context3.abrupt("return", Promise.reject(res));
+                });
 
               case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -1755,7 +1760,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1778,6 +1783,7 @@ function ajax(method, url) {
       return url.includes(value);
     });
     include ? Authorization = {} : null;
+    var start = new Date().getTime();
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -1786,6 +1792,10 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
       if (ret) {
         if (ret.code === 200) {
           resolve(ret);
@@ -1993,7 +2003,7 @@ function getPicture(sourceType, cb) {
     mediaValue: 'pic',
     destinationType: 'file',
     allowEdit: false,
-    quality: 100,
+    quality: 80,
     targetWidth: 1000,
     // targetHeight: 300,
     saveToPhotoAlbum: false
@@ -2018,6 +2028,12 @@ function setRefreshHeaderInfo(successCallback, errorCallback) {
     }
   });
 }
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 // 表单验证
 var Validation = /*#__PURE__*/function () {
@@ -2161,20 +2177,32 @@ var Validation = /*#__PURE__*/function () {
   }, {
     key: "__shapeValidate",
     value: function __shapeValidate(shape, value) {
-      var _this3 = this;
+      var _iterator = _createForOfIteratorHelper(value),
+          _step;
 
-      value.forEach(function (currentValue) {
-        for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
-          k = _Object$keys4[_i4];
-          var currentConfig = shape[key];
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var currentValue = _step.value;
 
-          _this3.__shapeAttrValidate(shape[k], currentValue[k]);
+          for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
+            k = _Object$keys4[_i4];
 
-          if (!_this3.isValid) {
+            this.__shapeAttrValidate(shape[k], currentValue[k]);
+
+            if (!this.isValid) {
+              break;
+            }
+          }
+
+          if (!this.isValid) {
             break;
           }
         }
-      });
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     }
   }, {
     key: "__validResult",
@@ -2294,6 +2322,7 @@ function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { 
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+var baidu = new BaiduSDK();
 
 var Service = /*#__PURE__*/function () {
   function Service() {
@@ -2303,33 +2332,14 @@ var Service = /*#__PURE__*/function () {
   createClass(Service, [{
     key: "saveIDCardPic",
     // 保存身份证图片
-    value: function () {
-      var _saveIDCardPic = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(gtId, files) {
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                return _context.abrupt("return", http.upload('/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId, {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                }));
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function saveIDCardPic(_x, _x2) {
-        return _saveIDCardPic.apply(this, arguments);
-      }
-
-      return saveIDCardPic;
-    }() // 获取担保状态
+    value: function saveIDCardPic(gtId, files) {
+      return http.upload('/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId, {
+        files: files
+      }, {
+        headers: {},
+        timeout: 3000
+      });
+    } // 获取担保状态
 
   }, {
     key: "queryDanbaoStatus",
@@ -2378,7 +2388,8 @@ var PageController = /*#__PURE__*/function (_Service) {
     var _ref = api.pageParam || {},
         gtCreditId = _ref.gtCreditId,
         gtCounterId = _ref.gtCounterId,
-        type = _ref.type;
+        type = _ref.type,
+        status = _ref.status;
 
     var typeMap = {
       teacher: 1,
@@ -2401,7 +2412,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       // 担保授信id
       gtCounterId: gtCounterId,
       // 担保人id
-      type: typeMap[type]
+      type: typeMap[type],
+      status: status // status 反担保人状态
+      // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+
     }; // 1： 配偶、 2：父母、 3：同事、 4：朋友、 5：亲戚
 
     _this.relationship = ['配偶', '父母', '同事', '朋友', '亲戚']; // 婚姻状况 1：未婚  :2：已婚、  3：已婚有子女、  4：离异后未再婚
@@ -2785,85 +2799,66 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__readIDCard",
     value: function () {
-      var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(pic) {
+      var _readIDCard = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(pic) {
         var res, res2;
-        return regenerator.wrap(function _callee2$(_context2) {
+        return regenerator.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                _context2.prev = 0;
                 api.showProgress({
                   title: '识别中...',
                   text: ''
                 });
-                _context2.next = 4;
-                return Utils$1.OCR.Baidu.IdcardVerify({
+                _context.prev = 1;
+                _context.next = 4;
+                return baidu.IdcardVerify({
                   certFile: pic
                 });
 
               case 4:
-                res = _context2.sent;
-
-                if (!(res.code === 200)) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                $api.byId('certNo').value = res.data.number || '';
-                _context2.next = 11;
-                break;
-
-              case 9:
-                $api.byId('certNo').value = '';
-                throw new Error('读取失败');
-
-              case 11:
-                _context2.next = 13;
+                res = _context.sent;
+                _context.next = 7;
                 return this.saveIDCardPic(this.initData.gtCreditId, {
                   pictureFile: pic
                 });
 
-              case 13:
-                res2 = _context2.sent;
+              case 7:
+                res2 = _context.sent;
 
-                if (!(res2.code === 200)) {
-                  _context2.next = 18;
-                  break;
+                if (res.code === 200 && res2.code === 200) {
+                  $api.byId('certNo').value = res.data.number || '';
+                  $api.byId('certNo').dataset.picture = res2.data.pictureId || '';
+                  api.toast({
+                    msg: '识别成功',
+                    location: 'middle'
+                  });
                 }
 
-                $api.byId('certNo').dataset.picture = res2.data.pictureId;
-                _context2.next = 19;
+                _context.next = 16;
                 break;
 
-              case 18:
-                throw new Error('保存身份证图片失败');
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](1);
+                $api.byId('certNo').value = '';
+                $api.byId('certNo').dataset.picture = '';
+                api.toast({
+                  msg: _context.t0.msg || '出错啦',
+                  location: 'middle'
+                });
 
-              case 19:
+              case 16:
                 api.hideProgress();
-                api.toast({
-                  msg: '识别成功',
-                  location: 'middle'
-                });
-                _context2.next = 26;
-                break;
 
-              case 23:
-                _context2.prev = 23;
-                _context2.t0 = _context2["catch"](0);
-                api.toast({
-                  msg: _context2.t0.message || '出错啦',
-                  location: 'middle'
-                });
-
-              case 26:
+              case 17:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this, [[0, 23]]);
+        }, _callee, this, [[1, 11]]);
       }));
 
-      function __readIDCard(_x3) {
+      function __readIDCard(_x) {
         return _readIDCard.apply(this, arguments);
       }
 
@@ -2889,11 +2884,28 @@ var PageController = /*#__PURE__*/function (_Service) {
                       sourceType = 'album';
                     }
 
-                    getPicture(sourceType, function (ret, err) {
-                      if (ret) {
-                        _this6.__readIDCard(ret.data);
-                      }
-                    });
+                    getPicture(sourceType, /*#__PURE__*/function () {
+                      var _ref4 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(ret, err) {
+                        return regenerator.wrap(function _callee2$(_context2) {
+                          while (1) {
+                            switch (_context2.prev = _context2.next) {
+                              case 0:
+                                if (ret) {
+                                  _this6.__readIDCard(ret.data);
+                                }
+
+                              case 1:
+                              case "end":
+                                return _context2.stop();
+                            }
+                          }
+                        }, _callee2);
+                      }));
+
+                      return function (_x2, _x3) {
+                        return _ref4.apply(this, arguments);
+                      };
+                    }());
                   });
                 };
 
@@ -2920,60 +2932,50 @@ var PageController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.prev = 0;
                 api.showProgress({
                   title: '识别中...',
                   text: ''
                 });
+                _context4.prev = 1;
                 _context4.next = 4;
-                return Utils$1.OCR.Baidu.BankVerify({
+                return baidu.BankVerify({
                   bankcardFile: pic
                 });
 
               case 4:
                 res = _context4.sent;
 
-                if (!(res.code === 200)) {
-                  _context4.next = 10;
-                  break;
+                if (res.code === 200) {
+                  $api.byId('bankCardNo').value = res.data.bank_card_number || '';
+                  $api.byId('bankName').value = res.data.bank_name || '';
+                  api.toast({
+                    msg: '识别成功',
+                    location: 'middle'
+                  });
                 }
 
-                $api.byId('bankCardNo').value = res.data.bank_card_number || '';
-                $api.byId('bankName').value = res.data.bank_name || '';
                 _context4.next = 13;
                 break;
 
-              case 10:
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
                 $api.byId('bankCardNo').value = '';
                 $api.byId('bankName').value = '';
-                throw new Error('读取失败');
-
-              case 13:
-                api.hideProgress();
-                api.toast({
-                  msg: '识别成功',
-                  location: 'middle'
-                });
-                _context4.next = 20;
-                break;
-
-              case 17:
-                _context4.prev = 17;
-                _context4.t0 = _context4["catch"](0);
                 api.toast({
                   msg: _context4.t0.message || '出错啦',
                   location: 'middle'
                 });
 
-              case 20:
+              case 13:
                 api.hideProgress();
 
-              case 21:
+              case 14:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 17]]);
+        }, _callee4, null, [[1, 8]]);
       }));
 
       function __readBank(_x4) {
@@ -3054,59 +3056,63 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "getPageDate",
     value: function () {
       var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
-        var gtCounterId, res;
+        var btnEl, gtCounterId, res;
         return regenerator.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                btnEl = $api.byId('submit');
+                $api.attr(btnEl, 'disabled', true);
                 gtCounterId = this.initData.gtCounterId;
 
                 if (gtCounterId) {
-                  _context6.next = 4;
+                  _context6.next = 6;
                   break;
                 }
 
                 api.refreshHeaderLoadDone();
                 return _context6.abrupt("return", false);
 
-              case 4:
+              case 6:
                 api.showProgress({
                   title: '加载中...',
                   text: '',
                   modal: false
                 });
-                _context6.prev = 5;
-                _context6.next = 8;
+                _context6.prev = 7;
+                _context6.next = 10;
                 return this.queryDanbaoRenMsgById(gtCounterId);
 
-              case 8:
+              case 10:
                 res = _context6.sent;
 
                 if (res.code === 200) {
                   this.__pageDataFillBack(res.data);
+
+                  $api.removeAttr(btnEl, 'disabled');
                 }
 
-                _context6.next = 15;
+                _context6.next = 17;
                 break;
 
-              case 12:
-                _context6.prev = 12;
-                _context6.t0 = _context6["catch"](5);
+              case 14:
+                _context6.prev = 14;
+                _context6.t0 = _context6["catch"](7);
                 api.toast({
                   msg: _context6.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 15:
+              case 17:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 17:
+              case 19:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, this, [[5, 12]]);
+        }, _callee6, this, [[7, 14]]);
       }));
 
       function getPageDate() {
@@ -3119,6 +3125,20 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "submit",
     value: function submit() {
       var _this8 = this;
+
+      var status = parseInt(this.initData.status);
+
+      if (!isNaN(status) && status >= 3) {
+        api.toast({
+          msg: '担保人状态为已经确认',
+          location: 'middle'
+        });
+        return;
+      }
+
+      if ($api.attr($api.byId('submit'), 'disabled')) {
+        return;
+      }
 
       this.__initValidation().validate({
         error: function error(msg) {

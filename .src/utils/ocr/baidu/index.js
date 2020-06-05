@@ -33,10 +33,9 @@ export default class BaiduSDK {
     }
 
     async IdcardVerify(files) {
-        const self = this
         const res = await this.getToken();
         if (res.code === 200) {
-            return http.upload(
+            return await http.upload(
                 `${this.ajaxUrls.URL_IDCARD_INFO}?accessToken=${res.data.accessToken}`,
                 {files},
                 {
@@ -50,7 +49,7 @@ export default class BaiduSDK {
     async BankVerify(files) {
         const res = await this.getToken();
         if (res.code === 200) {
-            return http.post(
+            return await http.post(
               `${this.ajaxUrls.URL_BANK_INFO}?accessToken=${res.data.accessToken}`,
               {files},
               {
@@ -59,7 +58,6 @@ export default class BaiduSDK {
               }
             );
         }
-        return Promise.reject(res)
     }
 }
 

@@ -913,7 +913,8 @@ function openRegLogin() {
 function openDanbaoRenForm(_ref8) {
   var gtCreditId = _ref8.gtCreditId,
       gtCounterId = _ref8.gtCounterId,
-      type = _ref8.type;
+      type = _ref8.type,
+      status = _ref8.status;
   api.openTabLayout({
     name: "html/danbaorenform/index",
     title: '担保人调查表',
@@ -924,7 +925,10 @@ function openDanbaoRenForm(_ref8) {
       // 授信id
       gtCounterId: gtCounterId,
       // 担保人id
-      type: type // 反担保人类别
+      type: type,
+      // 反担保人类别,
+      status: status // status 反担保人状态
+      // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
 
     },
     slidBackEnabled: true,
@@ -1603,25 +1607,29 @@ var BaiduSDK = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 3;
+                _context2.next = 2;
                 return this.getToken();
 
-              case 3:
+              case 2:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
-                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
+                });
 
               case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -1651,21 +1659,22 @@ var BaiduSDK = /*#__PURE__*/function () {
                 res = _context3.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
-                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context3.next = 6;
+                return http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
-
-              case 5:
-                return _context3.abrupt("return", Promise.reject(res));
+                });
 
               case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -1725,7 +1734,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1748,6 +1757,7 @@ function ajax(method, url) {
       return url.includes(value);
     });
     include ? Authorization = {} : null;
+    var start = new Date().getTime();
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -1756,6 +1766,10 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
       if (ret) {
         if (ret.code === 200) {
           resolve(ret);
@@ -2000,7 +2014,7 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         }; // <span class="del">删除</span>
 
-        return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
+        return "\n        <li class=\"collapse-item\">\n          <label class=\"checkbox\">\n            <input ".concat(item.status === 1 ? '' : 'disabled', " type=\"checkbox\" data-id=\"").concat(item.gtCounterId, "\" data-phone=\"").concat(item.phone || '', "\" checkbox-trigger=\"body\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"item\" data-status=\"").concat(item.status, "\" data-id=\"").concat(item.gtCounterId, "\" data-type=\"").concat(key, "\">\n            <span class=\"txt\">\u62C5\u4FDD\u4EBA").concat(index + 1, "</span>\n            <span data-status=\"").concat(item.status, "\" class=\"tag ").concat(statusMap[item.status] && statusMap[item.status][1], "\">").concat(statusMap[item.status] && statusMap[item.status][0], "</span>\n          </div>\n        </li>\n      ");
       });
       var collapseTpl = "\n      <div class=\"collapse\" collapse=\"show\">\n        <div class=\"collapse-header\">\n          <label class=\"checkbox\">\n            <input type=\"checkbox\" checkbox-trigger=\"header\">\n            <span></span>\n          </label>\n          <div class=\"cont\" click-trigger=\"header\">\n            <span>".concat(category[key], "</span>\n            <span id=\"").concat(key, "Num\">").concat(signedLength, "/").concat(arr.length, "\u4EBA</span>\n          </div>\n        </div>\n        <ul class=\"collapse-body\" id=\"").concat(key, "-body\">\n          ").concat(collapseBodyTpl.join(''), "\n        </ul>\n      </div>\n    ");
       $api.byId(key).innerHTML = collapseTpl;
@@ -2223,7 +2237,8 @@ var pageController = /*#__PURE__*/function (_Service) {
             openDanbaoRenForm({
               gtCreditId: _this2.initData.gtCreditId,
               gtCounterId: _item.dataset.id,
-              type: _item.dataset.type
+              type: _item.dataset.type,
+              status: _item.dataset.status
             });
           }
         }

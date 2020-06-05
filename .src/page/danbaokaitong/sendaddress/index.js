@@ -316,17 +316,11 @@ class PageController extends Service {
         }
       },
       custSpouseName: {
-        // valid: {
-        //   required: '请填写借款人配偶姓名',
-        // },
         get: function () {
           return $api.byId('custSpouseName').value
         }
       },
       peiouAddress: {
-        // valid: {
-        //   required: '请选择借款人配偶文书送达地址',
-        // },
         get: function () {
           return $api.byId('peiouAddress').value || ''
         }
@@ -362,24 +356,17 @@ class PageController extends Service {
         }
       },
       spAddrDetail: {
-        // valid: {
-        //   required: '请填写借款人配偶文书送达详细地址',
-        // },
         get: function () {
           return $api.byId('spAddrDetail').value
         }
       },
       custSpouseAddresseeName: {
-        // valid: {
-        //   required: '请填写借款人配偶收件姓名',
-        // },
         get: function () {
           return $api.byId('custSpouseAddresseeName').value
         }
       },
       custSpouseAddresseePhone: {
         valid: {
-          // required: '请填写借款人配偶收件联系电话',
           pattern: [/^1[3456789]\d{9}$/, '借款人配偶手机号码格式不正确'],
         },
         get: function () {
@@ -417,7 +404,6 @@ class PageController extends Service {
           //   required: '请填写担保人配偶收件姓名'
           // },
           gtSpouseAddresseePhone: {
-            // required: '请填写担保人配偶收件联系电话',
             pattern: [/^1[3456789]\d{9}$/, '担保人配偶手机号码格式不正确'],
           },
         },

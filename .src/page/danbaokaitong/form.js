@@ -102,15 +102,17 @@ export class Validation {
     }
   }
   __shapeValidate (shape, value) {
-    value.forEach(currentValue => {
+    for (let currentValue of value) {
       for (k of Object.keys(shape)) {
-        let currentConfig = shape[key]
         this.__shapeAttrValidate(shape[k], currentValue[k])
         if (!this.isValid) {
           break
         }
       }
-    })
+      if (!this.isValid) {
+        break
+      }
+    }
   }
 
   __validResult () {

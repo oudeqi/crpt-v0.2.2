@@ -24,7 +24,7 @@ const whiteList = [ // 白名单里不带token，否则后端会报错
 
 let hasAlert = false
 
-function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 10} = {}) {
+function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20} = {}) {
   return new Promise((resolve, reject) => {
     let token = ''
     if (headers.token) {
@@ -42,6 +42,7 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 10}
     method === 'upload' ? contentType = {} : null
     const include = whiteList.find(value => url.includes(value))
     include ? Authorization = {} : null
+    let start = new Date().getTime()
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -54,6 +55,9 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 10}
         ...headers
       } 
     }, (ret, error) => {
+      let end = new Date().getTime()
+      let dis = (end - start) / 1000
+      console.log('/************* ' + dis + 's **********/')
       if (ret) {
         if (ret.code === 200) {
           resolve(ret)
@@ -320,7 +324,7 @@ function getPicture (sourceType, cb) {
     mediaValue: 'pic',
     destinationType: 'file',
     allowEdit: false,
-    quality: 100,
+    quality: 80,
     targetWidth: 1000,
     // targetHeight: 300,
     saveToPhotoAlbum: false

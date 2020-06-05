@@ -1569,25 +1569,29 @@ var BaiduSDK = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 3;
+                _context2.next = 2;
                 return this.getToken();
 
-              case 3:
+              case 2:
                 res = _context2.sent;
 
                 if (!(res.code === 200)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
-                return _context2.abrupt("return", http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
+                });
 
               case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -1617,21 +1621,22 @@ var BaiduSDK = /*#__PURE__*/function () {
                 res = _context3.sent;
 
                 if (!(res.code === 200)) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
-                return _context3.abrupt("return", http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                _context3.next = 6;
+                return http.post("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
                   files: files
                 }, {
                   headers: {},
                   timeout: 3000
-                }));
-
-              case 5:
-                return _context3.abrupt("return", Promise.reject(res));
+                });
 
               case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -1691,7 +1696,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 10 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1714,6 +1719,7 @@ function ajax(method, url) {
       return url.includes(value);
     });
     include ? Authorization = {} : null;
+    var start = new Date().getTime();
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -1722,6 +1728,10 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
       if (ret) {
         if (ret.code === 200) {
           resolve(ret);
@@ -1924,6 +1934,12 @@ function setRefreshHeaderInfo(successCallback, errorCallback) {
   });
 }
 
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // 表单验证
 var Validation = /*#__PURE__*/function () {
   function Validation(config) {
@@ -2066,20 +2082,32 @@ var Validation = /*#__PURE__*/function () {
   }, {
     key: "__shapeValidate",
     value: function __shapeValidate(shape, value) {
-      var _this3 = this;
+      var _iterator = _createForOfIteratorHelper(value),
+          _step;
 
-      value.forEach(function (currentValue) {
-        for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
-          k = _Object$keys4[_i4];
-          var currentConfig = shape[key];
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var currentValue = _step.value;
 
-          _this3.__shapeAttrValidate(shape[k], currentValue[k]);
+          for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
+            k = _Object$keys4[_i4];
 
-          if (!_this3.isValid) {
+            this.__shapeAttrValidate(shape[k], currentValue[k]);
+
+            if (!this.isValid) {
+              break;
+            }
+          }
+
+          if (!this.isValid) {
             break;
           }
         }
-      });
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     }
   }, {
     key: "__validResult",
@@ -2411,17 +2439,11 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         },
         custSpouseName: {
-          // valid: {
-          //   required: '请填写借款人配偶姓名',
-          // },
           get: function get() {
             return $api.byId('custSpouseName').value;
           }
         },
         peiouAddress: {
-          // valid: {
-          //   required: '请选择借款人配偶文书送达地址',
-          // },
           get: function get() {
             return $api.byId('peiouAddress').value || '';
           }
@@ -2457,24 +2479,17 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         },
         spAddrDetail: {
-          // valid: {
-          //   required: '请填写借款人配偶文书送达详细地址',
-          // },
           get: function get() {
             return $api.byId('spAddrDetail').value;
           }
         },
         custSpouseAddresseeName: {
-          // valid: {
-          //   required: '请填写借款人配偶收件姓名',
-          // },
           get: function get() {
             return $api.byId('custSpouseAddresseeName').value;
           }
         },
         custSpouseAddresseePhone: {
           valid: {
-            // required: '请填写借款人配偶收件联系电话',
             pattern: [/^1[3456789]\d{9}$/, '借款人配偶手机号码格式不正确']
           },
           get: function get() {
@@ -2512,7 +2527,6 @@ var PageController = /*#__PURE__*/function (_Service) {
             //   required: '请填写担保人配偶收件姓名'
             // },
             gtSpouseAddresseePhone: {
-              // required: '请填写担保人配偶收件联系电话',
               pattern: [/^1[3456789]\d{9}$/, '担保人配偶手机号码格式不正确']
             }
           },

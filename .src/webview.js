@@ -255,7 +255,7 @@ function openBaseinfoFill () {
     bgColor: '#fff',
     softInputMode: 'auto',
     softInputBarEnabled: false,
-    softInputDismissMode: ['tap', 'interactive'],
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
     slidBackEnabled: true,
@@ -962,7 +962,7 @@ function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
 }
 
 // 担保人信息录入
-function openDanbaoRenForm ({gtCreditId, gtCounterId, type}) {
+function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status}) {
   api.openTabLayout({
     name: `html/danbaorenform/index`,
     title: '担保人调查表',
@@ -971,7 +971,10 @@ function openDanbaoRenForm ({gtCreditId, gtCounterId, type}) {
     pageParam: {
       gtCreditId, // 授信id
       gtCounterId, // 担保人id
-      type, // 反担保人类别
+      type, // 反担保人类别,
+      status,
+      // status 反担保人状态
+      // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
     },
     slidBackEnabled: true,
     navigationBar: {
