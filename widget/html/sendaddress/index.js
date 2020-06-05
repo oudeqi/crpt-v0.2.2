@@ -1934,6 +1934,10 @@ var Validation = /*#__PURE__*/function () {
     this.config = config;
     this.isValid = true; // 是否验证通过
 
+    this.error = null; // 验证失败回调
+
+    this.success = null; // 验证成功回调
+
     this.fnMap = {
       checked: function checked(config, v, error) {
         var value = v;
@@ -1941,7 +1945,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       required: function required(config, v, error) {
@@ -1950,7 +1954,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       pattern: function pattern(config, v, error) {
@@ -1960,7 +1964,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || pattern.test($api.trim(value));
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       max: function max(config, v, error) {
@@ -1970,7 +1974,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value <= max;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       min: function min(config, v, error) {
@@ -1980,7 +1984,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value >= min;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       }
     };
@@ -1988,7 +1992,7 @@ var Validation = /*#__PURE__*/function () {
 
   createClass(Validation, [{
     key: "__commonValidate",
-    value: function __commonValidate(currentConfig, error) {
+    value: function __commonValidate(currentConfig) {
       var currentValidConfig = currentConfig.valid || {};
       var currentValue = currentConfig.get();
       var condition = currentConfig.condition; // 决定是否校验
@@ -1998,7 +2002,7 @@ var Validation = /*#__PURE__*/function () {
         var fnMap = this.fnMap;
 
         if (!condition || typeof condition === 'function' && condition()) {
-          fnMap[k](currentValidConfig, currentValue, error);
+          fnMap[k](currentValidConfig, currentValue);
 
           if (!this.isValid) {
             break;
@@ -2007,12 +2011,52 @@ var Validation = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "__fnValidate",
+    value: function __fnValidate(_ref) {
+      var _this2 = this;
+
+      var validator = _ref.validator,
+          condition = _ref.condition;
+
+      if (!condition || typeof condition === 'function' && condition()) {
+        validator(function (msg) {
+          if (msg) {
+            _this2.error(msg.message || msg);
+
+            _this2.isValid = false;
+          }
+        });
+      }
+    }
+  }, {
+    key: "__validate",
+    value: function __validate() {
+      var config = this.config;
+
+      for (var _i2 = 0, _Object$keys2 = Object.keys(config); _i2 < _Object$keys2.length; _i2++) {
+        key = _Object$keys2[_i2];
+        var currentConfig = config[key] || {};
+
+        if (currentConfig.shape) {
+          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get());
+        } else if (currentConfig.validator && typeof currentConfig.validator === 'function') {
+          this.__fnValidate(currentConfig);
+        } else {
+          this.__commonValidate(currentConfig);
+        }
+
+        if (!this.isValid) {
+          break;
+        }
+      }
+    }
+  }, {
     key: "__shapeAttrValidate",
-    value: function __shapeAttrValidate(currentConfig, value, error) {
-      for (var _i2 = 0, _Object$keys2 = Object.keys(currentConfig); _i2 < _Object$keys2.length; _i2++) {
-        k = _Object$keys2[_i2];
+    value: function __shapeAttrValidate(currentConfig, value) {
+      for (var _i3 = 0, _Object$keys3 = Object.keys(currentConfig); _i3 < _Object$keys3.length; _i3++) {
+        k = _Object$keys3[_i3];
         var fnMap = this.fnMap;
-        fnMap[k](currentConfig, value, error);
+        fnMap[k](currentConfig, value);
 
         if (!this.isValid) {
           break;
@@ -2021,70 +2065,59 @@ var Validation = /*#__PURE__*/function () {
     }
   }, {
     key: "__shapeValidate",
-    value: function __shapeValidate(shape, value, error) {
-      var _this2 = this;
+    value: function __shapeValidate(shape, value) {
+      var _this3 = this;
 
       value.forEach(function (currentValue) {
-        for (var _i3 = 0, _Object$keys3 = Object.keys(shape); _i3 < _Object$keys3.length; _i3++) {
-          k = _Object$keys3[_i3];
-          // TODO
+        for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
+          k = _Object$keys4[_i4];
           var currentConfig = shape[key];
 
-          _this2.__shapeAttrValidate(shape[k], currentValue[k], error);
+          _this3.__shapeAttrValidate(shape[k], currentValue[k]);
 
-          if (!_this2.isValid) {
+          if (!_this3.isValid) {
             break;
           }
         }
       });
     }
   }, {
-    key: "__validate",
-    value: function __validate(error) {
+    key: "__validResult",
+    value: function __validResult() {
       var config = this.config;
+      var res = {};
 
-      for (var _i4 = 0, _Object$keys4 = Object.keys(config); _i4 < _Object$keys4.length; _i4++) {
-        key = _Object$keys4[_i4];
-        var currentConfig = config[key] || {};
+      for (var _i5 = 0, _Object$keys5 = Object.keys(config); _i5 < _Object$keys5.length; _i5++) {
+        key = _Object$keys5[_i5];
+        var revert = config[key].revert;
 
-        if (currentConfig.shape) {
-          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error);
-        } else {
-          this.__commonValidate(currentConfig, error);
+        if (typeof revert === 'boolean') {
+          revert = revert;
+        } else if (typeof revert === 'function') {
+          revert = revert();
+        } else if (!revert) {
+          revert = true;
         }
 
-        if (!this.isValid) {
-          break;
+        if (revert) {
+          res[key] = config[key].get();
         }
       }
+
+      return res;
     }
   }, {
     key: "validate",
-    value: function validate(_ref) {
-      var error = _ref.error,
-          success = _ref.success;
+    value: function validate(_ref2) {
+      var error = _ref2.error,
+          success = _ref2.success;
+      this.error = error;
+      this.success = success;
 
-      this.__validate(error);
+      this.__validate();
 
       if (this.isValid) {
-        var res = {};
-
-        for (var _i5 = 0, _Object$keys5 = Object.keys(this.config); _i5 < _Object$keys5.length; _i5++) {
-          key = _Object$keys5[_i5];
-          var revert = this.config[key].revert;
-
-          if (typeof revert === 'function') {
-            revert = revert();
-          } else if (typeof revert !== 'boolean') {
-            revert = true;
-          }
-
-          if (revert) {
-            res[key] = this.config[key].get();
-          }
-        }
-
-        success && success(res);
+        success && success(this.__validResult());
       }
     }
   }]);
@@ -2181,7 +2214,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var list = $api.byId('list');
       list.innerHTML = '';
       array.forEach(function (item, index) {
-        var tpl = "\n      <div class=\"item\">\n        <div class=\"item-header\">\n          \u62C5\u4FDD\u4EBA".concat(index + 1, "\n        </div>\n        <div class=\"item-body\">\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" select-trigger=\"name\" value=\"").concat(item.gtName || '', "\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtAddrProvince, "\"\n                        data-province-code=\"").concat(item.gtAddrProvinceCode, "\"\n                        data-city=\"").concat(item.gtAddrCity, "\"\n                        data-city-code=\"").concat(item.gtAddrCityCode, "\"\n                        data-county=\"").concat(item.gtAddrCounty, "\"\n                        data-county-code=\"").concat(item.gtAddrCountyCode, "\"\n                        value=\"").concat(item.gtAddrProvince ? "".concat(item.gtAddrProvince, "/").concat(item.gtAddrCity, "/").concat(item.gtAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"address\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddrDetail || '', "\" select-trigger=\"addressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseeName || '', "\" select-trigger=\"receiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseePhone || '', "\" select-trigger=\"phone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u914D\u5076\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA\u914D\u5076</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseName || '', "\" select-trigger=\"peiouName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtSpAddrProvince, "\"\n                        data-province-code=\"").concat(item.gtSpAddrProvinceCode, "\"\n                        data-city=\"").concat(item.gtSpAddrCity, "\"\n                        data-city-code=\"").concat(item.gtSpAddrCityCode, "\"\n                        data-county=\"").concat(item.gtSpAddrCounty, "\"\n                        data-county-code=\"").concat(item.gtSpAddrCountyCode, "\"\n                        value=\"").concat(item.gtSpAddrProvince ? "".concat(item.gtSpAddrProvince, "/").concat(item.gtSpAddrCity, "/").concat(item.gtSpAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"peiouAddress\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpAddrDetail || '', "\" select-trigger=\"peiouAddressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseeName || '', "\" select-trigger=\"peiouReceiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseePhone || '', "\" select-trigger=\"peiouPhone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      ");
+        var tpl = "\n      <div class=\"item\">\n        <div class=\"item-header\">\n          \u62C5\u4FDD\u4EBA".concat(index + 1, "\n        </div>\n        <div class=\"item-body\">\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" select-trigger=\"name\" value=\"").concat(item.gtName || '', "\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtAddrProvince ? "".concat(item.gtAddrProvince, "/").concat(item.gtAddrCity, "/").concat(item.gtAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"address\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddrDetail || '', "\" select-trigger=\"addressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseeName || '', "\" select-trigger=\"receiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseePhone || '', "\" select-trigger=\"phone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u914D\u5076\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA\u914D\u5076</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseName || '', "\" select-trigger=\"peiouName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtSpAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtSpAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtSpAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtSpAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtSpAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtSpAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtSpAddrProvince ? "".concat(item.gtSpAddrProvince, "/").concat(item.gtSpAddrCity, "/").concat(item.gtSpAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"peiouAddress\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpAddrDetail || '', "\" select-trigger=\"peiouAddressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseeName || '', "\" select-trigger=\"peiouReceiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseePhone || '', "\" select-trigger=\"peiouPhone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      ");
         $api.append(list, tpl);
       });
     }
@@ -2281,7 +2314,6 @@ var PageController = /*#__PURE__*/function (_Service) {
 
         if (address) {
           CitySelector(function (selected) {
-            console.log(JSON.stringify(selected));
             var a = selected[0];
             var b = selected[1];
             var c = selected[2];
@@ -2320,37 +2352,37 @@ var PageController = /*#__PURE__*/function (_Service) {
             required: '请选择借款人文书送达地址'
           },
           get: function get() {
-            return $api.byId('address').value;
+            return $api.byId('address').value || '';
           }
         },
         addrProvince: {
           get: function get() {
-            return $api.byId('address').dataset.province;
+            return $api.byId('address').dataset.province || '';
           }
         },
         addrProvinceCode: {
           get: function get() {
-            return $api.byId('address').dataset.provinceCode;
+            return $api.byId('address').dataset.provinceCode || '';
           }
         },
         addrCity: {
           get: function get() {
-            return $api.byId('address').dataset.city;
+            return $api.byId('address').dataset.city || '';
           }
         },
         addrCityCode: {
           get: function get() {
-            return $api.byId('address').dataset.cityCode;
+            return $api.byId('address').dataset.cityCode || '';
           }
         },
         addrCounty: {
           get: function get() {
-            return $api.byId('address').dataset.county;
+            return $api.byId('address').dataset.county || '';
           }
         },
         addrCountyCode: {
           get: function get() {
-            return $api.byId('address').dataset.countyCode;
+            return $api.byId('address').dataset.countyCode || '';
           }
         },
         addrDetail: {
@@ -2391,37 +2423,37 @@ var PageController = /*#__PURE__*/function (_Service) {
           //   required: '请选择借款人配偶文书送达地址',
           // },
           get: function get() {
-            return $api.byId('peiouAddress').value;
+            return $api.byId('peiouAddress').value || '';
           }
         },
         spAddrProvince: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.province;
+            return $api.byId('peiouAddress').dataset.province || '';
           }
         },
         spAddrProvinceCode: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.provinceCode;
+            return $api.byId('peiouAddress').dataset.provinceCode || '';
           }
         },
         spAddrCity: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.city;
+            return $api.byId('peiouAddress').dataset.city || '';
           }
         },
         spAddrCityCode: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.cityCode;
+            return $api.byId('peiouAddress').dataset.cityCode || '';
           }
         },
         spAddrCounty: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.county;
+            return $api.byId('peiouAddress').dataset.county || '';
           }
         },
         spAddrCountyCode: {
           get: function get() {
-            return $api.byId('peiouAddress').dataset.countyCode;
+            return $api.byId('peiouAddress').dataset.countyCode || '';
           }
         },
         spAddrDetail: {
@@ -2494,25 +2526,25 @@ var PageController = /*#__PURE__*/function (_Service) {
               data.push({
                 gtName: $api.dom(item, '[select-trigger="name"]').value,
                 // 担保人地址
-                gtAddress: $api.dom(item, '[select-trigger="address"]').value,
-                gtAddrProvince: $api.dom(item, '[select-trigger="address"]').dataset.province,
-                gtAddrProvinceCode: $api.dom(item, '[select-trigger="address"]').dataset.provinceCode,
-                gtAddrCity: $api.dom(item, '[select-trigger="address"]').dataset.city,
-                gtAddrCityCode: $api.dom(item, '[select-trigger="address"]').dataset.cityCode,
-                gtAddrCounty: $api.dom(item, '[select-trigger="address"]').dataset.county,
-                gtAddrCountyCode: $api.dom(item, '[select-trigger="address"]').dataset.countyCode,
+                gtAddress: $api.dom(item, '[select-trigger="address"]').value || '',
+                gtAddrProvince: $api.dom(item, '[select-trigger="address"]').dataset.province || '',
+                gtAddrProvinceCode: $api.dom(item, '[select-trigger="address"]').dataset.provinceCode || '',
+                gtAddrCity: $api.dom(item, '[select-trigger="address"]').dataset.city || '',
+                gtAddrCityCode: $api.dom(item, '[select-trigger="address"]').dataset.cityCode || '',
+                gtAddrCounty: $api.dom(item, '[select-trigger="address"]').dataset.county || '',
+                gtAddrCountyCode: $api.dom(item, '[select-trigger="address"]').dataset.countyCode || '',
                 gtAddrDetail: $api.dom(item, '[select-trigger="addressDetail"]').value,
                 gtAddresseeName: $api.dom(item, '[select-trigger="receiveName"]').value,
                 gtAddresseePhone: $api.dom(item, '[select-trigger="phone"]').value,
                 gtSpouseName: $api.dom(item, '[select-trigger="peiouName"]').value,
                 // 担保人配偶地址
-                gtSpAddress: $api.dom(item, '[select-trigger="peiouAddress"]').value,
-                gtSpAddrProvince: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.province,
-                gtSpAddrProvinceCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.provinceCode,
-                gtSpAddrCity: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.city,
-                gtSpAddrCityCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.cityCode,
-                gtSpAddrCounty: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.county,
-                gtSpAddrCountyCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.countyCode,
+                gtSpAddress: $api.dom(item, '[select-trigger="peiouAddress"]').value || '',
+                gtSpAddrProvince: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.province || '',
+                gtSpAddrProvinceCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.provinceCode || '',
+                gtSpAddrCity: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.city || '',
+                gtSpAddrCityCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.cityCode || '',
+                gtSpAddrCounty: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.county || '',
+                gtSpAddrCountyCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.countyCode || '',
                 gtSpAddrDetail: $api.dom(item, '[select-trigger="peiouAddressDetail"]').value,
                 gtSpouseAddresseeName: $api.dom(item, '[select-trigger="peiouReceiveName"]').value,
                 gtSpouseAddresseePhone: $api.dom(item, '[select-trigger="peiouPhone"]').value

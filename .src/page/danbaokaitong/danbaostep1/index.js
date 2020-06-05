@@ -13,6 +13,17 @@ class PageController extends HeaderController {
     const { productId, productName } = api.pageParam || {}
     this.productId = productId
     this.productName = productName
+    this.productType = null
+    /*
+      1. productType 字段用来表示是否是担保类型中的设备贷
+      2. productType 含义与原本的产品类型不太一样，原本产品类型分为：1-信用贷款 2-担保贷款
+      3. 由于没有表示设备贷的字段，与后端同事达成共识，1信用贷产品，2担保贷产品中的设备贷，如果以后新增其他类型在后面顺延
+    */
+  }
+
+  // 判断是否是设备贷
+  __isShebeiDai () {
+    return this.productType === '2' || this.productType === 2
   }
 
   // 隐藏设备贷
@@ -21,13 +32,12 @@ class PageController extends HeaderController {
   }
 
   // 根据产品id，显示或者隐藏设备贷
-  __isShebeiDaiShow (productId) {
-    $api.byId('shebeidai_container').style.display = 'block'
-    // if (productId === '6' || productId === 6) {
-    //   $api.byId('shebeidai_container').style.display = 'block'
-    // } else {
-    //   $api.byId('shebeidai_container').style.display = 'none'
-    // }
+  __isShebeiDaiShow (productType) {
+    if (this.__isShebeiDai()) {
+      $api.byId('shebeidai_container').style.display = 'block'
+    } else {
+      $api.byId('shebeidai_container').style.display = 'none'
+    }
   }
 
   // 获取产品信息
@@ -40,7 +50,6 @@ class PageController extends HeaderController {
     try {
       if (this.danbaoStatus) {
         const data = this.danbaoStatus
-        this.__isShebeiDaiShow(data.productId)
         document.querySelector('[name="buildType"][value="'+data.buildType+'"]').checked = true
         $api.byId('expectInveste').value = data.expectInveste
         $api.byId('demandMoney').value = data.demandMoney
@@ -49,26 +58,23 @@ class PageController extends HeaderController {
         $api.removeAttr($api.byId('save'), 'disabled')
         this.productId = data.productId
         this.productName = data.productName
-        this.rate = data.rate
-        let product = $api.byId('product')
-        let rate = $api.byId('rate')
+        this.productType = data.productType
         $api.byId('product').value = data.productName
         $api.byId('rate').value = `${data.rate || '0'}‰`
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
-// this.__removeDisabled()
+        this.__isShebeiDaiShow(data.productType)
+        // this.__removeDisabled()
       } else {
-        this.__isShebeiDaiShow(this.productId)
         const res = await this.queryProductById(this.productId)
         if (res.code === 200) {
           const data = res.data
           this.productId = data.productId
           this.productName = data.productName
-          this.rate = data.rate
-          let product = $api.byId('product')
-          let rate = $api.byId('rate')
+          this.productType = data.productType
           $api.byId('product').value = data.productName
           $api.byId('rate').value = `${data.rate || '0'}‰`
           $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
+          this.__isShebeiDaiShow(data.productType)
           this.__removeDisabled()
         }
       }
@@ -116,8 +122,7 @@ class PageController extends HeaderController {
         valid: {
           required: '请选择场地变化类型'
         },
-        revert: () => { return true },
-        condition: () => { return true },
+        condition: () => { return this.__isShebeiDai() },
         get: function () {
           const checkedRadio = document.querySelector('[name="buildType"]:checked')
           return checkedRadio ? checkedRadio.value : ''
@@ -127,15 +132,21 @@ class PageController extends HeaderController {
         valid: {
           max: [9999, '建厂预计投入不能超过9999'],
         },
-        revert: () => { return true },
-        condition: () => { return true },
+        condition: () => { return this.__isShebeiDai() },
         get: function () {
           return $api.byId('expectInveste').value
         }
       },
       demandMoney: {
-        valid: {
-          required: '资金需求不能为空'
+        validator: (callback) => {
+          let value = $api.byId('demandMoney').value.trim()
+          if (!value) {
+            callback('请填入需求资金')
+          } else if (isNaN(value)) {
+            callback('需求资金只能填入数字')
+          } else {
+            callback()
+          }
         },
         get: function () {
           return $api.byId('demandMoney').value
@@ -150,8 +161,15 @@ class PageController extends HeaderController {
         }
       },
       timeLimit: {
-        valid: {
-          required: '请输入用款期限',
+        validator: (callback) => {
+          let value = $api.byId('timeLimit').value.trim()
+          if (!value) {
+            callback('请输入用款期限')
+          } else if (isNaN(value)) {
+            callback('用款期限只能填入数字')
+          } else {
+            callback()
+          }
         },
         get: function () {
           return $api.byId('timeLimit').value
@@ -168,7 +186,6 @@ class PageController extends HeaderController {
         api.toast({ msg, location: 'middle' })
       },
       success: async (data) => {
-        // console.log(JSON.stringify(data))
         if (this.danbaoStatus && this.danbaoStatus.applyStatus > 0) {
           openDanbaoKaitong({step: 2})
           return
@@ -213,13 +230,13 @@ class PageController extends HeaderController {
       }
     }
     // 资金需求 可修改小额度
-    $api.byId('demandMoney').oninput = function (e) {
-      console.log(e.target.value)
-    }
-    // 用款期限 可修改小额度
-    $api.byId('timeLimit').oninput = function (e) {
-      console.log(e.target.value)
-    }
+    // $api.byId('demandMoney').oninput = function (e) {
+    //   console.log(e.target.value)
+    // }
+    // // 用款期限 可修改小额度
+    // $api.byId('timeLimit').oninput = function (e) {
+    //   console.log(e.target.value)
+    // }
     // 保存
     document.querySelector('#save').onclick = () => {
       this.__save()
@@ -236,8 +253,6 @@ class PageController extends HeaderController {
 apiready = function () {
   const ctrl = new PageController()
   ctrl.bindEvent()
-  ctrl.showProtocol()
-  ctrl.getProduct()
 
   // 下拉刷新
   setRefreshHeaderInfo(function(ret, err) {

@@ -3,13 +3,15 @@ export class Validation {
   constructor(config) {
     this.config = config
     this.isValid = true // 是否验证通过
+    this.error = null // 验证失败回调
+    this.success = null // 验证成功回调
     this.fnMap = {
       checked: (config, v, error) => {
         let value = v
         let msg = config.checked
         this.isValid = value
         if (!this.isValid) {
-          error(msg)
+          this.error(msg)
         }
       },
       required: (config, v, error) => {
@@ -17,7 +19,7 @@ export class Validation {
         let msg = config.required
         this.isValid = value
         if (!this.isValid) {
-          error(msg)
+          this.error(msg)
         }
       },
       pattern: (config, v, error) => {
@@ -26,7 +28,7 @@ export class Validation {
         let msg = config.pattern[1]
         this.isValid = !value || pattern.test($api.trim(value))
         if (!this.isValid) {
-          error(msg)
+          this.error(msg)
         }
       },
       max: (config, v, error) => {
@@ -35,7 +37,7 @@ export class Validation {
         let msg = config.max[1]
         this.isValid = !value || value <= max
         if (!this.isValid) {
-          error(msg)
+          this.error(msg)
         }
       },
       min: (config, v, error) => {
@@ -44,76 +46,98 @@ export class Validation {
         let msg = config.min[1]
         this.isValid = !value || value >= min
         if (!this.isValid) {
-          error(msg)
+          this.error(msg)
         }
       },
     }
   }
-  __commonValidate (currentConfig, error) {
+  __commonValidate (currentConfig) {
     const currentValidConfig = currentConfig.valid || {}
     const currentValue = currentConfig.get()
     const condition = currentConfig.condition // 决定是否校验
     for (k of Object.keys(currentValidConfig)) {
       const fnMap = this.fnMap
       if (!condition || (typeof condition === 'function' && condition())) {
-        fnMap[k](currentValidConfig, currentValue, error)
+        fnMap[k](currentValidConfig, currentValue)
         if (!this.isValid) {
           break
         }
       }
     }
   }
-  __shapeAttrValidate (currentConfig, value, error) {
-    for (k of Object.keys(currentConfig)) {
-      const fnMap = this.fnMap
-      fnMap[k](currentConfig, value, error)
+  __fnValidate ({validator, condition}) {
+    if (!condition || (typeof condition === 'function' && condition())) {
+      validator((msg) => {
+        if (msg) {
+          this.error(msg.message || msg)
+          this.isValid = false
+        }
+      })
+    }
+  }
+
+  __validate () {
+    const config = this.config
+    for (key of Object.keys(config)) {
+      let currentConfig = config[key] || {}
+      if (currentConfig.shape) {
+        this.__shapeValidate(currentConfig.shape || {}, currentConfig.get())
+      } else if (currentConfig.validator && typeof currentConfig.validator === 'function') {
+        this.__fnValidate(currentConfig)
+      } else {
+        this.__commonValidate(currentConfig)
+      }
       if (!this.isValid) {
         break
       }
     }
   }
-  __shapeValidate (shape, value, error) {
+  __shapeAttrValidate (currentConfig, value) {
+    for (k of Object.keys(currentConfig)) {
+      const fnMap = this.fnMap
+      fnMap[k](currentConfig, value)
+      if (!this.isValid) {
+        break
+      }
+    }
+  }
+  __shapeValidate (shape, value) {
     value.forEach(currentValue => {
       for (k of Object.keys(shape)) {
-        // TODO
         let currentConfig = shape[key]
-        this.__shapeAttrValidate(shape[k], currentValue[k], error)
+        this.__shapeAttrValidate(shape[k], currentValue[k])
         if (!this.isValid) {
           break
         }
       }
     })
   }
-  __validate (error) {
+
+  __validResult () {
     const config = this.config
+    const res = {}
     for (key of Object.keys(config)) {
-      let currentConfig = config[key] || {}
-      if (currentConfig.shape) {
-        this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error)
-      } else {
-        this.__commonValidate(currentConfig, error)
+      let revert = config[key].revert
+      if (typeof revert === 'boolean') {
+        revert = revert
+      } else if (typeof revert === 'function') {
+        revert = revert()
+      } else if (!revert) {
+        revert = true
       }
-      if (!this.isValid) {
-        break
+      if (revert) {
+        res[key] = config[key].get()
       }
     }
+    return res
   }
+
   validate ({error, success}) {
-    this.__validate(error)
+    this.error = error
+    this.success = success
+    this.__validate()
     if (this.isValid) {
-      const res = {}
-      for (key of Object.keys(this.config)) {
-        let revert = this.config[key].revert
-        if (typeof revert === 'function') {
-          revert = revert()
-        } else if (typeof revert !== 'boolean') {
-          revert = true
-        }
-        if (revert) {
-          res[key] = this.config[key].get()
-        }
-      }
-      success && success(res)
+      success && success(this.__validResult())
     }
   }
 }

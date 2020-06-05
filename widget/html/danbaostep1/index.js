@@ -3216,6 +3216,10 @@ var Validation = /*#__PURE__*/function () {
     this.config = config;
     this.isValid = true; // 是否验证通过
 
+    this.error = null; // 验证失败回调
+
+    this.success = null; // 验证成功回调
+
     this.fnMap = {
       checked: function checked(config, v, error) {
         var value = v;
@@ -3223,7 +3227,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       required: function required(config, v, error) {
@@ -3232,7 +3236,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       pattern: function pattern(config, v, error) {
@@ -3242,7 +3246,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || pattern.test($api.trim(value));
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       max: function max(config, v, error) {
@@ -3252,7 +3256,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value <= max;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       min: function min(config, v, error) {
@@ -3262,7 +3266,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value >= min;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       }
     };
@@ -3270,7 +3274,7 @@ var Validation = /*#__PURE__*/function () {
 
   createClass(Validation, [{
     key: "__commonValidate",
-    value: function __commonValidate(currentConfig, error) {
+    value: function __commonValidate(currentConfig) {
       var currentValidConfig = currentConfig.valid || {};
       var currentValue = currentConfig.get();
       var condition = currentConfig.condition; // 决定是否校验
@@ -3280,7 +3284,7 @@ var Validation = /*#__PURE__*/function () {
         var fnMap = this.fnMap;
 
         if (!condition || typeof condition === 'function' && condition()) {
-          fnMap[k](currentValidConfig, currentValue, error);
+          fnMap[k](currentValidConfig, currentValue);
 
           if (!this.isValid) {
             break;
@@ -3289,12 +3293,52 @@ var Validation = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "__fnValidate",
+    value: function __fnValidate(_ref) {
+      var _this2 = this;
+
+      var validator = _ref.validator,
+          condition = _ref.condition;
+
+      if (!condition || typeof condition === 'function' && condition()) {
+        validator(function (msg) {
+          if (msg) {
+            _this2.error(msg.message || msg);
+
+            _this2.isValid = false;
+          }
+        });
+      }
+    }
+  }, {
+    key: "__validate",
+    value: function __validate() {
+      var config = this.config;
+
+      for (var _i2 = 0, _Object$keys2 = Object.keys(config); _i2 < _Object$keys2.length; _i2++) {
+        key = _Object$keys2[_i2];
+        var currentConfig = config[key] || {};
+
+        if (currentConfig.shape) {
+          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get());
+        } else if (currentConfig.validator && typeof currentConfig.validator === 'function') {
+          this.__fnValidate(currentConfig);
+        } else {
+          this.__commonValidate(currentConfig);
+        }
+
+        if (!this.isValid) {
+          break;
+        }
+      }
+    }
+  }, {
     key: "__shapeAttrValidate",
-    value: function __shapeAttrValidate(currentConfig, value, error) {
-      for (var _i2 = 0, _Object$keys2 = Object.keys(currentConfig); _i2 < _Object$keys2.length; _i2++) {
-        k = _Object$keys2[_i2];
+    value: function __shapeAttrValidate(currentConfig, value) {
+      for (var _i3 = 0, _Object$keys3 = Object.keys(currentConfig); _i3 < _Object$keys3.length; _i3++) {
+        k = _Object$keys3[_i3];
         var fnMap = this.fnMap;
-        fnMap[k](currentConfig, value, error);
+        fnMap[k](currentConfig, value);
 
         if (!this.isValid) {
           break;
@@ -3303,70 +3347,59 @@ var Validation = /*#__PURE__*/function () {
     }
   }, {
     key: "__shapeValidate",
-    value: function __shapeValidate(shape, value, error) {
-      var _this2 = this;
+    value: function __shapeValidate(shape, value) {
+      var _this3 = this;
 
       value.forEach(function (currentValue) {
-        for (var _i3 = 0, _Object$keys3 = Object.keys(shape); _i3 < _Object$keys3.length; _i3++) {
-          k = _Object$keys3[_i3];
-          // TODO
+        for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
+          k = _Object$keys4[_i4];
           var currentConfig = shape[key];
 
-          _this2.__shapeAttrValidate(shape[k], currentValue[k], error);
+          _this3.__shapeAttrValidate(shape[k], currentValue[k]);
 
-          if (!_this2.isValid) {
+          if (!_this3.isValid) {
             break;
           }
         }
       });
     }
   }, {
-    key: "__validate",
-    value: function __validate(error) {
+    key: "__validResult",
+    value: function __validResult() {
       var config = this.config;
+      var res = {};
 
-      for (var _i4 = 0, _Object$keys4 = Object.keys(config); _i4 < _Object$keys4.length; _i4++) {
-        key = _Object$keys4[_i4];
-        var currentConfig = config[key] || {};
+      for (var _i5 = 0, _Object$keys5 = Object.keys(config); _i5 < _Object$keys5.length; _i5++) {
+        key = _Object$keys5[_i5];
+        var revert = config[key].revert;
 
-        if (currentConfig.shape) {
-          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error);
-        } else {
-          this.__commonValidate(currentConfig, error);
+        if (typeof revert === 'boolean') {
+          revert = revert;
+        } else if (typeof revert === 'function') {
+          revert = revert();
+        } else if (!revert) {
+          revert = true;
         }
 
-        if (!this.isValid) {
-          break;
+        if (revert) {
+          res[key] = config[key].get();
         }
       }
+
+      return res;
     }
   }, {
     key: "validate",
-    value: function validate(_ref) {
-      var error = _ref.error,
-          success = _ref.success;
+    value: function validate(_ref2) {
+      var error = _ref2.error,
+          success = _ref2.success;
+      this.error = error;
+      this.success = success;
 
-      this.__validate(error);
+      this.__validate();
 
       if (this.isValid) {
-        var res = {};
-
-        for (var _i5 = 0, _Object$keys5 = Object.keys(this.config); _i5 < _Object$keys5.length; _i5++) {
-          key = _Object$keys5[_i5];
-          var revert = this.config[key].revert;
-
-          if (typeof revert === 'function') {
-            revert = revert();
-          } else if (typeof revert !== 'boolean') {
-            revert = true;
-          }
-
-          if (revert) {
-            res[key] = this.config[key].get();
-          }
-        }
-
-        success && success(res);
+        success && success(this.__validResult());
       }
     }
   }]);
@@ -3467,11 +3500,24 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
 
     _this.productId = productId;
     _this.productName = productName;
+    _this.productType = null;
+    /*
+      1. productType 字段用来表示是否是担保类型中的设备贷
+      2. productType 含义与原本的产品类型不太一样，原本产品类型分为：1-信用贷款 2-担保贷款
+      3. 由于没有表示设备贷的字段，与后端同事达成共识，1信用贷产品，2担保贷产品中的设备贷，如果以后新增其他类型在后面顺延
+    */
+
     return _this;
-  } // 隐藏设备贷
+  } // 判断是否是设备贷
 
 
   createClass(PageController, [{
+    key: "__isShebeiDai",
+    value: function __isShebeiDai() {
+      return this.productType === '2' || this.productType === 2;
+    } // 隐藏设备贷
+
+  }, {
     key: "__hideShebeiDai",
     value: function __hideShebeiDai() {
       $api.byId('shebeidai_container').style.display = 'none';
@@ -3479,19 +3525,19 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
 
   }, {
     key: "__isShebeiDaiShow",
-    value: function __isShebeiDaiShow(productId) {
-      $api.byId('shebeidai_container').style.display = 'block'; // if (productId === '6' || productId === 6) {
-      //   $api.byId('shebeidai_container').style.display = 'block'
-      // } else {
-      //   $api.byId('shebeidai_container').style.display = 'none'
-      // }
+    value: function __isShebeiDaiShow(productType) {
+      if (this.__isShebeiDai()) {
+        $api.byId('shebeidai_container').style.display = 'block';
+      } else {
+        $api.byId('shebeidai_container').style.display = 'none';
+      }
     } // 获取产品信息
 
   }, {
     key: "getProduct",
     value: function () {
       var _getProduct = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var data, product, rate, res, _data, _product, _rate;
+        var data, res, _data;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -3521,14 +3567,11 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 _context.prev = 9;
 
                 if (!this.danbaoStatus) {
-                  _context.next = 29;
+                  _context.next = 27;
                   break;
                 }
 
                 data = this.danbaoStatus;
-
-                this.__isShebeiDaiShow(data.productId);
-
                 document.querySelector('[name="buildType"][value="' + data.buildType + '"]').checked = true;
                 $api.byId('expectInveste').value = data.expectInveste;
                 $api.byId('demandMoney').value = data.demandMoney;
@@ -3537,61 +3580,60 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 $api.removeAttr($api.byId('save'), 'disabled');
                 this.productId = data.productId;
                 this.productName = data.productName;
-                this.rate = data.rate;
-                product = $api.byId('product');
-                rate = $api.byId('rate');
+                this.productType = data.productType;
                 $api.byId('product').value = data.productName;
                 $api.byId('rate').value = "".concat(data.rate || '0', "\u2030");
-                $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1"); // this.__removeDisabled()
+                $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1");
 
-                _context.next = 34;
+                this.__isShebeiDaiShow(data.productType); // this.__removeDisabled()
+
+
+                _context.next = 31;
                 break;
 
-              case 29:
-                this.__isShebeiDaiShow(this.productId);
-
-                _context.next = 32;
+              case 27:
+                _context.next = 29;
                 return this.queryProductById(this.productId);
 
-              case 32:
+              case 29:
                 res = _context.sent;
 
                 if (res.code === 200) {
                   _data = res.data;
                   this.productId = _data.productId;
                   this.productName = _data.productName;
-                  this.rate = _data.rate;
-                  _product = $api.byId('product');
-                  _rate = $api.byId('rate');
+                  this.productType = _data.productType;
                   $api.byId('product').value = _data.productName;
                   $api.byId('rate').value = "".concat(_data.rate || '0', "\u2030");
                   $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(_data.productName, "\u4EA7\u54C1");
 
+                  this.__isShebeiDaiShow(_data.productType);
+
                   this.__removeDisabled();
                 }
 
-              case 34:
-                _context.next = 39;
+              case 31:
+                _context.next = 36;
                 break;
 
-              case 36:
-                _context.prev = 36;
+              case 33:
+                _context.prev = 33;
                 _context.t1 = _context["catch"](9);
                 api.toast({
                   msg: _context.t1.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 39:
+              case 36:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 41:
+              case 38:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 7], [9, 36]]);
+        }, _callee, this, [[2, 7], [9, 33]]);
       }));
 
       function getProduct() {
@@ -3629,6 +3671,8 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
   }, {
     key: "__initValidation",
     value: function __initValidation() {
+      var _this2 = this;
+
       var cfg = {
         agreement: {
           revert: false,
@@ -3644,11 +3688,8 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
           valid: {
             required: '请选择场地变化类型'
           },
-          revert: function revert() {
-            return true;
-          },
           condition: function condition() {
-            return true;
+            return _this2.__isShebeiDai();
           },
           get: function get() {
             var checkedRadio = document.querySelector('[name="buildType"]:checked');
@@ -3659,19 +3700,24 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
           valid: {
             max: [9999, '建厂预计投入不能超过9999']
           },
-          revert: function revert() {
-            return true;
-          },
           condition: function condition() {
-            return true;
+            return _this2.__isShebeiDai();
           },
           get: function get() {
             return $api.byId('expectInveste').value;
           }
         },
         demandMoney: {
-          valid: {
-            required: '资金需求不能为空'
+          validator: function validator(callback) {
+            var value = $api.byId('demandMoney').value.trim();
+
+            if (!value) {
+              callback('请填入需求资金');
+            } else if (isNaN(value)) {
+              callback('需求资金只能填入数字');
+            } else {
+              callback();
+            }
           },
           get: function get() {
             return $api.byId('demandMoney').value;
@@ -3686,8 +3732,16 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
           }
         },
         timeLimit: {
-          valid: {
-            required: '请输入用款期限'
+          validator: function validator(callback) {
+            var value = $api.byId('timeLimit').value.trim();
+
+            if (!value) {
+              callback('请输入用款期限');
+            } else if (isNaN(value)) {
+              callback('用款期限只能填入数字');
+            } else {
+              callback();
+            }
           },
           get: function get() {
             return $api.byId('timeLimit').value;
@@ -3700,7 +3754,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
     key: "__save",
     value: function () {
       var _save = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-        var _this2 = this;
+        var _this3 = this;
 
         var validation;
         return regenerator.wrap(function _callee3$(_context3) {
@@ -3722,7 +3776,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                         while (1) {
                           switch (_context2.prev = _context2.next) {
                             case 0:
-                              if (!(_this2.danbaoStatus && _this2.danbaoStatus.applyStatus > 0)) {
+                              if (!(_this3.danbaoStatus && _this3.danbaoStatus.applyStatus > 0)) {
                                 _context2.next = 3;
                                 break;
                               }
@@ -3735,15 +3789,15 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                             case 3:
                               _context2.prev = 3;
                               _context2.next = 6;
-                              return _this2.saveApply(_objectSpread$2({}, data, {
-                                productId: _this2.productId
+                              return _this3.saveApply(_objectSpread$2({}, data, {
+                                productId: _this3.productId
                               }));
 
                             case 6:
                               res = _context2.sent;
 
                               if (res.code === 200) {
-                                creditStatus = _this2.danbaoStatus || {};
+                                creditStatus = _this3.danbaoStatus || {};
                                 openDanbaoKaitong({
                                   step: 2,
                                   creditStatus: creditStatus
@@ -3812,7 +3866,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
   }, {
     key: "bindEvent",
     value: function bindEvent() {
-      var _this3 = this;
+      var _this4 = this;
 
       // 选填，客户录入（4位数）
       new NumberLimit($api.byId('expectInveste')); // 协议
@@ -3826,20 +3880,18 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
           $api.attr(el, 'disabled', true);
         }
       }; // 资金需求 可修改小额度
-
-
-      $api.byId('demandMoney').oninput = function (e) {
-        console.log(e.target.value);
-      }; // 用款期限 可修改小额度
-
-
-      $api.byId('timeLimit').oninput = function (e) {
-        console.log(e.target.value);
-      }; // 保存
+      // $api.byId('demandMoney').oninput = function (e) {
+      //   console.log(e.target.value)
+      // }
+      // // 用款期限 可修改小额度
+      // $api.byId('timeLimit').oninput = function (e) {
+      //   console.log(e.target.value)
+      // }
+      // 保存
 
 
       document.querySelector('#save').onclick = function () {
-        _this3.__save();
+        _this4.__save();
       };
 
       document.querySelector('#protocol').onclick = function (e) {
@@ -3857,9 +3909,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
 
 apiready = function apiready() {
   var ctrl = new PageController();
-  ctrl.bindEvent();
-  ctrl.showProtocol();
-  ctrl.getProduct(); // 下拉刷新
+  ctrl.bindEvent(); // 下拉刷新
 
   setRefreshHeaderInfo(function (ret, err) {
     ctrl.showProtocol();

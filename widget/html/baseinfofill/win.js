@@ -2402,7 +2402,7 @@ var PageController = /*#__PURE__*/function (_Service) {
           _this3.state.submitStatus = 'submitting';
           $api.addCls(_this3.el.submit, 'loading');
 
-          _this3.submit(_this3.state.url, _this3.state.postData).then(function (ret) {
+          _this3.submit(_this3.state.url, _this3.state.postData).then(function (res) {
             if (res.code === 200) {
               _this3.state.submitStatus = 'notsubmit';
               $api.removeCls($api.byId('submit'), 'loading');

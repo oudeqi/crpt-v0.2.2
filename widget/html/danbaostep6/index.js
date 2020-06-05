@@ -3269,6 +3269,9 @@ apiready = function apiready() {
   headerController.renderHeaderAndGetDanbaoStatus();
 
   $api.byId('next').onclick = function () {
+    api.closeWin({
+      name: 'tabLayout'
+    });
     openTabLayout(1);
   };
 };

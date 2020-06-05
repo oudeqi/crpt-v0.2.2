@@ -277,7 +277,7 @@ class PageController extends Service {
         if (!this.formValidation()) { return }
         this.state.submitStatus = 'submitting'
         $api.addCls(this.el.submit, 'loading')
-        this.submit(this.state.url, this.state.postData).then(ret => {
+        this.submit(this.state.url, this.state.postData).then(res => {
           if (res.code === 200) {
             this.state.submitStatus = 'notsubmit'
             $api.removeCls($api.byId('submit'), 'loading')

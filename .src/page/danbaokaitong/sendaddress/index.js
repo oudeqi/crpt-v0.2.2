@@ -78,12 +78,12 @@ class PageController extends Service {
                   <div class="form-crtl">
                     <div class="city-select">
                       <input type="text"
-                        data-province="${item.gtAddrProvince}"
-                        data-province-code="${item.gtAddrProvinceCode}"
-                        data-city="${item.gtAddrCity}"
-                        data-city-code="${item.gtAddrCityCode}"
-                        data-county="${item.gtAddrCounty}"
-                        data-county-code="${item.gtAddrCountyCode}"
+                        data-province="${item.gtAddrProvince || ''}"
+                        data-province-code="${item.gtAddrProvinceCode || ''}"
+                        data-city="${item.gtAddrCity || ''}"
+                        data-city-code="${item.gtAddrCityCode || ''}"
+                        data-county="${item.gtAddrCounty || ''}"
+                        data-county-code="${item.gtAddrCountyCode || ''}"
                         value="${item.gtAddrProvince ? `${item.gtAddrProvince}/${item.gtAddrCity}/${item.gtAddrCounty}` : ''}"
                         click-trigger="address" select-trigger="address" readonly placeholder="城市/区域">
                       <span></span>
@@ -134,12 +134,12 @@ class PageController extends Service {
                   <div class="form-crtl">
                     <div class="city-select">
                       <input type="text"
-                        data-province="${item.gtSpAddrProvince}"
-                        data-province-code="${item.gtSpAddrProvinceCode}"
-                        data-city="${item.gtSpAddrCity}"
-                        data-city-code="${item.gtSpAddrCityCode}"
-                        data-county="${item.gtSpAddrCounty}"
-                        data-county-code="${item.gtSpAddrCountyCode}"
+                        data-province="${item.gtSpAddrProvince || ''}"
+                        data-province-code="${item.gtSpAddrProvinceCode || ''}"
+                        data-city="${item.gtSpAddrCity || ''}"
+                        data-city-code="${item.gtSpAddrCityCode || ''}"
+                        data-county="${item.gtSpAddrCounty || ''}"
+                        data-county-code="${item.gtSpAddrCountyCode || ''}"
                         value="${item.gtSpAddrProvince ? `${item.gtSpAddrProvince}/${item.gtSpAddrCity}/${item.gtSpAddrCounty}` : ''}"
                         click-trigger="address" select-trigger="peiouAddress" readonly placeholder="城市/区域">
                       <span></span>
@@ -222,7 +222,6 @@ class PageController extends Service {
       const address = $api.closest(event.target, '[click-trigger="address"]')
       if (address) {
         CitySelector(selected => {
-          console.log(JSON.stringify(selected))
           let a = selected[0]
           let b = selected[1]
           let c = selected[2]
@@ -258,37 +257,37 @@ class PageController extends Service {
           required: '请选择借款人文书送达地址',
         },
         get: function () {
-          return $api.byId('address').value
+          return $api.byId('address').value || ''
         }
       },
       addrProvince: {
         get: function () {
-          return $api.byId('address').dataset.province
+          return $api.byId('address').dataset.province || ''
         }
       },
       addrProvinceCode: {
         get: function () {
-          return $api.byId('address').dataset.provinceCode
+          return $api.byId('address').dataset.provinceCode || ''
         }
       },
       addrCity: {
         get: function () {
-          return $api.byId('address').dataset.city
+          return $api.byId('address').dataset.city || ''
         }
       },
       addrCityCode: {
         get: function () {
-          return $api.byId('address').dataset.cityCode
+          return $api.byId('address').dataset.cityCode || ''
         }
       },
       addrCounty: {
         get: function () {
-          return $api.byId('address').dataset.county
+          return $api.byId('address').dataset.county || ''
         }
       },
       addrCountyCode: {
         get: function () {
-          return $api.byId('address').dataset.countyCode
+          return $api.byId('address').dataset.countyCode || ''
         }
       },
       addrDetail: {
@@ -329,37 +328,37 @@ class PageController extends Service {
         //   required: '请选择借款人配偶文书送达地址',
         // },
         get: function () {
-          return $api.byId('peiouAddress').value
+          return $api.byId('peiouAddress').value || ''
         }
       },
       spAddrProvince: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.province
+          return $api.byId('peiouAddress').dataset.province || ''
         }
       },
       spAddrProvinceCode: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.provinceCode
+          return $api.byId('peiouAddress').dataset.provinceCode || ''
         }
       },
       spAddrCity: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.city
+          return $api.byId('peiouAddress').dataset.city || ''
         }
       },
       spAddrCityCode: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.cityCode
+          return $api.byId('peiouAddress').dataset.cityCode || ''
         }
       },
       spAddrCounty: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.county
+          return $api.byId('peiouAddress').dataset.county || ''
         }
       },
       spAddrCountyCode: {
         get: function () {
-          return $api.byId('peiouAddress').dataset.countyCode
+          return $api.byId('peiouAddress').dataset.countyCode || ''
         }
       },
       spAddrDetail: {
@@ -430,26 +429,26 @@ class PageController extends Service {
             data.push({
               gtName: $api.dom(item, '[select-trigger="name"]').value,
               // 担保人地址
-              gtAddress: $api.dom(item, '[select-trigger="address"]').value,
-              gtAddrProvince: $api.dom(item, '[select-trigger="address"]').dataset.province,
-              gtAddrProvinceCode: $api.dom(item, '[select-trigger="address"]').dataset.provinceCode,
-              gtAddrCity: $api.dom(item, '[select-trigger="address"]').dataset.city,
-              gtAddrCityCode: $api.dom(item, '[select-trigger="address"]').dataset.cityCode,
-              gtAddrCounty: $api.dom(item, '[select-trigger="address"]').dataset.county,
-              gtAddrCountyCode: $api.dom(item, '[select-trigger="address"]').dataset.countyCode,
+              gtAddress: $api.dom(item, '[select-trigger="address"]').value || '',
+              gtAddrProvince: $api.dom(item, '[select-trigger="address"]').dataset.province || '',
+              gtAddrProvinceCode: $api.dom(item, '[select-trigger="address"]').dataset.provinceCode || '',
+              gtAddrCity: $api.dom(item, '[select-trigger="address"]').dataset.city || '',
+              gtAddrCityCode: $api.dom(item, '[select-trigger="address"]').dataset.cityCode || '',
+              gtAddrCounty: $api.dom(item, '[select-trigger="address"]').dataset.county || '',
+              gtAddrCountyCode: $api.dom(item, '[select-trigger="address"]').dataset.countyCode || '',
 
               gtAddrDetail: $api.dom(item, '[select-trigger="addressDetail"]').value,
               gtAddresseeName: $api.dom(item, '[select-trigger="receiveName"]').value,
               gtAddresseePhone: $api.dom(item, '[select-trigger="phone"]').value,
               gtSpouseName: $api.dom(item, '[select-trigger="peiouName"]').value,
               // 担保人配偶地址
-              gtSpAddress: $api.dom(item, '[select-trigger="peiouAddress"]').value,
-              gtSpAddrProvince: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.province,
-              gtSpAddrProvinceCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.provinceCode,
-              gtSpAddrCity: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.city,
-              gtSpAddrCityCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.cityCode,
-              gtSpAddrCounty: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.county,
-              gtSpAddrCountyCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.countyCode,
+              gtSpAddress: $api.dom(item, '[select-trigger="peiouAddress"]').value || '',
+              gtSpAddrProvince: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.province || '',
+              gtSpAddrProvinceCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.provinceCode || '',
+              gtSpAddrCity: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.city || '',
+              gtSpAddrCityCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.cityCode || '',
+              gtSpAddrCounty: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.county || '',
+              gtSpAddrCountyCode: $api.dom(item, '[select-trigger="peiouAddress"]').dataset.countyCode || '',
 
               gtSpAddrDetail: $api.dom(item, '[select-trigger="peiouAddressDetail"]').value,
               gtSpouseAddresseeName: $api.dom(item, '[select-trigger="peiouReceiveName"]').value,

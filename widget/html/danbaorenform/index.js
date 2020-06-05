@@ -2029,6 +2029,10 @@ var Validation = /*#__PURE__*/function () {
     this.config = config;
     this.isValid = true; // 是否验证通过
 
+    this.error = null; // 验证失败回调
+
+    this.success = null; // 验证成功回调
+
     this.fnMap = {
       checked: function checked(config, v, error) {
         var value = v;
@@ -2036,7 +2040,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       required: function required(config, v, error) {
@@ -2045,7 +2049,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = value;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       pattern: function pattern(config, v, error) {
@@ -2055,7 +2059,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || pattern.test($api.trim(value));
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       max: function max(config, v, error) {
@@ -2065,7 +2069,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value <= max;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       },
       min: function min(config, v, error) {
@@ -2075,7 +2079,7 @@ var Validation = /*#__PURE__*/function () {
         _this.isValid = !value || value >= min;
 
         if (!_this.isValid) {
-          error(msg);
+          _this.error(msg);
         }
       }
     };
@@ -2083,7 +2087,7 @@ var Validation = /*#__PURE__*/function () {
 
   createClass(Validation, [{
     key: "__commonValidate",
-    value: function __commonValidate(currentConfig, error) {
+    value: function __commonValidate(currentConfig) {
       var currentValidConfig = currentConfig.valid || {};
       var currentValue = currentConfig.get();
       var condition = currentConfig.condition; // 决定是否校验
@@ -2093,7 +2097,7 @@ var Validation = /*#__PURE__*/function () {
         var fnMap = this.fnMap;
 
         if (!condition || typeof condition === 'function' && condition()) {
-          fnMap[k](currentValidConfig, currentValue, error);
+          fnMap[k](currentValidConfig, currentValue);
 
           if (!this.isValid) {
             break;
@@ -2102,12 +2106,52 @@ var Validation = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "__fnValidate",
+    value: function __fnValidate(_ref) {
+      var _this2 = this;
+
+      var validator = _ref.validator,
+          condition = _ref.condition;
+
+      if (!condition || typeof condition === 'function' && condition()) {
+        validator(function (msg) {
+          if (msg) {
+            _this2.error(msg.message || msg);
+
+            _this2.isValid = false;
+          }
+        });
+      }
+    }
+  }, {
+    key: "__validate",
+    value: function __validate() {
+      var config = this.config;
+
+      for (var _i2 = 0, _Object$keys2 = Object.keys(config); _i2 < _Object$keys2.length; _i2++) {
+        key = _Object$keys2[_i2];
+        var currentConfig = config[key] || {};
+
+        if (currentConfig.shape) {
+          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get());
+        } else if (currentConfig.validator && typeof currentConfig.validator === 'function') {
+          this.__fnValidate(currentConfig);
+        } else {
+          this.__commonValidate(currentConfig);
+        }
+
+        if (!this.isValid) {
+          break;
+        }
+      }
+    }
+  }, {
     key: "__shapeAttrValidate",
-    value: function __shapeAttrValidate(currentConfig, value, error) {
-      for (var _i2 = 0, _Object$keys2 = Object.keys(currentConfig); _i2 < _Object$keys2.length; _i2++) {
-        k = _Object$keys2[_i2];
+    value: function __shapeAttrValidate(currentConfig, value) {
+      for (var _i3 = 0, _Object$keys3 = Object.keys(currentConfig); _i3 < _Object$keys3.length; _i3++) {
+        k = _Object$keys3[_i3];
         var fnMap = this.fnMap;
-        fnMap[k](currentConfig, value, error);
+        fnMap[k](currentConfig, value);
 
         if (!this.isValid) {
           break;
@@ -2116,70 +2160,59 @@ var Validation = /*#__PURE__*/function () {
     }
   }, {
     key: "__shapeValidate",
-    value: function __shapeValidate(shape, value, error) {
-      var _this2 = this;
+    value: function __shapeValidate(shape, value) {
+      var _this3 = this;
 
       value.forEach(function (currentValue) {
-        for (var _i3 = 0, _Object$keys3 = Object.keys(shape); _i3 < _Object$keys3.length; _i3++) {
-          k = _Object$keys3[_i3];
-          // TODO
+        for (var _i4 = 0, _Object$keys4 = Object.keys(shape); _i4 < _Object$keys4.length; _i4++) {
+          k = _Object$keys4[_i4];
           var currentConfig = shape[key];
 
-          _this2.__shapeAttrValidate(shape[k], currentValue[k], error);
+          _this3.__shapeAttrValidate(shape[k], currentValue[k]);
 
-          if (!_this2.isValid) {
+          if (!_this3.isValid) {
             break;
           }
         }
       });
     }
   }, {
-    key: "__validate",
-    value: function __validate(error) {
+    key: "__validResult",
+    value: function __validResult() {
       var config = this.config;
+      var res = {};
 
-      for (var _i4 = 0, _Object$keys4 = Object.keys(config); _i4 < _Object$keys4.length; _i4++) {
-        key = _Object$keys4[_i4];
-        var currentConfig = config[key] || {};
+      for (var _i5 = 0, _Object$keys5 = Object.keys(config); _i5 < _Object$keys5.length; _i5++) {
+        key = _Object$keys5[_i5];
+        var revert = config[key].revert;
 
-        if (currentConfig.shape) {
-          this.__shapeValidate(currentConfig.shape || {}, currentConfig.get(), error);
-        } else {
-          this.__commonValidate(currentConfig, error);
+        if (typeof revert === 'boolean') {
+          revert = revert;
+        } else if (typeof revert === 'function') {
+          revert = revert();
+        } else if (!revert) {
+          revert = true;
         }
 
-        if (!this.isValid) {
-          break;
+        if (revert) {
+          res[key] = config[key].get();
         }
       }
+
+      return res;
     }
   }, {
     key: "validate",
-    value: function validate(_ref) {
-      var error = _ref.error,
-          success = _ref.success;
+    value: function validate(_ref2) {
+      var error = _ref2.error,
+          success = _ref2.success;
+      this.error = error;
+      this.success = success;
 
-      this.__validate(error);
+      this.__validate();
 
       if (this.isValid) {
-        var res = {};
-
-        for (var _i5 = 0, _Object$keys5 = Object.keys(this.config); _i5 < _Object$keys5.length; _i5++) {
-          key = _Object$keys5[_i5];
-          var revert = this.config[key].revert;
-
-          if (typeof revert === 'function') {
-            revert = revert();
-          } else if (typeof revert !== 'boolean') {
-            revert = true;
-          }
-
-          if (revert) {
-            res[key] = this.config[key].get();
-          }
-        }
-
-        success && success(res);
+        success && success(this.__validResult());
       }
     }
   }]);
@@ -2454,6 +2487,28 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('spouseOccupation').value = data.spouseOccupation || ''; // 配偶职业
 
       $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || ''; // 配偶工作单位
+      // 是否填写车辆信息 1. 未填写  3. 已填写
+      // 是否填写房产信息 1. 未填写  3. 已填写
+
+      this.__renderFillStatus(data.carFillStatus, data.houseFillStatus);
+    }
+  }, {
+    key: "__renderFillStatus",
+    value: function __renderFillStatus(carFillStatus, houseFillStatus) {
+      var cheliangEl = $api.byId('cheliang');
+      var fangchanEl = $api.byId('fangchan');
+
+      if (carFillStatus === 3 || carFillStatus === '3') {
+        $api.addCls(cheliangEl, 'ok');
+      } else {
+        $api.removeCls(cheliangEl, 'ok');
+      }
+
+      if (houseFillStatus === 3 || houseFillStatus === '3') {
+        $api.addCls(fangchanEl, 'ok');
+      } else {
+        $api.removeCls(fangchanEl, 'ok');
+      }
     }
   }, {
     key: "__initValidation",
@@ -3175,7 +3230,11 @@ apiready = function apiready() {
   var ctrl = new PageController();
   ctrl.bindEvent();
   ctrl.initForm();
-  ctrl.getPageDate();
+  api.addEventListener({
+    name: 'viewappear'
+  }, function (ret, err) {
+    ctrl.getPageDate();
+  });
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate();
   });

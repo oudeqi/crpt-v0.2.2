@@ -10,14 +10,14 @@ class Service {
 
   // 保存身份证图片
   async saveIDCardPic(gtId, files) {
-      return http.upload(
-          '/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId,
-          {files},
-          {
-              headers: {},
-              timeout: 3000
-          }
-      );
+    return http.upload(
+      '/crpt-guarantee/guarantor/attachment/save?gtId=' + gtId,
+      {files},
+      {
+        headers: {},
+        timeout: 3000
+      }
+    )
   }
 
   // 获取担保状态
@@ -125,6 +125,24 @@ class PageController extends Service {
     $api.byId('spouseIncome').value = data.spouseIncome || '' // 配偶年收入  单位为: 万元
     $api.byId('spouseOccupation').value = data.spouseOccupation || '' // 配偶职业
     $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || '' // 配偶工作单位
+    // 是否填写车辆信息 1. 未填写  3. 已填写
+    // 是否填写房产信息 1. 未填写  3. 已填写
+    this.__renderFillStatus(data.carFillStatus, data.houseFillStatus)
+  }
+
+  __renderFillStatus (carFillStatus, houseFillStatus) {
+    const cheliangEl = $api.byId('cheliang')
+    const fangchanEl = $api.byId('fangchan')
+    if (carFillStatus === 3 || carFillStatus === '3') {
+      $api.addCls(cheliangEl, 'ok')
+    } else {
+      $api.removeCls(cheliangEl, 'ok')
+    }
+    if (houseFillStatus === 3 || houseFillStatus === '3') {
+      $api.addCls(fangchanEl, 'ok')
+    } else {
+      $api.removeCls(fangchanEl, 'ok')
+    }
   }
 
   __initValidation () {
@@ -506,8 +524,12 @@ apiready = function () {
   const ctrl = new PageController()
   ctrl.bindEvent()
   ctrl.initForm()
-  ctrl.getPageDate()
 
+  api.addEventListener({
+    name:'viewappear'
+  }, function(ret, err){
+    ctrl.getPageDate()
+  })
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate()
   })
