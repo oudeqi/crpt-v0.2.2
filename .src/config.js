@@ -9,7 +9,7 @@ import Utils from "./utils"
 
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'http://gateway.test.crpt-cloud.liuheco.com'
-const prod = 'http://gateway.test.crpt-cloud.liuheco.com'
+const prod = 'http://gateway.crpt-cloud.app.oak.net.cn'
 export const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
 const whiteList = [ // 白名单里不带token，否则后端会报错
   '/sms/smsverificationcode',
