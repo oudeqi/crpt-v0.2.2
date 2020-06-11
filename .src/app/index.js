@@ -51,6 +51,7 @@ class PageController {
     // 6：人工审核不通过
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
+
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()

@@ -126,7 +126,7 @@ ul {
     flex-shrink: 0;
     height: 28px;
     padding: 0 10px;
-    background: #1dc4a2;
+    background: #66BB6A;
     color: #fff;
     font-size: 14px;
     border-radius: 4px;
@@ -147,7 +147,7 @@ ul {
 .contactus {
   padding: 40px;
   text-align: center;
-  color: #1dc4a2;
+  color: #66BB6A;
   & span {
     text-decoration: underline;
   }
@@ -164,7 +164,7 @@ ul {
   }
   & span {
     text-decoration: underline;
-    color: #1dc4a2;
+    color: #66BB6A;
     font-size: 15px;
   }
 }

@@ -7,6 +7,7 @@ let index = 0
 let navs = document.querySelectorAll('#nav .item')
 
 function changeNavIndex (i) {
+
   api.setFrameGroupIndex({
     name: 'orderFrameGroup',
     index: i,
@@ -26,7 +27,13 @@ apiready = function () {
   // document.querySelector('#msgdetails').onclick = function () {
   //   openMsgDetails()
   // }
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let nav = $api.byId('nav')
   let navPos = $api.offset(nav)
   for (let i = 0; i < navs.length; i++) {

@@ -6,7 +6,13 @@ openIDcardUpload, openIDcardInfo } from '../../../webview.js'
 import { http, ActionSheet, getPicture } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let userinfo = $api.getStorage('userinfo')
   let { name, userType } = userinfo
   $api.byId('name').innerHTML = name

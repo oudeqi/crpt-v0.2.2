@@ -2,6 +2,13 @@ import '../../../app.css'
 
 
 apiready = function() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   api.parseTapmode();
   let header = $api.byId('header');
   $api.fixStatusBar(header)
@@ -10,7 +17,7 @@ apiready = function() {
   let title = $api.byId('g-title')
   const params = api.pageParam || {}
   $api.html(title, params.userType === 2 ? '企业登录' : '个人登录')
-  
+
   api.openFrame({
     name: 'html/gerenlogin/frm',
     url: 'widget://html/gerenlogin/frm.html',

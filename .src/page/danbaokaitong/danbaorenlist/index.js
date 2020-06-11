@@ -322,7 +322,13 @@ class pageController extends Service {
 }
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const ctrl = new pageController()
   ctrl.bindEvent()
   setRefreshHeaderInfo(function () {

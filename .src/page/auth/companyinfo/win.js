@@ -6,7 +6,13 @@ openIDcardUpload } from '../../../webview.js'
 import { http, initUIInput } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   api.addEventListener({ // 键盘挡住输入框
     name:'keyboardshow'
   }, function(ret, err){

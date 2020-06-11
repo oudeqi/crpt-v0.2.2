@@ -30,7 +30,14 @@ class PageController extends Service {
                     {"name": "鸡", "id": 1},
                     {"name": "鸭", "id": 2},
                     {"name": "猪", "id": 3}
-                ]
+                ],
+                maturityYear: Array.from({length: 50}, (v, k) => {
+                    const year = String(k + new Date().getFullYear())
+                    return {
+                        name: year,
+                        id: year
+                    }
+                })
             },
             //  select类组件json
             selects: {
@@ -104,7 +111,7 @@ class PageController extends Service {
         //  提交表单
         this.bindSubmitEvents()
 
-        this.bindDateEvents()
+        // this.bindDateEvents()
     }
 
     async initFormStatus() {
@@ -226,10 +233,10 @@ class PageController extends Service {
             //  租赁到期时间
             if (operateRes.data.maturityYear) {
                 self.data.maturityYear = operateRes.data.maturityYear
-                const dom = document.querySelector('#maturityYear')
+                const dom = document.querySelector('#maturityYearBox')
                 if (operateRes.data.farmsNature === 2) {
                     dom.classList.remove('hidden')
-                    document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear
+                    document.querySelector('#maturityYear').innerHTML = `${operateRes.data.maturityYear} 年`
                 }
             }
 
@@ -242,9 +249,9 @@ class PageController extends Service {
 
             // key: 养殖规模
             let scale
-            if(this.data.farmType === 3 && operateRes.data.farmsSize) {
-                scale = operateRes.data.farmsSize.replace(/\.\d+/g,'')
-            }else {
+            if (this.data.farmType === 3 && operateRes.data.farmsSize) {
+                scale = operateRes.data.farmsSize.replace(/\.\d+/g, '')
+            } else {
                 // 猪需要去除小数
                 scale = operateRes.data.farmsSize
             }
@@ -323,6 +330,8 @@ class PageController extends Service {
                     } else {
                         _dom.innerHTML = '万只'
                     }
+                }else if(name === 'maturityYear') {
+                    dom.innerHTML = `${value.name} 年`
                 }
             },
             data: self.profile.pickers[name]
@@ -400,7 +409,7 @@ class PageController extends Service {
                     }
                     // 2. 养殖场性质为租赁时，展示租赁日期
                     if (item === 'livestockType') {
-                        let _dom = document.querySelector('#maturityYear')
+                        let _dom = document.querySelector('#maturityYearBox')
                         if (parseInt(ev.target.getAttribute('data-id')) === 1) {
                             _dom.classList.add('hidden')
                         } else {
@@ -506,7 +515,7 @@ class PageController extends Service {
             workshopCountyCode: pcd.district.code,
             workshopAddr,
             workshopStruct: shedStructure,
-            maturityYear: maturityYear || '2020',
+            maturityYear: maturityYear || String(new Date().getFullYear()),
             envDataFileId: envDataFileId
         }
         $api.setStorage('operateInfo', JSON.stringify(formJSON));
@@ -526,7 +535,7 @@ class PageController extends Service {
     bindDateEvents() {
         const self = this
         const rd = new Rolldate({
-            el: '#maturityYearDateString',
+            el: '#maturityYear',
             format: 'YYYY',
             beginYear: 2020,
             endYear: 2070,
@@ -616,7 +625,7 @@ class PageController extends Service {
 
     validate(formData) {
         const self = this
-        const { farmsCategory } = formData
+        const {farmsCategory} = formData
         let rules = {
             landNature: {
                 type: 'regexp',
@@ -728,6 +737,13 @@ apiready = function () {
     let pageParam = api.pageParam || {};
     api.setStatusBarStyle({
         style: 'dark'
+    });
+    api.addEventListener({
+        name: 'navitembtn'
+    }, function (ret, err) {
+        if (ret.type === 'left') {
+            api.closeWin();
+        }
     });
     window.Page = new PageController({pageParam}).main()
 };

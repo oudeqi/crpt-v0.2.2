@@ -6,7 +6,13 @@ openIDcardUpload, openIDcardInfo } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let facePic = ''
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 

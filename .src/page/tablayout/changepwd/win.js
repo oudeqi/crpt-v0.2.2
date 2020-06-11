@@ -23,7 +23,13 @@ function getUserPhone (fn) {
 }
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let tel = ''
   let form = {} // 表单数据
   let sendStatus = 'notsend' // notsend:未发送,sending:发送中,countdown:倒计时中

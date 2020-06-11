@@ -11,14 +11,14 @@ html, body {
   font-size: 17px;
   color: #333;
   & strong {
-    color: #1dc4a2;
+    color: #66BB6A;
   }
 }
 .link-btns {
   height: 50px;
   font-size: 15px;
   padding: 20px;
-  color: #1dc4a2;
+  color: #66BB6A;
   text-align: center;
 }
 .code-ipt {
@@ -56,8 +56,8 @@ html, body {
     width: 120px;
     height: 100%;
     box-sizing: content-box;
-    background-color: #1dc4a2;
-    border: 1px solid #1dc4a2;
+    background-color: #66BB6A;
+    border: 1px solid #66BB6A;
     display: flex;
     align-items: center;
     justify-content: center;

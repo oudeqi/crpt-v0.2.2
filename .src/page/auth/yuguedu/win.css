@@ -14,7 +14,7 @@ html, body {
   font-size: 16px;
   color: #8d9daa;
   & strong {
-    color: #1dc4a2;
+    color: #66BB6A;
     padding: 0 2px;
   }
 }
@@ -25,7 +25,7 @@ html, body {
   & div {
     font-size: 18px;
     & strong {
-      color: #1dc4a2;
+      color: #66BB6A;
     }
   }
   & p {

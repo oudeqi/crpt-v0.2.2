@@ -9,12 +9,12 @@ html, body {
     padding-bottom: 10px;
   }
   & .txt1 {
-    color: #1dc4a2;
+    color: #66BB6A;
   }
   & .txt2 {
     font-weight: bold;
     font-size: 24px;
-    color: #1dc4a2;
+    color: #66BB6A;
   }
   & .txt3 {
     margin-top: 10px;

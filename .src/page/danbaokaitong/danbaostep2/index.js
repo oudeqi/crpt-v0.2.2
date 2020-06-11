@@ -37,6 +37,7 @@ class PageController extends Service {
             this.data.gtCreditId = data.gtCreditId
             this.data.productId = data.productId
             this.data.demandMoney = data.demandMoney
+            this.data.creditStatus = data.creditStatus
             //   审核中
             if (data.applyStatus === 2) {
                 let submitBtn = document.querySelector('#submit')
@@ -127,7 +128,7 @@ class PageController extends Service {
                     Utils.UI.toast(e.msg)
                 }
                 Utils.UI.hideLoading()
-            }else if(self.data.applyStatus >= 2) {
+            }else if(self.data.applyStatus >= 2 && self.data.creditStatus === 2) {
                 openDanbaoKaitong({step: 3})
             }
         }
@@ -138,7 +139,13 @@ apiready = function () {
     api.setStatusBarStyle({
         style: 'dark'
     })
-
+    api.addEventListener({
+        name: 'navitembtn'
+    }, function (ret, err) {
+        if (ret.type === 'left') {
+            api.closeWin();
+        }
+    });
     let pageParam = api.pageParam || {}
     let {id, type} = pageParam // '9939393'
 

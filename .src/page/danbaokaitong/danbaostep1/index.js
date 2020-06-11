@@ -214,7 +214,7 @@ class PageController extends HeaderController {
     let tpl = node.map(item => {
       return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
     })
-    $api.byId('protocol').innerHTML = tpl.join('、')
+    $api.byId('protocol').innerHTML = tpl.join('')
   }
 
   bindEvent () {
@@ -259,7 +259,13 @@ apiready = function () {
     ctrl.showProtocol()
     ctrl.getProduct()
   })
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){

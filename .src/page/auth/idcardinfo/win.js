@@ -86,7 +86,7 @@ apiready = function() {
     let tpl = nodes.map(item => {
       return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
     })
-    $api.byId('agreement').innerHTML = tpl.join('，')
+    $api.byId('agreement').innerHTML = tpl.join('')
   }
 
   showProtocol()

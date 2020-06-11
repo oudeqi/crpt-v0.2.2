@@ -1,16 +1,19 @@
 /* aui reset */
 .aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
-  background-color: #1dc4a2 !important;
-  border: solid 1px #1dc4a2 !important;
+  background-color: #66BB6A !important;
+  border: solid 1px #66BB6A !important;
 }
 .aui-switch:checked {
-  border-color: #1dc4a2 !important;
-  background-color: #1dc4a2 !important;
+  border-color: #66BB6A !important;
+  background-color: #66BB6A !important;
 }
 /*1cb594 88dbcb 1aa689 5aae9c*/
 /*页面头部*/
+.app_header.white {
+  background-color: #fff;
+}
 .app_header {
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   position: relative;
 }
 .app_header div {
@@ -63,7 +66,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -71,7 +74,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   color: #fff;
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
@@ -83,10 +86,10 @@
     border-radius: 44px;
   }
 .app_btn.active {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
 .app_btn.loading {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
 /*输入框组*/
 .app_ipt_group {
@@ -166,10 +169,10 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2;
+  color: #66BB6A;
 }
 .app_text_btn.active {
-    color: #88dbcb;
+    color: rgba(102, 187, 106, 0.75);
     padding-left: 1px;
     padding-right: 0px;
   }
@@ -189,7 +192,7 @@
   }
 .app_agreement strong {
     display: inline;
-    color: #1dc4a2;
+    color: #66BB6A;
     font-weight: normal;
     padding-left: 0;
     padding-right: 1px;
@@ -203,43 +206,50 @@ html, body {
   height: 100%;
 }
 .container {
-  padding: 20px;
+  /*padding: 0 12px 0 27px;*/
 }
 .tips {
-  font-size: 16px;
-  font-weight: bold;
-  color: #8d9daa;
-  line-height: 1.5;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  /*line-height: 1.5;*/
   text-align: center;
   padding-top: 10px;
+  height: 80px;
+  line-height: 80px;
+  background: #fff;
 }
 .tips strong {
-    color: #1dc4a2;
-    padding: 0 4px;
-    font-size: 1.2em;
-  }
+  color: #66BB6A;
+  padding: 0 4px;
+  /*font-size: 1.2em;*/
+}
+.step {
+  padding: 0 12px 0 27px;
+}
 .auth-block.active {
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   color: #fff;
 }
 .auth-block.active p {
-    color: #fff;
-  }
+  color: #fff;
+}
 .auth-block.active .icon {
-    background-image: url(../../image/auth/arrow-right-fff.png) !important;
-    background-size: contain;
-  }
+  background-image: url(../../image/auth/arrow-right-fff.png) !important;
+  background-size: contain;
+}
 .auth-block.active .badge {
-    background-color: #88dbcb;
-  }
+  background-color: #88dbcb;
+}
 .auth-block {
   margin-top: 30px;
-  background-color: #eaeaea;
-  height: 120px;
-  border-radius: 3px;
+  background-color: #fff;
+  height: 88px;
+  border-radius: 6px;
   position: relative;
-  padding-left: 40px;
-  padding-right: 25px;
+  padding-left: 35px;
+  padding-right: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -252,92 +262,101 @@ html, body {
   color: #8d9daa;
 }
 .auth-block .text {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    margin-right: 15px;
-  }
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  margin-right: 15px;
+}
 .auth-block .text strong {
-      font-size: 16px;
-      font-weight: bold;
-      display: inline-block;
-      vertical-align: middle;
-    }
+  font-size: 18px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #303133;
+  display: inline-block;
+  vertical-align: middle;
+}
 .auth-block .text .icon {
-      display: inline-block;
-      vertical-align: middle;
-      background-image: url(../../image/auth/arrow-right.png);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
-      width: 30px;
-      height: 30px;
-      margin-left: -6px;
-    }
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url(../../image/auth/arrow-right.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin-left: -6px;
+}
 .auth-block .text p {
-      margin-top: 4px;
-      margin-bottom: 0;
-      line-height: 1.5;
-    }
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
 .auth-block .pic {
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background-color: #c2ced2;
-  }
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: #c2ced2;
+}
 .auth-block .idcard {
-    background-image: url(../../image/auth/idcard.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 36px auto;
-  }
+  background-image: url(../../image/auth/idcard.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 36px auto;
+}
 .auth-block .facescan {
-    background-image: url(../../image/auth/facescan.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 30px auto;
-  }
+  background-image: url(../../image/auth/facescan.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
+}
 .auth-block .baseinfo {
-    background-image: url(../../image/auth/baseinfo.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 30px auto;
-  }
+  background-image: url(../../image/auth/baseinfo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
+}
 .auth-block .badge {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
-    text-align: center;
-    border-radius: 3px;
-    background-color: #beced6;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-  }
+  position: absolute;
+  top: 29px;
+  left: -15px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  background: #ffffff;
+  border: 1px solid #c0c4cc;
+  font-size: 20px;
+  font-family: DINAlternate-Bold, DINAlternate;
+  font-weight: bold;
+  color: #909399;
+  border-radius: 50%;
+}
 .auth-block2.active {
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   color: #fff;
 }
 .auth-block2.active .icon {
-    background-image: url(../../image/auth/arrow-right-fff.png) !important;
-    background-size: contain;
-  }
+  background-image: url(../../image/auth/arrow-right-fff.png) !important;
+  background-size: contain;
+}
 .auth-block2.active .badge {
-    background-color: #88dbcb;
-  }
+  background: #ffffff;
+  border: 1px solid #66bb6a;
+  color: #66bb6a;
+}
 .auth-block2 {
   margin-top: 30px;
-  border: 1px solid #1dc4a2;
-  height: 90px;
-  border-radius: 3px;
+  border: 1px solid #66BB6A;
+  height: 88px;
+  border-radius: 6px;
   position: relative;
-  padding-left: 40px;
-  padding-right: 25px;
+  padding-left: 35px;
+  padding-right: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -350,70 +369,61 @@ html, body {
   color: #8d9daa;
 }
 .auth-block2 .text {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-  }
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
 .auth-block2 .badge {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
-    text-align: center;
-    border-radius: 3px;
-    background-color: #1dc4a2;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-  }
+  background: #66bb6a;
+  color: #ffffff;
+  border: 1px solid #66bb6a;
+}
 .auth-block2 .pic {
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-  }
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
 .auth-block2 strong {
-    display: inline-block;
-    vertical-align: middle;
-  }
+  display: inline-block;
+  vertical-align: middle;
+}
 .auth-block2 .icon {
-    display: inline-block;
-    vertical-align: middle;
-    background-image: url(../../image/auth/arrow-right.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 30px;
-    height: 30px;
-    margin-left: -5px;
-  }
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url(../../image/auth/arrow-right.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin-left: -5px;
+}
 .authing .pic {
-    width: 80px;
-    height: 80px;
-    background-image: url(../../image/auth/authing.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 80px auto;
-  }
+  width: 80px;
+  height: 80px;
+  background-image: url(../../image/auth/authing.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80px auto;
+}
 .authpass .pic {
-    width: 50px;
-    height: 50px;
-    background-image: url(../../image/auth/gou.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 30px auto;
-  }
+  width: 50px;
+  height: 50px;
+  background-image: url(../../image/auth/gou.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
+}
 .authpass span {
-    color: #1dc4a2;
-  }
+  color: #66BB6A;
+}
 .autherror .pic {
-    width: 50px;
-    height: 50px;
-    background-image: url(../../image/auth/cha.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 30px auto;
-  }
+  width: 50px;
+  height: 50px;
+  background-image: url(../../image/auth/cha.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
+}
 .smile {
   width: 60px;
   height: 60px;

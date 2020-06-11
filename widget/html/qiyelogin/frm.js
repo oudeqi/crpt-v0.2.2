@@ -16,12 +16,33 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openReg() {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '注册',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true
-  });
+    // softInputDismissMode: ['tap', 'interactive'],
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
+    }
+  }); // api.openWin({
+  //   name: 'html/register/win',
+  //   url: 'widget://html/register/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 } // 注册登录选择
 
 
@@ -41,16 +62,40 @@ function openGerenLogin() {
       _ref$userType = _ref.userType,
       userType = _ref$userType === void 0 ? 1 : _ref$userType;
 
-  // 2企业 1个人，
-  api.openWin({
+  // 2企业 1个人
+  api.openTabLayout({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     pageParam: {
       userType: userType
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
     }
-  });
+  }); // api.openWin({
+  //   name: 'html/gerenlogin/win',
+  //   url: 'widget://html/gerenlogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     userType
+  //   }
+  // })
 } // 企业登录
 
 
@@ -60,16 +105,39 @@ function openSendCode() {
       userType = _ref2.userType;
 
   // 个人登录 1, 企业登录 2
-  api.openWin({
+  api.openTabLayout({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true,
     pageParam: {
       tel: tel,
       userType: userType
+    },
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
     }
-  });
+  }); // api.openWin({
+  //   name: 'html/sendcode/win',
+  //   url: 'widget://html/sendcode/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     tel, userType
+  //   }
+  // })
 } // 找回密码
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -325,7 +393,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -518,25 +591,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -556,7 +629,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };

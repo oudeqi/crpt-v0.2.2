@@ -524,7 +524,13 @@ class PageController extends Service {
 }
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   new NumberLimit($api.byId('spouseIncome')) // 限制配偶年收入输入
   const ctrl = new PageController()
   ctrl.bindEvent()

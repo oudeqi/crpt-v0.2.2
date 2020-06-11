@@ -6,7 +6,13 @@ import { http, setRefreshHeaderInfo } from '../../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageSize = 20
   let pageNo = 1
   let loading = false

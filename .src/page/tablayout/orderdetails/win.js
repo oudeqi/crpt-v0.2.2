@@ -6,7 +6,13 @@ import { http } from '../../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageParam = api.pageParam || {}
   let { id, type } = pageParam // '9939393'
 

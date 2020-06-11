@@ -115,7 +115,7 @@ function openTabLayout (index) {
     tabBar: {
       animated: false,
       scrollEnabled: true,
-      selectedColor: '#1dc4a2',
+      selectedColor: '#66BB6A',
       color: '#bfbfbf',
       index: index || 0,
       // preload: 4,
@@ -179,12 +179,36 @@ function openTabLayout (index) {
 
 // 注册
 function openReg () {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '注册',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
+    }
   })
+  // api.openWin({
+  //   name: 'html/register/win',
+  //   url: 'widget://html/register/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 }
 
 // 注册登录选择
@@ -200,50 +224,150 @@ function openRegLogin () {
 
 // 个人登录
 function openGerenLogin ({ userType = 1 } = {}) {
-  // 2企业 1个人，
-  api.openWin({
+  // 2企业 1个人
+  api.openTabLayout({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     pageParam: {
       userType
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
     }
   })
+  // api.openWin({
+  //   name: 'html/gerenlogin/win',
+  //   url: 'widget://html/gerenlogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     userType
+  //   }
+  // })
 }
 
 // 企业登录
 function openQiyeLogin () {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/qiyelogin/win',
     url: 'widget://html/qiyelogin/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
+    }
   })
+  // api.openWin({
+  //   name: 'html/qiyelogin/win',
+  //   url: 'widget://html/qiyelogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 }
 
 // 电话号码登录
 function openSendCode ({tel, userType} = {}) {
   // 个人登录 1, 企业登录 2
-  api.openWin({
+  api.openTabLayout({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true,
     pageParam: {
       tel, userType
+    },
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
     }
   })
+  // api.openWin({
+  //   name: 'html/sendcode/win',
+  //   url: 'widget://html/sendcode/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     tel, userType
+  //   }
+  // })
 }
 
 // 找回密码
 function openFindPwd () {
-  api.openWin({
-    name: 'html/findpwd/win',
-    url: 'widget://html/findpwd/win.html',
+  api.openTabLayout({
+    // name: 'html/findpwd/win',
+    // url: 'widget://html/findpwd/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
+    }
   })
+  // api.openWin({
+  //   name: 'html/findpwd/win',
+  //   url: 'widget://html/findpwd/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 }
 
 // 填写个人信息
@@ -261,10 +385,17 @@ function openBaseinfoFill () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -284,10 +415,17 @@ function openTodoAuthGeren () {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: 'rgba(102,187,106,1)',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
     }
   })
 }
@@ -305,10 +443,17 @@ function openTodoAuthQiye () {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
+      background: '#fff',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: 'rgba(102,187,106,1)',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -328,10 +473,17 @@ function openCompanyInfo () {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -348,10 +500,17 @@ function openIDcardUpload () {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -369,15 +528,17 @@ function openIDcardInfo (pageParam) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#fff',
-        iconPath: 'widget://image/back.png',
-      }],
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -395,10 +556,17 @@ function openFaceAuth (pageParam = {}) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -415,10 +583,17 @@ function openFaceUpload () {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -435,10 +610,17 @@ function openYuguEdu () {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -458,10 +640,17 @@ function openAuthResult (status, message, title) { // status: success error duri
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -478,10 +667,17 @@ function openMsgCenter () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -498,10 +694,17 @@ function openMsgList (title) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -518,10 +721,17 @@ function openMsgDetails () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -538,10 +748,17 @@ function openBillList () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -574,10 +791,17 @@ function openBillDetails (id, {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -594,10 +818,17 @@ function openMyLoan () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -615,10 +846,17 @@ function openOrderDetails (id) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -640,6 +878,13 @@ function openLoanApplication (id) {
       color: '#fff',
       fontSize: 18,
       fontWeight: 'normal',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -661,6 +906,13 @@ function openLoanConfirm (id) {
       color: '#fff',
       fontSize: 18,
       fontWeight: 'normal',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -677,10 +929,17 @@ function openMyQuota () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -697,10 +956,17 @@ function openMyProduct () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -717,10 +983,17 @@ function openSettings () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -738,10 +1011,17 @@ function openChangePwd () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -758,10 +1038,17 @@ function openContactUs () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -779,10 +1066,17 @@ function openRepayPlan (id) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -800,10 +1094,17 @@ function openRepayRecord (id) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -821,10 +1122,17 @@ function openProductDetails ({id, open} = {}) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -844,10 +1152,17 @@ function openCityList ({ eventName }) {
     navigationBar: {
       height: 44,
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -863,10 +1178,17 @@ function openProductRecommend (pageParam) {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -923,10 +1245,17 @@ function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStat
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#66BB6A',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 16,
       fontWeight: 'normal',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     },
     ...animation
   })
@@ -953,9 +1282,9 @@ function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
       fontSize: 18,
       fontWeight: 'normal',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green.png',
+        iconPath: 'widget://image/back_green_big.png',
       }],
     }
   })
@@ -984,9 +1313,9 @@ function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status}) {
       fontSize: 18,
       fontWeight: 'normal',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green.png',
+        iconPath: 'widget://image/back_green_big.png',
       }],
     }
   })
@@ -1011,9 +1340,9 @@ function openSendAddress ({gtId, gtCreditId}) {
       fontSize: 18,
       fontWeight: 'normal',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green.png',
+        iconPath: 'widget://image/back_green_big.png',
       }],
     }
   })
@@ -1037,6 +1366,13 @@ function openSignOnline (id) {
       color: '#fff',
       fontSize: 18,
       fontWeight: 'normal',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -1058,6 +1394,13 @@ function openAgreement (id, name) {
       color: '#fff',
       fontSize: 18,
       fontWeight: 'normal',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }
@@ -1091,6 +1434,13 @@ function openFangchan ({
       color: '#303133',
       fontSize: 18,
       fontWeight: 500,
+      leftButtons: [
+        {
+          text: '',
+          color: 'rgba(102,187,106,1)',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
     }
   })
 }
@@ -1123,6 +1473,13 @@ function openCheliang ({
       color: '#303133',
       fontSize: 18,
       fontWeight: 500,
+      leftButtons: [
+        {
+          text: '',
+          color: 'rgba(102,187,106,1)',
+          iconPath: 'widget://image/back_green_big.png',
+        }
+      ]
     }
   })
 }
@@ -1138,10 +1495,17 @@ function openProductList (type) { // 1-信用贷款 2-担保贷款
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
+      leftButtons: [
+        {
+          text: '',
+          color: '#fff',
+          iconPath: 'widget://image/back_white_big.png',
+        }
+      ]
     }
   })
 }

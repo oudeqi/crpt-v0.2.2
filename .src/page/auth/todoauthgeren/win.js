@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
@@ -8,7 +8,13 @@ import {
 import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let userinfo = $api.getStorage('userinfo')
   let { userType, access_token } = userinfo || {}
 
@@ -77,7 +83,6 @@ apiready = function() {
           <div class="text">
             <div>
               <strong>实名认证</strong>
-              <span class="icon"></span>
             </div>
             <p>请准备您的二代身份证</p>
           </div>
@@ -91,7 +96,6 @@ apiready = function() {
           <div class="text">
             <strong>实名认证</strong>
           </div>
-          <div class="pic"></div>
           <span>通过</span>
         </div>
       `
@@ -106,7 +110,6 @@ apiready = function() {
           <div class="text">
             <div>
               <strong>人脸认证</strong>
-              <span class="icon"></span>
             </div>
             <p>需要您本人完成人脸认证</p>
           </div>
@@ -149,7 +152,6 @@ apiready = function() {
           <div class="text">
             <div>
               <strong>补充基础信息</strong>
-              <span class="icon"></span>
             </div>
             <p>请填写您个人的基础信息</p>
           </div>

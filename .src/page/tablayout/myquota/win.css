@@ -29,7 +29,7 @@ html, body {
     padding-top: 10px;
   }
   & p:last-child {
-    color: #1dc4a2;
+    color: #66BB6A;
     font-size: 24px;
     font-weight: bold;
   }
@@ -105,7 +105,7 @@ li {
   }
 }
 .row2 {
-  color: #1dc4a2;
+  color: #66BB6A;
   margin-top: 5px;
 }
 .row3 {
@@ -117,7 +117,7 @@ li {
 .contactus {
   padding: 20px;
   text-align: center;
-  color: #1dc4a2;
+  color: #66BB6A;
   & span {
     text-decoration: underline;
   }

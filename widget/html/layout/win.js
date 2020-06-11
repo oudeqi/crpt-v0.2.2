@@ -52,7 +52,7 @@ function openTabLayout(index) {
     tabBar: {
       animated: false,
       scrollEnabled: true,
-      selectedColor: '#1dc4a2',
+      selectedColor: '#66BB6A',
       color: '#bfbfbf',
       index: index || 0,
       // preload: 4,

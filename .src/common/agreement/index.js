@@ -47,7 +47,13 @@ class PageController extends Service {
 }
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const ctrl = new PageController()
   ctrl.getPageData()
 }

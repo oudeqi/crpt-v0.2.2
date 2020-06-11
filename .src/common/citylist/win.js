@@ -1,6 +1,13 @@
 import { CityList } from '../../config.js'
 
 apiready = function () {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let statusBar = $api.byId('statusBar')
   $api.fixStatusBar(statusBar)
   let statusBarPos = $api.offset(statusBar)
