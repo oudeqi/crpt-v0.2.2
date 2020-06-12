@@ -1872,39 +1872,63 @@ apiready = function apiready() {
   document.querySelector('#front').onclick = function () {
     var btns = ['相机', '相册'];
     var sourceType = '';
-    ActionSheet('请选择', btns, function (index) {
-      if (index === 0) {
-        sourceType = 'camera';
-      } else {
-        sourceType = 'album';
-      }
 
-      getPicture(sourceType, function (ret, err) {
-        if (ret) {
+    if (api.systemType === 'ios') {
+      ActionSheet('请选择', btns, function (index) {
+        if (index === 0) {
+          sourceType = 'camera';
+        } else {
+          sourceType = 'album';
+        }
+
+        getPicture(sourceType, function (ret, err) {
+          if (ret) {
+            $api.dom($api.byId('front'), 'img').src = ret.data;
+            front = ret.data;
+          }
+        });
+      });
+    } else {
+      var cardcamera = api.require('cardcamera');
+
+      cardcamera.frontIdCard({}, function (ret, err) {
+        if (ret.status) {
           $api.dom($api.byId('front'), 'img').src = ret.data;
           front = ret.data;
         }
       });
-    });
+    }
   };
 
   document.querySelector('#back').onclick = function () {
     var btns = ['相机', '相册'];
     var sourceType = '';
-    ActionSheet('请选择', btns, function (index) {
-      if (index === 0) {
-        sourceType = 'camera';
-      } else {
-        sourceType = 'album';
-      }
 
-      getPicture(sourceType, function (ret, err) {
-        if (ret) {
+    if (api.systemType === 'ios') {
+      ActionSheet('请选择', btns, function (index) {
+        if (index === 0) {
+          sourceType = 'camera';
+        } else {
+          sourceType = 'album';
+        }
+
+        getPicture(sourceType, function (ret, err) {
+          if (ret) {
+            $api.dom($api.byId('back'), 'img').src = ret.data;
+            back = ret.data;
+          }
+        });
+      });
+    } else {
+      var cardcamera = api.require('cardcamera');
+
+      cardcamera.backIdCard({}, function (ret, err) {
+        if (ret.status) {
           $api.dom($api.byId('back'), 'img').src = ret.data;
           back = ret.data;
         }
       });
-    });
+    }
   }; // let idcard = {
   //   "code":200,
   //   "msg":"",
