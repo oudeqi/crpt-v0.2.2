@@ -3105,8 +3105,9 @@ var PageController = /*#__PURE__*/function (_Service) {
 
     _this.data = {
       gtId: props.pageParam.gtId,
-      flowStatus: props.flowStatus,
-      gtCreditId: props.gtCreditId,
+      flowStatus: props.pageParam.flowStatus,
+      gtCreditId: props.pageParam.gtCreditId,
+      applyStatus: props.pageParam.applyStatus,
       isInsert: false,
       farmType: 1,
       landType: 1,
@@ -3217,35 +3218,31 @@ var PageController = /*#__PURE__*/function (_Service) {
                 callback = _ref.callback;
                 self = this;
                 gtId = this.data.gtId;
-                gtCreditId = this.data.gtCreditId; //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+                gtCreditId = this.data.gtCreditId; // 0. 判断是否只读
 
-                this.initFormStatus(); // try {
-                //     const guaranteeRes = await this.getQueryGuaranteeMain()
-                //     if (guaranteeRes.data) {
-                //         const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
-                //         houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
-                //         carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
-                //         socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
-                //     }
-                // } catch (e) {
-                //     Utils.UI.toast('服务超时')
-                // }
-                //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
+                if (self.data.applyStatus >= 2) {
+                  Array.from(document.querySelectorAll('.fc_c_input')).forEach(function (dom, i) {
+                    dom.setAttribute('disabled', true);
+                  });
+                } //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
 
-                _context2.prev = 5;
-                _context2.next = 8;
+
+                this.initFormStatus(); //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
+
+                _context2.prev = 6;
+                _context2.next = 9;
                 return this.getQueryOperate({
                   gtId: gtId
                 });
 
-              case 8:
+              case 9:
                 operateRes = _context2.sent;
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
-              case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](5);
+              case 12:
+                _context2.prev = 12;
+                _context2.t0 = _context2["catch"](6);
 
                 //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
                 if (_context2.t0.code === 3005) {
@@ -3254,7 +3251,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   Utils$1.UI.toast(_context2.t0.msg);
                 }
 
-              case 14:
+              case 15:
                 try {
                   // 3. 刷主表土地信息和养殖信息填写状态和字段
                   // this.data.isInsert = false
@@ -3392,12 +3389,12 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                 callback && callback();
 
-              case 16:
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[5, 11]]);
+        }, _callee2, this, [[6, 12]]);
       }));
 
       function initData(_x) {
@@ -3441,6 +3438,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var pickerKeys = Object.keys(this.profile.pickers);
       pickerKeys.forEach(function (item, i) {
         document.querySelector("#".concat(item)).onclick = function () {
+          if (self.data.applyStatus >= 2) {
+            return void 0;
+          }
+
           self.initPicker(item, this);
         };
       });
@@ -3453,6 +3454,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var dom = document.querySelector("#shedAddress");
 
       dom.onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0;
+        }
+
         Utils$1.UI.setCityPicker({
           success: function success(selected) {
             var _selected = slicedToArray(selected, 3),
@@ -3493,6 +3498,10 @@ var PageController = /*#__PURE__*/function (_Service) {
         var parant = document.querySelector("#".concat(item));
 
         parant.onclick = function (e) {
+          if (self.data.applyStatus >= 2) {
+            return void 0;
+          }
+
           var list = parant.querySelectorAll(".".concat(defaultClassName));
           var ev = window.event || e;
 
@@ -3539,6 +3548,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var img = document.querySelector('#envReportFile-img');
 
       dom.onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0;
+        }
+
         Utils$1.File.actionSheet('请选择', ['相机', '相册'], function (index) {
           Utils$1.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
             if (res) {
@@ -3668,6 +3681,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var btn = document.querySelector('.cl_c_submit_btn');
 
       btn.onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0;
+        }
+
         self.submitFormData();
       };
     } //  绑定租赁日期选择

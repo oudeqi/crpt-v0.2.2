@@ -34,6 +34,7 @@ class PageController extends Service {
             gtId: props.pageParam.gtId,
             flowStatus: props.pageParam.flowStatus,
             gtCreditId: props.pageParam.gtCreditId,
+            applyStatus: props.pageParam.applyStatus,
             attachmentList: [{
                 attachId: '',
                 // gtId: '',
@@ -71,6 +72,14 @@ class PageController extends Service {
     async initData() {
         const self = this
         Utils.UI.showLoading('加载中')
+
+        // 0. 判断是否只读
+        if(self.data.applyStatus >= 2) {
+            Array.from(document.querySelectorAll('.a-desc')).forEach((dom,i) => {
+                dom.setAttribute('disabled', true)
+            })
+        }
+
         // 1. 先获取附件类型字典
         try {
             const codeRes = await this.getCodeList({
@@ -108,6 +117,9 @@ class PageController extends Service {
         const self = this
         const addBtn = document.querySelector('#add-btn')
         addBtn.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             self.searchAllData()
             self.data.attachmentList.push({
                 attachId: '',
@@ -130,6 +142,9 @@ class PageController extends Service {
     bindImageClickEvents() {
         const self = this
         document.querySelector('#img-bind-doc').onclick = async function (e) {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             let ev = window.event || e;
             if (ev.target.classList.contains('a-img-url') || ev.target.classList.contains('a-img') || ev.target.classList.contains('def')) {
                 let _i = ev.target.getAttribute('data-index')
@@ -166,6 +181,9 @@ class PageController extends Service {
     bindSaveBtnClickEvents() {
         const self = this
         document.querySelector('#save-bind-doc').onclick = async function (e) {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             let ev = window.event || e;
             if (ev.target.classList.contains('update')) {
                 let _i = ev.target.getAttribute('data-index')
@@ -232,6 +250,9 @@ class PageController extends Service {
     bindDelEvents() {
         const self = this
         document.querySelector('#credit-list').onclick = async function (e) {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             let ev = window.event || e;
             if (ev.target.classList.contains('del')) {
                 //  删除前需将model-tree检出，防止数据直接被抹除
@@ -298,6 +319,9 @@ class PageController extends Service {
     bindClearPreviewEvents() {
         const self = this
         document.querySelector('#pv-img-del').onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Object.assign(self.data.attachmentList[self.data.currentPreviewIndex], {
                 fileId: '',
                 fileDataStream: ''
@@ -312,6 +336,9 @@ class PageController extends Service {
     bindSubmitEvents() {
         const self = this
         document.querySelector('#save-btn').onclick = async function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Utils.UI.showLoading('提交中')
             try {
                 const res = await self.submitInfo({

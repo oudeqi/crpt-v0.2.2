@@ -64,8 +64,9 @@ class PageController extends Service {
         //  统一管理数据model data
         this.data = {
             gtId: props.pageParam.gtId,
-            flowStatus: props.flowStatus,
-            gtCreditId: props.gtCreditId,
+            flowStatus: props.pageParam.flowStatus,
+            gtCreditId: props.pageParam.gtCreditId,
+            applyStatus: props.pageParam.applyStatus,
             isInsert: false,
             farmType: 1,
             landType: 1,
@@ -138,19 +139,14 @@ class PageController extends Service {
         const gtId = this.data.gtId
         const gtCreditId = this.data.gtCreditId
 
+        // 0. 判断是否只读
+        if(self.data.applyStatus >= 2) {
+            Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom,i) => {
+                dom.setAttribute('disabled', true)
+            })
+        }
         //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
         this.initFormStatus()
-        // try {
-        //     const guaranteeRes = await this.getQueryGuaranteeMain()
-        //     if (guaranteeRes.data) {
-        //         const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
-        //         houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
-        //         carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
-        //         socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
-        //     }
-        // } catch (e) {
-        //     Utils.UI.toast('服务超时')
-        // }
         //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
         let operateRes
         // // 有缓存，则读取缓存并销毁
@@ -344,6 +340,9 @@ class PageController extends Service {
         const pickerKeys = Object.keys(this.profile.pickers)
         pickerKeys.forEach((item, i) => {
             document.querySelector(`#${item}`).onclick = function () {
+                if(self.data.applyStatus >= 2) {
+                    return void 0
+                }
                 self.initPicker(item, this)
             }
         })
@@ -354,6 +353,9 @@ class PageController extends Service {
         const self = this
         const dom = document.querySelector(`#shedAddress`)
         dom.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Utils.UI.setCityPicker({
                 success: selected => {
                     let [province, city, district] = selected
@@ -388,6 +390,9 @@ class PageController extends Service {
             //  由组件级代理
             let parant = document.querySelector(`#${item}`)
             parant.onclick = function (e) {
+                if(self.data.applyStatus >= 2) {
+                    return void 0
+                }
                 let list = parant.querySelectorAll(`.${defaultClassName}`)
                 let ev = window.event || e;
                 if (ev.target.nodeName === 'SPAN') {
@@ -428,6 +433,9 @@ class PageController extends Service {
         const box = document.querySelector('#envReportFile-img-box')
         const img = document.querySelector('#envReportFile-img')
         dom.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
                 Utils.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
                     if (res) {
@@ -527,6 +535,9 @@ class PageController extends Service {
         const self = this
         const btn = document.querySelector('.cl_c_submit_btn')
         btn.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             self.submitFormData()
         }
     }

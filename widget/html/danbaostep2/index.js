@@ -3434,7 +3434,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                 pageParam: {
                   gtId: self.data.gtId,
                   flowStatus: self.data.flowStatus,
-                  gtCreditId: self.data.gtCreditId
+                  gtCreditId: self.data.gtCreditId,
+                  applyStatus: self.data.applyStatus
                 }
               });
             }
