@@ -5,7 +5,13 @@ import { openProductDetails, openContactUs } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageSize = 20
   let pageNo = 1
   let loading = false

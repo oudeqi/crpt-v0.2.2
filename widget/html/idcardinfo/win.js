@@ -43,10 +43,15 @@ function openAuthResult(status, message, title) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 消息中心
@@ -70,7 +75,12 @@ function openAgreement(id, name) {
       background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 房产信息
@@ -328,7 +338,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -521,25 +536,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -559,7 +574,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };
@@ -2004,7 +2019,7 @@ apiready = function apiready() {
     var tpl = nodes.map(function (item) {
       return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
     });
-    $api.byId('agreement').innerHTML = tpl.join('，');
+    $api.byId('agreement').innerHTML = tpl.join('');
   }
 
   showProtocol();

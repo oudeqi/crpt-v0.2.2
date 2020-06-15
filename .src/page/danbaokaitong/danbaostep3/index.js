@@ -79,7 +79,13 @@ class PageController extends HeaderController {
 }
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const ctrl = new PageController()
   ctrl.bindEvent()
   ctrl.getPageData()

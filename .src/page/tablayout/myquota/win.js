@@ -6,10 +6,16 @@ import { http } from '../../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const myChart = echarts.init(document.getElementById('chart'))
   myChart.setOption({
-    color:['#1dc4a2', '#dddddd'],
+    color:['#66BB6A', '#dddddd'],
     series: [
       {
         // name: '访问来源',
@@ -53,7 +59,7 @@ apiready = function () {
       let t = numeral(data.limitAmount).subtract(data.loanAmount).value()
       let y = data.loanAmount
       myChart.setOption({
-        color:['#1dc4a2', '#dddddd'],
+        color:['#66BB6A', '#dddddd'],
         series: [
           {
             // name: '访问来源',

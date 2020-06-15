@@ -153,7 +153,13 @@ class PageController extends Service {
 }
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const controller = new PageController()
   controller.bindEvend()
   api.refreshHeaderLoading()

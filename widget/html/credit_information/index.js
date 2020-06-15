@@ -909,7 +909,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -1084,25 +1089,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -1122,7 +1127,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };

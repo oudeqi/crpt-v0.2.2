@@ -6,7 +6,13 @@ openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageParam = api.pageParam || {}
   let { userType } = pageParam
 

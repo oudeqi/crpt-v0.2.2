@@ -1,6 +1,13 @@
 import '../../../app.css'
 
 apiready = function() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageParam = api.pageParam || {}
   let { userType } = pageParam
   if (userType === 1) {

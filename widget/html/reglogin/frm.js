@@ -25,12 +25,33 @@ function _createClass(Constructor, protoProps, staticProps) {
 var createClass = _createClass;
 
 function openReg() {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '注册',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true
-  });
+    // softInputDismissMode: ['tap', 'interactive'],
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
+    }
+  }); // api.openWin({
+  //   name: 'html/register/win',
+  //   url: 'widget://html/register/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 } // 注册登录选择
 
 
@@ -39,26 +60,71 @@ function openGerenLogin() {
       _ref$userType = _ref.userType,
       userType = _ref$userType === void 0 ? 1 : _ref$userType;
 
-  // 2企业 1个人，
-  api.openWin({
+  // 2企业 1个人
+  api.openTabLayout({
     name: 'html/gerenlogin/win',
     url: 'widget://html/gerenlogin/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
+    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     pageParam: {
       userType: userType
+    },
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
     }
-  });
+  }); // api.openWin({
+  //   name: 'html/gerenlogin/win',
+  //   url: 'widget://html/gerenlogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     userType
+  //   }
+  // })
 } // 企业登录
 
 
 function openQiyeLogin() {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/qiyelogin/win',
     url: 'widget://html/qiyelogin/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true
-  });
+    // softInputDismissMode: ['tap', 'interactive'],
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
+    }
+  }); // api.openWin({
+  //   name: 'html/qiyelogin/win',
+  //   url: 'widget://html/qiyelogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 } // 电话号码登录
 
 var PageController = /*#__PURE__*/function () {

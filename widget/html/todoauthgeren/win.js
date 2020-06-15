@@ -40,10 +40,15 @@ function openBaseinfoFill() {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 打开待认证
@@ -60,10 +65,15 @@ function openIDcardUpload() {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 确认身份证信息
@@ -82,10 +92,15 @@ function openFaceAuth() {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 手持身份证上传
@@ -102,10 +117,15 @@ function openYuguEdu() {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 认证结果
@@ -363,7 +383,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -556,25 +581,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -594,7 +619,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };
@@ -1905,6 +1930,13 @@ function setRefreshHeaderInfo(successCallback, errorCallback) {
 }
 
 apiready = function apiready() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var userinfo = $api.getStorage('userinfo');
 
   var _ref = userinfo || {},
@@ -1986,15 +2018,15 @@ apiready = function apiready() {
 
   function renderStep1(status) {
     if (status === 0) {
-      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u8BF7\u51C6\u5907\u60A8\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n          </div>\n          <div class=\"pic idcard\"></div>\n        </div>\n      ";
+      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n            </div>\n            <p>\u8BF7\u51C6\u5907\u60A8\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n          </div>\n          <div class=\"pic idcard\"></div>\n        </div>\n      ";
     } else {
-      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block2 authpass\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u901A\u8FC7</span>\n        </div>\n      ";
+      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block2 authpass\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          </div>\n          <span>\u901A\u8FC7</span>\n        </div>\n      ";
     }
   }
 
   function renderStep2(status) {
     if (status === 0) {
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u9700\u8981\u60A8\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n        </div>\n      ";
+      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            </div>\n            <p>\u9700\u8981\u60A8\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n        </div>\n      ";
     } else {
       // autherror
       var type = 'authpass';
@@ -2013,7 +2045,7 @@ apiready = function apiready() {
 
   function renderStep3(status) {
     if (status === 0) {
-      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n              <span class=\"icon\"></span>\n            </div>\n            <p>\u8BF7\u586B\u5199\u60A8\u4E2A\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n          </div>\n          <div class=\"pic baseinfo\"></div>\n        </div>\n      ";
+      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n            </div>\n            <p>\u8BF7\u586B\u5199\u60A8\u4E2A\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n          </div>\n          <div class=\"pic baseinfo\"></div>\n        </div>\n      ";
     } else {
       $api.byId('step3').innerHTML = "\n        <div class=\"auth-block2 authpass\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u6210\u529F</span>\n        </div>\n      ";
     }

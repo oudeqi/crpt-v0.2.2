@@ -38,14 +38,14 @@ function openIDcardInfo(pageParam) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: '#1dc4a2',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: '#fff',
-        iconPath: 'widget://image/back.png'
+        iconPath: 'widget://image/back_white_big.png'
       }]
     }
   });
@@ -304,7 +304,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -497,25 +502,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -535,7 +540,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };
@@ -1841,6 +1846,13 @@ function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 apiready = function apiready() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var userinfo = $api.getStorage('userinfo');
   var name = userinfo.name,
       userType = userinfo.userType;
@@ -1860,39 +1872,63 @@ apiready = function apiready() {
   document.querySelector('#front').onclick = function () {
     var btns = ['相机', '相册'];
     var sourceType = '';
-    ActionSheet('请选择', btns, function (index) {
-      if (index === 0) {
-        sourceType = 'camera';
-      } else {
-        sourceType = 'album';
-      }
 
-      getPicture(sourceType, function (ret, err) {
-        if (ret) {
+    if (api.systemType === 'ios') {
+      ActionSheet('请选择', btns, function (index) {
+        if (index === 0) {
+          sourceType = 'camera';
+        } else {
+          sourceType = 'album';
+        }
+
+        getPicture(sourceType, function (ret, err) {
+          if (ret) {
+            $api.dom($api.byId('front'), 'img').src = ret.data;
+            front = ret.data;
+          }
+        });
+      });
+    } else {
+      var cardcamera = api.require('cardcamera');
+
+      cardcamera.frontIdCard({}, function (ret, err) {
+        if (ret.status) {
           $api.dom($api.byId('front'), 'img').src = ret.data;
           front = ret.data;
         }
       });
-    });
+    }
   };
 
   document.querySelector('#back').onclick = function () {
     var btns = ['相机', '相册'];
     var sourceType = '';
-    ActionSheet('请选择', btns, function (index) {
-      if (index === 0) {
-        sourceType = 'camera';
-      } else {
-        sourceType = 'album';
-      }
 
-      getPicture(sourceType, function (ret, err) {
-        if (ret) {
+    if (api.systemType === 'ios') {
+      ActionSheet('请选择', btns, function (index) {
+        if (index === 0) {
+          sourceType = 'camera';
+        } else {
+          sourceType = 'album';
+        }
+
+        getPicture(sourceType, function (ret, err) {
+          if (ret) {
+            $api.dom($api.byId('back'), 'img').src = ret.data;
+            back = ret.data;
+          }
+        });
+      });
+    } else {
+      var cardcamera = api.require('cardcamera');
+
+      cardcamera.backIdCard({}, function (ret, err) {
+        if (ret.status) {
           $api.dom($api.byId('back'), 'img').src = ret.data;
           back = ret.data;
         }
       });
-    });
+    }
   }; // let idcard = {
   //   "code":200,
   //   "msg":"",

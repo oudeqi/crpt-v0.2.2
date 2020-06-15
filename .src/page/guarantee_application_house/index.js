@@ -297,5 +297,12 @@ apiready = function () {
     api.setStatusBarStyle({
         style: 'dark'
     });
+    api.addEventListener({
+        name: 'navitembtn'
+    }, function (ret, err) {
+        if (ret.type === 'left') {
+            api.closeWin();
+        }
+    });
     new PageController({pageParam}).main()
 };

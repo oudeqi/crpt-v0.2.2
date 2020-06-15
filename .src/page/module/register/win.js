@@ -1,6 +1,13 @@
 import '../../../app.css'
 
 apiready = function() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   api.parseTapmode()
   let header = $api.byId('header')
   $api.fixStatusBar(header)

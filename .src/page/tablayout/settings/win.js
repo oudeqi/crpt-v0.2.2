@@ -5,7 +5,13 @@ import { openMsgList, openRegLogin, openChangePwd } from '../../../webview.js'
 import { http } from '../../../config.js'
 
 apiready = function () {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let userinfo = $api.getStorage('userinfo')
   let { name, userType, access_token } = userinfo
 

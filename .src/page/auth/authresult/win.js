@@ -5,7 +5,13 @@ import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo, openTabLayout } from '../../../webview.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageParam = api.pageParam || {}
   let { status, title, message } = pageParam // status: success error during
 

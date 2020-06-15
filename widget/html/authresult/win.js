@@ -1,4 +1,11 @@
 apiready = function apiready() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var pageParam = api.pageParam || {};
   var status = pageParam.status,
       title = pageParam.title,

@@ -6,6 +6,13 @@ import moment from 'moment'
 import numeral from 'numeral'
 
 apiready = function () {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let pageParam = api.pageParam || {}
   let {
     id, // '1103'

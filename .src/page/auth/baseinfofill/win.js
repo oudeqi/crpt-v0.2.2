@@ -60,13 +60,16 @@ class PageController extends Service {
   }
   // 判断客户类型
   renderUserType () {
-    if (this.state.userType === '1') {
-      this.el.userType1.innerHTML = '个人'
-      this.el.userType2.innerHTML = '个人'
-    } else {
-      this.el.userType1.innerHTML = '法定代表人'
-      this.el.userType2.innerHTML = '法定代表人'
-    }
+    let label = '您'
+    this.el.userType1.innerHTML = label
+    this.el.userType2.innerHTML = label
+    // if (this.state.userType === '1') {
+    //   this.el.userType1.innerHTML = '个人'
+    //   this.el.userType2.innerHTML = '个人'
+    // } else {
+    //   this.el.userType1.innerHTML = '法定代表人'
+    //   this.el.userType2.innerHTML = '法定代表人'
+    // }
   }
   // 初始化表单
   initForm () {
@@ -297,6 +300,13 @@ class PageController extends Service {
 }
 
 apiready = function () {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   const controller = new PageController()
   controller.renderUserType()
   controller.initComputedState()

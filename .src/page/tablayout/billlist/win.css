@@ -18,7 +18,7 @@ li {
   height: 40px;
   padding-bottom: 8px;
   & .tit {
-    color: #1dc4a2;
+    color: #66BB6A;
     font-weight: normal;
     flex-shrink: 0;
     margin-right: 10px;
@@ -31,7 +31,7 @@ li {
     border-radius: 4px;
   }
   & .normal {
-    background-color: #1dc4a2;
+    background-color: #66BB6A;
   }
   & .warning {
     background-color: orange;

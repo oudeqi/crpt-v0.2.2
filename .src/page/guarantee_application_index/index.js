@@ -30,7 +30,14 @@ class PageController extends Service {
                     {"name": "鸡", "id": 1},
                     {"name": "鸭", "id": 2},
                     {"name": "猪", "id": 3}
-                ]
+                ],
+                maturityYear: Array.from({length: 50}, (v, k) => {
+                    const year = String(k + new Date().getFullYear())
+                    return {
+                        name: year,
+                        id: year
+                    }
+                })
             },
             //  select类组件json
             selects: {
@@ -57,8 +64,9 @@ class PageController extends Service {
         //  统一管理数据model data
         this.data = {
             gtId: props.pageParam.gtId,
-            flowStatus: props.flowStatus,
-            gtCreditId: props.gtCreditId,
+            flowStatus: props.pageParam.flowStatus,
+            gtCreditId: props.pageParam.gtCreditId,
+            applyStatus: props.pageParam.applyStatus,
             isInsert: false,
             farmType: 1,
             landType: 1,
@@ -104,7 +112,7 @@ class PageController extends Service {
         //  提交表单
         this.bindSubmitEvents()
 
-        this.bindDateEvents()
+        // this.bindDateEvents()
     }
 
     async initFormStatus() {
@@ -131,19 +139,14 @@ class PageController extends Service {
         const gtId = this.data.gtId
         const gtCreditId = this.data.gtCreditId
 
+        // 0. 判断是否只读
+        if(self.data.applyStatus >= 2) {
+            Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom,i) => {
+                dom.setAttribute('disabled', true)
+            })
+        }
         //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
         this.initFormStatus()
-        // try {
-        //     const guaranteeRes = await this.getQueryGuaranteeMain()
-        //     if (guaranteeRes.data) {
-        //         const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
-        //         houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
-        //         carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
-        //         socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
-        //     }
-        // } catch (e) {
-        //     Utils.UI.toast('服务超时')
-        // }
         //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
         let operateRes
         // // 有缓存，则读取缓存并销毁
@@ -226,10 +229,10 @@ class PageController extends Service {
             //  租赁到期时间
             if (operateRes.data.maturityYear) {
                 self.data.maturityYear = operateRes.data.maturityYear
-                const dom = document.querySelector('#maturityYear')
+                const dom = document.querySelector('#maturityYearBox')
                 if (operateRes.data.farmsNature === 2) {
                     dom.classList.remove('hidden')
-                    document.querySelector('#maturityYearDateString').innerHTML = operateRes.data.maturityYear
+                    document.querySelector('#maturityYear').innerHTML = `${operateRes.data.maturityYear} 年`
                 }
             }
 
@@ -242,9 +245,9 @@ class PageController extends Service {
 
             // key: 养殖规模
             let scale
-            if(this.data.farmType === 3 && operateRes.data.farmsSize) {
-                scale = operateRes.data.farmsSize.replace(/\.\d+/g,'')
-            }else {
+            if (this.data.farmType === 3 && operateRes.data.farmsSize) {
+                scale = operateRes.data.farmsSize.replace(/\.\d+/g, '')
+            } else {
                 // 猪需要去除小数
                 scale = operateRes.data.farmsSize
             }
@@ -323,6 +326,8 @@ class PageController extends Service {
                     } else {
                         _dom.innerHTML = '万只'
                     }
+                }else if(name === 'maturityYear') {
+                    dom.innerHTML = `${value.name} 年`
                 }
             },
             data: self.profile.pickers[name]
@@ -335,6 +340,9 @@ class PageController extends Service {
         const pickerKeys = Object.keys(this.profile.pickers)
         pickerKeys.forEach((item, i) => {
             document.querySelector(`#${item}`).onclick = function () {
+                if(self.data.applyStatus >= 2) {
+                    return void 0
+                }
                 self.initPicker(item, this)
             }
         })
@@ -345,6 +353,9 @@ class PageController extends Service {
         const self = this
         const dom = document.querySelector(`#shedAddress`)
         dom.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Utils.UI.setCityPicker({
                 success: selected => {
                     let [province, city, district] = selected
@@ -379,6 +390,9 @@ class PageController extends Service {
             //  由组件级代理
             let parant = document.querySelector(`#${item}`)
             parant.onclick = function (e) {
+                if(self.data.applyStatus >= 2) {
+                    return void 0
+                }
                 let list = parant.querySelectorAll(`.${defaultClassName}`)
                 let ev = window.event || e;
                 if (ev.target.nodeName === 'SPAN') {
@@ -400,7 +414,7 @@ class PageController extends Service {
                     }
                     // 2. 养殖场性质为租赁时，展示租赁日期
                     if (item === 'livestockType') {
-                        let _dom = document.querySelector('#maturityYear')
+                        let _dom = document.querySelector('#maturityYearBox')
                         if (parseInt(ev.target.getAttribute('data-id')) === 1) {
                             _dom.classList.add('hidden')
                         } else {
@@ -419,6 +433,9 @@ class PageController extends Service {
         const box = document.querySelector('#envReportFile-img-box')
         const img = document.querySelector('#envReportFile-img')
         dom.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
                 Utils.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
                     if (res) {
@@ -506,7 +523,7 @@ class PageController extends Service {
             workshopCountyCode: pcd.district.code,
             workshopAddr,
             workshopStruct: shedStructure,
-            maturityYear: maturityYear || '2020',
+            maturityYear: maturityYear || String(new Date().getFullYear()),
             envDataFileId: envDataFileId
         }
         $api.setStorage('operateInfo', JSON.stringify(formJSON));
@@ -518,6 +535,9 @@ class PageController extends Service {
         const self = this
         const btn = document.querySelector('.cl_c_submit_btn')
         btn.onclick = function () {
+            if(self.data.applyStatus >= 2) {
+                return void 0
+            }
             self.submitFormData()
         }
     }
@@ -526,7 +546,7 @@ class PageController extends Service {
     bindDateEvents() {
         const self = this
         const rd = new Rolldate({
-            el: '#maturityYearDateString',
+            el: '#maturityYear',
             format: 'YYYY',
             beginYear: 2020,
             endYear: 2070,
@@ -616,7 +636,7 @@ class PageController extends Service {
 
     validate(formData) {
         const self = this
-        const { farmsCategory } = formData
+        const {farmsCategory} = formData
         let rules = {
             landNature: {
                 type: 'regexp',
@@ -728,6 +748,13 @@ apiready = function () {
     let pageParam = api.pageParam || {};
     api.setStatusBarStyle({
         style: 'dark'
+    });
+    api.addEventListener({
+        name: 'navitembtn'
+    }, function (ret, err) {
+        if (ret.type === 'left') {
+            api.closeWin();
+        }
     });
     window.Page = new PageController({pageParam}).main()
 };

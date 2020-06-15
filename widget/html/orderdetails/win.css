@@ -1,16 +1,19 @@
 /* aui reset */
 .aui-radio:checked, .aui-radio.aui-checked, .aui-checkbox:checked, .aui-checkbox.aui-checked {
-  background-color: #1dc4a2 !important;
-  border: solid 1px #1dc4a2 !important;
+  background-color: #66BB6A !important;
+  border: solid 1px #66BB6A !important;
 }
 .aui-switch:checked {
-  border-color: #1dc4a2 !important;
-  background-color: #1dc4a2 !important;
+  border-color: #66BB6A !important;
+  background-color: #66BB6A !important;
 }
 /*1cb594 88dbcb 1aa689 5aae9c*/
 /*页面头部*/
+.app_header.white {
+  background-color: #fff;
+}
 .app_header {
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   position: relative;
 }
 .app_header div {
@@ -63,7 +66,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -71,7 +74,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   color: #fff;
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
@@ -83,10 +86,10 @@
     border-radius: 44px;
   }
 .app_btn.active {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
 .app_btn.loading {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
 /*输入框组*/
 .app_ipt_group {
@@ -166,10 +169,10 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2;
+  color: #66BB6A;
 }
 .app_text_btn.active {
-    color: #88dbcb;
+    color: rgba(102, 187, 106, 0.75);
     padding-left: 1px;
     padding-right: 0px;
   }
@@ -189,7 +192,7 @@
   }
 .app_agreement strong {
     display: inline;
-    color: #1dc4a2;
+    color: #66BB6A;
     font-weight: normal;
     padding-left: 0;
     padding-right: 1px;
@@ -236,7 +239,7 @@ html, body {
     font-size: 22px;
   }
 .btn {
-  color: #1dc4a2;
+  color: #66BB6A;
 }
 .txt1 {
   color: #999;

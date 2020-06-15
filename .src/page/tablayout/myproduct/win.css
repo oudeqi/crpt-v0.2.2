@@ -16,7 +16,7 @@ li {
   & strong {
     flex-grow: 1;
     font-weight: normal;
-    color: #1dc4a2;
+    color: #66BB6A;
   }
   & span {
     flex-shrink: 0;
@@ -30,7 +30,7 @@ li {
 .contactus {
   padding: 30px;
   text-align: center;
-  color: #1dc4a2;
+  color: #66BB6A;
   & span {
     text-decoration: underline;
   }

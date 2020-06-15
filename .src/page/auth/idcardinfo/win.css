@@ -18,7 +18,7 @@ html, body {
   & h2 {
     font-size: 16px;
     font-weight: bold;
-    color: #1dc4a2;
+    color: #66BB6A;
     margin: 0;
   }
   & div {
@@ -70,8 +70,8 @@ html, body {
 .btn-box {
   text-align: center;
   & .icon-btn {
-    color: #1dc4a2;
-    border: 1px solid #1dc4a2;
+    color: #66BB6A;
+    border: 1px solid #66BB6A;
     height: 36px;
     border-radius: 36px;
     display: inline-flex;

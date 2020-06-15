@@ -69,7 +69,7 @@ function openTabLayout(index) {
     tabBar: {
       animated: false,
       scrollEnabled: true,
-      selectedColor: '#1dc4a2',
+      selectedColor: '#66BB6A',
       color: '#bfbfbf',
       index: index || 0,
       // preload: 4,
@@ -130,12 +130,33 @@ function openTabLayout(index) {
 
 
 function openReg() {
-  api.openWin({
+  api.openTabLayout({
     name: 'html/register/win',
     url: 'widget://html/register/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '注册',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true
-  });
+    // softInputDismissMode: ['tap', 'interactive'],
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
+    }
+  }); // api.openWin({
+  //   name: 'html/register/win',
+  //   url: 'widget://html/register/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 } // 注册登录选择
 
 
@@ -156,26 +177,69 @@ function openSendCode() {
       userType = _ref2.userType;
 
   // 个人登录 1, 企业登录 2
-  api.openWin({
+  api.openTabLayout({
     name: 'html/sendcode/win',
     url: 'widget://html/sendcode/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true,
     pageParam: {
       tel: tel,
       userType: userType
+    },
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
     }
-  });
+  }); // api.openWin({
+  //   name: 'html/sendcode/win',
+  //   url: 'widget://html/sendcode/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     tel, userType
+  //   }
+  // })
 } // 找回密码
 
 
 function openFindPwd() {
-  api.openWin({
-    name: 'html/findpwd/win',
-    url: 'widget://html/findpwd/win.html',
+  api.openTabLayout({
+    // name: 'html/findpwd/win',
+    // url: 'widget://html/findpwd/win.html',
+    // name: 'html/baseinfofill/win',
+    title: '',
+    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    reload: true
-  });
+    reload: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: '#fff',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
+    }
+  }); // api.openWin({
+  //   name: 'html/findpwd/win',
+  //   url: 'widget://html/findpwd/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  // })
 } // 填写个人信息
 
 
@@ -193,10 +257,15 @@ function openTodoAuthGeren() {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_green_big.png'
+      }]
     }
   });
 }
@@ -215,10 +284,15 @@ function openTodoAuthQiye() {
     },
     navigationBar: {
       hideBackButton: true,
-      background: '#1dc4a2',
+      background: '#fff',
       color: '#fff',
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: 'rgba(102,187,106,1)',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   });
 } // 企业信息确认
@@ -476,7 +550,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -669,25 +748,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -707,7 +786,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };

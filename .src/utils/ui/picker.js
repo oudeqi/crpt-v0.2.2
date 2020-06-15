@@ -23,25 +23,25 @@ const openPicker = function(params, options) {
             w: 90,
             h: 35,
             bg: '#fff',
-            bgActive: '#ccc',
+            // bgActive: '#ccc',
             color: '#888',
-            colorActive: '#fff'
+            colorActive: '#ccc'
         },
         ok: {
             text: '确定',
             size: 15,
             w: 90,
             h: 35,
-            bg: 'rgba(102,187,106,1)',
-            bgActive: '#ccc',
-            color: '#fff',
-            colorActive: '#fff'
+            bg: '#fff',
+            // bgActive: '#ccc',
+            color: 'rgba(102,187,106,1)',
+            colorActive: '#ccc'
         },
         title: {
             text: '请选择',
             size: 15,
             h: 50,
-            bg: '#eee',
+            bg: '#fff',
             color: '#888'
         },
         fixedOn: api.frameName
@@ -58,7 +58,7 @@ const openPicker = function(params, options) {
  * @params params: { data, success }
  */
 export const setPicker = function(params) {
-    return openPicker(params, {row: 4, col: 1})
+    return openPicker(params, {row: 5, col: 1})
 }
 
 /**

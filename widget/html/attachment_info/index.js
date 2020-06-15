@@ -926,7 +926,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -1101,25 +1106,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -1139,7 +1144,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };
@@ -2010,6 +2015,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtId: props.pageParam.gtId,
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
+      applyStatus: props.pageParam.applyStatus,
       attachmentList: [{
         attachId: '',
         // gtId: '',
@@ -2056,34 +2062,41 @@ var PageController = /*#__PURE__*/function (_Service) {
             switch (_context.prev = _context.next) {
               case 0:
                 self = this;
-                Utils$1.UI.showLoading('加载中'); // 1. 先获取附件类型字典
+                Utils$1.UI.showLoading('加载中'); // 0. 判断是否只读
 
-                _context.prev = 2;
-                _context.next = 5;
+                if (self.data.applyStatus >= 2) {
+                  Array.from(document.querySelectorAll('.a-desc')).forEach(function (dom, i) {
+                    dom.setAttribute('disabled', true);
+                  });
+                } // 1. 先获取附件类型字典
+
+
+                _context.prev = 3;
+                _context.next = 6;
                 return this.getCodeList({
                   type: "fileContentType",
                   valid: 1
                 });
 
-              case 5:
+              case 6:
                 codeRes = _context.sent;
                 self.profile.fileContentType = Utils$1.DictFilter(codeRes.data);
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](2);
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](3);
                 console.log(_context.t0);
 
-              case 12:
-                _context.prev = 12;
-                _context.next = 15;
+              case 13:
+                _context.prev = 13;
+                _context.next = 16;
                 return this.getAttachment({
                   gtId: this.data.gtId
                 });
 
-              case 15:
+              case 16:
                 res = _context.sent;
                 // this.data.attachmentList = res.data.length > 0 ? res.data : [{
                 //     attachId: '',
@@ -2095,24 +2108,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                 //     approvalStatus: '',
                 // }]
                 this.data.attachmentList = res.data.length > 0 ? res.data : [];
-                _context.next = 22;
+                _context.next = 23;
                 break;
 
-              case 19:
-                _context.prev = 19;
-                _context.t1 = _context["catch"](12);
+              case 20:
+                _context.prev = 20;
+                _context.t1 = _context["catch"](13);
                 Utils$1.UI.toast('服务超时');
 
-              case 22:
+              case 23:
                 this.compilerTemplate(this.data.attachmentList);
                 Utils$1.UI.hideLoading();
 
-              case 24:
+              case 25:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 9], [12, 19]]);
+        }, _callee, this, [[3, 10], [13, 20]]);
       }));
 
       function initData() {
@@ -2129,6 +2142,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var addBtn = document.querySelector('#add-btn');
 
       addBtn.onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0;
+        }
+
         self.searchAllData();
         self.data.attachmentList.push({
           attachId: '',
@@ -2160,6 +2177,14 @@ var PageController = /*#__PURE__*/function (_Service) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
+                  if (!(self.data.applyStatus >= 2)) {
+                    _context2.next = 2;
+                    break;
+                  }
+
+                  return _context2.abrupt("return", void 0);
+
+                case 2:
                   ev = window.event || e;
 
                   if (ev.target.classList.contains('a-img-url') || ev.target.classList.contains('a-img') || ev.target.classList.contains('def')) {
@@ -2191,7 +2216,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     }
                   }
 
-                case 2:
+                case 4:
                 case "end":
                   return _context2.stop();
               }
@@ -2218,10 +2243,18 @@ var PageController = /*#__PURE__*/function (_Service) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
+                  if (!(self.data.applyStatus >= 2)) {
+                    _context3.next = 2;
+                    break;
+                  }
+
+                  return _context3.abrupt("return", void 0);
+
+                case 2:
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('update')) {
-                    _context3.next = 29;
+                    _context3.next = 31;
                     break;
                   }
 
@@ -2230,32 +2263,32 @@ var PageController = /*#__PURE__*/function (_Service) {
                   self.searchAllData(); // 校验
 
                   if (!(!self.data.attachmentList[_i].attachId && !self.data.attachmentList[_i].fileDataStream)) {
-                    _context3.next = 7;
+                    _context3.next = 9;
                     break;
                   }
 
                   Utils$1.UI.toast('请上传图片');
                   return _context3.abrupt("return");
 
-                case 7:
+                case 9:
                   if (self.data.attachmentList[_i].fileComment) {
-                    _context3.next = 10;
+                    _context3.next = 12;
                     break;
                   }
 
                   Utils$1.UI.toast('请填写附件描述');
                   return _context3.abrupt("return");
 
-                case 10:
+                case 12:
                   Utils$1.UI.showLoading('提交中...');
-                  _context3.prev = 11;
+                  _context3.prev = 13;
 
                   if (!self.data.attachmentList[_i].attachId) {
-                    _context3.next = 19;
+                    _context3.next = 21;
                     break;
                   }
 
-                  _context3.next = 15;
+                  _context3.next = 17;
                   return self.updateAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[_i].attachId,
@@ -2264,7 +2297,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     fileDataStream: self.data.attachmentList[_i].fileDataStream
                   });
 
-                case 15:
+                case 17:
                   res = _context3.sent;
 
                   if (res.code === 202) {
@@ -2276,11 +2309,11 @@ var PageController = /*#__PURE__*/function (_Service) {
                     Utils$1.UI.toast('操作成功');
                   }
 
-                  _context3.next = 23;
+                  _context3.next = 25;
                   break;
 
-                case 19:
-                  _context3.next = 21;
+                case 21:
+                  _context3.next = 23;
                   return self.saveAttachment({
                     gtId: self.data.gtId,
                     fileContentType: self.data.attachmentList[_i].fileContentType || 0,
@@ -2290,7 +2323,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     fileDataStream: self.data.attachmentList[_i].fileDataStream
                   });
 
-                case 21:
+                case 23:
                   _res = _context3.sent;
 
                   if (_res.code === 202) {
@@ -2303,24 +2336,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                     Utils$1.UI.toast('操作成功');
                   }
 
-                case 23:
-                  _context3.next = 28;
+                case 25:
+                  _context3.next = 30;
                   break;
 
-                case 25:
-                  _context3.prev = 25;
-                  _context3.t0 = _context3["catch"](11);
+                case 27:
+                  _context3.prev = 27;
+                  _context3.t0 = _context3["catch"](13);
                   Utils$1.UI.toast(_context3.t0.msg || '出错啦');
 
-                case 28:
+                case 30:
                   Utils$1.UI.hideLoading();
 
-                case 29:
+                case 31:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[11, 25]]);
+          }, _callee3, null, [[13, 27]]);
         }));
 
         return function (_x2) {
@@ -2342,10 +2375,18 @@ var PageController = /*#__PURE__*/function (_Service) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
+                  if (!(self.data.applyStatus >= 2)) {
+                    _context4.next = 2;
+                    break;
+                  }
+
+                  return _context4.abrupt("return", void 0);
+
+                case 2:
                   ev = window.event || e;
 
                   if (!ev.target.classList.contains('del')) {
-                    _context4.next = 31;
+                    _context4.next = 33;
                     break;
                   }
 
@@ -2354,7 +2395,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   index = ev.target.getAttribute('data-index');
 
                   if (!(!self.data.attachmentList[index].attachId && self.data.attachmentList[index].fileContentType === 0)) {
-                    _context4.next = 8;
+                    _context4.next = 10;
                     break;
                   }
 
@@ -2362,32 +2403,32 @@ var PageController = /*#__PURE__*/function (_Service) {
                   self.compilerTemplate(self.data.attachmentList);
                   return _context4.abrupt("return");
 
-                case 8:
-                  _context4.prev = 8;
+                case 10:
+                  _context4.prev = 10;
 
                   if (!(self.data.attachmentList[index].fileContentType >= 1)) {
-                    _context4.next = 20;
+                    _context4.next = 22;
                     break;
                   }
 
                   if (self.data.attachmentList[index].attachId) {
-                    _context4.next = 13;
+                    _context4.next = 15;
                     break;
                   }
 
                   Utils$1.UI.toast('还未保存过附件，无法删除');
                   return _context4.abrupt("return");
 
-                case 13:
+                case 15:
                   Utils$1.UI.showLoading('正在删除...'); // 数据库 delte
 
-                  _context4.next = 16;
+                  _context4.next = 18;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 16:
+                case 18:
                   res = _context4.sent;
 
                   // 本地离线备份 重置 reset
@@ -2398,43 +2439,43 @@ var PageController = /*#__PURE__*/function (_Service) {
                     approvalStatus: 0
                   });
 
-                  _context4.next = 24;
+                  _context4.next = 26;
                   break;
 
-                case 20:
-                  _context4.next = 22;
+                case 22:
+                  _context4.next = 24;
                   return self.deleteAttachment({
                     gtId: self.data.gtId,
                     attachId: self.data.attachmentList[index].attachId
                   });
 
-                case 22:
+                case 24:
                   _res2 = _context4.sent;
                   // 本地离线备份直接 delete
                   self.data.attachmentList.splice(index, 1);
 
-                case 24:
+                case 26:
                   self.compilerTemplate(self.data.attachmentList);
-                  _context4.next = 30;
+                  _context4.next = 32;
                   break;
 
-                case 27:
-                  _context4.prev = 27;
-                  _context4.t0 = _context4["catch"](8);
+                case 29:
+                  _context4.prev = 29;
+                  _context4.t0 = _context4["catch"](10);
                   api.toast({
                     msg: _context4.t0.msg || '保存成功',
                     location: 'middle'
                   });
 
-                case 30:
+                case 32:
                   Utils$1.UI.hideLoading();
 
-                case 31:
+                case 33:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4, null, [[8, 27]]);
+          }, _callee4, null, [[10, 29]]);
         }));
 
         return function (_x3) {
@@ -2460,6 +2501,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       document.querySelector('#pv-img-del').onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0;
+        }
+
         _extends_1(self.data.attachmentList[self.data.currentPreviewIndex], {
           fileId: '',
           fileDataStream: ''
@@ -2481,37 +2526,45 @@ var PageController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                if (!(self.data.applyStatus >= 2)) {
+                  _context5.next = 2;
+                  break;
+                }
+
+                return _context5.abrupt("return", void 0);
+
+              case 2:
                 Utils$1.UI.showLoading('提交中');
-                _context5.prev = 1;
-                _context5.next = 4;
+                _context5.prev = 3;
+                _context5.next = 6;
                 return self.submitInfo({
                   gtId: self.data.gtId
                 });
 
-              case 4:
+              case 6:
                 res = _context5.sent;
                 Utils$1.UI.toast('操作成功');
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/danbaostep2/index',
                   script: 'window.location.reload();'
                 });
-                _context5.next = 12;
+                _context5.next = 14;
                 break;
 
-              case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
+              case 11:
+                _context5.prev = 11;
+                _context5.t0 = _context5["catch"](3);
                 Utils$1.UI.toast(_context5.t0.msg);
 
-              case 12:
+              case 14:
                 Utils$1.UI.hideLoading();
 
-              case 13:
+              case 15:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[1, 9]]);
+        }, _callee5, null, [[3, 11]]);
       }));
     } // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
 
@@ -2560,6 +2613,13 @@ apiready = function apiready() {
   var pageParam = api.pageParam || {};
   api.setStatusBarStyle({
     style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
   });
   new PageController({
     pageParam: pageParam

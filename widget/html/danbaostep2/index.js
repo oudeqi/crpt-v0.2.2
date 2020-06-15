@@ -909,7 +909,12 @@ var navigationBarProfile = {
   background: '#fff',
   color: '#303133',
   fontSize: 18,
-  fontWeight: 500
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
@@ -1084,25 +1089,25 @@ var openPicker = function openPicker(params, options) {
       w: 90,
       h: 35,
       bg: '#fff',
-      bgActive: '#ccc',
+      // bgActive: '#ccc',
       color: '#888',
-      colorActive: '#fff'
+      colorActive: '#ccc'
     },
     ok: {
       text: '确定',
       size: 15,
       w: 90,
       h: 35,
-      bg: 'rgba(102,187,106,1)',
-      bgActive: '#ccc',
-      color: '#fff',
-      colorActive: '#fff'
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
     },
     title: {
       text: '请选择',
       size: 15,
       h: 50,
-      bg: '#eee',
+      bg: '#fff',
       color: '#888'
     },
     fixedOn: api.frameName
@@ -1122,7 +1127,7 @@ var openPicker = function openPicker(params, options) {
 
 var setPicker = function setPicker(params) {
   return openPicker(params, {
-    row: 4,
+    row: 5,
     col: 1
   });
 };
@@ -1352,10 +1357,15 @@ function openDanbaoKaitong() {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: '#66BB6A',
+      background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 16,
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
     }
   }, animation));
 } // 担保人列表
@@ -1391,9 +1401,9 @@ function openDanbaoRenList() {
       fontSize: 18,
       fontWeight: 'normal',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green.png'
+        iconPath: 'widget://image/back_green_big.png'
       }]
     }
   });
@@ -1422,9 +1432,9 @@ function openSendAddress(_ref9) {
       fontSize: 18,
       fontWeight: 'normal',
       leftButtons: [{
-        text: '返回',
+        text: '',
         color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green.png'
+        iconPath: 'widget://image/back_green_big.png'
       }]
     }
   });
@@ -3335,7 +3345,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                 this.data.gtId = data.gtId;
                 this.data.gtCreditId = data.gtCreditId;
                 this.data.productId = data.productId;
-                this.data.demandMoney = data.demandMoney; //   审核中
+                this.data.demandMoney = data.demandMoney;
+                this.data.creditStatus = data.creditStatus; //   审核中
 
                 if (data.applyStatus === 2) {
                   submitBtn = document.querySelector('#submit');
@@ -3347,26 +3358,26 @@ var PageController = /*#__PURE__*/function (_Service) {
                   }
                 }
 
-                _context.next = 18;
+                _context.next = 19;
                 break;
 
-              case 15:
-                _context.prev = 15;
+              case 16:
+                _context.prev = 16;
                 _context.t0 = _context["catch"](1);
                 Utils$1.UI.toast('服务超时');
 
-              case 18:
+              case 19:
                 Utils$1.UI.hideLoading();
                 api.refreshHeaderLoadDone();
                 this.initUIModal();
                 this.bindEvents();
 
-              case 22:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 15]]);
+        }, _callee, this, [[1, 16]]);
       }));
 
       function initData() {
@@ -3423,7 +3434,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                 pageParam: {
                   gtId: self.data.gtId,
                   flowStatus: self.data.flowStatus,
-                  gtCreditId: self.data.gtCreditId
+                  gtCreditId: self.data.gtCreditId,
+                  applyStatus: self.data.applyStatus
                 }
               });
             }
@@ -3484,7 +3496,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                           break;
 
                         case 16:
-                          if (self.data.applyStatus >= 2) {
+                          if (self.data.applyStatus >= 2 && self.data.creditStatus === 2) {
                             openDanbaoKaitong({
                               step: 3
                             });
@@ -3520,6 +3532,13 @@ var PageController = /*#__PURE__*/function (_Service) {
 apiready = function apiready() {
   api.setStatusBarStyle({
     style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
   });
   var pageParam = api.pageParam || {};
   var id = pageParam.id,

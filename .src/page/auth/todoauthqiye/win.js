@@ -8,7 +8,13 @@ import {
 import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../config.js'
 
 apiready = function() {
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   let userinfo = $api.getStorage('userinfo')
   let { userType, access_token } = userinfo || {}
 

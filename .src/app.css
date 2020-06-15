@@ -3,20 +3,23 @@
 .aui-radio.aui-checked,
 .aui-checkbox:checked,
 .aui-checkbox.aui-checked {
-  background-color: #1dc4a2 !important;
-  border: solid 1px #1dc4a2 !important;
+  background-color: #66BB6A !important;
+  border: solid 1px #66BB6A !important;
 }
 
 .aui-switch:checked {
-  border-color: #1dc4a2 !important;
-  background-color: #1dc4a2 !important;
+  border-color: #66BB6A !important;
+  background-color: #66BB6A !important;
 }
 
 /*1cb594 88dbcb 1aa689 5aae9c*/
 
 /*页面头部*/
+.app_header.white {
+  background-color: #fff;
+}
 .app_header {
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   position: relative;
   & div {
     width: 55px;
@@ -56,11 +59,11 @@
 /*块状按钮*/
 .app_btn {
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
   align-items: center;
   justify-content: center;
   color: #fff;
-  background-color: #1dc4a2;
+  background-color: #66BB6A;
   font-weight: bold;
   height: 50px;
   border-radius: 50px;
@@ -71,10 +74,10 @@
     border-radius: 44px;
   }
   &.active {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
   &.loading {
-    background-color: #88dbcb;
+    background-color: rgba(102, 187, 106, 0.75);
   }
 }
 
@@ -142,9 +145,9 @@
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
-  color: #1dc4a2;
+  color: #66BB6A;
   &.active {
-    color: #88dbcb;
+    color: rgba(102, 187, 106, 0.75);
     padding-left: 1px;
     padding-right: 0px;
   }
@@ -165,7 +168,7 @@
   }
   & strong {
     display: inline;
-    color: #1dc4a2;
+    color: #66BB6A;
     font-weight: normal;
     padding-left: 0;
     padding-right: 1px;

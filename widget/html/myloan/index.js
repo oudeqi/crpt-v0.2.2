@@ -22,6 +22,13 @@ apiready = function apiready() {
   // document.querySelector('#msgdetails').onclick = function () {
   //   openMsgDetails()
   // }
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var nav = $api.byId('nav');
   var navPos = $api.offset(nav);
 
