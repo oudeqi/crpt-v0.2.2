@@ -2836,6 +2836,7 @@ apiready = function apiready() {
   var id = pageParam.id; // '9939393'
 
   function getDetails(id) {
+    console.log(id);
     api.showProgress({
       title: '加载中...',
       text: '',

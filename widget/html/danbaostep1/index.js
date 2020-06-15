@@ -3678,10 +3678,13 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       buildType.forEach(function (item) {
         $api.attr(item, 'disabled', true);
       });
-      $api.attr($api.byId('expectInveste'), 'disabled', true);
-      $api.attr($api.byId('demandMoney'), 'disabled', true);
-      $api.attr($api.byId('timeLimit'), 'disabled', true);
       $api.attr($api.byId('agreement'), 'disabled', true);
+      $api.attr($api.byId('expectInveste'), 'disabled', true);
+      $api.attr($api.byId('expectInveste'), 'placeholder', '');
+      $api.attr($api.byId('demandMoney'), 'disabled', true);
+      $api.attr($api.byId('demandMoney'), 'placeholder', '');
+      $api.attr($api.byId('timeLimit'), 'disabled', true);
+      $api.attr($api.byId('timeLimit'), 'placeholder', '');
     }
   }, {
     key: "__removeDisabled",
@@ -3691,10 +3694,13 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       buildType.forEach(function (item) {
         $api.removeAttr(item, 'disabled');
       });
-      $api.removeAttr($api.byId('expectInveste'), 'disabled');
-      $api.removeAttr($api.byId('demandMoney'), 'disabled');
-      $api.removeAttr($api.byId('timeLimit'), 'disabled');
       $api.removeAttr($api.byId('agreement'), 'disabled');
+      $api.removeAttr($api.byId('expectInveste'), 'disabled');
+      $api.attr($api.byId('expectInveste'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('demandMoney'), 'disabled');
+      $api.attr($api.byId('demandMoney'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('timeLimit'), 'disabled');
+      $api.attr($api.byId('timeLimit'), 'placeholder', '请输入');
     }
   }, {
     key: "__initValidation",
@@ -3877,6 +3883,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
     key: "showProtocol",
     value: function showProtocol() {
       var node = getNodeProtocolFromStorage(4);
+      console.log(node);
 
       if (!node) {
         api.toast({
