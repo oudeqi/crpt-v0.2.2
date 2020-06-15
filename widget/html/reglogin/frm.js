@@ -24,6 +24,22 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
+
+
 function openReg() {
   api.openTabLayout({
     name: 'html/register/win',
@@ -34,18 +50,7 @@ function openReg() {
     bgColor: '#fff',
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/register/win',
   //   url: 'widget://html/register/win.html',
@@ -73,18 +78,7 @@ function openGerenLogin() {
     pageParam: {
       userType: userType
     },
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/gerenlogin/win',
   //   url: 'widget://html/gerenlogin/win.html',
@@ -107,18 +101,7 @@ function openQiyeLogin() {
     bgColor: '#fff',
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/qiyelogin/win',
   //   url: 'widget://html/qiyelogin/win.html',

@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -38,18 +52,7 @@ function openBaseinfoFill() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 打开待认证
 
@@ -66,18 +69,7 @@ function openCompanyInfo() {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 身份证上传
 
@@ -93,18 +85,7 @@ function openFaceAuth() {
     pageParam: pageParam,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 手持身份证上传
 
@@ -118,18 +99,7 @@ function openYuguEdu() {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 认证结果
 

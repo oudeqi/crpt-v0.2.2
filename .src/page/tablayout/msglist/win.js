@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openMsgDetails } from '../../../webview.js'
 

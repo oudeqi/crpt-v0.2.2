@@ -8,9 +8,11 @@
   <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 <body>
-  <div id="title" style="display: none;">
+  <div id="title" style="display: none; position: relative">
+    <div class="bg"></div>
     <div class="title">
-      <div class="l" id="titText">
+      <div class="mc"></div>
+      <div class="l tit-text" id="titText">
         <div>****</div>
         <div>***</div>
       </div>
@@ -37,7 +39,7 @@
     <div class="sec_header">
       <span class="tit">还款计划</span>
       <!-- <span class="txt">（剩余5期未还清）</span> -->
-      <span class="btn" id="repayplan">查看</span>
+      <span class="btn" id="repayplan">查看 <i class="aui-iconfont aui-icon-right"></i></span>
     </div>
   </div>
 
@@ -59,13 +61,13 @@
       </div> -->
       <div class="item item1">
         <span class="txt1">还款方式</span>
-        <span class="txt2" id="productName">**</span>
+        <span class="txt2 chinese" id="productName">**</span>
       </div>
       <div class="item item1">
         <span class="txt1">
           合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同
         </span>
-        <span class="btn" id="agreement">查看</span>
+        <span class="btn" id="agreement">查看  <i class="aui-iconfont aui-icon-right"></i></span>
       </div>
     </div>
   </div>
@@ -86,7 +88,7 @@
       </ul> -->
       <div class="item item1">
         <span class="txt1">还款记录</span>
-        <span class="btn" id="repayrecord">查看</span>
+        <span class="btn" id="repayrecord">查看  <i class="aui-iconfont aui-icon-right"></i></span>
       </div>
     </div>
   </div>

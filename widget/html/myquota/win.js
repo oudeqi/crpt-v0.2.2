@@ -2829,7 +2829,7 @@ apiready = function apiready() {
   });
   var myChart = echarts.init(document.getElementById('chart'));
   myChart.setOption({
-    color: ['#66BB6A', '#dddddd'],
+    color: ['#66BB6A', 'rgba(245,245,245,1)'],
     series: [{
       // name: '访问来源',
       type: 'pie',

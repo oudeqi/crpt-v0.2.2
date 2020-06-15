@@ -220,9 +220,9 @@ html, body {
 }
 .nav .item span {
   padding: 10px 0;
-  border-bottom: 2px solid #fff;
+  border-bottom: 4px solid #fff;
 }
-.nav .item.active span {
+.nav .active span {
   color: #66BB6A;
-  border-bottom: 2px solid #66BB6A;
+  border-bottom: 4px solid #66BB6A;
 }

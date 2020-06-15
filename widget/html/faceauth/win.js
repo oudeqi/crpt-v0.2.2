@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -35,18 +49,7 @@ function openFaceUpload() {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 预估额度
 
@@ -66,18 +69,7 @@ function openAuthResult(status, message, title) {
     },
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 消息中心
 

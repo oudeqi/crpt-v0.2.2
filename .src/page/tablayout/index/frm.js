@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './frm.css'
+import './frm.less'
 import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config'
 import numeral from 'numeral'

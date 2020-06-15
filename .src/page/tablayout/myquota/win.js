@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openContactUs } from '../../../webview.js'
 import { http } from '../../../config.js'
@@ -15,7 +15,7 @@ apiready = function () {
   });
   const myChart = echarts.init(document.getElementById('chart'))
   myChart.setOption({
-    color:['#66BB6A', '#dddddd'],
+    color:['#66BB6A', 'rgba(245,245,245,1)'],
     series: [
       {
         // name: '访问来源',

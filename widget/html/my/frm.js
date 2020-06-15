@@ -15,6 +15,34 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -35,18 +63,7 @@ function openMsgCenter() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 账号动态/新闻通知列表
 
@@ -60,18 +77,7 @@ function openBillList() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 账单详情
 
@@ -85,18 +91,7 @@ function openMyLoan() {
     reload: true,
     bounces: false,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 订单详情
 
@@ -110,18 +105,7 @@ function openMyQuota() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 我开通的产品
 
@@ -135,18 +119,7 @@ function openMyProduct() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 设置
 
@@ -160,18 +133,7 @@ function openSettings() {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 修改密码
 

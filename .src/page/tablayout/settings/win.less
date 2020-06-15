@@ -1,20 +1,35 @@
 html, body {
-  background-color: #fff;
+  background:rgba(245,245,245,1);
   height: 100%;
 }
 .container {
   /*height: 100%;*/
   display: flex;
   flex-direction: column;
-  & ul {
+  ul {
     flex-grow: 1;
+    margin: 12px 0;
+    background: #fff;
   }
 }
 .btn-box {
   padding: 30px;
-  margin-top: 50px;
+  //margin-top: 50px;
+  height: 54px;
+  background: rgba(255, 255, 255, 1);
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  .txt {
+    font-size: 16px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: rgba(102, 187, 106, 1);
+  }
 }
-li.active {
+.active {
   background-color: #ededed;
   position: relative;
   top: -1px;
@@ -22,16 +37,21 @@ li.active {
 li {
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 12px;
   padding-right: 10px;
-  & .icon {
+  &:last-child {
+    .line-box {
+      border: none;
+    }
+  }
+  .icon {
     width: 30px;
     height: 30px;
     border-radius: 5px;
     background: #ddd;
     flex-shrink: 0;
   }
-  & .line-box {
+  .line-box {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -40,18 +60,21 @@ li {
     height: 54px;
     border-bottom: 1px solid #ededed;
     box-sizing: border-box;
-    & .text {
+    .text {
       flex-grow: 1;
-      font-size: 15px;
+      font-size:16px;
+      font-family:PingFang-SC-Medium,PingFang-SC;
+      font-weight:500;
+      color:rgba(48,49,51,1);
     }
-    & .msg {
+    .msg {
       margin-right: 5px;
       font-size: 14px;
       color: #aaa;
     }
-    & .arrow {
+    .arrow {
       flex-shrink: 0;
-      & i {
+      i {
         font-weight: bold;
         color: #666;
       }

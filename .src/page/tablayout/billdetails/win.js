@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { http, setRefreshHeaderInfo } from '../../../config.js'
 import moment from 'moment'
@@ -67,8 +67,8 @@ apiready = function () {
         <li>
           <div class="t">
             <div class="tit">
-              <span>应还</span>
-              <span>${numeral(item.repayTotalAmount).format('0,0.00')}</span>
+              <span class="label">应还(元)</span>
+              <span class="amount">${numeral(item.repayTotalAmount).format('0,0.00')}</span>
             </div>
             <div class="msg">
               <span>利息：${numeral(item.repayInterestAmount).format('0,0.00')}</span>

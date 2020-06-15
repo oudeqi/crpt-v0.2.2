@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openRepayPlan, openRepayRecord } from '../../../webview.js'
 import { http } from '../../../config.js'
@@ -72,7 +72,18 @@ apiready = function () {
         11: '待申请',
         12: '已取消',
       }
+      let statusMapping = {
+        3: 'refused',
+        4: 'cancel',
+        5: 'repaying',
+        6: 'normalOver',
+        7: 'earlyOver',
+        8: 'overdue',
+        9: 'overdueOver',
+        10: 'back',
+      }
       $api.byId('status').innerHTML = mapping[data.status] || ''
+      $api.byId('status').classList.add(statusMapping[data.status] || '')
       // 过期失效 -已撤销 ，已退货 ，赊销退货 的订单   不展示 还款计划，支付明细，和还款明细
       // 待支付 也不展示
       // 1-未支付 2-处理中 3-逾期 4-已还清 5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
@@ -88,13 +99,13 @@ apiready = function () {
 
       if ([1, 2, 3, 4, 6, 7, 9, 10, 11, 12].includes(data.status)) {
         $api.byId('titText').innerHTML = `
-          <div>订单金额(元)</div>
-          <div>${data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : ''}</div>
+          <div class="amount">订单金额(元)</div>
+          <div class="num">${data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : ''}</div>
         `
       } else {
         $api.byId('titText').innerHTML = `
-          <div>剩余未还本金(元)</div>
-          <div>${data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : ''}</div>
+          <div class="amount">剩余未还本金(元)</div>
+          <div class="num">${data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : ''}</div>
         `
       }
     }).catch(error => {

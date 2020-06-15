@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./win.css"></head>
 <body>
   <div class="container">
+    <div class="bg"></div>
     <div class="top">
       <div class="chart" id="chart">
       </div>
@@ -30,38 +31,41 @@
       </div>
       <div class="tips">当前额度为已开通产品的额度</div>
       <div class="contactus">
-        <span>获取更多额度</span>
+        <span class="contactus-btn">获取更多额度</span>
       </div>
     </div>
-    <div class="list_header">额度明细</div>
-    <ul>
-      <li>
-        <div class="row1">
-          <span class="pname">押金贷</span>
-          <span class="date">有效期 2020/12/12</span>
-        </div>
-        <div class="row2">可用额度 10000</div>
-        <div class="row3">总额度 20000，已用额度 10000</div>
-      </li>
-      <li>
-        <div class="row1">
-          <span class="pname">设备贷</span>
-          <span class="date">有效期 2020/12/12</span>
-        </div>
-        <div class="row2">可用额度 5000</div>
-        <div class="row3">总额度 10000，已用额度 5000</div>
-      </li>
-      <li>
-        <div class="row1">
-          <span class="pname">上游快贷</span>
-          <span class="date">有效期 2020/12/12</span>
-        </div>
-        <div class="row2">可用额度 5000</div>
-        <div class="row3">总额度 10000，已用额度 5000</div>
-      </li>
-    </ul>
+
+    <section class="detail">
+      <div class="list_header">
+        <span class="label">额度明细</span>
+        <span class="label">全部额度 <i class="aui-iconfont aui-icon-right"></i></span>
+      </div>
+      <ul>
+        <li>
+          <div class="row1">
+            <span class="pname">押金贷</span>
+            <span class="date">有效期 2020/12/12</span>
+          </div>
+          <div class="row2">
+            <div class="cell">
+              <div class="amount">200,000</div>
+              <div class="a-txt">总额度(元)</div>
+            </div>
+            <div class="cell">
+              <div class="amount">100,000</div>
+              <div class="a-txt">已用额度(元)</div>
+            </div>
+            <div class="cell">
+              <div class="amount green">100,000</div>
+              <div class="a-txt">可用额度(元)</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
     <div class="contactus">
-      <span id="contactus">联系客服</span>
+      <span id="contactus" class="contactus-btn">联系客服</span>
     </div>
   </div>
 

@@ -206,15 +206,17 @@ html, body {
   background-color: #ebebeb;
 }
 ul {
-  padding: 10px 0;
+  margin-top: 12px;
 }
 li {
   background: #fff;
-  padding-left: 15px;
+  padding: 10px;
+  padding-left: 12px;
+  padding-right: 16px;
 }
-li :last-child .content{
-    border-bottom: 0;
-  }
+li:last-child .content {
+  border-bottom: 0;
+}
 .content {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -222,43 +224,56 @@ li :last-child .content{
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #f5f5f5;
 }
 .content .icon {
-    width: 40px;
-    height: 40px;
-    background-color: #eee;
-    border-radius: 5px;
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-  }
+  width: 42px;
+  height: 42px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.content .icon.icon-account {
+  background: url(../../image/tab_my/account_msg.png) no-repeat;
+  background-size: 100%;
+}
+.content .icon.icon-news {
+  background: url(../../image/tab_my/news.png) no-repeat;
+  background-size: 100%;
+}
 .content .text {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    padding: 10px;
-  }
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 10px;
+}
 .content .t {
-    line-height: 1.5;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
+  line-height: 1.5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
 .content strong {
-    font-size: 16px;
-    font-weight: normal;
-  }
+  font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #303133;
+}
 .content span {
-    font-size: 15px;
-    color: #aaa;
-  }
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+}
 .content .b {
-    font-size: 15px;
-    color: #666;
-  }
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+  margin-top: 9px;
+}

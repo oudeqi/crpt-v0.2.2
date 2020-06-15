@@ -1,0 +1,68 @@
+html, body {
+  background-color: #ebebeb;
+}
+ul {
+  //padding: 10px 0;
+  margin-top: 12px;
+}
+li {
+  background: #fff;
+  padding: 10px;
+  padding-left: 12px;
+  padding-right: 16px;
+  &:last-child {
+    .content{
+      border-bottom: 0;
+    }
+  }
+}
+.content {
+  //padding: 16px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(245,245,245,1);
+  .icon {
+    width: 42px;
+    height: 42px;
+    //background-color: #eee;
+    //border-radius: 5px;
+    flex-shrink: 0;
+    &.icon-account {
+      background: url(../../image/tab_my/account_msg.png) no-repeat;
+      background-size: 100%;
+    }
+    &.icon-news {
+      background: url(../../image/tab_my/news.png) no-repeat;
+      background-size: 100%;
+    }
+  }
+  .text {
+    flex-grow: 1;
+    padding: 10px;
+  }
+  .t {
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  strong {
+    font-size:16px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+  }
+  span {
+    font-size:14px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+  }
+  .b {
+    font-size:14px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+    margin-top: 9px;
+  }
+}

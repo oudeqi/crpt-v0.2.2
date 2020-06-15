@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openWin({
     name: 'html/reglogin/win',
@@ -38,18 +52,7 @@ function openOrderDetails(id) {
     },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 贷款申请
 
@@ -2875,20 +2878,19 @@ apiready = function apiready() {
   }
 
   function appendList(data) {
-    var _mapping;
-
     // 业务单状态：
     // 3-已拒绝 4-已撤销 5-还款中 6-到期结清 7-提前结清
     // 8-逾期还款中 9-逾期已结清 10-已退货
-    var mapping = (_mapping = {
-      3: 'warning',
-      4: 'repaied',
-      5: 'cancel',
-      6: 'cancel',
-      7: 'cancel',
-      8: 'cancel',
-      9: 'during'
-    }, defineProperty(_mapping, "9", 'during'), defineProperty(_mapping, 10, 'cancel'), _mapping);
+    var mapping = {
+      3: 'refused',
+      4: 'cancel',
+      5: 'repaying',
+      6: 'normalOver',
+      7: 'earlyOver',
+      8: 'overdue',
+      9: 'overdueOver',
+      10: 'back'
+    };
     var mapping2 = {
       3: '已拒绝',
       4: '已撤销',
@@ -2900,7 +2902,7 @@ apiready = function apiready() {
       10: '已退货'
     };
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n      <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n        <div class=\"t\">\n          <div class=\"row1\">\n            <span>\u4E1A\u52A1\u5355\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n            <i class=\"aui-iconfont aui-icon-right\"></i>\n          </div>\n          <div class=\"row2\">\n            <span>\u6536\u6B3E\u65B9</span>\n            ").concat(item.saleCustName || '', "\n          </div>\n          <div class=\"row2\">\n            <span>\u653E\u6B3E\u65F6\u95F4</span>\n            ").concat(item.orderTime || '', "\n          </div>\n          <div class=\"row3\">\n            <span class=\"label\">\u8D37\u6B3E\u4EA7\u54C1</span>\n            <strong class=\"produce\">").concat(item.productName || '', "</strong>\n            <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n          </div>\n        </div>\n        <div class=\"b\">\n          <div class=\"tit\">\n            <span>\u8D37\u6B3E\u91D1\u989D(\u5143)</span>\n            <span>").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n          </div>\n        </div>\n      </li>\n      "));
+      $api.append($api.byId('list'), "\n      <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n<div class=\"t\">\n            <div class=\"row1\">\n              <span>\u4E1A\u52A1\u5355\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"b\">\n              <div class=\"tit\">\n                <div class=\"amount\">\u8D37\u6B3E\u91D1\u989D(\u5143) \n                  <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n                </div>\n                <span class=\"num\">").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n              </div>\n            </div>\n            <div class=\"row2\">\n              <span>\u6536\u6B3E\u65B9</span>\n              ").concat(item.saleCustName || '', "\n            </div>\n            <div class=\"row2\">\n              <span>\u653E\u6B3E\u65F6\u95F4</span>\n              ").concat(item.orderTime || '', "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u8D37\u6B3E\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName || '', "</strong>\n\n            </div>\n          </div>\n      </li>\n      "));
     });
   }
 

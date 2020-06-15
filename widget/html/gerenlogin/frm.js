@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
 /*
 list: [{
   text: '',
@@ -139,18 +153,7 @@ function openReg() {
     bgColor: '#fff',
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/register/win',
   //   url: 'widget://html/register/win.html',
@@ -189,18 +192,7 @@ function openSendCode() {
       userType: userType
     },
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/sendcode/win',
   //   url: 'widget://html/sendcode/win.html',
@@ -222,18 +214,7 @@ function openFindPwd() {
     // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/findpwd/win',
   //   url: 'widget://html/findpwd/win.html',
@@ -255,18 +236,7 @@ function openTodoAuthGeren() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 }
 
@@ -282,18 +252,7 @@ function openTodoAuthQiye() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 企业信息确认
 
