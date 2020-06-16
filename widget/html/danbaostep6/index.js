@@ -957,8 +957,9 @@ function openTabLayout(index) {
       animated: false,
       scrollEnabled: true,
       selectedColor: '#66BB6A',
-      color: '#bfbfbf',
+      color: '#606266',
       index: index || 0,
+      fontSize: 12,
       // preload: 4,
       list: [{
         text: "首页",

@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
 /*
 list: [{
   text: '',
@@ -70,8 +84,9 @@ function openTabLayout(index) {
       animated: false,
       scrollEnabled: true,
       selectedColor: '#66BB6A',
-      color: '#bfbfbf',
+      color: '#606266',
       index: index || 0,
+      fontSize: 12,
       // preload: 4,
       list: [{
         text: "首页",
@@ -155,6 +170,7 @@ function openGerenLogin() {
     pageParam: {
       userType: userType
     },
+<<<<<<< HEAD
     navigationBar: {
       hideBackButton: false,
       background: '#fff',
@@ -168,6 +184,18 @@ function openGerenLogin() {
       }]
     }
   });
+=======
+    navigationBar: navigationBarWhite
+  }); // api.openWin({
+  //   name: 'html/gerenlogin/win',
+  //   url: 'widget://html/gerenlogin/win.html',
+  //   bgColor: '#fff',
+  //   reload: true,
+  //   pageParam: {
+  //     userType
+  //   }
+  // })
+>>>>>>> 4fcda7fc41e24a2db24dfcb230f2e03a69f02cb9
 } // 企业登录
 
 
@@ -183,18 +211,7 @@ function openTodoAuthGeren() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 }
 
@@ -210,18 +227,7 @@ function openTodoAuthQiye() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 企业信息确认
 

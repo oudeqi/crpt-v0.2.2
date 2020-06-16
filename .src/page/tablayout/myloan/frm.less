@@ -1,0 +1,170 @@
+html, body {
+  background:rgba(245,245,245,1);
+}
+.tips {
+  margin: 10px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  //border-radius: 5px;
+  //background-color: #e0e6ea;
+  //color: #aaa;
+  //font-size: 14px;
+  background:rgba(102,187,106,0.1);
+  border-radius:6px;
+  font-size:14px;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(102,187,106,1);
+  display: flex;
+  align-items: center;
+  i {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url(../../image/tab_my/info.png) no-repeat;
+    background-size: 100%;
+  }
+}
+ul {
+  padding: 0 10px 15px;
+}
+li {
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 0 15px;
+}
+.t {
+  //border-bottom: 1px solid #ebebeb;
+  padding-bottom: 10px;
+}
+.row1 {
+  display: flex;
+  align-items: center;
+  color: #aaa;
+  font-size: 16px;
+  padding-top: 18px;
+  border-bottom: 1px solid rgba(245,245,245,1);
+  //margin-top: 8px;
+  padding-bottom: 18px;
+  span {
+    flex-grow: 1;
+    font-size:14px;
+    font-family:PingFang-SC-Medium,PingFang-SC;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+  }
+  i {
+    flex-shrink: 0;
+  }
+}
+
+.row2 {
+  color: #8d9daa;
+  font-size: 15px;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 3px;
+  padding-top: 8px;
+  span {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.row3 {
+  display: flex;
+  align-items: center;
+  color: #8d9daa;
+  font-size: 15px;
+  height: 28px;
+  line-height: 28px;
+  .label {
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .produce {
+    flex-grow: 1;
+    font-weight: normal;
+  }
+  .status {
+    flex-shrink: 0;
+    font-size: 14px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 5px;
+    border-radius: 4px;
+  }
+}
+
+.b {
+  border-bottom: 1px solid rgba(245,245,245,1);
+  padding: 12px 0;
+  .tit {
+    //display: flex;
+    //align-items: center;
+    //justify-content: space-between;
+    margin-top: 5px;
+    .amount {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size:16px;
+      font-family:PingFang-SC-Medium,PingFang-SC;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      margin-bottom: 8px;
+    }
+    .num {
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(48,49,51,1);
+    }
+  }
+  .msg {
+    color: #8d9daa;
+    font-size: 15px;
+    margin-top: 3px;
+  }
+}
+.status {
+  flex-shrink: 0;
+  //font-size: 14px;
+  color: #fff;
+  padding: 0 6px;
+  //border-radius: 4px;
+  font-size:12px;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  border-radius:4px;
+  &.normalOver, &.earlyOver, &.overdueOver {
+    //background-color: #fcf6d7;
+    //color: #fcc055;
+    color:rgba(102,187,106,1);
+    background:rgba(102,187,106,0.1);
+    border:1px solid rgba(102,187,106,1);
+  }
+  &.repaying {
+    background:rgba(245,166,35,0.1);
+    color:rgba(245,166,35,1);
+    border:1px solid rgba(245,166,35,1);
+  }
+  &.overdue {
+    //background-color: #fcefde;
+    //color: #f59b5b;
+    color:rgba(238,83,84,1);
+    background:rgba(238,83,84,0.1);
+    border:1px solid rgba(238,83,84,1);
+  }
+  &.cancel, &.refused, &.back {
+    background-color: rgba(230, 230, 230, 1);
+    color: #bbb;
+    border: rgba(230, 230, 230, 0.1);
+  }
+}
+

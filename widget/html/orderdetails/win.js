@@ -15,6 +15,22 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
+
+
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -38,18 +54,7 @@ function openRepayPlan(id) {
     },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 还款明细
 
@@ -66,18 +71,7 @@ function openRepayRecord(id) {
     },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 订单详情
 
@@ -2918,7 +2912,18 @@ apiready = function apiready() {
         11: '待申请',
         12: '已取消'
       };
-      $api.byId('status').innerHTML = mapping[data.status] || ''; // 过期失效 -已撤销 ，已退货 ，赊销退货 的订单   不展示 还款计划，支付明细，和还款明细
+      var statusMapping = {
+        3: 'refused',
+        4: 'cancel',
+        5: 'repaying',
+        6: 'normalOver',
+        7: 'earlyOver',
+        8: 'overdue',
+        9: 'overdueOver',
+        10: 'back'
+      };
+      $api.byId('status').innerHTML = mapping[data.status] || '';
+      $api.byId('status').classList.add(statusMapping[data.status] || ''); // 过期失效 -已撤销 ，已退货 ，赊销退货 的订单   不展示 还款计划，支付明细，和还款明细
       // 待支付 也不展示
       // 1-未支付 2-处理中 3-逾期 4-已还清 5-过期失效 6-已撤销 7-已退货 8-赊销退货 9-还款中
 
@@ -2934,9 +2939,9 @@ apiready = function apiready() {
       }
 
       if ([1, 2, 3, 4, 6, 7, 9, 10, 11, 12].includes(data.status)) {
-        $api.byId('titText').innerHTML = "\n          <div>\u8BA2\u5355\u91D1\u989D(\u5143)</div>\n          <div>".concat(data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : '', "</div>\n        ");
+        $api.byId('titText').innerHTML = "\n          <div class=\"amount\">\u8BA2\u5355\u91D1\u989D(\u5143)</div>\n          <div class=\"num\">".concat(data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : '', "</div>\n        ");
       } else {
-        $api.byId('titText').innerHTML = "\n          <div>\u5269\u4F59\u672A\u8FD8\u672C\u91D1(\u5143)</div>\n          <div>".concat(data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : '', "</div>\n        ");
+        $api.byId('titText').innerHTML = "\n          <div class=\"amount\">\u5269\u4F59\u672A\u8FD8\u672C\u91D1(\u5143)</div>\n          <div class=\"num\">".concat(data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : '', "</div>\n        ");
       }
     })["catch"](function (error) {
       api.toast({

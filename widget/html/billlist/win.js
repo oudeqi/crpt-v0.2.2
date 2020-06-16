@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -52,18 +66,7 @@ function openBillDetails(id) {
     },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 我的贷款
 
@@ -2896,7 +2899,7 @@ apiready = function apiready() {
     // 2、未按期还款
     // 3、今日还款
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\"\n          data-billdate=\"").concat(item.billDate || '', "\"\n          data-sumrepaytotalamount=\"").concat(item.sumRepayTotalAmount || 0, "\"\n          data-sumrepayprincipalamount=\"").concat(item.sumRepayPrincipalAmount || 0, "\"\n          data-sumserviceFee=\"").concat(item.sumServiceFee || 0, "\"\n          data-sumrepaypenaltyamount=\"").concat(item.sumRepayPenaltyAmount || 0, "\"\n          data-sumrepayinterestamount=\"").concat(item.sumRepayInterestAmount || 0, "\"\n        >\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, " \u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning">未按期还款</div>' : item.status === 3 ? '<div class="status normal">今日还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8 ").concat(numeral(item.sumRepayTotalAmount).format('0,0.00'), "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(numeral(item.sumRepayPrincipalAmount).format('0,0.00'), " + \u8D39\u7528").concat(numeral(item.sumServiceFee).format('0,0.00'), " + \u903E\u671F\u7F5A\u606F").concat(numeral(item.sumRepayPenaltyAmount).format('0,0.00'), "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\"\n          data-billdate=\"").concat(item.billDate || '', "\"\n          data-sumrepaytotalamount=\"").concat(item.sumRepayTotalAmount || 0, "\"\n          data-sumrepayprincipalamount=\"").concat(item.sumRepayPrincipalAmount || 0, "\"\n          data-sumserviceFee=\"").concat(item.sumServiceFee || 0, "\"\n          data-sumrepaypenaltyamount=\"").concat(item.sumRepayPenaltyAmount || 0, "\"\n          data-sumrepayinterestamount=\"").concat(item.sumRepayInterestAmount || 0, "\"\n        >\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, " \u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning"> <i></i> 未按期还款</div>' : item.status === 3 ? '<div class="status normal">今日还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8 ").concat(numeral(item.sumRepayTotalAmount).format('0,0.00'), "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(numeral(item.sumRepayPrincipalAmount).format('0,0.00'), " + \u8D39\u7528").concat(numeral(item.sumServiceFee).format('0,0.00'), " + \u903E\u671F\u7F5A\u606F").concat(numeral(item.sumRepayPenaltyAmount).format('0,0.00'), "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
     });
   }
 

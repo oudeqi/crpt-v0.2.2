@@ -15,6 +15,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // 打开侧滑
+
+
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -46,18 +60,7 @@ function openAuthResult(_ref4) {
     },
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: navigationBarGreen
   });
 } // 消息中心
 

@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openProductDetails, openContactUs } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
@@ -35,21 +35,25 @@ apiready = function () {
     }).catch(error => {
       loading = false
       api.refreshHeaderLoadDone()
+      alert(error)
       api.toast({ msg: '数据加载失败' })
     })
   }
 
   function appendList (data) {
-    data.forEach(item => {
+    data.forEach((item, index) => {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.productId || ''}">
           <div class="t">
-            <strong>${item.productName || '***'}</strong>
-            <span>${item.bankName || '***'}（${item.account || '***'}）</span>
+            <div class="logo logo-${index % 2}">${item.productName.slice(0, 1)}</div>
+            <div class="desc">
+                <strong>${item.productName || '***'}</strong>
+                <div class="b">
+                    开通时间 ${item.openDate || ''}
+                </div>
+            </div>
           </div>
-          <div class="b">
-            开通时间：${item.openDate || ''}
-          </div>
+          <span class="bank">${item.bankName || '***'}（${item.account || '***'}）</span>
         </li>
       `)
     })

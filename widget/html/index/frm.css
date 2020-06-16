@@ -288,218 +288,201 @@
   }
 
 html, body {
-  background-color: #efefef;
+  background: #f5f5f5;
 }
-
 .header {
   padding: 12px 10px;
   position: relative;
 }
-
 .header .bg {
-    height: 120px;
-    background:rgba(102,187,106,1);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-
+  height: 120px;
+  background: #66bb6a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
 .header .inner {
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1000;
-  }
-
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1000;
+}
 .header img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .nav {
   padding: 10px;
   margin: 0 10px;
   border-radius: 5px;
   background: #fff;
   overflow: hidden;
-
 }
-
 .nav .nav-item {
-    width: 50%;
-    font-size: 13px;
-    color: #666;
-    float: left;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    padding: 8px 0;
-  }
-
+  width: 50%;
+  font-size: 13px;
+  color: #666;
+  float: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 8px 0;
+}
 .nav .nav-item:nth-child(1) {
-      border-bottom: 1px solid #f2f2f2;
-      border-right: 1px solid #f2f2f2;
-    }
-
+  border-bottom: 1px solid #f2f2f2;
+  border-right: 1px solid #f2f2f2;
+}
 .nav .nav-item:nth-child(2) {
-      border-bottom: 1px solid #f2f2f2;
-      padding-left: 8px;
-    }
-
+  border-bottom: 1px solid #f2f2f2;
+  padding-left: 8px;
+}
 .nav .nav-item:nth-child(3) {
-      border-right: 1px solid #f2f2f2;
-    }
-
+  border-right: 1px solid #f2f2f2;
+}
 .nav .nav-item:nth-child(4) {
-      padding-left: 8px;
-    }
-
+  padding-left: 8px;
+}
 .nav .nav-item img {
-      width: 60px;
-      height: 60px;
-      display: block;
-    }
-
+  width: 60px;
+  height: 60px;
+  display: block;
+}
 .nav .nav-item span {
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
-      font-size: 15px;
-      color: #666;
-      padding-left: 6px;
-    }
-
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  font-size: 15px;
+  color: #666;
+  padding-left: 6px;
+}
 .banner {
   margin: 12px 10px 15px;
   border-radius: 5px;
   overflow: hidden;
 }
-
 .banner img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .high {
   padding-bottom: 15px;
 }
-
 .high .tit {
-    color: #333;
-    font-weight: bold;
-    padding: 5px 15px 5px;
-  }
-
+  color: #333;
+  font-weight: bold;
+  padding: 5px 15px 5px;
+}
 .high .body {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    padding: 0 5px;
-  }
-
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 10px;
+  border-radius: 4px;
+}
 .high .body .high_item {
-      width: 50%;
-      text-align: center;
-      background-color: #fff;
-      margin: 0 5px;
-      border-radius: 4px;
-      padding-bottom: 5px;
-    }
-
+  width: 50%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  text-align: center;
+  padding: 26px 0 14px;
+  background-color: #fff;
+  margin: 0;
+}
+.high .body .high_item:first-child {
+  border-right: 1px solid #f5f5f5;
+}
 .high .body .high_item .row1 {
-        padding-top: 10px;
-        color: #888;
-      }
-
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+}
 .high .body .high_item .row2 {
-        color: #c20015;
-        font-weight: bold;
-        font-size: 20px;
-      }
-
+  font-size: 24px;
+  font-family: DINAlternate-Bold, DINAlternate;
+  font-weight: bold;
+  color: #ee5354;
+}
 .high .body .high_item .row3 {
-        color: #888;
-        font-size: 14px;
-        padding-bottom: 5px;
-      }
-
+  padding-bottom: 5px;
+  font-size: 12px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+}
 .low {
   padding-bottom: 15px;
 }
-
 .low .tit {
-    color: #333;
-    font-weight: bold;
-    padding: 10px 15px 5px;
-  }
-
+  color: #333;
+  font-weight: bold;
+  padding: 10px 15px 5px;
+}
 .low .body {
-    padding: 0 10px;
-  }
-
+  border-radius: 5px;
+}
 .low .body .row {
-      margin-bottom: 15px;
-      background-color: #fff;
-      border-radius: 5px;
-      padding: 12px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-    }
-
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 16px 69px 16px 37px;
+  margin-bottom: 0;
+}
 .low .body .row:last-child {
-        margin-bottom: 0;
-      }
-
+  margin-bottom: 0;
+  border-bottom: none;
+}
 .low .body .row .l {
-        width: 100px;
-        -ms-flex-negative: 0;
-            flex-shrink: 0;
-      }
-
+  width: 100px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
 .low .body .row .l strong {
-          font-size: 25px;
-          color: #c20015;
-        }
-
+  font-size: 24px;
+  font-family: DINAlternate-Bold, DINAlternate;
+  font-weight: bold;
+  color: #ee5354;
+}
 .low .body .row .l span {
-          font-size: 14px;
-          color: #888;
-        }
-
+  font-size: 12px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+}
 .low .body .row .r {
-        -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-                flex-grow: 1;
-      }
-
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
 .low .body .row .r strong {
-          font-size: 18px;
-          color: #444;
-          font-weight: normal;
-          display: block;
-          width: 100%;
-        }
-
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+  margin-bottom: 8px;
+}
 .low .body .row .r span {
-          font-size: 15px;
-          color: #888;
-          display: block;
-          width: 100%;
-        }
-
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+}
 .clickBtn {
   cursor: pointer;
 }

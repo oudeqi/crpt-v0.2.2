@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openMsgList, openRegLogin, openChangePwd } from '../../../webview.js'
 import { http } from '../../../config.js'

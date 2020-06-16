@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 // import { openMsgDetails } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
@@ -46,9 +46,9 @@ apiready = function () {
   }
 
   function appendList (data) {
-    data.forEach(item => {
+    data.forEach((item, index) => {
       $api.append($api.byId('list'), `
-        <li>
+        <li class="${index === 0 ? 'active' : ''}">
           <div class="l">
             <div class="txt1">${item.repayDate ? item.repayDate.split(' ')[0] : ''}</div>
             <span class="txt2">${item.curPeriod}期</span><span class="txt3">${item.status===1?'（未按期还）': ''}</span>

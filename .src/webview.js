@@ -1,7 +1,34 @@
 
 // api.lockSlidPane();
 // api.unlockSlidPane
-
+const navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [
+    {
+      text: '',
+      color: 'rgba(102,187,106,1)',
+      iconPath: 'widget://image/back_green_big.png',
+    }
+  ]
+}
+const navigationBarGreen = {
+  hideBackButton: false,
+  background: 'rgba(102,187,106,1)',
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [
+    {
+      text: '',
+      color: '#fff',
+      iconPath: 'widget://image/back_white_big.png',
+    }
+  ]
+}
 // 打开侧滑
 function openLeftPane () {
   api.openWin({
@@ -116,8 +143,9 @@ function openTabLayout (index) {
       animated: false,
       scrollEnabled: true,
       selectedColor: '#66BB6A',
-      color: '#bfbfbf',
+      color: '#606266',
       index: index || 0,
+      fontSize: 12,
       // preload: 4,
       list: [
         {
@@ -185,20 +213,7 @@ function openReg () {
     title: '注册',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#303133',
-      fontSize: 18,
-      fontWeight: 500,
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -225,20 +240,7 @@ function openGerenLogin ({ userType = 1 } = {}) {
     pageParam: {
       userType
     },
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -250,20 +252,7 @@ function openQiyeLogin () {
     title: '',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -279,20 +268,7 @@ function openSendCode ({tel, userType} = {}) {
       tel, userType
     },
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -304,20 +280,7 @@ function openFindPwd () {
     title: '',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -334,20 +297,7 @@ function openBaseinfoFill () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -365,18 +315,8 @@ function openTodoAuthGeren () {
       type: 'none'
     },
     navigationBar: {
+      ...navigationBarWhite,
       hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_green_big.png',
-        }
-      ]
     }
   })
 }
@@ -393,18 +333,8 @@ function openTodoAuthQiye () {
       type: 'none'
     },
     navigationBar: {
+      ...navigationBarWhite,
       hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
     }
   })
 }
@@ -421,20 +351,7 @@ function openCompanyInfo () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -448,20 +365,7 @@ function openIDcardUpload () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -476,20 +380,7 @@ function openIDcardInfo (pageParam) {
     pageParam,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -506,20 +397,7 @@ function openFaceAuth ({ title, userType } = {}) {
     },
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -533,20 +411,7 @@ function openFaceUpload () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -560,20 +425,7 @@ function openYuguEdu () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -590,20 +442,7 @@ function openAuthResult ({status, message, title, tips}) { // status: success er
     },
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '返回',
-          color: '#66BB6A',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -617,20 +456,7 @@ function openMsgCenter () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -644,20 +470,7 @@ function openMsgList (title) {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -671,20 +484,7 @@ function openMsgDetails () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -698,20 +498,7 @@ function openBillList () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -741,20 +528,7 @@ function openBillDetails (id, {
     },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -768,20 +542,7 @@ function openMyLoan () {
     reload: true,
     bounces: false,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -796,20 +557,7 @@ function openOrderDetails (id) {
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -879,20 +627,7 @@ function openMyQuota () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarGreen
   })
 }
 
@@ -906,20 +641,7 @@ function openMyProduct () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -933,20 +655,7 @@ function openSettings () {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -1016,20 +725,7 @@ function openRepayPlan (id) {
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -1044,20 +740,7 @@ function openRepayRecord (id) {
     pageParam: { id },
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
+    navigationBar: navigationBarWhite
   })
 }
 

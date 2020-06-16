@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './win.css'
+import './win.less'
 
 import { openBillDetails } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
@@ -53,7 +53,7 @@ apiready = function () {
             <div class="tit">${item.billDate} 账单</div>
             ${
               item.status === 2
-              ? '<div class="status warning">未按期还款</div>'
+              ? '<div class="status warning"> <i></i> 未按期还款</div>'
               : item.status === 3
               ? '<div class="status normal">今日还款</div>'
               : ''

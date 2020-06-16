@@ -15,6 +15,24 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
 /*
 list: [{
   text: '',
@@ -70,8 +88,9 @@ function openTabLayout(index) {
       animated: false,
       scrollEnabled: true,
       selectedColor: '#66BB6A',
-      color: '#bfbfbf',
+      color: '#606266',
       index: index || 0,
+      fontSize: 12,
       // preload: 4,
       list: [{
         text: "首页",
@@ -136,18 +155,7 @@ function openReg() {
     title: '注册',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#303133',
-      fontSize: 18,
-      fontWeight: 500,
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 注册登录选择
 
@@ -179,18 +187,7 @@ function openSendCode() {
       userType: userType
     },
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 找回密码
 
@@ -202,18 +199,7 @@ function openFindPwd() {
     title: '',
     bgColor: '#fff',
     reload: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: navigationBarWhite
   });
 } // 填写个人信息
 
@@ -230,18 +216,9 @@ function openTodoAuthGeren() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
+    navigationBar: _objectSpread({}, navigationBarWhite, {
+      hideBackButton: true
+    })
   });
 }
 
@@ -257,18 +234,9 @@ function openTodoAuthQiye() {
     animation: {
       type: 'none'
     },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: 'rgba(48,49,51,1)',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
+    navigationBar: _objectSpread({}, navigationBarWhite, {
+      hideBackButton: true
+    })
   });
 } // 企业信息确认
 
@@ -1848,9 +1816,9 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
 var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1897,7 +1865,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2108,7 +2076,7 @@ function appLogin(options, successCallback, errorCallback) {
   }
 
   http.post('/auth/oauth/token', {
-    values: _objectSpread({
+    values: _objectSpread$1({
       loginDevice: api.deviceId,
       // 客户手机设备号(android-imei,IOS-??)
       ipAddress: '',

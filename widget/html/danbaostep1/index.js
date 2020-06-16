@@ -3909,7 +3909,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       }
 
       var tpl = node.map(function (item) {
-        return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</li>");
+        return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">\u300A").concat(item.protocolName, "\u300B</li>");
       });
       $api.byId('protocol').innerHTML = tpl.join('');
     }

@@ -224,7 +224,7 @@ class PageController extends HeaderController {
       return
     }
     let tpl = node.map(item => {
-      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</li>`
+      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
     })
     $api.byId('protocol').innerHTML = tpl.join('')
   }

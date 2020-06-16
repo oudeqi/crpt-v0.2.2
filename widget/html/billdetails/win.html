@@ -10,20 +10,39 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
+  <div class="bg"></div>
   <div class="header">
-    <div class="date"><span id="billDate">XXXX年X月X日</span>账单</div>
-    <div class="txt1">应还(元)</div>
-    <div class="txt2" id="sumRepayTotalAmount">****</div>
-    <div class="txt1">
-      本金 <span id="sumRepayPrincipalAmount">****</span>
-       + 利息 <span id="sumRepayInterestAmount">****</span>
-       + 费用 <span id="sumServiceFee">****</span>
-       + 逾期罚息 <span id="sumRepayPenaltyAmount">****</span>
+    <div class="cur-per">
+      <div class="mc"></div>
+      <div class="date"><span id="billDate">XXXX年X月X日</span>账单</div>
+      <div class="t">
+        <div class="tit">
+          <span class="label">应还(元)</span>
+          <span class="amount big" id="sumRepayTotalAmount">****</span>
+        </div>
+        <div class="total-txt">
+          本金 <span id="sumRepayPrincipalAmount">****</span> + 利息 <span id="sumRepayInterestAmount">****</span>
+          <br>
+          + 费用 <span id="sumServiceFee">****</span>
+          + 逾期罚息 <span id="sumRepayPenaltyAmount">****</span>
+        </div>
+      </div>
+      <p class="tips">
+        还款日将自动还款，请确保您的<strong><span id="bankName" class="bank">***</span><span class="bank">卡（尾号</span><span id="account" class="bank">****</span><span class="bank">）</span></strong>余额充足
+      </p>
     </div>
-    <div class="txt3">
-      还款日将自动还款，请确保您的<strong><span id="bankName">***</span>卡(尾号<span id="account">****</span>)</strong>
-      余额充足
-    </div>
+          
+
+
+
+
+
+
+
+
+
+
+
   </div>
 
   <ul id="list">

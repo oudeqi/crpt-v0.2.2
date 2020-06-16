@@ -1,5 +1,5 @@
 import '../../../app.css'
-import './frm.css'
+import './frm.less'
 
 
 import { openOrderDetails } from '../../../webview.js'
@@ -41,15 +41,14 @@ apiready = function () {
     // 3-已拒绝 4-已撤销 5-还款中 6-到期结清 7-提前结清
     // 8-逾期还款中 9-逾期已结清 10-已退货
     let mapping = {
-      3: 'warning',
-      4: 'repaied',
-      5: 'cancel',
-      6: 'cancel',
-      7: 'cancel',
-      8: 'cancel',
-      9: 'during',
-      9: 'during',
-      10: 'cancel',
+      3: 'refused',
+      4: 'cancel',
+      5: 'repaying',
+      6: 'normalOver',
+      7: 'earlyOver',
+      8: 'overdue',
+      9: 'overdueOver',
+      10: 'back',
     }
     let mapping2 = {
       3: '已拒绝',
@@ -69,6 +68,14 @@ apiready = function () {
               <span>业务单号：${item.orderNo || ''}</span>
               <i class="aui-iconfont aui-icon-right"></i>
             </div>
+            <div class="b">
+              <div class="tit">
+                <div class="amount">贷款金额(元) 
+                  <span class="status ${mapping[item.status]}">${mapping2[item.status] || ''}</span>
+                </div>
+                <span class="num">${numeral(item.payAmount).format('0,0.00')}</span>
+              </div>
+            </div>
             <div class="row2">
               <span>收款方</span>
               ${item.saleCustName || ''}
@@ -80,15 +87,10 @@ apiready = function () {
             <div class="row3">
               <span class="label">贷款产品</span>
               <strong class="produce">${item.productName || ''}</strong>
-              <span class="status ${mapping[item.status]}">${mapping2[item.status] || ''}</span>
+
             </div>
           </div>
-          <div class="b">
-            <div class="tit">
-              <span>贷款金额(元)</span>
-              <span>${numeral(item.payAmount).format('0,0.00')}</span>
-            </div>
-          </div>
+          
         </li>
       `)
     })
