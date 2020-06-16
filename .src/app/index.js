@@ -52,9 +52,9 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
 
-    // openFaceAuth({status: 'error', tips: 'message'})
+    // openTodoAuthQiye({status: 'error', tips: 'message'})
     // return
-    
+
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()

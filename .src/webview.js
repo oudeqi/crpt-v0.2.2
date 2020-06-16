@@ -411,7 +411,7 @@ function openFaceUpload () {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: navigationBarGreen
+    navigationBar: navigationBarWhite
   })
 }
 
@@ -957,7 +957,7 @@ function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status}) {
 }
 
 // 文书送达地址
-function openSendAddress ({gtId, gtCreditId}) {
+function openSendAddress ({gtId, gtCreditId, flowStatus}) {
   api.openTabLayout({
     name: `html/sendaddress/index`,
     title: '文书送达地址',
@@ -965,7 +965,13 @@ function openSendAddress ({gtId, gtCreditId}) {
     bgColor: 'rgba(245,245,245,1)',
     pageParam: {
       gtId, // 担保申请的id
-      gtCreditId // 担保授信id
+      gtCreditId, // 担保授信id
+      flowStatus // 资料录入状态
+      // 0 无填写
+      // 1 担保业务申请填写
+      // 2 反担保人列表
+      // 3 文书送达地址
+      // 4 其他附件上传
     },
     slidBackEnabled: true,
     navigationBar: {

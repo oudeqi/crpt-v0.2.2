@@ -92,7 +92,11 @@ class PageController extends Service {
                                 demandMoney: self.data.demandMoney
                             })
                         } else if (i === 2) {
-                            openSendAddress({gtId: self.data.gtId, gtCreditId: self.data.gtCreditId})
+                            openSendAddress({
+                              gtId: self.data.gtId,
+                              gtCreditId: self.data.gtCreditId,
+                              flowStatus: self.data.flowStatus
+                            })
                         } else {
                             Utils.Router[dom.getAttribute('data-router')]({
                                 pageParam: {

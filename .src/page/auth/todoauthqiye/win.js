@@ -121,17 +121,15 @@ apiready = function() {
       <div class="auth-block ${type}" tapmode="active" id="faceAuthResult">
         <div class="badge">2</div>
         <div class="content">
-          <strong>
-          ${
-            status === 1
-            ? '<span>人脸认证</span>'
-            : status === 2
-            ? '<span>人脸认证人工审核中</span>'
-            : status === 3
-            ? '<span>人脸认证人工审核失败<br />请联系客服</span>'
-            : ''
-          }
-          </strong>
+        ${
+          status === 1
+          ? '<strong>人脸认证</strong>'
+          : status === 2
+          ? '<strong>人脸认证人工审核中...</strong>'
+          : status === 3
+          ? '<strong>人脸认证人工审核失败</strong><p>请联系客服</p>'
+          : ''
+        }
         </div>
       </div>
       `
@@ -180,24 +178,18 @@ apiready = function() {
             title: '人脸认证'
           })
         } else {
-          api.toast({
-            msg: '请先完成第一步'
-          })
+          api.toast({ msg: '请先完成第一步', location: 'middle' })
         }
       }
     }
     if (baseinfo) {
       baseinfo.onclick = function () {
         if (mapping.realAuth.status === 0) {
-          api.toast({
-            msg: '请先完成第一步'
-          })
+          api.toast({ msg: '请先完成第一步', location: 'middle' })
           return
         }
         if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2 || mapping.faceAuth.status === 3) {
-          api.toast({
-            msg: '请先完成第二步'
-          })
+          api.toast({ msg: '请先完成第二步', location: 'middle' })
           return
         }
         openBaseinfoFill()

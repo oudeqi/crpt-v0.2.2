@@ -27,7 +27,7 @@ apiready = function() {
       }
       getPicture(sourceType, function(ret, err) {
         if (ret) {
-          $api.dom($api.byId('face'), 'img').src = ret.data;
+          $api.byId('pic').innerHTML = `<img src="${ret.data}" alt="">`
           facePic = ret.data
         }
       })
@@ -37,10 +37,11 @@ apiready = function() {
   document.querySelector('#submit').onclick = function () {
     if (submitStatus === 'notsubmit') {
       if (!facePic) {
-        return api.toast({ msg: '请选择手持身份证照片' })
+        return api.toast({ msg: '请选择手持身份证照片', location: 'middle' })
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('submit'), 'loading')
+      api.showProgress({ title: '加载中...', text: '', modal: false })
       http.upload('/crpt-cust/saas/bodyverify/submission', {
         files: {
           faceImage: facePic
@@ -48,12 +49,12 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
+        api.hideProgress()
         openAuthResult({status: 'during'})
       }).catch(error => {
         submitStatus = 'notsubmit'
-        api.toast({
-          msg: error.msg || '网络错误'
-        })
+        api.hideProgress()
+        api.toast({ msg: error.msg || '网络错误', location: 'middle' })
         $api.removeCls($api.byId('submit'), 'loading')
       })
     }

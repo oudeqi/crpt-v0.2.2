@@ -10,25 +10,43 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
-  <div class="tips">
-    如果您多次人脸认证失败，需要您上传<strong>本人手持身份证</strong>照片，进入人工审核。
-  </div>
+
   <div class="container">
 
-    <div class="upload" tapmode="active" id="face">
-      <div class="bg">点击拍摄上传</div>
-      <img src="" alt="">
-      <div class="inner"></div>
+    <div class="tips">
+      如果您多次人脸认证失败，需要您上传<strong>本人手持身份证</strong>照片，进行人工审核。
     </div>
+
+    <div class="take-case">
+      <div class="pic" id="pic">
+        
+      </div>
+      <p class="txt">拍摄示例</p>
+    </div>
+    <div class="take-btn" tapmode="active" id="face">点击拍摄/上传</div>
+    
 
     <div class="tit">
       拍摄要求
     </div>
-
     <ul>
       <li>1. 请将人脸正对前方，身份证不可遮挡面部</li>
-      <li>2. 请确保照片中的人脸及身份证正面信息清晰可见</li>
+      <li>2. 请确保照片中人脸及身份证正面信息清晰可见</li>
     </ul>
+    <div class="case">
+      <div class="case-item">
+        <img src="../../image/auth/take-err-case-1.png" alt="">
+        <span>遮挡脸部</span>
+      </div>
+      <div class="case-item">
+        <img src="../../image/auth/take-err-case-2.png" alt="">
+        <span>证件模糊</span>
+      </div>
+      <div class="case-item">
+        <img src="../../image/auth/take-err-case-3.png" alt="">
+        <span>人脸模糊</span>
+      </div>
+    </div>
 
     <div class="btn-box">
       <div class="app_btn" tapmode="active" id="submit">提交</div>

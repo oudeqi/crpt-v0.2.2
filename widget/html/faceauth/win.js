@@ -792,6 +792,20 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+// api.lockSlidPane();
+// api.unlockSlidPane
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: 'rgba(48,49,51,1)',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
 var navigationBarGreen = {
   hideBackButton: false,
   background: 'rgba(102,187,106,1)',
@@ -826,7 +840,7 @@ function openFaceUpload() {
     reload: true,
     bounces: true,
     slidBackEnabled: false,
-    navigationBar: navigationBarGreen
+    navigationBar: navigationBarWhite
   });
 } // 预估额度
 
@@ -1976,7 +1990,8 @@ apiready = function apiready() {
                     });
                   } else {
                     api.toast({
-                      msg: ret.data.info
+                      msg: ret.data.info,
+                      location: 'middle'
                     });
                   }
 

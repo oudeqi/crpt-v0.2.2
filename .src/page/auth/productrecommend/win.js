@@ -101,26 +101,22 @@ class PageController extends Service {
     arr.forEach(item => {
       $api.append(this.el.list, `
         <li tapmode data-id="${item.id || ''}">
-          <div class="l">
-            <div class="col1">
+          <div class="t">
+            ${item.des || ''}
+          </div>
+          <div class="b">
+            <div class="num">
             ${
               item.totalLimit > 0
-              ? `
-              <div class="otw red">${numeral(item.totalLimit).format('0,0.00')}</div>
-              <p>最高可贷(元)</p>
-              `
-              : `
-              <div class="otw red">${item.interestRate}%</div>
-              <p>贷款利率</p>
-              `
+              ? `<strong>${numeral(item.totalLimit).format('0,0')}</strong><span>最高可贷(元)</span>`
+              : `<strong>${item.interestRate}%</strong><span>贷款利率</span>`
             }
             </div>
-            <div class="col2">
-              <p class="otw">${item.des || ''}</p>
-              <p class="otw">${item.introduce || ''}</p>
+            <div class="txt">
+              ${item.introduce || ''}
             </div>
+            <div class="btn" tapmode="active" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
           </div>
-          <div class="btn" tapmode="active" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
         </li>
       `)
     })
@@ -128,9 +124,7 @@ class PageController extends Service {
   }
   // 获取页面数据
   _getPageData (cb) {
-    if (this.state.loading) {
-      return
-    }
+    if (this.state.loading) { return }
     this.state.loading = true
     let { custType } = this.state
     this.getData({ custType }).then(res => {
@@ -153,15 +147,17 @@ class PageController extends Service {
 }
 
 apiready = function() {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
-  const controller = new PageController()
-  controller.bindEvend()
+  })
+
+  const ctrl = new PageController()
+  ctrl.bindEvend()
   api.refreshHeaderLoading()
 
 }

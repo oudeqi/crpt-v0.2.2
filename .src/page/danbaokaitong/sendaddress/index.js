@@ -19,15 +19,39 @@ class PageController extends Service {
 
   constructor() {
     super(...arguments)
-    const { gtCreditId, gtId } = api.pageParam || {}
+    const { gtCreditId, gtId, flowStatus } = api.pageParam || {}
     this.initData = {
+      disabled: true, // 初始状态下，所有控件禁用
       gtId, // 担保申请的id
-      gtCreditId // 担保授信id
+      gtCreditId, // 担保授信id
+      flowStatus, // 资料录入状态
+      // 0 无填写
+      // 1 担保业务申请填写
+      // 2 反担保人列表
+      // 3 文书送达地址
+      // 4 其他附件上传
     }
   }
 
+  __setDisabled () { // 不可编辑
+    this.initData.disabled = true
+  }
+
+  __removeDisabled () { // 可编辑
+    this.initData.disabled = false
+  }
+
   __renderBaseDocument (data) {
+
     $api.byId('custName').value = data.custName || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custName'), 'disabled', true)
+      $api.attr($api.byId('custName'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custName'), 'disabled')
+      $api.attr($api.byId('custName'), 'placeholder', '请输入')
+    }
+
     $api.byId('address').value = data.addrProvince ? `${data.addrProvince}/${data.addrCity}/${data.addrCounty}` : ''
     $api.byId('address').dataset.province = data.addrProvince || ''
     $api.byId('address').dataset.provinceCode = data.addrProvinceCode || ''
@@ -36,9 +60,41 @@ class PageController extends Service {
     $api.byId('address').dataset.county = data.addrCounty || ''
     $api.byId('address').dataset.countyCode = data.addrCountyCode || ''
     $api.byId('addrDetail').value = data.addrDetail || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('addrDetail'), 'disabled', true)
+      $api.attr($api.byId('addrDetail'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('addrDetail'), 'disabled')
+      $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址')
+    }
+
     $api.byId('custAddresseeName').value = data.custAddresseeName || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custAddresseeName'), 'disabled', true)
+      $api.attr($api.byId('custAddresseeName'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custAddresseeName'), 'disabled')
+      $api.attr($api.byId('custAddresseeName'), 'placeholder', '请输入')
+    }
+
     $api.byId('custAddresseePhone').value = data.custAddresseePhone || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custAddresseePhone'), 'disabled', true)
+      $api.attr($api.byId('custAddresseePhone'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custAddresseePhone'), 'disabled')
+      $api.attr($api.byId('custAddresseePhone'), 'placeholder', '请输入')
+    }
+
     $api.byId('custSpouseName').value = data.custSpouseName || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custSpouseName'), 'disabled', true)
+      $api.attr($api.byId('custSpouseName'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custSpouseName'), 'disabled')
+      $api.attr($api.byId('custSpouseName'), 'placeholder', '请输入')
+    }
+
     $api.byId('peiouAddress').value = data.spAddrProvince ? `${data.spAddrProvince}/${data.spAddrCity}/${data.spAddrCounty}` : ''
     $api.byId('peiouAddress').dataset.province = data.spAddrProvince || ''
     $api.byId('peiouAddress').dataset.provinceCode = data.spAddrProvinceCode || ''
@@ -47,8 +103,31 @@ class PageController extends Service {
     $api.byId('peiouAddress').dataset.county = data.spAddrCounty || ''
     $api.byId('peiouAddress').dataset.countyCode = data.spAddrCountyCode || ''
     $api.byId('spAddrDetail').value = data.spAddrDetail || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('spAddrDetail'), 'disabled', true)
+      $api.attr($api.byId('spAddrDetail'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('spAddrDetail'), 'disabled')
+      $api.attr($api.byId('spAddrDetail'), 'placeholder', '详细地址')
+    }
+
     $api.byId('custSpouseAddresseeName').value = data.custSpouseAddresseeName || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custSpouseAddresseeName'), 'disabled', true)
+      $api.attr($api.byId('custSpouseAddresseeName'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custSpouseAddresseeName'), 'disabled')
+      $api.attr($api.byId('custSpouseAddresseeName'), 'placeholder', '详细地址')
+    }
+
     $api.byId('custSpouseAddresseePhone').value = data.custSpouseAddresseePhone || ''
+    if (this.initData.disabled) {
+      $api.attr($api.byId('custSpouseAddresseePhone'), 'disabled', true)
+      $api.attr($api.byId('custSpouseAddresseePhone'), 'placeholder', '')
+    } else {
+      $api.removeAttr($api.byId('custSpouseAddresseePhone'), 'disabled')
+      $api.attr($api.byId('custSpouseAddresseePhone'), 'placeholder', '详细地址')
+    }
   }
 
   __renderListDocument (array) {
@@ -69,7 +148,7 @@ class PageController extends Service {
                   <div class="form-label">担保人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" select-trigger="name" value="${item.gtName || ''}" placeholder="请输入">
+                      <input ${this.initData.disabled ? 'disabled' : ''} type="text" select-trigger="name" value="${item.gtName || ''}" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -94,7 +173,7 @@ class PageController extends Service {
                   <div class="form-label"></div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddrDetail || ''}" select-trigger="addressDetail" placeholder="详细地址">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtAddrDetail || ''}" select-trigger="addressDetail" placeholder="详细地址">
                     </div>
                   </div>
                 </div>
@@ -102,7 +181,7 @@ class PageController extends Service {
                   <div class="form-label">收件人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddresseeName || ''}" select-trigger="receiveName" placeholder="请输入">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtAddresseeName || ''}" select-trigger="receiveName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -110,7 +189,7 @@ class PageController extends Service {
                   <div class="form-label">联系电话</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtAddresseePhone || ''}" select-trigger="phone" placeholder="请输入">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtAddresseePhone || ''}" select-trigger="phone" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -125,7 +204,7 @@ class PageController extends Service {
                   <div class="form-label">担保人配偶</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseName || ''}" select-trigger="peiouName" placeholder="请输入">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtSpouseName || ''}" select-trigger="peiouName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -150,7 +229,7 @@ class PageController extends Service {
                   <div class="form-label"></div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpAddrDetail || ''}" select-trigger="peiouAddressDetail" placeholder="详细地址">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtSpAddrDetail || ''}" select-trigger="peiouAddressDetail" placeholder="详细地址">
                     </div>
                   </div>
                 </div>
@@ -158,7 +237,7 @@ class PageController extends Service {
                   <div class="form-label">收件人</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseAddresseeName || ''}" select-trigger="peiouReceiveName" placeholder="请输入">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtSpouseAddresseeName || ''}" select-trigger="peiouReceiveName" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -166,7 +245,7 @@ class PageController extends Service {
                   <div class="form-label">联系电话</div>
                   <div class="form-crtl">
                     <div class="txt-input">
-                      <input type="text" value="${item.gtSpouseAddresseePhone || ''}" select-trigger="peiouPhone" placeholder="请输入">
+                      <input type="text" ${this.initData.disabled ? 'disabled' : ''} value="${item.gtSpouseAddresseePhone || ''}" select-trigger="peiouPhone" placeholder="请输入">
                     </div>
                   </div>
                 </div>
@@ -186,7 +265,17 @@ class PageController extends Service {
     this.__renderListDocument(gtCounterList || [])
   }
 
+  __initStatus () {
+    let flowStatus = parseInt(this.initData.flowStatus)
+    if (!isNaN(flowStatus) && flowStatus >=4) {
+      this.__setDisabled()
+    } else {
+      this.__removeDisabled()
+    }
+  }
+
   async getPageData () {
+    this.__initStatus()
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
       const res = await this.querySendAddress(this.initData.gtCreditId)
@@ -217,10 +306,12 @@ class PageController extends Service {
       }
     })
   }
+
   __initAddress () {
     document.querySelector('body').addEventListener('click', e => {
       const address = $api.closest(event.target, '[click-trigger="address"]')
       if (address) {
+        if (this.initData.disabled) { return }
         CitySelector(selected => {
           let a = selected[0]
           let b = selected[1]
@@ -449,6 +540,11 @@ class PageController extends Service {
   }
 
   submit () {
+    let flowStatus = parseInt(this.initData.flowStatus)
+    if (!isNaN(flowStatus) && flowStatus >=4) {
+      api.toast({ msg: '文书送达地址已不可修改', location: 'middle' })
+      return
+    }
     this.__initValidation().validate({
       error: function (msg) {
         api.toast({ msg, location: 'middle' })

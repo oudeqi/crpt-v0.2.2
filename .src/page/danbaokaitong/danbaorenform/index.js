@@ -61,6 +61,7 @@ class PageController extends Service {
       others: 6, // '其他',
     }
     this.initData = {
+      disabled: true, // 初始状态下，所有控件禁用
       // gtId	int	担保申请id
       // gtCreditId	int	担保授信id
       gtCreditId, // 担保授信id
@@ -76,6 +77,106 @@ class PageController extends Service {
     this.marriage = ['未婚', '已婚', '已婚有子女', '离异后未再婚']
     // 【本科及以上、大专、中专或高中、初中或以下】
     this.education = ['本科及以上', '大专', '中专或高中', '初中或以下']
+  }
+
+  __setDisabled () { // 不可编辑
+    this.initData.disabled = true
+    $api.attr($api.byId('name'), 'disabled', true)
+    $api.attr($api.byId('name'), 'placeholder', '')
+
+    $api.attr($api.byId('phone'), 'disabled', true)
+    $api.attr($api.byId('phone'), 'placeholder', '')
+
+    $api.attr($api.byId('certNo'), 'disabled', true)
+    $api.attr($api.byId('certNo'), 'placeholder', '')
+
+    let accountNature = Array.from(document.querySelectorAll('[name="accountNature"]'))
+    accountNature.forEach(item => {
+      $api.attr(item, 'disabled', true)
+    })
+
+    $api.attr($api.byId('addrDetail'), 'disabled', true)
+    $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址')
+
+    $api.attr($api.byId('occupation'), 'disabled', true)
+    $api.attr($api.byId('occupation'), 'placeholder', '')
+
+    $api.attr($api.byId('workAddrDetail'), 'disabled', true)
+    $api.attr($api.byId('workAddrDetail'), 'placeholder', '工作详细地址')
+
+    $api.attr($api.byId('bankName'), 'disabled', true)
+    $api.attr($api.byId('bankName'), 'placeholder', '')
+
+    $api.attr($api.byId('bankCardNo'), 'disabled', true)
+    $api.attr($api.byId('bankCardNo'), 'placeholder', '')
+
+    $api.attr($api.byId('openBank'), 'disabled', true)
+    $api.attr($api.byId('openBank'), 'placeholder', '')
+
+    $api.attr($api.byId('spouseName'), 'disabled', true)
+    $api.attr($api.byId('spouseName'), 'placeholder', '')
+
+    $api.attr($api.byId('spousePhone'), 'disabled', true)
+    $api.attr($api.byId('spousePhone'), 'placeholder', '')
+
+    $api.attr($api.byId('spouseIncome'), 'disabled', true)
+    $api.attr($api.byId('spouseIncome'), 'placeholder', '')
+
+    $api.attr($api.byId('spouseOccupation'), 'disabled', true)
+    $api.attr($api.byId('spouseOccupation'), 'placeholder', '')
+
+    $api.attr($api.byId('spouseWorkCompany'), 'disabled', true)
+    $api.attr($api.byId('spouseWorkCompany'), 'placeholder', '')
+  }
+
+  __removeDisabled () { // 可编辑
+    this.initData.disabled = false
+    $api.removeAttr($api.byId('name'), 'disabled')
+    $api.attr($api.byId('name'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('phone'), 'disabled')
+    $api.attr($api.byId('phone'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('certNo'), 'disabled')
+    $api.attr($api.byId('certNo'), 'placeholder', '请输入')
+
+    let accountNature = Array.from(document.querySelectorAll('[name="accountNature"]'))
+    accountNature.forEach(item => {
+      $api.removeAttr(item, 'disabled')
+    })
+
+    $api.removeAttr($api.byId('addrDetail'), 'disabled')
+    $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址')
+
+    $api.removeAttr($api.byId('occupation'), 'disabled')
+    $api.attr($api.byId('occupation'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('workAddrDetail'), 'disabled')
+    $api.attr($api.byId('workAddrDetail'), 'placeholder', '工作详细地址')
+
+    $api.removeAttr($api.byId('bankName'), 'disabled')
+    $api.attr($api.byId('bankName'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('bankCardNo'), 'disabled')
+    $api.attr($api.byId('bankCardNo'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('openBank'), 'disabled')
+    $api.attr($api.byId('openBank'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('spouseName'), 'disabled')
+    $api.attr($api.byId('spouseName'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('spousePhone'), 'disabled')
+    $api.attr($api.byId('spousePhone'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('spouseIncome'), 'disabled')
+    $api.attr($api.byId('spouseIncome'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('spouseOccupation'), 'disabled')
+    $api.attr($api.byId('spouseOccupation'), 'placeholder', '请输入')
+
+    $api.removeAttr($api.byId('spouseWorkCompany'), 'disabled')
+    $api.attr($api.byId('spouseWorkCompany'), 'placeholder', '请输入')
   }
 
   __pageDataFillBack (data) {
@@ -189,17 +290,6 @@ class PageController extends Service {
     return new Validation(cfg)
   }
 
-  __bindNavBtnEvent () {
-    api.addEventListener({
-      name: 'navitembtn'
-    }, (ret, err) => {
-      console.log(JSON.stringify(ret))
-      if (ret.type === 'left') {
-        api.closeWin()
-      }
-    })
-  }
-
   __bindCollapseEvent () {
     $api.byId('collapse').onclick = e => {
       const collapse = $api.closest(event.target, '.collapse')
@@ -300,6 +390,7 @@ class PageController extends Service {
 
   __InitRelationship () {
     $api.byId('relationship').onclick = (e) => {
+      if (this.initData.disabled) { return }
       ActionSheet('与借款人关系', this.relationship, (index) => {
         e.target.value = this.relationship[index]
         e.target.dataset.value = index + 1
@@ -309,6 +400,7 @@ class PageController extends Service {
 
   __InitMarriage () {
     $api.byId('marriage').onclick = (e) => {
+      if (this.initData.disabled) { return }
       ActionSheet('婚姻状况', this.marriage, (index) => {
         e.target.value = this.marriage[index]
         e.target.dataset.value = index + 1
@@ -318,6 +410,7 @@ class PageController extends Service {
 
   __InitEducation () {
     $api.byId('education').onclick = (e) => {
+      if (this.initData.disabled) { return }
       ActionSheet('请选择学历', this.education, (index) => {
         e.target.value = this.education[index]
         e.target.dataset.value = this.education[index]
@@ -327,6 +420,7 @@ class PageController extends Service {
 
   __initAddress () {
     $api.byId('address').onclick = (e) => {
+      if (this.initData.disabled) { return }
       CitySelector(selected => {
         console.log(JSON.stringify(selected))
         let a = selected[0]
@@ -345,6 +439,7 @@ class PageController extends Service {
 
   __initWorkAddress () {
     $api.byId('workAddress').onclick = (e) => {
+      if (this.initData.disabled) { return }
       CitySelector(selected => {
         console.log(JSON.stringify(selected))
         let a = selected[0]
@@ -381,6 +476,7 @@ class PageController extends Service {
 
   async __bindIDCardOcr () {
     $api.byId('idCardOcrBtn').onclick = () => {
+      if (this.initData.disabled) { return }
       let btns = ['相机', '相册']
       let sourceType = ''
       ActionSheet('请选择', btns, index => {
@@ -417,6 +513,7 @@ class PageController extends Service {
 
   async __bindBankOcr () {
     $api.byId('bankOcrBtn').onclick = () => {
+      if (this.initData.disabled) { return }
       let btns = ['相机', '相册']
       let sourceType = ''
       ActionSheet('请选择', btns, index => {
@@ -443,7 +540,6 @@ class PageController extends Service {
   }
 
   bindEvent () {
-    this.__bindNavBtnEvent()
     this.__bindCollapseEvent()
     this.__bindGoFangchanAndCheliang()
     this.__bindIDCardOcr()
@@ -457,6 +553,12 @@ class PageController extends Service {
     if (!gtCounterId) {
       api.refreshHeaderLoadDone()
       return false
+    }
+    let status = parseInt(this.initData.status)
+    if (!isNaN(status) && status >=3) {
+      this.__setDisabled()
+    } else {
+      this.__removeDisabled()
     }
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
@@ -524,13 +626,15 @@ class PageController extends Service {
 }
 
 apiready = function () {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   new NumberLimit($api.byId('spouseIncome')) // 限制配偶年收入输入
   const ctrl = new PageController()
   ctrl.bindEvent()
@@ -541,6 +645,7 @@ apiready = function () {
   }, function(ret, err){
     ctrl.getPageDate()
   })
+
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate()
   })

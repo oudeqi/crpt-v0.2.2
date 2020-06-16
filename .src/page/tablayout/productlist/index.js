@@ -61,7 +61,7 @@ class PageController extends Service {
             id, open: 0 // 1 已开通， 0未开通
           })
         } else {
-          api.toast({ msg: 'id 不存在' })
+          api.toast({ msg: 'id 不存在', location: 'middle' })
         }
       }
     }
@@ -69,10 +69,7 @@ class PageController extends Service {
   // 去担保开通页面
   __goDanbao (id, name) {
     this.queryDanbaoStatus().then(res => {
-      api.toast({
-        msg: '已有开通的担保产品',
-        location: 'middle'
-      })
+      api.toast({ msg: '已有开通的担保产品', location: 'middle' })
     }).catch(error => {
       if (error.code === 3002) { // 无担保产品
         openDanbaoKaitong({
@@ -80,10 +77,7 @@ class PageController extends Service {
           productId: id,
         })
       } else {
-        api.toast({
-          msg: error.msg || '查询担保状态失败',
-          location: 'middle'
-        })
+        api.toast({ msg: error.msg || '查询担保状态失败', location: 'middle' })
       }
     })
   }
@@ -93,26 +87,22 @@ class PageController extends Service {
     arr.forEach(item => {
       $api.append(this.el.list, `
         <li tapmode data-id="${item.id || ''}">
-          <div class="l">
-            <div class="col1">
+          <div class="t">
+            ${item.des || ''}
+          </div>
+          <div class="b">
+            <div class="num">
             ${
               item.totalLimit > 0
-              ? `
-              <div class="otw red">${numeral(item.totalLimit).format('0,0.00')}</div>
-              <p>最高可贷(元)</p>
-              `
-              : `
-              <div class="otw red">${item.interestRate}%</div>
-              <p>贷款利率</p>
-              `
+              ? `<strong>${numeral(item.totalLimit).format('0,0')}</strong><span>最高可贷(元)</span>`
+              : `<strong>${item.interestRate}%</strong><span>贷款利率</span>`
             }
             </div>
-            <div class="col2">
-              <p class="otw">${item.des || ''}</p>
-              <p class="otw">${item.introduce || ''}</p>
+            <div class="txt">
+              ${item.introduce || ''}
             </div>
+            <div class="btn" tapmode="active" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
           </div>
-          <div class="btn" tapmode="active" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
         </li>
       `)
     })
@@ -136,7 +126,7 @@ class PageController extends Service {
         $api.byId('nodata').style.display = 'block'
       }
     } catch (error) {
-      api.toast({ msg: error.meaasge || '数据加载失败' })
+      api.toast({ msg: error.meaasge || '数据加载失败', location: 'middle' })
     }
     this.state.loading = false
     api.refreshHeaderLoadDone()
@@ -144,13 +134,15 @@ class PageController extends Service {
 }
 
 apiready = function() {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   const ctrl = new PageController()
   ctrl.bindEvend()
   ctrl.getPageData()

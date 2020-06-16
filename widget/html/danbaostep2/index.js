@@ -1412,7 +1412,8 @@ function openDanbaoRenList() {
 
 function openSendAddress(_ref11) {
   var gtId = _ref11.gtId,
-      gtCreditId = _ref11.gtCreditId;
+      gtCreditId = _ref11.gtCreditId,
+      flowStatus = _ref11.flowStatus;
   api.openTabLayout({
     name: "html/sendaddress/index",
     title: '文书送达地址',
@@ -1421,7 +1422,14 @@ function openSendAddress(_ref11) {
     pageParam: {
       gtId: gtId,
       // 担保申请的id
-      gtCreditId: gtCreditId // 担保授信id
+      gtCreditId: gtCreditId,
+      // 担保授信id
+      flowStatus: flowStatus // 资料录入状态
+      // 0 无填写
+      // 1 担保业务申请填写
+      // 2 反担保人列表
+      // 3 文书送达地址
+      // 4 其他附件上传
 
     },
     slidBackEnabled: true,
@@ -3427,7 +3435,8 @@ var PageController = /*#__PURE__*/function (_Service) {
             } else if (i === 2) {
               openSendAddress({
                 gtId: self.data.gtId,
-                gtCreditId: self.data.gtCreditId
+                gtCreditId: self.data.gtCreditId,
+                flowStatus: self.data.flowStatus
               });
             } else {
               Utils$1.Router[dom.getAttribute('data-router')]({

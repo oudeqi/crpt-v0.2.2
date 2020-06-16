@@ -6,7 +6,7 @@ openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
 
 apiready = function() {
-  
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -70,7 +70,7 @@ apiready = function() {
         if (ret.data.result === 'YES') {
           openAuthResult({status: 'success'})
         } else {
-          api.toast({ msg: ret.data.info })
+          api.toast({ msg: ret.data.info, location: 'middle' })
         }
       })
     }

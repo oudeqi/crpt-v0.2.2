@@ -2204,21 +2204,52 @@ var PageController = /*#__PURE__*/function (_Service) {
 
     var _ref = api.pageParam || {},
         gtCreditId = _ref.gtCreditId,
-        gtId = _ref.gtId;
+        gtId = _ref.gtId,
+        flowStatus = _ref.flowStatus;
 
     _this.initData = {
+      disabled: true,
+      // 初始状态下，所有控件禁用
       gtId: gtId,
       // 担保申请的id
-      gtCreditId: gtCreditId // 担保授信id
+      gtCreditId: gtCreditId,
+      // 担保授信id
+      flowStatus: flowStatus // 资料录入状态
+      // 0 无填写
+      // 1 担保业务申请填写
+      // 2 反担保人列表
+      // 3 文书送达地址
+      // 4 其他附件上传
 
     };
     return _this;
   }
 
   createClass(PageController, [{
+    key: "__setDisabled",
+    value: function __setDisabled() {
+      // 不可编辑
+      this.initData.disabled = true;
+    }
+  }, {
+    key: "__removeDisabled",
+    value: function __removeDisabled() {
+      // 可编辑
+      this.initData.disabled = false;
+    }
+  }, {
     key: "__renderBaseDocument",
     value: function __renderBaseDocument(data) {
       $api.byId('custName').value = data.custName || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custName'), 'disabled', true);
+        $api.attr($api.byId('custName'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custName'), 'disabled');
+        $api.attr($api.byId('custName'), 'placeholder', '请输入');
+      }
+
       $api.byId('address').value = data.addrProvince ? "".concat(data.addrProvince, "/").concat(data.addrCity, "/").concat(data.addrCounty) : '';
       $api.byId('address').dataset.province = data.addrProvince || '';
       $api.byId('address').dataset.provinceCode = data.addrProvinceCode || '';
@@ -2227,9 +2258,45 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('address').dataset.county = data.addrCounty || '';
       $api.byId('address').dataset.countyCode = data.addrCountyCode || '';
       $api.byId('addrDetail').value = data.addrDetail || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('addrDetail'), 'disabled', true);
+        $api.attr($api.byId('addrDetail'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('addrDetail'), 'disabled');
+        $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址');
+      }
+
       $api.byId('custAddresseeName').value = data.custAddresseeName || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custAddresseeName'), 'disabled', true);
+        $api.attr($api.byId('custAddresseeName'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custAddresseeName'), 'disabled');
+        $api.attr($api.byId('custAddresseeName'), 'placeholder', '请输入');
+      }
+
       $api.byId('custAddresseePhone').value = data.custAddresseePhone || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custAddresseePhone'), 'disabled', true);
+        $api.attr($api.byId('custAddresseePhone'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custAddresseePhone'), 'disabled');
+        $api.attr($api.byId('custAddresseePhone'), 'placeholder', '请输入');
+      }
+
       $api.byId('custSpouseName').value = data.custSpouseName || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custSpouseName'), 'disabled', true);
+        $api.attr($api.byId('custSpouseName'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custSpouseName'), 'disabled');
+        $api.attr($api.byId('custSpouseName'), 'placeholder', '请输入');
+      }
+
       $api.byId('peiouAddress').value = data.spAddrProvince ? "".concat(data.spAddrProvince, "/").concat(data.spAddrCity, "/").concat(data.spAddrCounty) : '';
       $api.byId('peiouAddress').dataset.province = data.spAddrProvince || '';
       $api.byId('peiouAddress').dataset.provinceCode = data.spAddrProvinceCode || '';
@@ -2238,16 +2305,44 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('peiouAddress').dataset.county = data.spAddrCounty || '';
       $api.byId('peiouAddress').dataset.countyCode = data.spAddrCountyCode || '';
       $api.byId('spAddrDetail').value = data.spAddrDetail || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('spAddrDetail'), 'disabled', true);
+        $api.attr($api.byId('spAddrDetail'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('spAddrDetail'), 'disabled');
+        $api.attr($api.byId('spAddrDetail'), 'placeholder', '详细地址');
+      }
+
       $api.byId('custSpouseAddresseeName').value = data.custSpouseAddresseeName || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custSpouseAddresseeName'), 'disabled', true);
+        $api.attr($api.byId('custSpouseAddresseeName'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custSpouseAddresseeName'), 'disabled');
+        $api.attr($api.byId('custSpouseAddresseeName'), 'placeholder', '详细地址');
+      }
+
       $api.byId('custSpouseAddresseePhone').value = data.custSpouseAddresseePhone || '';
+
+      if (this.initData.disabled) {
+        $api.attr($api.byId('custSpouseAddresseePhone'), 'disabled', true);
+        $api.attr($api.byId('custSpouseAddresseePhone'), 'placeholder', '');
+      } else {
+        $api.removeAttr($api.byId('custSpouseAddresseePhone'), 'disabled');
+        $api.attr($api.byId('custSpouseAddresseePhone'), 'placeholder', '详细地址');
+      }
     }
   }, {
     key: "__renderListDocument",
     value: function __renderListDocument(array) {
+      var _this2 = this;
+
       var list = $api.byId('list');
       list.innerHTML = '';
       array.forEach(function (item, index) {
-        var tpl = "\n      <div class=\"item\">\n        <div class=\"item-header\">\n          \u62C5\u4FDD\u4EBA".concat(index + 1, "\n        </div>\n        <div class=\"item-body\">\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" select-trigger=\"name\" value=\"").concat(item.gtName || '', "\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtAddrProvince ? "".concat(item.gtAddrProvince, "/").concat(item.gtAddrCity, "/").concat(item.gtAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"address\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddrDetail || '', "\" select-trigger=\"addressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseeName || '', "\" select-trigger=\"receiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtAddresseePhone || '', "\" select-trigger=\"phone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u914D\u5076\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA\u914D\u5076</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseName || '', "\" select-trigger=\"peiouName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtSpAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtSpAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtSpAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtSpAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtSpAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtSpAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtSpAddrProvince ? "".concat(item.gtSpAddrProvince, "/").concat(item.gtSpAddrCity, "/").concat(item.gtSpAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"peiouAddress\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpAddrDetail || '', "\" select-trigger=\"peiouAddressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseeName || '', "\" select-trigger=\"peiouReceiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" value=\"").concat(item.gtSpouseAddresseePhone || '', "\" select-trigger=\"peiouPhone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      ");
+        var tpl = "\n      <div class=\"item\">\n        <div class=\"item-header\">\n          \u62C5\u4FDD\u4EBA".concat(index + 1, "\n        </div>\n        <div class=\"item-body\">\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input ").concat(_this2.initData.disabled ? 'disabled' : '', " type=\"text\" select-trigger=\"name\" value=\"").concat(item.gtName || '', "\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtAddrProvince ? "".concat(item.gtAddrProvince, "/").concat(item.gtAddrCity, "/").concat(item.gtAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"address\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtAddrDetail || '', "\" select-trigger=\"addressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtAddresseeName || '', "\" select-trigger=\"receiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtAddresseePhone || '', "\" select-trigger=\"phone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"collapse\" collapse=\"show\">\n            <div class=\"collapse-header\" click-trigger=\"header\">\u62C5\u4FDD\u4EBA\u914D\u5076\u5730\u5740</div>\n            <div class=\"collapse-body\">\n              <div class=\"form\">\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u62C5\u4FDD\u4EBA\u914D\u5076</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtSpouseName || '', "\" select-trigger=\"peiouName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u9001\u8FBE\u5730\u5740</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"city-select\">\n                      <input type=\"text\"\n                        data-province=\"").concat(item.gtSpAddrProvince || '', "\"\n                        data-province-code=\"").concat(item.gtSpAddrProvinceCode || '', "\"\n                        data-city=\"").concat(item.gtSpAddrCity || '', "\"\n                        data-city-code=\"").concat(item.gtSpAddrCityCode || '', "\"\n                        data-county=\"").concat(item.gtSpAddrCounty || '', "\"\n                        data-county-code=\"").concat(item.gtSpAddrCountyCode || '', "\"\n                        value=\"").concat(item.gtSpAddrProvince ? "".concat(item.gtSpAddrProvince, "/").concat(item.gtSpAddrCity, "/").concat(item.gtSpAddrCounty) : '', "\"\n                        click-trigger=\"address\" select-trigger=\"peiouAddress\" readonly placeholder=\"\u57CE\u5E02/\u533A\u57DF\">\n                      <span></span>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\"></div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtSpAddrDetail || '', "\" select-trigger=\"peiouAddressDetail\" placeholder=\"\u8BE6\u7EC6\u5730\u5740\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u6536\u4EF6\u4EBA</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtSpouseAddresseeName || '', "\" select-trigger=\"peiouReceiveName\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-item\">\n                  <div class=\"form-label\">\u8054\u7CFB\u7535\u8BDD</div>\n                  <div class=\"form-crtl\">\n                    <div class=\"txt-input\">\n                      <input type=\"text\" ").concat(_this2.initData.disabled ? 'disabled' : '', " value=\"").concat(item.gtSpouseAddresseePhone || '', "\" select-trigger=\"peiouPhone\" placeholder=\"\u8BF7\u8F93\u5165\">\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      ");
         $api.append(list, tpl);
       });
     }
@@ -2263,6 +2358,17 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.__renderListDocument(gtCounterList || []);
     }
   }, {
+    key: "__initStatus",
+    value: function __initStatus() {
+      var flowStatus = parseInt(this.initData.flowStatus);
+
+      if (!isNaN(flowStatus) && flowStatus >= 4) {
+        this.__setDisabled();
+      } else {
+        this.__removeDisabled();
+      }
+    }
+  }, {
     key: "getPageData",
     value: function () {
       var _getPageData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
@@ -2271,43 +2377,45 @@ var PageController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.__initStatus();
+
                 api.showProgress({
                   title: '加载中...',
                   text: '',
                   modal: false
                 });
-                _context.prev = 1;
-                _context.next = 4;
+                _context.prev = 2;
+                _context.next = 5;
                 return this.querySendAddress(this.initData.gtCreditId);
 
-              case 4:
+              case 5:
                 res = _context.sent;
 
                 if (res.code === 200) {
                   this.__pageDataFillBack(res.data);
                 }
 
-                _context.next = 11;
+                _context.next = 12;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
                 api.toast({
                   msg: _context.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 11:
+              case 12:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[2, 9]]);
       }));
 
       function getPageData() {
@@ -2342,10 +2450,16 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__initAddress",
     value: function __initAddress() {
+      var _this3 = this;
+
       document.querySelector('body').addEventListener('click', function (e) {
         var address = $api.closest(event.target, '[click-trigger="address"]');
 
         if (address) {
+          if (_this3.initData.disabled) {
+            return;
+          }
+
           CitySelector(function (selected) {
             var a = selected[0];
             var b = selected[1];
@@ -2579,7 +2693,17 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "submit",
     value: function submit() {
-      var _this2 = this;
+      var _this4 = this;
+
+      var flowStatus = parseInt(this.initData.flowStatus);
+
+      if (!isNaN(flowStatus) && flowStatus >= 4) {
+        api.toast({
+          msg: '文书送达地址已不可修改',
+          location: 'middle'
+        });
+        return;
+      }
 
       this.__initValidation().validate({
         error: function error(msg) {
@@ -2596,7 +2720,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                 switch (_context2.prev = _context2.next) {
                   case 0:
                     console.log(JSON.stringify(data));
-                    sendData = _objectSpread$1({}, data, {}, _this2.initData);
+                    sendData = _objectSpread$1({}, data, {}, _this4.initData);
                     api.showProgress({
                       title: '加载中...',
                       text: '',
@@ -2604,7 +2728,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     });
                     _context2.prev = 3;
                     _context2.next = 6;
-                    return _this2.saveApply(sendData);
+                    return _this4.saveApply(sendData);
 
                   case 6:
                     res = _context2.sent;

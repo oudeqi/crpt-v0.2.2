@@ -384,6 +384,39 @@ html, body {
   -webkit-box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
           box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
 }
+.auth-block.authing .badge {
+  background: #66bb6a;
+  border: 1px solid #66bb6a;
+  color: #fff;
+}
+.auth-block.authing .content {
+  background: rgba(102, 187, 106, 0.1);
+  -webkit-box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+          box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+  border: 1px solid #66bb6a;
+}
+.auth-block.authing .content strong {
+  margin-top: 30px;
+}
+.auth-block.authing .content::after {
+  content: "";
+  display: none;
+}
+.auth-block.autherror .badge {
+  background: #66bb6a;
+  border: 1px solid #66bb6a;
+  color: #fff;
+}
+.auth-block.autherror .content {
+  background: rgba(102, 187, 106, 0.1);
+  -webkit-box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+          box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+  border: 1px solid #66bb6a;
+}
+.auth-block.autherror .content::after {
+  content: "";
+  display: none;
+}
 .auth-block.authpass .badge {
   background: #66bb6a;
   border: 1px solid #66bb6a;

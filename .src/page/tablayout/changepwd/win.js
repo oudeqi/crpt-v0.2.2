@@ -11,14 +11,10 @@ function getUserPhone (fn) {
     if (res.data.phone) {
       fn(res.data.phone)
     } else {
-      api.toast({
-        msg: '获取用户手机号失败'
-      })
+      api.toast({ msg: '获取用户手机号失败', location: 'middle' })
     }
   }).catch(error => {
-    api.toast({
-      msg: error.msg || '获取用户手机号失败'
-    })
+    api.toast({ msg: error.msg || '获取用户手机号失败', location: 'middle' })
   })
 }
 

@@ -1794,12 +1794,14 @@ function getUserPhone(fn) {
       fn(res.data.phone);
     } else {
       api.toast({
-        msg: '获取用户手机号失败'
+        msg: '获取用户手机号失败',
+        location: 'middle'
       });
     }
   })["catch"](function (error) {
     api.toast({
-      msg: error.msg || '获取用户手机号失败'
+      msg: error.msg || '获取用户手机号失败',
+      location: 'middle'
     });
   });
 }

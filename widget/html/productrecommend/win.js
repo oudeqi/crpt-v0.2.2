@@ -3268,7 +3268,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this3 = this;
 
       arr.forEach(function (item) {
-        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"l\">\n            <div class=\"col1\">\n            ").concat(item.totalLimit > 0 ? "\n              <div class=\"otw red\">".concat(numeral(item.totalLimit).format('0,0.00'), "</div>\n              <p>\u6700\u9AD8\u53EF\u8D37(\u5143)</p>\n              ") : "\n              <div class=\"otw red\">".concat(item.interestRate, "%</div>\n              <p>\u8D37\u6B3E\u5229\u7387</p>\n              "), "\n            </div>\n            <div class=\"col2\">\n              <p class=\"otw\">").concat(item.des || '', "</p>\n              <p class=\"otw\">").concat(item.introduce || '', "</p>\n            </div>\n          </div>\n          <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-type=\"").concat(item.type || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n        </li>\n      "));
+        $api.append(_this3.el.list, "\n        <li tapmode data-id=\"".concat(item.id || '', "\">\n          <div class=\"t\">\n            ").concat(item.des || '', "\n          </div>\n          <div class=\"b\">\n            <div class=\"num\">\n            ").concat(item.totalLimit > 0 ? "<strong>".concat(numeral(item.totalLimit).format('0,0'), "</strong><span>\u6700\u9AD8\u53EF\u8D37(\u5143)</span>") : "<strong>".concat(item.interestRate, "%</strong><span>\u8D37\u6B3E\u5229\u7387</span>"), "\n            </div>\n            <div class=\"txt\">\n              ").concat(item.introduce || '', "\n            </div>\n            <div class=\"btn\" tapmode=\"active\" data-id=\"").concat(item.id || '', "\" data-type=\"").concat(item.type || '', "\" data-name=\"").concat(item.name || '', "\">\u7ACB\u5373\u5F00\u901A</div>\n          </div>\n        </li>\n      "));
       });
       api.parseTapmode();
     } // 获取页面数据
@@ -3323,7 +3323,7 @@ apiready = function apiready() {
       api.closeWin();
     }
   });
-  var controller = new PageController();
-  controller.bindEvend();
+  var ctrl = new PageController();
+  ctrl.bindEvend();
   api.refreshHeaderLoading();
 };

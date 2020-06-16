@@ -45,7 +45,17 @@ class pageController extends Service {
     }
   }
 
-  _renderList (key, arr) {
+  __setDisabled () {
+    $api.addCls($api.byId('add'), 'hidden')
+    $api.addCls($api.byId('fixed_footer'), 'hidden')
+  }
+
+  __removeDisabled () {
+    $api.removeCls($api.byId('add'), 'hidden')
+    $api.removeCls($api.byId('fixed_footer'), 'hidden')
+  }
+
+  __renderList (key, arr) {
     const category = this.category
     const signed = arr.filter(item => item.status === 5) || []
     const signedLength = signed.length
@@ -105,8 +115,9 @@ class pageController extends Service {
         $api.byId('individualBusiness').innerHTML = ''
         $api.byId('others').innerHTML = ''
         for (key of Object.keys(res.data)) {
-          this._renderList(key, res.data[key])
+          this.__renderList(key, res.data[key])
         }
+        this.__removeDisabled()
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -115,14 +126,14 @@ class pageController extends Service {
     api.refreshHeaderLoadDone()
   }
 
-  _resetAllCheckbox () {
+  __resetAllCheckbox () {
     const body = document.querySelector('body')
     const allBodyCheckbox = $api.domAll(body, 'input[checkbox-trigger="body"]')
     let allChecked = Array.from(allBodyCheckbox).every(item => item.checked)
     $api.byId('allChecked').checked = allChecked
   }
 
-  _resetParentcheckbox (current) {
+  __resetParentcheckbox (current) {
     const collapse = $api.closest(current, '.collapse')
     const parent = $api.dom(collapse, '[checkbox-trigger="header"]')
     const allBodyCheckbox = $api.domAll(collapse, '[checkbox-trigger="body"]')
@@ -159,7 +170,7 @@ class pageController extends Service {
             bodyCheckbox[key].checked = headerCheckbox.checked
           }
         }
-        this._resetAllCheckbox()
+        this.__resetAllCheckbox()
       }
     })
 
@@ -182,8 +193,8 @@ class pageController extends Service {
     document.querySelector('body').addEventListener('click', e => {
       const bodyCheckbox = $api.closest(event.target, '[checkbox-trigger="body"]')
       if (bodyCheckbox) {
-        this._resetParentcheckbox(bodyCheckbox)
-        this._resetAllCheckbox()
+        this.__resetParentcheckbox(bodyCheckbox)
+        this.__resetAllCheckbox()
       }
     })
 
@@ -214,7 +225,7 @@ class pageController extends Service {
       const tpl = `
       <li class="collapse-item">
         <label class="checkbox">
-          <input type="checkbox" checkbox-trigger="body">
+          <input type="checkbox" disabled checkbox-trigger="body">
           <span></span>
         </label>
         <div class="cont" click-trigger="item" data-id="" data-type="others">
@@ -227,8 +238,8 @@ class pageController extends Service {
       $api.append(othersBody, tpl)
       console.log(JSON.stringify($api.byId('othersNum')))
       $api.byId('othersNum').innerHTML = `0/${length + 1}人`
-      this._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
-      this._resetAllCheckbox()
+      this.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
+      this.__resetAllCheckbox()
     }
 
     // 删除其他，去下一页
@@ -238,8 +249,8 @@ class pageController extends Service {
         const item = $api.closest(event.target, '.collapse-item')
         if (item) {
           const othersBody = $api.byId('others-body')
-          this._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
-          this._resetAllCheckbox()
+          this.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
+          this.__resetAllCheckbox()
           $api.remove(item)
           const others = $api.domAll(othersBody, '.collapse-item')
           const length = Object.keys(others).length
@@ -291,6 +302,7 @@ class pageController extends Service {
     api.hideProgress()
   }
 
+
   async send () {
     const body = document.querySelector('body')
     const checked = Array.from($api.domAll(body, 'input[checkbox-trigger="body"]:checked'))
@@ -322,18 +334,21 @@ class pageController extends Service {
 }
 
 apiready = function () {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   const ctrl = new pageController()
   ctrl.bindEvent()
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate()
   })
+
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){
@@ -347,13 +362,5 @@ apiready = function () {
   $api.byId('save').onclick = function () {
     ctrl.save()
   }
-
-  api.addEventListener({
-    name: 'navitembtn'
-  }, (ret, err) => {
-    if (ret.type === 'left') {
-      api.closeWin()
-    }
-  })
 
 }

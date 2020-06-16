@@ -2015,7 +2015,7 @@ apiready = function apiready() {
         type = 'autherror';
       }
 
-      $api.byId('step2').innerHTML = "\n      <div class=\"auth-block ".concat(type, "\" tapmode=\"active\" id=\"faceAuthResult\">\n        <div class=\"badge\">2</div>\n        <div class=\"content\">\n          <strong>\n          ").concat(status === 1 ? '<span>人脸认证</span>' : status === 2 ? '<span>人脸认证人工审核中</span>' : status === 3 ? '<span>人脸认证人工审核失败<br />请联系客服</span>' : '', "\n          </strong>\n        </div>\n      </div>\n      ");
+      $api.byId('step2').innerHTML = "\n      <div class=\"auth-block ".concat(type, "\" tapmode=\"active\" id=\"faceAuthResult\">\n        <div class=\"badge\">2</div>\n        <div class=\"content\">\n        ").concat(status === 1 ? '<strong>人脸认证</strong>' : status === 2 ? '<strong>人脸认证人工审核中...</strong>' : status === 3 ? '<strong>人脸认证人工审核失败</strong><p>请联系客服</p>' : '', "\n        </div>\n      </div>\n      ");
     }
   }
 
@@ -2050,7 +2050,8 @@ apiready = function apiready() {
           });
         } else {
           api.toast({
-            msg: '请先完成第一步'
+            msg: '请先完成第一步',
+            location: 'middle'
           });
         }
       };
@@ -2060,14 +2061,16 @@ apiready = function apiready() {
       baseinfo.onclick = function () {
         if (mapping.realAuth.status === 0) {
           api.toast({
-            msg: '请先完成第一步'
+            msg: '请先完成第一步',
+            location: 'middle'
           });
           return;
         }
 
         if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2 || mapping.faceAuth.status === 3) {
           api.toast({
-            msg: '请先完成第二步'
+            msg: '请先完成第二步',
+            location: 'middle'
           });
           return;
         }

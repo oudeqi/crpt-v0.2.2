@@ -2000,8 +2000,20 @@ var pageController = /*#__PURE__*/function (_Service) {
   }
 
   createClass(pageController, [{
-    key: "_renderList",
-    value: function _renderList(key, arr) {
+    key: "__setDisabled",
+    value: function __setDisabled() {
+      $api.addCls($api.byId('add'), 'hidden');
+      $api.addCls($api.byId('fixed_footer'), 'hidden');
+    }
+  }, {
+    key: "__removeDisabled",
+    value: function __removeDisabled() {
+      $api.removeCls($api.byId('add'), 'hidden');
+      $api.removeCls($api.byId('fixed_footer'), 'hidden');
+    }
+  }, {
+    key: "__renderList",
+    value: function __renderList(key, arr) {
       var category = this.category;
       var signed = arr.filter(function (item) {
         return item.status === 5;
@@ -2057,8 +2069,10 @@ var pageController = /*#__PURE__*/function (_Service) {
                   for (_i = 0, _Object$keys = Object.keys(res.data); _i < _Object$keys.length; _i++) {
                     key = _Object$keys[_i];
 
-                    this._renderList(key, res.data[key]);
+                    this.__renderList(key, res.data[key]);
                   }
+
+                  this.__removeDisabled();
                 }
 
                 _context.next = 11;
@@ -2091,8 +2105,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       return getPageDate;
     }()
   }, {
-    key: "_resetAllCheckbox",
-    value: function _resetAllCheckbox() {
+    key: "__resetAllCheckbox",
+    value: function __resetAllCheckbox() {
       var body = document.querySelector('body');
       var allBodyCheckbox = $api.domAll(body, 'input[checkbox-trigger="body"]');
       var allChecked = Array.from(allBodyCheckbox).every(function (item) {
@@ -2101,8 +2115,8 @@ var pageController = /*#__PURE__*/function (_Service) {
       $api.byId('allChecked').checked = allChecked;
     }
   }, {
-    key: "_resetParentcheckbox",
-    value: function _resetParentcheckbox(current) {
+    key: "__resetParentcheckbox",
+    value: function __resetParentcheckbox(current) {
       var collapse = $api.closest(current, '.collapse');
       var parent = $api.dom(collapse, '[checkbox-trigger="header"]');
       var allBodyCheckbox = $api.domAll(collapse, '[checkbox-trigger="body"]');
@@ -2152,7 +2166,7 @@ var pageController = /*#__PURE__*/function (_Service) {
             }
           }
 
-          _this2._resetAllCheckbox();
+          _this2.__resetAllCheckbox();
         }
       }); // 底部 checkbox ，控制 header，body checkbox
 
@@ -2181,9 +2195,9 @@ var pageController = /*#__PURE__*/function (_Service) {
         var bodyCheckbox = $api.closest(event.target, '[checkbox-trigger="body"]');
 
         if (bodyCheckbox) {
-          _this2._resetParentcheckbox(bodyCheckbox);
+          _this2.__resetParentcheckbox(bodyCheckbox);
 
-          _this2._resetAllCheckbox();
+          _this2.__resetAllCheckbox();
         }
       }); // 添加其他
 
@@ -2198,14 +2212,14 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         var others = $api.domAll(othersBody, '.collapse-item');
         var length = Object.keys(others).length;
-        var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
+        var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" disabled checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
         $api.append(othersBody, tpl);
         console.log(JSON.stringify($api.byId('othersNum')));
         $api.byId('othersNum').innerHTML = "0/".concat(length + 1, "\u4EBA");
 
-        _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
+        _this2.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
 
-        _this2._resetAllCheckbox();
+        _this2.__resetAllCheckbox();
       }; // 删除其他，去下一页
 
 
@@ -2217,9 +2231,9 @@ var pageController = /*#__PURE__*/function (_Service) {
           if (item) {
             var othersBody = $api.byId('others-body');
 
-            _this2._resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
+            _this2.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
 
-            _this2._resetAllCheckbox();
+            _this2.__resetAllCheckbox();
 
             $api.remove(item);
             var others = $api.domAll(othersBody, '.collapse-item');
@@ -2448,12 +2462,4 @@ apiready = function apiready() {
   $api.byId('save').onclick = function () {
     ctrl.save();
   };
-
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  });
 };

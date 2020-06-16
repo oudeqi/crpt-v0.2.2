@@ -2421,6 +2421,8 @@ var PageController = /*#__PURE__*/function (_Service) {
 
     };
     _this.initData = {
+      disabled: true,
+      // 初始状态下，所有控件禁用
       // gtId	int	担保申请id
       // gtCreditId	int	担保授信id
       gtCreditId: gtCreditId,
@@ -2442,6 +2444,82 @@ var PageController = /*#__PURE__*/function (_Service) {
   }
 
   createClass(PageController, [{
+    key: "__setDisabled",
+    value: function __setDisabled() {
+      // 不可编辑
+      this.initData.disabled = true;
+      $api.attr($api.byId('name'), 'disabled', true);
+      $api.attr($api.byId('name'), 'placeholder', '');
+      $api.attr($api.byId('phone'), 'disabled', true);
+      $api.attr($api.byId('phone'), 'placeholder', '');
+      $api.attr($api.byId('certNo'), 'disabled', true);
+      $api.attr($api.byId('certNo'), 'placeholder', '');
+      var accountNature = Array.from(document.querySelectorAll('[name="accountNature"]'));
+      accountNature.forEach(function (item) {
+        $api.attr(item, 'disabled', true);
+      });
+      $api.attr($api.byId('addrDetail'), 'disabled', true);
+      $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址');
+      $api.attr($api.byId('occupation'), 'disabled', true);
+      $api.attr($api.byId('occupation'), 'placeholder', '');
+      $api.attr($api.byId('workAddrDetail'), 'disabled', true);
+      $api.attr($api.byId('workAddrDetail'), 'placeholder', '工作详细地址');
+      $api.attr($api.byId('bankName'), 'disabled', true);
+      $api.attr($api.byId('bankName'), 'placeholder', '');
+      $api.attr($api.byId('bankCardNo'), 'disabled', true);
+      $api.attr($api.byId('bankCardNo'), 'placeholder', '');
+      $api.attr($api.byId('openBank'), 'disabled', true);
+      $api.attr($api.byId('openBank'), 'placeholder', '');
+      $api.attr($api.byId('spouseName'), 'disabled', true);
+      $api.attr($api.byId('spouseName'), 'placeholder', '');
+      $api.attr($api.byId('spousePhone'), 'disabled', true);
+      $api.attr($api.byId('spousePhone'), 'placeholder', '');
+      $api.attr($api.byId('spouseIncome'), 'disabled', true);
+      $api.attr($api.byId('spouseIncome'), 'placeholder', '');
+      $api.attr($api.byId('spouseOccupation'), 'disabled', true);
+      $api.attr($api.byId('spouseOccupation'), 'placeholder', '');
+      $api.attr($api.byId('spouseWorkCompany'), 'disabled', true);
+      $api.attr($api.byId('spouseWorkCompany'), 'placeholder', '');
+    }
+  }, {
+    key: "__removeDisabled",
+    value: function __removeDisabled() {
+      // 可编辑
+      this.initData.disabled = false;
+      $api.removeAttr($api.byId('name'), 'disabled');
+      $api.attr($api.byId('name'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('phone'), 'disabled');
+      $api.attr($api.byId('phone'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('certNo'), 'disabled');
+      $api.attr($api.byId('certNo'), 'placeholder', '请输入');
+      var accountNature = Array.from(document.querySelectorAll('[name="accountNature"]'));
+      accountNature.forEach(function (item) {
+        $api.removeAttr(item, 'disabled');
+      });
+      $api.removeAttr($api.byId('addrDetail'), 'disabled');
+      $api.attr($api.byId('addrDetail'), 'placeholder', '详细地址');
+      $api.removeAttr($api.byId('occupation'), 'disabled');
+      $api.attr($api.byId('occupation'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('workAddrDetail'), 'disabled');
+      $api.attr($api.byId('workAddrDetail'), 'placeholder', '工作详细地址');
+      $api.removeAttr($api.byId('bankName'), 'disabled');
+      $api.attr($api.byId('bankName'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('bankCardNo'), 'disabled');
+      $api.attr($api.byId('bankCardNo'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('openBank'), 'disabled');
+      $api.attr($api.byId('openBank'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('spouseName'), 'disabled');
+      $api.attr($api.byId('spouseName'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('spousePhone'), 'disabled');
+      $api.attr($api.byId('spousePhone'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('spouseIncome'), 'disabled');
+      $api.attr($api.byId('spouseIncome'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('spouseOccupation'), 'disabled');
+      $api.attr($api.byId('spouseOccupation'), 'placeholder', '请输入');
+      $api.removeAttr($api.byId('spouseWorkCompany'), 'disabled');
+      $api.attr($api.byId('spouseWorkCompany'), 'placeholder', '请输入');
+    }
+  }, {
     key: "__pageDataFillBack",
     value: function __pageDataFillBack(data) {
       $api.byId('name').value = data.name || '';
@@ -2579,19 +2657,6 @@ var PageController = /*#__PURE__*/function (_Service) {
         }
       };
       return new Validation(cfg);
-    }
-  }, {
-    key: "__bindNavBtnEvent",
-    value: function __bindNavBtnEvent() {
-      api.addEventListener({
-        name: 'navitembtn'
-      }, function (ret, err) {
-        console.log(JSON.stringify(ret));
-
-        if (ret.type === 'left') {
-          api.closeWin();
-        }
-      });
     }
   }, {
     key: "__bindCollapseEvent",
@@ -2743,6 +2808,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this3 = this;
 
       $api.byId('relationship').onclick = function (e) {
+        if (_this3.initData.disabled) {
+          return;
+        }
+
         ActionSheet('与借款人关系', _this3.relationship, function (index) {
           e.target.value = _this3.relationship[index];
           e.target.dataset.value = index + 1;
@@ -2755,6 +2824,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this4 = this;
 
       $api.byId('marriage').onclick = function (e) {
+        if (_this4.initData.disabled) {
+          return;
+        }
+
         ActionSheet('婚姻状况', _this4.marriage, function (index) {
           e.target.value = _this4.marriage[index];
           e.target.dataset.value = index + 1;
@@ -2767,6 +2840,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var _this5 = this;
 
       $api.byId('education').onclick = function (e) {
+        if (_this5.initData.disabled) {
+          return;
+        }
+
         ActionSheet('请选择学历', _this5.education, function (index) {
           e.target.value = _this5.education[index];
           e.target.dataset.value = _this5.education[index];
@@ -2776,7 +2853,13 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__initAddress",
     value: function __initAddress() {
+      var _this6 = this;
+
       $api.byId('address').onclick = function (e) {
+        if (_this6.initData.disabled) {
+          return;
+        }
+
         CitySelector(function (selected) {
           console.log(JSON.stringify(selected));
           var a = selected[0];
@@ -2795,7 +2878,13 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "__initWorkAddress",
     value: function __initWorkAddress() {
+      var _this7 = this;
+
       $api.byId('workAddress').onclick = function (e) {
+        if (_this7.initData.disabled) {
+          return;
+        }
+
         CitySelector(function (selected) {
           console.log(JSON.stringify(selected));
           var a = selected[0];
@@ -2883,13 +2972,17 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "__bindIDCardOcr",
     value: function () {
       var _bindIDCardOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-        var _this6 = this;
+        var _this8 = this;
 
         return regenerator.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 $api.byId('idCardOcrBtn').onclick = function () {
+                  if (_this8.initData.disabled) {
+                    return;
+                  }
+
                   var btns = ['相机', '相册'];
                   var sourceType = '';
                   ActionSheet('请选择', btns, function (index) {
@@ -2906,7 +2999,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                             switch (_context2.prev = _context2.next) {
                               case 0:
                                 if (ret) {
-                                  _this6.__readIDCard(ret.data);
+                                  _this8.__readIDCard(ret.data);
                                 }
 
                               case 1:
@@ -3003,13 +3096,17 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "__bindBankOcr",
     value: function () {
       var _bindBankOcr = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
-        var _this7 = this;
+        var _this9 = this;
 
         return regenerator.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 $api.byId('bankOcrBtn').onclick = function () {
+                  if (_this9.initData.disabled) {
+                    return;
+                  }
+
                   var btns = ['相机', '相册'];
                   var sourceType = '';
                   ActionSheet('请选择', btns, function (index) {
@@ -3021,7 +3118,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
                     getPicture(sourceType, function (ret, err) {
                       if (ret) {
-                        _this7.__readBank(ret.data);
+                        _this9.__readBank(ret.data);
                       }
                     });
                   });
@@ -3057,8 +3154,6 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "bindEvent",
     value: function bindEvent() {
-      this.__bindNavBtnEvent();
-
       this.__bindCollapseEvent();
 
       this.__bindGoFangchanAndCheliang();
@@ -3071,7 +3166,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "getPageDate",
     value: function () {
       var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
-        var btnEl, gtCounterId, res;
+        var btnEl, gtCounterId, status, res;
         return regenerator.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -3089,16 +3184,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                 return _context6.abrupt("return", false);
 
               case 6:
+                status = parseInt(this.initData.status);
+
+                if (!isNaN(status) && status >= 3) {
+                  this.__setDisabled();
+                } else {
+                  this.__removeDisabled();
+                }
+
                 api.showProgress({
                   title: '加载中...',
                   text: '',
                   modal: false
                 });
-                _context6.prev = 7;
-                _context6.next = 10;
+                _context6.prev = 9;
+                _context6.next = 12;
                 return this.queryDanbaoRenMsgById(gtCounterId);
 
-              case 10:
+              case 12:
                 res = _context6.sent;
 
                 if (res.code === 200) {
@@ -3107,27 +3210,27 @@ var PageController = /*#__PURE__*/function (_Service) {
                   $api.removeAttr(btnEl, 'disabled');
                 }
 
-                _context6.next = 17;
+                _context6.next = 19;
                 break;
 
-              case 14:
-                _context6.prev = 14;
-                _context6.t0 = _context6["catch"](7);
+              case 16:
+                _context6.prev = 16;
+                _context6.t0 = _context6["catch"](9);
                 api.toast({
                   msg: _context6.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 17:
+              case 19:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 19:
+              case 21:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, this, [[7, 14]]);
+        }, _callee6, this, [[9, 16]]);
       }));
 
       function getPageDate() {
@@ -3139,7 +3242,7 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "submit",
     value: function submit() {
-      var _this8 = this;
+      var _this10 = this;
 
       var status = parseInt(this.initData.status);
 
@@ -3164,16 +3267,16 @@ var PageController = /*#__PURE__*/function (_Service) {
         },
         success: function () {
           var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee7(data) {
-            var _this8$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
+            var _this10$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
 
             return regenerator.wrap(function _callee7$(_context7) {
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
                     _context7.prev = 0;
-                    _this8$initData = _this8.initData, gtCreditId = _this8$initData.gtCreditId, gtCounterId = _this8$initData.gtCounterId, type = _this8$initData.type;
+                    _this10$initData = _this10.initData, gtCreditId = _this10$initData.gtCreditId, gtCounterId = _this10$initData.gtCounterId, type = _this10$initData.type;
                     isUpdate = gtCounterId;
-                    postData = _objectSpread$1({}, data, {}, _this8.__getOtherParams(), {
+                    postData = _objectSpread$1({}, data, {}, _this10.__getOtherParams(), {
                       type: type,
                       gtCreditId: gtCreditId // 担保授信id
 
@@ -3191,7 +3294,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     }
 
                     _context7.next = 8;
-                    return _this8[callMethod](postData);
+                    return _this10[callMethod](postData);
 
                   case 8:
                     res = _context7.sent;
@@ -3204,7 +3307,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                           global: true
                         });
                       } else {
-                        _this8.initData.gtCounterId = res.data.gtCounterId;
+                        _this10.initData.gtCounterId = res.data.gtCounterId;
                         api.toast({
                           msg: '新增担保人成功',
                           location: 'middle',

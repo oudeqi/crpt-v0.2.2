@@ -1975,7 +1975,7 @@ var App = /*#__PURE__*/function () {
       // 6：人工审核不通过
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
-      // openFaceAuth({status: 'error', tips: 'message'})
+      // openTodoAuthQiye({status: 'error', tips: 'message'})
       // return
       var userinfo = $api.getStorage('userinfo');
 
