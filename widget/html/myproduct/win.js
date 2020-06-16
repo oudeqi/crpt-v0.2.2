@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -52,9 +52,9 @@ function openContactUs() {
 
 
 function openProductDetails() {
-  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      id = _ref4.id,
-      open = _ref4.open;
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref6.id,
+      open = _ref6.open;
 
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -1738,13 +1738,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();

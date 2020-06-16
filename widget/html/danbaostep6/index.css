@@ -309,6 +309,7 @@
 
 .form input {
     border: 0;
+    outline: 0;
   }
 
 .form .form-item {

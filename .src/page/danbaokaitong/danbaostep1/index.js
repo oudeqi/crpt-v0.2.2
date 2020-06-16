@@ -1,6 +1,8 @@
+import '../../../app.css'
 import '../header.css'
 import '../form.css'
 import './index.css'
+
 import HeaderController from '../header.js'
 import { Validation, NumberLimit } from '../form.js'
 import { setRefreshHeaderInfo, getNodeProtocolFromStorage } from '../../../config.js'
@@ -63,7 +65,7 @@ class PageController extends HeaderController {
         $api.byId('rate').value = `${data.rate || '0'}‰`
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
         this.__isShebeiDaiShow(data.productType)
-        // this.__removeDisabled()
+        this.__removeDisabled()
       } else {
         const res = await this.queryProductById(this.productId)
         if (res.code === 200) {
@@ -217,13 +219,12 @@ class PageController extends HeaderController {
 
   showProtocol () {
     let node = getNodeProtocolFromStorage(4)
-    console.log(node)
     if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
     }
     let tpl = node.map(item => {
-      return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
+      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</li>`
     })
     $api.byId('protocol').innerHTML = tpl.join('')
   }
@@ -253,7 +254,7 @@ class PageController extends HeaderController {
       this.__save()
     }
     document.querySelector('#protocol').onclick = e => {
-      let strong = $api.closest(e.target, 'strong')
+      let strong = $api.closest(e.target, 'li')
       if (strong) {
         openAgreement(strong.dataset.id, strong.dataset.name)
       }

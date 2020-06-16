@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -27,13 +27,13 @@ function openRegLogin() {
 
 
 function openBillDetails(id) {
-  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      billDate = _ref3.billDate,
-      sumRepayTotalAmount = _ref3.sumRepayTotalAmount,
-      sumRepayPrincipalAmount = _ref3.sumRepayPrincipalAmount,
-      sumServiceFee = _ref3.sumServiceFee,
-      sumRepayPenaltyAmount = _ref3.sumRepayPenaltyAmount,
-      sumRepayInterestAmount = _ref3.sumRepayInterestAmount;
+  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      billDate = _ref5.billDate,
+      sumRepayTotalAmount = _ref5.sumRepayTotalAmount,
+      sumRepayPrincipalAmount = _ref5.sumRepayPrincipalAmount,
+      sumServiceFee = _ref5.sumServiceFee,
+      sumRepayPenaltyAmount = _ref5.sumRepayPenaltyAmount,
+      sumRepayInterestAmount = _ref5.sumRepayInterestAmount;
 
   api.openTabLayout({
     name: 'html/billdetails/win',
@@ -1721,13 +1721,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();

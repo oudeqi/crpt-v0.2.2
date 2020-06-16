@@ -1,9 +1,8 @@
 import '../../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill, openAgreement,
-openIDcardUpload, openIDcardInfo, openAuthResult } from '../../../webview.js'
-import { http, initUIInput, getNodeProtocolFromStorage, getProtocolFromNode } from '../../../config.js'
+import { openAgreement, openAuthResult } from '../../../webview.js'
+import { http, getNodeProtocolFromStorage, getProtocolFromNode } from '../../../config.js'
 
 apiready = function() {
 
@@ -30,21 +29,8 @@ apiready = function() {
     nation, authority, timelimit, front, back
   } = pageParam
 
-  initUIInput($api.byId('name'), {
-    placeholder: '请输入',
-    keyboardType: 'done',
-    maxStringLength: 10
-  }, function (value) {
-    name = value
-  })
 
-  // $api.byId('name').innerHTML = name
-  let UIInput = api.require('UIInput')
-  let iptIndex = api.systemType === 'ios' ? 1 : 0
-  UIInput.insertValue({
-    index: iptIndex,
-    msg: name || ''
-  })
+  $api.byId('name').value = name
   $api.byId('number').innerHTML = number || ''
   $api.byId('authority').innerHTML = authority || ''
   $api.byId('timelimit').innerHTML = timelimit || ''
@@ -84,14 +70,14 @@ apiready = function() {
       return
     }
     let tpl = nodes.map(item => {
-      return `<span>《</span><strong tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">${item.protocolName}</strong><span>》</span>`
+      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
     })
     $api.byId('agreement').innerHTML = tpl.join('')
   }
 
   showProtocol()
   document.querySelector('#agreement').onclick = (e) => {
-    let strong = $api.closest(e.target, 'strong')
+    let strong = $api.closest(e.target, 'li')
     if (strong) {
       openAgreement(strong.dataset.id, strong.dataset.name)
     }
@@ -99,6 +85,7 @@ apiready = function() {
 
   document.querySelector('#next').onclick = function () {
     if (submitStatus === 'notsubmit') {
+      let name = $api.byId('name').value.trim()
       if (!name) {
         return api.toast({ msg: '请输入姓名' })
       }
@@ -127,7 +114,7 @@ apiready = function() {
             msg: ret.data.info || '实名认证失败'
           })
         } else {
-          openAuthResult('success')
+          openAuthResult({status: 'success'})
         }
       }).catch(error => {
         api.toast({

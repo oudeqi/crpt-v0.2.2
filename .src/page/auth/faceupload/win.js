@@ -48,7 +48,7 @@ apiready = function() {
       }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        openAuthResult('during')
+        openAuthResult({status: 'during'})
       }).catch(error => {
         submitStatus = 'notsubmit'
         api.toast({

@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -38,13 +38,13 @@ function openIDcardInfo(pageParam) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -1705,13 +1705,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();

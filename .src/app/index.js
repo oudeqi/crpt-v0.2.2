@@ -39,9 +39,9 @@ import Utils from '../utils'
 // $api.rmStorage()
 // $api.clearStorage()
 
-class PageController {
+class App {
 
-  openPage () {
+  init () {
     // 认证状态 int
     // 1：正常
     // 2：待实名认证
@@ -51,6 +51,9 @@ class PageController {
     // 6：人工审核不通过
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
+
+    openFaceAuth({status: 'error', tips: 'message'})
+    return
 
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
@@ -66,7 +69,7 @@ class PageController {
       //   gtId: '1268076050995986433'
       // })
       // return
-      // openGerenLogin()
+      // openSendCode({ tel: '18989193377', userType: 1 })
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
@@ -117,8 +120,8 @@ class PageController {
 
 apiready = function () {
 
-  const ctrl = new PageController()
-  ctrl.openPage()
+  const ctrl = new App()
+  ctrl.init()
   ctrl.bindEvent()
 
 }

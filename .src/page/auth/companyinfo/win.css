@@ -3,30 +3,118 @@ html, body {
   background-color: #fff;
 }
 .container {
-  padding: 40px 30px;
+  padding: 0 24px;
+}
+.step {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  .step_list {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .step_item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all .3s;
+    cursor: pointer;
+    &:last-child .icon {
+      margin-right: 0;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width:26px;
+      height:26px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background:rgba(255,255,255,1);
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(192,196,204,1);
+      line-height:24px;
+      font-style: normal;
+    }
+    .txt {
+      display: none;
+      font-size:18px;
+      color:rgba(48,49,51,1);
+      line-height:25px;
+    }
+  }
+  .line {
+    margin-top: 9px;
+    height:4px;
+    background:rgba(245,245,245,1);
+    border-radius:2px;
+    width: 100%;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height:4px;
+      background:rgba(102,187,106,1);
+      border-radius:2px
+    }
+  }
+}
+@define-extend activeIcon {
+  width:26px;
+  height:26px;
+  background:rgba(102,187,106,1);
+  border:1px solid rgba(102,187,106,1);
+  font-size:20px;
+  font-family:DINAlternate-Bold,DINAlternate;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:24px;
+}
+@for $i from 1 to 3 {
+	.step.step$(i) {
+    .step_list .step_item:nth-child($i){
+      flex-grow: 1;
+      .icon {
+        @extend activeIcon;
+      }
+      .txt {
+        display: block;
+      }
+    }
+    .line::after {
+      width: calc(33.33% * $(i));
+    }
+  }
 }
 
-.btn-box {
-  margin-top: 50px;
-}
-h1 {
-  margin: 0;
-  font-size: 20px;
-  color: #66BB6A;
-  line-height: 1;
-}
 section {
-  margin-top: 30px;
-  border-bottom: 1px solid #666;
+  margin-top: 34px;
+  border-bottom: 1px solid rgba(245,245,245,1);
   & h2 {
-    color: #666;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: bold;
-    margin: 0;
+    height:20px;
+    font-size:14px;
+    color:rgba(144,147,153,1);
+    line-height:20px;
   }
   & div {
     /*border: 1px solid #ededed;*/
     height: 40px;
+    & input {
+      display: block;
+      width: 100%;
+      font-size:18px;
+      color:rgba(48,49,51,1);
+    }
   }
+}
+
+.btn-box {
+  margin-top: 40px;
 }

@@ -14,6 +14,10 @@
 <body>
   <div class="container">
 
+    <div class="tit">
+      找回密码
+    </div>
+
     <div class="tips">
       验证码已发送至手机号
       <strong id="tel">****</strong>
@@ -21,7 +25,9 @@
 
     <div class="code-ipt">
       <div class="label">验证码</div>
-      <div class="ipt" id="code"></div>
+      <div class="ipt">
+        <input id="code" type="number" name="code" placeholder="短信验证码" value="">
+      </div>
       <div class="btn" tapmode id="sendcode">
         发送验证码
       </div>

@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -37,13 +37,13 @@ function openIDcardUpload() {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -1704,13 +1704,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1809,56 +1809,6 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function initUIInput(dom) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var cb = arguments.length > 2 ? arguments[2] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      if (value) {
-        cb && cb(value.msg);
-      }
-    });
-  });
-} // let userinfo = {
-
 apiready = function apiready() {
   api.addEventListener({
     name: 'navitembtn'
@@ -1867,78 +1817,40 @@ apiready = function apiready() {
       api.closeWin();
     }
   });
-  api.addEventListener({
-    // 键盘挡住输入框
-    name: 'keyboardshow'
-  }, function (ret, err) {
-    document.getElementById('container').style['min-height'] = '105%';
-    document.getElementById('frID').scrollIntoView();
-  });
-  api.addEventListener({
-    name: 'keyboardhide'
-  }, function (ret, err) {
-    document.getElementById('container').style['min-height'] = '100%';
-  });
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
-
-  var postData = {
-    companyName: '',
-    code: '',
-    name: '',
-    frID: ''
-  };
-  initUIInput($api.byId('companyName'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 40
-  }, function (value) {
-    postData.companyName = value;
-  });
-  initUIInput($api.byId('code'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 40
-  }, function (value) {
-    postData.code = value;
-  });
-  initUIInput($api.byId('name'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 10
-  }, function (value) {
-    postData.name = value;
-  });
-  initUIInput($api.byId('frID'), {
-    placeholder: '请输入...',
-    keyboardType: 'done',
-    maxStringLength: 40
-  }, function (value) {
-    postData.frID = value;
-  });
 
   document.querySelector('#submit').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!postData.companyName) {
+      var companyName = $api.byId('companyName').value.trim();
+      var code = $api.byId('code').value.trim();
+      var name = $api.byId('name').value.trim();
+      var frID = $api.byId('frID').value.trim();
+
+      if (!companyName) {
         return api.toast({
-          msg: '请输入企业全称'
+          msg: '请输入企业全称',
+          location: 'middle'
         });
       }
 
-      if (!postData.code) {
+      if (!code) {
         return api.toast({
-          msg: '请输入社会统一信用代码'
+          msg: '请输入社会统一信用代码',
+          location: 'middle'
         });
       }
 
-      if (!postData.name) {
+      if (!name) {
         return api.toast({
-          msg: '请输入法定代表人姓名'
+          msg: '请输入法定代表人姓名',
+          location: 'middle'
         });
       }
 
-      if (!postData.frID) {
+      if (!frID) {
         return api.toast({
-          msg: '请输入法人唯一标识'
+          msg: '请输入法人唯一标识',
+          location: 'middle'
         });
       }
 
@@ -1946,13 +1858,13 @@ apiready = function apiready() {
       $api.addCls($api.byId('submit'), 'loading');
       http.post('/crpt-cust/saas/company/auth', {
         body: {
-          entNameCredit: postData.companyName,
+          entNameCredit: companyName,
           // 企业名称 四川东雄农业科技有限公司
-          frName: postData.name,
+          frName: name,
           // 法定代表人 万国东
-          cid: postData.frID,
+          cid: frID,
           // 法人唯一标识 51092219690504357X
-          regNo: postData.code // 统一社会信用代码 9151070431459311XW
+          regNo: code // 统一社会信用代码 9151070431459311XW
 
         }
       }).then(function (ret) {
@@ -1963,14 +1875,16 @@ apiready = function apiready() {
           openIDcardUpload();
         } else {
           api.toast({
-            msg: ret.data.info
+            msg: ret.data.info,
+            location: 'middle'
           });
         }
       })["catch"](function (error) {
         submitStatus = 'notsubmit';
         $api.removeCls($api.byId('submit'), 'loading');
         api.toast({
-          msg: error.msg || '企业四要素认证失败，请确认信息是否正确'
+          msg: error.msg || '企业四要素认证失败，请确认信息是否正确',
+          location: 'middle'
         });
       });
     }

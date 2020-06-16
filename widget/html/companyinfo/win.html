@@ -10,36 +10,61 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
-  <div class="container" id="container">
 
-    <h1>请确认企业信息</h1>
+  <div class="container">
+
+    <div class="step step1">
+      <div class="step_list">
+        <div class="step_item">
+          <i class="icon">1</i>
+          <span class="txt">确认企业信息</span>
+        </div>
+        <div class="step_item">
+          <i class="icon">2</i>
+          <span class="txt"></span>
+        </div>
+        <div class="step_item">
+          <i class="icon">3</i>
+          <span class="txt"></span>
+        </div>
+      </div>
+      <div class="line"></div>
+    </div>
+
     <section>
       <h2>企业全称</h2>
-      <div id="companyName"></div>
+      <div>
+        <input id="companyName" type="text" name="companyName" placeholder="请输入..." value="">
+      </div>
       
     </section>
 
     <section>
       <h2>社会统一信用代码</h2>
-      <div id="code"></div>
+      <div>
+        <input id="code" type="text" name="code" placeholder="请输入..." value="">
+      </div>
       
     </section>
 
     <section>
       <h2>法定代表人</h2>
-      <div id="name"></div>
+      <div>
+        <input id="name" type="text" name="name" placeholder="请输入..." value="">
+      </div>
       
     </section>
 
     <section>
       <h2>法人身份证号</h2>
-      <div id="frID"></div>
+      <div>
+        <input id="frID" type="text" name="frID" placeholder="请输入..." value="">
+      </div>
     </section>
 
     <div class="btn-box">
       <div class="app_btn" tapmode id="submit">下一步</div>
     </div>
-
 
   </div>
   <script type="text/javascript" src="../../script/api.js"></script>

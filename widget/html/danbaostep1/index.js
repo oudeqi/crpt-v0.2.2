@@ -905,9 +905,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -916,14 +916,14 @@ function openRegLogin() {
 
 
 function openDanbaoKaitong() {
-  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      step = _ref6.step,
-      _ref6$title = _ref6.title,
-      title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
-      productId = _ref6.productId,
-      creditStatus = _ref6.creditStatus,
-      _ref6$back = _ref6.back,
-      back = _ref6$back === void 0 ? false : _ref6$back;
+  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      step = _ref8.step,
+      _ref8$title = _ref8.title,
+      title = _ref8$title === void 0 ? '普惠担保' : _ref8$title,
+      productId = _ref8.productId,
+      creditStatus = _ref8.creditStatus,
+      _ref8$back = _ref8.back,
+      back = _ref8$back === void 0 ? false : _ref8$back;
 
   var i = step;
 
@@ -1870,13 +1870,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -3610,7 +3610,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 _context.prev = 9;
 
                 if (!this.danbaoStatus) {
-                  _context.next = 27;
+                  _context.next = 28;
                   break;
                 }
 
@@ -3628,17 +3628,18 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 $api.byId('rate').value = "".concat(data.rate || '0', "\u2030");
                 $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1");
 
-                this.__isShebeiDaiShow(data.productType); // this.__removeDisabled()
+                this.__isShebeiDaiShow(data.productType);
 
+                this.__removeDisabled();
 
-                _context.next = 31;
+                _context.next = 32;
                 break;
 
-              case 27:
-                _context.next = 29;
+              case 28:
+                _context.next = 30;
                 return this.queryProductById(this.productId);
 
-              case 29:
+              case 30:
                 res = _context.sent;
 
                 if (res.code === 200) {
@@ -3655,28 +3656,28 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   this.__removeDisabled();
                 }
 
-              case 31:
-                _context.next = 36;
+              case 32:
+                _context.next = 37;
                 break;
 
-              case 33:
-                _context.prev = 33;
+              case 34:
+                _context.prev = 34;
                 _context.t1 = _context["catch"](9);
                 api.toast({
                   msg: _context.t1.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 36:
+              case 37:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 38:
+              case 39:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 7], [9, 33]]);
+        }, _callee, this, [[2, 7], [9, 34]]);
       }));
 
       function getProduct() {
@@ -3898,7 +3899,6 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
     key: "showProtocol",
     value: function showProtocol() {
       var node = getNodeProtocolFromStorage(4);
-      console.log(node);
 
       if (!node) {
         api.toast({
@@ -3909,7 +3909,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       }
 
       var tpl = node.map(function (item) {
-        return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
+        return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</li>");
       });
       $api.byId('protocol').innerHTML = tpl.join('');
     }
@@ -3945,7 +3945,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
       };
 
       document.querySelector('#protocol').onclick = function (e) {
-        var strong = $api.closest(e.target, 'strong');
+        var strong = $api.closest(e.target, 'li');
 
         if (strong) {
           openAgreement(strong.dataset.id, strong.dataset.name);

@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -40,13 +40,13 @@ function openBaseinfoFill() {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -65,13 +65,13 @@ function openIDcardUpload() {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -80,25 +80,31 @@ function openIDcardUpload() {
 
 
 function openFaceAuth() {
-  var pageParam = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      title = _ref3.title,
+      userType = _ref3.userType;
+
   api.openTabLayout({
     name: 'html/faceauth/win',
-    title: pageParam.title,
+    title: title || '人脸识别',
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam: pageParam,
+    pageParam: {
+      title: title,
+      userType: userType
+    },
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -1784,13 +1790,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -2018,15 +2024,15 @@ apiready = function apiready() {
 
   function renderStep1(status) {
     if (status === 0) {
-      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n            </div>\n            <p>\u8BF7\u51C6\u5907\u60A8\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n          </div>\n          <div class=\"pic idcard\"></div>\n        </div>\n      ";
+      $api.byId('step1').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n        <div class=\"badge\">1</div>\n        <div class=\"content\">\n          <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          <p>\u8BF7\u51C6\u5907\u60A8\u4EBA\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n        </div>\n      </div>\n      ";
     } else {
-      $api.byId('step1').innerHTML = "\n        <div class=\"auth-block2 authpass\">\n          <div class=\"badge\">1</div>\n          <div class=\"text\">\n            <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          </div>\n          <span>\u901A\u8FC7</span>\n        </div>\n      ";
+      $api.byId('step1').innerHTML = "\n      <div class=\"auth-block authpass\">\n        <div class=\"badge\">1</div>\n        <div class=\"content\">\n          <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n        </div>\n      </div>\n      ";
     }
   }
 
   function renderStep2(status) {
     if (status === 0) {
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n            </div>\n            <p>\u9700\u8981\u60A8\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n          </div>\n          <div class=\"pic facescan\"></div>\n        </div>\n      ";
+      $api.byId('step2').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"faceAuth\">\n        <div class=\"badge\">2</div>\n        <div class=\"content\">\n          <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n          <p>\u9700\u8981\u60A8\u672C\u4EBA\u5B8C\u6210\u4EBA\u8138\u8BA4\u8BC1</p>\n        </div>\n      </div>\n      ";
     } else {
       // autherror
       var type = 'authpass';
@@ -2039,15 +2045,15 @@ apiready = function apiready() {
         type = 'autherror';
       }
 
-      $api.byId('step2').innerHTML = "\n        <div class=\"auth-block2 ".concat(type, "\" id=\"faceAuthResult\">\n          <div class=\"badge\">2</div>\n          <div class=\"text\">\n            <strong>\u4EBA\u8138\u8BA4\u8BC1</strong>\n          </div>\n          <div class=\"pic\"></div>\n          ").concat(status === 1 ? '<span>通过</span>' : status === 3 ? '<span>审核失败<br />请联系客服</span>' : '', "\n        </div>\n      ");
+      $api.byId('step2').innerHTML = "\n      <div class=\"auth-block ".concat(type, "\" tapmode=\"active\" id=\"faceAuthResult\">\n        <div class=\"badge\">2</div>\n        <div class=\"content\">\n          <strong>\n          ").concat(status === 1 ? '<span>人脸认证</span>' : status === 2 ? '<span>人脸认证人工审核中</span>' : status === 3 ? '<span>人脸认证人工审核失败<br />请联系客服</span>' : '', "\n          </strong>\n        </div>\n      </div>\n      ");
     }
   }
 
   function renderStep3(status) {
     if (status === 0) {
-      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <div>\n              <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n            </div>\n            <p>\u8BF7\u586B\u5199\u60A8\u4E2A\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n          </div>\n          <div class=\"pic baseinfo\"></div>\n        </div>\n      ";
+      $api.byId('step3').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n        <div class=\"badge\">3</div>\n        <div class=\"content\">\n          <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n          <p>\u8BF7\u586B\u5199\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n        </div>\n      </div>\n      ";
     } else {
-      $api.byId('step3').innerHTML = "\n        <div class=\"auth-block2 authpass\">\n          <div class=\"badge\">3</div>\n          <div class=\"text\">\n            <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n          </div>\n          <div class=\"pic\"></div>\n          <span>\u6210\u529F</span>\n        </div>\n      ";
+      $api.byId('step3').innerHTML = "\n      <div class=\"auth-block authpass\">\n        <div class=\"badge\">3</div>\n        <div class=\"content\">\n          <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n        </div>\n      </div>\n      ";
     }
   }
 
@@ -2116,9 +2122,11 @@ apiready = function apiready() {
       mapping.baseinfo.status === 1 ? step = 0 : null;
 
       if (step > 0) {
-        $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "\u6B65</strong>\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C");
+        $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "</strong>\u6B65\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C");
+        $api.byId('yugueduContainer').innerHTML = '';
       } else if (step === 0) {
-        $api.byId('yugueduContainer').innerHTML = "\n          <div class=\"smile\"></div>\n          <div class=\"btn-box\">\n            <div class=\"app_btn\" tapmode=\"active\" id=\"yuguedu\">\u7ACB\u5373\u9884\u4F30\u989D\u5EA6</div>\n          </div>\n        ";
+        $api.byId('tips').innerHTML = "\u5DF2\u5B8C\u6210\u4FE1\u606F\u6536\u96C6";
+        $api.byId('yugueduContainer').innerHTML = "\n          <div class=\"app_btn\" tapmode=\"active\" id=\"yuguedu\">\u7ACB\u5373\u9884\u4F30\u989D\u5EA6</div>\n        ";
       }
 
       renderStep1(mapping.realAuth.status);
@@ -2155,7 +2163,7 @@ apiready = function apiready() {
             // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
             windows.forEach(function (win) {
               // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/win' && win.name !== 'html/settings/win') {
+              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
                 api.closeWin({
                   name: win.name
                 });

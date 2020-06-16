@@ -6,13 +6,15 @@ openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
 
 apiready = function() {
+  
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   let pageParam = api.pageParam || {}
   let { userType } = pageParam
 
@@ -22,10 +24,9 @@ apiready = function() {
     $api.byId('userType').innerHTML = '法定代表人'
   }
 
-  let facePic = ''
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
-  document.querySelector('#face').onclick = function () {
+  function pickPic (fn) {
     let btns = ['相机', '相册']
     let sourceType = ''
     ActionSheet('请选择', btns, function (index) {
@@ -36,38 +37,41 @@ apiready = function() {
       }
       getPicture(sourceType, function(ret, err) {
         if (ret) {
-          $api.dom($api.byId('face'), 'img').src = ret.data;
-          facePic = ret.data
+          fn(ret.data)
         }
       })
     })
   }
 
+  async function submit (path) {
+    return http.upload('/crpt-cust/saas/faceauth', {
+      files: {
+        faceImage: path
+      }
+    })
+  }
+
   document.querySelector('#start').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!facePic) {
-        return api.toast({ msg: '请选择人脸照' })
-      }
-      submitStatus = 'submitting'
-      $api.addCls($api.byId('start'), 'loading')
-      http.upload('/crpt-cust/saas/faceauth', {
-        files: {
-          faceImage: facePic
+      pickPic(async function (path) {
+        submitStatus = 'submitting'
+        $api.addCls($api.byId('start'), 'loading')
+        api.showProgress({ title: '加载中...', text: '', modal: false })
+        try {
+          const ret = await submit()
+        } catch (error) {
+          api.toast({
+            msg: error.msg || '网络错误'
+          })
         }
-      }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('start'), 'loading')
+        api.hideProgress()
         if (ret.data.result === 'YES') {
-          openAuthResult('success')
+          openAuthResult({status: 'success'})
         } else {
           api.toast({ msg: ret.data.info })
         }
-      }).catch(error => {
-        api.toast({
-          msg: error.msg || '网络错误'
-        })
-        submitStatus = 'notsubmit'
-        $api.removeCls($api.byId('start'), 'loading')
       })
     }
   }

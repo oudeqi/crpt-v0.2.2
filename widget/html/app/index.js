@@ -41,124 +41,10 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-// 导航布局
-
-
-function openTabLayout(index) {
-  api.openTabLayout({
-    name: 'tabLayout',
-    bgColor: '#fff',
-    reload: true,
-    delay: 300,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal' // leftButtons: [{
-      //   // text: '设置',
-      //   // color: '#fff',
-      //   // fontSize: 16,
-      //   iconPath: 'widget://image/avatar.png',
-      // }],
-      // rightButtons: [{
-      //   text: '设置',
-      //   color: '#fff',
-      //   fontSize: 16,
-      //   // iconPath: 'widget://image/settings@2x.png'
-      // }]
-
-    },
-    tabBar: {
-      animated: false,
-      scrollEnabled: true,
-      selectedColor: '#66BB6A',
-      color: '#bfbfbf',
-      index: index || 0,
-      // preload: 4,
-      list: [{
-        text: "首页",
-        iconPath: "widget://image/tablayout/shouye.png",
-        selectedIconPath: "widget://image/tablayout/shouye_active.png"
-      }, {
-        text: "贷款",
-        iconPath: "widget://image/tablayout/loan.png",
-        selectedIconPath: "widget://image/tablayout/loan_active.png"
-      }, {
-        text: "还款",
-        iconPath: "widget://image/tablayout/huankuan.png",
-        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
-      }, {
-        text: "我的",
-        iconPath: "widget://image/tablayout/wode.png",
-        selectedIconPath: "widget://image/tablayout/wode_active.png"
-      }],
-      frames: [{
-        title: "首页",
-        //tab切换时对应的标题
-        name: "tablayout/index",
-        url: "widget://html/index/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "待申请",
-        name: "tablayout/loan",
-        url: "widget://html/loan/index.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "还款",
-        name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "我的",
-        name: "tablayout/my",
-        url: "widget://html/my/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }]
-    }
-  });
-} // 注册
-
-
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -166,59 +52,37 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openTodoAuthGeren() {
+function openFaceAuth() {
+  var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      title = _ref3.title,
+      userType = _ref3.userType;
+
   api.openTabLayout({
-    name: 'html/todoauthgeren/win',
-    title: '待完成',
-    url: 'widget://html/todoauthgeren/win.html',
+    name: 'html/faceauth/win',
+    title: title || '人脸识别',
+    url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
     reload: true,
+    pageParam: {
+      title: title,
+      userType: userType
+    },
     bounces: true,
     slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
     navigationBar: {
-      hideBackButton: true,
+      hideBackButton: false,
       background: '#fff',
       color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
-  });
-}
-
-function openTodoAuthQiye() {
-  api.openTabLayout({
-    name: 'html/todoauthqiye/win',
-    title: '待完成',
-    url: 'widget://html/todoauthqiye/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: 'rgba(102,187,106,1)',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
   });
-} // 企业信息确认
+} // 手持身份证上传
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1667,13 +1531,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1957,14 +1821,14 @@ var Utils$1 = new Utils();
 // $api.rmStorage()
 // $api.clearStorage()
 
-var PageController = /*#__PURE__*/function () {
-  function PageController() {
-    classCallCheck(this, PageController);
+var App = /*#__PURE__*/function () {
+  function App() {
+    classCallCheck(this, App);
   }
 
-  createClass(PageController, [{
-    key: "openPage",
-    value: function openPage() {
+  createClass(App, [{
+    key: "init",
+    value: function init() {
       // 认证状态 int
       // 1：正常
       // 2：待实名认证
@@ -1974,41 +1838,11 @@ var PageController = /*#__PURE__*/function () {
       // 6：人工审核不通过
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
-      var userinfo = $api.getStorage('userinfo');
-
-      if (userinfo) {
-        // openIDcardUpload()
-        // openSendAddress({
-        //   gtCreditId: '1258945510237147136',
-        //   gtId: '1263411018323742721'
-        // })
-        // openDanbaoRenList({
-        //   gtCreditId: '1268076050915659776',
-        //   productId: '4',
-        //   demandMoney: '50',
-        //   gtId: '1268076050995986433'
-        // })
-        // return
-        // openGerenLogin()
-        // return
-        // openDanbaoKaitong({step: 0, creditStatus: 2})
-        // return
-        var authStatus = $api.getStorage('authStatus') || {};
-
-        if (authStatus.status === 1) {
-          openTabLayout();
-        } else {
-          var userType = userinfo.userType;
-
-          if (userType === '1') {
-            openTodoAuthGeren();
-          } else {
-            openTodoAuthQiye();
-          }
-        }
-      } else {
-        openRegLogin();
-      }
+      openFaceAuth({
+        status: 'error',
+        tips: 'message'
+      });
+      return;
     }
   }, {
     key: "bindEvent",
@@ -2040,11 +1874,11 @@ var PageController = /*#__PURE__*/function () {
     }
   }]);
 
-  return PageController;
+  return App;
 }();
 
 apiready = function apiready() {
-  var ctrl = new PageController();
-  ctrl.openPage();
+  var ctrl = new App();
+  ctrl.init();
   ctrl.bindEvent();
 };

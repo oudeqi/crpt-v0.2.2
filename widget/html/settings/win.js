@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -1704,13 +1704,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1851,7 +1851,7 @@ apiready = function apiready() {
           // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
           windows.forEach(function (win) {
             // 关闭非root、非登录注册页、非本页
-            if (win.name !== 'root' && win.name !== 'html/reglogin/win' && win.name !== 'html/settings/win') {
+            if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
               api.closeWin({
                 name: win.name
               });

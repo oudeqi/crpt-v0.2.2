@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -1679,13 +1679,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1784,55 +1784,6 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-var openUIInput = function openUIInput(dom, form, key) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  var cb = arguments.length > 4 ? arguments[4] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    cb && cb(ret.id);
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      form[key] = [ret.id, value && value.msg ? value.msg : ''];
-    });
-  });
-};
-
 var isPhoneNo = function isPhoneNo(phone) {
   return /^1[3456789]\d{9}$/.test(phone);
 };
@@ -1862,31 +1813,12 @@ apiready = function apiready() {
     }
   });
   var tel = '';
-  var form = {}; // 表单数据
-
   var sendStatus = 'notsend'; // notsend:未发送,sending:发送中,countdown:倒计时中
 
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
   getUserPhone(function (value) {
     tel = value;
-  });
-  openUIInput($api.byId('code'), form, 'code', {
-    placeholder: '短信验证码',
-    keyboardType: 'next',
-    maxStringLength: 6
-  });
-  openUIInput($api.byId('pwd'), form, 'pwd', {
-    placeholder: '设置登录密码',
-    keyboardType: 'next',
-    inputType: 'password',
-    maxStringLength: 16
-  });
-  openUIInput($api.byId('repwd'), form, 'repwd', {
-    placeholder: '确认登录密码',
-    keyboardType: 'done',
-    inputType: 'password',
-    maxStringLength: 16
   });
 
   function countDown() {
@@ -1942,6 +1874,10 @@ apiready = function apiready() {
 
   document.querySelector('#submit').onclick = function () {
     if (submitStatus === 'notsubmit') {
+      var pwd = $api.byId('pwd').value.trim();
+      var repwd = $api.byId('repwd').value.trim();
+      var code = $api.byId('code').value.trim();
+
       if (!tel) {
         return api.toast({
           msg: '未获取到用户手机号',
@@ -1956,21 +1892,21 @@ apiready = function apiready() {
         });
       }
 
-      if (!form['pwd'][1]) {
+      if (!pwd) {
         return api.toast({
           msg: '请输入密码',
           location: 'middle'
         });
       }
 
-      if (form['pwd'][1] !== form['repwd'][1]) {
+      if (pwd !== repwd) {
         return api.toast({
           msg: '两次密码输入不一致',
           location: 'middle'
         });
       }
 
-      if (!form['code'][1]) {
+      if (!code) {
         return api.toast({
           msg: '请输入验证码',
           location: 'middle'
@@ -1980,9 +1916,9 @@ apiready = function apiready() {
       submitStatus = 'submitting';
       var body = {
         phone: tel,
-        password: base64_1.encode(form['pwd'][1]),
-        confirmPassword: base64_1.encode(form['repwd'][1]),
-        verification: form['code'][1]
+        password: base64_1.encode(pwd),
+        confirmPassword: base64_1.encode(repwd),
+        verification: code
       };
       $api.addCls($api.byId('submit'), 'loading');
       http.post('/crpt-cust/identification/getbackpassword', {

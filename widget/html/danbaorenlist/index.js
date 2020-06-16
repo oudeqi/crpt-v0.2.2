@@ -900,9 +900,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -910,11 +910,11 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openDanbaoRenForm(_ref8) {
-  var gtCreditId = _ref8.gtCreditId,
-      gtCounterId = _ref8.gtCounterId,
-      type = _ref8.type,
-      status = _ref8.status;
+function openDanbaoRenForm(_ref10) {
+  var gtCreditId = _ref10.gtCreditId,
+      gtCounterId = _ref10.gtCounterId,
+      type = _ref10.type,
+      status = _ref10.status;
   api.openTabLayout({
     name: "html/danbaorenform/index",
     title: '担保人调查表',
@@ -1798,13 +1798,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();

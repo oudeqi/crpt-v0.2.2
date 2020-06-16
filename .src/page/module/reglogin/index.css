@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 0 24px;
+  padding-top: 30px;
+}
+section {
+  padding-top: 70px;
+}
+h2 {
+  height:33px;
+  font-size:24px;
+  font-weight: 600;
+  color:rgba(48,49,51,1);
+  line-height:33px;
+}
+p {
+  font-size:16px;
+  color:rgba(144,147,153,1);
+  line-height:22px;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+.app_btn {
+  margin-bottom: 12px;
+}

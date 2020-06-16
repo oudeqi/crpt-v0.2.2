@@ -2,7 +2,7 @@ import '../../../app.css'
 import './win.css'
 
 import { openAuthResult, openCityList } from '../../../webview.js'
-import { http, ActionSheet, CitySelector, initUIInput, isPhoneNo } from '../../../config.js'
+import { http, ActionSheet, CitySelector, isPhoneNo } from '../../../config.js'
 
 
 class Service {
@@ -11,8 +11,8 @@ class Service {
   }
 }
 
-
 class PageController extends Service {
+
   constructor () {
     super(...arguments)
     this.state = {
@@ -26,20 +26,20 @@ class PageController extends Service {
         isChildren: '',
         education: '',
         permanentAddress: '',
-        workCompany: '', // 工作单位 选填
-        animalHusbandryYear: '', // 从事畜牧<br />行业年限
         addrProvince: '', // String 是 法人居住地址（省）
         addrProvinceCode: '', // String 是 法人居住地址编号（省）
         addrCity: '', // String 是 法人居住地址（市）
         addrCityCode: '', // String 是 法人居住地址编号（市）
         addrCounty: '', // String 是 法人居住地址（区县）
         addrCountyCode: '', // String 是 法人居住地址编号（区县）
-        addrDetail: '', // String 是 法人居住地址详细
         relationship: '',
-        relationName: '',
-        relationPhone: '',
-        otherName: '',
-        otherPhone: '',
+        // workCompany 工作单位 选填
+        // animalHusbandryYear 行业年限
+        // addrDetail 法人居住地址详细
+        // relationName 姓名
+        // relationPhone 手机号
+        // otherName 姓名
+        // otherPhone 手机号
       }
     }
     this.el = {
@@ -48,6 +48,7 @@ class PageController extends Service {
       submit: $api.byId('submit'),
     }
   }
+
   // 初始化计算属性
   initComputedState () {
     // 个人补充基本信息：http://crptdev.liuheco.com/crpt-cust/saas/personinfo/submission
@@ -63,14 +64,8 @@ class PageController extends Service {
     let label = '您'
     this.el.userType1.innerHTML = label
     this.el.userType2.innerHTML = label
-    // if (this.state.userType === '1') {
-    //   this.el.userType1.innerHTML = '个人'
-    //   this.el.userType2.innerHTML = '个人'
-    // } else {
-    //   this.el.userType1.innerHTML = '法定代表人'
-    //   this.el.userType2.innerHTML = '法定代表人'
-    // }
   }
+
   // 初始化表单
   initForm () {
     // 婚姻状况 1：已婚   2：未婚 3：离异
@@ -98,35 +93,29 @@ class PageController extends Service {
       })
     }
     // 户籍地址
-    api.addEventListener({
-      name: 'cityListSelected'
-    }, (ret, err) => {
-      const selected = ret.value
-      console.log(JSON.stringify(selected))
-      $api.dom($api.byId('permanentAddress'), 'input').value = selected.city
-      this.state.postData.permanentAddress = selected.city
-    })
+    // api.addEventListener({
+    //   name: 'cityListSelected'
+    // }, (ret, err) => {
+    //   const selected = ret.value
+    //   console.log(JSON.stringify(selected))
+    //   $api.dom($api.byId('permanentAddress'), 'input').value = selected.city
+    //   this.state.postData.permanentAddress = selected.city
+    // })
+    // document.querySelector('#permanentAddress').onclick = () => {
+    //   openCityList({ eventName: 'cityListSelected' })
+    // }
     document.querySelector('#permanentAddress').onclick = () => {
-      openCityList({
-        eventName: 'cityListSelected'
+      CitySelector(selected => {
+        console.log(JSON.stringify(selected))
+        let a = selected[0]
+        let b = selected[1]
+        let c = selected[2]
+        let addr = `${a.name}/${b.name}/${c.name}`
+        $api.dom($api.byId('permanentAddress'), 'input').value = addr
+        this.state.postData.permanentAddress = addr
       })
     }
-    // 工作单位 workCompany
-    initUIInput($api.byId('workCompany'), {
-      placeholder: '请输入',
-      keyboardType: 'next',
-      maxStringLength: 100
-    }, (value) => {
-      this.state.postData.workCompany = value
-    })
-    // 行业年限 animalHusbandryYear
-    initUIInput($api.byId('animalHusbandryYear'), {
-      placeholder: '请输入',
-      keyboardType: 'decimal',
-      maxStringLength: 4
-    }, (value) => {
-      this.state.postData.animalHusbandryYear = value
-    })
+
     // 现居住信息
     document.querySelector('#address').onclick = () => {
       CitySelector(selected => {
@@ -143,14 +132,7 @@ class PageController extends Service {
         this.state.postData.addrCountyCode = c.id
       })
     }
-    // 详细地址
-    initUIInput($api.byId('addrDetail'), {
-      placeholder: '请输入',
-      keyboardType: 'next',
-      maxStringLength: 30
-    }, (value) => {
-      this.state.postData.addrDetail = value
-    })
+
     // 亲属关系  标记  1-配偶 2-子女 3-父母
     document.querySelector('#relationship').onclick = () => {
       let btns = ['配偶', '子女', '父母']
@@ -159,132 +141,138 @@ class PageController extends Service {
         this.state.postData.relationship = String(index + 1)
       })
     }
-    // 姓名
-    initUIInput($api.byId('relationName'), {
-      placeholder: '请输入',
-      keyboardType: 'next',
-      maxStringLength: 10
-    }, (value) => {
-      this.state.postData.relationName = value
-    })
-    // 手机号
-    initUIInput($api.byId('relationPhone'), {
-      placeholder: '请输入',
-      keyboardType: 'number',
-      maxStringLength: 11
-    }, (value) => {
-      this.state.postData.relationPhone = value
-    })
-    // 姓名
-    initUIInput($api.byId('otherName'), {
-      placeholder: '请输入',
-      keyboardType: 'next',
-      maxStringLength: 10
-    }, (value) => {
-      this.state.postData.otherName = value
-    })
-    // 手机号
-    initUIInput($api.byId('otherPhone'), {
-      placeholder: '请输入',
-      keyboardType: 'number',
-      maxStringLength: 11
-    }, (value) => {
-      this.state.postData.otherPhone = value
-    })
+
   }
   // 表单验证
   formValidation () {
+    let workCompany = $api.byId('workCompany').value.trim()
+    let animalHusbandryYear = $api.byId('animalHusbandryYear').value.trim()
+    let addrDetail = $api.byId('addrDetail').value.trim()
+    let relationName = $api.byId('relationName').value.trim()
+    let relationPhone = $api.byId('relationPhone').value.trim()
+    let otherName = $api.byId('otherName').value.trim()
+    let otherPhone = $api.byId('otherPhone').value.trim()
     const { postData } = this.state
     let valid = true
     if (!postData.marriage) {
-      api.toast({ msg: '请选择婚姻状况' })
+      api.toast({ msg: '请选择婚姻状况', location: 'middle' })
       valid = false
       return valid
     }
     if (!postData.isChildren) {
-      api.toast({ msg: '请选择子女状况' })
+      api.toast({ msg: '请选择子女状况', location: 'middle' })
       valid = false
       return valid
     }
     if (!postData.education) {
-      api.toast({ msg: '请选择教育情况' })
+      api.toast({ msg: '请选择教育情况', location: 'middle' })
       valid = false
       return valid
     }
     if (!postData.permanentAddress) {
-      api.toast({ msg: '请选择户籍地址' })
+      api.toast({ msg: '请选择户籍地址', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.animalHusbandryYear) {
-      api.toast({ msg: '请输入从事畜牧行业年限' })
+    if (!animalHusbandryYear) {
+      api.toast({ msg: '请输入从事畜牧行业年限', location: 'middle' })
       valid = false
       return valid
     }
-    if (isNaN(postData.animalHusbandryYear)) {
-      api.toast({ msg: '从事畜牧行业年限只能输入数字' })
+    if (isNaN(animalHusbandryYear)) {
+      api.toast({ msg: '从事畜牧行业年限只能输入数字', location: 'middle' })
       valid = false
       return valid
     }
     if (!postData.addrProvince) {
-      api.toast({ msg: '请选择居住地省市地区' })
+      api.toast({ msg: '请选择居住地省市地区', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.addrDetail) {
-      api.toast({ msg: '请选择居住地详细地址' })
+    if (!addrDetail) {
+      api.toast({ msg: '请选择居住地详细地址', location: 'middle' })
       valid = false
       return valid
     }
     if (!postData.relationship) {
-      api.toast({ msg: '请选择亲属关系' })
+      api.toast({ msg: '请选择亲属关系', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.relationName) {
-      api.toast({ msg: '请输入直属亲属姓名' })
+    if (!relationName) {
+      api.toast({ msg: '请输入直属亲属姓名', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.relationPhone) {
-      api.toast({ msg: '请输入直属亲属手机号' })
+    if (!relationPhone) {
+      api.toast({ msg: '请输入直属亲属手机号', location: 'middle' })
       valid = false
       return valid
     }
-    if (!isPhoneNo(postData.relationPhone)) {
-      api.toast({ msg: '直属亲属手机号格式不正确' })
+    if (!isPhoneNo(relationPhone)) {
+      api.toast({ msg: '直属亲属手机号格式不正确', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.otherName) {
-      api.toast({ msg: '请输入其他联系人姓名' })
+    if (!otherName) {
+      api.toast({ msg: '请输入其他联系人姓名', location: 'middle' })
       valid = false
       return valid
     }
-    if (!postData.otherPhone) {
-      api.toast({ msg: '请输入其他联系人手机号' })
+    if (!otherPhone) {
+      api.toast({ msg: '请输入其他联系人手机号', location: 'middle' })
       valid = false
       return valid
     }
-    if (!isPhoneNo(postData.otherPhone)) {
-      api.toast({ msg: '其他联系人手机号格式不正确' })
+    if (!isPhoneNo(otherPhone)) {
+      api.toast({ msg: '其他联系人手机号格式不正确', location: 'middle' })
       valid = false
       return valid
     }
     return valid
   }
-  // 事件绑定
+
   bindEvent () {
+    // 返回
+    api.addEventListener({
+      name: 'navitembtn'
+    }, function (ret, err) {
+      if (ret.type === 'left') {
+        api.closeWin()
+      }
+    })
+
     this.el.submit.onclick = () => {
       if (this.state.submitStatus === 'notsubmit') {
         if (!this.formValidation()) { return }
         this.state.submitStatus = 'submitting'
         $api.addCls(this.el.submit, 'loading')
-        this.submit(this.state.url, this.state.postData).then(res => {
+        let workCompany = $api.byId('workCompany').value.trim()
+        let animalHusbandryYear = $api.byId('animalHusbandryYear').value.trim()
+        let addrDetail = $api.byId('addrDetail').value.trim()
+        let relationName = $api.byId('relationName').value.trim()
+        let relationPhone = $api.byId('relationPhone').value.trim()
+        let otherName = $api.byId('otherName').value.trim()
+        let otherPhone = $api.byId('otherPhone').value.trim()
+        const data = {
+          ...this.state.postData,
+          workCompany,
+          animalHusbandryYear,
+          addrDetail,
+          relationName,
+          relationPhone,
+          otherName,
+          otherPhone,
+        }
+        this.submit(this.state.url, data).then(res => {
           if (res.code === 200) {
             this.state.submitStatus = 'notsubmit'
             $api.removeCls($api.byId('submit'), 'loading')
-            openAuthResult('success', '补充基本信息成功', '补充基本信息')
+            openAuthResult({
+              status: 'success',
+              message: '补充基本信息成功',
+              title: '补充基本信息'
+            })
           }
         }).catch(error => {
           api.toast({
@@ -300,19 +288,11 @@ class PageController extends Service {
 }
 
 apiready = function () {
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  });
-  const controller = new PageController()
-  controller.renderUserType()
-  controller.initComputedState()
-  controller.initForm()
-  controller.bindEvent()
 
-
+  const ctrl = new PageController()
+  ctrl.renderUserType()
+  ctrl.initComputedState()
+  ctrl.initForm()
+  ctrl.bindEvent()
 
 }

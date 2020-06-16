@@ -10,32 +10,72 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
-  <div class="tips">
-    请准备<strong id="name">***</strong><span id="userType"></span>的二代居民身份证
-  </div>
+
   <div class="container">
 
-    <div class="upload" tapmode="active" id="front">
-      <div class="bg">上传身份证正面照</div>
-      <img src="" alt="">
-      <div class="inner"></div>
+    <div class="step step2">
+      <div class="step_list">
+        <div class="step_item">
+          <i class="icon">1</i>
+          <span class="txt"></span>
+        </div>
+        <div class="step_item">
+          <i class="icon">2</i>
+          <span class="txt">身份证上传</span>
+        </div>
+        <div class="step_item">
+          <i class="icon">3</i>
+          <span class="txt"></span>
+        </div>
+      </div>
+      <div class="line"></div>
     </div>
 
-    <div class="upload" tapmode="active" id="back">
-      <div class="bg">点击上传国徽面</div>
-      <img src="" alt="">
-      <div class="inner"></div>
+    <div class="tips">
+      请准备<strong id="name">***</strong><span id="userType"></span>的二代居民身份证
     </div>
 
-    <div class="tit">
-      拍摄要求
+    <div class="upload z">
+      <div class="pic" tapmode="active" id="front">
+        <div class="bg"></div>
+        <img src="" alt="">
+        <div class="btn"></div>
+      </div>
+      <p class="tips">点击拍摄/上传人像面</p>
     </div>
 
-    <ul>
-      <li>1. 需要上传第二代居民身份证的正反两面</li>
-      <li>2. 请确保照片中的身份证信息清晰可见</li>
-      <li>3. 保持周围光线充足</li>
-    </ul>
+    <div class="upload f">
+      <div class="pic" tapmode="active" id="back">
+        <div class="bg"></div>
+        <img src="" alt="">
+        <div class="btn"></div>
+      </div>
+      <p class="tips">点击拍摄/上传国徽面</p>
+    </div>
+
+    <div class="take-case">
+      <div class="tit">
+        拍摄示例
+      </div>
+      <ul>
+        <li>
+          <img src="../../image/auth/take-case-1.png" alt="">
+          <p>标准拍摄</p>
+        </li>
+        <li>
+          <img src="../../image/auth/take-case-2.png" alt="">
+          <p>边框缺失</p>
+        </li>
+        <li>
+          <img src="../../image/auth/take-case-3.png" alt="">
+          <p>照片模糊</p>
+        </li>
+        <li>
+          <img src="../../image/auth/take-case-4.png" alt="">
+          <p>闪光强烈</p>
+        </li>
+      </ul>
+    </div>
 
     <div class="btn-box">
       <div class="app_btn" tapmode="active" id="next">下一步</div>

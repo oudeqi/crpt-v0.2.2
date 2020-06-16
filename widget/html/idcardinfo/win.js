@@ -16,9 +16,9 @@ function _defineProperty(obj, key, value) {
 var defineProperty = _defineProperty;
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -26,7 +26,11 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openAuthResult(status, message, title) {
+function openAuthResult(_ref4) {
+  var status = _ref4.status,
+      message = _ref4.message,
+      title = _ref4.title,
+      tips = _ref4.tips;
   // status: success error during
   api.openTabLayout({
     name: 'html/authresult/win',
@@ -37,19 +41,20 @@ function openAuthResult(status, message, title) {
     pageParam: {
       status: status,
       title: title,
-      message: message
+      message: message,
+      tips: tips
     },
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
@@ -1739,13 +1744,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1844,56 +1849,6 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function initUIInput(dom) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var cb = arguments.length > 2 ? arguments[2] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      if (value) {
-        cb && cb(value.msg);
-      }
-    });
-  });
-} // let userinfo = {
-
 function getNodeProtocolFromStorage(useNode) {
   // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
   var protocol = $api.getStorage('protocol') || {};
@@ -1952,21 +1907,7 @@ apiready = function apiready() {
       timelimit = pageParam.timelimit,
       front = pageParam.front,
       back = pageParam.back;
-  initUIInput($api.byId('name'), {
-    placeholder: '请输入',
-    keyboardType: 'done',
-    maxStringLength: 10
-  }, function (value) {
-    name = value;
-  }); // $api.byId('name').innerHTML = name
-
-  var UIInput = api.require('UIInput');
-
-  var iptIndex = api.systemType === 'ios' ? 1 : 0;
-  UIInput.insertValue({
-    index: iptIndex,
-    msg: name || ''
-  });
+  $api.byId('name').value = name;
   $api.byId('number').innerHTML = number || '';
   $api.byId('authority').innerHTML = authority || '';
   $api.byId('timelimit').innerHTML = timelimit || '';
@@ -2017,7 +1958,7 @@ apiready = function apiready() {
     }
 
     var tpl = nodes.map(function (item) {
-      return "<span>\u300A</span><strong tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">").concat(item.protocolName, "</strong><span>\u300B</span>");
+      return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">\u300A").concat(item.protocolName, "\u300B</li>");
     });
     $api.byId('agreement').innerHTML = tpl.join('');
   }
@@ -2025,7 +1966,7 @@ apiready = function apiready() {
   showProtocol();
 
   document.querySelector('#agreement').onclick = function (e) {
-    var strong = $api.closest(e.target, 'strong');
+    var strong = $api.closest(e.target, 'li');
 
     if (strong) {
       openAgreement(strong.dataset.id, strong.dataset.name);
@@ -2034,7 +1975,9 @@ apiready = function apiready() {
 
   document.querySelector('#next').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!name) {
+      var _name = $api.byId('name').value.trim();
+
+      if (!_name) {
         return api.toast({
           msg: '请输入姓名'
         });
@@ -2056,7 +1999,7 @@ apiready = function apiready() {
       $api.addCls($api.byId('next'), 'loading');
       http.upload('/crpt-cust/saas/realnameauth', {
         values: {
-          name: name,
+          name: _name,
           gender: gender,
           number: number,
           birthday: birthday,
@@ -2078,7 +2021,9 @@ apiready = function apiready() {
             msg: ret.data.info || '实名认证失败'
           });
         } else {
-          openAuthResult('success');
+          openAuthResult({
+            status: 'success'
+          });
         }
       })["catch"](function (error) {
         api.toast({

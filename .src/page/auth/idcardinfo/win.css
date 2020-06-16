@@ -1,106 +1,166 @@
+.step {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  .step_list {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .step_item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all .3s;
+    cursor: pointer;
+    &:last-child .icon {
+      margin-right: 0;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width:26px;
+      height:26px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background:rgba(255,255,255,1);
+      border:1px solid rgba(192,196,204,1);
+      font-size:20px;
+      font-family:DINAlternate-Bold,DINAlternate;
+      font-weight:bold;
+      color:rgba(192,196,204,1);
+      line-height:24px;
+      font-style: normal;
+    }
+    .txt {
+      display: none;
+      font-size:18px;
+      color:rgba(48,49,51,1);
+      line-height:25px;
+    }
+  }
+  .line {
+    margin-top: 9px;
+    height:4px;
+    background:rgba(245,245,245,1);
+    border-radius:2px;
+    width: 100%;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height:4px;
+      background:rgba(102,187,106,1);
+      border-radius:2px
+    }
+  }
+}
+@define-extend activeIcon {
+  width:26px;
+  height:26px;
+  background:rgba(102,187,106,1);
+  border:1px solid rgba(102,187,106,1);
+  font-size:20px;
+  font-family:DINAlternate-Bold,DINAlternate;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:24px;
+}
+@for $i from 1 to 3 {
+	.step.step$(i) {
+    .step_list .step_item:nth-child($i){
+      flex-grow: 1;
+      .icon {
+        @extend activeIcon;
+      }
+      .txt {
+        display: block;
+      }
+    }
+    .line::after {
+      width: 100%;
+    }
+  }
+}
+
+
 html, body {
   background-color: #fff;
 }
 .container {
-  padding: 10px 20px 20px;
+  padding: 0 24px;
 }
-
 .tips {
-  background: #e7eff4;
-  line-height: 1.5;
-  padding: 12px 15px;
-  font-size: 16px;
-  color: #8d9daa;
+  padding: 5px 10px;
+  background:rgba(102,187,106,0.1);
+  border-radius:6px;
+  font-size:14px;
+  color:rgba(102,187,106,1);
+  line-height:20px;
 }
 .tips2 {
-  border-bottom: 1px solid #ededed;
-  padding: 10px 0;
+  margin-top: 24px;
   & h2 {
-    font-size: 16px;
-    font-weight: bold;
-    color: #66BB6A;
-    margin: 0;
+    height:22px;
+    font-size:16px;
+    color:rgba(48,49,51,1);
+    line-height:22px;
   }
   & div {
-    color: #aaa;
-    font-size: 13px;
-    margin: 5px 0 0;
+    font-size:12px;
+    color:rgba(144,147,153,1);
+    line-height:17px;
+    margin-top: 4px;
+    & span {
+      color: #FF5F39;
+    }
   }
 }
+
 .ipt-group {
-  padding: 10px 0;
+  padding-top: 15px;
   & .item {
-    height: 36px;
-    margin-top: 5px;
+    border-bottom: 1px solid rgba(245,245,245,1);
+    min-height: 50px;
     display: flex;
     align-items: center;
     & label {
       width: 88px;
+      padding-top: 14px;
+      padding-bottom: 14px;
       flex-shrink: 0;
-      color: #8d9daa;
-      font-size: 16px;
-      height: 100%;
-      line-height: 1.5;
-      display: flex;
-      align-items: center;
+      font-size:16px;
+      color:rgba(48,49,51,1);
     }
     & div {
       flex-grow: 1;
-      height: 100%;
+      padding-top: 14px;
+      padding-bottom: 14px;
+      padding-left: 4px;
       display: flex;
       align-items: flex-start;
       display: flex;
       align-items: center;
-      padding-left: 4px;
-    }
-  }
-  & .item:last-child {
-    height: 70px;
-    & label {
-      display: flex;
-      align-items: flex-start;
-    }
-    & div {
-      display: flex;
-      align-items: flex-start;
+      & input {
+        /*border: 1px solid red;*/
+        height: 24px;
+      }
     }
   }
 }
 
-.btn-box {
-  text-align: center;
-  & .icon-btn {
-    color: #66BB6A;
-    border: 1px solid #66BB6A;
-    height: 36px;
-    border-radius: 36px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 15px;
-    & i {
-      font-size: 18px;
-      font-weight: bold;
-      position: relative;
-      top: -1px;
-    }
-    & span {
-      margin-left: 5px;
-      font-size: 15px;
-    }
-    &.active {
-      background-color: #88dbcb;
-      color: #fff;
-      border: 0;
-    }
-  }
+.app_agreement {
+  margin-top: 15px;
 }
-.agreement-box {
+
+.btn-box {
+  padding: 12px 0;
   margin-top: 30px;
-}
-.agreement-list {
-  display: inline;
-}
-.btn-box {
-  margin-top: 10px;
+  .app_plain_btn {
+    margin-bottom: 10px;
+  }
 }

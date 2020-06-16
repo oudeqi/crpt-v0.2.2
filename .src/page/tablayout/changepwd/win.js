@@ -31,15 +31,11 @@ apiready = function() {
     }
   });
   let tel = ''
-  let form = {} // 表单数据
   let sendStatus = 'notsend' // notsend:未发送,sending:发送中,countdown:倒计时中
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
   getUserPhone(value => {
     tel = value
   })
-  openUIInput($api.byId('code'), form, 'code', { placeholder: '短信验证码', keyboardType: 'next', maxStringLength: 6 })
-  openUIInput($api.byId('pwd'), form, 'pwd', { placeholder: '设置登录密码', keyboardType: 'next', inputType: 'password', maxStringLength: 16 })
-  openUIInput($api.byId('repwd'), form, 'repwd', { placeholder: '确认登录密码', keyboardType: 'done', inputType: 'password', maxStringLength: 16 })
 
   function countDown () {
     let second = 60
@@ -67,17 +63,12 @@ apiready = function() {
       sendStatus = 'sending'
       $api.byId('sendcode').innerHTML = '正在发送中...'
       http.post('/crpt-cust/sms/smsverificationcode', {
-        body: {
-          phone: tel
-        }
+        body: { phone: tel }
       }).then(ret => {
         sendStatus = 'countdown'
         countDown()
       }).catch(error => {
-        api.toast({
-          msg: error.msg || '验证码发送失败',
-          location: 'middle'
-        })
+        api.toast({ msg: error.msg || '验证码发送失败', location: 'middle' })
         sendStatus = 'notsend'
         $api.byId('sendcode').innerHTML = '发送验证码'
       })
@@ -86,27 +77,30 @@ apiready = function() {
 
   document.querySelector('#submit').onclick = function () {
     if (submitStatus === 'notsubmit') {
+      let pwd = $api.byId('pwd').value.trim()
+      let repwd = $api.byId('repwd').value.trim()
+      let code = $api.byId('code').value.trim()
       if (!tel) {
         return api.toast({ msg: '未获取到用户手机号', location: 'middle' })
       }
       if (!isPhoneNo(tel)) {
         return api.toast({ msg: '用户手机号格式不正确', location: 'middle' })
       }
-      if (!form['pwd'][1]) {
+      if (!pwd) {
         return api.toast({ msg: '请输入密码', location: 'middle' })
       }
-      if (form['pwd'][1] !== form['repwd'][1]) {
+      if (pwd !== repwd) {
         return api.toast({ msg: '两次密码输入不一致', location: 'middle' })
       }
-      if (!form['code'][1]) {
+      if (!code) {
         return api.toast({ msg: '请输入验证码', location: 'middle' })
       }
       submitStatus = 'submitting'
       let body = {
         phone: tel,
-        password: Base64.encode(form['pwd'][1]),
-        confirmPassword: Base64.encode(form['repwd'][1]),
-        verification: form['code'][1]
+        password: Base64.encode(pwd),
+        confirmPassword: Base64.encode(repwd),
+        verification: code
       }
       $api.addCls($api.byId('submit'), 'loading')
       http.post('/crpt-cust/identification/getbackpassword', { body }).then(ret => {
@@ -119,10 +113,7 @@ apiready = function() {
         })
         api.closeWin()
       }).catch(error => {
-        api.toast({
-          msg: error.msg || '操作失败',
-          location: 'middle'
-        })
+        api.toast({ msg: error.msg || '操作失败', location: 'middle' })
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
       })

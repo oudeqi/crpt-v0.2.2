@@ -8,21 +8,43 @@
   <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 <body>
-  <div class="tips">
-    请确认您的身份信息是否正确。若信息有误，请修改或重新拍照/上传
-  </div>
   <div class="container">
+
+    <div class="step step3">
+      <div class="step_list">
+        <div class="step_item">
+          <i class="icon">1</i>
+          <span class="txt"></span>
+        </div>
+        <div class="step_item">
+          <i class="icon">2</i>
+          <span class="txt"></span>
+        </div>
+        <div class="step_item">
+          <i class="icon">3</i>
+          <span class="txt">核实信息</span>
+        </div>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <div class="tips">
+      请确认法定代表张某某的身份信息是否正确。若信息有误，请修改或重新拍照/上传
+    </div>
+
     <div class="tips2">
       <h2>身份信息</h2>
       <div>
-        *若姓名出现文字识别错，可点击修改。请保持与身份证一致。
+        <span>*</span>若姓名出现文字识别错，可点击修改。请保持与身份证一致
       </div>
     </div>
+
     <div class="ipt-group">
       <div class="item">
-        <label>*姓名</label>
-        <div id="name"></div>
-        <!-- 张三 -->
+        <label>姓名</label>
+        <div>
+          <input id="name" type="text" name="name" placeholder="请输入" value="">
+        </div>
       </div>
       <div class="item">
         <label>身份证号</label>
@@ -51,21 +73,19 @@
       </div>
     </div>
 
-    <div class="btn-box">
-      <div class="icon-btn" tapmode="active" id="retry">
-        <i class="aui-iconfont aui-icon-camera"></i>
-        <span>重新上传</span>
-      </div>
-    </div>
-
-    <div class="app_agreement agreement-box">
-      <label><input class="aui-radio" type="checkbox" id="checkbox" name="type">&nbsp;已阅读并同意</label>
-      <div id="agreement" class="agreement-list">
-        <!-- <span>《</span><strong tapmode="active">信用授权使用协议</strong><span>》</span> -->
+    <div class="app_agreement">
+      <label>
+        <input class="app_checkbox" type="checkbox" id="checkbox" name="type">
+      </label>
+      <div class="agreement_content">
+        <strong>已阅读并同意</strong><ul id="agreement"></ul>
+        <!-- <span>《</span><strong tapmode="active">用户服务协议</strong><span>》</span> -->
+        <!-- <li tapmode="active">《用户服务协议》</li> -->
       </div>
     </div>
 
     <div class="btn-box">
+      <div class="app_plain_btn" tapmode="active" id="retry">重新上传</div>
       <div class="app_btn" tapmode="active" id="next">下一步</div>
     </div>
 

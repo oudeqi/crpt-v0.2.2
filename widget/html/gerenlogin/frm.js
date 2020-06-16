@@ -131,39 +131,31 @@ function openTabLayout(index) {
 
 function openReg() {
   api.openTabLayout({
-    name: 'html/register/win',
-    url: 'widget://html/register/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/register/index',
+    url: 'widget://html/register/index.html',
     title: '注册',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     navigationBar: {
       hideBackButton: false,
       background: '#fff',
-      color: '#fff',
+      color: '#303133',
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: 500,
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_green_big.png'
       }]
     }
-  }); // api.openWin({
-  //   name: 'html/register/win',
-  //   url: 'widget://html/register/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  // })
+  });
 } // 注册登录选择
 
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -215,11 +207,9 @@ function openSendCode() {
 
 function openFindPwd() {
   api.openTabLayout({
-    // name: 'html/findpwd/win',
-    // url: 'widget://html/findpwd/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/findpwd/index',
+    url: 'widget://html/findpwd/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: {
@@ -229,17 +219,12 @@ function openFindPwd() {
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_green_big.png'
       }]
     }
-  }); // api.openWin({
-  //   name: 'html/findpwd/win',
-  //   url: 'widget://html/findpwd/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  // })
+  });
 } // 填写个人信息
 
 
@@ -1951,13 +1936,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -2055,55 +2040,6 @@ var http = {
     });
   }
 }; // 统一ios和android的输入框，下标都从0开始
-
-var openUIInput = function openUIInput(dom, form, key) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  var cb = arguments.length > 4 ? arguments[4] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    cb && cb(ret.id);
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      form[key] = [ret.id, value && value.msg ? value.msg : ''];
-    });
-  });
-};
 
 var isPhoneNo = function isPhoneNo(phone) {
   return /^1[3456789]\d{9}$/.test(phone);
@@ -2223,25 +2159,18 @@ function appLogin(options, successCallback, errorCallback) {
 }
 
 apiready = function apiready() {
-  // 表单数据
-  var form = {};
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
   //  根据传参确定登录接口的userType类型和是否隐藏
 
   var _ref = api.pageParam || {},
-      userType = _ref.userType;
-
-  openUIInput($api.byId('tel'), form, 'tel', {
-    placeholder: '请输入手机号码',
-    keyboardType: 'number',
-    maxStringLength: 11
-  });
-  openUIInput($api.byId('pwd'), form, 'pwd', {
-    placeholder: '请输入密码',
-    keyboardType: 'done',
-    inputType: 'password',
-    maxStringLength: 16
-  }); // document.querySelector('#switch').onchange = function () {
+      userType = _ref.userType; // document.querySelector('#switch').onchange = function () {
   //   let lockIcon = $api.byId('lockIcon')
   //   if (this.checked) {
   //     $api.addCls(lockIcon, 'aui-icon-unlock')
@@ -2255,6 +2184,7 @@ apiready = function apiready() {
   // }
   //  企业登录，屏蔽短信验证码按钮
 
+
   if (userType === 2) {
     document.querySelector('#tel_login').style.display = 'none';
   }
@@ -2264,11 +2194,12 @@ apiready = function apiready() {
   };
 
   document.querySelector('#tel_login').onclick = function () {
-    var tel = form['tel'][1];
+    var tel = $api.byId('tel').value.trim();
 
     if (!tel) {
       api.toast({
-        msg: '请输入手机号码'
+        msg: '请输入手机号码',
+        location: 'middle'
       });
     } else if (isPhoneNo(tel)) {
       openSendCode({
@@ -2277,7 +2208,8 @@ apiready = function apiready() {
       });
     } else {
       api.toast({
-        msg: '手机号码格式不正确'
+        msg: '手机号码格式不正确',
+        location: 'middle'
       });
     }
   };
@@ -2288,15 +2220,20 @@ apiready = function apiready() {
 
   document.querySelector('#login').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!form['tel'][1]) {
+      var tel = $api.byId('tel').value.trim();
+      var pwd = $api.byId('pwd').value.trim();
+
+      if (!tel) {
         return api.toast({
-          msg: '请输入手机号码'
+          msg: '请输入手机号码',
+          location: 'middle'
         });
       }
 
-      if (!form['pwd'][1]) {
+      if (!pwd) {
         return api.toast({
-          msg: '请输入密码'
+          msg: '请输入密码',
+          location: 'middle'
         });
       }
 
@@ -2305,11 +2242,11 @@ apiready = function apiready() {
       var body = {
         userType: userType || 1,
         // 1个人用户登录，2企业用户登录
-        username: form['tel'][1],
+        username: tel,
         loginType: 1,
         // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
-        // verification: form['code'][1],
-        password: form['pwd'][1]
+        // verification: code,
+        password: pwd
       };
       appLogin(body, function (userinfo) {
         submitStatus = 'notsubmit';

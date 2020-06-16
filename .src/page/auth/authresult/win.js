@@ -5,30 +5,33 @@ import { openRegLogin, openBaseinfoFill,
 openIDcardUpload, openIDcardInfo, openTabLayout } from '../../../webview.js'
 
 apiready = function() {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   let pageParam = api.pageParam || {}
-  let { status, title, message } = pageParam // status: success error during
+  let { status, title, message, tips } = pageParam // status: success error during
 
   if (status === 'success') {
     $api.byId('status') .innerHTML = `
       <div class="icon yes"></div>
-      <div class="title">${message || '认证成功'}</div>
+      <div class="message">${message || '认证成功'}</div>
     `
   } else if (status === 'error') {
     $api.byId('status') .innerHTML = `
       <div class="icon no"></div>
-      <div class="title">${message || '认证失败，请重试'}</div>
+      <div class="message">${message || '认证失败，请重试'}</div>
+      <div class="tips">${tips || '请尽快联系您的业务人员'}</div>
     `
   } else {
     $api.byId('status') .innerHTML = `
       <div class="during"></div>
-      <div class="title">${message || '人工审核中...'}</div>
+      <div class="message">${message || '人工审核中...'}</div>
     `
   }
 

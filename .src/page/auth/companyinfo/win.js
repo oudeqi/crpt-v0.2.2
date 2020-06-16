@@ -1,9 +1,8 @@
 import '../../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
-openIDcardUpload } from '../../../webview.js'
-import { http, initUIInput } from '../../../config.js'
+import { openIDcardUpload } from '../../../webview.js'
+import { http } from '../../../config.js'
 
 apiready = function() {
   api.addEventListener({
@@ -12,81 +11,36 @@ apiready = function() {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  });
-  api.addEventListener({ // 键盘挡住输入框
-    name:'keyboardshow'
-  }, function(ret, err){
-    document.getElementById('container').style['min-height'] = '105%'
-    document.getElementById('frID').scrollIntoView()
-  })
-  api.addEventListener({
-    name:'keyboardhide'
-  }, function(ret, err){
-    document.getElementById('container').style['min-height'] = '100%'
   })
 
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
-  let postData = {
-    companyName: '',
-    code: '',
-    name: '',
-    frID: ''
-  }
-
-  initUIInput($api.byId('companyName'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 40
-  }, function (value) {
-    postData.companyName = value
-  })
-
-  initUIInput($api.byId('code'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 40
-  }, function (value) {
-    postData.code = value
-  })
-
-  initUIInput($api.byId('name'), {
-    placeholder: '请输入...',
-    keyboardType: 'next',
-    maxStringLength: 10
-  }, function (value) {
-    postData.name = value
-  })
-
-  initUIInput($api.byId('frID'), {
-    placeholder: '请输入...',
-    keyboardType: 'done',
-    maxStringLength: 40
-  }, function (value) {
-    postData.frID = value
-  })
 
   document.querySelector('#submit').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      if (!postData.companyName) {
-        return api.toast({ msg: '请输入企业全称' })
+      let companyName = $api.byId('companyName').value.trim()
+      let code = $api.byId('code').value.trim()
+      let name = $api.byId('name').value.trim()
+      let frID = $api.byId('frID').value.trim()
+      if (!companyName) {
+        return api.toast({ msg: '请输入企业全称', location: 'middle'  })
       }
-      if (!postData.code) {
-        return api.toast({ msg: '请输入社会统一信用代码' })
+      if (!code) {
+        return api.toast({ msg: '请输入社会统一信用代码', location: 'middle'  })
       }
-      if (!postData.name) {
-        return api.toast({ msg: '请输入法定代表人姓名' })
+      if (!name) {
+        return api.toast({ msg: '请输入法定代表人姓名', location: 'middle'  })
       }
-      if (!postData.frID) {
-        return api.toast({ msg: '请输入法人唯一标识' })
+      if (!frID) {
+        return api.toast({ msg: '请输入法人唯一标识', location: 'middle'  })
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('submit'), 'loading')
       http.post('/crpt-cust/saas/company/auth', {
         body: {
-          entNameCredit: postData.companyName,  // 企业名称 四川东雄农业科技有限公司
-          frName: postData.name, // 法定代表人 万国东
-          cid: postData.frID, // 法人唯一标识 51092219690504357X
-          regNo: postData.code, // 统一社会信用代码 9151070431459311XW
+          entNameCredit: companyName,  // 企业名称 四川东雄农业科技有限公司
+          frName: name, // 法定代表人 万国东
+          cid: frID, // 法人唯一标识 51092219690504357X
+          regNo: code, // 统一社会信用代码 9151070431459311XW
         }
       }).then(ret => {
         submitStatus = 'notsubmit'
@@ -94,12 +48,12 @@ apiready = function() {
         if (ret.data.result === 'YES') {
           openIDcardUpload()
         } else {
-          api.toast({ msg: ret.data.info })
+          api.toast({ msg: ret.data.info, location: 'middle'  })
         }
       }).catch(error => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
-        api.toast({ msg: error.msg || '企业四要素认证失败，请确认信息是否正确' })
+        api.toast({ msg: error.msg || '企业四要素认证失败，请确认信息是否正确', location: 'middle' })
       })
     }
   }

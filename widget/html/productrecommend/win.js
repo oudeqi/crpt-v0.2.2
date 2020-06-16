@@ -246,9 +246,9 @@ function openTabLayout(index) {
 
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -257,9 +257,9 @@ function openRegLogin() {
 
 
 function openProductDetails() {
-  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      id = _ref4.id,
-      open = _ref4.open;
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref6.id,
+      open = _ref6.open;
 
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -291,14 +291,14 @@ function openProductDetails() {
 
 
 function openDanbaoKaitong() {
-  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      step = _ref6.step,
-      _ref6$title = _ref6.title,
-      title = _ref6$title === void 0 ? '普惠担保' : _ref6$title,
-      productId = _ref6.productId,
-      creditStatus = _ref6.creditStatus,
-      _ref6$back = _ref6.back,
-      back = _ref6$back === void 0 ? false : _ref6$back;
+  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      step = _ref8.step,
+      _ref8$title = _ref8.title,
+      title = _ref8$title === void 0 ? '普惠担保' : _ref8$title,
+      productId = _ref8.productId,
+      creditStatus = _ref8.creditStatus,
+      _ref8$back = _ref8.back,
+      back = _ref8$back === void 0 ? false : _ref8$back;
 
   var i = step;
 
@@ -1987,13 +1987,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();

@@ -1,0 +1,100 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 0 24px ;
+}
+.tit {
+  font-size:24px;
+  font-weight:600;
+  color:rgba(48,49,51,1);
+  padding-left: 6px;
+  padding-top: 48px;
+  padding-bottom: 39px;
+}
+.tips {
+  text-align: center;
+  & p {
+    font-size:16px;
+    color:rgba(144,147,153,1);
+    height: 22px;
+    line-height:22px;
+  }
+  & strong {
+    display: block;
+    margin-top: 8px;
+    height:33px;
+    line-height:33px;
+    font-size:24px;
+    font-weight:600;
+    color:rgba(102,187,106,1);
+  }
+}
+.link-btns {
+  height: 50px;
+  font-size: 15px;
+  padding: 20px;
+  color: #66BB6A;
+  text-align: center;
+}
+.code-ipt {
+  margin-top: 50px;
+  padding-right: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  position: relative;
+  border: 1px solid #ededed;
+  border-radius: 3px;
+  & .label {
+    padding: 5px 0 5px 15px;
+    width: 80px;
+    flex-shrink: 0;
+    font-size: 17px;
+    color: #333;
+    border-right: 1px solid #dfdfdf;
+  }
+  & .ipt {
+    flex-grow: 1;
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 4px;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  & .btn {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 120px;
+    height: 100%;
+    box-sizing: content-box;
+    background-color: #66BB6A;
+    border: 1px solid #66BB6A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius:0 3px 3px 0;
+    & span {
+      padding-left: 0;
+      padding-right: 1px;
+    }
+    &.active span {
+      padding-left: 1px;
+      padding-right: 0;
+    }
+    &.loading {
+      background-color: #88dbcb;
+    }
+  }
+}
+
+.btn-box {
+  margin-top: 90px;
+}

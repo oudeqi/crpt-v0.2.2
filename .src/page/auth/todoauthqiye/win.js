@@ -8,13 +8,15 @@ import {
 import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../config.js'
 
 apiready = function() {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
+  })
+
   let userinfo = $api.getStorage('userinfo')
   let { userType, access_token } = userinfo || {}
 
@@ -32,11 +34,7 @@ apiready = function() {
   }
 
   function getStatus (cb) {
-    api.showProgress({
-      title: '加载中...',
-      text: '',
-      modal: false
-    })
+    api.showProgress({ title: '加载中...', text: '', modal: false })
     getAndStorageAuthStatus(function (status) {
       api.hideProgress()
       api.refreshHeaderLoadDone()
@@ -78,28 +76,22 @@ apiready = function() {
   function renderStep1 (status) {
     if (status === 0) {
       $api.byId('step1').innerHTML = `
-        <div class="auth-block" tapmode="active" id="companyInfo">
-          <div class="badge">1</div>
-          <div class="text">
-            <div>
-              <strong>企业实名认证</strong>
-              <span class="icon"></span>
-            </div>
-            <p>请准备法定代表人的二代身份证</p>
-          </div>
-          <div class="pic idcard"></div>
+      <div class="auth-block" tapmode="active" id="companyInfo">
+        <div class="badge">1</div>
+        <div class="content">
+          <strong>企业实名认证</strong>
+          <p>请准备法定代表人的二代身份证</p>
         </div>
+      </div>
       `
     } else {
       $api.byId('step1').innerHTML = `
-        <div class="auth-block2 authpass" id="companyInfoResult">
-          <div class="badge">1</div>
-          <div class="text">
-            <strong>实名认证</strong>
-          </div>
-          <div class="pic"></div>
-          <span>通过</span>
+      <div class="auth-block authpass" id="companyInfoResult">
+        <div class="badge">1</div>
+        <div class="content">
+          <strong>企业实名认证</strong>
         </div>
+      </div>
       `
     }
   }
@@ -107,18 +99,13 @@ apiready = function() {
   function renderStep2 (status) {
     if (status === 0) {
       $api.byId('step2').innerHTML = `
-        <div class="auth-block" tapmode="active" id="faceAuth">
-          <div class="badge">2</div>
-          <div class="text">
-            <div>
-              <strong>法定代表人进行人脸认证</strong>
-              <span class="icon"></span>
-            </div>
-            <p>需要法定代表人本人完成人脸认证</p>
-          </div>
-          <div class="pic facescan"></div>
-          ${status === 1 ? '<span>通过</span>' : ''}
+      <div class="auth-block" tapmode="active" id="faceAuth">
+        <div class="badge">2</div>
+        <div class="content">
+          <strong>法定代表人人脸认证</strong>
+          <p>需要法定代表人本人完成人脸认证</p>
         </div>
+      </div>
       `
     } else {
       // autherror
@@ -131,20 +118,22 @@ apiready = function() {
       }
       // <span>图片模糊</span>
       $api.byId('step2').innerHTML = `
-        <div class="auth-block2 ${type}" id="faceAuthResult">
-          <div class="badge">2</div>
-          <div class="text">
-            <strong>法定代表人脸认证</strong>
-          </div>
-          <div class="pic"></div>
+      <div class="auth-block ${type}" tapmode="active" id="faceAuthResult">
+        <div class="badge">2</div>
+        <div class="content">
+          <strong>
           ${
             status === 1
-            ? '<span>通过</span>'
+            ? '<span>人脸认证</span>'
+            : status === 2
+            ? '<span>人脸认证人工审核中</span>'
             : status === 3
-            ? '<span>人工审核失败<br />请联系客服</span>'
+            ? '<span>人脸认证人工审核失败<br />请联系客服</span>'
             : ''
           }
+          </strong>
         </div>
+      </div>
       `
     }
   }
@@ -152,28 +141,22 @@ apiready = function() {
   function renderStep3 (status) {
     if (status === 0) {
       $api.byId('step3').innerHTML = `
-        <div class="auth-block" tapmode="active" id="baseinfo">
-          <div class="badge">3</div>
-          <div class="text">
-            <div>
-              <strong>补充基础信息</strong>
-              <span class="icon"></span>
-            </div>
-            <p>请填写法定代表人的基础信息</p>
-          </div>
-          <div class="pic baseinfo"></div>
+      <div class="auth-block" tapmode="active" id="baseinfo">
+        <div class="badge">3</div>
+        <div class="content">
+          <strong>补充基础信息</strong>
+          <p>请填写法定代表人的基础信息</p>
         </div>
+      </div>
       `
     } else {
       $api.byId('step3').innerHTML = `
-        <div class="auth-block2 authpass" id="baseinfoResult">
-          <div class="badge">3</div>
-          <div class="text">
-            <strong>补充基本信息</strong>
-          </div>
-          <div class="pic"></div>
-          <span>成功</span>
+      <div class="auth-block authpass">
+        <div class="badge">3</div>
+        <div class="content">
+          <strong>补充基础信息</strong>
         </div>
+      </div>
       `
     }
   }
@@ -235,8 +218,10 @@ apiready = function() {
       mapping.faceAuth.status === 1 ? step = 1 : null
       mapping.baseinfo.status === 1 ? step = 0 : null
       if (step > 0) {
-        $api.byId('tips').innerHTML = `完成以下<strong>${step}步</strong>，即可获得申请额度资格`
+        $api.byId('tips').innerHTML = `完成以下<strong>${step}</strong>步，即可获得申请额度资格`
+        $api.byId('yugueduContainer').innerHTML = ''
       } else if (step === 0) {
+        $api.byId('tips').innerHTML = `已完成信息收集`
         $api.byId('yugueduContainer').innerHTML = `
           <div class="smile"></div>
           <div class="btn-box">
@@ -275,7 +260,7 @@ apiready = function() {
           if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
             windows.forEach(win => {
               // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/win' && win.name !== 'html/settings/win') {
+              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
                 api.closeWin({
                   name: win.name
                 })

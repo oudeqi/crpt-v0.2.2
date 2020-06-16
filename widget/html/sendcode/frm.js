@@ -130,9 +130,9 @@ function openTabLayout(index) {
 
 
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -147,13 +147,10 @@ function openGerenLogin() {
 
   // 2企业 1个人
   api.openTabLayout({
-    name: 'html/gerenlogin/win',
-    url: 'widget://html/gerenlogin/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/gerenlogin/index',
+    url: 'widget://html/gerenlogin/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     pageParam: {
       userType: userType
@@ -165,20 +162,12 @@ function openGerenLogin() {
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_green_big.png'
       }]
     }
-  }); // api.openWin({
-  //   name: 'html/gerenlogin/win',
-  //   url: 'widget://html/gerenlogin/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  //   pageParam: {
-  //     userType
-  //   }
-  // })
+  });
 } // 企业登录
 
 
@@ -1890,13 +1879,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -1994,55 +1983,6 @@ var http = {
     });
   }
 }; // 统一ios和android的输入框，下标都从0开始
-
-var openUIInput = function openUIInput(dom, form, key) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  var cb = arguments.length > 4 ? arguments[4] : undefined;
-
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    cb && cb(ret.id);
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      form[key] = [ret.id, value && value.msg ? value.msg : ''];
-    });
-  });
-};
 
 var isPhoneNo = function isPhoneNo(phone) {
   return /^1[3456789]\d{9}$/.test(phone);
@@ -2175,8 +2115,13 @@ function appLogin(options, successCallback, errorCallback) {
 }
 
 apiready = function apiready() {
-  var form = {}; // 表单数据
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   var sendStatus = 'notsend'; // notsend:未发送,sending:发送中,countdown:倒计时中
 
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
@@ -2184,11 +2129,6 @@ apiready = function apiready() {
   var pageParam = api.pageParam || {};
   var tel = pageParam.tel,
       userType = pageParam.userType;
-  openUIInput($api.byId('code'), form, 'code', {
-    placeholder: '请输入...',
-    keyboardType: 'done',
-    maxStringLength: 6
-  });
 
   if (tel && isPhoneNo(tel)) {
     $api.byId('tel').innerHTML = phoneNoFormat(tel);
@@ -2200,9 +2140,11 @@ apiready = function apiready() {
 
   if (userType === 1) {
     // 个人登录
+    $api.byId('tit').innerHTML = '个人登录';
     sendCode();
   } else {
     sendStatus = 'sending';
+    $api.byId('tit').innerHTML = '企业登录';
     countDown();
   }
 
@@ -2263,11 +2205,12 @@ apiready = function apiready() {
 
   document.querySelector('#login').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      var code = form['code'][1];
+      var code = $api.byId('code').value.trim();
 
       if (!code) {
         return api.toast({
-          msg: '请输入验证码'
+          msg: '请输入验证码',
+          location: 'middle'
         });
       }
 

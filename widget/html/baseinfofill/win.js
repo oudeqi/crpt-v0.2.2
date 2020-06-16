@@ -1,3 +1,20 @@
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -111,27 +128,10 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 var createClass = _createClass;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 function openRegLogin() {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
@@ -139,7 +139,11 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openAuthResult(status, message, title) {
+function openAuthResult(_ref4) {
+  var status = _ref4.status,
+      message = _ref4.message,
+      title = _ref4.title,
+      tips = _ref4.tips;
   // status: success error during
   api.openTabLayout({
     name: 'html/authresult/win',
@@ -150,55 +154,25 @@ function openAuthResult(status, message, title) {
     pageParam: {
       status: status,
       title: title,
-      message: message
+      message: message,
+      tips: tips
     },
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [{
-        text: '',
-        color: '#fff',
+        text: '返回',
+        color: '#66BB6A',
         iconPath: 'widget://image/back_white_big.png'
       }]
     }
   });
 } // 消息中心
-
-
-function openCityList(_ref5) {
-  var eventName = _ref5.eventName;
-  api.openTabLayout({
-    name: 'html/citylist/win',
-    title: '城市选择',
-    url: 'widget://html/citylist/win.html',
-    bgColor: '#fff',
-    pageParam: {
-      eventName: eventName
-    },
-    slidBackEnabled: true,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      height: 44,
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '',
-        color: '#fff',
-        iconPath: 'widget://image/back_white_big.png'
-      }]
-    }
-  });
-} // 产品推荐
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -571,14 +545,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	openPageCreditInformation: openPageCreditInformation,
-	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-	openAttachmentInfo: openAttachmentInfo,
-	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openAttachmentInfo: openAttachmentInfo,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -1822,13 +1796,13 @@ function ajax(method, url) {
             }, function (ret, err) {
               hasAlert = false;
               api.closeWin({
-                name: 'html/register/win'
+                name: 'html/register/index'
               });
               api.closeWin({
-                name: 'html/gerenlogin/win'
+                name: 'html/gerenlogin/index'
               });
               api.closeWin({
-                name: 'html/qiyelogin/win'
+                name: 'html/qiyelogin/index'
               });
               setTimeout(function () {
                 $api.clearStorage();
@@ -2000,55 +1974,9 @@ function CitySelector(cb) {
   });
 }
 
-function initUIInput(dom) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var cb = arguments.length > 2 ? arguments[2] : undefined;
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  var UIInput = api.require('UIInput');
-
-  var rect = $api.offset(dom);
-  var maxRows = options.maxRows,
-      maxStringLength = options.maxStringLength,
-      inputType = options.inputType,
-      placeholder = options.placeholder,
-      keyboardType = options.keyboardType,
-      alignment = options.alignment,
-      isCenterVertical = options.isCenterVertical;
-  UIInput.open({
-    rect: {
-      x: rect.l,
-      y: rect.t,
-      w: rect.w,
-      h: rect.h
-    },
-    fixed: false,
-    autoFocus: false,
-    maxRows: maxRows || 1,
-    maxStringLength: maxStringLength,
-    inputType: inputType,
-    placeholder: placeholder,
-    keyboardType: keyboardType,
-    alignment: alignment,
-    isCenterVertical: isCenterVertical,
-    fixedOn: api.frameName,
-    styles: {
-      bgColor: 'rgba(0,0,0,0)',
-      size: 16,
-      color: '#333',
-      placeholder: {
-        color: '#aaa'
-      }
-    }
-  }, function (ret) {
-    UIInput.value({
-      id: ret.id
-    }, function (value) {
-      if (value) {
-        cb && cb(value.msg);
-      }
-    });
-  });
-} // let userinfo = {
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -2094,10 +2022,6 @@ var PageController = /*#__PURE__*/function (_Service) {
         isChildren: '',
         education: '',
         permanentAddress: '',
-        workCompany: '',
-        // 工作单位 选填
-        animalHusbandryYear: '',
-        // 从事畜牧<br />行业年限
         addrProvince: '',
         // String 是 法人居住地址（省）
         addrProvinceCode: '',
@@ -2110,13 +2034,14 @@ var PageController = /*#__PURE__*/function (_Service) {
         // String 是 法人居住地址（区县）
         addrCountyCode: '',
         // String 是 法人居住地址编号（区县）
-        addrDetail: '',
-        // String 是 法人居住地址详细
-        relationship: '',
-        relationName: '',
-        relationPhone: '',
-        otherName: '',
-        otherPhone: ''
+        relationship: '' // workCompany 工作单位 选填
+        // animalHusbandryYear 行业年限
+        // addrDetail 法人居住地址详细
+        // relationName 姓名
+        // relationPhone 手机号
+        // otherName 姓名
+        // otherPhone 手机号
+
       }
     };
     _this.el = {
@@ -2145,13 +2070,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function renderUserType() {
       var label = '您';
       this.el.userType1.innerHTML = label;
-      this.el.userType2.innerHTML = label; // if (this.state.userType === '1') {
-      //   this.el.userType1.innerHTML = '个人'
-      //   this.el.userType2.innerHTML = '个人'
-      // } else {
-      //   this.el.userType1.innerHTML = '法定代表人'
-      //   this.el.userType2.innerHTML = '法定代表人'
-      // }
+      this.el.userType2.innerHTML = label;
     } // 初始化表单
 
   }, {
@@ -2185,39 +2104,31 @@ var PageController = /*#__PURE__*/function (_Service) {
           _this2.state.postData.education = btns[index];
         });
       }; // 户籍地址
+      // api.addEventListener({
+      //   name: 'cityListSelected'
+      // }, (ret, err) => {
+      //   const selected = ret.value
+      //   console.log(JSON.stringify(selected))
+      //   $api.dom($api.byId('permanentAddress'), 'input').value = selected.city
+      //   this.state.postData.permanentAddress = selected.city
+      // })
+      // document.querySelector('#permanentAddress').onclick = () => {
+      //   openCityList({ eventName: 'cityListSelected' })
+      // }
 
-
-      api.addEventListener({
-        name: 'cityListSelected'
-      }, function (ret, err) {
-        var selected = ret.value;
-        console.log(JSON.stringify(selected));
-        $api.dom($api.byId('permanentAddress'), 'input').value = selected.city;
-        _this2.state.postData.permanentAddress = selected.city;
-      });
 
       document.querySelector('#permanentAddress').onclick = function () {
-        openCityList({
-          eventName: 'cityListSelected'
+        CitySelector(function (selected) {
+          console.log(JSON.stringify(selected));
+          var a = selected[0];
+          var b = selected[1];
+          var c = selected[2];
+          var addr = "".concat(a.name, "/").concat(b.name, "/").concat(c.name);
+          $api.dom($api.byId('permanentAddress'), 'input').value = addr;
+          _this2.state.postData.permanentAddress = addr;
         });
-      }; // 工作单位 workCompany
+      }; // 现居住信息
 
-
-      initUIInput($api.byId('workCompany'), {
-        placeholder: '请输入',
-        keyboardType: 'next',
-        maxStringLength: 100
-      }, function (value) {
-        _this2.state.postData.workCompany = value;
-      }); // 行业年限 animalHusbandryYear
-
-      initUIInput($api.byId('animalHusbandryYear'), {
-        placeholder: '请输入',
-        keyboardType: 'decimal',
-        maxStringLength: 4
-      }, function (value) {
-        _this2.state.postData.animalHusbandryYear = value;
-      }); // 现居住信息
 
       document.querySelector('#address').onclick = function () {
         CitySelector(function (selected) {
@@ -2233,16 +2144,8 @@ var PageController = /*#__PURE__*/function (_Service) {
           _this2.state.postData.addrCounty = c.name;
           _this2.state.postData.addrCountyCode = c.id;
         });
-      }; // 详细地址
+      }; // 亲属关系  标记  1-配偶 2-子女 3-父母
 
-
-      initUIInput($api.byId('addrDetail'), {
-        placeholder: '请输入',
-        keyboardType: 'next',
-        maxStringLength: 30
-      }, function (value) {
-        _this2.state.postData.addrDetail = value;
-      }); // 亲属关系  标记  1-配偶 2-子女 3-父母
 
       document.querySelector('#relationship').onclick = function () {
         var btns = ['配偶', '子女', '父母'];
@@ -2250,51 +2153,26 @@ var PageController = /*#__PURE__*/function (_Service) {
           $api.dom($api.byId('relationship'), 'input').value = btns[index];
           _this2.state.postData.relationship = String(index + 1);
         });
-      }; // 姓名
-
-
-      initUIInput($api.byId('relationName'), {
-        placeholder: '请输入',
-        keyboardType: 'next',
-        maxStringLength: 10
-      }, function (value) {
-        _this2.state.postData.relationName = value;
-      }); // 手机号
-
-      initUIInput($api.byId('relationPhone'), {
-        placeholder: '请输入',
-        keyboardType: 'number',
-        maxStringLength: 11
-      }, function (value) {
-        _this2.state.postData.relationPhone = value;
-      }); // 姓名
-
-      initUIInput($api.byId('otherName'), {
-        placeholder: '请输入',
-        keyboardType: 'next',
-        maxStringLength: 10
-      }, function (value) {
-        _this2.state.postData.otherName = value;
-      }); // 手机号
-
-      initUIInput($api.byId('otherPhone'), {
-        placeholder: '请输入',
-        keyboardType: 'number',
-        maxStringLength: 11
-      }, function (value) {
-        _this2.state.postData.otherPhone = value;
-      });
+      };
     } // 表单验证
 
   }, {
     key: "formValidation",
     value: function formValidation() {
+      var workCompany = $api.byId('workCompany').value.trim();
+      var animalHusbandryYear = $api.byId('animalHusbandryYear').value.trim();
+      var addrDetail = $api.byId('addrDetail').value.trim();
+      var relationName = $api.byId('relationName').value.trim();
+      var relationPhone = $api.byId('relationPhone').value.trim();
+      var otherName = $api.byId('otherName').value.trim();
+      var otherPhone = $api.byId('otherPhone').value.trim();
       var postData = this.state.postData;
       var valid = true;
 
       if (!postData.marriage) {
         api.toast({
-          msg: '请选择婚姻状况'
+          msg: '请选择婚姻状况',
+          location: 'middle'
         });
         valid = false;
         return valid;
@@ -2302,7 +2180,8 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       if (!postData.isChildren) {
         api.toast({
-          msg: '请选择子女状况'
+          msg: '请选择子女状况',
+          location: 'middle'
         });
         valid = false;
         return valid;
@@ -2310,7 +2189,8 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       if (!postData.education) {
         api.toast({
-          msg: '请选择教育情况'
+          msg: '请选择教育情况',
+          location: 'middle'
         });
         valid = false;
         return valid;
@@ -2318,23 +2198,26 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       if (!postData.permanentAddress) {
         api.toast({
-          msg: '请选择户籍地址'
+          msg: '请选择户籍地址',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.animalHusbandryYear) {
+      if (!animalHusbandryYear) {
         api.toast({
-          msg: '请输入从事畜牧行业年限'
+          msg: '请输入从事畜牧行业年限',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (isNaN(postData.animalHusbandryYear)) {
+      if (isNaN(animalHusbandryYear)) {
         api.toast({
-          msg: '从事畜牧行业年限只能输入数字'
+          msg: '从事畜牧行业年限只能输入数字',
+          location: 'middle'
         });
         valid = false;
         return valid;
@@ -2342,15 +2225,17 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       if (!postData.addrProvince) {
         api.toast({
-          msg: '请选择居住地省市地区'
+          msg: '请选择居住地省市地区',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.addrDetail) {
+      if (!addrDetail) {
         api.toast({
-          msg: '请选择居住地详细地址'
+          msg: '请选择居住地详细地址',
+          location: 'middle'
         });
         valid = false;
         return valid;
@@ -2358,67 +2243,82 @@ var PageController = /*#__PURE__*/function (_Service) {
 
       if (!postData.relationship) {
         api.toast({
-          msg: '请选择亲属关系'
+          msg: '请选择亲属关系',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.relationName) {
+      if (!relationName) {
         api.toast({
-          msg: '请输入直属亲属姓名'
+          msg: '请输入直属亲属姓名',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.relationPhone) {
+      if (!relationPhone) {
         api.toast({
-          msg: '请输入直属亲属手机号'
+          msg: '请输入直属亲属手机号',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!isPhoneNo(postData.relationPhone)) {
+      if (!isPhoneNo(relationPhone)) {
         api.toast({
-          msg: '直属亲属手机号格式不正确'
+          msg: '直属亲属手机号格式不正确',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.otherName) {
+      if (!otherName) {
         api.toast({
-          msg: '请输入其他联系人姓名'
+          msg: '请输入其他联系人姓名',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!postData.otherPhone) {
+      if (!otherPhone) {
         api.toast({
-          msg: '请输入其他联系人手机号'
+          msg: '请输入其他联系人手机号',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
-      if (!isPhoneNo(postData.otherPhone)) {
+      if (!isPhoneNo(otherPhone)) {
         api.toast({
-          msg: '其他联系人手机号格式不正确'
+          msg: '其他联系人手机号格式不正确',
+          location: 'middle'
         });
         valid = false;
         return valid;
       }
 
       return valid;
-    } // 事件绑定
-
+    }
   }, {
     key: "bindEvent",
     value: function bindEvent() {
       var _this3 = this;
+
+      // 返回
+      api.addEventListener({
+        name: 'navitembtn'
+      }, function (ret, err) {
+        if (ret.type === 'left') {
+          api.closeWin();
+        }
+      });
 
       this.el.submit.onclick = function () {
         if (_this3.state.submitStatus === 'notsubmit') {
@@ -2428,12 +2328,33 @@ var PageController = /*#__PURE__*/function (_Service) {
 
           _this3.state.submitStatus = 'submitting';
           $api.addCls(_this3.el.submit, 'loading');
+          var workCompany = $api.byId('workCompany').value.trim();
+          var animalHusbandryYear = $api.byId('animalHusbandryYear').value.trim();
+          var addrDetail = $api.byId('addrDetail').value.trim();
+          var relationName = $api.byId('relationName').value.trim();
+          var relationPhone = $api.byId('relationPhone').value.trim();
+          var otherName = $api.byId('otherName').value.trim();
+          var otherPhone = $api.byId('otherPhone').value.trim();
 
-          _this3.submit(_this3.state.url, _this3.state.postData).then(function (res) {
+          var data = _objectSpread$1({}, _this3.state.postData, {
+            workCompany: workCompany,
+            animalHusbandryYear: animalHusbandryYear,
+            addrDetail: addrDetail,
+            relationName: relationName,
+            relationPhone: relationPhone,
+            otherName: otherName,
+            otherPhone: otherPhone
+          });
+
+          _this3.submit(_this3.state.url, data).then(function (res) {
             if (res.code === 200) {
               _this3.state.submitStatus = 'notsubmit';
               $api.removeCls($api.byId('submit'), 'loading');
-              openAuthResult('success', '补充基本信息成功', '补充基本信息');
+              openAuthResult({
+                status: 'success',
+                message: '补充基本信息成功',
+                title: '补充基本信息'
+              });
             }
           })["catch"](function (error) {
             api.toast({
@@ -2452,16 +2373,9 @@ var PageController = /*#__PURE__*/function (_Service) {
 }(Service);
 
 apiready = function apiready() {
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  });
-  var controller = new PageController();
-  controller.renderUserType();
-  controller.initComputedState();
-  controller.initForm();
-  controller.bindEvent();
+  var ctrl = new PageController();
+  ctrl.renderUserType();
+  ctrl.initComputedState();
+  ctrl.initForm();
+  ctrl.bindEvent();
 };

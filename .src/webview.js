@@ -180,42 +180,33 @@ function openTabLayout (index) {
 // 注册
 function openReg () {
   api.openTabLayout({
-    name: 'html/register/win',
-    url: 'widget://html/register/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/register/index',
+    url: 'widget://html/register/index.html',
     title: '注册',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     navigationBar: {
       hideBackButton: false,
       background: '#fff',
-      color: '#fff',
+      color: '#303133',
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: 500,
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_green_big.png',
         }
       ]
     }
   })
-  // api.openWin({
-  //   name: 'html/register/win',
-  //   url: 'widget://html/register/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  // })
 }
 
 // 注册登录选择
 function openRegLogin () {
-  api.openWin({
-    name: 'html/reglogin/win',
-    url: 'widget://html/reglogin/win.html',
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false,
@@ -226,13 +217,10 @@ function openRegLogin () {
 function openGerenLogin ({ userType = 1 } = {}) {
   // 2企业 1个人
   api.openTabLayout({
-    name: 'html/gerenlogin/win',
-    url: 'widget://html/gerenlogin/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/gerenlogin/index',
+    url: 'widget://html/gerenlogin/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     pageParam: {
       userType
@@ -245,34 +233,22 @@ function openGerenLogin ({ userType = 1 } = {}) {
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_green_big.png',
         }
       ]
     }
   })
-  // api.openWin({
-  //   name: 'html/gerenlogin/win',
-  //   url: 'widget://html/gerenlogin/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  //   pageParam: {
-  //     userType
-  //   }
-  // })
 }
 
 // 企业登录
 function openQiyeLogin () {
   api.openTabLayout({
-    name: 'html/qiyelogin/win',
-    url: 'widget://html/qiyelogin/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/qiyelogin/index',
+    url: 'widget://html/qiyelogin/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
-    // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     navigationBar: {
       hideBackButton: false,
@@ -282,30 +258,22 @@ function openQiyeLogin () {
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_green_big.png',
         }
       ]
     }
   })
-  // api.openWin({
-  //   name: 'html/qiyelogin/win',
-  //   url: 'widget://html/qiyelogin/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  // })
 }
 
 // 电话号码登录
 function openSendCode ({tel, userType} = {}) {
   // 个人登录 1, 企业登录 2
   api.openTabLayout({
-    name: 'html/sendcode/win',
-    url: 'widget://html/sendcode/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/sendcode/index',
+    url: 'widget://html/sendcode/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     pageParam: {
       tel, userType
@@ -326,25 +294,14 @@ function openSendCode ({tel, userType} = {}) {
       ]
     }
   })
-  // api.openWin({
-  //   name: 'html/sendcode/win',
-  //   url: 'widget://html/sendcode/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  //   pageParam: {
-  //     tel, userType
-  //   }
-  // })
 }
 
 // 找回密码
 function openFindPwd () {
   api.openTabLayout({
-    // name: 'html/findpwd/win',
-    // url: 'widget://html/findpwd/win.html',
-    // name: 'html/baseinfofill/win',
+    name: 'html/findpwd/index',
+    url: 'widget://html/findpwd/index.html',
     title: '',
-    // url: 'widget://html/baseinfofill/win.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: {
@@ -355,19 +312,13 @@ function openFindPwd () {
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_green_big.png',
         }
       ]
     }
   })
-  // api.openWin({
-  //   name: 'html/findpwd/win',
-  //   url: 'widget://html/findpwd/win.html',
-  //   bgColor: '#fff',
-  //   reload: true,
-  // })
 }
 
 // 填写个人信息
@@ -385,14 +336,14 @@ function openBaseinfoFill () {
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -421,8 +372,8 @@ function openTodoAuthGeren () {
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: 'rgba(102,187,106,1)',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_green_big.png',
         }
       ]
@@ -444,13 +395,13 @@ function openTodoAuthQiye () {
     navigationBar: {
       hideBackButton: true,
       background: '#fff',
-      color: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: 'rgba(102,187,106,1)',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -467,20 +418,19 @@ function openCompanyInfo () {
     bgColor: '#fff',
     softInputMode: 'auto',
     softInputBarEnabled: false,
-    softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -500,14 +450,14 @@ function openIDcardUpload () {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -528,14 +478,14 @@ function openIDcardInfo (pageParam) {
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -544,26 +494,28 @@ function openIDcardInfo (pageParam) {
 }
 
 // 人脸认证
-function openFaceAuth (pageParam = {}) {
+function openFaceAuth ({ title, userType } = {}) {
   api.openTabLayout({
     name: 'html/faceauth/win',
-    title: pageParam.title,
+    title: title || '人脸识别',
     url: 'widget://html/faceauth/win.html',
     bgColor: '#fff',
     reload: true,
-    pageParam,
+    pageParam: {
+      title, userType
+    },
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]
@@ -626,7 +578,7 @@ function openYuguEdu () {
 }
 
 // 认证结果
-function openAuthResult (status, message, title) { // status: success error during
+function openAuthResult ({status, message, title, tips}) { // status: success error during
   api.openTabLayout({
     name: 'html/authresult/win',
     title: title || '认证结果',
@@ -634,20 +586,20 @@ function openAuthResult (status, message, title) { // status: success error duri
     bgColor: '#fff',
     reload: true,
     pageParam: {
-      status, title, message
+      status, title, message, tips
     },
     bounces: true,
     slidBackEnabled: false,
     navigationBar: {
       hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
+      background: '#fff',
+      color: 'rgba(48,49,51,1)',
       fontSize: 18,
       fontWeight: 'bold',
       leftButtons: [
         {
-          text: '',
-          color: '#fff',
+          text: '返回',
+          color: '#66BB6A',
           iconPath: 'widget://image/back_white_big.png',
         }
       ]

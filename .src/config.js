@@ -80,9 +80,9 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
               msg: '登录状态已经过期，请重新登录！',
             }, function(ret, err){
               hasAlert = false
-              api.closeWin({ name: 'html/register/win' })
-              api.closeWin({ name: 'html/gerenlogin/win' })
-              api.closeWin({ name: 'html/qiyelogin/win' })
+              api.closeWin({ name: 'html/register/index' })
+              api.closeWin({ name: 'html/gerenlogin/index' })
+              api.closeWin({ name: 'html/qiyelogin/index' })
               setTimeout(() => {
                 $api.clearStorage()
                 openRegLogin()

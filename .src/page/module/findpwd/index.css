@@ -1,0 +1,19 @@
+html, body {
+  height: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+.container {
+  padding: 0 24px;
+}
+.tit {
+  font-size:24px;
+  font-weight:600;
+  color:rgba(48,49,51,1);
+  padding-left: 6px;
+  padding-top: 48px;
+  padding-bottom: 30px;
+}
+.submit {
+  margin-top: 48px;
+}
