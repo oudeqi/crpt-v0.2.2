@@ -2861,8 +2861,8 @@ apiready = function apiready() {
   }
 
   function appendList(data) {
-    data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li>\n          <div class=\"l\">\n            <div class=\"txt1\">".concat(item.repayDate ? item.repayDate.split(' ')[0] : '', "</div>\n            <span class=\"txt2\">").concat(item.curPeriod, "\u671F</span><span class=\"txt3\">").concat(item.status === 1 ? '（未按期还）' : '', "</span>\n          </div>\n          <div class=\"r\">\n            <div class=\"txt1\">\u5E94\u8FD8\uFF1A").concat(numeral(item.repayTotalAmount).format('0,0.00'), "</div>\n            <div class=\"txt2\">\u672C\u91D1\uFF1A").concat(numeral(item.repayPrincipalAmount).format('0,0.00'), "</div>\n            <div class=\"txt2\">\u8D39\u7528\uFF1A").concat(numeral(item.serviceFee).format('0,0.00'), "</div>\n            ").concat(item.status === 1 ? "<div class=\"txt3\">\u903E\u671F\u7F5A\u606F\uFF1A".concat(numeral(item.repayPenaltyAmount).format('0,0.00'), "</div>") : '', "\n          </div>\n        </li>\n      "));
+    data.forEach(function (item, index) {
+      $api.append($api.byId('list'), "\n        <li class=\"".concat(index === 0 ? 'active' : '', "\">\n          <div class=\"l\">\n            <div class=\"txt1\">").concat(item.repayDate ? item.repayDate.split(' ')[0] : '', "</div>\n            <span class=\"txt2\">").concat(item.curPeriod, "\u671F</span><span class=\"txt3\">").concat(item.status === 1 ? '（未按期还）' : '', "</span>\n          </div>\n          <div class=\"r\">\n            <div class=\"txt1\">\u5E94\u8FD8\uFF1A").concat(numeral(item.repayTotalAmount).format('0,0.00'), "</div>\n            <div class=\"txt2\">\u672C\u91D1\uFF1A").concat(numeral(item.repayPrincipalAmount).format('0,0.00'), "</div>\n            <div class=\"txt2\">\u8D39\u7528\uFF1A").concat(numeral(item.serviceFee).format('0,0.00'), "</div>\n            ").concat(item.status === 1 ? "<div class=\"txt3\">\u903E\u671F\u7F5A\u606F\uFF1A".concat(numeral(item.repayPenaltyAmount).format('0,0.00'), "</div>") : '', "\n          </div>\n        </li>\n      "));
     });
   }
 
