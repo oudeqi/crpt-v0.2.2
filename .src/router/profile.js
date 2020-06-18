@@ -13,7 +13,7 @@ const navigationBarWhite = {
   leftButtons: [
     {
       text: '',
-      color: themeColor,
+      color: themeMainColor,
       iconPath: 'widget://image/back_green_big.png',
     }
   ]
@@ -22,7 +22,7 @@ const navigationBarWhite = {
 // 绿色底导航
 const navigationBarGreen = {
   hideBackButton: false,
-  background: themeColor,
+  background: themeMainColor,
   color: '#fff',
   fontSize: 18,
   fontWeight: 'bold',
@@ -39,9 +39,9 @@ const navigationBarGreen = {
 const routerMapConfig = {
   // 好销贷产品申请
   hxd_apply: {
-    name: 'haoxiaodai_apply',
+    name: 'hxd_apply',
     title: '产品介绍',
-    url: 'widget://html/hxd_apply/win.html',
+    url: 'widget://html/hxd_apply/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
