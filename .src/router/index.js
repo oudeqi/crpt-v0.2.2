@@ -1,11 +1,14 @@
 import profile from './profile'
 
-export default class Router {
+class Router {
   // 打开window级别页面
-  static openPage = function ({ key, params }) {
+  openPage({ key, params }) {
+    alert(2)
     api.openTabLayout({
       ...profile[key],
       ...params
     })
   }
 }
+
+export default new Router()

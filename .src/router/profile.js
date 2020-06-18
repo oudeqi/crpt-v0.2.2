@@ -39,9 +39,9 @@ const navigationBarGreen = {
 const routerMapConfig = {
   // 好销贷产品申请
   hxd_apply: {
-    name: 'haoxiaodai_apply',
+    name: 'hxd_apply',
     title: '产品介绍',
-    url: 'widget://html/hxd_apply/win.html',
+    url: 'widget://html/hxd_apply/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite

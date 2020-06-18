@@ -34,6 +34,7 @@ import {
     openProductRecommend
 } from '../webview.js'
 import Utils from '../utils'
+import Router from '../router'
 // $api.setStorage()
 // $api.getStorage()
 // $api.rmStorage()
@@ -54,7 +55,9 @@ class App {
 
     // openTodoAuthQiye({status: 'error', tips: 'message'})
     // return
-
+    // alert(Router)
+    // Router.openPage({key: 'hxd_apply'})
+    // return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()
