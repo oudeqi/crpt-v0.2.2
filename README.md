@@ -8,7 +8,7 @@
 ![](https://ftp.bmp.ovh/imgs/2020/06/776d4d2a9635e40b.jpeg)
 
 ## 相关项目
-
+_业务员端_
 
 ## 版本记录
 
@@ -59,11 +59,11 @@
 ├── module                  //  产品业务模块
 │   ├── guarantee           //  担保贷
 │   │   ...
-│   │   └── credit/
-│   ├── supplier            //  好销贷
+│   │   └── apply/
+│   ├── haoxiaodai            //  好销贷
 │   │   ...
 │   │   └── apply/
-│   └── deposit             //  押金贷
+│   └── yajindai             //  押金贷
 │       ...
 │       └── apply/
 ├── styles                  //  通用样式
