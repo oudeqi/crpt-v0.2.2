@@ -37,6 +37,7 @@ class PageController extends Service {
 
   // 根据custType显示不同的nav
   renderNav () {
+    // 担保客户仅可浏览担保类产品信息，不可看到其他信用类贷款产品；
     if (this.state.custType === '2') { // 1：通用   2：普惠担保  3：其他
       this.el.navDanbao.style.display = 'block'
     } else if (this.state.custType === '1' || this.state.custType === '3') {

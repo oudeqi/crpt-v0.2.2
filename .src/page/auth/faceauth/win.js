@@ -43,7 +43,7 @@ apiready = function() {
     })
   }
 
-  async function submit (path) {
+  function submit (path) {
     return http.upload('/crpt-cust/saas/faceauth', {
       files: {
         faceImage: path
@@ -58,20 +58,18 @@ apiready = function() {
         $api.addCls($api.byId('start'), 'loading')
         api.showProgress({ title: '加载中...', text: '', modal: false })
         try {
-          const ret = await submit()
+          const ret = await submit(path)
+          if (ret.data.result === 'YES') {
+            openAuthResult({status: 'success'})
+          } else {
+            api.toast({ msg: ret.data.info, location: 'middle' })
+          }
         } catch (error) {
-          api.toast({
-            msg: error.msg || '网络错误'
-          })
+          api.toast({ msg: error.msg || '网络错误', location: 'middle' })
         }
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('start'), 'loading')
         api.hideProgress()
-        if (ret.data.result === 'YES') {
-          openAuthResult({status: 'success'})
-        } else {
-          api.toast({ msg: ret.data.info, location: 'middle' })
-        }
       })
     }
   }

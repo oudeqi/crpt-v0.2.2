@@ -313,7 +313,7 @@ li {
 li .t {
     height: 48px;
     line-height: 48px;
-    border: 1px solid rgba(245,245,245,1);
+    border-bottom: 1px solid rgba(245,245,245,1);
     font-size:16px;
     font-weight:500;
     color:rgba(48,49,51,1);

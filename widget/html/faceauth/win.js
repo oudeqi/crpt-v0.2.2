@@ -1920,38 +1920,19 @@ apiready = function apiready() {
     });
   }
 
-  function submit(_x) {
-    return _submit.apply(this, arguments);
-  }
-
-  function _submit() {
-    _submit = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(path) {
-      return regenerator.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              return _context2.abrupt("return", http.upload('/crpt-cust/saas/faceauth', {
-                files: {
-                  faceImage: path
-                }
-              }));
-
-            case 1:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-    return _submit.apply(this, arguments);
+  function submit(path) {
+    return http.upload('/crpt-cust/saas/faceauth', {
+      files: {
+        faceImage: path
+      }
+    });
   }
 
   document.querySelector('#start').onclick = function () {
     if (submitStatus === 'notsubmit') {
       pickPic( /*#__PURE__*/function () {
         var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(path) {
-          var _ret;
-
+          var ret;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -1965,24 +1946,10 @@ apiready = function apiready() {
                   });
                   _context.prev = 3;
                   _context.next = 6;
-                  return submit();
+                  return submit(path);
 
                 case 6:
-                  _ret = _context.sent;
-                  _context.next = 12;
-                  break;
-
-                case 9:
-                  _context.prev = 9;
-                  _context.t0 = _context["catch"](3);
-                  api.toast({
-                    msg: _context.t0.msg || '网络错误'
-                  });
-
-                case 12:
-                  submitStatus = 'notsubmit';
-                  $api.removeCls($api.byId('start'), 'loading');
-                  api.hideProgress();
+                  ret = _context.sent;
 
                   if (ret.data.result === 'YES') {
                     openAuthResult({
@@ -1995,15 +1962,31 @@ apiready = function apiready() {
                     });
                   }
 
+                  _context.next = 13;
+                  break;
+
+                case 10:
+                  _context.prev = 10;
+                  _context.t0 = _context["catch"](3);
+                  api.toast({
+                    msg: _context.t0.msg || '网络错误',
+                    location: 'middle'
+                  });
+
+                case 13:
+                  submitStatus = 'notsubmit';
+                  $api.removeCls($api.byId('start'), 'loading');
+                  api.hideProgress();
+
                 case 16:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[3, 9]]);
+          }, _callee, null, [[3, 10]]);
         }));
 
-        return function (_x2) {
+        return function (_x) {
           return _ref.apply(this, arguments);
         };
       }());

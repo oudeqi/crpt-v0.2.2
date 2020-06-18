@@ -3066,6 +3066,7 @@ var PageController = /*#__PURE__*/function (_Service) {
   createClass(PageController, [{
     key: "renderNav",
     value: function renderNav() {
+      // 担保客户仅可浏览担保类产品信息，不可看到其他信用类贷款产品；
       if (this.state.custType === '2') {
         // 1：通用   2：普惠担保  3：其他
         this.el.navDanbao.style.display = 'block';
