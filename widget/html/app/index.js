@@ -1955,6 +1955,7 @@ var Utils = function Utils() {
 var Utils$1 = new Utils();
 
 // 主题色
+var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
 var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
 
@@ -1966,23 +1967,10 @@ var navigationBarWhite$1 = {
   fontWeight: 'bold',
   leftButtons: [{
     text: '',
-    color: themeColor,
+    color: themeMainColor,
     iconPath: 'widget://image/back_green_big.png'
   }]
 }; // 绿色底导航
-
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: themeColor,
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-}; // router page 配置信息
 
 var routerMapConfig = {
   // 好销贷产品申请
@@ -2011,7 +1999,6 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      alert(2);
       api.openTabLayout(_objectSpread$2({}, routerMapConfig[key], {}, params));
     }
   }]);
@@ -2044,7 +2031,6 @@ var App = /*#__PURE__*/function () {
       // Utils.Router.openPageCreditInformation()
       // openTodoAuthQiye({status: 'error', tips: 'message'})
       // return
-      // alert(Router)
       // Router.openPage({key: 'hxd_apply'})
       // return
       var userinfo = $api.getStorage('userinfo');

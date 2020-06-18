@@ -13,7 +13,7 @@ const navigationBarWhite = {
   leftButtons: [
     {
       text: '',
-      color: themeColor,
+      color: themeMainColor,
       iconPath: 'widget://image/back_green_big.png',
     }
   ]
@@ -22,7 +22,7 @@ const navigationBarWhite = {
 // 绿色底导航
 const navigationBarGreen = {
   hideBackButton: false,
-  background: themeColor,
+  background: themeMainColor,
   color: '#fff',
   fontSize: 18,
   fontWeight: 'bold',

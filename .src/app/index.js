@@ -55,7 +55,6 @@ class App {
 
     // openTodoAuthQiye({status: 'error', tips: 'message'})
     // return
-    // alert(Router)
     // Router.openPage({key: 'hxd_apply'})
     // return
     const userinfo = $api.getStorage('userinfo')

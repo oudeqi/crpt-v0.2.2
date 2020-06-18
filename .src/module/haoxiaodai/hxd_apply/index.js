@@ -1,8 +1,12 @@
 
+const page = new Vue({
+  el: '#app',
+  data: {
 
+  }
+})
 
 apiready = function () {
-  alert(1)
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -11,10 +15,5 @@ apiready = function () {
     }
   });
   // alert(Vue)
-  // const page = new Vue({
-  //   el: '#app',
-  //   data: {
 
-  //   }
-  // })
 }
