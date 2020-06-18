@@ -1870,6 +1870,7 @@ var Service = /*#__PURE__*/function () {
     classCallCheck(this, Service);
 
     this.ajaxUrls = {
+      queryGuaranteeMainUrl: '/crpt-guarantee/gt/apply/query',
       postGuaranteeCarUrl: '/crpt-guarantee/guarantor/car/insert',
       getGuaranteeCarUrl: '/crpt-guarantee/guarantor/car/query',
       saveAttachmentUrl: '/crpt-guarantee/guarantor/attachment/save'
@@ -1877,6 +1878,16 @@ var Service = /*#__PURE__*/function () {
   }
 
   createClass(Service, [{
+    key: "getQueryGuaranteeMain",
+    value: function getQueryGuaranteeMain() {
+      return http.get(this.ajaxUrls.queryGuaranteeMainUrl, null, {
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
+        timeout: 3000
+      });
+    }
+  }, {
     key: "postGuaranteeCarList",
     value: function postGuaranteeCarList(params) {
       return http.post(this.ajaxUrls.postGuaranteeCarUrl, {
@@ -1957,6 +1968,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
       gtCounterId: props.pageParam.gtCounterId,
+      disabled: props.pageParam.disabled,
       _cb: props.pageParam._cb,
       type: props.pageParam.type || 1,
       carList: [{
@@ -2008,7 +2020,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-        var self, params, res;
+        var self, params, applyRes, res;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2023,12 +2035,21 @@ var PageController = /*#__PURE__*/function (_Service) {
                 } else {
                   // 反担保人传gtCounterId
                   params.gtCounterId = self.data.gtCounterId;
-                }
+                } // 查第二步的授信状态
+
 
                 _context2.next = 7;
-                return this.getGuaranteeCarList(params);
+                return this.getQueryGuaranteeMain();
 
               case 7:
+                applyRes = _context2.sent;
+                this.data.applyStatus = applyRes.data.applyStatus;
+                this.data.creditStatus = applyRes.data.creditStatus;
+                this.data.disabled = this.data.applyStatus >= 2 && this.data.creditStatus === 2;
+                _context2.next = 13;
+                return this.getGuaranteeCarList(params);
+
+              case 13:
                 res = _context2.sent;
                 this.data.carList = res.data.length > 0 ? res.data.map(function (item, i) {
                   return _objectSpread$1({}, item, {
@@ -2040,24 +2061,24 @@ var PageController = /*#__PURE__*/function (_Service) {
                   brand: '',
                   pictureId: ''
                 }];
-                _context2.next = 14;
+                _context2.next = 20;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 17:
+                _context2.prev = 17;
                 _context2.t0 = _context2["catch"](2);
                 Utils$1.UI.toast('服务超时');
 
-              case 14:
+              case 20:
                 this.compilerTemplate(this.data.carList);
                 Utils$1.UI.hideLoading('加载中');
 
-              case 16:
+              case 22:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[2, 11]]);
+        }, _callee2, this, [[2, 17]]);
       }));
 
       function initData() {
@@ -2074,6 +2095,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var addBtn = document.querySelector('#add-btn');
 
       addBtn.onclick = function () {
+        if (self.data.disabled) {
+          return void 0;
+        }
+
         self.searchAllData();
         self.data.carList.push({
           carNo: '',
@@ -2091,6 +2116,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       document.querySelector('#credit-list').onclick = function (e) {
+        if (self.data.disabled) {
+          return void 0;
+        }
+
         var ev = window.event || e;
 
         if (ev.target.classList.contains('del')) {
@@ -2127,6 +2156,14 @@ var PageController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                if (!self.data.disabled) {
+                  _context3.next = 2;
+                  break;
+                }
+
+                return _context3.abrupt("return", void 0);
+
+              case 2:
                 self.searchAllData(); // 校验是否还有未填写的数据
 
                 isValidate = !self.data.carList.some(function (item, i) {
@@ -2134,16 +2171,16 @@ var PageController = /*#__PURE__*/function (_Service) {
                 });
 
                 if (isValidate) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
                 Utils$1.UI.toast('还有信息未填完');
                 return _context3.abrupt("return");
 
-              case 5:
+              case 7:
                 Utils$1.UI.showLoading('提交中');
-                _context3.prev = 6;
+                _context3.prev = 8;
                 params = {
                   type: self.data.type || 1,
                   gtCreditId: self.data.gtCreditId,
@@ -2157,32 +2194,32 @@ var PageController = /*#__PURE__*/function (_Service) {
                   params.gtCounterId = self.data.gtCounterId;
                 }
 
-                _context3.next = 11;
+                _context3.next = 13;
                 return self.postGuaranteeCarList(params);
 
-              case 11:
+              case 13:
                 res = _context3.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: self.data._cb || 'window.location.reload'
                 });
-                _context3.next = 18;
+                _context3.next = 20;
                 break;
 
-              case 15:
-                _context3.prev = 15;
-                _context3.t0 = _context3["catch"](6);
+              case 17:
+                _context3.prev = 17;
+                _context3.t0 = _context3["catch"](8);
                 Utils$1.UI.toast('服务超时');
 
-              case 18:
+              case 20:
                 Utils$1.UI.hideLoading();
 
-              case 19:
+              case 21:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[6, 15]]);
+        }, _callee3, null, [[8, 17]]);
       }));
     } // 绑定ocr
 
@@ -2192,6 +2229,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       document.querySelector('#car-page').onclick = function (e) {
+        if (self.data.disabled) {
+          return void 0;
+        }
+
         var ev = window.event || e;
 
         if (ev.target.classList.contains('icon_house_scan')) {
@@ -2300,11 +2341,21 @@ var PageController = /*#__PURE__*/function (_Service) {
   }, {
     key: "compilerTemplate",
     value: function compilerTemplate(list) {
+      var self = this;
+      var disabled = self.data.disabled;
+
       var _html = list.reduce(function (prev, item, i) {
         return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u8F66\u8F86<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u53F7\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\" id=\"carNo_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carNo, "\"/>\n                        <div class=\"fc_unit icon_house_scan\" id=\"carOCRBtn_").concat(i, "\" data-index=\"").concat(i, "\">hi</div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u54C1\u724C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\" id=\"brand_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.brand, "\">\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8F66\u8F86\u4EF7\u503C</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"carPrice_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.carPrice, "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
-      document.querySelector('#credit-list').innerHTML = _html; // alert(_html)
+      document.querySelector('#credit-list').innerHTML = _html;
+
+      if (disabled) {
+        Array.from(document.querySelectorAll('.fc_c_input')).forEach(function (dom, i) {
+          dom.setAttribute('disabled', true);
+        });
+      } // alert(_html)
+
     }
   }]);
 

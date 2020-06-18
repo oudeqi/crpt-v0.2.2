@@ -9,216 +9,238 @@ import Service from './service'
  * @class PageController类，需继承Service类
  */
 class PageController extends Service {
-    constructor(props) {
-        super()
-        //  所有表单域预置信息
-        this.profile = {
-            // upload参数
-            uploadImgType: {
-                0: 'camera',
-                1: 'album'
-            }
+  constructor(props) {
+    super()
+    //  所有表单域预置信息
+    this.profile = {
+      // upload参数
+      uploadImgType: {
+        0: 'camera',
+        1: 'album'
+      }
+    }
+    //  统一管理数据model data
+    this.data = {
+      gtId: props.pageParam.gtId,
+      flowStatus: props.pageParam.flowStatus,
+      gtCreditId: props.pageParam.gtCreditId,
+      gtCounterId: props.pageParam.gtCounterId,
+      disabled: props.pageParam.disabled,
+      _cb: props.pageParam._cb,
+      type: props.pageParam.type || 1,
+      houseList: [{
+        houseNo: '',
+        area: '',
+        housePrice: '',
+        addrDetail: '',
+        addrProvince: '',
+        addrProvinceCode: '',
+        addrCity: '',
+        addrCityCode: '',
+        addrCounty: '',
+        addrCountyCode: '',
+        pictureId: ''
+      }]
+    }
+  }
+
+  //  执行函数
+  main(props) {
+    this.initData()
+    this.bindEvents()
+  }
+
+  //  事件绑定入口
+  bindEvents() {
+    this.bindAddEvents()
+    this.bindDelEvents()
+    this.bindSubmitEvents()
+  }
+
+  async initData() {
+    Utils.UI.showLoading('加载中')
+    const self = this
+    try {
+      let params = {}
+      // 担保人则传gtId
+      if (self.data.type === 1) {
+        params.gtId = self.data.gtId
+      } else {
+        // 反担保人传gtCounterId
+        params.gtCounterId = self.data.gtCounterId
+      }
+      // 查第二步的授信状态
+      const applyRes = await this.getQueryGuaranteeMain()
+      this.data.applyStatus = applyRes.data.applyStatus
+      this.data.creditStatus = applyRes.data.creditStatus
+      this.data.disabled = this.data.applyStatus >= 2 && this.data.creditStatus === 2
+
+
+      const res = await this.getGuaranteeHouseList(params)
+      this.data.houseList = res.data.length > 0 ? res.data.map((item, i) => {
+        return {
+          ...item,
+          pictureId: item.pictureId || ''
         }
-        //  统一管理数据model data
-        this.data = {
-            gtId: props.pageParam.gtId,
-            flowStatus: props.pageParam.flowStatus,
-            gtCreditId: props.pageParam.gtCreditId,
-            gtCounterId: props.pageParam.gtCounterId,
-            _cb: props.pageParam._cb,
-            type: props.pageParam.type || 1,
-            houseList: [{
-                houseNo: '',
-                area: '',
-                housePrice: '',
-                addrDetail: '',
-                addrProvince: '',
-                addrProvinceCode: '',
-                addrCity: '',
-                addrCityCode: '',
-                addrCounty: '',
-                addrCountyCode: '',
-                pictureId: ''
-            }]
+      }) : [{
+        houseNo: '',
+        area: '',
+        housePrice: '',
+        addrDetail: '',
+        addrProvince: '',
+        addrProvinceCode: '',
+        addrCity: '',
+        addrCityCode: '',
+        addrCounty: '',
+        addrCountyCode: '',
+        pictureId: ''
+      }]
+    } catch (e) {
+      Utils.UI.toast('服务超时')
+    }
+    this.compilerTemplate(this.data.houseList)
+    this.bindCityPickerEvents()
+    Utils.UI.hideLoading()
+  }
+
+  //  绑定add事件
+  bindAddEvents() {
+    const self = this
+    const addBtn = document.querySelector('#add-btn')
+    addBtn.onclick = function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      self.data.houseList.push({
+        houseNo: '',
+        area: '',
+        housePrice: '',
+        addrDetail: '',
+        addrProvince: '',
+        addrProvinceCode: '',
+        addrCity: '',
+        addrCityCode: '',
+        addrCounty: '',
+        addrCountyCode: '',
+        pictureId: ''
+      })
+      self.compilerTemplate((self.data.houseList))
+      self.bindCityPickerEvents()
+    }
+  }
+
+  // 绑定删除事件
+  bindDelEvents() {
+    const self = this
+    document.querySelector('#credit-list').onclick = function (e) {
+      if(self.data.disabled) {
+        return void 0
+      }
+      let ev = window.event || e;
+      if (ev.target.classList.contains('del')) {
+        //  删除前需将model-tree检出，防止数据直接被抹除
+        self.searchAllData()
+        let index = ev.target.getAttribute('data-index')
+        self.data.houseList.splice(index, 1)
+        self.compilerTemplate(self.data.houseList)
+        self.bindCityPickerEvents()
+      }
+    }
+  }
+
+  // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
+  searchAllData() {
+    const self = this
+    const newHouseList = self.data.houseList.map((item, i) => {
+      return {
+        ...item,
+        houseNo: document.querySelector(`#houseNo_${i}`).value,
+        housePrice: Number(document.querySelector(`#housePrice_${i}`).value),
+        area: document.querySelector(`#area_${i}`).value,
+        addrDetail: document.querySelector(`#addrDetail_${i}`).value
+      }
+    })
+    this.data.houseList = newHouseList
+  }
+
+  // 绑定city picker组件
+  bindCityPickerEvents() {
+    const self = this
+    Array.from(document.querySelectorAll('.fc_c_city_label')).forEach((dom, i) => {
+      dom.onclick = function () {
+        if (self.data.disabled) {
+          return void 0
         }
-    }
-
-    //  执行函数
-    main(props) {
-        this.initData()
-        this.bindEvents()
-    }
-
-    //  事件绑定入口
-    bindEvents() {
-        this.bindAddEvents()
-        this.bindDelEvents()
-        this.bindSubmitEvents()
-    }
-
-    async initData() {
-        Utils.UI.showLoading('加载中')
-        const self = this
-        try {
-            let params = {}
-            // 担保人则传gtId
-            if (self.data.type === 1) {
-                params.gtId = self.data.gtId
-            } else {
-                // 反担保人传gtCounterId
-                params.gtCounterId = self.data.gtCounterId
-            }
-            const res = await this.getGuaranteeHouseList(params)
-            this.data.houseList = res.data.length > 0 ? res.data.map((item, i) => {
-                return {
-                    ...item,
-                    pictureId: item.pictureId || ''
-                }
-            }) : [{
-                houseNo: '',
-                area: '',
-                housePrice: '',
-                addrDetail: '',
-                addrProvince: '',
-                addrProvinceCode: '',
-                addrCity: '',
-                addrCityCode: '',
-                addrCounty: '',
-                addrCountyCode: '',
-                pictureId: ''
-            }]
-        } catch (e) {
-            Utils.UI.toast('服务超时')
-        }
-        this.compilerTemplate(this.data.houseList)
-        this.bindCityPickerEvents()
-        Utils.UI.hideLoading()
-    }
-
-    //  绑定add事件
-    bindAddEvents() {
-        const self = this
-        const addBtn = document.querySelector('#add-btn')
-        addBtn.onclick = function () {
-            self.searchAllData()
-            self.data.houseList.push({
-                houseNo: '',
-                area: '',
-                housePrice: '',
-                addrDetail: '',
-                addrProvince: '',
-                addrProvinceCode: '',
-                addrCity: '',
-                addrCityCode: '',
-                addrCounty: '',
-                addrCountyCode: '',
-                pictureId: ''
+        Utils.UI.setCityPicker({
+          success: selected => {
+            let [province, city, district] = selected
+            // const index = dom.getAttribute('data-index')
+            Object.assign(self.data.houseList[i], {
+              addrProvince: province.name,
+              addrProvinceCode: province.id,
+              addrCity: city.name,
+              addrCityCode: city.id,
+              addrCounty: district.name,
+              addrCountyCode: district.id
             })
-            self.compilerTemplate((self.data.houseList))
-            self.bindCityPickerEvents()
-        }
-    }
-
-    // 绑定删除事件
-    bindDelEvents() {
-        const self = this
-        document.querySelector('#credit-list').onclick = function (e) {
-            let ev = window.event || e;
-            if (ev.target.classList.contains('del')) {
-                //  删除前需将model-tree检出，防止数据直接被抹除
-                self.searchAllData()
-                let index = ev.target.getAttribute('data-index')
-                self.data.houseList.splice(index, 1)
-                self.compilerTemplate(self.data.houseList)
-                self.bindCityPickerEvents()
-            }
-        }
-    }
-
-    // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
-    searchAllData() {
-        const self = this
-        const newHouseList = self.data.houseList.map((item, i) => {
-            return {
-                ...item,
-                houseNo: document.querySelector(`#houseNo_${i}`).value,
-                housePrice: Number(document.querySelector(`#housePrice_${i}`).value),
-                area: document.querySelector(`#area_${i}`).value,
-                addrDetail: document.querySelector(`#addrDetail_${i}`).value
-            }
+            dom.innerHTML = `${province.name} ${city.name} ${district.name}`
+            dom.classList.add('selected')
+          },
+          data: 'widget://res/city.json',
         })
-        this.data.houseList = newHouseList
-    }
+      }
+    })
+  }
 
-    // 绑定city picker组件
-    bindCityPickerEvents() {
-        const self = this
-        Array.from(document.querySelectorAll('.fc_c_city_label')).forEach((dom, i) => {
-            dom.onclick = function() {
-                Utils.UI.setCityPicker({
-                    success: selected => {
-                        let [province, city, district] = selected
-                        // const index = dom.getAttribute('data-index')
-                        Object.assign(self.data.houseList[i], {
-                            addrProvince: province.name,
-                            addrProvinceCode: province.id,
-                            addrCity: city.name,
-                            addrCityCode: city.id,
-                            addrCounty: district.name,
-                            addrCountyCode: district.id
-                        })
-                        dom.innerHTML = `${province.name} ${city.name} ${district.name}`
-                        dom.classList.add('selected')
-                    },
-                    data: 'widget://res/city.json',
-                })
-            }
-        })
-    }
-
-    //  绑定提交房产信息
-    bindSubmitEvents() {
-        const self = this
-        document.querySelector('#save-btn').onclick = async function () {
-            self.searchAllData()
-            // 校验是否还有未填写的数据
-            let isValidate = !self.data.houseList.some((item, i) => {
-                return !item.houseNo || !item.housePrice || !item.area || !item.addrDetail || !item.addrProvince
-            })
-            if (!isValidate) {
-                Utils.UI.toast('还有信息未填完')
-                return
-            }
-            Utils.UI.showLoading('提交中')
-            try {
-                let params = {
-                    type: self.data.type || 1,
-                    gtCreditId: self.data.gtCreditId,
-                    houseList: self.data.houseList
-                }
-                // 担保人则传gtId
-                if (params.type === 1) {
-                    params.gtId = self.data.gtId
-                } else {
-                    // 反担保人传gtCounterId
-                    params.gtCounterId = self.data.gtCounterId
-                }
-                const res = await self.postGuaranteeHouseList(params)
-                Utils.Router.closeCurrentWinAndRefresh({
-                    winName: 'html/guarantee_application_index/index',
-                    script: self.data._cb || 'window.location.reload'
-                })
-            } catch (e) {
-                Utils.UI.toast('服务超时')
-            }
-            Utils.UI.hideLoading()
+  //  绑定提交房产信息
+  bindSubmitEvents() {
+    const self = this
+    document.querySelector('#save-btn').onclick = async function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      // 校验是否还有未填写的数据
+      let isValidate = !self.data.houseList.some((item, i) => {
+        return !item.houseNo || !item.housePrice || !item.area || !item.addrDetail || !item.addrProvince
+      })
+      if (!isValidate) {
+        Utils.UI.toast('还有信息未填完')
+        return
+      }
+      Utils.UI.showLoading('提交中')
+      try {
+        let params = {
+          type: self.data.type || 1,
+          gtCreditId: self.data.gtCreditId,
+          houseList: self.data.houseList
         }
+        // 担保人则传gtId
+        if (params.type === 1) {
+          params.gtId = self.data.gtId
+        } else {
+          // 反担保人传gtCounterId
+          params.gtCounterId = self.data.gtCounterId
+        }
+        const res = await self.postGuaranteeHouseList(params)
+        Utils.Router.closeCurrentWinAndRefresh({
+          winName: 'html/guarantee_application_index/index',
+          script: self.data._cb || 'window.location.reload'
+        })
+      } catch (e) {
+        Utils.UI.toast('服务超时')
+      }
+      Utils.UI.hideLoading()
     }
+  }
 
-    // 编译html模板
-    compilerTemplate(list) {
-        const _html = list.reduce((prev, item, i) => {
-            return prev + `<div class="cl-cell">
+  // 编译html模板
+  compilerTemplate(list) {
+    const self = this
+    const disabled = self.data.disabled
+    const _html = list.reduce((prev, item, i) => {
+      return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
                 <span class="clt_main" >房产<b>${i + 1}</b></span>
@@ -274,8 +296,8 @@ class PageController extends Service {
                         <div class="fc_c_city" >
                             <span id="address_${i}" class="fc_c_city_label ${item.addrProvince && 'selected'}" data-index="${i}">
                             ${item.addrProvince
-                ? item.addrProvince + ' ' + item.addrCity + ' ' + item.addrCounty
-                : '选择 城市/区域'}
+          ? item.addrProvince + ' ' + item.addrCity + ' ' + item.addrCounty
+          : '选择 城市/区域'}
                             </span>
                         </div>
                     </div>
@@ -286,23 +308,29 @@ class PageController extends Service {
             </div>
         </div>
     </div>`
-        }, '')
-        document.querySelector('#credit-list').innerHTML = _html
-        // alert(_html)
+    }, '')
+    document.querySelector('#credit-list').innerHTML = _html
+
+    if (disabled) {
+      Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom, i) => {
+        dom.setAttribute('disabled', true)
+      })
     }
+    // alert(_html)
+  }
 }
 
 apiready = function () {
-    let pageParam = api.pageParam || {};
-    api.setStatusBarStyle({
-        style: 'dark'
-    });
-    api.addEventListener({
-        name: 'navitembtn'
-    }, function (ret, err) {
-        if (ret.type === 'left') {
-            api.closeWin();
-        }
-    });
-    new PageController({pageParam}).main()
+  let pageParam = api.pageParam || {};
+  api.setStatusBarStyle({
+    style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
+  new PageController({ pageParam }).main()
 };

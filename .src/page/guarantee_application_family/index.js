@@ -9,213 +9,233 @@ import Service from './service'
  * @class PageController类，需继承Service类
  */
 class PageController extends Service {
-    constructor(props) {
-        super()
-        //  所有表单域预置信息
-        this.profile = {
-            pickers: {
-                relation: [
-                    {name: '配偶', id: 1},
-                    {name: '父母', id: 2},
-                    {name: '子女', id: 3}
-                ]
-            },
-            // upload参数
-            uploadImgType: {
-                0: 'camera',
-                1: 'album'
-            },
-            remap: {
-                relation: {
-                    1: '配偶',
-                    2: '父母',
-                    3: '子女'
-                }
-            }
+  constructor(props) {
+    super()
+    //  所有表单域预置信息
+    this.profile = {
+      pickers: {
+        relation: [
+          { name: '配偶', id: 1 },
+          { name: '父母', id: 2 },
+          { name: '子女', id: 3 }
+        ]
+      },
+      // upload参数
+      uploadImgType: {
+        0: 'camera',
+        1: 'album'
+      },
+      remap: {
+        relation: {
+          1: '配偶',
+          2: '父母',
+          3: '子女'
         }
-        //  统一管理数据model data
-        this.data = {
-            gtId: props.pageParam.gtId,
-            flowStatus: props.pageParam.flowStatus,
-            gtCreditId: props.pageParam.gtCreditId,
-            gtCounterId: props.pageParam.gtCounterId,
-            _cb: props.pageParam._cb,
-            type: props.pageParam.type || 1,
-            socialrefList: [{
-                name: '',
-                phone: '',
-                income: '',
-                type: '',
-                occupation: '',
-                workCompany: ''
-            }]
+      }
+    }
+    //  统一管理数据model data
+    this.data = {
+      gtId: props.pageParam.gtId,
+      flowStatus: props.pageParam.flowStatus,
+      gtCreditId: props.pageParam.gtCreditId,
+      gtCounterId: props.pageParam.gtCounterId,
+      disabled: props.pageParam.disabled,
+      _cb: props.pageParam._cb,
+      type: props.pageParam.type || 1,
+      socialrefList: [{
+        name: '',
+        phone: '',
+        income: '',
+        type: '',
+        occupation: '',
+        workCompany: ''
+      }]
+    }
+  }
+
+  //  执行函数
+  main(props) {
+    this.initData()
+    this.bindEvents()
+  }
+
+  //  事件绑定入口
+  bindEvents() {
+    this.bindAddEvents()
+    this.bindDelEvents()
+    this.bindSubmitEvents()
+  }
+
+  async initData() {
+    Utils.UI.showLoading('加载中')
+    const self = this
+    try {
+      let params = {}
+      // 担保人则传gtId
+      if (self.data.type === 1) {
+        params.gtId = self.data.gtId
+      } else {
+        // 反担保人传gtCounterId
+        params.gtCounterId = self.data.gtCounterId
+      }
+      // 查第二步的授信状态
+      const applyRes = await this.getQueryGuaranteeMain()
+      this.data.applyStatus = applyRes.data.applyStatus
+      this.data.creditStatus = applyRes.data.creditStatus
+      this.data.disabled = this.data.applyStatus >= 2 && this.data.creditStatus === 2
+
+      const res = await this.getGuaranteeFamilyList(params)
+      this.data.socialrefList = res.data.length > 0 ? res.data : [{
+        name: '',
+        phone: '',
+        income: '',
+        type: '',
+        occupation: '',
+        workCompany: ''
+      }]
+    } catch (e) {
+      Utils.UI.toast('服务超时')
+    }
+    this.compilerTemplate(this.data.socialrefList)
+    this.bindPickerEvents()
+    Utils.UI.hideLoading()
+  }
+
+  //  绑定add事件
+  bindAddEvents() {
+    const self = this
+    const addBtn = document.querySelector('#add-btn')
+    addBtn.onclick = function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      self.data.socialrefList.push({
+        name: '',
+        phone: '',
+        income: '',
+        type: '',
+        occupation: '',
+        workCompany: ''
+      })
+      self.compilerTemplate((self.data.socialrefList))
+      self.bindPickerEvents()
+    }
+  }
+
+  // 绑定删除事件
+  bindDelEvents() {
+    const self = this
+    document.querySelector('#credit-list').onclick = function (e) {
+      if (self.data.disabled) {
+        return void 0
+      }
+      let ev = window.event || e;
+      if (ev.target.classList.contains('del')) {
+        //  删除前需将model-tree检出，防止数据直接被抹除
+        self.searchAllData()
+        let index = ev.target.getAttribute('data-index')
+        self.data.socialrefList.splice(index, 1)
+        self.compilerTemplate(self.data.socialrefList)
+        self.bindPickerEvents()
+      }
+    }
+  }
+
+  // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
+  searchAllData() {
+    const self = this
+    const newSocialrefList = self.data.socialrefList.map((item, i) => {
+      return {
+        ...item,
+        name: document.querySelector(`#name_${i}`).value,
+        phone: Number(document.querySelector(`#phone_${i}`).value),
+        income: document.querySelector(`#income_${i}`).value,
+        occupation: document.querySelector(`#occupation_${i}`).value,
+        workCompany: document.querySelector(`#workCompany_${i}`).value
+      }
+    })
+    this.data.socialrefList = newSocialrefList
+  }
+
+  // 绑定所有Picker组件事件
+  bindPickerEvents() {
+    const self = this
+    Array.from(document.querySelectorAll('.fc_c_picker')).forEach((dom, i) => {
+      dom.onclick = function () {
+        if (self.data.disabled) {
+          return void 0
         }
-    }
-
-    //  执行函数
-    main(props) {
-        this.initData()
-        this.bindEvents()
-    }
-
-    //  事件绑定入口
-    bindEvents() {
-        this.bindAddEvents()
-        this.bindDelEvents()
-        this.bindSubmitEvents()
-    }
-
-    async initData() {
-        Utils.UI.showLoading('加载中')
-        const self = this
-        try {
-            let params = {}
-            // 担保人则传gtId
-            if (self.data.type === 1) {
-                params.gtId = self.data.gtId
-            } else {
-                // 反担保人传gtCounterId
-                params.gtCounterId = self.data.gtCounterId
-            }
-            const res = await this.getGuaranteeFamilyList(params)
-            this.data.socialrefList = res.data.length > 0 ? res.data : [{
-                name: '',
-                phone: '',
-                income: '',
-                type: '',
-                occupation: '',
-                workCompany: ''
-            }]
-        } catch (e) {
-            Utils.UI.toast('服务超时')
-        }
-        this.compilerTemplate(this.data.socialrefList)
-        this.bindPickerEvents()
-        Utils.UI.hideLoading()
-    }
-
-    //  绑定add事件
-    bindAddEvents() {
-        const self = this
-        const addBtn = document.querySelector('#add-btn')
-        addBtn.onclick = function () {
-            self.searchAllData()
-            self.data.socialrefList.push({
-                name: '',
-                phone: '',
-                income: '',
-                type: '',
-                occupation: '',
-                workCompany: ''
-            })
-            self.compilerTemplate((self.data.socialrefList))
-            self.bindPickerEvents()
-        }
-    }
-
-    // 绑定删除事件
-    bindDelEvents() {
-        const self = this
-        document.querySelector('#credit-list').onclick = function (e) {
-            let ev = window.event || e;
-            if (ev.target.classList.contains('del')) {
-                //  删除前需将model-tree检出，防止数据直接被抹除
-                self.searchAllData()
-                let index = ev.target.getAttribute('data-index')
-                self.data.socialrefList.splice(index, 1)
-                self.compilerTemplate(self.data.socialrefList)
-                self.bindPickerEvents()
-            }
-        }
-    }
-
-    // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
-    searchAllData() {
-        const self = this
-        const newSocialrefList = self.data.socialrefList.map((item, i) => {
-            return {
-                ...item,
-                name: document.querySelector(`#name_${i}`).value,
-                phone: Number(document.querySelector(`#phone_${i}`).value),
-                income: document.querySelector(`#income_${i}`).value,
-                occupation: document.querySelector(`#occupation_${i}`).value,
-                workCompany: document.querySelector(`#workCompany_${i}`).value
-            }
+        Utils.UI.setPicker({
+          success: selected => {
+            let value = selected[0]
+            self.data.socialrefList[i].type = Number(value.id)
+            dom.innerHTML = value.name
+          },
+          data: self.profile.pickers.relation
         })
-        this.data.socialrefList = newSocialrefList
-    }
+      }
+    })
 
-    // 绑定所有Picker组件事件
-    bindPickerEvents() {
-        const self = this
-        Array.from(document.querySelectorAll('.fc_c_picker')).forEach((dom, i) => {
-            dom.onclick = function () {
-                Utils.UI.setPicker({
-                    success: selected => {
-                        let value = selected[0]
-                        self.data.socialrefList[i].type = Number(value.id)
-                        dom.innerHTML = value.name
-                    },
-                    data: self.profile.pickers.relation
-                })
-            }
-        })
+  }
 
-    }
+  //  绑定提交房产信息
+  bindSubmitEvents() {
+    const self = this
+    document.querySelector('#save-btn').onclick = async function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      // 校验是否还有未填写的数据
+      let isValidate = !self.data.socialrefList.some((item, i) => {
+        return !item.name || !item.phone || !item.income || !item.type || !item.occupation || !item.workCompany
+      })
+      if (!isValidate) {
+        Utils.UI.toast('还有信息未填完')
+        return
+      }
+      // 校验手机号是否合法
+      isValidate = self.data.socialrefList.some((item, i) => {
+        return !/1\d{10}/.test(item.phone)
+      })
+      if (isValidate) {
+        Utils.UI.toast('手机号格式有误哦')
+        return
+      }
 
-    //  绑定提交房产信息
-    bindSubmitEvents() {
-        const self = this
-        document.querySelector('#save-btn').onclick = async function () {
-            self.searchAllData()
-            // 校验是否还有未填写的数据
-            let isValidate = !self.data.socialrefList.some((item, i) => {
-                return !item.name || !item.phone || !item.income || !item.type || !item.occupation || !item.workCompany
-            })
-            if (!isValidate) {
-                Utils.UI.toast('还有信息未填完')
-                return
-            }
-            // 校验手机号是否合法
-            isValidate = self.data.socialrefList.some((item,i) => {
-                return !/1\d{10}/.test(item.phone)
-            })
-            if(isValidate) {
-                Utils.UI.toast('手机号格式有误哦')
-                return
-            }
-
-            Utils.UI.showLoading('提交中')
-            try {
-                let params = {
-                    type: self.data.type || 1,
-                    gtCreditId: self.data.gtCreditId,
-                    socialrefList: self.data.socialrefList
-                }
-                // 担保人则传gtId
-                if (params.type === 1) {
-                    params.gtId = self.data.gtId
-                } else {
-                    // 反担保人传gtCounterId
-                    params.gtCounterId = self.data.gtCounterId
-                }
-                const res = await self.postGuaranteeFamilyList(params)
-                Utils.Router.closeCurrentWinAndRefresh({
-                    winName: 'html/guarantee_application_index/index',
-                    script: self.data._cb || 'window.location.reload'
-                })
-            } catch (e) {
-                Utils.UI.toast('服务超时')
-            }
-            Utils.UI.hideLoading()
+      Utils.UI.showLoading('提交中')
+      try {
+        let params = {
+          type: self.data.type || 1,
+          gtCreditId: self.data.gtCreditId,
+          socialrefList: self.data.socialrefList
         }
+        // 担保人则传gtId
+        if (params.type === 1) {
+          params.gtId = self.data.gtId
+        } else {
+          // 反担保人传gtCounterId
+          params.gtCounterId = self.data.gtCounterId
+        }
+        const res = await self.postGuaranteeFamilyList(params)
+        Utils.Router.closeCurrentWinAndRefresh({
+          winName: 'html/guarantee_application_index/index',
+          script: self.data._cb || 'window.location.reload'
+        })
+      } catch (e) {
+        Utils.UI.toast('服务超时')
+      }
+      Utils.UI.hideLoading()
     }
+  }
 
-    // 编译html模板
-    compilerTemplate(list) {
-        const self = this
-        const _html = list.reduce((prev, item, i) => {
-            return prev + `<div class="cl-cell">
+  // 编译html模板
+  compilerTemplate(list) {
+    const self = this
+    const disabled = self.data.disabled
+    const _html = list.reduce((prev, item, i) => {
+      return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
                 <span class="clt_main" >家庭成员<b>${i + 1}</b></span>
@@ -296,23 +316,28 @@ class PageController extends Service {
             </div>
         </div>
     </div>`
-        }, '')
-        document.querySelector('#credit-list').innerHTML = _html
-        // alert(_html)
+    }, '')
+    document.querySelector('#credit-list').innerHTML = _html
+    // alert(_html)
+    if (disabled) {
+      Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom, i) => {
+        dom.setAttribute('disabled', true)
+      })
     }
+  }
 }
 
 apiready = function () {
-    let pageParam = api.pageParam || {};
-    api.setStatusBarStyle({
-        style: 'dark'
-    });
-    api.addEventListener({
-        name: 'navitembtn'
-    }, function (ret, err) {
-        if (ret.type === 'left') {
-            api.closeWin();
-        }
-    });
-    new PageController({pageParam}).main()
+  let pageParam = api.pageParam || {};
+  api.setStatusBarStyle({
+    style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
+  new PageController({ pageParam }).main()
 };
