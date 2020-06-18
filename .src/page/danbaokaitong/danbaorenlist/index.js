@@ -28,12 +28,14 @@ class pageController extends Service {
 
   constructor() {
     super(...arguments)
-    const { gtCreditId, gtId, productId, demandMoney } = api.pageParam || {}
+    const { gtCreditId, gtId, productId, demandMoney, flowStatus } = api.pageParam || {}
     this.initData = {
       gtCreditId, // 担保授信id
       gtId, // 担保id
       productId, // 产品id
-      demandMoney // 资金需求
+      demandMoney, // 资金需求
+      flowStatus, // 资料录入状态
+      // 0无填写 1担保业务申请填写 2反担保人列表 3文书送达地址 4其他附件上传
     }
     this.category = {
       teacher: '教师',
@@ -117,7 +119,13 @@ class pageController extends Service {
         for (key of Object.keys(res.data)) {
           this.__renderList(key, res.data[key])
         }
-        this.__removeDisabled()
+        let flowStatus = parseInt(this.initData.flowStatus)
+        // 0无填写 1担保业务申请填写 2反担保人列表 3文书送达地址 4其他附件上传
+        if (flowStatus < 2) {
+          this.__removeDisabled()
+        } else {
+          this.__setDisabled()
+        }
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -228,7 +236,7 @@ class pageController extends Service {
           <input type="checkbox" disabled checkbox-trigger="body">
           <span></span>
         </label>
-        <div class="cont" click-trigger="item" data-id="" data-type="others">
+        <div class="cont" click-trigger="item" data-status="0" data-id="" data-type="others">
           <span class="txt">担保人${length + 1}</span>
           <span class="del" click-trigger="del">删除</span>
           <span class="tag wait">未填写信息</span>
@@ -236,7 +244,6 @@ class pageController extends Service {
       </li>
       `
       $api.append(othersBody, tpl)
-      console.log(JSON.stringify($api.byId('othersNum')))
       $api.byId('othersNum').innerHTML = `0/${length + 1}人`
       this.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'))
       this.__resetAllCheckbox()
@@ -270,6 +277,7 @@ class pageController extends Service {
             gtCounterId: item.dataset.id,
             type: item.dataset.type,
             status: item.dataset.status,
+            flowStatus: this.initData.flowStatus
           })
         }
       }

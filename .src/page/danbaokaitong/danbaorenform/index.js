@@ -51,7 +51,7 @@ class PageController extends Service {
 
   constructor() {
     super(...arguments)
-    const { gtCreditId, gtCounterId, type, status } = api.pageParam || {}
+    const { gtCreditId, gtCounterId, type, status, flowStatus } = api.pageParam || {}
     const typeMap = {
       teacher: 1, // '教师',
       doctor: 2, // '医生',
@@ -69,6 +69,12 @@ class PageController extends Service {
       type: typeMap[type],
       status, // status 反担保人状态
       // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+      flowStatus, // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
 
     }
     // 1： 配偶、 2：父母、 3：同事、 4：朋友、 5：亲戚
@@ -81,6 +87,8 @@ class PageController extends Service {
 
   __setDisabled () { // 不可编辑
     this.initData.disabled = true
+    $api.attr($api.byId('submit'), 'disabled', true)
+
     $api.attr($api.byId('name'), 'disabled', true)
     $api.attr($api.byId('name'), 'placeholder', '')
 
@@ -131,6 +139,9 @@ class PageController extends Service {
 
   __removeDisabled () { // 可编辑
     this.initData.disabled = false
+
+    $api.removeAttr($api.byId('submit'), 'disabled')
+
     $api.removeAttr($api.byId('name'), 'disabled')
     $api.attr($api.byId('name'), 'placeholder', '请输入')
 
@@ -231,9 +242,6 @@ class PageController extends Service {
     $api.byId('spouseIncome').value = data.spouseIncome || '' // 配偶年收入  单位为: 万元
     $api.byId('spouseOccupation').value = data.spouseOccupation || '' // 配偶职业
     $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || '' // 配偶工作单位
-    // 是否填写车辆信息 1. 未填写  3. 已填写
-    // 是否填写房产信息 1. 未填写  3. 已填写
-    this.__renderFillStatus(data.carFillStatus, data.houseFillStatus)
   }
 
   __renderFillStatus (carFillStatus, houseFillStatus) {
@@ -322,7 +330,7 @@ class PageController extends Service {
             gtCreditId,
             gtCounterId,
             type: 2,
-            _cb: 'location.reload();'
+            _cb: ';'
           })
         }
       }).catch(error => {
@@ -546,26 +554,41 @@ class PageController extends Service {
     this.__bindBankOcr()
   }
 
+  async getFillStatus () {
+    const gtCounterId = this.initData.gtCounterId
+    if (!gtCounterId) {
+      return false
+    }
+    const res = await this.queryDanbaoRenMsgById(gtCounterId)
+    if (res.code === 200) {
+      this.__renderFillStatus(res.data.carFillStatus, res.data.houseFillStatus)
+    }
+  }
+
   async getPageDate () {
-    const btnEl = $api.byId('submit')
-    $api.attr(btnEl, 'disabled', true)
+    this.__setDisabled()
     const gtCounterId = this.initData.gtCounterId
     if (!gtCounterId) {
       api.refreshHeaderLoadDone()
-      return false
-    }
-    let status = parseInt(this.initData.status)
-    if (!isNaN(status) && status >=3) {
-      this.__setDisabled()
-    } else {
       this.__removeDisabled()
+      return false
     }
     api.showProgress({ title: '加载中...', text: '', modal: false })
     try {
       const res = await this.queryDanbaoRenMsgById(gtCounterId)
-      if (res.code === 200) {
+      if (res.code === 200) {// 是否填写车辆信息 1. 未填写  3. 已填写
+        // 是否填写房产信息 1. 未填写  3. 已填写
+        this.__renderFillStatus(res.data.carFillStatus, res.data.houseFillStatus)
         this.__pageDataFillBack(res.data)
-        $api.removeAttr(btnEl, 'disabled')
+        let status = parseInt(this.initData.status)
+        // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+        let flowStatus = parseInt(this.initData.flowStatus)
+        // 资料录入状态  // 0无填写 // 1担保业务申请填写 // 2反担保人列表 // 3文书送达地址 // 4其他附件上传
+        if (flowStatus < 2 && status < 3) {
+          this.__removeDisabled()
+        } else {
+          this.__setDisabled()
+        }
       }
     } catch (error) {
       api.toast({ msg: error.msg || '出错啦', location: 'middle' })
@@ -576,6 +599,7 @@ class PageController extends Service {
 
   submit () {
     let status = parseInt(this.initData.status)
+    // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
     if (!isNaN(status) && status >=3) {
       api.toast({ msg: '担保人状态为已经确认', location: 'middle' })
       return
@@ -643,9 +667,10 @@ apiready = function () {
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){
-    ctrl.getPageDate()
+    ctrl.getFillStatus()
   })
 
+  ctrl.getPageDate()
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate()
   })

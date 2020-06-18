@@ -1376,7 +1376,8 @@ function openDanbaoRenList() {
       gtCreditId = _ref9.gtCreditId,
       gtId = _ref9.gtId,
       productId = _ref9.productId,
-      demandMoney = _ref9.demandMoney;
+      demandMoney = _ref9.demandMoney,
+      flowStatus = _ref9.flowStatus;
 
   api.openTabLayout({
     name: "html/danbaorenlist/index",
@@ -1390,7 +1391,14 @@ function openDanbaoRenList() {
       // 产品id
       demandMoney: demandMoney,
       // 资金需求
-      gtId: gtId // 担保id
+      gtId: gtId,
+      // 担保id
+      flowStatus: flowStatus // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
 
     },
     slidBackEnabled: true,
@@ -3430,7 +3438,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                 gtCreditId: self.data.gtCreditId,
                 gtId: self.data.gtId,
                 productId: self.data.productId,
-                demandMoney: self.data.demandMoney
+                demandMoney: self.data.demandMoney,
+                flowStatus: self.data.flowStatus
               });
             } else if (i === 2) {
               openSendAddress({

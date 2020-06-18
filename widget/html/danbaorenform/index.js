@@ -2404,7 +2404,8 @@ var PageController = /*#__PURE__*/function (_Service) {
         gtCreditId = _ref.gtCreditId,
         gtCounterId = _ref.gtCounterId,
         type = _ref.type,
-        status = _ref.status;
+        status = _ref.status,
+        flowStatus = _ref.flowStatus;
 
     var typeMap = {
       teacher: 1,
@@ -2430,8 +2431,15 @@ var PageController = /*#__PURE__*/function (_Service) {
       gtCounterId: gtCounterId,
       // 担保人id
       type: typeMap[type],
-      status: status // status 反担保人状态
+      status: status,
+      // status 反担保人状态
       // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+      flowStatus: flowStatus // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
 
     }; // 1： 配偶、 2：父母、 3：同事、 4：朋友、 5：亲戚
 
@@ -2448,6 +2456,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function __setDisabled() {
       // 不可编辑
       this.initData.disabled = true;
+      $api.attr($api.byId('submit'), 'disabled', true);
       $api.attr($api.byId('name'), 'disabled', true);
       $api.attr($api.byId('name'), 'placeholder', '');
       $api.attr($api.byId('phone'), 'disabled', true);
@@ -2486,6 +2495,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function __removeDisabled() {
       // 可编辑
       this.initData.disabled = false;
+      $api.removeAttr($api.byId('submit'), 'disabled');
       $api.removeAttr($api.byId('name'), 'disabled');
       $api.attr($api.byId('name'), 'placeholder', '请输入');
       $api.removeAttr($api.byId('phone'), 'disabled');
@@ -2594,10 +2604,6 @@ var PageController = /*#__PURE__*/function (_Service) {
       $api.byId('spouseOccupation').value = data.spouseOccupation || ''; // 配偶职业
 
       $api.byId('spouseWorkCompany').value = data.spouseWorkCompany || ''; // 配偶工作单位
-      // 是否填写车辆信息 1. 未填写  3. 已填写
-      // 是否填写房产信息 1. 未填写  3. 已填写
-
-      this.__renderFillStatus(data.carFillStatus, data.houseFillStatus);
     }
   }, {
     key: "__renderFillStatus",
@@ -2701,7 +2707,7 @@ var PageController = /*#__PURE__*/function (_Service) {
               gtCreditId: gtCreditId,
               gtCounterId: gtCounterId,
               type: 2,
-              _cb: 'location.reload();'
+              _cb: ';'
             });
           }
         })["catch"](function (error) {
@@ -3163,74 +3169,124 @@ var PageController = /*#__PURE__*/function (_Service) {
       this.__bindBankOcr();
     }
   }, {
-    key: "getPageDate",
+    key: "getFillStatus",
     value: function () {
-      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
-        var btnEl, gtCounterId, status, res;
+      var _getFillStatus = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
+        var gtCounterId, res;
         return regenerator.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                btnEl = $api.byId('submit');
-                $api.attr(btnEl, 'disabled', true);
                 gtCounterId = this.initData.gtCounterId;
 
                 if (gtCounterId) {
-                  _context6.next = 6;
+                  _context6.next = 3;
+                  break;
+                }
+
+                return _context6.abrupt("return", false);
+
+              case 3:
+                _context6.next = 5;
+                return this.queryDanbaoRenMsgById(gtCounterId);
+
+              case 5:
+                res = _context6.sent;
+
+                if (res.code === 200) {
+                  this.__renderFillStatus(res.data.carFillStatus, res.data.houseFillStatus);
+                }
+
+              case 7:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function getFillStatus() {
+        return _getFillStatus.apply(this, arguments);
+      }
+
+      return getFillStatus;
+    }()
+  }, {
+    key: "getPageDate",
+    value: function () {
+      var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee7() {
+        var gtCounterId, res, status, flowStatus;
+        return regenerator.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                this.__setDisabled();
+
+                gtCounterId = this.initData.gtCounterId;
+
+                if (gtCounterId) {
+                  _context7.next = 6;
                   break;
                 }
 
                 api.refreshHeaderLoadDone();
-                return _context6.abrupt("return", false);
+
+                this.__removeDisabled();
+
+                return _context7.abrupt("return", false);
 
               case 6:
-                status = parseInt(this.initData.status);
-
-                if (!isNaN(status) && status >= 3) {
-                  this.__setDisabled();
-                } else {
-                  this.__removeDisabled();
-                }
-
                 api.showProgress({
                   title: '加载中...',
                   text: '',
                   modal: false
                 });
-                _context6.prev = 9;
-                _context6.next = 12;
+                _context7.prev = 7;
+                _context7.next = 10;
                 return this.queryDanbaoRenMsgById(gtCounterId);
 
-              case 12:
-                res = _context6.sent;
+              case 10:
+                res = _context7.sent;
 
                 if (res.code === 200) {
+                  // 是否填写车辆信息 1. 未填写  3. 已填写
+                  // 是否填写房产信息 1. 未填写  3. 已填写
+                  this.__renderFillStatus(res.data.carFillStatus, res.data.houseFillStatus);
+
                   this.__pageDataFillBack(res.data);
 
-                  $api.removeAttr(btnEl, 'disabled');
+                  status = parseInt(this.initData.status); // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+
+                  flowStatus = parseInt(this.initData.flowStatus); // 资料录入状态  // 0无填写 // 1担保业务申请填写 // 2反担保人列表 // 3文书送达地址 // 4其他附件上传
+
+                  if (flowStatus < 2 && status < 3) {
+                    this.__removeDisabled();
+                  } else {
+                    this.__setDisabled();
+                  }
                 }
 
-                _context6.next = 19;
+                _context7.next = 17;
                 break;
 
-              case 16:
-                _context6.prev = 16;
-                _context6.t0 = _context6["catch"](9);
+              case 14:
+                _context7.prev = 14;
+                _context7.t0 = _context7["catch"](7);
                 api.toast({
-                  msg: _context6.t0.msg || '出错啦',
+                  msg: _context7.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 19:
+              case 17:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 21:
+              case 19:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[9, 16]]);
+        }, _callee7, this, [[7, 14]]);
       }));
 
       function getPageDate() {
@@ -3244,7 +3300,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     value: function submit() {
       var _this10 = this;
 
-      var status = parseInt(this.initData.status);
+      var status = parseInt(this.initData.status); // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
 
       if (!isNaN(status) && status >= 3) {
         api.toast({
@@ -3266,14 +3322,14 @@ var PageController = /*#__PURE__*/function (_Service) {
           });
         },
         success: function () {
-          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee7(data) {
+          var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee8(data) {
             var _this10$initData, gtCreditId, gtCounterId, type, isUpdate, postData, callMethod, res;
 
-            return regenerator.wrap(function _callee7$(_context7) {
+            return regenerator.wrap(function _callee8$(_context8) {
               while (1) {
-                switch (_context7.prev = _context7.next) {
+                switch (_context8.prev = _context8.next) {
                   case 0:
-                    _context7.prev = 0;
+                    _context8.prev = 0;
                     _this10$initData = _this10.initData, gtCreditId = _this10$initData.gtCreditId, gtCounterId = _this10$initData.gtCounterId, type = _this10$initData.type;
                     isUpdate = gtCounterId;
                     postData = _objectSpread$1({}, data, {}, _this10.__getOtherParams(), {
@@ -3293,11 +3349,11 @@ var PageController = /*#__PURE__*/function (_Service) {
                       postData.isNecessary = 0; // 是否必输： 1-是  0-否，默认： 0-否
                     }
 
-                    _context7.next = 8;
+                    _context8.next = 8;
                     return _this10[callMethod](postData);
 
                   case 8:
-                    res = _context7.sent;
+                    res = _context8.sent;
 
                     if (res && res.code === 200) {
                       if (isUpdate) {
@@ -3318,23 +3374,23 @@ var PageController = /*#__PURE__*/function (_Service) {
                       api.closeWin();
                     }
 
-                    _context7.next = 15;
+                    _context8.next = 15;
                     break;
 
                   case 12:
-                    _context7.prev = 12;
-                    _context7.t0 = _context7["catch"](0);
+                    _context8.prev = 12;
+                    _context8.t0 = _context8["catch"](0);
                     api.toast({
-                      msg: _context7.t0.msg,
+                      msg: _context8.t0.msg,
                       location: 'middle'
                     });
 
                   case 15:
                   case "end":
-                    return _context7.stop();
+                    return _context8.stop();
                 }
               }
-            }, _callee7, null, [[0, 12]]);
+            }, _callee8, null, [[0, 12]]);
           }));
 
           function success(_x5) {
@@ -3366,8 +3422,9 @@ apiready = function apiready() {
   api.addEventListener({
     name: 'viewappear'
   }, function (ret, err) {
-    ctrl.getPageDate();
+    ctrl.getFillStatus();
   });
+  ctrl.getPageDate();
   setRefreshHeaderInfo(function () {
     ctrl.getPageDate();
   });

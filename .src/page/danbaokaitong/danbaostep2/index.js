@@ -89,13 +89,14 @@ class PageController extends Service {
                                 gtCreditId: self.data.gtCreditId,
                                 gtId: self.data.gtId,
                                 productId: self.data.productId,
-                                demandMoney: self.data.demandMoney
+                                demandMoney: self.data.demandMoney,
+                                flowStatus: self.data.flowStatus,
                             })
                         } else if (i === 2) {
                             openSendAddress({
                               gtId: self.data.gtId,
                               gtCreditId: self.data.gtCreditId,
-                              flowStatus: self.data.flowStatus
+                              flowStatus: self.data.flowStatus,
                             })
                         } else {
                             Utils.Router[dom.getAttribute('data-router')]({

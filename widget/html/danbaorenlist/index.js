@@ -914,7 +914,8 @@ function openDanbaoRenForm(_ref10) {
   var gtCreditId = _ref10.gtCreditId,
       gtCounterId = _ref10.gtCounterId,
       type = _ref10.type,
-      status = _ref10.status;
+      status = _ref10.status,
+      flowStatus = _ref10.flowStatus;
   api.openTabLayout({
     name: "html/danbaorenform/index",
     title: '担保人调查表',
@@ -927,8 +928,15 @@ function openDanbaoRenForm(_ref10) {
       // 担保人id
       type: type,
       // 反担保人类别,
-      status: status // status 反担保人状态
+      status: status,
+      // status 反担保人状态
       // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+      flowStatus: flowStatus // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
 
     },
     slidBackEnabled: true,
@@ -1976,7 +1984,8 @@ var pageController = /*#__PURE__*/function (_Service) {
         gtCreditId = _ref.gtCreditId,
         gtId = _ref.gtId,
         productId = _ref.productId,
-        demandMoney = _ref.demandMoney;
+        demandMoney = _ref.demandMoney,
+        flowStatus = _ref.flowStatus;
 
     _this.initData = {
       gtCreditId: gtCreditId,
@@ -1985,7 +1994,10 @@ var pageController = /*#__PURE__*/function (_Service) {
       // 担保id
       productId: productId,
       // 产品id
-      demandMoney: demandMoney // 资金需求
+      demandMoney: demandMoney,
+      // 资金需求
+      flowStatus: flowStatus // 资料录入状态
+      // 0无填写 1担保业务申请填写 2反担保人列表 3文书送达地址 4其他附件上传
 
     };
     _this.category = {
@@ -2040,7 +2052,7 @@ var pageController = /*#__PURE__*/function (_Service) {
     key: "getPageDate",
     value: function () {
       var _getPageDate = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var res, _i, _Object$keys;
+        var res, _i, _Object$keys, flowStatus;
 
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -2072,7 +2084,13 @@ var pageController = /*#__PURE__*/function (_Service) {
                     this.__renderList(key, res.data[key]);
                   }
 
-                  this.__removeDisabled();
+                  flowStatus = parseInt(this.initData.flowStatus); // 0无填写 1担保业务申请填写 2反担保人列表 3文书送达地址 4其他附件上传
+
+                  if (flowStatus < 2) {
+                    this.__removeDisabled();
+                  } else {
+                    this.__setDisabled();
+                  }
                 }
 
                 _context.next = 11;
@@ -2212,9 +2230,8 @@ var pageController = /*#__PURE__*/function (_Service) {
 
         var others = $api.domAll(othersBody, '.collapse-item');
         var length = Object.keys(others).length;
-        var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" disabled checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
+        var tpl = "\n      <li class=\"collapse-item\">\n        <label class=\"checkbox\">\n          <input type=\"checkbox\" disabled checkbox-trigger=\"body\">\n          <span></span>\n        </label>\n        <div class=\"cont\" click-trigger=\"item\" data-status=\"0\" data-id=\"\" data-type=\"others\">\n          <span class=\"txt\">\u62C5\u4FDD\u4EBA".concat(length + 1, "</span>\n          <span class=\"del\" click-trigger=\"del\">\u5220\u9664</span>\n          <span class=\"tag wait\">\u672A\u586B\u5199\u4FE1\u606F</span>\n        </div>\n      </li>\n      ");
         $api.append(othersBody, tpl);
-        console.log(JSON.stringify($api.byId('othersNum')));
         $api.byId('othersNum').innerHTML = "0/".concat(length + 1, "\u4EBA");
 
         _this2.__resetParentcheckbox($api.dom(othersBody, '[checkbox-trigger="body"]'));
@@ -2257,7 +2274,8 @@ var pageController = /*#__PURE__*/function (_Service) {
               gtCreditId: _this2.initData.gtCreditId,
               gtCounterId: _item.dataset.id,
               type: _item.dataset.type,
-              status: _item.dataset.status
+              status: _item.dataset.status,
+              flowStatus: _this2.initData.flowStatus
             });
           }
         }

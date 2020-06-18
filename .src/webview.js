@@ -897,7 +897,7 @@ function openDanbaoKaitong ({step, title = '普惠担保', productId, creditStat
 }
 
 // 担保人列表
-function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
+function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney, flowStatus} = {}) {
   api.openTabLayout({
     name: `html/danbaorenlist/index`,
     title: '担保人列表',
@@ -908,6 +908,12 @@ function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
       productId, // 产品id
       demandMoney, // 资金需求
       gtId, // 担保id
+      flowStatus, // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
     },
     slidBackEnabled: true,
     navigationBar: {
@@ -926,7 +932,7 @@ function openDanbaoRenList ({gtCreditId, gtId, productId, demandMoney} = {}) {
 }
 
 // 担保人信息录入
-function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status}) {
+function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status, flowStatus}) {
   api.openTabLayout({
     name: `html/danbaorenform/index`,
     title: '担保人调查表',
@@ -939,6 +945,12 @@ function openDanbaoRenForm ({gtCreditId, gtCounterId, type, status}) {
       status,
       // status 反担保人状态
       // 0：未填写信息   1：待发送  2：确认中  3：已确认   4：已作废  5：已签约  6：已拒签  ，默认为：0。
+      flowStatus, // 资料录入状态
+      // 0无填写
+      // 1担保业务申请填写
+      // 2反担保人列表
+      // 3文书送达地址
+      // 4其他附件上传
     },
     slidBackEnabled: true,
     navigationBar: {
