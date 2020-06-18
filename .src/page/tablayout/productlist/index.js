@@ -115,8 +115,7 @@ class PageController extends Service {
     let { custType } = this.state
     try {
       let res = await this.getData({ custType })
-      let data = res.data || []
-      let list = data.filter(item => item.type === this.state.type)
+      let list = res.data || []
       if (res.code === 200 && list.length > 0) {
         $api.byId('list-box').style.display = 'block'
         $api.byId('nodata').style.display = 'none'

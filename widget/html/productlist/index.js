@@ -3154,9 +3154,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "getPageData",
     value: function () {
       var _getPageData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var _this4 = this;
-
-        var custType, res, data, list;
+        var custType, res, list;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3179,10 +3177,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 7:
                 res = _context.sent;
-                data = res.data || [];
-                list = data.filter(function (item) {
-                  return item.type === _this4.state.type;
-                });
+                list = res.data || [];
 
                 if (res.code === 200 && list.length > 0) {
                   $api.byId('list-box').style.display = 'block';
@@ -3194,27 +3189,27 @@ var PageController = /*#__PURE__*/function (_Service) {
                   $api.byId('nodata').style.display = 'block';
                 }
 
-                _context.next = 16;
+                _context.next = 15;
                 break;
 
-              case 13:
-                _context.prev = 13;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](4);
                 api.toast({
                   msg: _context.t0.meaasge || '数据加载失败',
                   location: 'middle'
                 });
 
-              case 16:
+              case 15:
                 this.state.loading = false;
                 api.refreshHeaderLoadDone();
 
-              case 18:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[4, 13]]);
+        }, _callee, this, [[4, 12]]);
       }));
 
       function getPageData() {

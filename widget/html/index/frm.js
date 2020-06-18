@@ -220,16 +220,14 @@ function openDanbaoKaitong() {
 } // 担保人列表
 
 
-function openProductList(type) {
+function openProductList() {
   // 1-信用贷款 2-担保贷款
   api.openTabLayout({
     name: 'html/productlist/win',
     title: '产品推荐',
     url: 'widget://html/productlist/index.html',
     bgColor: '#fff',
-    pageParam: {
-      type: type
-    },
+    pageParam: {},
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
@@ -3104,7 +3102,7 @@ var PageController = /*#__PURE__*/function (_Service) {
 
         if (error.code === 3002) {
           // 无担保产品
-          openProductList(2); // 产品类型：1-信用贷款 2-担保贷款
+          openProductList();
         } else {
           api.toast({
             msg: error.msg || '查询担保状态失败',
@@ -3199,7 +3197,7 @@ apiready = function apiready() {
   };
 
   $api.byId('danbaofuwu').onclick = function () {
-    openProductList(2); // 产品类型：1-信用贷款 2-担保贷款
+    controller.goDanbao();
   };
 
   controller.renderNav();

@@ -57,7 +57,7 @@ class PageController extends Service {
     }).catch(error => {
       api.hideProgress()
       if (error.code === 3002) { // 无担保产品
-        openProductList(2) // 产品类型：1-信用贷款 2-担保贷款
+        openProductList()
       } else {
         api.toast({
           msg: error.msg || '查询担保状态失败',
@@ -153,7 +153,7 @@ apiready = function () {
     controller.goDanbao()
   }
   $api.byId('danbaofuwu').onclick = () => {
-    openProductList(2) // 产品类型：1-信用贷款 2-担保贷款
+    controller.goDanbao()
   }
   controller.renderNav()
   controller.renderProduct()
