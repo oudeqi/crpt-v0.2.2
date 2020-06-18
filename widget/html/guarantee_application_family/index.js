@@ -1870,12 +1870,23 @@ var Service = /*#__PURE__*/function () {
     classCallCheck(this, Service);
 
     this.ajaxUrls = {
+      queryGuaranteeMainUrl: '/crpt-guarantee/gt/apply/query',
       postGuaranteeFamilyUrl: '/crpt-guarantee/guarantor/socialref/insert',
       getGuaranteeFamilyUrl: '/crpt-guarantee/guarantor/socialref/query'
     };
   }
 
   createClass(Service, [{
+    key: "getQueryGuaranteeMain",
+    value: function getQueryGuaranteeMain() {
+      return http.get(this.ajaxUrls.queryGuaranteeMainUrl, null, {
+        // headers: {
+        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
+        // },
+        timeout: 3000
+      });
+    }
+  }, {
     key: "postGuaranteeFamilyList",
     value: function postGuaranteeFamilyList(params) {
       return http.post(this.ajaxUrls.postGuaranteeFamilyUrl, {
@@ -1962,6 +1973,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       flowStatus: props.pageParam.flowStatus,
       gtCreditId: props.pageParam.gtCreditId,
       gtCounterId: props.pageParam.gtCounterId,
+      disabled: props.pageParam.disabled,
       _cb: props.pageParam._cb,
       type: props.pageParam.type || 1,
       socialrefList: [{
@@ -1995,7 +2007,7 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "initData",
     value: function () {
       var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var self, params, res;
+        var self, params, applyRes, res;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2010,12 +2022,21 @@ var PageController = /*#__PURE__*/function (_Service) {
                 } else {
                   // 反担保人传gtCounterId
                   params.gtCounterId = self.data.gtCounterId;
-                }
+                } // 查第二步的授信状态
+
 
                 _context.next = 7;
-                return this.getGuaranteeFamilyList(params);
+                return this.getQueryGuaranteeMain();
 
               case 7:
+                applyRes = _context.sent;
+                this.data.applyStatus = applyRes.data.applyStatus;
+                this.data.creditStatus = applyRes.data.creditStatus;
+                this.data.disabled = this.data.applyStatus >= 2 && this.data.creditStatus === 2;
+                _context.next = 13;
+                return this.getGuaranteeFamilyList(params);
+
+              case 13:
                 res = _context.sent;
                 this.data.socialrefList = res.data.length > 0 ? res.data : [{
                   name: '',
@@ -2025,25 +2046,25 @@ var PageController = /*#__PURE__*/function (_Service) {
                   occupation: '',
                   workCompany: ''
                 }];
-                _context.next = 14;
+                _context.next = 20;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 17:
+                _context.prev = 17;
                 _context.t0 = _context["catch"](2);
                 Utils$1.UI.toast('服务超时');
 
-              case 14:
+              case 20:
                 this.compilerTemplate(this.data.socialrefList);
                 this.bindPickerEvents();
                 Utils$1.UI.hideLoading();
 
-              case 17:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 11]]);
+        }, _callee, this, [[2, 17]]);
       }));
 
       function initData() {
@@ -2060,6 +2081,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var addBtn = document.querySelector('#add-btn');
 
       addBtn.onclick = function () {
+        if (self.data.disabled) {
+          return void 0;
+        }
+
         self.searchAllData();
         self.data.socialrefList.push({
           name: '',
@@ -2080,6 +2105,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
 
       document.querySelector('#credit-list').onclick = function (e) {
+        if (self.data.disabled) {
+          return void 0;
+        }
+
         var ev = window.event || e;
 
         if (ev.target.classList.contains('del')) {
@@ -2115,6 +2144,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       var self = this;
       Array.from(document.querySelectorAll('.fc_c_picker')).forEach(function (dom, i) {
         dom.onclick = function () {
+          if (self.data.disabled) {
+            return void 0;
+          }
+
           Utils$1.UI.setPicker({
             success: function success(selected) {
               var value = selected[0];
@@ -2137,6 +2170,14 @@ var PageController = /*#__PURE__*/function (_Service) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                if (!self.data.disabled) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return", void 0);
+
+              case 2:
                 self.searchAllData(); // 校验是否还有未填写的数据
 
                 isValidate = !self.data.socialrefList.some(function (item, i) {
@@ -2144,30 +2185,30 @@ var PageController = /*#__PURE__*/function (_Service) {
                 });
 
                 if (isValidate) {
-                  _context2.next = 5;
+                  _context2.next = 7;
                   break;
                 }
 
                 Utils$1.UI.toast('还有信息未填完');
                 return _context2.abrupt("return");
 
-              case 5:
+              case 7:
                 // 校验手机号是否合法
                 isValidate = self.data.socialrefList.some(function (item, i) {
                   return !/1\d{10}/.test(item.phone);
                 });
 
                 if (!isValidate) {
-                  _context2.next = 9;
+                  _context2.next = 11;
                   break;
                 }
 
                 Utils$1.UI.toast('手机号格式有误哦');
                 return _context2.abrupt("return");
 
-              case 9:
+              case 11:
                 Utils$1.UI.showLoading('提交中');
-                _context2.prev = 10;
+                _context2.prev = 12;
                 params = {
                   type: self.data.type || 1,
                   gtCreditId: self.data.gtCreditId,
@@ -2181,32 +2222,32 @@ var PageController = /*#__PURE__*/function (_Service) {
                   params.gtCounterId = self.data.gtCounterId;
                 }
 
-                _context2.next = 15;
+                _context2.next = 17;
                 return self.postGuaranteeFamilyList(params);
 
-              case 15:
+              case 17:
                 res = _context2.sent;
                 Utils$1.Router.closeCurrentWinAndRefresh({
                   winName: 'html/guarantee_application_index/index',
                   script: self.data._cb || 'window.location.reload'
                 });
-                _context2.next = 22;
+                _context2.next = 24;
                 break;
 
-              case 19:
-                _context2.prev = 19;
-                _context2.t0 = _context2["catch"](10);
+              case 21:
+                _context2.prev = 21;
+                _context2.t0 = _context2["catch"](12);
                 Utils$1.UI.toast('服务超时');
 
-              case 22:
+              case 24:
                 Utils$1.UI.hideLoading();
 
-              case 23:
+              case 25:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[10, 19]]);
+        }, _callee2, null, [[12, 21]]);
       }));
     } // 编译html模板
 
@@ -2214,12 +2255,19 @@ var PageController = /*#__PURE__*/function (_Service) {
     key: "compilerTemplate",
     value: function compilerTemplate(list) {
       var self = this;
+      var disabled = self.data.disabled;
 
       var _html = list.reduce(function (prev, item, i) {
         return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\" >\u5BB6\u5EAD\u6210\u5458<b>".concat(i + 1, "</b></span>\n                <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u59D3\u540D</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"name_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.name || '', "\"/>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u8054\u7CFB\u7535\u8BDD</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"tel\"  id=\"phone_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.phone || '', "\">\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u6BCF\u5E74\u6536\u5165</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"number\" pattern=\"[0-9/.]*\"\n                               id=\"income_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.income || '', "\" />\n                        <div class=\"fc_unit\">\u4E07\u5143</div>\n                    </div>\n                </div>\n            </div>\n\n             <div class=\"form-cell_shell\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u4EB2\u5C5E\u5173\u7CFB</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <div id=\"type_").concat(i, "\" class=\"fc_c_picker\">").concat(item.type ? self.profile.remap.relation[item.type] : '<span class="placeholder">请选择</span>', "</div>\n                    </div>\n                </div>\n            </div>\n\n             <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u804C\u4E1A</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"occupation_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.occupation || '', "\"/>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"fc_label\">\n                    <span class=\"fc_span\">\u5DE5\u4F5C\u5355\u4F4D</span>\n                </div>\n                <div class=\"fc_content\">\n                    <div class=\"fc_c_common\">\n                        <input class=\"fc_c_input\" type=\"text\"\n                               id=\"workCompany_").concat(i, "\" placeholder=\"\u8BF7\u8F93\u5165\" data-index=\"").concat(i, "\" value=\"").concat(item.workCompany || '', "\"/>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
       }, '');
 
       document.querySelector('#credit-list').innerHTML = _html; // alert(_html)
+
+      if (disabled) {
+        Array.from(document.querySelectorAll('.fc_c_input')).forEach(function (dom, i) {
+          dom.setAttribute('disabled', true);
+        });
+      }
     }
   }]);
 

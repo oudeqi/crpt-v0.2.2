@@ -1,7 +1,7 @@
 import Utils from './../../utils'
 import '../../app.css'
 import './index.less'
-import {http, baseUrl} from "../../config";
+import { http, baseUrl } from "../../config";
 import Service from './service'
 import Rolldate from 'rolldate'
 
@@ -10,751 +10,752 @@ import Rolldate from 'rolldate'
  * @desc 担保业务申请表录入页Page 类
  */
 class PageController extends Service {
-    /**
-     * @param props { pageParam: { gtId, flowStatus } }
-     */
-    constructor(props) {
-        super()
-        //  所有表单域预置信息
-        this.profile = {
-            //  picker类组件json
-            pickers: {
-                landType: [
-                    {"name": "一般耕地", "id": 1},
-                    {"name": "基本农田", "id": 2},
-                    {"name": "山地", "id": 3},
-                    {"name": "林地", "id": 4},
-                    {"name": "草地", "id": 5}
-                ],
-                farmType: [
-                    {"name": "鸡", "id": 1},
-                    {"name": "鸭", "id": 2},
-                    {"name": "猪", "id": 3}
-                ],
-                maturityYear: Array.from({length: 50}, (v, k) => {
-                    const year = String(k + new Date().getFullYear())
-                    return {
-                        name: year,
-                        id: year
-                    }
-                })
-            },
-            //  select类组件json
-            selects: {
-                envReport: [
-                    {"name": "无环评", "id": 1},
-                    {"name": "环评备案", "id": 2},
-                    {"name": "环评报告", "id": 3}
-                ],
-                livestockType: [
-                    {"name": "自有", "id": 1},
-                    {"name": "租赁", "id": 2}
-                ],
-                shedStructure: [
-                    {"name": "墙体结构", "id": 1},
-                    {"name": "立柱式", "id": 2}
-                ]
-            },
-            // upload参数
-            uploadImgType: {
-                0: 'camera',
-                1: 'album'
-            }
-        }
-        //  统一管理数据model data
-        this.data = {
-            gtId: props.pageParam.gtId,
-            flowStatus: props.pageParam.flowStatus,
-            gtCreditId: props.pageParam.gtCreditId,
-            applyStatus: props.pageParam.applyStatus,
-            isInsert: false,
-            farmType: 1,
-            landType: 1,
-            envReport: 1,
-            shedStructure: 1,
-            livestockType: 1,
-            maturityYear: '',
-            pcd: {
-                province: {},
-                city: {},
-                district: {}
-            }
-        }
-    }
-
-    //  执行函数
-    main() {
-        Utils.UI.showLoading('加载中...')
-        this.initData({
-            callback: () => {
-                Utils.UI.hideLoading();
-            }
+  /**
+   * @param props { pageParam: { gtId, flowStatus } }
+   */
+  constructor(props) {
+    super()
+    //  所有表单域预置信息
+    this.profile = {
+      //  picker类组件json
+      pickers: {
+        landType: [
+          { "name": "一般耕地", "id": 1 },
+          { "name": "基本农田", "id": 2 },
+          { "name": "山地", "id": 3 },
+          { "name": "林地", "id": 4 },
+          { "name": "草地", "id": 5 }
+        ],
+        farmType: [
+          { "name": "鸡", "id": 1 },
+          { "name": "鸭", "id": 2 },
+          { "name": "猪", "id": 3 }
+        ],
+        maturityYear: Array.from({ length: 50 }, (v, k) => {
+          const year = String(k + new Date().getFullYear())
+          return {
+            name: year,
+            id: year
+          }
         })
-        this.bindEvents()
-        return this
+      },
+      //  select类组件json
+      selects: {
+        envReport: [
+          { "name": "无环评", "id": 1 },
+          { "name": "环评备案", "id": 2 },
+          { "name": "环评报告", "id": 3 }
+        ],
+        livestockType: [
+          { "name": "自有", "id": 1 },
+          { "name": "租赁", "id": 2 }
+        ],
+        shedStructure: [
+          { "name": "墙体结构", "id": 1 },
+          { "name": "立柱式", "id": 2 }
+        ]
+      },
+      // upload参数
+      uploadImgType: {
+        0: 'camera',
+        1: 'album'
+      }
     }
-
-    //  事件绑定入口
-    bindEvents() {
-        const self = this
-        //  绑定所有picker下拉框
-        this.bindPickerEvents()
-        //  绑定所有select选择框
-        this.bindSelectEvents()
-        //  绑定cityPicker
-        this.bindCityPickerEvents()
-        //  绑定环评材料上传
-        this.bindUploadReportFileEvents()
-        //  绑定土地信息与养殖信息折叠面板事件
-        this.bindCollapseEvents()
-        // 路由跳转
-        this.bindEventsPageRouter()
-        //  提交表单
-        this.bindSubmitEvents()
-
-        // this.bindDateEvents()
+    //  统一管理数据model data
+    this.data = {
+      gtId: props.pageParam.gtId,
+      flowStatus: props.pageParam.flowStatus,
+      gtCreditId: props.pageParam.gtCreditId,
+      creditStatus: props.pageParam.creditStatus,
+      applyStatus: props.pageParam.applyStatus,
+      isInsert: false,
+      farmType: 1,
+      landType: 1,
+      envReport: 1,
+      shedStructure: 1,
+      livestockType: 1,
+      maturityYear: '',
+      pcd: {
+        province: {},
+        city: {},
+        district: {}
+      }
     }
+  }
 
-    async initFormStatus() {
-        const self = this
-        const gtId = this.data.gtId
-        const gtCreditId = this.data.gtCreditId
+  //  执行函数
+  main() {
+    Utils.UI.showLoading('加载中...')
+    this.initData({
+      callback: () => {
+        Utils.UI.hideLoading();
+      }
+    })
+    this.bindEvents()
+    return this
+  }
 
-        //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
-        try {
-            const guaranteeRes = await this.getQueryGuaranteeMain()
-            if (guaranteeRes.data) {
-                const {houseFillStatus, carFillStatus, socialFillStatus} = guaranteeRes.data
-                houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
-                carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
-                socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
-            }
-        } catch (e) {
-            Utils.UI.toast('服务超时')
-        }
-    }
-
-    async initData({callback}) {
-        const self = this
-        const gtId = this.data.gtId
-        const gtCreditId = this.data.gtCreditId
-
-        // 0. 判断是否只读
-        if(self.data.applyStatus >= 2) {
-            Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom,i) => {
-                dom.setAttribute('disabled', true)
-            })
-        }
-        //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
-        this.initFormStatus()
-        //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
-        let operateRes
-        // // 有缓存，则读取缓存并销毁
-        // 2020.6.2 暂时去掉storage缓存，真机上出现了缓存清不掉的情况，改成用动态刷子表状态接口
-        // if ($api.getStorage('operateInfo')) {
-        //     operateRes = {
-        //         data: JSON.parse($api.getStorage('operateInfo'))
-        //     }
-        //     $api.rmStorage('operateInfo')
-        // } else {
-        //
-        // }
-        try {
-            operateRes = await this.getQueryOperate({gtId})
-        } catch (err) {
-            //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
-            if (err.code === 3005) {
-                this.data.isInsert = true
-            } else {
-                Utils.UI.toast(err.msg)
-            }
-        }
-        try {
-            // 3. 刷主表土地信息和养殖信息填写状态和字段
-            // this.data.isInsert = false
-            this.data.operateId = operateRes.data.operateId
-            document.querySelector('#landInfoStatus').classList.add('done')
-            document.querySelector('#farmInfoStatus').classList.add('done')
-
-            // key: 土地性质
-            const landTypeProfile = this.profile.pickers.landType.find((item, i) => Number(operateRes.data.landNature) === item.id)
-            if (landTypeProfile) {
-                document.querySelector('#landType').innerHTML = landTypeProfile.name
-                this.data.landType = landTypeProfile.id
-            }
-
-            //  key: 环评材料
-            const envReportProfile = this.profile.selects.envReport.find((item, i) => Number(operateRes.data.envDataType) === item.id)
-            if (envReportProfile) {
-                Array
-                    .from(document
-                        .querySelector('#envReport')
-                        .querySelectorAll('.fc_c_option'))
-                    .forEach((item, i) => {
-                        if (Number(item.getAttribute('data-id')) === envReportProfile.id) {
-                            self.data.envReport = envReportProfile.id
-                            item.classList.add('active')
-                        } else {
-                            item.classList.remove('active')
-                        }
-                    })
-            }
-
-            // key: 环评附件
-            if (envReportProfile && envReportProfile.id !== 1) {
-                const imgDom = document.querySelector('#envReportFile-img')
-                this.data.envDataFileId = operateRes.data.envDataFileId
-                imgDom.src = `${baseUrl}/crpt-file/file/download/${operateRes.data.envDataFileId}`
-                imgDom.classList.remove('hidden')
-                document.querySelector('#envEnclosure').classList.remove('hidden')
-            }
-
-            //  key: 养殖场性质
-            const livestockTypeProfile = this.profile.selects.livestockType.find((item, i) => Number(operateRes.data.farmsNature) === item.id)
-            if (livestockTypeProfile) {
-                Array
-                    .from(document
-                        .querySelector('#livestockType')
-                        .querySelectorAll('.fc_c_option'))
-                    .forEach((item, i) => {
-                        if (Number(item.getAttribute('data-id')) === livestockTypeProfile.id) {
-                            self.data.livestockType = livestockTypeProfile.id
-                            item.classList.add('active')
-                        } else {
-                            item.classList.remove('active')
-                        }
-                    })
-            }
-
-            //  租赁到期时间
-            if (operateRes.data.maturityYear) {
-                self.data.maturityYear = operateRes.data.maturityYear
-                const dom = document.querySelector('#maturityYearBox')
-                if (operateRes.data.farmsNature === 2) {
-                    dom.classList.remove('hidden')
-                    document.querySelector('#maturityYear').innerHTML = `${operateRes.data.maturityYear} 年`
-                }
-            }
-
-            // key: 养殖品种
-            const farmTypeProfile = this.profile.pickers.farmType.find((item, i) => Number(operateRes.data.farmsCategory) === item.id)
-            if (farmTypeProfile) {
-                document.querySelector('#farmType').innerHTML = farmTypeProfile.name
-                this.data.farmType = farmTypeProfile.id
-            }
-
-            // key: 养殖规模
-            let scale
-            if (this.data.farmType === 3 && operateRes.data.farmsSize) {
-                scale = operateRes.data.farmsSize.replace(/\.\d+/g, '')
-            } else {
-                // 猪需要去除小数
-                scale = operateRes.data.farmsSize
-            }
-            this.data.scale = scale
-            document.querySelector('#scale').value = scale
-            document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'
-
-            // key: 棚舍数量
-            const sheds = operateRes.data.workshopCount
-            this.data.sheds = sheds
-            document.querySelector('#sheds').value = sheds
-
-            // key: 棚舍面积
-            const shedArea = operateRes.data.workshopArea
-            this.data.shedArea = shedArea
-            document.querySelector('#shedArea').value = shedArea
-
-            // key: 棚舍地址
-            const {workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode} = operateRes.data
-            this.data.pcd = {
-                province: {
-                    name: workshopProvince,
-                    code: workshopProvinceCode,
-                },
-                city: {
-                    name: workshopCity,
-                    code: workshopCityCode,
-                },
-                district: {
-                    name: workshopCounty,
-                    code: workshopCountyCode
-                }
-            }
-            document.querySelector(`#shedAddress`).innerHTML = `<span class="fc_c_city_label selected">${workshopProvince} ${workshopCity} ${workshopCounty}</span>`
-
-            // key: 棚舍面积
-            const shedAddressDetail = operateRes.data.workshopAddr
-            this.data.shedArea = shedAddressDetail
-            document.querySelector('#shedAddressDetail').value = shedAddressDetail
-
-            // key: 棚设结构
-            const shedStructureProfile = this.profile.selects.shedStructure.find((item, i) => Number(operateRes.data.workshopStruct) === item.id)
-            if (shedStructureProfile) {
-                Array
-                    .from(document
-                        .querySelector('#shedStructure')
-                        .querySelectorAll('.fc_c_option'))
-                    .forEach((item, i) => {
-                        if (Number(item.getAttribute('data-id')) === shedStructureProfile.id) {
-                            self.data.shedStructure = shedStructureProfile.id
-                            item.classList.add('active')
-                        } else {
-                            item.classList.remove('active')
-                        }
-                    })
-            }
-        } catch (e) {
-        }
-        callback && callback()
-    }
-
-    // 初始化所有picker组件
-    initPicker(name, dom) {
-        const self = this
-        Utils.UI.setPicker({
-            success: selected => {
-                let value = selected[0]
-                self.data[name] = value.id
-                dom.innerHTML = value.name
-                // 副作用effects
-                // 1. picker为farmType时，需要将养殖规模的单位进行调整
-                if (name === 'farmType') {
-                    let _dom = document.querySelector('#scaleUnit')
-                    if (value.name === '猪') {
-                        _dom.innerHTML = '头'
-                    } else {
-                        _dom.innerHTML = '万只'
-                    }
-                }else if(name === 'maturityYear') {
-                    dom.innerHTML = `${value.name} 年`
-                }
-            },
-            data: self.profile.pickers[name]
-        })
-    }
-
-    // 绑定所有picker组件的事件
-    bindPickerEvents() {
-        const self = this
-        const pickerKeys = Object.keys(this.profile.pickers)
-        pickerKeys.forEach((item, i) => {
-            document.querySelector(`#${item}`).onclick = function () {
-                if(self.data.applyStatus >= 2) {
-                    return void 0
-                }
-                self.initPicker(item, this)
-            }
-        })
-    }
-
-    // 绑定city picker组件
-    bindCityPickerEvents() {
-        const self = this
-        const dom = document.querySelector(`#shedAddress`)
-        dom.onclick = function () {
-            if(self.data.applyStatus >= 2) {
-                return void 0
-            }
-            Utils.UI.setCityPicker({
-                success: selected => {
-                    let [province, city, district] = selected
-                    self.data.pcd = {
-                        province: {
-                            name: province.name,
-                            code: province.id
-                        },
-                        city: {
-                            name: city.name,
-                            code: city.id
-                        },
-                        district: {
-                            name: district.name,
-                            code: district.id
-                        }
-                    }
-                    dom.innerHTML = `<span class="fc_c_city_label selected">${province.name} ${city.name} ${district.name}</span>`
-                },
-                data: 'widget://res/city.json',
-            })
-        }
-    }
-
-    // 绑定所有select组件事件
-    bindSelectEvents() {
-        const self = this
-        const selectKeys = Object.keys(this.profile.selects)
-        const defaultClassName = 'fc_c_option'
-        const activeClassName = 'active'
-        selectKeys.forEach((item, i) => {
-            //  由组件级代理
-            let parant = document.querySelector(`#${item}`)
-            parant.onclick = function (e) {
-                if(self.data.applyStatus >= 2) {
-                    return void 0
-                }
-                let list = parant.querySelectorAll(`.${defaultClassName}`)
-                let ev = window.event || e;
-                if (ev.target.nodeName === 'SPAN') {
-                    for (let i = 0; i < list.length; i++) {
-                        list[i].classList.remove(activeClassName)
-                    }
-                    ev.target.classList.add(activeClassName);
-                    self.data[item] = ev.target.getAttribute('data-id')
-
-                    // 副作用effects
-                    // 1. 环评材料选择为无环保时，需要将环保附件上传栏隐藏
-                    if (item === 'envReport') {
-                        let _dom = document.querySelector('#envEnclosure')
-                        if (parseInt(ev.target.getAttribute('data-id')) === 1) {
-                            _dom.classList.add('hidden')
-                        } else {
-                            _dom.classList.remove('hidden')
-                        }
-                    }
-                    // 2. 养殖场性质为租赁时，展示租赁日期
-                    if (item === 'livestockType') {
-                        let _dom = document.querySelector('#maturityYearBox')
-                        if (parseInt(ev.target.getAttribute('data-id')) === 1) {
-                            _dom.classList.add('hidden')
-                        } else {
-                            _dom.classList.remove('hidden')
-                        }
-                    }
-                }
-            }
-        })
-    }
-
-    //  绑定上传环评附件事件
-    bindUploadReportFileEvents() {
-        const self = this
-        const dom = document.querySelector('#envReportFile')
-        const box = document.querySelector('#envReportFile-img-box')
-        const img = document.querySelector('#envReportFile-img')
-        dom.onclick = function () {
-            if(self.data.applyStatus >= 2) {
-                return void 0
-            }
-            Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
-                Utils.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
-                    if (res) {
-                        self.data.envReportFile = res.data
-                        if (res.data) {
-                            img.src = res.data;
-                            box.classList.remove('hidden')
-                            Utils.UI.toast('上传成功')
-                        } else {
-                            Utils.UI.toast('未上传成功')
-                        }
-                    }
-                })
-            })
-        }
-    }
-
+  //  事件绑定入口
+  bindEvents() {
+    const self = this
+    //  绑定所有picker下拉框
+    this.bindPickerEvents()
+    //  绑定所有select选择框
+    this.bindSelectEvents()
+    //  绑定cityPicker
+    this.bindCityPickerEvents()
+    //  绑定环评材料上传
+    this.bindUploadReportFileEvents()
     //  绑定土地信息与养殖信息折叠面板事件
-    bindCollapseEvents() {
-        let landInfoBox = document.querySelector('#landInfoBox')
-        let landInfoCollapse = document.querySelector('#landInfo')
-        let farmInfoBox = document.querySelector('#farmInfoBox')
-        let farmInfoCollapse = document.querySelector('#farmInfo')
+    this.bindCollapseEvents()
+    // 路由跳转
+    this.bindEventsPageRouter()
+    //  提交表单
+    this.bindSubmitEvents()
 
-        farmInfoBox.onclick = function () {
-            if (farmInfoCollapse.classList.contains('folder')) {
-                farmInfoCollapse.classList.remove('folder')
-                farmInfoBox.querySelector('.cl-cell_arrow').classList.add('rotate')
+    // this.bindDateEvents()
+  }
+
+  async initFormStatus() {
+    const self = this
+    const gtId = this.data.gtId
+    const gtCreditId = this.data.gtCreditId
+
+    //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+    try {
+      const guaranteeRes = await this.getQueryGuaranteeMain()
+      if (guaranteeRes.data) {
+        const { houseFillStatus, carFillStatus, socialFillStatus } = guaranteeRes.data
+        houseFillStatus === 3 && document.querySelector('#houseInfoStatus').classList.add('done')
+        carFillStatus === 3 && document.querySelector('#carInfoStatus').classList.add('done')
+        socialFillStatus === 3 && document.querySelector('#familyInfoStatus').classList.add('done')
+      }
+    } catch (e) {
+      Utils.UI.toast('服务超时')
+    }
+  }
+
+  async initData({ callback }) {
+    const self = this
+    const gtId = this.data.gtId
+    const gtCreditId = this.data.gtCreditId
+
+    // 0. 判断是否只读
+    if (self.data.applyStatus >= 2) {
+      Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom, i) => {
+        dom.setAttribute('disabled', true)
+      })
+    }
+    //  1. 刷房产信息、车辆信息、家庭成员信息子表状态
+    this.initFormStatus()
+    //  2. 查经营信息中土地信息和养殖信息子表以及接口类型
+    let operateRes
+    // // 有缓存，则读取缓存并销毁
+    // 2020.6.2 暂时去掉storage缓存，真机上出现了缓存清不掉的情况，改成用动态刷子表状态接口
+    // if ($api.getStorage('operateInfo')) {
+    //     operateRes = {
+    //         data: JSON.parse($api.getStorage('operateInfo'))
+    //     }
+    //     $api.rmStorage('operateInfo')
+    // } else {
+    //
+    // }
+    try {
+      operateRes = await this.getQueryOperate({ gtId })
+    } catch (err) {
+      //  3005 担保运营数据不存在，则提交按钮应为insert接口，同时土地信息和养殖信息置灰
+      if (err.code === 3005) {
+        this.data.isInsert = true
+      } else {
+        Utils.UI.toast(err.msg)
+      }
+    }
+    try {
+      // 3. 刷主表土地信息和养殖信息填写状态和字段
+      // this.data.isInsert = false
+      this.data.operateId = operateRes.data.operateId
+      document.querySelector('#landInfoStatus').classList.add('done')
+      document.querySelector('#farmInfoStatus').classList.add('done')
+
+      // key: 土地性质
+      const landTypeProfile = this.profile.pickers.landType.find((item, i) => Number(operateRes.data.landNature) === item.id)
+      if (landTypeProfile) {
+        document.querySelector('#landType').innerHTML = landTypeProfile.name
+        this.data.landType = landTypeProfile.id
+      }
+
+      //  key: 环评材料
+      const envReportProfile = this.profile.selects.envReport.find((item, i) => Number(operateRes.data.envDataType) === item.id)
+      if (envReportProfile) {
+        Array
+          .from(document
+            .querySelector('#envReport')
+            .querySelectorAll('.fc_c_option'))
+          .forEach((item, i) => {
+            if (Number(item.getAttribute('data-id')) === envReportProfile.id) {
+              self.data.envReport = envReportProfile.id
+              item.classList.add('active')
             } else {
-                farmInfoCollapse.classList.add('folder')
-                farmInfoBox.querySelector('.cl-cell_arrow').classList.remove('rotate')
+              item.classList.remove('active')
             }
-        }
-        landInfoBox.onclick = function () {
-            if (landInfoCollapse.classList.contains('folder')) {
-                landInfoCollapse.classList.remove('folder')
-                landInfoBox.querySelector('.cl-cell_arrow').classList.add('rotate')
+          })
+      }
+
+      // key: 环评附件
+      if (envReportProfile && envReportProfile.id !== 1) {
+        const imgDom = document.querySelector('#envReportFile-img')
+        this.data.envDataFileId = operateRes.data.envDataFileId
+        imgDom.src = `${baseUrl}/crpt-file/file/download/${operateRes.data.envDataFileId}`
+        imgDom.classList.remove('hidden')
+        document.querySelector('#envEnclosure').classList.remove('hidden')
+      }
+
+      //  key: 养殖场性质
+      const livestockTypeProfile = this.profile.selects.livestockType.find((item, i) => Number(operateRes.data.farmsNature) === item.id)
+      if (livestockTypeProfile) {
+        Array
+          .from(document
+            .querySelector('#livestockType')
+            .querySelectorAll('.fc_c_option'))
+          .forEach((item, i) => {
+            if (Number(item.getAttribute('data-id')) === livestockTypeProfile.id) {
+              self.data.livestockType = livestockTypeProfile.id
+              item.classList.add('active')
             } else {
-                landInfoCollapse.classList.add('folder')
-                landInfoBox.querySelector('.cl-cell_arrow').classList.remove('rotate')
+              item.classList.remove('active')
             }
-        }
-    }
+          })
+      }
 
-    //  跳转至房产、车辆、家庭成员录入页
-    bindEventsPageRouter() {
-        const self = this
-        let _cbScriptString = 'window.Page && window.Page.initFormStatus();'
-        document.querySelector('#familyInfo').onclick = function () {
-            self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationFamily({pageParam: {...api.pageParam, _cb: _cbScriptString}})
+      //  租赁到期时间
+      if (operateRes.data.maturityYear) {
+        self.data.maturityYear = operateRes.data.maturityYear
+        const dom = document.querySelector('#maturityYearBox')
+        if (operateRes.data.farmsNature === 2) {
+          dom.classList.remove('hidden')
+          document.querySelector('#maturityYear').innerHTML = `${operateRes.data.maturityYear} 年`
         }
-        document.querySelector('#houseInfo').onclick = function () {
-            self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationHouse({pageParam: {...api.pageParam, _cb: _cbScriptString}})
-        }
-        document.querySelector('#carInfo').onclick = function () {
-            self.cacheOperateInfo()
-            Utils.Router.openGuaranteeApplicationCar({pageParam: {...api.pageParam, _cb: _cbScriptString}})
-        }
-    }
+      }
 
-    // 跳转子页面前缓存主表经营信息
-    cacheOperateInfo() {
-        const self = this
-        const {landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, envDataFileId} = this.data
-        const farmsSize = document.querySelector('#scale').value
-        const workshopCount = document.querySelector('#sheds').value
-        const workshopArea = document.querySelector('#shedArea').value
-        const workshopAddr = document.querySelector('#shedAddressDetail').value
-        const formJSON = {
-            gtId,
-            landNature: landType,
-            envDataType: envReport,
-            farmsNature: livestockType,
-            farmsCategory: farmType,
-            farmsSize,
-            workshopCount,
-            workshopArea,
-            workshopProvince: pcd.province.name,
-            workshopProvinceCode: pcd.province.code,
-            workshopCity: pcd.city.name,
-            workshopCityCode: pcd.city.code,
-            workshopCounty: pcd.district.name,
-            workshopCountyCode: pcd.district.code,
-            workshopAddr,
-            workshopStruct: shedStructure,
-            maturityYear: maturityYear || String(new Date().getFullYear()),
-            envDataFileId: envDataFileId
-        }
-        $api.setStorage('operateInfo', JSON.stringify(formJSON));
-        // $api.setStorage('operateInfoEnvReportFile', envReportFile);
-    }
+      // key: 养殖品种
+      const farmTypeProfile = this.profile.pickers.farmType.find((item, i) => Number(operateRes.data.farmsCategory) === item.id)
+      if (farmTypeProfile) {
+        document.querySelector('#farmType').innerHTML = farmTypeProfile.name
+        this.data.farmType = farmTypeProfile.id
+      }
 
-    // 提交表单
-    bindSubmitEvents() {
-        const self = this
-        const btn = document.querySelector('.cl_c_submit_btn')
-        btn.onclick = function () {
-            if(self.data.applyStatus >= 2) {
-                return void 0
+      // key: 养殖规模
+      let scale
+      if (this.data.farmType === 3 && operateRes.data.farmsSize) {
+        scale = operateRes.data.farmsSize.replace(/\.\d+/g, '')
+      } else {
+        // 猪需要去除小数
+        scale = operateRes.data.farmsSize
+      }
+      this.data.scale = scale
+      document.querySelector('#scale').value = scale
+      document.querySelector('#scaleUnit').innerHTML = this.data.farmType === 3 ? '头' : '万只'
+
+      // key: 棚舍数量
+      const sheds = operateRes.data.workshopCount
+      this.data.sheds = sheds
+      document.querySelector('#sheds').value = sheds
+
+      // key: 棚舍面积
+      const shedArea = operateRes.data.workshopArea
+      this.data.shedArea = shedArea
+      document.querySelector('#shedArea').value = shedArea
+
+      // key: 棚舍地址
+      const { workshopProvince, workshopProvinceCode, workshopCity, workshopCityCode, workshopCounty, workshopCountyCode } = operateRes.data
+      this.data.pcd = {
+        province: {
+          name: workshopProvince,
+          code: workshopProvinceCode,
+        },
+        city: {
+          name: workshopCity,
+          code: workshopCityCode,
+        },
+        district: {
+          name: workshopCounty,
+          code: workshopCountyCode
+        }
+      }
+      document.querySelector(`#shedAddress`).innerHTML = `<span class="fc_c_city_label selected">${workshopProvince} ${workshopCity} ${workshopCounty}</span>`
+
+      // key: 棚舍面积
+      const shedAddressDetail = operateRes.data.workshopAddr
+      this.data.shedArea = shedAddressDetail
+      document.querySelector('#shedAddressDetail').value = shedAddressDetail
+
+      // key: 棚设结构
+      const shedStructureProfile = this.profile.selects.shedStructure.find((item, i) => Number(operateRes.data.workshopStruct) === item.id)
+      if (shedStructureProfile) {
+        Array
+          .from(document
+            .querySelector('#shedStructure')
+            .querySelectorAll('.fc_c_option'))
+          .forEach((item, i) => {
+            if (Number(item.getAttribute('data-id')) === shedStructureProfile.id) {
+              self.data.shedStructure = shedStructureProfile.id
+              item.classList.add('active')
+            } else {
+              item.classList.remove('active')
             }
-            self.submitFormData()
-        }
+          })
+      }
+    } catch (e) {
     }
+    callback && callback()
+  }
 
-    //  绑定租赁日期选择
-    bindDateEvents() {
-        const self = this
-        const rd = new Rolldate({
-            el: '#maturityYear',
-            format: 'YYYY',
-            beginYear: 2020,
-            endYear: 2070,
-            minStep: 1,
-            lang: {title: '选择租赁到期时间'},
-            trigger: 'tap',
-            init: function () {
-                console.log('插件开始触发');
+  // 初始化所有picker组件
+  initPicker(name, dom) {
+    const self = this
+    Utils.UI.setPicker({
+      success: selected => {
+        let value = selected[0]
+        self.data[name] = value.id
+        dom.innerHTML = value.name
+        // 副作用effects
+        // 1. picker为farmType时，需要将养殖规模的单位进行调整
+        if (name === 'farmType') {
+          let _dom = document.querySelector('#scaleUnit')
+          if (value.name === '猪') {
+            _dom.innerHTML = '头'
+          } else {
+            _dom.innerHTML = '万只'
+          }
+        } else if (name === 'maturityYear') {
+          dom.innerHTML = `${value.name} 年`
+        }
+      },
+      data: self.profile.pickers[name]
+    })
+  }
+
+  // 绑定所有picker组件的事件
+  bindPickerEvents() {
+    const self = this
+    const pickerKeys = Object.keys(this.profile.pickers)
+    pickerKeys.forEach((item, i) => {
+      document.querySelector(`#${item}`).onclick = function () {
+        if (self.data.applyStatus >= 2) {
+          return void 0
+        }
+        self.initPicker(item, this)
+      }
+    })
+  }
+
+  // 绑定city picker组件
+  bindCityPickerEvents() {
+    const self = this
+    const dom = document.querySelector(`#shedAddress`)
+    dom.onclick = function () {
+      if (self.data.applyStatus >= 2) {
+        return void 0
+      }
+      Utils.UI.setCityPicker({
+        success: selected => {
+          let [province, city, district] = selected
+          self.data.pcd = {
+            province: {
+              name: province.name,
+              code: province.id
             },
-            moveEnd: function (scroll) {
-                console.log('滚动结束');
+            city: {
+              name: city.name,
+              code: city.id
             },
-            confirm: function (date) {
-                self.data.maturityYear = date
-                console.log('确定按钮触发');
-            },
-            cancel: function () {
-                console.log('插件运行取消');
+            district: {
+              name: district.name,
+              code: district.id
             }
+          }
+          dom.innerHTML = `<span class="fc_c_city_label selected">${province.name} ${city.name} ${district.name}</span>`
+        },
+        data: 'widget://res/city.json',
+      })
+    }
+  }
+
+  // 绑定所有select组件事件
+  bindSelectEvents() {
+    const self = this
+    const selectKeys = Object.keys(this.profile.selects)
+    const defaultClassName = 'fc_c_option'
+    const activeClassName = 'active'
+    selectKeys.forEach((item, i) => {
+      //  由组件级代理
+      let parant = document.querySelector(`#${item}`)
+      parant.onclick = function (e) {
+        if (self.data.applyStatus >= 2) {
+          return void 0
+        }
+        let list = parant.querySelectorAll(`.${defaultClassName}`)
+        let ev = window.event || e;
+        if (ev.target.nodeName === 'SPAN') {
+          for (let i = 0; i < list.length; i++) {
+            list[i].classList.remove(activeClassName)
+          }
+          ev.target.classList.add(activeClassName);
+          self.data[item] = ev.target.getAttribute('data-id')
+
+          // 副作用effects
+          // 1. 环评材料选择为无环保时，需要将环保附件上传栏隐藏
+          if (item === 'envReport') {
+            let _dom = document.querySelector('#envEnclosure')
+            if (parseInt(ev.target.getAttribute('data-id')) === 1) {
+              _dom.classList.add('hidden')
+            } else {
+              _dom.classList.remove('hidden')
+            }
+          }
+          // 2. 养殖场性质为租赁时，展示租赁日期
+          if (item === 'livestockType') {
+            let _dom = document.querySelector('#maturityYearBox')
+            if (parseInt(ev.target.getAttribute('data-id')) === 1) {
+              _dom.classList.add('hidden')
+            } else {
+              _dom.classList.remove('hidden')
+            }
+          }
+        }
+      }
+    })
+  }
+
+  //  绑定上传环评附件事件
+  bindUploadReportFileEvents() {
+    const self = this
+    const dom = document.querySelector('#envReportFile')
+    const box = document.querySelector('#envReportFile-img-box')
+    const img = document.querySelector('#envReportFile-img')
+    dom.onclick = function () {
+      if (self.data.applyStatus >= 2) {
+        return void 0
+      }
+      Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
+        Utils.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
+          if (res) {
+            self.data.envReportFile = res.data
+            if (res.data) {
+              img.src = res.data;
+              box.classList.remove('hidden')
+              Utils.UI.toast('上传成功')
+            } else {
+              Utils.UI.toast('未上传成功')
+            }
+          }
         })
-        // rd.show();
-        // rd.hide();
+      })
     }
+  }
 
-    //  format 土地信息和养殖信息数据
-    async submitFormData() {
-        const self = this
-        const {landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear} = this.data
-        const farmsSize = document.querySelector('#scale').value
-        const workshopCount = document.querySelector('#sheds').value
-        const workshopArea = document.querySelector('#shedArea').value
-        const workshopAddr = document.querySelector('#shedAddressDetail').value
-        const formJSON = {
-            gtId,
-            landNature: landType,
-            envDataType: envReport,
-            farmsNature: livestockType,
-            farmsCategory: farmType,
-            farmsSize,
-            workshopCount,
-            workshopArea,
-            workshopProvince: pcd.province.name,
-            workshopProvinceCode: pcd.province.code,
-            workshopCity: pcd.city.name,
-            workshopCityCode: pcd.city.code,
-            workshopCounty: pcd.district.name,
-            workshopCountyCode: pcd.district.code,
-            workshopAddr,
-            workshopStruct: shedStructure
-        }
-        console.log(JSON.stringify(formJSON))
+  //  绑定土地信息与养殖信息折叠面板事件
+  bindCollapseEvents() {
+    let landInfoBox = document.querySelector('#landInfoBox')
+    let landInfoCollapse = document.querySelector('#landInfo')
+    let farmInfoBox = document.querySelector('#farmInfoBox')
+    let farmInfoCollapse = document.querySelector('#farmInfo')
 
-        let isValidate = this.validate(formJSON)
-
-        // let isValidate = !Object.values(formJSON).some((item, i) => !item)
-
-        // 挂载租赁时间不校验
-        formJSON.maturityYear = maturityYear || '2020'
-
-        if (isValidate) {
-            Utils.UI.showLoading('保存中...')
-            let res = null
-            try {
-                if (self.data.isInsert) {
-                    res = await this.postInsertOperate(formJSON, {envDataFileStream: envReportFile})
-                    //  第一次插入经营新后，存储返回的operateId
-                    self.data.operateId = res.data
-                    self.data.isInsert = false
-                } else {
-                    Object.assign(formJSON, {operateId: self.data.operateId})
-                    res = await this.postUpdateOperate(formJSON, {envDataFileStream: envReportFile})
-                }
-                if (res.code === 200) {
-                    Utils.UI.toast('提交成功')
-                    Utils.Router.closeCurrentWinAndRefresh({
-                        winName: 'html/danbaostep2/index',
-                        script: 'window.location.reload();'
-                    })
-                }
-            } catch (e) {
-                Utils.UI.hideLoading()
-                Utils.UI.toast(e.msg)
-            }
-            Utils.UI.hideLoading()
-        }
+    farmInfoBox.onclick = function () {
+      if (farmInfoCollapse.classList.contains('folder')) {
+        farmInfoCollapse.classList.remove('folder')
+        farmInfoBox.querySelector('.cl-cell_arrow').classList.add('rotate')
+      } else {
+        farmInfoCollapse.classList.add('folder')
+        farmInfoBox.querySelector('.cl-cell_arrow').classList.remove('rotate')
+      }
     }
-
-    validate(formData) {
-        const self = this
-        const {farmsCategory} = formData
-        let rules = {
-            landNature: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择土地性质'
-            },
-            envDataType: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择环评材料'
-            },
-            farmsNature: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择养殖场性质'
-            },
-            farmsCategory: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择养殖品种'
-            },
-            farmsSize: {
-                type: 'regexp',
-                rule: farmsCategory === 3 ? /^[-\+]?\d+$/g : /^[-\+]?\d+(\.\d+)?$/g,
-                message: '请输入合法的养殖规模数量'
-            },
-            workshopCount: {
-                type: 'regexp',
-                rule: /^[-\+]?\d+$/g,
-                message: '请输入合法的棚舍数量'
-            },
-            workshopArea: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请输入棚舍面积'
-            },
-            workshopProvince: {
-                type: 'string',
-                length: 1,
-                message: '请选择棚舍地址'
-            },
-            workshopProvinceCode: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择棚舍地址'
-            },
-            workshopCity: {
-                type: 'string',
-                length: 1,
-                message: '请选择棚舍地址'
-            },
-            workshopCityCode: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择棚舍地址'
-            },
-            workshopCounty: {
-                type: 'string',
-                length: 1,
-                message: '请选择棚舍地址'
-            },
-            workshopCountyCode: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择棚舍地址'
-            },
-            workshopAddr: {
-                type: 'string',
-                length: 1,
-                message: '请填写棚舍详细地址'
-            },
-            workshopStruct: {
-                type: 'regexp',
-                rule: /\w+/g,
-                message: '请选择棚设结构'
-            }
-        }
-        return this._validator(formData, rules)
+    landInfoBox.onclick = function () {
+      if (landInfoCollapse.classList.contains('folder')) {
+        landInfoCollapse.classList.remove('folder')
+        landInfoBox.querySelector('.cl-cell_arrow').classList.add('rotate')
+      } else {
+        landInfoCollapse.classList.add('folder')
+        landInfoBox.querySelector('.cl-cell_arrow').classList.remove('rotate')
+      }
     }
+  }
 
-    _validator(formData, rules) {
-        let isValidate = true
-        let keys = Object.keys(formData)
-        for (let i = 0; i < keys.length; i++) {
-            let K = keys[i]
-            if (rules[K]) {
-                if (rules[K].type === 'regexp') {
-                    if (!rules[K].rule.test(formData[K])) {
-                        Utils.UI.toast(rules[K].message)
-                        isValidate = false
-                        return false
-                    }
-                } else if (rules[K].type === 'string') {
-                    if ((formData[K] + '').trim().length < rules[K].length) {
-                        Utils.UI.toast(rules[K].message)
-                        isValidate = false
-                        return false
-                    }
-                }
-            }
-
-
-        }
-        return isValidate
+  //  跳转至房产、车辆、家庭成员录入页
+  bindEventsPageRouter() {
+    const self = this
+    let _cbScriptString = 'window.Page && window.Page.initFormStatus();'
+    document.querySelector('#familyInfo').onclick = function () {
+      self.cacheOperateInfo()
+      Utils.Router.openGuaranteeApplicationFamily({ pageParam: { ...api.pageParam,  _cb: _cbScriptString } })
     }
+    document.querySelector('#houseInfo').onclick = function () {
+      self.cacheOperateInfo()
+      Utils.Router.openGuaranteeApplicationHouse({ pageParam: { ...api.pageParam, _cb: _cbScriptString } })
+    }
+    document.querySelector('#carInfo').onclick = function () {
+      self.cacheOperateInfo()
+      Utils.Router.openGuaranteeApplicationCar({ pageParam: { ...api.pageParam, _cb: _cbScriptString } })
+    }
+  }
+
+  // 跳转子页面前缓存主表经营信息
+  cacheOperateInfo() {
+    const self = this
+    const { landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear, envDataFileId } = this.data
+    const farmsSize = document.querySelector('#scale').value
+    const workshopCount = document.querySelector('#sheds').value
+    const workshopArea = document.querySelector('#shedArea').value
+    const workshopAddr = document.querySelector('#shedAddressDetail').value
+    const formJSON = {
+      gtId,
+      landNature: landType,
+      envDataType: envReport,
+      farmsNature: livestockType,
+      farmsCategory: farmType,
+      farmsSize,
+      workshopCount,
+      workshopArea,
+      workshopProvince: pcd.province.name,
+      workshopProvinceCode: pcd.province.code,
+      workshopCity: pcd.city.name,
+      workshopCityCode: pcd.city.code,
+      workshopCounty: pcd.district.name,
+      workshopCountyCode: pcd.district.code,
+      workshopAddr,
+      workshopStruct: shedStructure,
+      maturityYear: maturityYear || String(new Date().getFullYear()),
+      envDataFileId: envDataFileId
+    }
+    $api.setStorage('operateInfo', JSON.stringify(formJSON));
+    // $api.setStorage('operateInfoEnvReportFile', envReportFile);
+  }
+
+  // 提交表单
+  bindSubmitEvents() {
+    const self = this
+    const btn = document.querySelector('.cl_c_submit_btn')
+    btn.onclick = function () {
+      if (self.data.applyStatus >= 2) {
+        return void 0
+      }
+      self.submitFormData()
+    }
+  }
+
+  //  绑定租赁日期选择
+  bindDateEvents() {
+    const self = this
+    const rd = new Rolldate({
+      el: '#maturityYear',
+      format: 'YYYY',
+      beginYear: 2020,
+      endYear: 2070,
+      minStep: 1,
+      lang: { title: '选择租赁到期时间' },
+      trigger: 'tap',
+      init: function () {
+        console.log('插件开始触发');
+      },
+      moveEnd: function (scroll) {
+        console.log('滚动结束');
+      },
+      confirm: function (date) {
+        self.data.maturityYear = date
+        console.log('确定按钮触发');
+      },
+      cancel: function () {
+        console.log('插件运行取消');
+      }
+    })
+    // rd.show();
+    // rd.hide();
+  }
+
+  //  format 土地信息和养殖信息数据
+  async submitFormData() {
+    const self = this
+    const { landType, farmType, envReport, livestockType, shedStructure, gtId, envReportFile, pcd, maturityYear } = this.data
+    const farmsSize = document.querySelector('#scale').value
+    const workshopCount = document.querySelector('#sheds').value
+    const workshopArea = document.querySelector('#shedArea').value
+    const workshopAddr = document.querySelector('#shedAddressDetail').value
+    const formJSON = {
+      gtId,
+      landNature: landType,
+      envDataType: envReport,
+      farmsNature: livestockType,
+      farmsCategory: farmType,
+      farmsSize,
+      workshopCount,
+      workshopArea,
+      workshopProvince: pcd.province.name,
+      workshopProvinceCode: pcd.province.code,
+      workshopCity: pcd.city.name,
+      workshopCityCode: pcd.city.code,
+      workshopCounty: pcd.district.name,
+      workshopCountyCode: pcd.district.code,
+      workshopAddr,
+      workshopStruct: shedStructure
+    }
+    console.log(JSON.stringify(formJSON))
+
+    let isValidate = this.validate(formJSON)
+
+    // let isValidate = !Object.values(formJSON).some((item, i) => !item)
+
+    // 挂载租赁时间不校验
+    formJSON.maturityYear = maturityYear || '2020'
+
+    if (isValidate) {
+      Utils.UI.showLoading('保存中...')
+      let res = null
+      try {
+        if (self.data.isInsert) {
+          res = await this.postInsertOperate(formJSON, { envDataFileStream: envReportFile })
+          //  第一次插入经营新后，存储返回的operateId
+          self.data.operateId = res.data
+          self.data.isInsert = false
+        } else {
+          Object.assign(formJSON, { operateId: self.data.operateId })
+          res = await this.postUpdateOperate(formJSON, { envDataFileStream: envReportFile })
+        }
+        if (res.code === 200) {
+          Utils.UI.toast('提交成功')
+          Utils.Router.closeCurrentWinAndRefresh({
+            winName: 'html/danbaostep2/index',
+            script: 'window.location.reload();'
+          })
+        }
+      } catch (e) {
+        Utils.UI.hideLoading()
+        Utils.UI.toast(e.msg)
+      }
+      Utils.UI.hideLoading()
+    }
+  }
+
+  validate(formData) {
+    const self = this
+    const { farmsCategory } = formData
+    let rules = {
+      landNature: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择土地性质'
+      },
+      envDataType: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择环评材料'
+      },
+      farmsNature: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择养殖场性质'
+      },
+      farmsCategory: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择养殖品种'
+      },
+      farmsSize: {
+        type: 'regexp',
+        rule: farmsCategory === 3 ? /^[-\+]?\d+$/g : /^[-\+]?\d+(\.\d+)?$/g,
+        message: '请输入合法的养殖规模数量'
+      },
+      workshopCount: {
+        type: 'regexp',
+        rule: /^[-\+]?\d+$/g,
+        message: '请输入合法的棚舍数量'
+      },
+      workshopArea: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请输入棚舍面积'
+      },
+      workshopProvince: {
+        type: 'string',
+        length: 1,
+        message: '请选择棚舍地址'
+      },
+      workshopProvinceCode: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择棚舍地址'
+      },
+      workshopCity: {
+        type: 'string',
+        length: 1,
+        message: '请选择棚舍地址'
+      },
+      workshopCityCode: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择棚舍地址'
+      },
+      workshopCounty: {
+        type: 'string',
+        length: 1,
+        message: '请选择棚舍地址'
+      },
+      workshopCountyCode: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择棚舍地址'
+      },
+      workshopAddr: {
+        type: 'string',
+        length: 1,
+        message: '请填写棚舍详细地址'
+      },
+      workshopStruct: {
+        type: 'regexp',
+        rule: /\w+/g,
+        message: '请选择棚设结构'
+      }
+    }
+    return this._validator(formData, rules)
+  }
+
+  _validator(formData, rules) {
+    let isValidate = true
+    let keys = Object.keys(formData)
+    for (let i = 0; i < keys.length; i++) {
+      let K = keys[i]
+      if (rules[K]) {
+        if (rules[K].type === 'regexp') {
+          if (!rules[K].rule.test(formData[K])) {
+            Utils.UI.toast(rules[K].message)
+            isValidate = false
+            return false
+          }
+        } else if (rules[K].type === 'string') {
+          if ((formData[K] + '').trim().length < rules[K].length) {
+            Utils.UI.toast(rules[K].message)
+            isValidate = false
+            return false
+          }
+        }
+      }
+
+
+    }
+    return isValidate
+  }
 }
 
 apiready = function () {
-    let pageParam = api.pageParam || {};
-    api.setStatusBarStyle({
-        style: 'dark'
-    });
-    api.addEventListener({
-        name: 'navitembtn'
-    }, function (ret, err) {
-        if (ret.type === 'left') {
-            api.closeWin();
-        }
-    });
-    window.Page = new PageController({pageParam}).main()
+  let pageParam = api.pageParam || {};
+  api.setStatusBarStyle({
+    style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
+  window.Page = new PageController({ pageParam }).main()
 };

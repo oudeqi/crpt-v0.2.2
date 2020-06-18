@@ -3362,7 +3362,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                 this.data.gtCreditId = data.gtCreditId;
                 this.data.productId = data.productId;
                 this.data.demandMoney = data.demandMoney;
-                this.data.creditStatus = data.creditStatus; //   审核中
+                this.data.creditStatus = data.creditStatus; // alert(JSON.stringify(this.data))
+                //   审核中
 
                 if (data.applyStatus === 2) {
                   submitBtn = document.querySelector('#submit');
@@ -3453,7 +3454,8 @@ var PageController = /*#__PURE__*/function (_Service) {
                   gtId: self.data.gtId,
                   flowStatus: self.data.flowStatus,
                   gtCreditId: self.data.gtCreditId,
-                  applyStatus: self.data.applyStatus
+                  applyStatus: self.data.applyStatus,
+                  creditStatus: self.data.creditStatus
                 }
               });
             }

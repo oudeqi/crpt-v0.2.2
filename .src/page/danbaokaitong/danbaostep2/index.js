@@ -38,6 +38,7 @@ class PageController extends Service {
             this.data.productId = data.productId
             this.data.demandMoney = data.demandMoney
             this.data.creditStatus = data.creditStatus
+            // alert(JSON.stringify(this.data))
             //   审核中
             if (data.applyStatus === 2) {
                 let submitBtn = document.querySelector('#submit')
@@ -104,7 +105,8 @@ class PageController extends Service {
                                     gtId: self.data.gtId,
                                     flowStatus: self.data.flowStatus,
                                     gtCreditId: self.data.gtCreditId,
-                                    applyStatus: self.data.applyStatus
+                                    applyStatus: self.data.applyStatus,
+                                    creditStatus: self.data.creditStatus
                                 }
                             })
                         }

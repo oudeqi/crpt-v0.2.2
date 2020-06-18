@@ -2,216 +2,236 @@ import Utils from './../../utils'
 import '../../app.css'
 import './index.less'
 import Service from './service'
-
 /**
  * @authro liyang
  * @desc 担保业务申请表录入页Page 类
  * @class PageController类，需继承Service类
  */
 class PageController extends Service {
-    constructor(props) {
-        super()
-        //  所有表单域预置信息
-        this.profile = {
-            // upload参数
-            uploadImgType: {
-                0: 'camera',
-                1: 'album'
-            }
+  constructor(props) {
+    super()
+    //  所有表单域预置信息
+    this.profile = {
+      // upload参数
+      uploadImgType: {
+        0: 'camera',
+        1: 'album'
+      }
+    }
+    //  统一管理数据model data
+    this.data = {
+      gtId: props.pageParam.gtId,
+      flowStatus: props.pageParam.flowStatus,
+      gtCreditId: props.pageParam.gtCreditId,
+      gtCounterId: props.pageParam.gtCounterId,
+      disabled: props.pageParam.disabled,
+      _cb: props.pageParam._cb,
+      type: props.pageParam.type || 1,
+      carList: [{ carNo: '', carPrice: '', brand: '', pictureId: '' }]
+    }
+  }
+
+  //  执行函数
+  async main(props) {
+    this.initData()
+    this.bindEvents()
+  }
+
+  //  事件绑定入口
+  bindEvents() {
+    this.bindAddEvents()
+    this.bindDelEvents()
+    this.bindSubmitEvents()
+    this.bindOCREvents()
+  }
+
+  async initData() {
+    Utils.UI.showLoading('加载中')
+    const self = this
+    try {
+      let params = {}
+      // 担保人则传gtId
+      if (self.data.type === 1) {
+        params.gtId = self.data.gtId
+      } else {
+        // 反担保人传gtCounterId
+        params.gtCounterId = self.data.gtCounterId
+      }
+      // 查第二步的授信状态
+      const applyRes = await this.getQueryGuaranteeMain()
+      this.data.applyStatus = applyRes.data.applyStatus
+      this.data.creditStatus = applyRes.data.creditStatus
+      this.data.disabled = this.data.applyStatus >= 2 && this.data.creditStatus === 2
+
+      const res = await this.getGuaranteeCarList(params)
+      this.data.carList = res.data.length > 0 ? res.data.map((item, i) => {
+        return {
+          ...item,
+          pictureId: item.pictureId || ''
         }
-        //  统一管理数据model data
-        this.data = {
-            gtId: props.pageParam.gtId,
-            flowStatus: props.pageParam.flowStatus,
-            gtCreditId: props.pageParam.gtCreditId,
-            gtCounterId: props.pageParam.gtCounterId,
-            _cb: props.pageParam._cb,
-            type: props.pageParam.type || 1,
-            carList: [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
+      }) : [{ carNo: '', carPrice: '', brand: '', pictureId: '' }]
+    } catch (e) {
+      Utils.UI.toast('服务超时')
+    }
+    this.compilerTemplate(this.data.carList)
+    Utils.UI.hideLoading('加载中')
+  }
+
+  //  绑定add事件
+  bindAddEvents() {
+    const self = this
+    const addBtn = document.querySelector('#add-btn')
+    addBtn.onclick = function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      self.data.carList.push({
+        carNo: '',
+        carPrice: '',
+        brand: '',
+        pictureId: ''
+      })
+      self.compilerTemplate((self.data.carList))
+    }
+  }
+
+  // 绑定删除事件
+  bindDelEvents() {
+    const self = this
+    document.querySelector('#credit-list').onclick = function (e) {
+      if (self.data.disabled) {
+        return void 0
+      }
+      let ev = window.event || e;
+      if (ev.target.classList.contains('del')) {
+        //  删除前需将model-tree检出，防止数据直接被抹除
+        self.searchAllData()
+        let index = ev.target.getAttribute('data-index')
+        self.data.carList.splice(index, 1)
+        self.compilerTemplate(self.data.carList)
+      }
+    }
+  }
+
+  // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
+  searchAllData() {
+    const self = this
+    const newCarList = self.data.carList.map((item, i) => {
+      return {
+        ...item,
+        carNo: document.querySelector(`#carNo_${i}`).value,
+        carPrice: Number(document.querySelector(`#carPrice_${i}`).value),
+        brand: document.querySelector(`#brand_${i}`).value
+      }
+    })
+    this.data.carList = newCarList
+  }
+
+  //  绑定提交车辆信息
+  bindSubmitEvents() {
+    const self = this
+    document.querySelector('#save-btn').onclick = async function () {
+      if (self.data.disabled) {
+        return void 0
+      }
+      self.searchAllData()
+      // 校验是否还有未填写的数据
+      let isValidate = !self.data.carList.some((item, i) => {
+        return !item.carNo || !item.carPrice || !item.brand
+      })
+      if (!isValidate) {
+        Utils.UI.toast('还有信息未填完')
+        return
+      }
+      Utils.UI.showLoading('提交中')
+      try {
+        let params = {
+          type: self.data.type || 1,
+          gtCreditId: self.data.gtCreditId,
+          carList: self.data.carList
         }
-    }
-
-    //  执行函数
-    async main(props) {
-        this.initData()
-        this.bindEvents()
-    }
-
-    //  事件绑定入口
-    bindEvents() {
-        this.bindAddEvents()
-        this.bindDelEvents()
-        this.bindSubmitEvents()
-        this.bindOCREvents()
-    }
-
-    async initData() {
-        Utils.UI.showLoading('加载中')
-        const self = this
-        try {
-            let params = {}
-            // 担保人则传gtId
-            if (self.data.type === 1) {
-                params.gtId = self.data.gtId
-            } else {
-                // 反担保人传gtCounterId
-                params.gtCounterId = self.data.gtCounterId
-            }
-            const res = await this.getGuaranteeCarList(params)
-            this.data.carList = res.data.length > 0 ? res.data.map((item, i) => {
-                return {
-                    ...item,
-                    pictureId: item.pictureId || ''
-                }
-            }) : [{carNo: '', carPrice: '', brand: '', pictureId: ''}]
-        } catch (e) {
-            Utils.UI.toast('服务超时')
+        // 担保人则传gtId
+        if (params.type === 1) {
+          params.gtId = self.data.gtId
+        } else {
+          // 反担保人传gtCounterId
+          params.gtCounterId = self.data.gtCounterId
         }
-        this.compilerTemplate(this.data.carList)
-        Utils.UI.hideLoading('加载中')
-    }
-
-    //  绑定add事件
-    bindAddEvents() {
-        const self = this
-        const addBtn = document.querySelector('#add-btn')
-        addBtn.onclick = function () {
-            self.searchAllData()
-            self.data.carList.push({
-                carNo: '',
-                carPrice: '',
-                brand: '',
-                pictureId: ''
-            })
-            self.compilerTemplate((self.data.carList))
-        }
-    }
-
-    // 绑定删除事件
-    bindDelEvents() {
-        const self = this
-        document.querySelector('#credit-list').onclick = function (e) {
-            let ev = window.event || e;
-            if (ev.target.classList.contains('del')) {
-                //  删除前需将model-tree检出，防止数据直接被抹除
-                self.searchAllData()
-                let index = ev.target.getAttribute('data-index')
-                self.data.carList.splice(index, 1)
-                self.compilerTemplate(self.data.carList)
-            }
-        }
-    }
-
-    // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
-    searchAllData() {
-        const self = this
-        const newCarList = self.data.carList.map((item, i) => {
-            return {
-                ...item,
-                carNo: document.querySelector(`#carNo_${i}`).value,
-                carPrice: Number(document.querySelector(`#carPrice_${i}`).value),
-                brand: document.querySelector(`#brand_${i}`).value
-            }
+        const res = await self.postGuaranteeCarList(params)
+        Utils.Router.closeCurrentWinAndRefresh({
+          winName: 'html/guarantee_application_index/index',
+          script: self.data._cb || 'window.location.reload'
         })
-        this.data.carList = newCarList
+      } catch (e) {
+        Utils.UI.toast('服务超时')
+      }
+      Utils.UI.hideLoading()
     }
+  }
 
-    //  绑定提交车辆信息
-    bindSubmitEvents() {
-        const self = this
-        document.querySelector('#save-btn').onclick = async function () {
-            self.searchAllData()
-            // 校验是否还有未填写的数据
-            let isValidate = !self.data.carList.some((item, i) => {
-                return !item.carNo || !item.carPrice || !item.brand
-            })
-            if (!isValidate) {
-                Utils.UI.toast('还有信息未填完')
-                return
-            }
-            Utils.UI.showLoading('提交中')
-            try {
-                let params = {
-                    type: self.data.type || 1,
-                    gtCreditId: self.data.gtCreditId,
-                    carList: self.data.carList
-                }
-                // 担保人则传gtId
-                if (params.type === 1) {
-                    params.gtId = self.data.gtId
+  // 绑定ocr
+  bindOCREvents() {
+    const self = this
+    document.querySelector('#car-page').onclick = function (e) {
+      if (self.data.disabled) {
+        return void 0
+      }
+      let ev = window.event || e;
+      if (ev.target.classList.contains('icon_house_scan')) {
+        const _index = ev.target.getAttribute('data-index')
+        // ocr传图
+        Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
+          Utils.File.getPicture(self.profile.uploadImgType[index], async function (res, err) {
+            if (res) {
+              let fileStream = res.data
+              Utils.UI.showLoading('正在识别中...')
+              try {
+                const response = await Utils.OCR.Baidu.CarVerify({ carFile: fileStream });
+                if (response.code === 200) {
+                  // 先检出数据
+                  self.searchAllData()
+                  const data = response.data
+                  // self.data.carList.splice(index, 1)
+                  const { carNo, carBrand } = data
+                  self.data.carList[_index].carNo = carNo
+                  self.data.carList[_index].brand = carBrand
+                  self.compilerTemplate(self.data.carList)
+
+                  // 后台保存上传的附件
+                  try {
+                    const attachRes = await self.saveAttachment({ gtId: self.data.gtId }, { pictureFile: fileStream })
+                    if (attachRes.code === 200) {
+                      const pictureId = attachRes.data.pictureId
+                      self.data.carList[_index].pictureId = pictureId
+                    }
+                  } catch (e) {
+
+                  }
                 } else {
-                    // 反担保人传gtCounterId
-                    params.gtCounterId = self.data.gtCounterId
+                  Utils.UI.toast(response.msg)
                 }
-                const res = await self.postGuaranteeCarList(params)
-                Utils.Router.closeCurrentWinAndRefresh({
-                    winName: 'html/guarantee_application_index/index',
-                    script: self.data._cb || 'window.location.reload'
-                })
-            } catch (e) {
-                Utils.UI.toast('服务超时')
+              } catch (e) {
+
+              }
+              Utils.UI.hideLoading()
             }
-            Utils.UI.hideLoading()
-        }
+          })
+        })
+        // self.searchAllData()
+        // let index = ev.target.getAttribute('data-index')
+        // self.data.carList.splice(index, 1)
+        // self.compilerTemplate(self.data.carList)
+      }
     }
+  }
 
-    // 绑定ocr
-    bindOCREvents() {
-        const self = this
-        document.querySelector('#car-page').onclick = function (e) {
-            let ev = window.event || e;
-            if (ev.target.classList.contains('icon_house_scan')) {
-                const _index = ev.target.getAttribute('data-index')
-                // ocr传图
-                Utils.File.actionSheet('请选择', ['相机', '相册'], function (index) {
-                    Utils.File.getPicture(self.profile.uploadImgType[index], async function (res, err) {
-                        if (res) {
-                            let fileStream = res.data
-                            Utils.UI.showLoading('正在识别中...')
-                            try {
-                                const response = await Utils.OCR.Baidu.CarVerify({carFile: fileStream});
-                                if (response.code === 200) {
-                                    // 先检出数据
-                                    self.searchAllData()
-                                    const data = response.data
-                                    // self.data.carList.splice(index, 1)
-                                    const {carNo, carBrand} = data
-                                    self.data.carList[_index].carNo = carNo
-                                    self.data.carList[_index].brand = carBrand
-                                    self.compilerTemplate(self.data.carList)
-
-                                    // 后台保存上传的附件
-                                    try {
-                                        const attachRes = await self.saveAttachment({gtId: self.data.gtId}, {pictureFile: fileStream})
-                                        if (attachRes.code === 200) {
-                                            const pictureId = attachRes.data.pictureId
-                                            self.data.carList[_index].pictureId = pictureId
-                                        }
-                                    } catch (e) {
-
-                                    }
-                                } else {
-                                    Utils.UI.toast(response.msg)
-                                }
-                            } catch (e) {
-
-                            }
-                            Utils.UI.hideLoading()
-                        }
-                    })
-                })
-                // self.searchAllData()
-                // let index = ev.target.getAttribute('data-index')
-                // self.data.carList.splice(index, 1)
-                // self.compilerTemplate(self.data.carList)
-            }
-        }
-    }
-
-    // 编译html模板
-    compilerTemplate(list) {
-        const _html = list.reduce((prev, item, i) => {
-            return prev + `<div class="cl-cell">
+  // 编译html模板
+  compilerTemplate(list) {
+    const self = this
+    const disabled = self.data.disabled
+    const _html = list.reduce((prev, item, i) => {
+      return prev + `<div class="cl-cell">
         <div class="cl-cell_box cl_h_bd">
             <div class="cl-cell_text single">
                 <span class="clt_main" >车辆<b>${i + 1}</b></span>
@@ -257,23 +277,29 @@ class PageController extends Service {
             </div>
         </div>
     </div>`
-        }, '')
-        document.querySelector('#credit-list').innerHTML = _html
-        // alert(_html)
+    }, '')
+    document.querySelector('#credit-list').innerHTML = _html
+
+    if (disabled) {
+      Array.from(document.querySelectorAll('.fc_c_input')).forEach((dom, i) => {
+        dom.setAttribute('disabled', true)
+      })
     }
+    // alert(_html)
+  }
 }
 
 apiready = function () {
-    let pageParam = api.pageParam || {};
-    api.setStatusBarStyle({
-        style: 'dark'
-    });
-    api.addEventListener({
-        name: 'navitembtn'
-    }, function (ret, err) {
-        if (ret.type === 'left') {
-            api.closeWin();
-        }
-    });
-    new PageController({pageParam}).main()
+  let pageParam = api.pageParam || {};
+  api.setStatusBarStyle({
+    style: 'dark'
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
+  new PageController({ pageParam }).main()
 };
