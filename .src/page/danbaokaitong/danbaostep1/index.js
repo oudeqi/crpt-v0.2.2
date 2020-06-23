@@ -65,7 +65,7 @@ class PageController extends HeaderController {
         $api.byId('rate').value = `${data.rate || '0'}‰`
         $api.byId('desc').innerHTML = `您正在申请${data.productName}产品`
         this.__isShebeiDaiShow(data.productType)
-        this.__removeDisabled()
+        // this.__removeDisabled()
       } else {
         const res = await this.queryProductById(this.productId)
         if (res.code === 200) {

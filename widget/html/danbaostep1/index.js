@@ -3610,7 +3610,7 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 _context.prev = 9;
 
                 if (!this.danbaoStatus) {
-                  _context.next = 28;
+                  _context.next = 27;
                   break;
                 }
 
@@ -3628,18 +3628,17 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                 $api.byId('rate').value = "".concat(data.rate || '0', "\u2030");
                 $api.byId('desc').innerHTML = "\u60A8\u6B63\u5728\u7533\u8BF7".concat(data.productName, "\u4EA7\u54C1");
 
-                this.__isShebeiDaiShow(data.productType);
+                this.__isShebeiDaiShow(data.productType); // this.__removeDisabled()
 
-                this.__removeDisabled();
 
-                _context.next = 32;
+                _context.next = 31;
                 break;
 
-              case 28:
-                _context.next = 30;
+              case 27:
+                _context.next = 29;
                 return this.queryProductById(this.productId);
 
-              case 30:
+              case 29:
                 res = _context.sent;
 
                 if (res.code === 200) {
@@ -3656,28 +3655,28 @@ var PageController = /*#__PURE__*/function (_HeaderController) {
                   this.__removeDisabled();
                 }
 
-              case 32:
-                _context.next = 37;
+              case 31:
+                _context.next = 36;
                 break;
 
-              case 34:
-                _context.prev = 34;
+              case 33:
+                _context.prev = 33;
                 _context.t1 = _context["catch"](9);
                 api.toast({
                   msg: _context.t1.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 37:
+              case 36:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 39:
+              case 38:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 7], [9, 34]]);
+        }, _callee, this, [[2, 7], [9, 33]]);
       }));
 
       function getProduct() {

@@ -1138,13 +1138,13 @@ function openCheliang ({
 }
 
 // 产品列表
-function openProductList (type) { // 1-信用贷款 2-担保贷款
+function openProductList () { // 1-信用贷款 2-担保贷款
   api.openTabLayout({
     name: 'html/productlist/win',
     title: '产品推荐',
     url: 'widget://html/productlist/index.html',
     bgColor: '#fff',
-    pageParam: { type },
+    pageParam: {},
     slidBackEnabled: true,
     navigationBar: {
       hideBackButton: false,
