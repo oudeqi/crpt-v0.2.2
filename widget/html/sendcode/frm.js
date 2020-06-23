@@ -170,21 +170,6 @@ function openGerenLogin() {
     pageParam: {
       userType: userType
     },
-<<<<<<< HEAD
-    navigationBar: {
-      hideBackButton: false,
-      background: '#fff',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
-      leftButtons: [{
-        text: '返回',
-        color: '#66BB6A',
-        iconPath: 'widget://image/back_green_big.png'
-      }]
-    }
-  });
-=======
     navigationBar: navigationBarWhite
   }); // api.openWin({
   //   name: 'html/gerenlogin/win',
@@ -195,7 +180,6 @@ function openGerenLogin() {
   //     userType
   //   }
   // })
->>>>>>> 4fcda7fc41e24a2db24dfcb230f2e03a69f02cb9
 } // 企业登录
 
 
