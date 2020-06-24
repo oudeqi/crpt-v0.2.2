@@ -1873,8 +1873,26 @@ var routerMapConfig = {
   // 好销贷用款确认
   hxd_u_confirm: {
     name: 'hxd_u_confirm',
-    title: '申请用款',
+    title: '用款确认',
     url: 'widget://html/hxd_u_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款校验
+  hxd_u_smscode: {
+    name: 'hxd_u_smscode',
+    title: '用款校验',
+    url: 'widget://html/hxd_u_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款结果
+  hxd_u_result: {
+    name: 'hxd_u_result',
+    title: '审核结果',
+    url: 'widget://html/hxd_u_result/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -1950,7 +1968,7 @@ var App = /*#__PURE__*/function () {
         // openDanbaoKaitong({step: 0, creditStatus: 2})
         // return
         Router$2.openPage({
-          key: 'hxd_u_confirm'
+          key: 'hxd_u_result'
         });
         return;
       } else {
