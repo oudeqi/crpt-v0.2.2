@@ -1,3 +1,4 @@
+<!-- 好销贷授信申请 -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,11 +17,14 @@
   <body>
     <div id="app">
       <section class="header">
-        <div class="logo">销</div>
-        <div class="name">好销贷</div>
+        <div class="logo">{{productInfo.short}}</div>
+        <div class="name">{{productInfo.name}}</div>
         <div class="loan">
-          <div class="num">300万</div>
-          <div class="label">最高额度（元）</div>
+          <div class="num">
+            {{productInfo.loan}}
+            <span class="unit">万</span>
+          </div>
+          <div class="label">最高额度(元)</div>
         </div>
       </section>
       <section class="introduction">
@@ -28,16 +32,60 @@
           <h4 class="tit">产品介绍</h4>
 
           <ul class="list">
-            <li class="cell">
+            <li class="cell" v-for="(item) in introduction" :key="item.title">
               <div class="icon"></div>
               <div class="desc">
-                <p class="c-title">产品简介</p>
-                <p class="c-detail">好销贷是新希望六和与新希望金服联合推出的</p>
+                <p class="c-title">{{item.title}}</p>
+                <p class="c-detail">{{item.detail}}</p>
               </div>
             </li>
           </ul>
         </div>
+        <div class="intro qa">
+          <h4 class="tit">Q&A</h4>
+          <ul class="list">
+            <li
+              class="cell"
+              v-for="(item) in (isFolder ? [QA[0]] : QA)"
+              :key="item.q"
+            >
+              <div class="desc">
+                <p class="c-title">
+                  <span class="label">Q</span>
+                  {{item.q}}
+                </p>
+                <p class="c-detail">
+                  <span class="label">A</span>
+                  {{item.a}}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="folder" @click="handleFolder">
+          {{isFolder ? '更多问与答' : '收起'}}
+        </div>
       </section>
+
+      <div class="app_agreement">
+        <label>
+          <input
+            class="app_checkbox"
+            type="checkbox"
+            id="checkbox"
+            name="type"
+          />
+        </label>
+        <div class="agreement_content">
+          <span>已阅读并同意</span>
+          <span class="ac" v-for="item in agreements" :key="item.id"
+            >《{{item.title}}》</span
+          >
+        </div>
+      </div>
+      <div class="bottom-box">
+        <div class="btn btn-normal">我要申请</div>
+      </div>
     </div>
 
     <script type="text/javascript" src="../../script/api.js"></script>

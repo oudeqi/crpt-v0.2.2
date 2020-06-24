@@ -1,0 +1,77 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: #fff;
+}
+.pd {
+  padding: 12px;
+}
+.tips {
+  height: 36px;
+  background: rgba(102, 187, 106, 0.1);
+  border-radius: 6px;
+  line-height: 36px;
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: @themeColor;
+  padding-left: 12px;
+}
+.form {
+  margin-bottom: 72px;
+  .item {
+    .desc {
+      font-size: 16px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+      padding: 22px 0 17px;
+
+      &.bd {
+        border-bottom: 1px solid rgba(245, 245, 245, 1);
+      }
+    }
+    .form-item {
+      padding: 16px 0;
+      &.sm {
+        padding: 0;
+      }
+      &.bd {
+        border-bottom: 1px solid rgba(245, 245, 245, 1);
+      }
+      .city {
+        font-size: 14px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: @themeColor;
+      }
+      input {
+        font-size: 14px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        // color: rgba(192, 196, 204, 1);
+      }
+      .upload {
+        width: 214px;
+        height: 300px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 11px;
+        border: 2px dashed rgba(245, 245, 245, 1);
+      }
+      .detail {
+        font-size: 16px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: rgba(144, 147, 153, 1);
+        .gr {
+          color: @themeColor;
+        }
+      }
+    }
+  }
+}
+.bottom-box {
+  padding: 12px 0 38px 0;
+  background: #fff;
+}

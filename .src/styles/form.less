@@ -140,3 +140,30 @@
     font-weight:500;
     color:rgba(255,255,255,1);
 }
+
+input,textarea, button {
+  outline: none;
+  border: none;
+}
+.btn {
+  width: 331px;
+  height: 50px;
+  background: rgba(102, 187, 106, 1);
+  border-radius: 25px;
+  line-height: 50px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  &.disabled {
+    background:rgba(220,224,232,1);
+    color:rgba(255,255,255,1);
+  }
+  &.btn-prime {
+    border:1px solid rgba(102,187,106,1);
+    background:rgba(255,255,255,1);
+    color:rgba(102,187,106,1);
+  }
+}

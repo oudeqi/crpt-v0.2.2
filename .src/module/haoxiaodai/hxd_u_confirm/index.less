@@ -1,0 +1,181 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: @pageBg;
+}
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pd {
+  padding: 12px;
+}
+.header {
+  background: @themeColor;
+  box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+  border-radius: 6px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 24px 0;
+  margin-bottom: 12px;
+  .label {
+    font-size: 14px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+  }
+  .num {
+    font-size: 24px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+.main {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+  border-radius: 6px;
+  padding: 0 12px;
+  margin-bottom: 12px;
+  .total {
+    font-size: 16px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: rgba(96, 98, 102, 1);
+    padding: 16px 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .footer {
+    font-size: 16px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: @themeColor;
+    text-align: center;
+    padding: 12px;
+  }
+}
+.list {
+  .cell {
+    padding: 16px 12px 8px 12px;
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #f5f5f5;
+    .l {
+      font-size: 20px;
+      font-family: DINAlternate-Bold, DINAlternate;
+      font-weight: bold;
+      color: rgba(48, 49, 51, 1);
+      margin-right: 12px;
+      margin-top: -3px;
+    }
+    .r {
+      .title {
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(48, 49, 51, 1);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .ok {
+          font-size: 10px;
+        }
+      }
+      .num {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // width: 65%;
+        margin-bottom: 10px;
+        .can {
+          .lb {
+            font-size: 14px;
+            font-family: PingFang-SC-Medium, PingFang-SC;
+            font-weight: 500;
+            color: rgba(144, 147, 153, 1);
+          }
+          .n {
+            font-size: 20px;
+            font-family: DINAlternate-Bold, DINAlternate;
+            font-weight: bold;
+            color: rgba(234, 92, 57, 1);
+          }
+          &.left {
+            .n {
+              color: rgba(144, 147, 153, 1);
+            }
+          }
+        }
+      }
+      .date {
+        font-size: 14px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: rgba(144, 147, 153, 1);
+        margin-bottom: 6px;
+      }
+      .orderId {
+        font-size: 14px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: rgba(144, 147, 153, 1);
+      }
+    }
+  }
+}
+.repay-b {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+  border-radius: 6px;
+  .item {
+    padding: 17px 12px;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:last-child {
+      border-bottom: none;
+    }
+    .k {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+    }
+    .v {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+    }
+  }
+}
+
+.app_agreement {
+  display: flex;
+  padding: 21px 12px;
+}
+.agreement_content {
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: rgba(144, 147, 153, 1);
+  margin-left: 12px;
+  .ac {
+    color: #66bb6a;
+  }
+}
+.bottom-box {
+  padding: 12px 0 38px 0;
+  background: #fff;
+  width: 100vw;
+  flex: none;
+}
