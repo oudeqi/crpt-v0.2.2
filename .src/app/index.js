@@ -1,37 +1,37 @@
 import {
-    // openDrawerLayout,
-    openAgreement,
-    openLoanConfirm,
-    openSendAddress,
-    openDanbaoKaitong,
-    openDanbaoRenList,
-    openDanbaoRenForm,
-    openMsgCenter,
-    openTabLayout,
-    openRegLogin,
-    openReg,
-    openGerenLogin,
-    openQiyeLogin,
-    openSendCode,
-    openFindPwd,
-    openBaseinfoFill,
-    openTodoAuthGeren,
-    openTodoAuthQiye,
-    openCompanyInfo,
-    openIDcardUpload,
-    openIDcardInfo,
-    openFaceAuth,
-    openFaceUpload,
-    openYuguEdu,
-    openAuthResult,
-    openBillList,
-    openBillDetails,
-    openMyProduct,
-    openMyQuota,
-    openSettings,
-    openContactUs,
-    openProductDetails,
-    openProductRecommend
+  // openDrawerLayout,
+  openAgreement,
+  openLoanConfirm,
+  openSendAddress,
+  openDanbaoKaitong,
+  openDanbaoRenList,
+  openDanbaoRenForm,
+  openMsgCenter,
+  openTabLayout,
+  openRegLogin,
+  openReg,
+  openGerenLogin,
+  openQiyeLogin,
+  openSendCode,
+  openFindPwd,
+  openBaseinfoFill,
+  openTodoAuthGeren,
+  openTodoAuthQiye,
+  openCompanyInfo,
+  openIDcardUpload,
+  openIDcardInfo,
+  openFaceAuth,
+  openFaceUpload,
+  openYuguEdu,
+  openAuthResult,
+  openBillList,
+  openBillDetails,
+  openMyProduct,
+  openMyQuota,
+  openSettings,
+  openContactUs,
+  openProductDetails,
+  openProductRecommend
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -42,7 +42,7 @@ import Router from '../router'
 
 class App {
 
-  init () {
+  init() {
     // 认证状态 int
     // 1：正常
     // 2：待实名认证
@@ -57,6 +57,7 @@ class App {
     // return
     // Router.openPage({key: 'hxd_apply'})
     // return
+
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()
@@ -75,6 +76,9 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
+      Router.openPage({ key: 'hxd_u_result' })
+
+      return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
         openTabLayout()
@@ -91,10 +95,10 @@ class App {
     }
   }
 
-  bindEvent () {
+  bindEvent() {
     // 云修复完成
     api.addEventListener({
-      name:'smartupdatefinish'
+      name: 'smartupdatefinish'
     }, (ret, err) => {
       api.confirm({
         title: '提示',
@@ -109,10 +113,10 @@ class App {
     })
     // 点击启动页面
     api.addEventListener({
-      name:'launchviewclicked'
-    }, (ret,err) => {
+      name: 'launchviewclicked'
+    }, (ret, err) => {
       api.alert({
-        msg:ret.value
+        msg: ret.value
       })
     })
   }

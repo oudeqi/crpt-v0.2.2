@@ -5,15 +5,15 @@ function _defineProperty(obj, key, value) {
       enumerable: true,
       configurable: true,
       writable: true
-    });
+    })
   } else {
-    obj[key] = value;
+    obj[key] = value
   }
 
-  return obj;
+  return obj
 }
 
-var defineProperty = _defineProperty;
+var defineProperty = _defineProperty
 
 // api.lockSlidPane();
 // api.unlockSlidPane
@@ -28,7 +28,7 @@ var navigationBarWhite = {
     color: 'rgba(102,187,106,1)',
     iconPath: 'widget://image/back_green_big.png'
   }]
-};
+}
 /*
 list: [{
   text: '',
@@ -89,58 +89,58 @@ function openTabLayout(index) {
       fontSize: 12,
       // preload: 4,
       list: [{
-        text: "首页",
-        iconPath: "widget://image/tablayout/shouye.png",
-        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+        text: '首页',
+        iconPath: 'widget://image/tablayout/shouye.png',
+        selectedIconPath: 'widget://image/tablayout/shouye_active.png'
       }, {
-        text: "贷款",
-        iconPath: "widget://image/tablayout/loan.png",
-        selectedIconPath: "widget://image/tablayout/loan_active.png"
+        text: '贷款',
+        iconPath: 'widget://image/tablayout/loan.png',
+        selectedIconPath: 'widget://image/tablayout/loan_active.png'
       }, {
-        text: "还款",
-        iconPath: "widget://image/tablayout/huankuan.png",
-        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+        text: '还款',
+        iconPath: 'widget://image/tablayout/huankuan.png',
+        selectedIconPath: 'widget://image/tablayout/huankuan_active.png'
       }, {
-        text: "我的",
-        iconPath: "widget://image/tablayout/wode.png",
-        selectedIconPath: "widget://image/tablayout/wode_active.png"
+        text: '我的',
+        iconPath: 'widget://image/tablayout/wode.png',
+        selectedIconPath: 'widget://image/tablayout/wode_active.png'
       }],
       frames: [{
-        title: "首页",
-        //tab切换时对应的标题
-        name: "tablayout/index",
-        url: "widget://html/index/frm.html",
+        title: '首页',
+        // tab切换时对应的标题
+        name: 'tablayout/index',
+        url: 'widget://html/index/frm.html',
         bounces: true,
         reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
+        scrollToTop: true // 其他继承自openFrame的参数
 
       }, {
-        title: "待申请",
-        name: "tablayout/loan",
-        url: "widget://html/loan/index.html",
+        title: '待申请',
+        name: 'tablayout/loan',
+        url: 'widget://html/loan/index.html',
         bounces: true,
         reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
+        scrollToTop: true // 其他继承自openFrame的参数
 
       }, {
-        title: "还款",
-        name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
+        title: '还款',
+        name: 'tablayout/repay',
+        url: 'widget://html/repay/frm.html',
         bounces: true,
         reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
+        scrollToTop: true // 其他继承自openFrame的参数
 
       }, {
-        title: "我的",
-        name: "tablayout/my",
-        url: "widget://html/my/frm.html",
+        title: '我的',
+        name: 'tablayout/my',
+        url: 'widget://html/my/frm.html',
         bounces: true,
         reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
+        scrollToTop: true // 其他继承自openFrame的参数
 
       }]
     }
-  });
+  })
 } // 注册
 
 
@@ -151,14 +151,14 @@ function openRegLogin() {
     bgColor: '#fff',
     reload: true,
     slidBackEnabled: false
-  });
+  })
 } // 个人登录
 
 
 function openGerenLogin() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref$userType = _ref.userType,
-      userType = _ref$userType === void 0 ? 1 : _ref$userType;
+    _ref$userType = _ref.userType,
+    userType = _ref$userType === void 0 ? 1 : _ref$userType
 
   // 2企业 1个人
   api.openTabLayout({
@@ -171,7 +171,7 @@ function openGerenLogin() {
       userType: userType
     },
     navigationBar: navigationBarWhite
-  }); // api.openWin({
+  }) // api.openWin({
   //   name: 'html/gerenlogin/win',
   //   url: 'widget://html/gerenlogin/win.html',
   //   bgColor: '#fff',
@@ -196,7 +196,7 @@ function openTodoAuthGeren() {
       type: 'none'
     },
     navigationBar: navigationBarWhite
-  });
+  })
 }
 
 function openTodoAuthQiye() {
@@ -212,256 +212,256 @@ function openTodoAuthQiye() {
       type: 'none'
     },
     navigationBar: navigationBarWhite
-  });
+  })
 } // 企业信息确认
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {}
 
 function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  return module = { exports: {} }, fn(module, module.exports), module.exports
 }
 
-var base64 = createCommonjsModule(function (module, exports) {
-(function (global, factory) {
-     module.exports = factory(global)
-        ;
+var base64 = createCommonjsModule(function(module, exports) {
+  (function(global, factory) {
+    module.exports = factory(global)
+        
 }((
     typeof self !== 'undefined' ? self
-        : typeof window !== 'undefined' ? window
+      : typeof window !== 'undefined' ? window
         : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
-: commonjsGlobal
-), function(global) {
+          : commonjsGlobal
+  ), function(global) {
     // existing version for noConflict()
-    global = global || {};
-    var _Base64 = global.Base64;
-    var version = "2.5.2";
+    global = global || {}
+    var _Base64 = global.Base64
+    var version = '2.5.2';
     // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
+    var buffer
+    if (module.exports) {
+      try {
+        buffer = eval("require('buffer').Buffer")
         } catch (err) {
-            buffer = undefined;
+        buffer = undefined
         }
     }
     // constants
-    var b64chars
-        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    var b64tab = function(bin) {
+    var b64chars =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    var b64tab = (function(bin) {
         var t = {};
         for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
         return t;
-    }(b64chars);
-    var fromCharCode = String.fromCharCode;
+    }(b64chars));
+    var fromCharCode = String.fromCharCode
     // encoder stuff
     var cb_utob = function(c) {
-        if (c.length < 2) {
-            var cc = c.charCodeAt(0);
+      if (c.length < 2) {
+        var cc = c.charCodeAt(0)
             return cc < 0x80 ? c
-                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
-                                + fromCharCode(0x80 | (cc & 0x3f)))
-                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+          : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6)) +
+                                fromCharCode(0x80 | (cc & 0x3f)))
+            : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f)) +
+                    fromCharCode(0x80 | ((cc >>> 6) & 0x3f)) +
+                    fromCharCode(0x80 | (cc & 0x3f)))
         } else {
-            var cc = 0x10000
-                + (c.charCodeAt(0) - 0xD800) * 0x400
-                + (c.charCodeAt(1) - 0xDC00);
-            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
-                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        var cc = 0x10000 +
+                (c.charCodeAt(0) - 0xD800) * 0x400 +
+                (c.charCodeAt(1) - 0xDC00)
+            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07)) +
+                    fromCharCode(0x80 | ((cc >>> 12) & 0x3f)) +
+                    fromCharCode(0x80 | ((cc >>> 6) & 0x3f)) +
+                    fromCharCode(0x80 | (cc & 0x3f)))
         }
-    };
-    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+    }
+    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g
     var utob = function(u) {
-        return u.replace(re_utob, cb_utob);
+      return u.replace(re_utob, cb_utob)
     };
     var cb_encode = function(ccc) {
-        var padlen = [0, 2, 1][ccc.length % 3],
-        ord = ccc.charCodeAt(0) << 16
-            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
-            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
+      var padlen = [0, 2, 1][ccc.length % 3],
+        ord = ccc.charCodeAt(0) << 16 |
+            ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8) |
+            ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
         chars = [
-            b64chars.charAt( ord >>> 18),
-            b64chars.charAt((ord >>> 12) & 63),
-            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
-            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
-        ];
-        return chars.join('');
+          b64chars.charAt(ord >>> 18),
+          b64chars.charAt((ord >>> 12) & 63),
+          padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
+          padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
+        ]
+        return chars.join('')
     };
     var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
+      return global.btoa(b)
     } : function(b) {
-        return b.replace(/[\s\S]{1,3}/g, cb_encode);
+      return b.replace(/[\s\S]{1,3}/g, cb_encode)
     };
     var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+      var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]'
         return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
+        : btoa(utob(String(u)))
     };
     var encode = function(u, urisafe) {
-        return !urisafe
-            ? _encode(u)
-            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
-                return m0 == '+' ? '-' : '_';
-            }).replace(/=/g, '');
+      return !urisafe
+        ? _encode(u)
+        : _encode(String(u)).replace(/[+\/]/g, function(m0) {
+          return m0 == '+' ? '-' : '_'
+            }).replace(/=/g, '')
     };
-    var encodeURI = function(u) { return encode(u, true) };
+    var encodeURI = function(u) { return encode(u, true) }
     // decoder stuff
-    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
+    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g
     var cb_btou = function(cccc) {
-        switch(cccc.length) {
-        case 4:
-            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
-                |    ((0x3f & cccc.charCodeAt(1)) << 12)
-                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
-                |     (0x3f & cccc.charCodeAt(3)),
-            offset = cp - 0x10000;
-            return (fromCharCode((offset  >>> 10) + 0xD800)
-                    + fromCharCode((offset & 0x3FF) + 0xDC00));
+      switch (cccc.length) {
+      case 4:
+        var cp = ((0x07 & cccc.charCodeAt(0)) << 18)    |
+                ((0x3f & cccc.charCodeAt(1)) << 12)    |
+                ((0x3f & cccc.charCodeAt(2)) << 6)     |
+                (0x3f & cccc.charCodeAt(3)),
+          offset = cp - 0x10000
+            return (fromCharCode((offset >>> 10) + 0xD800) +
+                    fromCharCode((offset & 0x3FF) + 0xDC00))
         case 3:
-            return fromCharCode(
-                ((0x0f & cccc.charCodeAt(0)) << 12)
-                    | ((0x3f & cccc.charCodeAt(1)) << 6)
-                    |  (0x3f & cccc.charCodeAt(2))
-            );
+        return fromCharCode(
+          ((0x0f & cccc.charCodeAt(0)) << 12) |
+                    ((0x3f & cccc.charCodeAt(1)) << 6)  |
+                    (0x3f & cccc.charCodeAt(2))
+        )
         default:
-            return  fromCharCode(
-                ((0x1f & cccc.charCodeAt(0)) << 6)
-                    |  (0x3f & cccc.charCodeAt(1))
-            );
+        return fromCharCode(
+          ((0x1f & cccc.charCodeAt(0)) << 6)  |
+                    (0x3f & cccc.charCodeAt(1))
+        )
         }
-    };
+    }
     var btou = function(b) {
-        return b.replace(re_btou, cb_btou);
+      return b.replace(re_btou, cb_btou)
     };
     var cb_decode = function(cccc) {
-        var len = cccc.length,
+      var len = cccc.length,
         padlen = len % 4,
-        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
-            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
-            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
-            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
+        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0) |
+            (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0) |
+            (len > 2 ? b64tab[cccc.charAt(2)] << 6 : 0) |
+            (len > 3 ? b64tab[cccc.charAt(3)] : 0),
         chars = [
-            fromCharCode( n >>> 16),
-            fromCharCode((n >>>  8) & 0xff),
-            fromCharCode( n         & 0xff)
-        ];
-        chars.length -= [0, 0, 2, 1][padlen];
-        return chars.join('');
+          fromCharCode(n >>> 16),
+          fromCharCode((n >>> 8) & 0xff),
+          fromCharCode(n & 0xff)
+        ]
+        chars.length -= [0, 0, 2, 1][padlen]
+        return chars.join('')
     };
     var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
-        return a.replace(/\S{1,4}/g, cb_decode);
+      return global.atob(a)
+    } : function(a) {
+      return a.replace(/\S{1,4}/g, cb_decode)
     };
     var atob = function(a) {
-        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
+      return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''))
     };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+    var _decode = buffer
+        ? buffer.from && Uint8Array && buffer.from !== Uint8Array.from
         ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
+          return (a.constructor === buffer.constructor
+            ? a : buffer.from(a, 'base64')).toString()
         }
         : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
+          return (a.constructor === buffer.constructor
+            ? a : new buffer(a, 'base64')).toString()
         }
-        : function(a) { return btou(_atob(a)) };
-    var decode = function(a){
-        return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
-        );
+      : function(a) { return btou(_atob(a)) }
+    var decode = function(a) {
+      return _decode(
+        String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+          .replace(/[^A-Za-z0-9\+\/]/g, '')
+      )
     };
     var noConflict = function() {
-        var Base64 = global.Base64;
-        global.Base64 = _Base64;
-        return Base64;
+      var Base64 = global.Base64
+        global.Base64 = _Base64
+        return Base64
     };
     // export Base64
     global.Base64 = {
-        VERSION: version,
-        atob: atob,
-        btoa: btoa,
-        fromBase64: decode,
-        toBase64: encode,
-        utob: utob,
-        encode: encode,
-        encodeURI: encodeURI,
-        btou: btou,
-        decode: decode,
-        noConflict: noConflict,
-        __buffer__: buffer
-    };
+      VERSION: version,
+      atob: atob,
+      btoa: btoa,
+      fromBase64: decode,
+      toBase64: encode,
+      utob: utob,
+      encode: encode,
+      encodeURI: encodeURI,
+      btou: btou,
+      decode: decode,
+      noConflict: noConflict,
+      __buffer__: buffer
+    }
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
-        var noEnum = function(v){
-            return {value:v,enumerable:false,writable:true,configurable:true};
+      var noEnum = function(v) {
+        return {value: v, enumerable: false, writable: true, configurable: true}
         };
-        global.Base64.extendString = function () {
+      global.Base64.extendString = function() {
+        Object.defineProperty(
+          String.prototype, 'fromBase64', noEnum(function() {
+            return decode(this)
+          }))
             Object.defineProperty(
-                String.prototype, 'fromBase64', noEnum(function () {
-                    return decode(this)
-                }));
+          String.prototype, 'toBase64', noEnum(function(urisafe) {
+            return encode(this, urisafe)
+          }))
             Object.defineProperty(
-                String.prototype, 'toBase64', noEnum(function (urisafe) {
-                    return encode(this, urisafe)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64URI', noEnum(function () {
-                    return encode(this, true)
-                }));
+          String.prototype, 'toBase64URI', noEnum(function() {
+            return encode(this, true)
+          }))
         };
     }
     //
     // export Base64 to the namespace
     //
     if (global['Meteor']) { // Meteor.js
-        Base64 = global.Base64;
+      Base64 = global.Base64
     }
     // module.exports and AMD are mutually exclusive.
     // module.exports has precedence.
-    if ( module.exports) {
-        module.exports.Base64 = global.Base64;
+    if (module.exports) {
+      module.exports.Base64 = global.Base64
     }
     // that's it!
     return {Base64: global.Base64}
-}));
-});
-var base64_1 = base64.Base64;
+  }))
+})
+var base64_1 = base64.Base64
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
+    throw new TypeError('Cannot call a class as a function')
   }
 }
 
-var classCallCheck = _classCallCheck;
+var classCallCheck = _classCallCheck
 
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
+var _extends_1 = createCommonjsModule(function(module) {
+  function _extends() {
+    module.exports = _extends = Object.assign || function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
 
       for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+        }
         }
       }
-    }
 
-    return target;
+      return target
   };
 
-  return _extends.apply(this, arguments);
+    return _extends.apply(this, arguments)
 }
 
-module.exports = _extends;
-});
+  module.exports = _extends
+})
 
 // 系统顶部导航配置
 var navigationBarProfile = {
@@ -474,7 +474,7 @@ var navigationBarProfile = {
     color: 'rgba(102,187,106,1)',
     iconPath: 'widget://image/back_green_big.png'
   }]
-};
+}
 
 /**
  * 打开授信资料录入页面
@@ -489,14 +489,14 @@ function openPageCreditInformation() {
     reload: true,
     bounces: true,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 /**
  * 1. 打开担保业务申请表页面
  */
 
 function openGuaranteeApplicationIndex(_ref) {
-  var pageParam = _ref.pageParam;
+  var pageParam = _ref.pageParam
   api.openTabLayout({
     title: '担保业务申请表',
     name: 'html/guarantee_application_index/index',
@@ -506,7 +506,7 @@ function openGuaranteeApplicationIndex(_ref) {
     bounces: true,
     pageParam: pageParam,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 /**
  * 2. 打开反担保人列表页面
@@ -521,7 +521,7 @@ function openGuaranteeApplicationIndex(_ref) {
  */
 
 function openAttachmentInfo(_ref2) {
-  var pageParam = _ref2.pageParam;
+  var pageParam = _ref2.pageParam
   api.openTabLayout({
     title: '附件上传',
     name: 'html/attachment_info/index',
@@ -531,14 +531,14 @@ function openAttachmentInfo(_ref2) {
     bounces: true,
     pageParam: pageParam,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 /**
  * 1.1 打开房产信息录入页面
  */
 
 function openGuaranteeApplicationHouse(_ref3) {
-  var pageParam = _ref3.pageParam;
+  var pageParam = _ref3.pageParam
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -548,14 +548,14 @@ function openGuaranteeApplicationHouse(_ref3) {
     bounces: true,
     pageParam: pageParam,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 /**
  * 1.2 打开车辆信息录入页面
  */
 
 function openGuaranteeApplicationCar(_ref4) {
-  var pageParam = _ref4.pageParam;
+  var pageParam = _ref4.pageParam
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',
@@ -565,14 +565,14 @@ function openGuaranteeApplicationCar(_ref4) {
     bounces: true,
     pageParam: pageParam,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 /**
  * 1.3 打开家庭成员信息录入页面
  */
 
 function openGuaranteeApplicationFamily(_ref5) {
-  var pageParam = _ref5.pageParam;
+  var pageParam = _ref5.pageParam
   api.openTabLayout({
     title: '家庭成员信息',
     name: 'html/guarantee_application_family/index',
@@ -582,24 +582,24 @@ function openGuaranteeApplicationFamily(_ref5) {
     bounces: true,
     pageParam: pageParam,
     navigationBar: navigationBarProfile
-  });
+  })
 }
 function closeCurrentWinAndRefresh(_ref6) {
   var winName = _ref6.winName,
-      frameName = _ref6.frameName,
-      script = _ref6.script;
+    frameName = _ref6.frameName,
+    script = _ref6.script
   //  关闭当前win并刷新指定页面
   api.execScript({
     name: winName,
     frameName: frameName,
     script: script
-  });
-  setTimeout(function () {
-    api.closeWin();
-  }, 300);
+  })
+  setTimeout(function() {
+    api.closeWin()
+  }, 300)
 }
 
-var rmap = /*#__PURE__*/Object.freeze({
+var rmap = /* #__PURE__*/Object.freeze({
   __proto__: null,
   openPageCreditInformation: openPageCreditInformation,
   openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
@@ -608,7 +608,7 @@ var rmap = /*#__PURE__*/Object.freeze({
   openGuaranteeApplicationCar: openGuaranteeApplicationCar,
   openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
   closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
-});
+})
 
 /**
  * Router class
@@ -617,31 +617,31 @@ var rmap = /*#__PURE__*/Object.freeze({
  */
 
 var Router = function Router() {
-  classCallCheck(this, Router);
+  classCallCheck(this, Router)
 
-  _extends_1(this, rmap);
+  _extends_1(this, rmap)
 };
 
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
+    var descriptor = props[i]
+    descriptor.enumerable = descriptor.enumerable || false
+    descriptor.configurable = true
+    if ('value' in descriptor) descriptor.writable = true
+    Object.defineProperty(target, descriptor.key, descriptor)
   }
 }
 
 function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps)
+  if (staticProps) _defineProperties(Constructor, staticProps)
+  return Constructor
 }
 
-var createClass = _createClass;
+var createClass = _createClass
 
 var openPicker = function openPicker(params, options) {
-  var UIActionSelector = api.require('UIActionSelector');
+  var UIActionSelector = api.require('UIActionSelector')
 
   UIActionSelector.open({
     datas: params.data,
@@ -688,12 +688,12 @@ var openPicker = function openPicker(params, options) {
       color: '#888'
     },
     fixedOn: api.frameName
-  }, function (ret, err) {
+  }, function(ret, err) {
     if (ret.eventType === 'ok') {
-      params.success && params.success(ret.selectedInfo);
+      params.success && params.success(ret.selectedInfo)
     }
-  });
-  return UIActionSelector;
+  })
+  return UIActionSelector
 };
 /**
  * @authro liyang
@@ -706,7 +706,7 @@ var setPicker = function setPicker(params) {
   return openPicker(params, {
     row: 5,
     col: 1
-  });
+  })
 };
 /**
  * @authro liyang
@@ -718,26 +718,26 @@ var setCityPicker = function setCityPicker(params) {
   return openPicker(params, {
     row: 5,
     col: 3
-  });
+  })
 };
 
 var showLoading = function showLoading() {
-  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...'
   api.showProgress({
     title: title,
     text: '',
     modal: true
-  });
+  })
 };
 var hideLoading = function hideLoading() {
-  api.hideProgress();
+  api.hideProgress()
 };
 
 var toast = function toast(msg) {
   api.toast({
     msg: msg,
     location: 'middle'
-  });
+  })
 };
 
 /**
@@ -746,7 +746,7 @@ var toast = function toast(msg) {
  * @desc UI类
  */
 
-var UI = /*#__PURE__*/function () {
+var UI = /* #__PURE__*/(function () {
   function UI() {
     classCallCheck(this, UI);
   }
@@ -779,14 +779,14 @@ var UI = /*#__PURE__*/function () {
   }]);
 
   return UI;
-}();
+}());
 
 /**
  * File class
  * @author liyang
  * @desc File类
  */
-var File = /*#__PURE__*/function () {
+var File = /* #__PURE__*/(function () {
   function File() {
     classCallCheck(this, File);
   }
@@ -827,19 +827,19 @@ var File = /*#__PURE__*/function () {
   }]);
 
   return File;
-}();
+}());
 
 var codeMapFilter = function codeMapFilter(list) {
-  var codeMap = {};
-  list.filter(function (item, i) {
-    return !!item.valid;
-  }).forEach(function (el, k) {
-    codeMap[el.code] = el.name;
-  });
-  return codeMap;
+  var codeMap = {}
+  list.filter(function(item, i) {
+    return Boolean(item.valid);
+  }).forEach(function(el, k) {
+    codeMap[el.code] = el.name
+  })
+  return codeMap
 };
 
-var runtime_1 = createCommonjsModule(function (module) {
+var runtime_1 = createCommonjsModule(function(module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -847,29 +847,29 @@ var runtime_1 = createCommonjsModule(function (module) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var runtime = (function (exports) {
+  var runtime = (function(exports) {
 
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined$1; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+    var Op = Object.prototype
+  var hasOwn = Op.hasOwnProperty
+  var undefined$1 // More compressible than void 0.
+  var $Symbol = typeof Symbol === 'function' ? Symbol : {}
+  var iteratorSymbol = $Symbol.iterator || '@@iterator';
+    var asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator';
+    var toStringTagSymbol = $Symbol.toStringTag || '@@toStringTag';
 
-  function wrap(innerFn, outerFn, self, tryLocsList) {
+    function wrap(innerFn, outerFn, self, tryLocsList) {
     // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
+      var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator
+    var generator = Object.create(protoGenerator.prototype)
+    var context = new Context(tryLocsList || [])
 
     // The ._invoke method unifies the implementations of the .next,
     // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
+    generator._invoke = makeInvokeMethod(innerFn, self, context)
 
-    return generator;
+    return generator
   }
-  exports.wrap = wrap;
+    exports.wrap = wrap
 
   // Try/catch helper to minimize deoptimizations. Returns a completion
   // record like context.tryEntries[i].completion. This interface could
@@ -882,137 +882,137 @@ var runtime = (function (exports) {
   // only additional allocation required is the completion record, which
   // has a stable shape and so hopefully should be cheap to allocate.
   function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
+      try {
+        return { type: 'normal', arg: fn.call(obj, arg) }
     } catch (err) {
-      return { type: "throw", arg: err };
+        return { type: 'throw', arg: err }
     }
-  }
+    }
 
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
+    var GenStateSuspendedStart = 'suspendedStart';
+    var GenStateSuspendedYield = 'suspendedYield';
+    var GenStateExecuting = 'executing';
+    var GenStateCompleted = 'completed';
 
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
+    // Returning this object from the innerFn has the same effect as
+    // breaking out of the dispatch switch statement.
+    var ContinueSentinel = {}
 
   // Dummy constructor functions that we use as the .constructor and
   // .constructor.prototype properties for functions that return Generator
   // objects. For full spec compliance, you may wish to configure your
   // minifier not to mangle the names of these two functions.
   function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
+    function GeneratorFunction() {}
+    function GeneratorFunctionPrototype() {}
 
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
+    // This is a polyfill for %IteratorPrototype% for environments that
+    // don't natively support it.
+    var IteratorPrototype = {}
+  IteratorPrototype[iteratorSymbol] = function() {
+      return this
   };
 
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+    var getProto = Object.getPrototypeOf
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])))
   if (NativeIteratorPrototype &&
       NativeIteratorPrototype !== Op &&
       hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
     // This environment has a native %IteratorPrototype%; use it instead
     // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
+      IteratorPrototype = NativeIteratorPrototype
   }
 
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+    var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype)
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype
+  GeneratorFunctionPrototype.constructor = GeneratorFunction
   GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
+    GeneratorFunction.displayName = 'GeneratorFunction';
 
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
+    // Helper for defining the .next, .throw, and .return methods of the
+    // Iterator interface in terms of a single ._invoke method.
+    function defineIteratorMethods(prototype) {
+      ['next', 'throw', 'return'].forEach(function(method) {
+        prototype[method] = function(arg) {
+          return this._invoke(method, arg)
       };
-    });
+      })
   }
 
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
+    exports.isGeneratorFunction = function(genFun) {
+      var ctor = typeof genFun === 'function' && genFun.constructor
     return ctor
-      ? ctor === GeneratorFunction ||
+        ? ctor === GeneratorFunction ||
         // For the native GeneratorFunction constructor, the best we can
         // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
+        (ctor.displayName || ctor.name) === 'GeneratorFunction'
+        : false
   };
 
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    exports.mark = function(genFun) {
+      if (Object.setPrototypeOf) {
+        Object.setPrototypeOf(genFun, GeneratorFunctionPrototype)
     } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
+        genFun.__proto__ = GeneratorFunctionPrototype
       if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
+          genFun[toStringTagSymbol] = 'GeneratorFunction';
+        }
       }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
+      genFun.prototype = Object.create(Gp)
+    return genFun
   };
 
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
+    // Within the body of any async function, `await x` is transformed to
+    // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+    // `hasOwn.call(value, "__await")` to determine if the yielded value is
+    // meant to be awaited.
+    exports.awrap = function(arg) {
+      return { __await: arg }
   };
 
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
+    function AsyncIterator(generator, PromiseImpl) {
+      function invoke(method, arg, resolve, reject) {
+        var record = tryCatch(generator[method], generator, arg)
+      if (record.type === 'throw') {
+          reject(record.arg)
       } else {
-        var result = record.arg;
-        var value = result.value;
+          var result = record.arg
+        var value = result.value
         if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
+            typeof value === 'object' &&
+            hasOwn.call(value, '__await')) {
+            return PromiseImpl.resolve(value.__await).then(function(value) {
+              invoke('next', value, resolve, reject)
           }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
+              invoke('throw', err, resolve, reject)
+          })
         }
 
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          return PromiseImpl.resolve(value).then(function(unwrapped) {
           // When a yielded Promise is resolved, its final value becomes
           // the .value of the Promise<{value,done}> result for the
           // current iteration.
-          result.value = unwrapped;
-          resolve(result);
+            result.value = unwrapped
+          resolve(result)
         }, function(error) {
           // If a rejected Promise was yielded, throw the rejection back
           // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
+            return invoke('throw', error, resolve, reject)
+        })
       }
-    }
+      }
 
-    var previousPromise;
+      var previousPromise
 
     function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function(resolve, reject) {
+            invoke(method, arg, resolve, reject)
+        })
       }
 
-      return previousPromise =
+        return previousPromise =
         // If enqueue has been called before, then we want to wait until
         // all previous Promises have been resolved before calling invoke,
         // so that results are always delivered in the correct order. If
@@ -1030,176 +1030,176 @@ var runtime = (function (exports) {
           // Avoid propagating failures to Promises returned by later
           // invocations of the iterator.
           callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
+        ) : callInvokeWithMethodAndArg()
     }
 
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
+      // Define the unified helper method that is used to implement .next,
+      // .throw, and .return (see defineIteratorMethods).
+      this._invoke = enqueue
   }
 
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
+    defineIteratorMethods(AsyncIterator.prototype)
+  AsyncIterator.prototype[asyncIteratorSymbol] = function() {
+      return this
   };
-  exports.AsyncIterator = AsyncIterator;
+    exports.AsyncIterator = AsyncIterator
 
   // Note that simple async functions are implemented on top of
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
   exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
+      if (PromiseImpl === void 0) PromiseImpl = Promise
 
     var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
+        wrap(innerFn, outerFn, self, tryLocsList),
+        PromiseImpl
+      )
 
     return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
+        ? iter // If outerFn is a generator, return the full iterator.
+        : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next()
+        })
   };
 
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
+    function makeInvokeMethod(innerFn, self, context) {
+      var state = GenStateSuspendedStart
 
     return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
+        if (state === GenStateExecuting) {
+          throw new Error('Generator is already running')
       }
 
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
+        if (state === GenStateCompleted) {
+          if (method === 'throw') {
+            throw arg
         }
 
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
+          // Be forgiving, per 25.3.3.3.3 of the spec:
+          // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+          return doneResult()
       }
 
-      context.method = method;
-      context.arg = arg;
+        context.method = method
+      context.arg = arg
 
       while (true) {
-        var delegate = context.delegate;
+          var delegate = context.delegate
         if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
+            var delegateResult = maybeInvokeDelegate(delegate, context)
           if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
+              if (delegateResult === ContinueSentinel) continue
+            return delegateResult
           }
-        }
+          }
 
-        if (context.method === "next") {
+          if (context.method === 'next') {
           // Setting context._sent for legacy support of Babel's
           // function.sent implementation.
-          context.sent = context._sent = context.arg;
+            context.sent = context._sent = context.arg
 
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
+        } else if (context.method === 'throw') {
+            if (state === GenStateSuspendedStart) {
+              state = GenStateCompleted
+            throw context.arg
           }
 
-          context.dispatchException(context.arg);
+            context.dispatchException(context.arg)
 
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
+        } else if (context.method === 'return') {
+            context.abrupt('return', context.arg)
         }
 
-        state = GenStateExecuting;
+          state = GenStateExecuting
 
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
+        var record = tryCatch(innerFn, self, context)
+        if (record.type === 'normal') {
           // If an exception is thrown from innerFn, we leave state ===
           // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
+            state = context.done
+              ? GenStateCompleted
+              : GenStateSuspendedYield
 
           if (record.arg === ContinueSentinel) {
-            continue;
+              continue
           }
 
-          return {
-            value: record.arg,
-            done: context.done
-          };
+            return {
+              value: record.arg,
+              done: context.done
+            }
 
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
+        } else if (record.type === 'throw') {
+            state = GenStateCompleted
           // Dispatch the exception by looping back around to the
           // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
+          context.method = 'throw';
+            context.arg = record.arg
+        }
         }
       }
-    };
   }
 
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
+    // Call delegate.iterator[context.method](context.arg) and handle the
+    // result, either by returning a { value, done } result from the
+    // delegate iterator, or by modifying context.method and context.arg,
+    // setting context.delegate to null, and returning the ContinueSentinel.
+    function maybeInvokeDelegate(delegate, context) {
+      var method = delegate.iterator[context.method]
     if (method === undefined$1) {
       // A .throw or .return when the delegate iterator has no .throw
       // method always terminates the yield* loop.
-      context.delegate = null;
+        context.delegate = null
 
-      if (context.method === "throw") {
+      if (context.method === 'throw') {
         // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
+          if (delegate.iterator['return']) {
           // If the delegate iterator has a return method, give it a
           // chance to clean up.
-          context.method = "return";
-          context.arg = undefined$1;
-          maybeInvokeDelegate(delegate, context);
+            context.method = 'return';
+            context.arg = undefined$1
+          maybeInvokeDelegate(delegate, context)
 
-          if (context.method === "throw") {
+          if (context.method === 'throw') {
             // If maybeInvokeDelegate(context) changed context.method from
             // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
+              return ContinueSentinel
           }
-        }
+          }
 
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
+          context.method = 'throw';
+          context.arg = new TypeError(
+            "The iterator does not provide a 'throw' method")
       }
 
-      return ContinueSentinel;
+        return ContinueSentinel
     }
 
-    var record = tryCatch(method, delegate.iterator, context.arg);
+      var record = tryCatch(method, delegate.iterator, context.arg)
 
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
+    if (record.type === 'throw') {
+        context.method = 'throw';
+        context.arg = record.arg
+      context.delegate = null
+      return ContinueSentinel
     }
 
-    var info = record.arg;
+      var info = record.arg
 
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
+    if (!info) {
+        context.method = 'throw';
+        context.arg = new TypeError('iterator result is not an object')
+      context.delegate = null
+      return ContinueSentinel
     }
 
-    if (info.done) {
+      if (info.done) {
       // Assign the result of the finished delegate to the temporary
       // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
+        context[delegate.resultName] = info.value
 
       // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
+      context.next = delegate.nextLoc
 
       // If context.method was "throw" but the delegate handled the
       // exception, let the outer generator proceed normally. If
@@ -1207,355 +1207,355 @@ var runtime = (function (exports) {
       // "consumed" by the delegate iterator. If context.method was
       // "return", allow the original .return call to continue in the
       // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined$1;
+      if (context.method !== 'return') {
+          context.method = 'next';
+          context.arg = undefined$1
       }
 
-    } else {
+      } else {
       // Re-yield the result returned by the delegate method.
-      return info;
+        return info
     }
 
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
+      // The delegate iterator is finished, so forget it and continue with
+      // the outer generator.
+      context.delegate = null
+    return ContinueSentinel
   }
 
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
+    // Define Generator.prototype.{next,throw,return} in terms of the
+    // unified ._invoke helper method.
+    defineIteratorMethods(Gp)
 
-  Gp[toStringTagSymbol] = "Generator";
+  Gp[toStringTagSymbol] = 'Generator';
 
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
+    // A Generator should always return itself as the iterator object when the
+    // @@iterator function is called on it. Some browsers' implementations of the
+    // iterator prototype chain incorrectly implement this, causing the Generator
+    // object to not be returned from this call. This ensures that doesn't happen.
+    // See https://github.com/facebook/regenerator/issues/274 for more details.
+    Gp[iteratorSymbol] = function() {
+      return this
   };
 
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
+    Gp.toString = function() {
+      return '[object Generator]';
+    }
 
   function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
+      var entry = { tryLoc: locs[0] }
 
     if (1 in locs) {
-      entry.catchLoc = locs[1];
+        entry.catchLoc = locs[1]
     }
 
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
+      if (2 in locs) {
+        entry.finallyLoc = locs[2]
+      entry.afterLoc = locs[3]
     }
 
-    this.tryEntries.push(entry);
+      this.tryEntries.push(entry)
   }
 
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
+    function resetTryEntry(entry) {
+      var record = entry.completion || {}
+    record.type = 'normal';
+      delete record.arg
+    entry.completion = record
   }
 
-  function Context(tryLocsList) {
+    function Context(tryLocsList) {
     // The root entry object (effectively a try statement without a catch
     // or a finally block) gives us a place to store values thrown from
     // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
+      this.tryEntries = [{ tryLoc: 'root' }]
+    tryLocsList.forEach(pushTryEntry, this)
+    this.reset(true)
   }
 
-  exports.keys = function(object) {
-    var keys = [];
+    exports.keys = function(object) {
+      var keys = []
     for (var key in object) {
-      keys.push(key);
+        keys.push(key)
     }
-    keys.reverse();
+      keys.reverse()
 
     // Rather than returning an object with a next method, we keep
     // things simple and return the next function itself.
     return function next() {
-      while (keys.length) {
-        var key = keys.pop();
+        while (keys.length) {
+          var key = keys.pop()
         if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
+            next.value = key
+          next.done = false
+          return next
         }
-      }
+        }
 
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
+        // To avoid creating an additional object, we just hang the .value
+        // and .done properties off the next function object itself. This
+        // also ensures that the minifier will not anonymize the function.
+        next.done = true
+      return next
     };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined$1;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
     }
 
-    // Return an iterator with no values.
-    return { next: doneResult };
+  function values(iterable) {
+      if (iterable) {
+        var iteratorMethod = iterable[iteratorSymbol]
+      if (iteratorMethod) {
+          return iteratorMethod.call(iterable)
+      }
+
+        if (typeof iterable.next === 'function') {
+          return iterable
+      }
+
+        if (!isNaN(iterable.length)) {
+          var i = -1, next = function next() {
+            while (++i < iterable.length) {
+              if (hasOwn.call(iterable, i)) {
+                next.value = iterable[i]
+              next.done = false
+              return next
+            }
+            }
+
+            next.value = undefined$1
+          next.done = true
+
+          return next
+        };
+
+          return next.next = next
+      }
+      }
+
+      // Return an iterator with no values.
+      return { next: doneResult }
   }
-  exports.values = values;
+    exports.values = values
 
   function doneResult() {
-    return { value: undefined$1, done: true };
+      return { value: undefined$1, done: true }
   }
 
-  Context.prototype = {
-    constructor: Context,
+    Context.prototype = {
+      constructor: Context,
 
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
+      reset: function(skipTempReset) {
+        this.prev = 0
+      this.next = 0
       // Resetting context._sent for legacy support of Babel's
       // function.sent implementation.
-      this.sent = this._sent = undefined$1;
-      this.done = false;
-      this.delegate = null;
+      this.sent = this._sent = undefined$1
+      this.done = false
+      this.delegate = null
 
-      this.method = "next";
-      this.arg = undefined$1;
+      this.method = 'next';
+        this.arg = undefined$1
 
-      this.tryEntries.forEach(resetTryEntry);
+      this.tryEntries.forEach(resetTryEntry)
 
       if (!skipTempReset) {
-        for (var name in this) {
+          for (var name in this) {
           // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
+            if (name.charAt(0) === 't' &&
               hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined$1;
+              !isNaN(Number(name.slice(1)))) {
+              this[name] = undefined$1
+          }
           }
         }
+      },
+
+      stop: function() {
+        this.done = true
+
+      var rootEntry = this.tryEntries[0]
+      var rootRecord = rootEntry.completion
+      if (rootRecord.type === 'throw') {
+          throw rootRecord.arg
       }
+
+        return this.rval
     },
 
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
+      dispatchException: function(exception) {
+        if (this.done) {
+          throw exception
       }
 
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
+        var context = this
       function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
+          record.type = 'throw';
+          record.arg = exception
+        context.next = loc
 
         if (caught) {
           // If the dispatched exception was caught by a catch block,
           // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined$1;
+            context.method = 'next';
+            context.arg = undefined$1
         }
 
-        return !! caught;
-      }
+          return Boolean(caught);
+        }
 
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i]
+        var record = entry.completion
 
-        if (entry.tryLoc === "root") {
+        if (entry.tryLoc === 'root') {
           // Exception thrown outside of any try block that could handle
           // it, so set the completion value of the entire function to
           // throw the exception.
-          return handle("end");
+            return handle('end')
         }
 
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
+          if (entry.tryLoc <= this.prev) {
+            var hasCatch = hasOwn.call(entry, 'catchLoc')
+          var hasFinally = hasOwn.call(entry, 'finallyLoc')
 
           if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
+              if (this.prev < entry.catchLoc) {
+                return handle(entry.catchLoc, true)
             } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
+                return handle(entry.finallyLoc)
             }
 
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
+            } else if (hasCatch) {
+              if (this.prev < entry.catchLoc) {
+                return handle(entry.catchLoc, true)
             }
 
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
+            } else if (hasFinally) {
+              if (this.prev < entry.finallyLoc) {
+                return handle(entry.finallyLoc)
             }
 
-          } else {
-            throw new Error("try statement without catch or finally");
+            } else {
+              throw new Error('try statement without catch or finally')
+          }
           }
         }
-      }
-    },
+      },
 
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
+      abrupt: function(type, arg) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i]
         if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
+            hasOwn.call(entry, 'finallyLoc') &&
             this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
+            var finallyEntry = entry
           break;
+          }
         }
-      }
 
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
+        if (finallyEntry &&
+          (type === 'break' ||
+           type === 'continue') &&
           finallyEntry.tryLoc <= arg &&
           arg <= finallyEntry.finallyLoc) {
         // Ignore the finally entry if control is not jumping to a
         // location outside the try/catch block.
-        finallyEntry = null;
+          finallyEntry = null
       }
 
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
+        var record = finallyEntry ? finallyEntry.completion : {}
+      record.type = type
+      record.arg = arg
 
       if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
+          this.method = 'next';
+          this.next = finallyEntry.finallyLoc
+        return ContinueSentinel
       }
 
-      return this.complete(record);
+        return this.complete(record)
     },
 
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
+      complete: function(record, afterLoc) {
+        if (record.type === 'throw') {
+          throw record.arg
       }
 
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
+        if (record.type === 'break' ||
+          record.type === 'continue') {
+          this.next = record.arg
+      } else if (record.type === 'return') {
+          this.rval = this.arg = record.arg
+        this.method = 'return';
+          this.next = 'end';
+        } else if (record.type === 'normal' && afterLoc) {
+          this.next = afterLoc
       }
 
-      return ContinueSentinel;
+        return ContinueSentinel
     },
 
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
+      finish: function(finallyLoc) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i]
         if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
+            this.complete(entry.completion, entry.afterLoc)
+          resetTryEntry(entry)
+          return ContinueSentinel
         }
-      }
-    },
+        }
+      },
 
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
+      'catch': function(tryLoc) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i]
         if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
+            var record = entry.completion
+          if (record.type === 'throw') {
+              var thrown = record.arg
+            resetTryEntry(entry)
           }
-          return thrown;
+            return thrown
         }
-      }
+        }
 
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
+        // The context.catch method must only be called with a location
+        // argument that corresponds to a known catch block.
+        throw new Error('illegal catch attempt')
     },
 
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
+      delegateYield: function(iterable, resultName, nextLoc) {
+        this.delegate = {
+          iterator: values(iterable),
+          resultName: resultName,
+          nextLoc: nextLoc
+        }
 
-      if (this.method === "next") {
+      if (this.method === 'next') {
         // Deliberately forget the last sent value so that we don't
         // accidentally pass it on to the delegate.
-        this.arg = undefined$1;
+          this.arg = undefined$1
       }
 
-      return ContinueSentinel;
+        return ContinueSentinel
     }
-  };
+    }
 
   // Regardless of whether this script is executing as a CommonJS module
   // or not, return the runtime object so that we can declare the variable
   // regeneratorRuntime in the outer scope, which allows this module to be
   // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
+  return exports
 
 }(
   // If this script is executing as a CommonJS module, use module.exports
   // as the regeneratorRuntime namespace. Otherwise create a new empty
   // object. Either way, the resulting object will be used to initialize
   // the regeneratorRuntime variable at the top of this file.
-   module.exports 
-));
+    module.exports
+  ))
 
 try {
-  regeneratorRuntime = runtime;
+    regeneratorRuntime = runtime
 } catch (accidentalStrictMode) {
   // This module should not be running in strict mode, so the above
   // assignment should always work unless something is misconfigured. Just
@@ -1566,51 +1566,51 @@ try {
   // you've misconfigured your bundler to force strict mode and applied a
   // CSP to forbid Function, and you're not willing to fix either of those
   // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
+    Function('r', 'regeneratorRuntime = r')(runtime)
 }
-});
+})
 
-var regenerator = runtime_1;
+var regenerator = runtime_1
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
-    var info = gen[key](arg);
-    var value = info.value;
+    var info = gen[key](arg)
+    var value = info.value
   } catch (error) {
-    reject(error);
+    reject(error)
     return;
   }
 
   if (info.done) {
-    resolve(value);
+    resolve(value)
   } else {
-    Promise.resolve(value).then(_next, _throw);
+    Promise.resolve(value).then(_next, _throw)
   }
 }
 
 function _asyncToGenerator(fn) {
-  return function () {
+  return function() {
     var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
+      args = arguments
+    return new Promise(function(resolve, reject) {
+      var gen = fn.apply(self, args)
 
       function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, 'next', value)
       }
 
       function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, 'throw', err)
       }
 
-      _next(undefined);
-    });
+      _next(undefined)
+    })
   };
 }
 
-var asyncToGenerator = _asyncToGenerator;
+var asyncToGenerator = _asyncToGenerator
 
-var BaiduSDK = /*#__PURE__*/function () {
+var BaiduSDK = /* #__PURE__*/(function () {
   function BaiduSDK() {
     classCallCheck(this, BaiduSDK);
 
@@ -1767,11 +1767,11 @@ var BaiduSDK = /*#__PURE__*/function () {
   }]);
 
   return BaiduSDK;
-}();
+}());
 
 var OCR = {
   Baidu: new BaiduSDK()
-};
+}
 
 /**
  * Utils class
@@ -1780,60 +1780,60 @@ var OCR = {
  */
 
 var Utils = function Utils() {
-  classCallCheck(this, Utils);
+  classCallCheck(this, Utils)
 
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-  this.OCR = OCR;
+  this.Router = new Router()
+  this.UI = new UI()
+  this.File = new File()
+  this.DictFilter = codeMapFilter
+  this.OCR = OCR
 };
 
-var Utils$1 = new Utils();
+var Utils$1 = new Utils()
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function(sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable }); keys.push.apply(keys, symbols) } return keys }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function(key) { defineProperty(target, key, source[key]) }) } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) } else { ownKeys(Object(source)).forEach(function(key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)) }) } } return target }
+var uat = 'http://gateway.test.crpt-cloud.liuheco.com'
+var baseUrl = uat 
 var whiteList = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert = false;
+  '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+]
+var hasAlert = false
 
 function ajax(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}
 
   var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+    _ref$headers = _ref.headers,
+    headers = _ref$headers === void 0 ? {} : _ref$headers,
+    _ref$tag = _ref.tag,
+    tag = _ref$tag === void 0 ? null : _ref$tag,
+    _ref$timeout = _ref.timeout,
+    timeout = _ref$timeout === void 0 ? 20 : _ref$timeout
 
-  return new Promise(function (resolve, reject) {
-    var token = '';
+  return new Promise(function(resolve, reject) {
+    var token = ''
 
     if (headers.token) {
-      token = headers.token;
+      token = headers.token
     } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+      var userinfo = $api.getStorage('userinfo')
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : ''
     }
 
     var contentType = {
       'Content-Type': 'application/json;charset=utf-8'
-    };
+    }
     var Authorization = {
       Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
+    }
+    method === 'upload' ? contentType = {} : null
+    var include = whiteList.find(function(value) {
+      return url.includes(value)
+    })
+    include ? Authorization = {} : null
+    var start = new Date().getTime()
     api.ajax({
       url: baseUrl + url,
       method: method === 'upload' ? 'post' : method,
@@ -1841,155 +1841,155 @@ function ajax(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
+    }, function(ret, error) {
+      var end = new Date().getTime()
+      var dis = (end - start) / 1000
+      console.log('/************* ' + dis + 's **********/')
 
       if (ret) {
         if (ret.code === 200) {
-          resolve(ret);
+          resolve(ret)
         } else {
           // 表单校验未过专属code
           if (ret.code === 202) {
-            var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
-            resolve(ret);
+            var _data = ret.data
+            Utils$1.UI.toast(_data[0].msg)
+            resolve(ret)
           } else {
-            reject(ret);
+            reject(ret)
           }
         }
       } else {
         if (error.statusCode === 500 && error.body.code === 216) {
           if (!hasAlert) {
-            hasAlert = true;
+            hasAlert = true
             api.alert({
               title: '提示',
               msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert = false;
+            }, function(ret, err) {
+              hasAlert = false
               api.closeWin({
                 name: 'html/register/index'
-              });
+              })
               api.closeWin({
                 name: 'html/gerenlogin/index'
-              });
+              })
               api.closeWin({
                 name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
+              })
+              setTimeout(function() {
+                $api.clearStorage()
+                openRegLogin()
+              }, 150)
+            })
           }
 
-          reject(error);
+          reject(error)
         }
 
-        reject(error);
+        reject(error)
       }
 
       {
         if (ret) {
-          console.log('/************* SUCCESS. **********/');
+          console.log('/************* SUCCESS. **********/')
         } else {
-          console.log('/************* ERROR. ************/');
+          console.log('/************* ERROR. ************/')
         }
 
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url)
+        console.log('__TOKEN ==> ' + token)
+        console.log('__BODY ==> ' + JSON.stringify(data))
+        console.log('__DATA ==> ' + JSON.stringify(ret || error))
       }
-    });
-  });
+    })
+  })
 }
 
 var http = {
   cancel: function cancel(tag) {
     return api.cancelAjax({
       tag: tag
-    });
+    })
   },
   get: function get(url, data) {
     var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
+      headers = _ref2.headers,
+      tag = _ref2.tag,
+      timeout = _ref2.timeout
 
     return ajax('get', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    });
+    })
   },
   post: function post(url, data) {
     var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
+      headers = _ref3.headers,
+      tag = _ref3.tag,
+      timeout = _ref3.timeout
 
     return ajax('post', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    });
+    })
   },
   put: function put(url, data) {
     var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
+      headers = _ref4.headers,
+      tag = _ref4.tag,
+      timeout = _ref4.timeout
 
     return ajax('put', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    });
+    })
   },
-  "delete": function _delete(url, data) {
+  'delete': function _delete(url, data) {
     var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
+      headers = _ref5.headers,
+      tag = _ref5.tag,
+      timeout = _ref5.timeout
 
     return ajax('delete', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    });
+    })
   },
   upload: function upload(url, data) {
     var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
+      headers = _ref6.headers,
+      tag = _ref6.tag,
+      timeout = _ref6.timeout
 
     return ajax('upload', url, data, {
       headers: headers,
       tag: tag,
       timeout: timeout
-    });
+    })
   }
-}; // 统一ios和android的输入框，下标都从0开始
+} // 统一ios和android的输入框，下标都从0开始
 
 var isPhoneNo = function isPhoneNo(phone) {
-  return /^1[3456789]\d{9}$/.test(phone);
+  return /^1[3456789]\d{9}$/.test(phone)
 };
 
 var phoneNoFormat = function phoneNoFormat(tel) {
-  var tag = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '****';
-  var a = String(tel).substring(0, 3);
-  var b = String(tel).substr(3, 4);
-  var c = String(tel).substr(7, 4);
+  var tag = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '****'
+  var a = String(tel).substring(0, 3)
+  var b = String(tel).substr(3, 4)
+  var c = String(tel).substr(7, 4)
 
   if (tag === '****') {
-    return a + tag + c;
+    return a + tag + c
   } else {
-    return a + tag + b + tag + c;
+    return a + tag + b + tag + c
   }
-};
+}
 //   "access_token": "6ca22146-008e-4c12-9772-8d72229b731b",
 //   "token_type":"bearer",
 //   "refresh_token":"6509c5e3-b3d5-4725-9f1b-89b5f548d444",
@@ -2006,9 +2006,9 @@ var phoneNoFormat = function phoneNoFormat(tel) {
 
 
 function loginSuccessCallback(userinfo) {
-  $api.setStorage('userinfo', userinfo); // 用户信息
+  $api.setStorage('userinfo', userinfo) // 用户信息
 
-  getAndStorageAuthStatus(function (status) {
+  getAndStorageAuthStatus(function(status) {
     // 认证状态 int
     // 1：正常
     // 2：待实名认证
@@ -2017,19 +2017,19 @@ function loginSuccessCallback(userinfo) {
     // 5：待补充基本信息
     // 6：人工审核不通过
     if (status === 1) {
-      openTabLayout();
+      openTabLayout()
     } else {
       var _ref7 = userinfo || {},
-          userType = _ref7.userType;
+        userType = _ref7.userType
 
       if (userType === '1') {
         // 1个人用户登录 2企业用户登录
-        openTodoAuthGeren();
+        openTodoAuthGeren()
       } else if (userType === '2') {
-        openTodoAuthQiye();
+        openTodoAuthQiye()
       }
     }
-  });
+  })
 }
 
 function getAndStorageAuthStatus(successCallback, errorCallback) {
@@ -2040,27 +2040,27 @@ function getAndStorageAuthStatus(successCallback, errorCallback) {
   // 4：人脸认证失败，待人工审核
   // 5：待补充基本信息
   // 6：人工审核不通过
-  http.get("/crpt-cust/customer/query/authstatus").then(function (res) {
+  http.get('/crpt-cust/customer/query/authstatus').then(function(res) {
     $api.setStorage('authStatus', {
       status: res.data
-    });
-    successCallback && successCallback(res.data);
-  })["catch"](function (error) {
+    })
+    successCallback && successCallback(res.data)
+  })['catch'](function(error) {
     api.toast({
       msg: error.msg || '获取认证状态失败'
-    });
-    errorCallback && errorCallback(error);
-  });
+    })
+    errorCallback && errorCallback(error)
+  })
 }
 
 function appLogin(options, successCallback, errorCallback) {
-  var pwd = '';
+  var pwd = ''
 
   if (options.verification) {
     // 在验证码登录的时候，密码必须设置为手机号码
-    pwd = options.username;
+    pwd = options.username
   } else {
-    pwd = base64_1.encode(options.password || '');
+    pwd = base64_1.encode(options.password || '')
   }
 
   http.post('/auth/oauth/token', {
@@ -2088,124 +2088,124 @@ function appLogin(options, successCallback, errorCallback) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }).then(function (userinfo) {
+  }).then(function(userinfo) {
     api.toast({
       msg: '登录成功',
       location: 'middle',
       global: true
-    });
-    successCallback && successCallback(userinfo);
-  })["catch"](function (error) {
+    })
+    successCallback && successCallback(userinfo)
+  })['catch'](function(error) {
     api.toast({
       msg: error.msg || '登录失败',
       location: 'middle'
-    });
-    errorCallback && errorCallback(error);
-  });
+    })
+    errorCallback && errorCallback(error)
+  })
 }
 
 apiready = function apiready() {
   api.addEventListener({
     name: 'navitembtn'
-  }, function (ret, err) {
+  }, function(ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
-  var sendStatus = 'notsend'; // notsend:未发送,sending:发送中,countdown:倒计时中
+  })
+  var sendStatus = 'notsend' // notsend:未发送,sending:发送中,countdown:倒计时中
 
-  var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
+  var submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
-  var pageParam = api.pageParam || {};
+  var pageParam = api.pageParam || {}
   var tel = pageParam.tel,
-      userType = pageParam.userType;
+    userType = pageParam.userType
 
   if (tel && isPhoneNo(tel)) {
-    $api.byId('tel').innerHTML = phoneNoFormat(tel);
+    $api.byId('tel').innerHTML = phoneNoFormat(tel)
   } else {
-    $api.byId('tel').innerHTML = '';
+    $api.byId('tel').innerHTML = ''
   }
 
-  var apLoginBtn = document.querySelector('#ap_login');
+  var apLoginBtn = document.querySelector('#ap_login')
 
   if (userType === 1) {
     // 个人登录
-    $api.byId('tit').innerHTML = '个人登录';
-    sendCode();
+    $api.byId('tit').innerHTML = '个人登录'
+    sendCode()
   } else {
-    sendStatus = 'sending';
-    $api.byId('tit').innerHTML = '企业登录';
-    countDown();
+    sendStatus = 'sending'
+    $api.byId('tit').innerHTML = '企业登录'
+    countDown()
   }
 
   function countDown() {
-    var second = 60;
-    sendStatus = 'countdown';
-    $api.removeCls($api.byId('sendcode'), 'loading');
-    $api.byId('sendcode').innerHTML = second + '秒后重试';
-    var timer = setInterval(function () {
+    var second = 60
+    sendStatus = 'countdown'
+    $api.removeCls($api.byId('sendcode'), 'loading')
+    $api.byId('sendcode').innerHTML = second + '秒后重试'
+    var timer = setInterval(function() {
       if (second <= 0) {
-        sendStatus = 'notsend';
-        $api.byId('sendcode').innerHTML = '发送验证码';
-        clearInterval(timer);
+        sendStatus = 'notsend'
+        $api.byId('sendcode').innerHTML = '发送验证码'
+        clearInterval(timer)
       } else {
-        second--;
-        $api.byId('sendcode').innerHTML = second + '秒后重试';
+        second--
+        $api.byId('sendcode').innerHTML = second + '秒后重试'
       }
-    }, 1000);
+    }, 1000)
   }
 
   function sendCode() {
     if (sendStatus === 'notsend') {
-      sendStatus = 'sending';
-      $api.byId('sendcode').innerHTML = '正在发送中...';
-      $api.addCls($api.byId('sendcode'), 'loading');
+      sendStatus = 'sending'
+      $api.byId('sendcode').innerHTML = '正在发送中...'
+      $api.addCls($api.byId('sendcode'), 'loading')
       http.post('/crpt-cust/sms/smsverificationcode', {
         body: {
           phone: tel
         }
-      }).then(function (ret) {
-        countDown();
-      })["catch"](function (error) {
-        sendStatus = 'notsend';
-        $api.removeCls($api.byId('sendcode'), 'loading');
-        $api.byId('sendcode').innerHTML = '发送验证码';
+      }).then(function(ret) {
+        countDown()
+      })['catch'](function(error) {
+        sendStatus = 'notsend'
+        $api.removeCls($api.byId('sendcode'), 'loading')
+        $api.byId('sendcode').innerHTML = '发送验证码'
         api.toast({
           msg: error.msg || '发送验证码失败',
           location: 'middle'
-        });
-      });
+        })
+      })
     }
   }
 
-  document.querySelector('#sendcode').onclick = function () {
-    sendCode();
+  document.querySelector('#sendcode').onclick = function() {
+    sendCode()
   };
 
   if (userType === 2) {
-    apLoginBtn.onclick = function () {
+    apLoginBtn.onclick = function() {
       openGerenLogin({
         userType: 2
-      });
+      })
     };
   } else {
     // 个人登录时隐藏账密登录提示
-    apLoginBtn.style.display = 'none';
+    apLoginBtn.style.display = 'none'
   }
 
-  document.querySelector('#login').onclick = function () {
+  document.querySelector('#login').onclick = function() {
     if (submitStatus === 'notsubmit') {
-      var code = $api.byId('code').value.trim();
+      var code = $api.byId('code').value.trim()
 
       if (!code) {
         return api.toast({
           msg: '请输入验证码',
           location: 'middle'
-        });
+        })
       }
 
-      submitStatus = 'submitting';
-      $api.addCls($api.byId('login'), 'loading');
+      submitStatus = 'submitting'
+      $api.addCls($api.byId('login'), 'loading')
       var body = {
         userType: userType,
         // 1个人用户登录，2企业用户登录
@@ -2214,15 +2214,15 @@ apiready = function apiready() {
         // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code // password: tel, // 在验证码登录的时候，密码必须设置为手机号码
 
-      };
-      appLogin(body, function (userinfo) {
-        submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('login'), 'loading');
-        loginSuccessCallback(userinfo);
-      }, function (error) {
-        submitStatus = 'notsubmit';
-        $api.removeCls($api.byId('login'), 'loading');
-      });
+      }
+      appLogin(body, function(userinfo) {
+        submitStatus = 'notsubmit'
+        $api.removeCls($api.byId('login'), 'loading')
+        loginSuccessCallback(userinfo)
+      }, function(error) {
+        submitStatus = 'notsubmit'
+        $api.removeCls($api.byId('login'), 'loading')
+      })
     }
-  };
+  }
 };

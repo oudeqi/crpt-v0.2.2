@@ -1,0 +1,51 @@
+<!doctype html>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+    <meta name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    >
+    <meta name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    >
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" >
+    
+  
+  <link rel="stylesheet" href="./index.css"></head>
+  <body>
+    <div id="app">
+      <div class="pd">
+        <section class="header">
+          <div class="label">我的额度</div>
+          <div class="amount">￥{{'1,000,000'}}</div>
+        </section>
+      </div>
+      <div class="box">
+        <div class="timeline"></div>
+        <ul class="list">
+          <li class="cell"
+            v-for="(item ,index) in list"
+            :class="[{active: index === 0, bigmg: item.month === 1}]"
+            :key="item.id"
+          >
+            <div class="l">
+              <div class="txt1">{{item.date}}</div>
+            </div>
+            <div class="r">
+              <div class="txt1">{{item.text}}</div>
+              <div class="txt2">提升后总额度{{item.total}}</div>
+            </div>
+            <div class="month">{{item.month}}月</div>
+            <div v-if="item.month === 12" class="year">{{item.year}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  
+  <script src="./index.js"></script></body>
+</html>

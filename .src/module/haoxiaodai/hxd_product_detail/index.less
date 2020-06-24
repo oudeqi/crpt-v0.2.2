@@ -1,0 +1,80 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: @pageBg;
+}
+
+.pd {
+  padding: 16px 12px;
+}
+.list {
+  .cell {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 6px 0px rgba(162, 177, 163, 0.1);
+    border-radius: 6px;
+    padding: 16px 12px;
+    margin-bottom: 12px;
+    .title {
+      font-size: 16px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid @pageBg;
+      padding-bottom: 16px;
+      .status {
+        background: rgba(144, 147, 153, 0.1);
+        border-radius: 13px;
+        font-size: 16px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: rgba(144, 147, 153, 1);
+        padding: 2px 15px;
+      }
+    }
+    .main {
+      padding: 8px 0;
+      border-bottom: 1px solid @pageBg;
+      .md {
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .gr {
+          color: @themeColor;
+        }
+        .key {
+          font-size: 16px;
+          font-family: PingFang-SC-Medium, PingFang-SC;
+          font-weight: 500;
+          color: rgba(144, 147, 153, 1);
+        }
+        .val {
+          font-size: 16px;
+          font-family: PingFang-SC-Medium, PingFang-SC;
+          font-weight: 500;
+          color: rgba(48, 49, 51, 1);
+        }
+      }
+    }
+    .footer {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      .topage {
+        font-size: 14px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        color: rgba(102, 187, 106, 1);
+      }
+    }
+  }
+}

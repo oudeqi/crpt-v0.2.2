@@ -41,139 +41,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-// api.lockSlidPane();
-// api.unlockSlidPane
-var navigationBarWhite = {
-  hideBackButton: false,
-  background: '#fff',
-  color: 'rgba(48,49,51,1)',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: 'rgba(102,187,106,1)',
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-};
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-// 导航布局
-
-
-function openTabLayout(index) {
-  api.openTabLayout({
-    name: 'tabLayout',
-    bgColor: '#fff',
-    reload: true,
-    delay: 300,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal' // leftButtons: [{
-      //   // text: '设置',
-      //   // color: '#fff',
-      //   // fontSize: 16,
-      //   iconPath: 'widget://image/avatar.png',
-      // }],
-      // rightButtons: [{
-      //   text: '设置',
-      //   color: '#fff',
-      //   fontSize: 16,
-      //   // iconPath: 'widget://image/settings@2x.png'
-      // }]
-
-    },
-    tabBar: {
-      animated: false,
-      scrollEnabled: true,
-      selectedColor: '#66BB6A',
-      color: '#606266',
-      index: index || 0,
-      fontSize: 12,
-      // preload: 4,
-      list: [{
-        text: "首页",
-        iconPath: "widget://image/tablayout/shouye.png",
-        selectedIconPath: "widget://image/tablayout/shouye_active.png"
-      }, {
-        text: "贷款",
-        iconPath: "widget://image/tablayout/loan.png",
-        selectedIconPath: "widget://image/tablayout/loan_active.png"
-      }, {
-        text: "还款",
-        iconPath: "widget://image/tablayout/huankuan.png",
-        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
-      }, {
-        text: "我的",
-        iconPath: "widget://image/tablayout/wode.png",
-        selectedIconPath: "widget://image/tablayout/wode_active.png"
-      }],
-      frames: [{
-        title: "首页",
-        //tab切换时对应的标题
-        name: "tablayout/index",
-        url: "widget://html/index/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "待申请",
-        name: "tablayout/loan",
-        url: "widget://html/loan/index.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "还款",
-        name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "我的",
-        name: "tablayout/my",
-        url: "widget://html/my/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }]
-    }
-  });
-} // 注册
-
-
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -183,43 +50,6 @@ function openRegLogin() {
     slidBackEnabled: false
   });
 } // 个人登录
-
-
-function openTodoAuthGeren() {
-  api.openTabLayout({
-    name: 'html/todoauthgeren/win',
-    title: '待完成',
-    url: 'widget://html/todoauthgeren/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
-    })
-  });
-}
-
-function openTodoAuthQiye() {
-  api.openTabLayout({
-    name: 'html/todoauthqiye/win',
-    title: '待完成',
-    url: 'widget://html/todoauthqiye/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
-    })
-  });
-} // 企业信息确认
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1590,9 +1420,9 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var uat = 'http://gateway.test.crpt-cloud.liuheco.com';
 var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1639,7 +1469,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1959,7 +1789,7 @@ var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
 var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
 
-var navigationBarWhite$1 = {
+var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
@@ -1972,21 +1802,106 @@ var navigationBarWhite$1 = {
   }]
 }; // 绿色底导航
 
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: themeMainColor,
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+}; // router page 配置信息
+
 var routerMapConfig = {
-  // 好销贷产品申请
+  // 好销贷授信申请
   hxd_apply: {
     name: 'hxd_apply',
     title: '产品介绍',
     url: 'widget://html/hxd_apply/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请补充企业信息
+  hxd_a_supply: {
+    name: 'hxd_a_supply',
+    title: '补充企业信息',
+    url: 'widget://html/hxd_a_supply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请成功/失败
+  hxd_a_success: {
+    name: 'hxd_a_success',
+    title: '产品开通',
+    url: 'widget://html/hxd_a_success/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 好销贷产品详情
+  hxd_product_detail: {
+    name: 'hxd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/hxd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷额度变化详情
+  hxd_quota: {
+    name: 'hxd_quota',
+    title: '额度变化详情',
+    url: 'widget://html/hxd_quota/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款申请
+  hxd_u_apply: {
+    name: 'hxd_u_apply',
+    title: '申请用款',
+    url: 'widget://html/hxd_u_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款确认
+  hxd_u_confirm: {
+    name: 'hxd_u_confirm',
+    title: '用款确认',
+    url: 'widget://html/hxd_u_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款校验
+  hxd_u_smscode: {
+    name: 'hxd_u_smscode',
+    title: '用款校验',
+    url: 'widget://html/hxd_u_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款结果
+  hxd_u_result: {
+    name: 'hxd_u_result',
+    title: '审核结果',
+    url: 'widget://html/hxd_u_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Router$1 = /*#__PURE__*/function () {
   function Router() {
@@ -1999,14 +1914,14 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$2({}, routerMapConfig[key], {}, params));
+      api.openTabLayout(_objectSpread$1({}, routerMapConfig[key], {}, params));
     }
   }]);
 
   return Router;
 }();
 
-new Router$1();
+var Router$2 = new Router$1();
 
 // $api.getStorage()
 // $api.rmStorage()
@@ -2052,19 +1967,10 @@ var App = /*#__PURE__*/function () {
         // return
         // openDanbaoKaitong({step: 0, creditStatus: 2})
         // return
-        var authStatus = $api.getStorage('authStatus') || {};
-
-        if (authStatus.status === 1) {
-          openTabLayout();
-        } else {
-          var userType = userinfo.userType;
-
-          if (userType === '1') {
-            openTodoAuthGeren();
-          } else {
-            openTodoAuthQiye();
-          }
-        }
+        Router$2.openPage({
+          key: 'hxd_u_result'
+        });
+        return;
       } else {
         openRegLogin();
       }
