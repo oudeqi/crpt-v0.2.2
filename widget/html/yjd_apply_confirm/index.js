@@ -1,6 +1,4 @@
-import './index.less'
-
-const page = new Vue({
+var page = new Vue({
   el: '#app',
   data: {
     status: 1,
@@ -19,18 +17,15 @@ const page = new Vue({
       }
     }
   },
-  methods: {
+  methods: {}
+});
 
-  },
-})
-
-apiready = function () {
+apiready = function apiready() {
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  })
-
-}
+  }); // alert(Vue)
+};
