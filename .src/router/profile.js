@@ -1,3 +1,4 @@
+import ouweiRouterMap from './routermap-ouwei'
 // 主题色
 const themeMainColor = 'rgba(102,187,106,1)'
 // 导航文字黑色
@@ -120,4 +121,7 @@ const routerMapConfig = {
   },
 }
 
-export default routerMapConfig
+export default {
+  ...routerMapConfig,
+  ...ouweiRouterMap
+}
