@@ -75,7 +75,8 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      Router.openPage({ key: 'hxd_r_smscode' })
+      Router.openPage({ key: 'yjd_select_contract' })
+
       return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
