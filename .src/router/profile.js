@@ -118,6 +118,33 @@ const routerMapConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷还款试算
+  hxd_r_try: {
+    name: 'hxd_r_try',
+    title: '还款试算',
+    url: 'widget://html/hxd_r_try/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算详情页
+  hxd_r_try_detail: {
+    name: 'hxd_r_try_detail',
+    title: '还款试算详情',
+    url: 'widget://html/hxd_r_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_smscode: {
+    name: 'hxd_r_smscode',
+    title: '还款校验',
+    url: 'widget://html/hxd_r_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
 }
 
 export default routerMapConfig

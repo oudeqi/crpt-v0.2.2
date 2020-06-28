@@ -1,0 +1,48 @@
+<!-- 好销贷还款试算详情frame -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <div class="box">
+        <!-- <h1 class="tit">详情</h1> -->
+        <section class="total">
+          <div class="top">
+            <span class="t1 label">还款总额</span>
+            <div class="t1 num">1,032,232.00 元</div>
+          </div>
+          <div class="btm">本金1,000.22元 利息30.66元</div>
+        </section>
+        <div class="middle">共{{31}}笔</div>
+        <ul class="list">
+          <li class="cel" :key="item.orderId" v-for="(item, index) in list">
+            <div class="key1">
+              <span class="label">还款{{index}}</span>
+              <div class="num">{{item.total}}元</div>
+            </div>
+            <div class="key2">
+              本金{{item.principle}}元 利息{{item.interest}}元
+            </div>
+            <div class="key2">{{item.orderId}}</div>
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="close" @click="handleCloseFrame">关闭</div> -->
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

@@ -57,7 +57,6 @@ class App {
     // return
     // Router.openPage({key: 'hxd_apply'})
     // return
-
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()
@@ -76,8 +75,7 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      Router.openPage({ key: 'hxd_u_result' })
-
+      Router.openPage({ key: 'hxd_r_smscode' })
       return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
