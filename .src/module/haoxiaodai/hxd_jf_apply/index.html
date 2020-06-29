@@ -1,0 +1,65 @@
+<!-- 好销贷金服开户申请页-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <div class="pd">
+        <div class="header">
+          <p class="slogan">NEWHOPE</p>
+          <p class="h1">开通转账还款通道</p>
+          <p class="h1 mg16">助您还款无忧</p>
+          <p class="tips">向您的【转账还款通道】汇款完成还款</p>
+          <p class="tips">资金交易规范、安全、透明</p>
+        </div>
+        <div class="rules">
+          <ul class="list">
+            <li class="cell">
+              <div class="icon">icon</div>
+              <div class="txt">一键开通</div>
+            </li>
+            <li class="cell">
+              <div class="icon">icon</div>
+              <div class="txt">信息透明</div>
+            </li>
+            <li class="cell">
+              <div class="icon">icon</div>
+              <div class="txt">资金安全</div>
+            </li>
+            <li class="cell">
+              <div class="icon">icon</div>
+              <div class="txt">还款无忧</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="app_agreement">
+        <label>
+          <input class="app_checkbox" type="checkbox" id="checkbox" name="type" />
+        </label>
+        <div class="agreement_content">
+          <span>已阅读并同意</span>
+          <span class="ac" v-for="item in agreements" :key="item.id">《{{item.title}}》</span>
+        </div>
+      </div>
+      <div class="bottom-box">
+        <div class="btn btn-normal">立即开通</div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

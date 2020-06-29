@@ -1,0 +1,137 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: #fff;
+}
+.pd {
+  padding: 12px;
+}
+.tips {
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(48, 49, 51, 1);
+  padding: 16px 0;
+}
+.form {
+  margin-bottom: 72px;
+  .item {
+    .desc {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+      padding: 22px 0 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(245, 245, 245, 1);
+
+      .name {
+        flex: 1;
+      }
+      .label {
+        width: 120px;
+        flex: none;
+      }
+      .city {
+        // font-size: 14px;
+        // font-family: PingFang-SC-Medium, PingFang-SC;
+        // font-weight: 500;
+        color: @themeColor;
+      }
+      .dipt {
+        flex: 1;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        font-family: PingFang-SC-Medium, PingFang-SC;
+        font-weight: 500;
+        // color: rgba(192, 196, 204, 1);
+      }
+    }
+    .h1 {
+      margin-top: 24px;
+      font-size: 16px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+      margin-bottom: 4px;
+    }
+    .tips {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+      margin-bottom: 16px;
+      .gr {
+        color: @themeColor;
+      }
+    }
+  }
+  .form-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    .upload {
+      flex: none;
+      width: 160px;
+      height: 240px;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 11px;
+      border: 2px dashed rgba(245, 245, 245, 1);
+      &.u1 {
+        background: red;
+      }
+      &.u2 {
+        background: green;
+      }
+    }
+    .txt {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+      margin-top: 18px;
+      width: 128px;
+      text-align: center;
+    }
+  }
+}
+.bottom-box {
+  padding: 12px 0 38px 0;
+  background: #fff;
+}
+.app_agreement {
+  display: flex;
+  padding: 21px 12px;
+}
+.agreement_content {
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: rgba(144, 147, 153, 1);
+  margin-left: 12px;
+  .ac {
+    color: #66bb6a;
+  }
+}
+.app_checkbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border: 1px solid rgba(192, 196, 204, 1);
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  &:checked {
+    // background-image: url(../../image/form/checked.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
