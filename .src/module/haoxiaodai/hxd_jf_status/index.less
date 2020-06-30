@@ -1,0 +1,75 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: #fff;
+}
+.header {
+  padding: 24px;
+}
+.sts {
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(48, 49, 51, 1);
+}
+.box {
+  position: relative;
+
+  &::before {
+    display: block;
+    content: "";
+    width: 0px;
+    border-right: 1px dashed #dcdfe6;
+    height: calc(100% - 24px - 24px - 48px);
+    position: absolute;
+    top: calc(24px + 4.5px + 4.5px);
+    left: 6.5px;
+  }
+}
+.main {
+  padding: 24px;
+
+  .cell {
+    position: relative;
+    &::before {
+      position: absolute;
+      display: block;
+      content: "";
+      width: 9px;
+      height: 9px;
+      background: rgba(245, 245, 245, 1);
+      border: 2px solid rgba(144, 147, 153, 1);
+      border-radius: 50%;
+      left: -21px;
+      top: 4.5px;
+      box-sizing: border-box;
+    }
+    &.active {
+      &::before {
+        background: @themeColor;
+        border: none;
+        // left: -21px;
+      }
+    }
+    .tit {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+    }
+    .desc {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+      padding: 7px 0;
+      &.gr {
+        color: @themeColor;
+      }
+    }
+  }
+}
+.pd20 {
+  padding-bottom: 52px;
+}

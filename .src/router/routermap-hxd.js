@@ -146,6 +146,24 @@ const routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷金服开户结果
+  hxd_jf_result: {
+    name: 'hxd_jf_result',
+    title: '开户结果',
+    url: 'widget://html/hxd_jf_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户状态查看
+  hxd_jf_status: {
+    name: 'hxd_jf_status',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
 }
 
 export default routerHXDConfig
