@@ -14,7 +14,7 @@ apiready = function () {
     el: '#app',
     data: {
       isFolder: true,
-      noApply: !!pageParam.noApply, // 是否是申请过，默认为false
+      hasApply: !!pageParam.hasApply, // 是否是申请过，默认为false
       agreements: [
         { id: 1, title: "授信合同1111" },
         { id: 2, title: "授信合同高校的" }

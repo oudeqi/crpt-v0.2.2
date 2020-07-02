@@ -35,7 +35,7 @@ apiready = function apiready() {
     el: '#app',
     data: {
       isFolder: true,
-      noApply: !!pageParam.noApply,
+      hasApply: !!pageParam.hasApply,
       // 是否是申请过，默认为false
       agreements: [{
         id: 1,

@@ -67,7 +67,7 @@
         </div>
       </section>
 
-      <div class="app_agreement">
+      <div v-if="!hasApply" class="app_agreement">
         <label>
           <input
             class="app_checkbox"
@@ -83,7 +83,7 @@
           >
         </div>
       </div>
-      <div v-if="noApply" class="bottom-box">
+      <div v-if="!hasApply" class="bottom-box">
         <div class="btn btn-normal">我要申请</div>
       </div>
     </div>

@@ -75,11 +75,11 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      Router.openPage({
-        key: 'hxd_u_apply',
-        params: { pageParam: { productId: '1' } }
-      })
-      return
+      // Router.openPage({
+      //   key: 'hxd_u_apply',
+      //   params: { pageParam: { productId: '1' } }
+      // })
+      // return
       
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
