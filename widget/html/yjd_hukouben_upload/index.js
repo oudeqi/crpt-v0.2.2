@@ -1,24 +1,17 @@
-var page = new Vue({
-  el: '#app',
-  data: {
-    status: 1,
-    textLabel: {
-      1: {
-        tips: "您已成功开通好消贷",
-        label: "您的授信额度为",
-        amount: "1,000,000",
-        cbName: "查看产品详情"
-      },
-      0: {
-        tips: "开通失败",
-        label: "你失败了，这次你彻底申请失败了",
-        amount: "0",
-        cbName: "开通更多产品"
+function vmInit() {
+  return new Vue({
+    el: '#app',
+    data: function data() {
+      return {};
+    },
+    mounted: function mounted() {},
+    methods: {
+      next: function next() {
+        console.log('zxczxczxczx===');
       }
     }
-  },
-  methods: {}
-});
+  });
+}
 
 apiready = function apiready() {
   api.addEventListener({
@@ -27,5 +20,12 @@ apiready = function apiready() {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  }); // alert(Vue)
+  });
+  var vm = vmInit();
+  api.parseTapmode();
+
+  $api.byId('next').onclick = function () {
+    console.log('a');
+    vm.next();
+  };
 };
