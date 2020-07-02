@@ -22,7 +22,8 @@ apiready = function () {
       isWarning: true,
       EBSOrders: [],
       availableAmount: 0, // 当前可用额度
-      productId: pageParam.productId
+      productId: pageParam.productId,
+      filter
     },
     methods: {
       async handleGetEBSOrders() {
@@ -39,8 +40,7 @@ apiready = function () {
           }
         }
         Utils.UI.hideLoading()
-      },
-      filter
+      }
     },
     mounted() {
       console.log(this.filter.toThousands(10000))

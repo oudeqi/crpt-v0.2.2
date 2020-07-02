@@ -2065,7 +2065,8 @@ apiready = function apiready() {
       EBSOrders: [],
       availableAmount: 0,
       // 当前可用额度
-      productId: pageParam.productId
+      productId: pageParam.productId,
+      filter: filter
     },
     methods: {
       handleGetEBSOrders: function handleGetEBSOrders() {
@@ -2113,8 +2114,7 @@ apiready = function apiready() {
             }
           }, _callee, null, [[0, 8]]);
         }))();
-      },
-      filter: filter
+      }
     },
     mounted: function mounted() {
       console.log(this.filter.toThousands(10000));

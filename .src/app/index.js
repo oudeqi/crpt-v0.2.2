@@ -80,6 +80,7 @@ class App {
         params: { pageParam: { productId: '1' } }
       })
       return
+      
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
         openTabLayout()
