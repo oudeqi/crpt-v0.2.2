@@ -2124,9 +2124,9 @@ apiready = function apiready() {
          * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
          * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
          */
-        var custType = ($api.getStorage('userinfo') || {}).custType;
+        var userType = ($api.getStorage('userinfo') || {}).userType;
 
-        if (item.creditStatus === 0 && custType === 2) {
+        if (item.creditStatus === 0 && userType === 2) {
           Router$2.openPage({
             key: 'hxd_a_supply',
             params: {
