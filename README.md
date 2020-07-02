@@ -46,7 +46,12 @@ _业务员端_
 │   ├── profile.js          
 │   └── index.js
 ├── tablayout               //  页面
-│   ├── index
+│   ├── wallet              //  希望钱包页
+│   │   ├── index.html
+│   │   ├── index.js
+│   │   ├── index.less
+│   │   └── service.js
+│   ├── index               //  首页
 │   │   ├── index.html
 │   │   ├── index.js
 │   │   ├── index.less
