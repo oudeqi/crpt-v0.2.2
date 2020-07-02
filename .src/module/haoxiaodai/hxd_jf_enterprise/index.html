@@ -1,0 +1,77 @@
+<!-- 好销贷金服申请企业信息补充 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <section class="pd">
+        <div class="tips">基本信息</div>
+        <div class="form">
+          <div class="item">
+            <div class="desc bd">
+              <span class="label">企业名称</span>
+              <span class="name">新希望动物营养科技有限</span>
+            </div>
+            <div class="desc bd">
+              <span class="label">企业对公账户</span>
+              <input class="name dipt" type="text" placeholder="请输入账户" />
+            </div>
+            <div class="desc bd">
+              <span class="label">开户银行</span>
+              <div class="name city">请选择</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="h1">影印件资料</div>
+            <div class="tips">
+              影印件资料需要加盖公章
+              <span class="gr">查看样图</span>
+            </div>
+            <div class="form-item sm">
+              <div class="cell">
+                <div class="upload u1">
+                  <img src alt />
+                </div>
+                <p class="txt">点击上传营业执照</p>
+              </div>
+  
+              <div class="cell">
+                <div class="upload u2">
+                  <img src alt />
+                </div>
+                <p class="txt">点击上传身份证正反面</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="app_agreement">
+        <label>
+          <input class="app_checkbox" type="checkbox" id="checkbox" name="type" />
+        </label>
+        <p class="agreement_content">
+          <span>我已阅读并同意如下协议</span>
+          <span class="ac" v-for="item in agreements" :key="item.id">《{{item.title}}》</span>
+        </p>
+      </div>
+      <div class="bottom-box">
+        <div class="btn btn-normal">提交</div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

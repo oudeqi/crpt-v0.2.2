@@ -57,7 +57,6 @@ class App {
     // return
     // Router.openPage({key: 'hxd_apply'})
     // return
-
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()

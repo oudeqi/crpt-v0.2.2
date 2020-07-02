@@ -798,6 +798,11 @@ input, textarea, button {
   background: #ffffff;
   color: #66bb6a;
 }
+.btn.btn-transparent {
+  background: rgba(102, 187, 106, 0.1);
+  color: #66bb6a;
+  border: none;
+}
 body * {
   cursor: pointer;
 }

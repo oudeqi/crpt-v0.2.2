@@ -1,0 +1,101 @@
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
+  background: #fff;
+}
+#app {
+  background: #fff;
+}
+.pd {
+  padding: 12px 24px;
+}
+.header {
+  background: linear-gradient(
+    135deg,
+    rgba(119, 210, 124, 1) 0%,
+    rgba(69, 163, 101, 1) 100%
+  );
+  border-radius: 16px;
+  padding: 30px 23px 58px;
+  box-shadow: 0px 12px 20px rgba(119, 210, 124, 1);
+  .slogan {
+    font-size: 12px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 12px;
+    margin-bottom: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .slg2 {
+      font-size: 16px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 1);
+      line-height: 22px;
+      letter-spacing: 4px;
+      text-shadow: 1px 1px 4px rgba(6, 117, 18, 1),
+        -1px -1px 4px rgba(182, 236, 184, 1);
+    }
+  }
+  .h1 {
+    font-size: 30px;
+    font-family: DINAlternate-Bold, DINAlternate;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    line-height: 35px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(6, 117, 18, 1),
+      -1px -1px 4px rgba(182, 236, 184, 1);
+  }
+  .copy {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    font-size: 12px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    padding: 4px 13px;
+    width: 51px;
+    margin: 8px auto;
+    text-align: center;
+  }
+}
+.bank-info {
+  margin-top: 31px;
+  .bname {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    &.tot {
+      border-top: 1px solid rgba(245, 245, 245, 1);
+    }
+    .label {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(144, 147, 153, 1);
+    }
+    .txt {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(48, 49, 51, 1);
+      &.n {
+        font-size: 20px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(48, 49, 51, 1);
+      }
+    }
+  }
+}
+.bottom-box {
+  margin-top: 50px;
+  .btn {
+    margin-bottom: 19px;
+  }
+}

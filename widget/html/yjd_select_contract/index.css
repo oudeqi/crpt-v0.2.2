@@ -205,6 +205,10 @@ input, textarea {
   padding-left: 1px;
   padding-right: 0px;
 }
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 
 html, body {
   background: #F5F5F5;
