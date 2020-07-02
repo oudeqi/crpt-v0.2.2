@@ -75,8 +75,12 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      Router.openPage({ key: 'hxd_jf_status' })
-
+      Router.openPage({
+        key: 'hxd_a_supply', params: {
+          pageParam: { id: '1' }
+        }
+      })
+      
       return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
