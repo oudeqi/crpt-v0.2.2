@@ -1,4 +1,5 @@
-import './index.less'
+import '../../../styles/common.less'
+import './index.css'
 
 const page = new Vue({
   el: '#app',

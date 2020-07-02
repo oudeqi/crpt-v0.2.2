@@ -4,40 +4,60 @@
 <html>
   <head>
     <meta charset="utf-8" >
-    <meta name="viewport"
-      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
-    >
-    <meta name="format-detection"
-      content="telephone=no,email=no,date=no,address=no"
-    >
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" >
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no" >
     <link rel="stylesheet" type="text/css" href="../../css/api.css" >
-    
   
   <link rel="stylesheet" href="./index.css"></head>
   <body>
-    <div id="app">
-      <div class="header">
-        <div class="icon">
-          <div class="up"></div>
-          <div class="below"></div>
+    <div class="container" id="app">
+
+      <div class="top">
+        <strong>200,000</strong>
+        <span>最高可贷金额(元)</span>
+      </div>
+
+      <div class="middle">
+        <div class="middle-label">申请金额</div>
+        <div class="middle-ipt">
+          <span>￥</span>
+          <input type="tel" placeholder="请输入申请金额">
         </div>
-        <p class="tips">{{textLabel[status].tips}}</p>
-        <div class="desc">
-          <div v-if="status === 1">
-            <div class="label">{{textLabel[status].label}}</div>
-            <p class="amount">
-              <span class="unit">￥ </span>{{textLabel[status].amount}}
-            </p>
-          </div>
-          <div v-else>
-            <div class="label">{{textLabel[status].label}}</div>
-          </div>
+        <div class="middle-addon">
+          <span>手续费</span>
+          <strong>0.00</strong>
         </div>
       </div>
-      <div class="btn btn-normal mgt">{{textLabel[status].cbName}}</div>
-      <div class="btn btn-prime">进入首页</div>
-    </div>
 
+      <div class="bottom">
+        <div class="bottom-row">
+          <span class="bottom-label">贷款利率</span><span class="bottom-value">4.8%</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">贷款期限(月)</span><span class="bottom-value">7</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">贷款到期日</span><span class="bottom-value">2020-04-01</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">还款方式</span><span class="bottom-value">到期还本付息</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">借款人姓名</span><span class="bottom-value">王振</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">贷款收款账号</span><span class="bottom-value">13869509523</span>
+        </div>
+        <div class="bottom-row">
+          <span class="bottom-label">贷款收款账户名称</span><span class="bottom-value">德阳农业服务有限公司</span>
+        </div>
+      </div>
+
+      <div class="fixed-btn">
+        <div class="app_btn">下一步</div>
+      </div>
+
+    </div>
     <script type="text/javascript" src="../../script/api.js"></script>
     <script type="text/javascript" src="../../script/vue.js"></script>
   

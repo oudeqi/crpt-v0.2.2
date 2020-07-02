@@ -1,0 +1,132 @@
+html, body {
+  background-color: #fff;
+}
+
+.tips {
+  height:22px;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(48,49,51,1);
+  line-height:22px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@define-extend center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.upload {
+  margin-top: 17px;
+}
+.upload-pic {
+  width:240px;
+  height:144px;
+  padding: 12px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius:11px;
+  border:2px dashed rgba(245,245,245,1);
+  background-color:rgba(255,255,255,1);
+  position: relative;
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius:4px;
+    overflow: hidden;
+    background-image: url(../../image/yajindai/hukouben-1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    @extend center;
+  }
+}
+.upload-btn {
+  width:40px;
+  height:40px;
+  border-radius:20px;
+  background-color:rgba(102,187,106,1);
+  background-image: url(../../image/yajindai/take-picture.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  @extend center;
+}
+.upload-txt {
+  text-align: center;
+  height:20px;
+  font-size:14px;
+  color:rgba(96,98,102,1);
+  line-height:20px;
+  margin-top: 7px;
+}
+
+.notice {
+  margin-top: 30px;
+  padding: 0 24px;
+  padding-bottom: 100px;
+}
+.notice-title {
+  height:25px;
+  font-size:18px;
+  font-weight:500;
+  color:rgba(48,49,51,1);
+  line-height:25px;
+}
+.notice-desc {
+  height:22px;
+  font-size:16px;
+  color:rgba(144,147,153,1);
+  line-height:22px;
+  margin-top: 12px;
+}
+.notice-case {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  div {
+    flex-grow: 1;
+    margin-right: 6px;
+    text-align: center;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:first-child span{
+      color:rgba(102,187,106,1);
+    }
+    img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+    span {
+      margin-top: 8px;
+      height:20px;
+      font-size:14px;
+      color:rgba(255,95,57,1);
+      line-height:20px;
+    }
+  }
+}
+
+.fixed-btn {
+  padding: 15px 12px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
