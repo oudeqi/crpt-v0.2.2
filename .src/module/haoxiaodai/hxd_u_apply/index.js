@@ -1,5 +1,6 @@
 import './index.less'
 import service from './service';
+import filter from './../../../utils/filter'
 import Utils from '../../../utils';
 
 
@@ -38,9 +39,11 @@ apiready = function () {
           }
         }
         Utils.UI.hideLoading()
-      }
+      },
+      filter
     },
     mounted() {
+      console.log(this.filter.toThousands(10000))
       this.handleGetEBSOrders()
     }
   })
