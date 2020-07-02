@@ -2108,7 +2108,12 @@ var App = /*#__PURE__*/function () {
         // openDanbaoKaitong({step: 0, creditStatus: 2})
         // return
         Router$2.openPage({
-          key: 'yjd_apply_result'
+          key: 'hxd_u_apply',
+          params: {
+            pageParam: {
+              productId: '1'
+            }
+          }
         });
         return;
       } else {
