@@ -6,7 +6,28 @@ html, body {
 .container {
   padding: 24px;
 }
-
+.tab {
+  display: flex;
+  justify-content: space-around;
+  label {
+    input {
+      display: none;
+    }
+    span {
+      height:42px;
+      line-height:42px;
+      font-size:16px;
+      font-weight:500;
+      color: #303133;
+      font-weight: normal;
+      border-bottom: 4px solid #fff;
+    }
+    input:checked + span {
+      color: #66BB6A;
+      border-bottom: 4px solid rgba(102,187,106,1);
+    }
+  }
+}
 .qiye-name {
   display: none;
   margin-top: 24px;

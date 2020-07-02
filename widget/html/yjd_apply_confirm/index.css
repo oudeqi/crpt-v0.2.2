@@ -308,3 +308,404 @@ html, body {
 .btn {
   margin: 24px auto;
 }
+
+input, textarea {
+  outline: 0;
+}
+/*块状按钮*/
+.app_btn {
+  height: 50px;
+  background: #66bb6a;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.app_btn.disabled {
+  background: #dce0e8;
+}
+.app_btn.active {
+  background-color: rgba(102, 187, 106, 0.75);
+}
+.app_btn.loading {
+  background-color: rgba(102, 187, 106, 0.75);
+}
+.app_plain_btn {
+  height: 50px;
+  background: #ffffff;
+  border-radius: 25px;
+  border: 1px solid #66bb6a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #66bb6a;
+}
+/*输入框组*/
+.app_ipt_group {
+  padding-top: 20px;
+}
+.app_ipt_group .item {
+  height: 54px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-bottom: 1px solid #eaeaea;
+}
+.app_ipt_group .item .icon {
+  width: 50px;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.app_ipt_group .item .icon .aui-iconfont {
+  font-size: 22px;
+  color: #666;
+}
+.app_ipt_group .item .icon .aui-icon-unlock:before {
+  position: relative;
+  left: 4px;
+}
+.app_ipt_group .item .ipt {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100%;
+  position: relative;
+  top: 2px;
+  margin-right: 20px;
+}
+.app_ipt_group .item .ipt input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+}
+.app_ipt_group .item .btn {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-left: 10px;
+  padding-right: 4px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #66BB6A;
+}
+.app_ipt_group .item .btn.active {
+  color: #909399;
+  padding-right: 3px;
+}
+.app_ipt_group .item .btn.loading {
+  color: #666;
+}
+.app_checkbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border: 1px solid #c0c4cc;
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+}
+.app_checkbox:checked {
+  background-image: url(../../image/form/checked.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.app_agreement {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.app_agreement label {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-right: 10px;
+}
+.app_agreement .agreement_content {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-top: 1px;
+}
+.app_agreement .agreement_content ul {
+  display: inline;
+}
+.app_agreement .agreement_content ul li {
+  display: inline;
+}
+.app_agreement .agreement_content strong {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #909399;
+}
+.app_agreement .agreement_content span {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #909399;
+}
+.app_agreement .agreement_content li {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #66BB6A;
+  padding-left: 0;
+  padding-right: 1px;
+}
+.app_agreement .agreement_content li.active {
+  padding-left: 1px;
+  padding-right: 0;
+}
+/*连接按钮*/
+.app_link_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  font-size: 16px;
+  color: #66bb6a;
+}
+.app_link_btn.active {
+  padding-left: 1px;
+  padding-right: 0px;
+}
+/*文字按钮*/
+.app_text_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  color: #66BB6A;
+}
+.app_text_btn.active {
+  color: rgba(102, 187, 106, 0.75);
+  padding-left: 1px;
+  padding-right: 0px;
+}
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  background-color: #F5F5F5;
+}
+
+.top {
+  height:98px;
+  background:rgba(255,255,255,1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.top strong {
+    height:28px;
+    font-size:24px;
+    font-weight:bold;
+    color:rgba(48,49,51,1);
+    line-height:28px;
+  }
+
+.top span {
+    height:20px;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+  }
+
+.middle {
+  background:rgba(255,255,255,1);
+  padding: 0 24px;
+  margin-top: 12px;
+  padding-top: 16px;
+}
+
+.middle-label {
+  height:20px;
+  font-size:14px;
+  color:rgba(48,49,51,1);
+  line-height:20px;
+}
+
+.middle-ipt {
+  border-bottom: 1px solid rgba(245,245,245,1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px 0;
+}
+
+.middle-ipt span {
+    width: 100px;
+    height:28px;
+    font-size:20px;
+    font-weight:500;
+    color:rgba(48,49,51,1);
+    line-height:28px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+  }
+
+.middle-ipt input {
+    outline: 0;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    width: 100%;
+    font-size:30px;
+    height: 35px;
+    line-height: 35px;
+    font-weight:bold;
+    color:rgba(102,187,106,1);
+  }
+
+.middle-ipt input::-webkit-input-placeholder {
+      font-size:20px;
+      color:rgba(192,196,204,1);
+      vertical-align: middle;
+    }
+
+.middle-ipt input::-moz-placeholder {
+      font-size:20px;
+      color:rgba(192,196,204,1);
+      vertical-align: middle;
+    }
+
+.middle-ipt input:-ms-input-placeholder {
+      font-size:20px;
+      color:rgba(192,196,204,1);
+      vertical-align: middle;
+    }
+
+.middle-ipt input::-ms-input-placeholder {
+      font-size:20px;
+      color:rgba(192,196,204,1);
+      vertical-align: middle;
+    }
+
+.middle-ipt input::placeholder {
+      font-size:20px;
+      color:rgba(192,196,204,1);
+      vertical-align: middle;
+    }
+
+.middle-addon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 40px;
+}
+
+.middle-addon span {
+    font-size:14px;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+  }
+
+.middle-addon strong {
+    font-size:14px;
+    font-weight:500;
+    color:rgba(245,166,35,1);
+  }
+
+.bottom {
+  margin-top: 12px;
+  background:rgba(255,255,255,1);
+  padding: 10px 0;
+}
+
+.bottom-row {
+  margin: 16px 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.bottom-label {
+  height:21px;
+  font-size:15px;
+  color:rgba(144,147,153,1);
+  line-height:21px;
+}
+
+.bottom-value {
+  height:21px;
+  font-size:15px;
+  color:rgba(48,49,51,1);
+  line-height:21px;
+}
+
+.fixed-btn {
+  padding: 15px 12px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #fff;
+}
