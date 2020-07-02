@@ -35,8 +35,8 @@ apiready = function () {
          * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
          * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
          */
-        const custType = ($api.getStorage('userinfo') || {}).custType
-        if (item.creditStatus === 0 && custType === 2) {
+        const userType = ($api.getStorage('userinfo') || {}).userType
+        if (item.creditStatus === 0 && userType === 2) {
           Router.openPage({ key: 'hxd_a_supply', params: {
             pageParam: {productId: item.productId}
           } })
