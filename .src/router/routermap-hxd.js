@@ -29,6 +29,15 @@ const routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarGreen
   },
+  // 好销贷产品推荐列表
+  hxd_product_list: {
+    name: 'hxd_product_list',
+    title: '产品详情',
+    url: 'widget://html/hxd_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
   // 好销贷产品详情
   hxd_product_detail: {
     name: 'hxd_product_detail',
