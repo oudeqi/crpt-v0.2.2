@@ -3,7 +3,7 @@ import './frm.less'
 import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../../config'
 import numeral from 'numeral'
-
+import Router from '../../../router'
 
 class Service {
   getlist ({custType, status} = {}) {
@@ -155,9 +155,12 @@ apiready = function () {
   $api.byId('danbaofuwu').onclick = () => {
     controller.goDanbao()
   }
+  $api.byId('gongyingshang').onclick = () => {
+    Router.openPage({ key: 'hxd_product_list' })
+  }
   controller.renderNav()
   controller.renderProduct()
-
+  
   setRefreshHeaderInfo((ret, err) => {
     controller.renderNav()
     controller.renderProduct()
