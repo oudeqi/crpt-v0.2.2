@@ -1,5 +1,7 @@
 import './index.less'
 import { qa, intro } from './config';
+import service from './service'
+import Utils from '../../../utils';
 
 apiready = function () {
   const pageParam = api.pageParam || {}
@@ -10,6 +12,9 @@ apiready = function () {
       api.closeWin();
     }
   });
+  api.closeWin({
+    name: 'hxd_a_supply'
+  })
   const page = new Vue({
     el: '#app',
     data: {
@@ -31,7 +36,31 @@ apiready = function () {
       handleFolder() {
         this.isFolder = !this.isFolder;
       },
+      async handleGetProductDetail() {
+        try {
+          const res = await service.getProductInfo({ productId: pageParam.productId })
+          console.log(JSON.stringify(res))
+        } catch (error) {
+
+        }
+      }
     },
+    mounted() {
+
+      Utils.UI.setRefreshHeaderInfo({
+        success: () => {
+          this.handleGetProductDetail()
+          setTimeout(() => {
+            api.refreshHeaderLoadDone()
+          }, 0);
+        },
+        fail: () => {
+          api.refreshHeaderLoadDone()
+        },
+      })
+
+      this.handleGetProductDetail()
+    }
   })
 
 }
