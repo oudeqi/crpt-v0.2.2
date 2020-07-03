@@ -1,47 +1,8 @@
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
-
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
 
 var runtime_1 = createCommonjsModule(function (module) {
 /**
@@ -814,6 +775,33 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
+function openRegLogin() {
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -822,103 +810,26 @@ function _classCallCheck(instance, Constructor) {
 
 var classCallCheck = _classCallCheck;
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
-
-var setPrototypeOf = createCommonjsModule(function (module) {
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-module.exports = _setPrototypeOf;
-});
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
 
-var inherits = _inherits;
-
-var _typeof_1 = createCommonjsModule(function (module) {
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-});
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-var assertThisInitialized = _assertThisInitialized;
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-var possibleConstructorReturn = _possibleConstructorReturn;
-
-var getPrototypeOf = createCommonjsModule(function (module) {
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
+    return target;
   };
-  return _getPrototypeOf(o);
+
+  return _extends.apply(this, arguments);
 }
 
-module.exports = _getPrototypeOf;
+module.exports = _extends;
 });
 
 // 系统顶部导航配置
@@ -1058,14 +969,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-  openAttachmentInfo: openAttachmentInfo,
-  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -1079,6 +990,24 @@ var Router = function Router() {
 
   _extends_1(this, rmap);
 };
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
 
 var openPicker = function openPicker(params, options) {
   var UIActionSelector = api.require('UIActionSelector');
@@ -1309,16 +1238,6 @@ var codeMapFilter = function codeMapFilter(list) {
   });
   return codeMap;
 };
-
-function openRegLogin() {
-  api.openTabLayout({
-    name: 'html/reglogin/index',
-    url: 'widget://html/reglogin/index.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -1888,754 +1807,664 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-var Service = /*#__PURE__*/function () {
-  function Service() {
-    classCallCheck(this, Service);
-
-    this.ajaxUrls = {
-      getAttachmentUrl: '/crpt-guarantee/gt/attachment/list',
-      deleteAttachmentUrl: '/crpt-guarantee/gt/attachment/delete',
-      saveAttachmentUrl: '/crpt-guarantee/gt/attachment/save',
-      updateAttachmentUrl: '/crpt-guarantee/gt/attachment/update',
-      submitAttachmentUrl: '/crpt-guarantee/gt/attachment/submit',
-      submitInfoUrl: '/crpt-guarantee/gt/attachment/submit',
-      getFileContentType: '/crpt-biz/dict/codelist'
-    };
-  }
-
-  createClass(Service, [{
-    key: "postAttachment",
-    value: function postAttachment(params) {
-      return http.post(this.ajaxUrls.postAttachmentUrl, {
-        body: params
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46',
-        //     'Content-Type': 'application/json'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "getAttachment",
-    value: function getAttachment(params) {
-      return http.get(this.ajaxUrls.getAttachmentUrl, {
-        values: params
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "deleteAttachment",
-    value: function deleteAttachment(params) {
-      return http.get(this.ajaxUrls.deleteAttachmentUrl, {
-        values: params
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "saveAttachment",
-    value: function saveAttachment(params, files) {
-      return http.upload(this.ajaxUrls.saveAttachmentUrl, {
-        values: params,
-        files: files
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "updateAttachment",
-    value: function updateAttachment(params, files) {
-      return http.upload(this.ajaxUrls.updateAttachmentUrl, {
-        values: params,
-        files: files
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "submitInfo",
-    value: function submitInfo(params) {
-      return http.get(this.ajaxUrls.submitInfoUrl, {
-        values: params
-      }, {
-        // headers: {
-        //     token: 'Bearer 10cbc5c5-6b9e-48b3-bebe-91b64ecd3a46'
-        // },
-        timeout: 3000
-      });
-    }
-  }, {
-    key: "getCodeList",
-    value: function getCodeList(params) {
-      return http.post(this.ajaxUrls.getFileContentType, {
-        body: params
-      }, {
-        timeout: 3000
-      });
-    }
-  }]);
-
-  return Service;
-}();
+var dev$1 = 'http://crptdev.liuheco.com';
+var baseUrl$1 =  dev$1 ;
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, Authorization), contentType), headers)
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
+
+// 主题色
+var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
+
+var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
+
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: textColor,
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: themeMainColor,
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+}; // 绿色底导航
+
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: themeMainColor,
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+};
+
 /**
- * @authro liyang
- * @desc 担保业务申请表录入页Page 类
- * @class PageController类，需继承Service类
+ * themeMainColor 主题色
+ * textColor 导航文字黑色
+ * navigationBarWhite 浅色底导航
+ * navigationBarGreen 绿色底导航
  */
 
-var PageController = /*#__PURE__*/function (_Service) {
-  inherits(PageController, _Service);
+var routerMap = {
+  yjd_select_contract: {
+    name: 'yjd_select_contract',
+    title: '选择代养合同',
+    url: 'widget://html/yjd_select_contract/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_confirm: {
+    name: 'yjd_apply_confirm',
+    title: '申请贷款',
+    url: 'widget://html/yjd_apply_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_hukouben_upload: {
+    name: 'yjd_hukouben_upload',
+    title: '上传户口本',
+    url: 'widget://html/yjd_hukouben_upload/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_result: {
+    name: 'yjd_apply_result',
+    title: '贷款申请',
+    url: 'widget://html/yjd_apply_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷产品详情
+  yjd_product_detail: {
+    name: 'yjd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/yjd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
 
-  var _super = _createSuper(PageController);
+var routerHXDConfig = {
+  // 好销贷授信申请
+  hxd_apply: {
+    name: 'hxd_apply',
+    title: '产品介绍',
+    url: 'widget://html/hxd_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请补充企业信息
+  hxd_a_supply: {
+    name: 'hxd_a_supply',
+    title: '补充企业信息',
+    url: 'widget://html/hxd_a_supply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请成功/失败
+  hxd_a_success: {
+    name: 'hxd_a_success',
+    title: '产品开通',
+    url: 'widget://html/hxd_a_success/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 好销贷产品详情
+  hxd_product_detail: {
+    name: 'hxd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/hxd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷额度变化详情
+  hxd_quota: {
+    name: 'hxd_quota',
+    title: '额度变化详情',
+    url: 'widget://html/hxd_quota/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款申请
+  hxd_u_apply: {
+    name: 'hxd_u_apply',
+    title: '申请用款',
+    url: 'widget://html/hxd_u_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款确认
+  hxd_u_confirm: {
+    name: 'hxd_u_confirm',
+    title: '用款确认',
+    url: 'widget://html/hxd_u_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款校验
+  hxd_u_smscode: {
+    name: 'hxd_u_smscode',
+    title: '用款校验',
+    url: 'widget://html/hxd_u_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款结果
+  hxd_u_result: {
+    name: 'hxd_u_result',
+    title: '审核结果',
+    url: 'widget://html/hxd_u_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算
+  hxd_r_try: {
+    name: 'hxd_r_try',
+    title: '还款试算',
+    url: 'widget://html/hxd_r_try/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算详情页
+  hxd_r_try_detail: {
+    name: 'hxd_r_try_detail',
+    title: '还款试算详情',
+    url: 'widget://html/hxd_r_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_smscode: {
+    name: 'hxd_r_smscode',
+    title: '还款校验',
+    url: 'widget://html/hxd_r_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_result: {
+    name: 'hxd_r_result',
+    title: '还款结果',
+    url: 'widget://html/hxd_r_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户申请
+  hxd_jf_apply: {
+    name: 'hxd_jf_apply',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户成功页
+  hxd_jf_account: {
+    name: 'hxd_jf_account',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_account/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户企业补充信息
+  hxd_jf_enterprise: {
+    name: 'hxd_jf_enterprise',
+    title: '开通信息补充',
+    url: 'widget://html/hxd_jf_enterprise/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户结果
+  hxd_jf_result: {
+    name: 'hxd_jf_result',
+    title: '开户结果',
+    url: 'widget://html/hxd_jf_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户状态查看
+  hxd_jf_status: {
+    name: 'hxd_jf_status',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
 
-  function PageController(props) {
-    var _this;
+var routerConfig = {
+  // 我的钱包详情
+  wallet: {
+    name: 'wallet',
+    title: '希望钱包',
+    url: 'widget://html/wallet/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 通用产品列表
+  com_product_list: {
+    name: 'com_product_list',
+    title: '产品列表',
+    url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
 
-    classCallCheck(this, PageController);
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-    _this = _super.call(this); //  所有表单域预置信息
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$3(_objectSpread$3(_objectSpread$3({}, routerHXDConfig), routerMap), routerConfig);
 
-    _this.profile = {
-      // upload参数
-      uploadImgType: {
-        0: 'camera',
-        1: 'album'
-      },
-      remap: {
-        approvalStatus: {
-          0: '',
-          1: '待审核',
-          2: '已审核',
-          3: '已作废'
-        }
-      },
-      fileContentType: {}
-    }; //  统一管理数据model data
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-    _this.data = {
-      gtId: props.pageParam.gtId,
-      flowStatus: props.pageParam.flowStatus,
-      gtCreditId: props.pageParam.gtCreditId,
-      applyStatus: props.pageParam.applyStatus,
-      attachmentList: [{
-        attachId: '',
-        // gtId: '',
-        fileId: '',
-        productFileId: '',
-        productFileRequire: '',
-        fileComment: '',
-        fileContentType: '',
-        approvalStatus: '' // approvalPersonName: '',
-        // createDate: '',
-        // updateDate: ''
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-      }]
-    };
-    return _this;
-  } //  执行函数
+var Router$1 = /*#__PURE__*/function () {
+  function Router() {
+    classCallCheck(this, Router);
+  }
 
-
-  createClass(PageController, [{
-    key: "main",
-    value: function main(props) {
-      this.initData();
-      this.bindEvents();
-    } //  事件绑定入口
-
-  }, {
-    key: "bindEvents",
-    value: function bindEvents() {
-      this.bindAddEvents();
-      this.bindDelEvents();
-      this.bindImageClickEvents();
-      this.bindSaveBtnClickEvents();
-      this.bindPreviewBoxEvents();
-      this.bindClearPreviewEvents();
-      this.bindSubmitEvents(); // this.bindSubmitEvents()
+  createClass(Router, [{
+    key: "openPage",
+    // 打开window级别页面
+    value: function openPage(_ref) {
+      var key = _ref.key,
+          params = _ref.params;
+      api.openTabLayout(_objectSpread$4(_objectSpread$4({}, profile[key]), params));
     }
-  }, {
-    key: "initData",
-    value: function () {
-      var _initData = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        var self, codeRes, res;
+  }]);
+
+  return Router;
+}();
+
+var Router$2 = new Router$1();
+
+/**
+ * @author Sunning
+ * 存放部分方法
+ */
+var filter = {
+  /**
+   * @author Sunning
+   * 数字格式化为千分位   1000 ==> 1,000
+   * @param {Object} s 要格式化的数字
+   * @param {Object} n 保留几位小数
+   */
+  formatNumber: function formatNumber(s, n) {
+    if (s === '-' || !s) {
+      return '-';
+    } else {
+      if (n === 0) {
+        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      } else {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
+        var positive = s.toString().split('-');
+        var l;
+        var r;
+
+        if (positive.length > 1) {
+          l = positive[1].split('.')[0].split('').reverse();
+          r = positive[1].split('.')[1];
+        } else {
+          l = s.split('.')[0].split('').reverse();
+          r = s.split('.')[1];
+        }
+
+        var t = '';
+
+        for (var i = 0; i < l.length; i++) {
+          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+        }
+
+        var result = t.split('').reverse().join('') + '.' + r;
+        if (positive.length > 1) result = '-' + result;
+        return result;
+      }
+    }
+  },
+
+  /**
+   * author: Sunning
+   * 将数字格式化为千分位
+   * @param {Object} value 需要转化的数字
+   */
+  toThousands: function toThousands(value) {
+    if (value === '' || value === undefined || value === null) {
+      return '';
+    }
+
+    value = String(value); // 强制转化为转化为字符串
+
+    var isDecimal = value.split('.');
+
+    if (isDecimal.length === 1) {
+      // 如果长度为1表示没有小数，否则表示有小数
+      return this.formatNumber(value, 0);
+    } else {
+      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
+    }
+  }
+};
+
+apiready = function apiready() {
+  var page = new Vue({
+    el: '#app',
+    data: {
+      filter: filter,
+      hxdData: [],
+      yjdData: [],
+      pageParam: ''
+    },
+    mounted: function mounted() {
+      var _this = this;
+
+      return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                self = this;
-                Utils$1.UI.showLoading('加载中'); // 0. 判断是否只读
+                _this.pageParam = api.pageParam || {};
 
-                if (self.data.applyStatus >= 2) {
-                  Array.from(document.querySelectorAll('.a-desc')).forEach(function (dom, i) {
-                    dom.setAttribute('disabled', true);
-                  });
-                } // 1. 先获取附件类型字典
+                _this.handleGetData();
 
+                Utils$1.UI.setRefreshHeaderInfo({
+                  success: function success() {
+                    _this.handleGetData();
 
-                _context.prev = 3;
-                _context.next = 6;
-                return this.getCodeList({
-                  type: "fileContentType",
-                  valid: 1
-                });
+                    setTimeout(function () {
+                      api.refreshHeaderLoadDone();
+                    }, 0);
+                  },
+                  fail: function fail() {
+                    api.refreshHeaderLoadDone();
+                  }
+                }); // this.creditStatusObj = await filterDict('creditStatus')
 
-              case 6:
-                codeRes = _context.sent;
-                self.profile.fileContentType = Utils$1.DictFilter(codeRes.data);
-                _context.next = 13;
-                break;
-
-              case 10:
-                _context.prev = 10;
-                _context.t0 = _context["catch"](3);
-                console.log(_context.t0);
-
-              case 13:
-                _context.prev = 13;
-                _context.next = 16;
-                return this.getAttachment({
-                  gtId: this.data.gtId
-                });
-
-              case 16:
-                res = _context.sent;
-                // this.data.attachmentList = res.data.length > 0 ? res.data : [{
-                //     attachId: '',
-                //     fileId: '',
-                //     productFileId: '',
-                //     productFileRequire: '',
-                //     fileComment: '',
-                //     fileContentType: '',
-                //     approvalStatus: '',
-                // }]
-                this.data.attachmentList = res.data.length > 0 ? res.data : [];
-                _context.next = 23;
-                break;
-
-              case 20:
-                _context.prev = 20;
-                _context.t1 = _context["catch"](13);
-                Utils$1.UI.toast('服务超时');
-
-              case 23:
-                this.compilerTemplate(this.data.attachmentList);
-                Utils$1.UI.hideLoading();
-
-              case 25:
+              case 3:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[3, 10], [13, 20]]);
-      }));
-
-      function initData() {
-        return _initData.apply(this, arguments);
-      }
-
-      return initData;
-    }() //  绑定add事件
-
-  }, {
-    key: "bindAddEvents",
-    value: function bindAddEvents() {
-      var self = this;
-      var addBtn = document.querySelector('#add-btn');
-
-      addBtn.onclick = function () {
-        if (self.data.applyStatus >= 2) {
-          return void 0;
+        }, _callee);
+      }))();
+    },
+    methods: {
+      handleGetData: function handleGetData() {
+        if (this.pageParam.pageFrom === 'gongyingshang') {
+          this.getHxdTable();
+        } else {
+          this.getYjdTable();
         }
+      },
+      getHxdTable: function getHxdTable() {
+        var _this2 = this;
 
-        self.searchAllData();
-        self.data.attachmentList.push({
-          attachId: '',
-          // gtId: '',
-          fileId: '',
-          productFileId: '',
-          productFileRequire: '',
-          fileComment: '',
-          fileContentType: 0,
-          approvalStatus: '' // approvalPersonName: '',
-          // createDate: '',
-          // updateDate: ''
-
+        // 好销贷
+        // Utils.UI.showLoading('加载中')
+        http$1.get('/crpt-credit/credit/hxd/product/list', {}).then(function (res) {
+          _this2.hxdData = res.data; // Utils.UI.hideLoading()
         });
-        self.compilerTemplate(self.data.attachmentList);
-      };
-    } //  绑定图片点击事件
-
-  }, {
-    key: "bindImageClickEvents",
-    value: function bindImageClickEvents() {
-      var self = this;
-
-      document.querySelector('#img-bind-doc').onclick = /*#__PURE__*/function () {
-        var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(e) {
-          var ev, _i;
-
-          return regenerator.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  if (!(self.data.applyStatus >= 2)) {
-                    _context2.next = 2;
-                    break;
-                  }
-
-                  return _context2.abrupt("return", void 0);
-
-                case 2:
-                  ev = window.event || e;
-
-                  if (ev.target.classList.contains('a-img-url') || ev.target.classList.contains('a-img') || ev.target.classList.contains('def')) {
-                    _i = ev.target.getAttribute('data-index'); //  1. 如果有图片，则预览
-                    // alert(self.data.attachmentList[_i].fileId)
-
-                    if (self.data.attachmentList[_i].fileId) {
-                      document.querySelector('#preview').classList.remove('hidden');
-                      document.querySelector('#pv-img').src = ev.target.getAttribute('src');
-                      self.data.currentPreviewIndex = _i;
-                    } else {
-                      // 上传
-                      Utils$1.File.actionSheet('请选择', ['相机', '相册'], function (index) {
-                        Utils$1.File.getPicture(self.profile.uploadImgType[index], function (res, err) {
-                          if (res) {
-                            if (res.data) {
-                              self.data.attachmentList[_i].fileDataStream = res.data;
-                              Array.from(document.querySelectorAll('.a-img-url'))[_i].src = res.data; // ev.target.src = res.data;
-
-                              Utils$1.UI.toast('上传成功');
-                            } else {
-                              Utils$1.UI.toast('未上传成功');
-                            }
-                          } else {
-                            console.log(err);
-                          }
-                        });
-                      });
-                    }
-                  }
-
-                case 4:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }));
-
-        return function (_x) {
-          return _ref.apply(this, arguments);
-        };
-      }();
-    } // 绑定附件保存按钮
-
-  }, {
-    key: "bindSaveBtnClickEvents",
-    value: function bindSaveBtnClickEvents() {
-      var self = this;
-
-      document.querySelector('#save-bind-doc').onclick = /*#__PURE__*/function () {
-        var _ref2 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(e) {
-          var ev, _i, res, _res;
-
-          return regenerator.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  if (!(self.data.applyStatus >= 2)) {
-                    _context3.next = 2;
-                    break;
-                  }
-
-                  return _context3.abrupt("return", void 0);
-
-                case 2:
-                  ev = window.event || e;
-
-                  if (!ev.target.classList.contains('update')) {
-                    _context3.next = 31;
-                    break;
-                  }
-
-                  _i = ev.target.getAttribute('data-index'); // 先刷一遍本地离线备份
-
-                  self.searchAllData(); // 校验
-
-                  if (!(!self.data.attachmentList[_i].attachId && !self.data.attachmentList[_i].fileDataStream)) {
-                    _context3.next = 9;
-                    break;
-                  }
-
-                  Utils$1.UI.toast('请上传图片');
-                  return _context3.abrupt("return");
-
-                case 9:
-                  if (self.data.attachmentList[_i].fileComment) {
-                    _context3.next = 12;
-                    break;
-                  }
-
-                  Utils$1.UI.toast('请填写附件描述');
-                  return _context3.abrupt("return");
-
-                case 12:
-                  Utils$1.UI.showLoading('提交中...');
-                  _context3.prev = 13;
-
-                  if (!self.data.attachmentList[_i].attachId) {
-                    _context3.next = 21;
-                    break;
-                  }
-
-                  _context3.next = 17;
-                  return self.updateAttachment({
-                    gtId: self.data.gtId,
-                    attachId: self.data.attachmentList[_i].attachId,
-                    fileComment: self.data.attachmentList[_i].fileComment
-                  }, {
-                    fileDataStream: self.data.attachmentList[_i].fileDataStream
-                  });
-
-                case 17:
-                  res = _context3.sent;
-
-                  if (res.code === 202) {
-                    Utils$1.UI.toast(res.data[0].msg);
-                  } else if (res.code === 200) {
-                    self.data.attachmentList[_i].fileId = res.data.fileId;
-                    self.data.attachmentList[_i].approvalStatus = 1;
-                    self.compilerTemplate(self.data.attachmentList);
-                    Utils$1.UI.toast('操作成功');
-                  }
-
-                  _context3.next = 25;
-                  break;
-
-                case 21:
-                  _context3.next = 23;
-                  return self.saveAttachment({
-                    gtId: self.data.gtId,
-                    fileContentType: self.data.attachmentList[_i].fileContentType || 0,
-                    fileComment: self.data.attachmentList[_i].fileComment,
-                    productFileId: self.data.attachmentList[_i].productFileId || ''
-                  }, {
-                    fileDataStream: self.data.attachmentList[_i].fileDataStream
-                  });
-
-                case 23:
-                  _res = _context3.sent;
-
-                  if (_res.code === 202) {
-                    Utils$1.UI.toast(_res.data[0].msg);
-                  } else if (_res.code === 200) {
-                    self.data.attachmentList[_i].attachId = _res.data.attachId;
-                    self.data.attachmentList[_i].fileId = _res.data.fileId;
-                    self.data.attachmentList[_i].approvalStatus = 1;
-                    self.compilerTemplate(self.data.attachmentList);
-                    Utils$1.UI.toast('操作成功');
-                  }
-
-                case 25:
-                  _context3.next = 30;
-                  break;
-
-                case 27:
-                  _context3.prev = 27;
-                  _context3.t0 = _context3["catch"](13);
-                  Utils$1.UI.toast(_context3.t0.msg || '出错啦');
-
-                case 30:
-                  Utils$1.UI.hideLoading();
-
-                case 31:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3, null, [[13, 27]]);
-        }));
-
-        return function (_x2) {
-          return _ref2.apply(this, arguments);
-        };
-      }();
-    } // 绑定删除事件
-
-  }, {
-    key: "bindDelEvents",
-    value: function bindDelEvents() {
-      var self = this;
-
-      document.querySelector('#credit-list').onclick = /*#__PURE__*/function () {
-        var _ref3 = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4(e) {
-          var ev, index, res, _res2;
-
-          return regenerator.wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  if (!(self.data.applyStatus >= 2)) {
-                    _context4.next = 2;
-                    break;
-                  }
-
-                  return _context4.abrupt("return", void 0);
-
-                case 2:
-                  ev = window.event || e;
-
-                  if (!ev.target.classList.contains('del')) {
-                    _context4.next = 33;
-                    break;
-                  }
-
-                  //  删除前需将model-tree检出，防止数据直接被抹除
-                  self.searchAllData();
-                  index = ev.target.getAttribute('data-index');
-
-                  if (!(!self.data.attachmentList[index].attachId && self.data.attachmentList[index].fileContentType === 0)) {
-                    _context4.next = 10;
-                    break;
-                  }
-
-                  self.data.attachmentList.splice(index, 1);
-                  self.compilerTemplate(self.data.attachmentList);
-                  return _context4.abrupt("return");
-
-                case 10:
-                  _context4.prev = 10;
-
-                  if (!(self.data.attachmentList[index].fileContentType >= 1)) {
-                    _context4.next = 22;
-                    break;
-                  }
-
-                  if (self.data.attachmentList[index].attachId) {
-                    _context4.next = 15;
-                    break;
-                  }
-
-                  Utils$1.UI.toast('还未保存过附件，无法删除');
-                  return _context4.abrupt("return");
-
-                case 15:
-                  Utils$1.UI.showLoading('正在删除...'); // 数据库 delte
-
-                  _context4.next = 18;
-                  return self.deleteAttachment({
-                    gtId: self.data.gtId,
-                    attachId: self.data.attachmentList[index].attachId
-                  });
-
-                case 18:
-                  res = _context4.sent;
-
-                  // 本地离线备份 重置 reset
-                  _extends_1(self.data.attachmentList[index], {
-                    attachId: '',
-                    fileId: '',
-                    fileComment: '',
-                    approvalStatus: 0
-                  });
-
-                  _context4.next = 26;
-                  break;
-
-                case 22:
-                  _context4.next = 24;
-                  return self.deleteAttachment({
-                    gtId: self.data.gtId,
-                    attachId: self.data.attachmentList[index].attachId
-                  });
-
-                case 24:
-                  _res2 = _context4.sent;
-                  // 本地离线备份直接 delete
-                  self.data.attachmentList.splice(index, 1);
-
-                case 26:
-                  self.compilerTemplate(self.data.attachmentList);
-                  _context4.next = 32;
-                  break;
-
-                case 29:
-                  _context4.prev = 29;
-                  _context4.t0 = _context4["catch"](10);
-                  api.toast({
-                    msg: _context4.t0.msg || '保存成功',
-                    location: 'middle'
-                  });
-
-                case 32:
-                  Utils$1.UI.hideLoading();
-
-                case 33:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4, null, [[10, 29]]);
-        }));
-
-        return function (_x3) {
-          return _ref3.apply(this, arguments);
-        };
-      }();
-    } // 绑定预览图遮罩事件
-
-  }, {
-    key: "bindPreviewBoxEvents",
-    value: function bindPreviewBoxEvents() {
-      document.querySelector('#preview').onclick = function (e) {
-
-        if (e.target.id === 'preview') {
-          this.classList.add('hidden');
-        }
-      };
-    } //  绑定清空附件预览图
-
-  }, {
-    key: "bindClearPreviewEvents",
-    value: function bindClearPreviewEvents() {
-      var self = this;
-
-      document.querySelector('#pv-img-del').onclick = function () {
-        if (self.data.applyStatus >= 2) {
-          return void 0;
-        }
-
-        _extends_1(self.data.attachmentList[self.data.currentPreviewIndex], {
-          fileId: '',
-          fileDataStream: ''
+      },
+      getYjdTable: function getYjdTable() {
+        var _this3 = this;
+
+        // 押金贷
+        http$1.get('/crpt-product/product/cooperation/fostercare/list', {}).then(function (res) {
+          _this3.yjdData = res.data;
         });
+      },
+      changeHXD: function changeHXD(item) {
+        // 好销贷跳转
 
-        self.searchAllData();
-        self.compilerTemplate(self.data.attachmentList);
-        document.querySelector('#preview').classList.add('hidden');
-      };
-    } //  提交总表单事件
+        /**
+         * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
+         * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
+         * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
+         */
+        var userType = ($api.getStorage('userinfo') || {}).userType;
 
-  }, {
-    key: "bindSubmitEvents",
-    value: function bindSubmitEvents() {
-      var self = this;
-      document.querySelector('#save-btn').onclick = /*#__PURE__*/asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
-        var res;
-        return regenerator.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                if (!(self.data.applyStatus >= 2)) {
-                  _context5.next = 2;
-                  break;
-                }
-
-                return _context5.abrupt("return", void 0);
-
-              case 2:
-                Utils$1.UI.showLoading('提交中');
-                _context5.prev = 3;
-                _context5.next = 6;
-                return self.submitInfo({
-                  gtId: self.data.gtId
-                });
-
-              case 6:
-                res = _context5.sent;
-                Utils$1.UI.toast('操作成功');
-                Utils$1.Router.closeCurrentWinAndRefresh({
-                  winName: 'html/danbaostep2/index',
-                  script: 'window.location.reload();'
-                });
-                _context5.next = 14;
-                break;
-
-              case 11:
-                _context5.prev = 11;
-                _context5.t0 = _context5["catch"](3);
-                Utils$1.UI.toast(_context5.t0.msg);
-
-              case 14:
-                Utils$1.UI.hideLoading();
-
-              case 15:
-              case "end":
-                return _context5.stop();
+        if (item.creditStatus === 0 && Number(userType) === 2) {
+          Router$2.openPage({
+            key: 'hxd_a_supply',
+            params: {
+              pageParam: {
+                productId: item.productId
+              }
+            }
+          });
+        } else {
+          Router$2.openPage({
+            key: 'hxd_apply',
+            params: {
+              pageParam: {
+                productId: item.productId
+              }
+            }
+          });
+        }
+      },
+      changeYJD: function changeYJD(item) {
+        // 押金贷跳转
+        Router$2.openPage({
+          key: 'yjd_product_detail',
+          params: {
+            pageParam: {
+              item: item
             }
           }
-        }, _callee5, null, [[3, 11]]);
-      }));
-    } // 检索出当前所有填充在input中的model-tree，防止删除或新增时，将未保存的数据抹掉
-
-  }, {
-    key: "searchAllData",
-    value: function searchAllData() {
-      var self = this;
-      var newAttachmentList = self.data.attachmentList.map(function (item, i) {
-        return _objectSpread$2(_objectSpread$2({}, item), {}, {
-          fileComment: document.querySelector("#fileComment_".concat(i)).value
         });
-      });
-      this.data.attachmentList = newAttachmentList;
-    } // textarea事件绑定
-
-  }, {
-    key: "bindTextareaChangeEvents",
-    value: function bindTextareaChangeEvents() {
-      Array.from(document.querySelectorAll('.a-desc')).forEach(function (dom, i) {
-        dom.onkeyup = function (event) {
-          var _index = event.target.getAttribute('data-index');
-
-          Array.from(document.querySelectorAll('.current_length'))[_index].innerHTML = event.target.value.length;
-        };
-      });
-    } // 编译html模板
-
-  }, {
-    key: "compilerTemplate",
-    value: function compilerTemplate(list) {
-      var self = this;
-
-      var _html = list.reduce(function (prev, item, i) {
-        return prev + "<div class=\"cl-cell\">\n        <div class=\"cl-cell_box cl_h_bd\">\n            <div class=\"cl-cell_text single\">\n                <span class=\"clt_main\">\n                ".concat(!item.productFileRequire ? "" : "<span style='color: red;margin-right: 3px'>* </span>", " \n                ").concat(!!item.fileContentType ? self.profile.fileContentType[item.fileContentType] : "附件<b>" + (i + 1) + "</b>", " \n                <b class=\"b-status s_").concat(item.approvalStatus || 0, "\">").concat(self.profile.remap.approvalStatus[item.approvalStatus || 0], "</b> </span>\n                <div>\n                    <a class=\"update\" data-index=\"").concat(i, "\">\u4FDD\u5B58</a>\n                    <a class=\"del\" data-index=\"").concat(i, "\">\u5220\u9664</a>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-body\">\n            <div class=\"form-cell_shell\" data-index=\"").concat(i, "\">\n                <div class=\"a-img\"  data-index=\"").concat(i, "\">\n                    <span class=\"def\"  data-index=\"").concat(i, "\"></span>\n                    <img class=\"a-img-url\" src=\"").concat(baseUrl, "/crpt-file/file/download/").concat(item.fileId, "\" alt=\"\" id=\"fileId_").concat(i, "\" data-index=\"").concat(i, "\">\n                </div>\n                <div class=\"a-text-box\">\n                    <textarea class=\"a-desc\" name=\"\" id=\"fileComment_").concat(i, "\" cols=\"30\" rows=\"10\" data-index=\"").concat(i, "\" maxlength=\"50\" onchange=\"\">").concat(item.fileComment || '', "</textarea>\n                    <span class=\"a-count\"><b class=\"current_length\">").concat(item.fileComment && item.fileComment.length || 0, "</b>/50</span>\n                </div>\n            </div>\n        </div>\n    </div>");
-      }, '');
-
-      document.querySelector('#credit-list').innerHTML = _html;
-      self.bindTextareaChangeEvents();
+      }
     }
-  }]);
-
-  return PageController;
-}(Service);
-
-apiready = function apiready() {
-  var pageParam = api.pageParam || {};
-  api.setStatusBarStyle({
-    style: 'dark'
   });
   api.addEventListener({
     name: 'navitembtn'
@@ -2643,8 +2472,5 @@ apiready = function apiready() {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  });
-  new PageController({
-    pageParam: pageParam
-  }).main();
+  }); // alert(Vue)
 };

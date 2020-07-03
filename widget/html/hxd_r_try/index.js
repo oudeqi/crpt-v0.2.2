@@ -111,6 +111,15 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 押金贷产品详情
+  yjd_product_detail: {
+    name: 'yjd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/yjd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -138,15 +147,6 @@ var routerHXDConfig = {
     name: 'hxd_a_success',
     title: '产品开通',
     url: 'widget://html/hxd_a_success/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 好销贷产品推荐列表
-  hxd_product_list: {
-    name: 'hxd_product_list',
-    title: '产品详情',
-    url: 'widget://html/hxd_product_list/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarGreen
@@ -297,13 +297,22 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 通用产品列表
+  com_product_list: {
+    name: 'com_product_list',
+    title: '产品列表',
+    url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+var profile = _objectSpread(_objectSpread(_objectSpread({}, routerHXDConfig), routerMap), routerConfig);
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -320,7 +329,7 @@ var Router = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$1({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$1(_objectSpread$1({}, profile[key]), params));
     }
   }]);
 

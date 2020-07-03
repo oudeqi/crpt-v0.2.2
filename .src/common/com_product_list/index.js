@@ -28,7 +28,6 @@ apiready = function () {
           api.refreshHeaderLoadDone()
         }
       })
-      // console.log(JSON.stringify(this.pageParam))
       // this.creditStatusObj = await filterDict('creditStatus')
     },
     methods: {
@@ -43,7 +42,6 @@ apiready = function () {
         // Utils.UI.showLoading('加载中')
         http.get('/crpt-credit/credit/hxd/product/list', {}).then(res => {
           this.hxdData = res.data
-          console.log(JSON.stringify(this.hxdData))
           // Utils.UI.hideLoading()
         })
       },
