@@ -12,10 +12,9 @@ apiready = function () {
       filter,
       hxdData: [],
       yjdData: [],
-      pageParam: ''
+      pageParam: api.pageParam || {}
     },
     async mounted () {
-      this.pageParam = api.pageParam || {}
       this.handleGetData()
       Utils.UI.setRefreshHeaderInfo({
         success: () => {
@@ -55,9 +54,10 @@ apiready = function () {
          * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
          * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
          * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
+         * companyExtId === -1 企业用户，并且未填写过信息
          */
         const userType = ($api.getStorage('userinfo') || {}).userType
-        if (item.creditStatus === 0 && Number(userType) === 2) {
+        if (item.creditStatus === 0 && Number(userType) === 2 && item.companyExtId === -1) {
           Router.openPage({ key: 'hxd_a_supply', params: {
             pageParam: {productId: item.productId}
           }})

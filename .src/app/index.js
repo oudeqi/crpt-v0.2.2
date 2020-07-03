@@ -79,7 +79,9 @@ class App {
       //   key: 'hxd_u_apply',
       //   params: { pageParam: { productId: '1' } }
       // })
-      
+      // Router.openPage({
+      //   key: 'hxd_u_smscode'
+      // })
       // return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {

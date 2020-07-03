@@ -2242,6 +2242,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  // 通用开通账户页面
+  com_open_account: {
+    name: 'com_open_account',
+    title: '产品列表',
+    url: 'widget://html/com_open_account/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
   }
 };
 
@@ -2321,6 +2330,9 @@ var App = /*#__PURE__*/function () {
         // Router.openPage({
         //   key: 'hxd_u_apply',
         //   params: { pageParam: { productId: '1' } }
+        // })
+        // Router.openPage({
+        //   key: 'hxd_u_smscode'
         // })
         // return
         var authStatus = $api.getStorage('authStatus') || {};
