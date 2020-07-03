@@ -79,8 +79,8 @@ class App {
       //   key: 'hxd_u_apply',
       //   params: { pageParam: { productId: '1' } }
       // })
-      // return
       
+      // return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
         openTabLayout()

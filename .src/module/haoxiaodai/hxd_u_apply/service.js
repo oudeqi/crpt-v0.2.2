@@ -4,8 +4,8 @@ const service = {
   postQueryEBSOrders: (params) => {
     return http.post(`/crpt-order/order/hxd/query/warehouse/order/list`, { body: params })
   },
-  postSignJF: (params) => {
-    return http.get(`/crpt-order/crpt-credit/credit/jf/apply/sign`, { values: params })
+  postApply: (params) => {
+    return http.post(`/crpt-credit/credit/hxd/apply/warehouse/order/list`, { body: params })
   }
 }
 export default service

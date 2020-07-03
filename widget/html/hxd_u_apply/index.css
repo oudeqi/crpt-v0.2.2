@@ -1,3 +1,217 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+input, textarea {
+  outline: none;
+  border: none;
+}
+/*块状按钮*/
+.app_btn {
+  height: 50px;
+  background: #66bb6a;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.app_btn.disabled {
+  background: #dce0e8;
+}
+.app_btn.active {
+  background-color: rgba(102, 187, 106, 0.75);
+}
+.app_btn.loading {
+  background-color: rgba(102, 187, 106, 0.75);
+}
+.app_plain_btn {
+  height: 50px;
+  background: #ffffff;
+  border-radius: 25px;
+  border: 1px solid #66bb6a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #66bb6a;
+}
+/*输入框组*/
+.app_ipt_group {
+  padding-top: 20px;
+}
+.app_ipt_group .item {
+  height: 54px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-bottom: 1px solid #eaeaea;
+}
+.app_ipt_group .item .icon {
+  width: 50px;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.app_ipt_group .item .icon .aui-iconfont {
+  font-size: 22px;
+  color: #666;
+}
+.app_ipt_group .item .icon .aui-icon-unlock:before {
+  position: relative;
+  left: 4px;
+}
+.app_ipt_group .item .ipt {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100%;
+  position: relative;
+  top: 2px;
+  margin-right: 20px;
+}
+.app_ipt_group .item .ipt input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+}
+.app_ipt_group .item .btn {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-left: 10px;
+  padding-right: 4px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #66BB6A;
+}
+.app_ipt_group .item .btn.active {
+  color: #909399;
+  padding-right: 3px;
+}
+.app_ipt_group .item .btn.loading {
+  color: #666;
+}
+.app_checkbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border: 1px solid #c0c4cc;
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+}
+.app_checkbox:checked {
+  background-image: url(../../image/form/checked.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.app_agreement {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.app_agreement label {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-right: 10px;
+}
+.app_agreement .agreement_content {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-top: 1px;
+}
+.app_agreement .agreement_content ul {
+  display: inline;
+}
+.app_agreement .agreement_content ul li {
+  display: inline;
+}
+.app_agreement .agreement_content strong {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #909399;
+}
+.app_agreement .agreement_content span {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #909399;
+}
+.app_agreement .agreement_content li {
+  display: inline;
+  font-size: 15px;
+  font-weight: normal;
+  color: #66BB6A;
+  padding-left: 0;
+  padding-right: 1px;
+}
+.app_agreement .agreement_content li.active {
+  padding-left: 1px;
+  padding-right: 0;
+}
+/*连接按钮*/
+.app_link_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  font-size: 16px;
+  color: #66bb6a;
+}
+.app_link_btn.active {
+  padding-left: 1px;
+  padding-right: 0px;
+}
+/*文字按钮*/
+.app_text_btn {
+  padding-left: 0;
+  padding-right: 1px;
+  color: #66BB6A;
+}
+.app_text_btn.active {
+  color: rgba(102, 187, 106, 0.75);
+  padding-left: 1px;
+  padding-right: 0px;
+}
 .gt-page {
   min-height: 100vh;
   padding-bottom: 30px;
@@ -225,6 +439,7 @@ html, body {
 }
 #app {
   min-height: 100vh;
+  padding-bottom: 100px;
 }
 .header {
   background: #ffffff;
@@ -264,6 +479,8 @@ html, body {
   font-size: 20px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
+}
+.header .use .num.war {
   color: #ea5c39;
 }
 .header .warning {
@@ -272,15 +489,17 @@ html, body {
   font-weight: 500;
   color: #ea5c39;
   text-align: right;
+  margin-top: 8px;
+}
+.header .warning.calm {
+  color: #909399;
 }
 .header .single .num-ipt {
   background: #f5f5f5;
   border-radius: 4px;
-  border: 1px solid #dce0e8;
   font-size: 20px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
-  color: #ea5c39;
   width: 150px;
   text-align: right;
   padding: 0 5px;
@@ -307,10 +526,14 @@ html, body {
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
   color: #606266;
+  text-align: center;
+  margin-top: 24px;
 }
 .main.ept .empty {
-  color: red;
-  font-size: 20px;
+  width: 180px;
+  height: 200px;
+  background: url(../../image/common/uorder_empty.png) no-repeat;
+  background-size: 100% 100%;
 }
 .main .tips {
   font-size: 16px;
@@ -326,6 +549,7 @@ html, body {
   border-radius: 6px;
   padding: 16px 12px 8px 12px;
   margin-bottom: 12px;
+  border: 2px solid #fff;
 }
 .main .list .cell.selected {
   background: #eff8f0;
@@ -347,9 +571,14 @@ html, body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  height: 32px;
+  line-height: 32px;
 }
 .main .list .cell .title .ok {
-  font-size: 10px;
+  width: 32px;
+  height: 32px;
+  background: url(../../image/form/checked.png) no-repeat;
+  background-size: 100% 100%;
 }
 .main .list .cell .num {
   display: -webkit-box;
@@ -395,4 +624,13 @@ html, body {
 .bottom-box {
   padding: 12px 0 38px 0;
   background: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }

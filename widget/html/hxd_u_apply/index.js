@@ -737,6 +737,23 @@ try {
 
 var regenerator = runtime_1;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -774,23 +791,6 @@ function _asyncToGenerator(fn) {
 }
 
 var asyncToGenerator = _asyncToGenerator;
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 function openRegLogin() {
   api.openTabLayout({
@@ -1109,6 +1109,32 @@ var toast = function toast(msg) {
   });
 };
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function setRefreshHeaderInfo(_ref) {
+  var success = _ref.success,
+      fail = _ref.fail,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options;
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      fail && fail(error);
+    } else {
+      success && success(ret);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -1144,6 +1170,11 @@ var UI = /*#__PURE__*/function () {
     key: "toast",
     value: function toast$1(params) {
       return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
     }
   }]);
 
@@ -1420,9 +1451,9 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1469,7 +1500,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1787,9 +1818,9 @@ var Utils$1 = new Utils();
 var dev$1 = 'http://crptdev.liuheco.com';
 var baseUrl$1 =  dev$1 ;
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var whiteList$1 = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1834,7 +1865,7 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1974,9 +2005,9 @@ var service = {
       body: params
     });
   },
-  postSignJF: function postSignJF(params) {
-    return http$1.get("/crpt-order/crpt-credit/credit/jf/apply/sign", {
-      values: params
+  postApply: function postApply(params) {
+    return http$1.post("/crpt-credit/credit/hxd/apply/warehouse/order/list", {
+      body: params
     });
   }
 };
@@ -2049,6 +2080,10 @@ var filter = {
   }
 };
 
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
   api.addEventListener({
@@ -2061,12 +2096,24 @@ apiready = function apiready() {
   var page = new Vue({
     el: '#app',
     data: {
-      isWarning: true,
+      // isWarning: true,
       EBSOrders: [],
       availableAmount: 0,
       // 当前可用额度
-      productId: pageParam.productId,
-      filter: filter
+      useAmount: '',
+      // 勾选用款金额
+      productId: pageParam.productId
+    },
+    computed: {
+      isWarning: function isWarning() {
+        return this.availableAmount < this.useAmount;
+      },
+      availableAmountTn: function availableAmountTn() {
+        return filter.toThousands(this.availableAmount);
+      },
+      useAmountTn: function useAmountTn() {
+        return filter.toThousands(this.useAmount);
+      }
     },
     methods: {
       handleGetEBSOrders: function handleGetEBSOrders() {
@@ -2089,11 +2136,18 @@ apiready = function apiready() {
                   res = _context.sent;
 
                   if (res.data) {
-                    _this.EBSOrders = res.data.warehouseOrderlist;
+                    _this.EBSOrders = res.data.warehouseOrderlist.map(function (item) {
+                      return _objectSpread$3({}, item, {
+                        isSelected: false
+                      });
+                    });
                     _this.availableAmount = res.data.availableAmount;
+                  } else {
+                    _this.EBSOrders = [];
+                    _this.availableAmount = '';
                   }
 
-                  _context.next = 11;
+                  _context.next = 13;
                   break;
 
                 case 8:
@@ -2104,20 +2158,125 @@ apiready = function apiready() {
                     Utils$1.UI.toast(_context.t0.msg);
                   }
 
-                case 11:
+                  _this.EBSOrders = [];
+                  _this.availableAmount = '';
+
+                case 13:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
           }, _callee, null, [[0, 8]]);
         }))();
+      },
+      handleSelect: function handleSelect(index) {
+        this.EBSOrders[index].isSelected = !this.EBSOrders[index].isSelected;
+        this.useAmount = filter.toThousands(this.calculateUseAmount());
+      },
+      calculateUseAmount: function calculateUseAmount() {
+        var _list = this.EBSOrders.filter(function (item) {
+          return item.isSelected;
+        });
+
+        return _list.reduce(function (prev, item, i) {
+          return prev + item.wareAvailableAmount;
+        }, 0) || '';
+      },
+      postApplySubmit: function postApplySubmit() {
+        var _this2 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var _list, res;
+
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _list = _this2.EBSOrders.filter(function (item) {
+                    return item.isSelected;
+                  }).map(function (item) {
+                    return item.orderId;
+                  });
+                  _context2.prev = 1;
+                  Utils$1.UI.showLoading('提交中');
+                  _context2.next = 5;
+                  return service.postApply({
+                    productId: _this2.productId,
+                    orderIds: _list
+                  });
+
+                case 5:
+                  res = _context2.sent;
+
+                  if (res.code === 200) {
+                    alert('ok');
+                    Router.openPage({
+                      key: 'hxd_u_confirm',
+                      params: {
+                        pageParam: {
+                          productId: _this2.productId
+                        }
+                      }
+                    });
+                  }
+
+                  _context2.next = 12;
+                  break;
+
+                case 9:
+                  _context2.prev = 9;
+                  _context2.t0 = _context2["catch"](1);
+
+                  if (_context2.t0.msg) {
+                    Utils$1.UI.toast("".concat(_context2.t0.code, " : ").concat(_context2.t0.msg));
+                  }
+
+                case 12:
+                  Utils$1.UI.hideLoading('');
+
+                case 13:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[1, 9]]);
+        }))();
+      },
+      handleSubmit: function handleSubmit() {
+        var _list = this.EBSOrders.filter(function (item) {
+          return item.isSelected;
+        });
+
+        if (_list.length <= 0) {
+          Utils$1.UI.toast('请选择入库单');
+          return;
+        }
+
+        this.postApplySubmit();
+      },
+      handleChange: function handleChange(event) {
+        this.useAmount = event.target.value.replace(/,/g, '');
       }
     },
     mounted: function mounted() {
-      console.log(this.filter.toThousands(10000));
+      var _this3 = this;
+
+      api.parseTapmode();
+      Utils$1.UI.setRefreshHeaderInfo({
+        success: function success() {
+          _this3.handleGetEBSOrders();
+
+          setTimeout(function () {
+            api.refreshHeaderLoadDone();
+          }, 0);
+        },
+        fail: function fail() {
+          api.refreshHeaderLoadDone();
+        }
+      });
       this.handleGetEBSOrders();
     }
   });

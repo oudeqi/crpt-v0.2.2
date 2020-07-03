@@ -11,7 +11,6 @@ apiready = function () {
       api.closeWin();
     }
   });
-
   const page = new Vue({
     el: '#app',
     data: {
