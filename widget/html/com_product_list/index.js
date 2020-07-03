@@ -2371,7 +2371,7 @@ apiready = function apiready() {
       filter: filter,
       hxdData: [],
       yjdData: [],
-      pageParam: ''
+      pageParam: api.pageParam || {}
     },
     mounted: function mounted() {
       var _this = this;
@@ -2381,8 +2381,6 @@ apiready = function apiready() {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.pageParam = api.pageParam || {};
-
                 _this.handleGetData();
 
                 Utils$1.UI.setRefreshHeaderInfo({
@@ -2398,7 +2396,7 @@ apiready = function apiready() {
                   }
                 }); // this.creditStatusObj = await filterDict('creditStatus')
 
-              case 3:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2438,6 +2436,7 @@ apiready = function apiready() {
          * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
          * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
          * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
+         * companyExtId === -1 企业用户，并且未填写过信息
          */
         var userType = ($api.getStorage('userinfo') || {}).userType;
 

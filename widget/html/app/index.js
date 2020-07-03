@@ -2330,6 +2330,9 @@ var App = /*#__PURE__*/function () {
         //   key: 'hxd_u_apply',
         //   params: { pageParam: { productId: '1' } }
         // })
+        // Router.openPage({
+        //   key: 'hxd_u_smscode'
+        // })
         // return
         var authStatus = $api.getStorage('authStatus') || {};
 
