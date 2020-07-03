@@ -10,58 +10,22 @@
   <link rel="stylesheet" href="./index.css"></head>
   <body>
     <div class="container" id="app">
-
-      <div class="result">
-        <div class="result-icon"></div>
-        <div class="result-txt">
-          <strong>您的贷款申请已提交审核</strong>
-          <span>将在提交后1-3个工作日内通知您审核结果</span>
-        </div>
+      <div class="success">
+        <div class="success-icon"></div>
+        <div class="success-desc">提交成功</div>
+        <div class="success-tips">3s后自动跳转</div>
       </div>
 
-      <div class="detail">
-        <div class="detail-head">
-          <strong>150,000.00</strong>
-          <span>申请贷款金额(元)</span>
-        </div>
-        <div class="detail-main">
-          <div class="detail-row">
-            <span>贷款利率</span><strong>4.8%</strong>
-          </div>
-          <div class="detail-row">
-            <span>贷款期限(月)</span><strong>7</strong>
-          </div>
-          <div class="detail-row">
-            <span>贷款到期日</span><strong>2020-04-01</strong>
-          </div>
-          <div class="detail-row">
-            <span>还款方式</span><strong>到期还本付息</strong>
-          </div>
-          <div class="detail-row">
-            <span>借款人姓名</span><strong>王振</strong>
-          </div>
-          <div class="detail-row">
-            <span>贷款收款账号</span><strong>13869509523</strong>
-          </div>
-          <div class="detail-row">
-            <span>贷款收款账户名称</span><strong>德阳农业服务有限公司</strong>
-          </div>
-        </div>
+      <div class="failure">
+        <div class="failure-icon"></div>
+        <div class="failure-desc">对不起，您不能申请该贷款</div>
+        <div class="failure-tips">原因：资料审核不通过</div>
+        <div class="failure-tips">如需帮助请联系客户经理</div>
       </div>
-
-      <div class="listgroup">
-        <div class="listgroup-item" id="msg">代养合同信息</div>
-        <div class="listgroup-item">户口本信息</div>
-      </div>
-
-      <div class="tips">
-        若长时间未更新审核结果请联系客户经理
+      <div class="failure-btn">
+        <div class="app_btn">确认</div>
       </div>
       
-      <div class="fixed-btn">
-        <div class="app_btn" tapmode="active" id="next">下一步</div>
-      </div>
-
     </div>
     <script type="text/javascript" src="../../script/api.js"></script>
     <script type="text/javascript" src="../../script/vue.js"></script>

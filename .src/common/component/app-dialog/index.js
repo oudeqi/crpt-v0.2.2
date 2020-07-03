@@ -2,7 +2,7 @@ import './index.css'
 
 const AppDialog = {
   template: `
-    <div class="dialog-mask" @click="onMaskClick">
+    <div class="full-mask" @click="onMaskClick">
       <div class="dialog">
         <div v-if="title" class="dialog-header">{{title}}</div>
         <div class="dialog-content">
