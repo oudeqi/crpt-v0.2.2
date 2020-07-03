@@ -1476,6 +1476,32 @@ var toast = function toast(msg) {
   });
 };
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function setRefreshHeaderInfo(_ref) {
+  var success = _ref.success,
+      fail = _ref.fail,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options;
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      fail && fail(error);
+    } else {
+      success && success(ret);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -1511,6 +1537,11 @@ var UI = /*#__PURE__*/function () {
     key: "toast",
     value: function toast$1(params) {
       return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
     }
   }]);
 
@@ -1756,9 +1787,9 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1805,7 +1836,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2025,9 +2056,9 @@ function getPicture(sourceType, cb) {
   }, cb);
 }
 
-function setRefreshHeaderInfo(successCallback, errorCallback) {
+function setRefreshHeaderInfo$1(successCallback, errorCallback) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread({
+  api.setRefreshHeaderInfo(_objectSpread$1({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
     textColor: '#bfbfbf',
@@ -2330,9 +2361,9 @@ var NumberLimit = function NumberLimit(el) {
   };
 };
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -3332,7 +3363,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     _context8.prev = 0;
                     _this10$initData = _this10.initData, gtCreditId = _this10$initData.gtCreditId, gtCounterId = _this10$initData.gtCounterId, type = _this10$initData.type;
                     isUpdate = gtCounterId;
-                    postData = _objectSpread$1({}, data, {}, _this10.__getOtherParams(), {
+                    postData = _objectSpread$2({}, data, {}, _this10.__getOtherParams(), {
                       type: type,
                       gtCreditId: gtCreditId // 担保授信id
 
@@ -3425,7 +3456,7 @@ apiready = function apiready() {
     ctrl.getFillStatus();
   });
   ctrl.getPageDate();
-  setRefreshHeaderInfo(function () {
+  setRefreshHeaderInfo$1(function () {
     ctrl.getPageDate();
   });
 

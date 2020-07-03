@@ -1,0 +1,65 @@
+
+<!-- 好销贷授信申请 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <section class="header">
+        <div class="logo">押</div>
+        <div class="name">{{pageParam.item.title}}</div>
+        <div class="loan">
+          <div class="num">{{filter.toThousands(pageParam.item.totalLimit)}}</div>
+          <div class="label">最高额度(元)</div>
+        </div>
+      </section>
+      <section class="introduction">
+        <div class="intro">
+          <h4 class="tit">产品介绍</h4>
+          <ul class="list">
+            <li class="cell">
+              <div class="icon"></div>
+              <div class="desc">
+                <p class="c-title">安全可靠</p>
+                <p class="c-detail">银行贷款产品，50万内受国家存款制度保障</p>
+              </div>
+            </li>
+            <li class="cell">
+              <div class="icon"></div>
+              <div class="desc">
+                <p class="c-title">超长账期</p>
+                <p class="c-detail">账期依据养户实际情况设定，最长可达60个</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="introduction">
+        <div class="intro">
+          <h4 class="tit">开通流程</h4>
+          <img src="../../image/yjd_product_detail_follow.png" alt="" srcset="">
+        </div>
+      </section>
+      
+      <div class="fixed-btn" @click="changePage()">
+        <div class="app_btn">立即申请</div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

@@ -1163,6 +1163,49 @@ var toast = function toast(msg) {
   });
 };
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function setRefreshHeaderInfo(_ref) {
+  var success = _ref.success,
+      fail = _ref.fail,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options;
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      fail && fail(error);
+    } else {
+      success && success(ret);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -1198,6 +1241,11 @@ var UI = /*#__PURE__*/function () {
     key: "toast",
     value: function toast$1(params) {
       return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
     }
   }]);
 
@@ -1262,26 +1310,9 @@ var codeMapFilter = function codeMapFilter(list) {
   return codeMap;
 };
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 function openRegLogin() {
@@ -1342,7 +1373,7 @@ function openDanbaoKaitong() {
       subType: 'from_right'
     }
   };
-  api.openTabLayout(_objectSpread({
+  api.openTabLayout(_objectSpread$1({
     name: "html/danbaostep".concat(i, "/index"),
     title: title,
     url: "widget://html/danbaostep".concat(i, "/index.html"),
@@ -1668,9 +1699,9 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1717,7 +1748,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1851,9 +1882,9 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function setRefreshHeaderInfo(successCallback, errorCallback) {
+function setRefreshHeaderInfo$1(successCallback, errorCallback) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread$1({
+  api.setRefreshHeaderInfo(_objectSpread$2({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
     textColor: '#bfbfbf',
@@ -3570,7 +3601,7 @@ apiready = function apiready() {
   var headerController = new HeaderController();
   headerController.renderHeaderAndGetDanbaoStatus(); // 下拉刷新
 
-  setRefreshHeaderInfo(function (ret, err) {
+  setRefreshHeaderInfo$1(function (ret, err) {
     pageController.main();
     headerController.renderHeaderAndGetDanbaoStatus();
   });

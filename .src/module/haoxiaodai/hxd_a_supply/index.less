@@ -45,19 +45,38 @@ body {
         font-family: PingFang-SC-Medium, PingFang-SC;
         font-weight: 500;
         color: @themeColor;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &.active {
+          color: #000;
+        }
       }
-      input {
+      .ipt {
         font-size: 14px;
         font-family: PingFang-SC-Medium, PingFang-SC;
         font-weight: 500;
+        min-width: 350px;
         // color: rgba(192, 196, 204, 1);
       }
       .upload {
         width: 214px;
         height: 300px;
-        background: rgba(255, 255, 255, 1);
         border-radius: 11px;
         border: 2px dashed rgba(245, 245, 245, 1);
+        background: url("../../image/yyzz_ex.png") no-repeat;
+        background-size: 184px 270px;
+        background-position: 15px 15px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.nobg {
+          background: none;
+        }
+        img {
+          width: 90%;
+        }
       }
       .detail {
         font-size: 16px;
@@ -74,4 +93,22 @@ body {
 .bottom-box {
   padding: 12px 0 38px 0;
   background: #fff;
+}
+
+.cl-cell_arrow {
+  width: 16px;
+  height: 16px;
+  //color: #999;
+  //transform: scaleY(1.6);
+  transition: all 0.2s ease-in-out;
+  transform-origin: center center;
+  flex: none;
+  background: url(../../image/guarantee/form-arrow.png) no-repeat;
+  background-size: 100% 100%;
+  &.collapse {
+    transform: rotate(90deg);
+  }
+  &.rotate {
+    transform: rotate(-90deg);
+  }
 }

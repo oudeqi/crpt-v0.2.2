@@ -12,7 +12,7 @@ _业务员端_
 
 ## 版本记录
 
-### 0.3.0（， 线上）
+### 0.3.0（2020/07/30， 线上）
   - 新增押金贷产品流程（支用、还款）
   - 新增好销贷产品（授信、支用、还款）
   - 新增贷款试算功能
@@ -46,7 +46,12 @@ _业务员端_
 │   ├── profile.js          
 │   └── index.js
 ├── tablayout               //  页面
-│   ├── index
+│   ├── wallet              //  希望钱包页
+│   │   ├── index.html
+│   │   ├── index.js
+│   │   ├── index.less
+│   │   └── service.js
+│   ├── index               //  首页
 │   │   ├── index.html
 │   │   ├── index.js
 │   │   ├── index.less
@@ -69,6 +74,9 @@ _业务员端_
 ├── styles                  //  通用样式
 │   ├── _variable.less
 │   └── form.less
+├── http                    //  ajax
+│   ├── index.js
+│   └── config.js
 ├── utils                   //  工具库
 │   ├── index.js            //  Util类
 │   ├── file                //  插件类

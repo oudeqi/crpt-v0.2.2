@@ -1,6 +1,8 @@
-@import '../../../styles/_variable.less';
-@import '../../../styles/form.less';
-html, body {
+@import "../../../styles/common.less";
+@import "../../../styles/_variable.less";
+@import "../../../styles/form.less";
+html,
+body {
   background: @pageBg;
 }
 .mg {
@@ -8,6 +10,7 @@ html, body {
 }
 #app {
   min-height: 100vh;
+  padding-bottom: 100px;
 }
 .header {
   background: rgba(255, 255, 255, 1);
@@ -38,7 +41,10 @@ html, body {
       font-size: 20px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      color: rgba(234, 92, 57, 1);
+      // color: rgba(234, 92, 57, 1);
+      &.war {
+        color: rgba(234, 92, 57, 1);
+      }
     }
   }
   .warning {
@@ -47,19 +53,24 @@ html, body {
     font-weight: 500;
     color: rgba(234, 92, 57, 1);
     text-align: right;
+    margin-top: 8px;
+    &.calm {
+      color: #909399;
+    }
   }
   .single {
     .num-ipt {
       background: rgba(245, 245, 245, 1);
       border-radius: 4px;
-      border: 1px solid rgba(220, 224, 232, 1);
+      // border: 1px solid rgba(220, 224, 232, 1);
       font-size: 20px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      color: rgba(234, 92, 57, 1);
+      // color: rgba(234, 92, 57, 1);
       width: 150px;
       text-align: right;
       padding: 0 5px;
+      // outline: none;
     }
   }
 }
@@ -74,13 +85,16 @@ html, body {
       font-size: 16px;
       font-family: PingFang-SC-Medium, PingFang-SC;
       font-weight: 500;
-      color: rgba(96, 98, 102, 1);
-      
+      color: #606266;
+      text-align: center;
+      margin-top: 24px;
     }
     .empty {
-        color: red;
-        font-size: 20px;
-      }
+      width: 180px;
+      height: 200px;
+      background: url(../../image/common/uorder_empty.png) no-repeat;
+      background-size: 100% 100%;
+    }
   }
   .tips {
     font-size: 16px;
@@ -96,6 +110,7 @@ html, body {
       border-radius: 6px;
       padding: 16px 12px 8px 12px;
       margin-bottom: 12px;
+      border: 2px solid #fff;
       &.selected {
         background: rgba(239, 248, 240, 1);
         border-radius: 6px;
@@ -110,8 +125,14 @@ html, body {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        height: 32px;
+        line-height: 32px;
         .ok {
-          font-size: 10px;
+          width: 32px;
+          height: 32px;
+          // font-size: 10px;
+          background: url(../../image/form/checked.png) no-repeat;
+          background-size: 100% 100%;
         }
       }
       .num {
@@ -159,4 +180,9 @@ html, body {
 .bottom-box {
   padding: 12px 0 38px 0;
   background: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
 }

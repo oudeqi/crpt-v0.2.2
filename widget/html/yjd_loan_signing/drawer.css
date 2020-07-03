@@ -1,5 +1,12 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 input, textarea {
-  outline: 0;
+  outline: none;
+  border: none;
 }
 /*块状按钮*/
 .app_btn {
@@ -204,10 +211,6 @@ input, textarea {
   color: rgba(102, 187, 106, 0.75);
   padding-left: 1px;
   padding-right: 0px;
-}
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
 }
 
 .content {

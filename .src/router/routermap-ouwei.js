@@ -72,6 +72,15 @@ const routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 押金贷产品详情
+  yjd_product_detail: {
+    name: 'yjd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/yjd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
 }
 
 export default routerMap

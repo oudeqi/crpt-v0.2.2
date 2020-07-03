@@ -21,18 +21,31 @@
         <div class="form">
           <div class="item">
             <div class="desc bd">企业公司经营地址</div>
-            <div class="form-item bd">
-              <div class="city">城市/区域</div>
+            <div class="form-item bd" @click="handlePickCity">
+              <div v-if="!hasSelected" class="city">
+                城市/区域
+                <a class="cl-cell_arrow collapse"></a>
+              </div>
+              <div v-else class="city" :class="{active: hasSelected}">
+                {{pcdString}}
+                <a class="cl-cell_arrow collapse"></a>
+              </div>
             </div>
             <div class="form-item bd">
-              <input type="text" placeholder="请输入详细地址" />
+              <input
+                class="ipt"
+                type="text"
+                placeholder="请输入详细地址"
+                :value="address"
+                @change="handleChangeAddress"
+              />
             </div>
           </div>
           <div class="item">
             <div class="desc">请上传统一社会信用代码证影印件</div>
-            <div class="form-item sm">
-              <div class="upload">
-                <img src alt />
+            <div class="form-item sm" @click="handleUploadPic">
+              <div class="upload" :class="{nobg: businessLicense}">
+                <img v-if="businessLicense" :src="businessLicense" alt />
               </div>
             </div>
           </div>
@@ -51,7 +64,7 @@
         </div>
       </section>
       <div class="bottom-box">
-        <div class="btn btn-normal">提交申请</div>
+        <div class="btn btn-normal" @click="handleClick">提交申请</div>
       </div>
     </div>
 

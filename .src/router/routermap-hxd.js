@@ -1,4 +1,4 @@
-import { themeMainColor, textColor, navigationBarWhite, navigationBarGreen } from './navbar-config'
+import { navigationBarWhite, navigationBarGreen } from './navbar-config'
 
 // router page 配置信息
 const routerHXDConfig = {

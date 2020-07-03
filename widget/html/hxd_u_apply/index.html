@@ -20,57 +20,81 @@
         <div class="header">
           <p class="can">
             <span class="label">当前可用金额(元)</span>
-            <span class="num">200,000,00</span>
+            <span class="num" :class="{war: isWarning}"
+              >{{availableAmountTn}}</span>
           </p>
-          <div v-if="orders.length >= 2" class="can use">
+          <div v-if="EBSOrders.length >= 2" class="can use">
             <span class="label">用款金额(元)</span>
-            <div class="num">240,000,00</div>
+            <div class="num" :class="{war: isWarning}">
+              {{useAmountTn}}
+            </div>
           </div>
-          <div v-else class="can use single">
+          <div v-else-if="EBSOrders.length === 1" class="can use single">
             <span class="label">用款金额(元)</span>
-            <input class="num-ipt" >
+            <input class="num-ipt"
+              type="text"
+              :class="{war: isWarning}"
+              :value="useAmountTn"
+              @keyup="handleChange"
+              maxlength="10"
+            >
+          </div>
+          <div v-if="EBSOrders.length === 0" class="can use">
+            <span class="label">用款金额(元)</span>
+            <div class="num" :class="{war: isWarning}">0</div>
           </div>
           <div v-if="isWarning" class="warning">用款金额已超出当前可用额度</div>
+          <div v-else class="warning calm">1000≤用款金额≤可用金额</div>
         </div>
-        <section v-if="orders.length >= 1" class="main">
+        <section v-if="EBSOrders.length >= 1" class="main">
           <div class="tips">请选择用款入库单</div>
           <ul class="list">
             <li class="cell"
-              v-for="item in orders"
-              :key="item.orderId"
-              :class="item.isSelected ? 'selected' : ''"
+              v-for="(item, index) in EBSOrders"
+              :key="item.warehouseOrderId"
+              :class="{selected: item.isSelected}"
+              @click="handleSelect(index)"
             >
               <div class="title">
-                {{item.title}}
-                <span v-if="item.isSelected" class="ok">这里差一个勾</span>
+                {{item.buyCustName}}
+                <span v-if="item.isSelected" class="ok"></span>
               </div>
               <div class="num">
                 <div class="can">
                   <div class="lb">可用金额</div>
-                  <div class="n">{{item.can}}</div>
+                  <div class="n">{{item.wareAvailableAmount}}</div>
                 </div>
                 <div class="can left">
                   <div class="lb">金额</div>
-                  <div class="n">{{item.left}}</div>
+                  <div class="n">{{item.wareShouldPayAmount}}</div>
                 </div>
               </div>
               <div class="date">
                 下单日期:
-                <span>{{item.date}}</span>
+                <span>{{item.wareOrderTime}}</span>
               </div>
-              <div class="orderId">入库单编号: {{item.orderId}}</div>
+              <div class="orderId">
+                入库单编号: {{item.expWarehouseOrderNo}}
+              </div>
             </li>
           </ul>
         </section>
         <section v-else class="main ept">
           <div class="box">
-            <div class="empty">这里缺张图</div>
+            <div class="empty"></div>
             <div class="tps">暂无可用款入库单</div>
           </div>
         </section>
       </section>
       <div class="bottom-box">
-        <div class="btn btn-normal" :class="orders.length <= 0 ? 'disabled' : ''">下一步</div>
+        <button class="btn btn-normal"
+          :class="{disabled : EBSOrders.length <= 0 || isWarning }"
+          @click="handleSubmit"
+          :disabled="EBSOrders.length <= 0 || isWarning"
+          tapmode
+        >
+          下一步
+        </button>
       </div>
     </div>
 
