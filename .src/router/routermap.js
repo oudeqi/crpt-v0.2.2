@@ -11,5 +11,14 @@ const routerConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 通用产品列表
+  com_product_list: {
+    name: 'com_product_list',
+    title: '产品列表',
+    url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
 }
 export default routerConfig
