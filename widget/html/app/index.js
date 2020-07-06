@@ -2104,7 +2104,7 @@ var routerMap = {
     url: 'widget://html/loan_application/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarGreen
   },
   // 贷款确认
   loan_confirm: {
@@ -2113,13 +2113,40 @@ var routerMap = {
     url: 'widget://html/loan_confirm/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarGreen
   },
   // 贷款详情
-  loan_details: {
-    name: 'loan_details',
+  yjd_loan_details: {
+    name: 'yjd_loan_details',
     title: '贷款详情',
-    url: 'widget://html/loan_details/index.html',
+    url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  // 还款计划
+  repay_plan: {
+    name: 'repay_plan',
+    title: '还款计划',
+    url: 'widget://html/repay_plan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  // 还款记录
+  repay_record: {
+    name: 'repay_record',
+    title: '还款记录',
+    url: 'widget://html/repay_record/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  // 代养合同
+  yjd_contract: {
+    name: 'yjd_contract',
+    title: '代养合同',
+    url: 'widget://html/yjd_contract/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
@@ -2653,31 +2680,11 @@ var App = /*#__PURE__*/function () {
       // 6：人工审核不通过
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
-      // openTodoAuthQiye({status: 'error', tips: 'message'})
-      // return
-      // Router.openPage({ key: 'loan_details' })
+      // Router.openPage({ key: 'yjd_contract', params: {pageParam: { id: 12 }}})
       // return
       var userinfo = $api.getStorage('userinfo');
 
       if (userinfo) {
-        // openIDcardUpload()
-        // openSendAddress({
-        //   gtCreditId: '1258945510237147136',
-        //   gtId: '1263411018323742721'
-        // })
-        // openDanbaoRenList({
-        //   gtCreditId: '1268076050915659776',
-        //   productId: '4',
-        //   demandMoney: '50',
-        //   gtId: '1268076050995986433'
-        // })
-        // return
-        // openSendCode({ tel: '18989193377', userType: 1 })
-        // return
-        // openDanbaoKaitong({step: 0, creditStatus: 2})
-        // return
-        // Router.openPage({ key: 'wallet' })
-        // return
         var authStatus = $api.getStorage('authStatus') || {};
 
         if (authStatus.status === 1) {

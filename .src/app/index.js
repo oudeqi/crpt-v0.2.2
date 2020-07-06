@@ -1,32 +1,8 @@
 import {
-  openAgreement,
-  openSendAddress,
-  openDanbaoKaitong,
-  openDanbaoRenList,
-  openDanbaoRenForm,
-  openMsgCenter,
   openTabLayout,
   openRegLogin,
-  openReg,
-  openGerenLogin,
-  openQiyeLogin,
-  openSendCode,
-  openFindPwd,
-  openBaseinfoFill,
   openTodoAuthGeren,
   openTodoAuthQiye,
-  openCompanyInfo,
-  openIDcardUpload,
-  openIDcardInfo,
-  openFaceAuth,
-  openFaceUpload,
-  openYuguEdu,
-  openAuthResult,
-  openBillList,
-  openBillDetails,
-  openContactUs,
-  openProductDetails,
-  openProductRecommend
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -73,31 +49,10 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
 
-    // openTodoAuthQiye({status: 'error', tips: 'message'})
-    // return
-    // Router.openPage({ key: 'loan_details' })
+    // Router.openPage({ key: 'yjd_contract', params: {pageParam: { id: 12 }}})
     // return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
-      // openIDcardUpload()
-      // openSendAddress({
-      //   gtCreditId: '1258945510237147136',
-      //   gtId: '1263411018323742721'
-      // })
-      // openDanbaoRenList({
-      //   gtCreditId: '1268076050915659776',
-      //   productId: '4',
-      //   demandMoney: '50',
-      //   gtId: '1268076050995986433'
-      // })
-      // return
-      // openSendCode({ tel: '18989193377', userType: 1 })
-      // return
-      // openDanbaoKaitong({step: 0, creditStatus: 2})
-      // return
-      // Router.openPage({ key: 'wallet' })
-
-      // return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
         openTabLayout()

@@ -28,7 +28,7 @@
   
     <section class="total">
       <span>待申请(共{{total}}笔)</span>
-      <strong>{{totalSum}}</strong>
+      <strong>{{ totalSum ? ('¥ ' + numeral(totalSum).format('¥ 0,0.00')) : ''}}</strong>
     </section>
     <!-- 
       orderType 

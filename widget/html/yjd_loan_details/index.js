@@ -2275,25 +2275,6 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function setRefreshHeaderInfo$1(successCallback, errorCallback) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread$3({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, options), function (ret, error) {
-    if (error) {
-      errorCallback && errorCallback(error);
-    } else {
-      successCallback && successCallback(ret);
-    }
-  });
-}
-
 var numeral = createCommonjsModule(function (module) {
 /*! @preserve
  * numeral.js
@@ -3305,114 +3286,44 @@ return numeral;
 });
 
 apiready = function apiready() {
-  var pageSize = 20;
-  var pageNo = 1;
-  var loading = false;
-
-  function getPageData(cb) {
-    if (loading) {
-      return;
-    }
-
-    loading = true; // 查询状态： 1-未还清 2-已还清 3-已失效
-
-    http.get("/crpt-order/order/payInfo?status=3&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
-      loading = false;
-      api.refreshHeaderLoadDone();
-
-      if (res && res.data.list.length > 0) {
-        pageNo++;
-        cb(res.data.list);
-      } else if (pageNo === 1) ; else {
-        api.toast({
-          msg: '无更多数据'
-        });
-      }
-    })["catch"](function (error) {
-      loading = false;
-      api.refreshHeaderLoadDone();
-      api.toast({
-        msg: error.msg || '数据加载失败'
-      });
-    });
-  }
-
-  function appendList(data) {
-    // 业务单状态：
-    // 3-已拒绝 4-已撤销 5-还款中 6-到期结清 7-提前结清
-    // 8-逾期还款中 9-逾期已结清 10-已退货
-    var mapping = {
-      3: 'refused',
-      4: 'cancel',
-      5: 'repaying',
-      6: 'normalOver',
-      7: 'earlyOver',
-      8: 'overdue',
-      9: 'overdueOver',
-      10: 'back'
-    };
-    var mapping2 = {
-      3: '已拒绝',
-      4: '已撤销',
-      5: '还款中',
-      6: '到期结清',
-      7: '提前结清',
-      8: '逾期还款中',
-      9: '逾期已结清',
-      10: '已退货'
-    };
-    data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n      <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n<div class=\"t\">\n            <div class=\"row1\">\n              <span>\u4E1A\u52A1\u5355\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"b\">\n              <div class=\"tit\">\n                <div class=\"amount\">\u8D37\u6B3E\u91D1\u989D(\u5143) \n                  <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n                </div>\n                <span class=\"num\">").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n              </div>\n            </div>\n            <div class=\"row2\">\n              <span>\u6536\u6B3E\u65B9</span>\n              ").concat(item.saleCustName || '', "\n            </div>\n            <div class=\"row2\">\n              <span>\u653E\u6B3E\u65F6\u95F4</span>\n              ").concat(item.orderTime || '', "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u8D37\u6B3E\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName || '', "</strong>\n\n            </div>\n          </div>\n      </li>\n      "));
-    });
-  }
-
-  function refresh() {
-    pageNo = 1;
-    getPageData(function (data) {
-      $api.byId('list').innerHTML = '';
-      appendList(data);
-    });
-  }
-
-  function loadmore() {
-    getPageData(function (data) {
-      appendList(data);
-    });
-  }
-
-  setRefreshHeaderInfo$1(function (ret, err) {
-    refresh();
-  });
   api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100 //距离底部距离
-
-    }
+    name: 'navitembtn'
   }, function (ret, err) {
-    loadmore();
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
   });
-  api.refreshHeaderLoading();
+  var pageParam = api.pageParam || {};
+  var id = pageParam.id,
+      type = pageParam.type; // '9939393'
 
-  document.querySelector('#list').onclick = function (event) {
-    var li = $api.closest(event.target, 'li');
-
-    if (!li) {
-      return;
-    }
-
-    var id = li.dataset.id;
-
-    if (id) {
-      Router$1.openPage({
-        key: 'loan_details'
-      }, {
-        id: id
-      });
-    } else {
-      api.toast({
-        msg: 'id 不存在'
-      });
-    }
+  document.querySelector('#repayplan').onclick = function () {
+    Router$1.openPage({
+      key: 'repay_plan',
+      params: {
+        pageParam: {
+          id: id
+        }
+      }
+    });
   };
+
+  document.querySelector('#repayrecord').onclick = function () {
+    Router$1.openPage({
+      key: 'repay_record',
+      params: {
+        pageParam: {
+          id: id
+        }
+      }
+    });
+  };
+
+  document.querySelector('#agreement').onclick = function () {
+    api.alert({
+      title: '消息',
+      msg: '功能开发中...'
+    });
+  };
+
 };

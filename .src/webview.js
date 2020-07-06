@@ -575,36 +575,6 @@ function openContactUs () {
   })
 }
 
-// 还款计划
-function openRepayPlan (id) {
-  api.openTabLayout({
-    name: 'html/repayplan/win',
-    title: '还款计划',
-    url: 'widget://html/repayplan/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 还款明细
-function openRepayRecord (id) {
-  api.openTabLayout({
-    name: 'html/repayrecord/win',
-    title: '还款记录',
-    url: 'widget://html/repayrecord/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
 // 订单详情
 function openProductDetails ({id, open} = {}) {
   api.openTabLayout({
@@ -1052,8 +1022,6 @@ export {
   openMyLoan,
   openChangePwd,
   openContactUs,
-  openRepayPlan,
-  openRepayRecord,
   openProductDetails,
   openCityList,
   openProductRecommend,
