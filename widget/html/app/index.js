@@ -2427,7 +2427,7 @@ var App = /*#__PURE__*/function () {
         // return
         // openDanbaoKaitong({step: 0, creditStatus: 2})
         // return
-        // Router.openPage({ key: 'yjd_account_open' })
+        // Router.openPage({ key: 'wallet' })
         // return
         var authStatus = $api.getStorage('authStatus') || {};
 

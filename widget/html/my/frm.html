@@ -12,14 +12,12 @@
 <body>
   <div id="app">
     <div class="top">
-      <div class="name">{{userinfo.name}}</div>
-      <div class="tel">{{userinfo.userType === '1' ? '个人账号' : '企业账号'}}</div>
+      <div class="name" id="name">***</div>
+      <div class="tel" id="type">***</div>
       <div class="tel" id="tel">****</div>
     </div>
     <section class="tab_my-main">
       <ul class="tm-main-ul">
-        
-  
         <li tapmode="active" v-for="(item, index) in menuArr" :key="item.icon" @click="changePage(index)">
           <div class="icon" :class="item.icon"></div>
           <div class="line-box">
@@ -31,20 +29,7 @@
             </div>
           </div>
         </li>
-  
-        
-  
-        
-  
-        
-  
-        
-  
-        
-  
       </ul>
-  
-  
     </section>
   </div>
   <script type="text/javascript" src="../../script/api.js"></script>

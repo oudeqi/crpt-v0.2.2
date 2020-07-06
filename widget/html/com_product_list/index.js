@@ -2516,19 +2516,72 @@ apiready = function apiready() {
       getHxdTable: function getHxdTable() {
         var _this2 = this;
 
-        // 好销贷
-        // Utils.UI.showLoading('加载中')
-        http$1.get('/crpt-credit/credit/hxd/product/list', {}).then(function (res) {
-          _this2.hxdData = res.data; // Utils.UI.hideLoading()
-        });
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var res;
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  // 好销贷
+                  Utils$1.UI.showLoading('加载中');
+                  _context2.prev = 1;
+                  _context2.next = 4;
+                  return http$1.get('/crpt-credit/credit/hxd/product/list', {});
+
+                case 4:
+                  res = _context2.sent;
+                  _this2.hxdData = res.data;
+                  Utils$1.UI.hideLoading();
+                  _context2.next = 12;
+                  break;
+
+                case 9:
+                  _context2.prev = 9;
+                  _context2.t0 = _context2["catch"](1);
+                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
+
+                case 12:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[1, 9]]);
+        }))();
       },
       getYjdTable: function getYjdTable() {
         var _this3 = this;
 
-        // 押金贷
-        http$1.get('/crpt-product/product/cooperation/fostercare/list', {}).then(function (res) {
-          _this3.yjdData = res.data;
-        });
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+          var res;
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  // 押金贷
+                  Utils$1.UI.showLoading('加载中');
+                  _context3.prev = 1;
+                  _context3.next = 4;
+                  return http$1.get('/crpt-product/product/cooperation/fostercare/list', {});
+
+                case 4:
+                  res = _context3.sent;
+                  _this3.yjdData = res.data;
+                  Utils$1.UI.hideLoading();
+                  _context3.next = 12;
+                  break;
+
+                case 9:
+                  _context3.prev = 9;
+                  _context3.t0 = _context3["catch"](1);
+                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
+
+                case 12:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, null, [[1, 9]]);
+        }))();
       },
       changeHXD: function changeHXD(item) {
         // 好销贷跳转

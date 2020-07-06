@@ -6,7 +6,6 @@ import Router from '../../router'
 const page = new Vue({
   el: '#app',
   data: {
-    userinfo: $api.getStorage('userinfo'),
     menuArr: [
       {title: '消息中心', 'icon': 'message'},
       {title: '我的账单', 'icon': 'bill'},
@@ -38,19 +37,19 @@ const page = new Vue({
 })
 apiready = function () {
 
-  // let userinfo = {}
-  // let name = ''
-  // let userType = ''
-  // let access_token = ''
+  let userinfo = {}
+  let name = ''
+  let userType = ''
+  let access_token = ''
 
-  // function initPage () {
-  //   userinfo = $api.getStorage('userinfo')
-  //   name = userinfo.name
-  //   userType = userinfo.userType
-  //   access_token = userinfo.access_token
-  //   $api.byId('name').innerHTML = name
-  //   $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
-  // }
+  function initPage () {
+    userinfo = $api.getStorage('userinfo')
+    name = userinfo.name
+    userType = userinfo.userType
+    access_token = userinfo.access_token
+    $api.byId('name').innerHTML = name
+    $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
+  }
   function getInfo () {
     http.post('/crpt-cust/identification/myinfo').then(res => {
       $api.byId('tel').innerHTML = res.data.phone
@@ -71,11 +70,11 @@ apiready = function () {
     })
   }
   getInfo()
-  // initPage()
+  initPage()
   api.addEventListener({
     name:'viewappear'
   }, function(ret, err){
-    // initPage()
+    initPage()
     getInfo()
   })
 

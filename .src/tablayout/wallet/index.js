@@ -1,6 +1,6 @@
 import './index.less'
-
-
+import { http } from '../../config.js'
+import filter from '../../utils/filter'
 
 apiready = function () {
   api.addEventListener({
@@ -13,8 +13,20 @@ apiready = function () {
 
   const page = new Vue({
     el: '#app',
-    data: {},
-    methods: {}
+    data: {
+      accountData: [],
+      filter
+    },
+    mounted () {
+      this.getData()
+    },
+    methods: {
+      getData () {
+        http.get('/crpt-cust/customer/account/hope/account/info', {}).then(res => {
+          this.accountData = res.data
+        })
+      }
+    }
   })
 
 }
