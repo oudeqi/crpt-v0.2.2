@@ -2383,9 +2383,223 @@ var Router$1 = /*#__PURE__*/function () {
 
 new Router$1();
 
+var dev$1 = 'http://crptdev.liuheco.com';
+var baseUrl$1 =  dev$1 ;
+
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
+
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$5(_objectSpread$5(_objectSpread$5({}, Authorization), contentType), headers)
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
+
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
+// 保存设备信息
+
+function saveDeviceMes() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var sendJson = {
+        networkType: api.connectionType,
+        // 网络类型
+        deviceType: api.uiMode,
+        // 设备类型
+        deviceModel: api.deviceModel,
+        // 设备型号（手机型号）
+        deviceUniqueSymbol: api.deviceId,
+        // 设备唯一标识
+        longitude: position.coords.longitude,
+        // 经度
+        latitude: position.coords.latitude // 纬度
+
+      };
+      http$1.post('/crpt-cust/customer/device/info/save', {
+        body: sendJson
+      }).then(function (res) {// console.log(JSON.stringify(res))
+      })["catch"](function (err) {
+        console.log(JSON.stringify(err));
+      });
+    });
+  } else {
+    alert("不支持定位功能");
+  }
+}
 
 var App = /*#__PURE__*/function () {
   function App() {
@@ -2432,8 +2646,8 @@ var App = /*#__PURE__*/function () {
         var authStatus = $api.getStorage('authStatus') || {};
 
         if (authStatus.status === 1) {
-          // openTabLayout()
-          openTabLayout(1);
+          openTabLayout();
+          saveDeviceMes();
         } else {
           var userType = userinfo.userType;
 

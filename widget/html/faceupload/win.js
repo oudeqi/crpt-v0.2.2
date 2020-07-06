@@ -1761,19 +1761,6 @@ function ajax(method, url) {
 
         reject(error);
       }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
     });
   });
 }
