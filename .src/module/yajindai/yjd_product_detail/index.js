@@ -1,6 +1,7 @@
 import './index.less'
 import filter from './../../../utils/filter'
 import http from '../../../http/index.js'
+import Router from '../../../router'
 
 apiready = function () {
   const page = new Vue({
@@ -20,13 +21,11 @@ apiready = function () {
         })
       },
       changePage () { // 跳转到开户页面
-        let key = ''
-        if (this.detailData.openHopeAccountFlag === 1) { // 已开通
-          key = 'yjd_select_contract' // 选择代养合同
-        } else { // 未开通
-          key = 'yjd_account_open' // 开通新网账户
-        }
-        Router.openPage({ key: key })
+        Router.openPage({
+          key: this.detailData.openHopeAccountFlag === 1 ?
+          'yjd_select_contract' : // 选择代养合同
+          'yjd_account_open' // 开通新网账户
+        })
       }
     },
   })

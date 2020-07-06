@@ -62,7 +62,7 @@ function openAuthResult(_ref4) {
     slidBackEnabled: false,
     navigationBar: navigationBarGreen
   });
-} // 消息中心
+} // 账号动态/新闻通知列表
 
 
 function openAgreement(id, name) {

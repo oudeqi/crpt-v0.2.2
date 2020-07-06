@@ -446,20 +446,6 @@ function openAuthResult ({status, message, title, tips}) { // status: success er
   })
 }
 
-// 消息中心
-function openMsgCenter () {
-  api.openTabLayout({
-    name: 'html/msgcenter/win',
-    title: '消息中心',
-    url: 'widget://html/msgcenter/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
 // 账号动态/新闻通知列表
 function openMsgList (title) {
   api.openTabLayout({
@@ -480,20 +466,6 @@ function openMsgDetails () {
     name: 'html/msgdetails/win',
     title: '消息详情',
     url: 'widget://html/msgdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 账单列表
-function openBillList () {
-  api.openTabLayout({
-    name: 'html/billlist/win',
-    title: '我的账单',
-    url: 'widget://html/billlist/win.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -547,48 +519,6 @@ function openMyLoan () {
 }
 
 
-
-// 我的额度
-function openMyQuota () {
-  api.openTabLayout({
-    name: 'html/myquota/win',
-    title: '我的额度',
-    url: 'widget://html/myquota/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
-
-// 我开通的产品
-function openMyProduct () {
-  api.openTabLayout({
-    name: 'html/myproduct/win',
-    title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 设置
-function openSettings () {
-  api.openTabLayout({
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
 
 
 // 修改密码
@@ -1116,15 +1046,10 @@ export {
   openFaceUpload,
   openYuguEdu,
   openAuthResult,
-  openMsgCenter,
   openMsgList,
   openMsgDetails,
-  openBillList,
   openBillDetails,
   openMyLoan,
-  openMyQuota,
-  openMyProduct,
-  openSettings,
   openChangePwd,
   openContactUs,
   openRepayPlan,
