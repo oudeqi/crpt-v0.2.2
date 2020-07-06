@@ -75,12 +75,13 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      Router.openPage({ key: 'yjd_account_open' })
+      // Router.openPage({ key: 'yjd_account_open' })
 
-      return
+      // return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
-        openTabLayout()
+        // openTabLayout()
+        openTabLayout(1)
       } else {
         const userType = userinfo.userType
         if (userType === '1') {

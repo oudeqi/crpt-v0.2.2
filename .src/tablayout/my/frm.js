@@ -1,10 +1,10 @@
-import '../../../app.css'
+import '../../app.css'
 import './frm.css'
 
 import { openLeftPane, openMsgCenter, openBillList,
 openMyLoan, openMyQuota, openMyProduct, openSettings,
-openContactUs } from '../../../webview.js'
-import { http } from '../../../config.js'
+openContactUs } from '../../webview.js'
+import { http } from '../../config.js'
 
 function getInfo () {
   http.post('/crpt-cust/identification/myinfo').then(res => {

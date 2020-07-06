@@ -1,9 +1,9 @@
-import '../../../app.css'
+import '../../app.css'
 import './frm.less'
-import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config'
+import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../webview.js'
+import { http, setRefreshHeaderInfo } from '../../config'
 import numeral from 'numeral'
-import Router from '../../../router'
+import Router from '../../router'
 
 class Service {
   getlist ({custType, status} = {}) {

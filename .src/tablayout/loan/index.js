@@ -1,8 +1,8 @@
-import '../../../app.css'
+import '../../app.css'
 import './index.css'
 
-import { openLoanApplication } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { openLoanApplication } from '../../webview.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {

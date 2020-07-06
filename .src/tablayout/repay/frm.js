@@ -1,8 +1,8 @@
-import '../../../app.css'
+import '../../app.css'
 import './frm.css'
 
-import { openLeftPane, openContactUs, openBillList } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { openLeftPane, openContactUs, openBillList } from '../../webview.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
 import find from 'lodash/find'
