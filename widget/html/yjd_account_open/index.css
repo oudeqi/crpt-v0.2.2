@@ -217,84 +217,126 @@ html, body {
   background-color: #f5f5f5;
 }
 
-.success {
-  height:300px;
-  padding-top: 87px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.card {
+  margin-top: 12px;
+  height:106px;
   background:rgba(255,255,255,1);
-  margin-bottom: 20px;
+  padding: 0 12px;
 }
 
-.success .success-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background-image: url(../../image/success.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+.card .card-t {
+    height: 54px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-bottom: 1px solid rgba(245,245,245,1);
   }
 
-.success .success-desc {
-    text-align: center;
-    margin-top: 24px;
-    height:22px;
-    font-size:16px;
-    font-weight:500;
-    color:rgba(48,49,51,1);
-    line-height:22px;
+.card .card-t strong {
+      height:22px;
+      font-size:16px;
+      font-weight: bold;
+      color:rgba(48,49,51,1);
+      line-height:22px;
+      margin-right: 12px;
+    }
+
+.card .card-t span {
+      height:20px;
+      font-size:14px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+
+.card .card-b {
+    height: 51px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding-right: 3px;
   }
 
-.success .success-tips {
-    text-align: center;
-    margin-top: 16px;
-    height:20px;
-    font-size:14px;
-    color:rgba(144,147,153,1);
-    line-height:20px;
-  }
+.card .card-b input {
+      width: 100%;
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+    }
 
-.failure {
-  padding-top: 87px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  background:rgba(255,255,255,1);
-  margin-bottom: 20px;
-  padding-bottom: 48px;
+.card .card-b input:disabled {
+        opacity: 1;
+        color:rgba(48,49,51,1);
+      }
+
+.card .card-b input[disabled] {
+        opacity: 1;
+        color:rgba(48,49,51,1);
+      }
+
+.card .card-b .ocr-btn {
+      width:17px;
+      height:17px;
+      background-image: url(../../image/scan.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      font-style: normal;
+    }
+
+.card .card-b .code-btn {
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      height:22px;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(74,144,226,1);
+      line-height:22px;
+      font-style: normal;
+    }
+
+.contract {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 0 12px;
 }
 
-.failure .failure-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background-image: url(../../image/error.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-
-.failure .failure-desc {
-    text-align: center;
-    margin-top: 24px;
-    margin-bottom: 16px;
-    height:22px;
-    font-size:16px;
-    font-weight:500;
-    color:rgba(48,49,51,1);
-    line-height:22px;
-  }
-
-.failure .failure-tips {
-    text-align: center;
+.contract input {
+    margin-right: 12px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
     margin-top: 2px;
-    height:20px;
+  }
+
+.contract .contract-txt {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
     font-size:14px;
     color:rgba(144,147,153,1);
     line-height:20px;
   }
 
-.failure-btn {
-  background-color: #f5f5f5;
+.contract .contract-txt strong {
+      color: #66BB6A;
+      display: inline;
+    }
+
+.btn-box {
   padding: 24px 12px;
 }

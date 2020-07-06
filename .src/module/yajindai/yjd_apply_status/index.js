@@ -90,15 +90,17 @@ apiready = function () {
 
   const vm = vmInit()
   api.parseTapmode()
-  
+  $api.byId('next').onclick = function () {
+    vm.next()
+  }
 
-  // $api.byId('msg').onclick = function () {
-  //   openDialog2()
-  //   // openDialog({
-  //   //   title: '代养合同信息',
-  //   //   path: 'widget://html/yjd_apply_result/contract-msg.html?id=12',
-  //   //   webViewH: 500
-  //   // })
-  // }
+  $api.byId('msg').onclick = function () {
+    openDialog2()
+    // openDialog({
+    //   title: '代养合同信息',
+    //   path: 'widget://html/yjd_apply_result/contract-msg.html?id=12',
+    //   webViewH: 500
+    // })
+  }
 
 }

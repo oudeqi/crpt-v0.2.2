@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no" />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  </head>
+  <body>
+    <div class="container" id="app">
+      
+      <app-drawer @on-close="onClose">
+        <div class="content">
+          <div class="tips1">验证码已发送至手机号</div>
+          <div class="phone">134****0094</div>
+          <div class="tips2">请注意查收【新网银行】发送的短信验证码</div>
+          <div @click="handleInputClick" class="ipt">
+            <div v-for="(item, index) in code" :key="index" class="ipt-item">{{item}}</div>
+          </div>
+          <div class="countdown">56s后重新发送</div>
+          <div class="fq">
+            <div class="tit">没收到短信？</div>
+            <div class="desc">1.该手机号是否处于正常通信状态</div>
+            <div class="desc">2.短信是否被手机安全软件拦截</div>
+            <div class="desc">如以上都无异常，建设银行服务热线<strong>95533</strong></div>
+          </div>
+          <input v-model="inputValue" ref="hidden_ipt" class="hidden-ipt" type="tel" maxlength="6">
+        </div>
+      </app-drawer>
+      
+    </div>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

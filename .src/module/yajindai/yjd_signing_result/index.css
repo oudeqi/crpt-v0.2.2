@@ -61,6 +61,16 @@ html, body {
     font-weight:500;
     color:rgba(48,49,51,1);
     line-height:22px;
+    border: 1px solid rgba(255,255,255,1);
+  }
+  .failure-reason {
+    text-align: center;
+    margin-top: 2px;
+    height:20px;
+    font-size:14px;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+    margin-bottom: 20px;
   }
   .failure-tips {
     text-align: center;
@@ -69,6 +79,9 @@ html, body {
     font-size:14px;
     color:rgba(144,147,153,1);
     line-height:20px;
+    strong {
+      color: #66BB6A;
+    }
   }
 }
 

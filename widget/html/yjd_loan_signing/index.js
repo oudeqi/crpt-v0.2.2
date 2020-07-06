@@ -13,6 +13,25 @@ function vmInit() {
   });
 }
 
+function openDialog() {
+  api.openFrame({
+    reload: true,
+    name: 'drawer',
+    bounces: false,
+    bgColor: 'rgba(0,0,0,0,0)',
+    url: 'widget://html/yjd_loan_signing/drawer.html',
+    rect: {
+      x: 0,
+      y: 0,
+      w: 'auto',
+      h: 'auto'
+    },
+    pageParam: {
+      id: '2'
+    }
+  });
+}
+
 apiready = function apiready() {
   api.addEventListener({
     name: 'navitembtn'
@@ -22,12 +41,10 @@ apiready = function apiready() {
     }
   });
   var vm = vmInit();
-  api.parseTapmode(); // $api.byId('msg').onclick = function () {
-  //   openDialog2()
-  //   // openDialog({
-  //   //   title: '代养合同信息',
-  //   //   path: 'widget://html/yjd_apply_result/contract-msg.html?id=12',
-  //   //   webViewH: 500
-  //   // })
-  // }
+  api.parseTapmode();
+
+  $api.byId('sign').onclick = function () {
+    console.log('object');
+    openDialog();
+  };
 };

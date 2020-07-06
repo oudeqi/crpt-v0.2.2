@@ -217,84 +217,145 @@ html, body {
   background-color: #f5f5f5;
 }
 
-.success {
-  height:300px;
-  padding-top: 87px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  background:rgba(255,255,255,1);
-  margin-bottom: 20px;
+.top {
+  padding: 12px;
+  background-color: #fff;
 }
 
-.success .success-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background-image: url(../../image/success.png);
+.tips {
+  height:60px;
+  background:rgba(102,187,106,0.1);
+  border-radius:6px;
+  font-size:14px;
+  color:rgba(102,187,106,1);
+  padding: 8px;
+  padding-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  line-height: 1.5;
+}
+
+.tips::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../image/info.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    margin-right: 4px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
-.success .success-desc {
-    text-align: center;
-    margin-top: 24px;
-    height:22px;
-    font-size:16px;
-    font-weight:500;
-    color:rgba(48,49,51,1);
-    line-height:22px;
-  }
-
-.success .success-tips {
-    text-align: center;
-    margin-top: 16px;
-    height:20px;
-    font-size:14px;
-    color:rgba(144,147,153,1);
-    line-height:20px;
-  }
-
-.failure {
-  padding-top: 87px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  background:rgba(255,255,255,1);
-  margin-bottom: 20px;
-  padding-bottom: 48px;
+.total {
+  margin-top: 24px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.failure .failure-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background-image: url(../../image/error.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-
-.failure .failure-desc {
-    text-align: center;
-    margin-top: 24px;
-    margin-bottom: 16px;
-    height:22px;
-    font-size:16px;
-    font-weight:500;
+.total strong {
+    height:28px;
+    font-size:24px;
+    font-weight:bold;
     color:rgba(48,49,51,1);
-    line-height:22px;
+    line-height:28px;
   }
 
-.failure .failure-tips {
-    text-align: center;
+.total span {
     margin-top: 2px;
     height:20px;
     font-size:14px;
+    font-weight:500;
     color:rgba(144,147,153,1);
     line-height:20px;
   }
 
-.failure-btn {
-  background-color: #f5f5f5;
+.list {
+  margin-top: 24px;
+}
+
+.list li {
+    margin: 16px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+
+.list li span {
+      height:20px;
+      font-size:15px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+
+.list li strong {
+      height:20px;
+      font-size:15px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      line-height:20px;
+    }
+
+.contract {
+  padding: 20px 12px;
+  background-color: #fff;
+  margin-top: 12px;
+}
+
+.contract .tit {
+    text-align: center;
+    height:29px;
+    font-size:24px;
+    color:rgba(48,49,51,1);
+    line-height:29px;
+  }
+
+.contract .content {
+    margin-top: 20px;
+    min-height:284px;
+    background:rgba(245,245,245,1);
+  }
+
+.contract .checkbox {
+    margin-top: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+
+.contract .checkbox span {
+      height:20px;
+      font-size:15px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+      margin-left: 8px;
+    }
+
+.bottom-btn {
+  margin-top: 10px;
   padding: 24px 12px;
 }

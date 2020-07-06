@@ -2,7 +2,7 @@ html, body {
   background-color: rgba(0,0,0,0);
 }
 
-.dialog-mask {
+.full-mask {
   position: fixed;
   top: 0;
   left: 0;
@@ -15,49 +15,50 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0,0,0,0.35);
-}
-.dialog {
-  width: 100%;
-  height: auto;
-  background-color: #fff;
-  border-radius: 6px;
-}
-.dialog-header {
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  font-size:16px;
-  font-weight:500;
-  color:rgba(48,49,51,1);
-  border-bottom: 1px solid rgba(245,245,245,1);
-}
-.dialog-content {
-  min-height: 100px;
-}
-.dialog-footer {
-  height: 60px;
-  border-top: 1px solid rgba(245,245,245,1);
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+  background-color: rgba(0,0,0,0.5);
+  .dialog {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 6px;
+    .dialog-header {
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      border-bottom: 1px solid rgba(245,245,245,1);
+    }
+    .dialog-content {
+      min-height: 100px;
+    }
+    .dialog-footer {
+      height: 60px;
+      border-top: 1px solid rgba(245,245,245,1);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      .dialog-btn {
+        font-size:16px;
+        font-weight:bold;
+        color:#aaa;
+        flex-grow: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid rgba(245,245,245,1);
+        &:last-child {
+          margin-right: 0;
+          color:rgba(102,187,106,1);
+        }
+        &.active {
+          color: red !important;
+        }
+      }
+    }
+  }
 }
 
-.dialog-btn {
-  font-size:16px;
-  font-weight:bold;
-  color:#aaa;
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid rgba(245,245,245,1);
-  &:last-child {
-    margin-right: 0;
-    color:rgba(102,187,106,1);
-  }
-  &.active {
-    color: red !important;
-  }
-}
+

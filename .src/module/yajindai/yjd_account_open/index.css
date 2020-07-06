@@ -1,0 +1,96 @@
+html, body {
+  background-color: #f5f5f5;
+}
+
+.card {
+  margin-top: 12px;
+  height:106px;
+  background:rgba(255,255,255,1);
+  padding: 0 12px;
+  .card-t {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(245,245,245,1);
+    strong {
+      height:22px;
+      font-size:16px;
+      font-weight: bold;
+      color:rgba(48,49,51,1);
+      line-height:22px;
+      margin-right: 12px;
+    }
+    span {
+      height:20px;
+      font-size:14px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+  }
+  .card-b {
+    height: 51px;
+    display: flex;
+    align-items: center;
+    padding-right: 3px;
+    input {
+      width: 100%;
+      flex-grow: 1;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      &:disabled {
+        opacity: 1;
+        color:rgba(48,49,51,1);
+      }
+      &[disabled] {
+        opacity: 1;
+        color:rgba(48,49,51,1);
+      }
+    }
+    .ocr-btn {
+      width:17px;
+      height:17px;
+      background-image: url(../../image/scan.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      flex-shrink: 0;
+      font-style: normal;
+    }
+    .code-btn {
+      flex-shrink: 0;
+      height:22px;
+      font-size:16px;
+      font-weight:500;
+      color:rgba(74,144,226,1);
+      line-height:22px;
+      font-style: normal;
+    }
+  }
+}
+
+.contract {
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 12px;
+  input {
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contract-txt {
+    flex-grow: 1;
+    font-size:14px;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+    strong {
+      color: #66BB6A;
+      display: inline;
+    }
+  }
+}
+
+.btn-box {
+  padding: 24px 12px;
+}

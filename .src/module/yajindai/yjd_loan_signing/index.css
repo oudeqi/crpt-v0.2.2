@@ -1,0 +1,114 @@
+html, body {
+  background-color: #f5f5f5;
+}
+
+.top {
+  padding: 12px;
+  background-color: #fff;
+}
+
+.tips {
+  height:60px;
+  background:rgba(102,187,106,0.1);
+  border-radius:6px;
+  font-size:14px;
+  color:rgba(102,187,106,1);
+  padding: 8px;
+  padding-top: 10px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.5;
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../image/info.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+}
+
+.total {
+  margin-top: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  strong {
+    height:28px;
+    font-size:24px;
+    font-weight:bold;
+    color:rgba(48,49,51,1);
+    line-height:28px;
+  }
+  span {
+    margin-top: 2px;
+    height:20px;
+    font-size:14px;
+    font-weight:500;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+  }
+}
+
+.list {
+  margin-top: 24px;
+  li {
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      height:20px;
+      font-size:15px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+    }
+    strong {
+      height:20px;
+      font-size:15px;
+      font-weight:500;
+      color:rgba(48,49,51,1);
+      line-height:20px;
+    }
+  }
+}
+
+.contract {
+  padding: 20px 12px;
+  background-color: #fff;
+  margin-top: 12px;
+  .tit {
+    text-align: center;
+    height:29px;
+    font-size:24px;
+    color:rgba(48,49,51,1);
+    line-height:29px;
+  }
+  .content {
+    margin-top: 20px;
+    min-height:284px;
+    background:rgba(245,245,245,1);
+  }
+  .checkbox {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    span {
+      height:20px;
+      font-size:15px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+      margin-left: 8px;
+    }
+  }
+}
+
+.bottom-btn {
+  margin-top: 10px;
+  padding: 24px 12px;
+}
