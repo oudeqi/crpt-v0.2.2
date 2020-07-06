@@ -1,7 +1,5 @@
 import {
-  // openDrawerLayout,
   openAgreement,
-  openLoanConfirm,
   openSendAddress,
   openDanbaoKaitong,
   openDanbaoRenList,
@@ -55,8 +53,8 @@ class App {
 
     // openTodoAuthQiye({status: 'error', tips: 'message'})
     // return
-    // Router.openPage({key: 'hxd_apply'})
-    // return
+    Router.openPage({ key: 'loan_details' })
+    return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       // openIDcardUpload()

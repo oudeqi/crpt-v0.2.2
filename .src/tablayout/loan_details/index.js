@@ -1,8 +1,8 @@
-import '../../../app.css'
-import './win.less'
+import '../../app.css'
+import './index.css'
 
-import { openRepayPlan, openRepayRecord } from '../../../webview.js'
-import { http } from '../../../config.js'
+import { openRepayPlan, openRepayRecord } from '../../webview.js'
+import { http } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
@@ -115,6 +115,6 @@ apiready = function () {
     })
   }
 
-  getDetails(id)
+  // getDetails(id)
 
 }

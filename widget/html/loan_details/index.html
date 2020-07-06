@@ -1,0 +1,170 @@
+<!doctype html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" >
+  <link rel="stylesheet" type="text/css" href="../../css/aui.css" >
+
+  <link rel="stylesheet" href="./index.css"></head>
+<body>
+
+  <section class="header">
+    <div class="header-num">
+      <span>剩余未还本金(元)</span>
+      <strong>3,010.00</strong>
+    </div>
+    <div class="header-status">还款中</div>
+  </section>
+
+  <section class="content">
+    <div class="plan">
+      <div class="plan-tit">还款计划</div>
+      <div class="plan-desc">（剩余5期未还清）</div>
+      <div class="plan-btn arrowbtn">查看</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">贷款明细</div>
+      <div class="card-row">
+        <span class="card-label">贷款金额(元)</span>
+        <strong class="card-value__lg">5,504.55</strong>
+      </div>
+      <div class="card-row">
+        <span class="card-label">还款方式</span>
+        <strong class="card-value">一次性还本付息</strong>
+      </div>
+      <div class="card-row">
+        <span class="card-label">合 同</span>
+        <span class="card-btn arrowbtn">查看</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">还款明细</div>
+      <div class="card-row">
+        <span class="card-label">已还总额(元)</span>
+        <strong class="card-value__lg">5,504.55</strong>
+      </div>
+      <div class="card-block">
+        <p><span>已还本金</span><strong>5,000.00</strong></p>
+        <p><span>已还利息</span><strong>5,000.00</strong></p>
+        <p><span>已还逾期罚息</span><strong>5,000.00</strong></p>
+      </div>
+      <div class="card-row">
+        <span class="card-label">还款方式</span>
+        <strong class="card-value">一次性还本付息</strong>
+      </div>
+      <div class="card-row">
+        <span class="card-label">还款记录</span>
+        <span class="card-btn arrowbtn">查看</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">还款明细</div>
+      <div class="card-block">
+        <p><span>业务单号</span><strong>987239u08237s</strong></p>
+        <p><span>申请金额(元)</span><strong>20,800.00</strong></p>
+        <p><span>下单时间</span><strong>2019-04-06 10:10</strong></p>
+        <p><span>代养合同编号</span><strong>987239u08237s2398d9872</strong></p>
+        <p><span>收款方</span><strong>重庆市永川区旺财珠宝销售服务部重庆市永川区旺财珠宝销售服务部</strong></p>
+      </div>
+    </div>
+
+  </section>
+
+  <div id="title" style="display: none; position: relative">
+    <div class="bg"></div>
+    <div class="title">
+      <div class="mc"></div>
+      <div class="l tit-text" id="titText">
+        <div>****</div>
+        <div>***</div>
+      </div>
+      <div class="r" id="status">
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="plan" style="display: none;">
+    <div class="sec_header">
+      <span class="tit">还款计划</span>
+      
+      <span class="btn" id="repayplan">查看 <i class="aui-iconfont aui-icon-right"></i></span>
+    </div>
+  </div>
+
+  <div class="sec" id="payDetails" style="display: none;">
+    <div class="sec_header">
+      <span class="tit">贷款明细</span>
+    </div>
+    <div class="sec_list">
+      <div class="item item1">
+        <span class="txt1">贷款金额</span>
+        <span class="txt2" id="payAmount">**</span>
+      </div>
+      
+      <div class="item item1">
+        <span class="txt1">还款方式</span>
+        <span class="txt2 chinese" id="productName">**</span>
+      </div>
+      <div class="item item1">
+        <span class="txt1">
+          合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同
+        </span>
+        <span class="btn" id="agreement">查看  <i class="aui-iconfont aui-icon-right"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="repayDetails" style="display: none;">
+    <div class="sec_header">
+      <span class="tit">还款明细</span>
+    </div>
+    <div class="sec_list">
+      
+      <div class="item item1">
+        <span class="txt1">还款记录</span>
+        <span class="btn" id="repayrecord">查看  <i class="aui-iconfont aui-icon-right"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec_header">
+      <span class="tit">业务单明细</span>
+    </div>
+    <ul class="sec_list2">
+      <li>
+        <span>业务单号：</span>
+        <span id="orderNo">**</span>
+      </li>
+      <li>
+        <span>业务单金额：</span>
+        <span id="totalAmount">**</span>
+      </li>
+      <li>
+        <span>创建时间：</span>
+        <span id="orderTime">**</span>
+      </li>
+      <li>
+        <span>业务单涞源：</span>
+        <span id="appCode">**</span>
+      </li>
+      <li>
+        <span>
+          收款方：
+        </span>
+        <span id="saleCustName">**</span>
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+
+  <script src="./index.js"></script></body>
+</html>

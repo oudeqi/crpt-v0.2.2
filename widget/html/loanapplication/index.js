@@ -28,9 +28,9 @@ function openRegLogin() {
 
 function openLoanConfirm(id) {
   api.openTabLayout({
-    name: 'html/loanconfirm/index',
+    name: 'html/loan_confirm/index',
     title: '贷款确认',
-    url: 'widget://html/loanconfirm/index.html',
+    url: 'widget://html/loan_confirm/index.html',
     bgColor: '#fff',
     reload: true,
     pageParam: {

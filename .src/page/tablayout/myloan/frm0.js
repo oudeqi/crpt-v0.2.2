@@ -1,8 +1,7 @@
 import '../../../app.css'
 import './frm.less'
 
-
-import { openOrderDetails } from '../../../webview.js'
+import Router from '../../../router'
 import { http, setRefreshHeaderInfo } from '../../../config.js'
 import numeral from 'numeral'
 
@@ -131,7 +130,7 @@ apiready = function () {
     }
     let id = li.dataset.id
     if (id) {
-      openOrderDetails(id)
+      Router.openPage({ key: 'loan_details' }, { id })
     } else {
       api.toast({ msg: 'id 不存在' })
     }

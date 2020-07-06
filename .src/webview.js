@@ -176,7 +176,7 @@ function openTabLayout (index) {
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
-          title: "待申请",
+          title: "贷款申请",
           name: "tablayout/loan",
           url: "widget://html/loan/index.html",
           bounces: true,
@@ -546,76 +546,7 @@ function openMyLoan () {
   })
 }
 
-// 订单详情
-function openOrderDetails (id) {
-  api.openTabLayout({
-    name: 'html/orderdetails/win',
-    title: '贷款详情',
-    url: 'widget://html/orderdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
 
-// 贷款申请
-function openLoanApplication (id) {
-  api.openTabLayout({
-    name: 'html/loanapplication/index',
-    title: '待申请',
-    url: 'widget://html/loanapplication/index.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
-  })
-}
-
-// 贷款确认
-function openLoanConfirm (id) {
-  api.openTabLayout({
-    name: 'html/loanconfirm/index',
-    title: '贷款确认',
-    url: 'widget://html/loanconfirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
-  })
-}
 
 // 我的额度
 function openMyQuota () {
@@ -1191,9 +1122,6 @@ export {
   openBillList,
   openBillDetails,
   openMyLoan,
-  openOrderDetails,
-  openLoanApplication,
-  openLoanConfirm,
   openMyQuota,
   openMyProduct,
   openSettings,

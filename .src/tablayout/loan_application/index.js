@@ -1,8 +1,8 @@
-import '../../../app.css'
+import '../../app.css'
 import './index.css'
 
-import { openRepayPlan, openRepayRecord, openLoanConfirm } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import Router from '../../router'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
@@ -57,6 +57,6 @@ apiready = function () {
   api.refreshHeaderLoading()
 
   document.querySelector('#apply').onclick = function (event) {
-    openLoanConfirm()
+    Router.openPage({ key: 'loan_confirm' })
   }
 }

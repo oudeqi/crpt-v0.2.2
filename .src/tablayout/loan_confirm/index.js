@@ -1,8 +1,8 @@
-import '../../../app.css'
+import '../../app.css'
 import './index.css'
 
-import { openRepayPlan, openRepayRecord } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { openRepayPlan, openRepayRecord } from '../../webview.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
