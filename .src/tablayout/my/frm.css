@@ -66,6 +66,9 @@ li {
   & .settings {
     background-image: url(../../image/tab_my/settings@2x.png);
   }
+  & .wallet {
+    background-image: url(../../image/tab_my/wallet@2x.png);
+  }
   & .line-box {
     flex-grow: 1;
     display: flex;

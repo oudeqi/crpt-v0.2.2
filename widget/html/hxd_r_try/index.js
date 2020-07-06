@@ -321,6 +321,83 @@ var routerHXDConfig = {
 };
 
 var routerConfig = {
+  // 消息中心
+  msgcenter: {
+    name: 'html/msgcenter/win',
+    title: '消息中心',
+    url: 'widget://html/msgcenter/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的账单
+  billlist: {
+    name: 'html/billlist/win',
+    title: '我的账单',
+    url: 'widget://html/billlist/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的贷款
+  myloan: {
+    name: 'html/myloan/win',
+    title: '我的贷款',
+    url: 'widget://html/myloan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: false,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的额度
+  myquota: {
+    name: 'html/myquota/win',
+    title: '我的额度',
+    url: 'widget://html/myquota/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 已开通的产品
+  myproduct: {
+    name: 'html/myproduct/win',
+    title: '我开通的产品',
+    url: 'widget://html/myproduct/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 联系我们
+  contactus: {
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 设置
+  settings: {
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
   // 我的钱包详情
   wallet: {
     name: 'wallet',
@@ -344,7 +421,7 @@ var routerConfig = {
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+var profile = _objectSpread(_objectSpread(_objectSpread({}, routerHXDConfig), routerMap), routerConfig);
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -361,7 +438,7 @@ var Router = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$1({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$1(_objectSpread$1({}, profile[key]), params));
     }
   }]);
 

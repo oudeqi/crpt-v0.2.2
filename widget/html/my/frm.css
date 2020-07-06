@@ -361,6 +361,9 @@ li .contact {
 li .settings {
     background-image: url(../../image/tab_my/settings@2x.png);
   }
+li .wallet {
+    background-image: url(../../image/tab_my/wallet@2x.png);
+  }
 li .line-box {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;

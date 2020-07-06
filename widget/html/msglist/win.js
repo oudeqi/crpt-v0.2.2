@@ -25,7 +25,7 @@ function openMsgDetails() {
     slidBackEnabled: true,
     navigationBar: navigationBarWhite
   });
-} // 账单列表
+} // 账单详情
 
 apiready = function apiready() {
   api.addEventListener({

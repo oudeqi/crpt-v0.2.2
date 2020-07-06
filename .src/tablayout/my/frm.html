@@ -8,98 +8,104 @@
   <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 <body>
-  <div class="top">
-    <div class="name" id="name">***</div>
-    <div class="tel" id="type">****</div>
-    <div class="tel" id="tel">****</div>
+  <div id="app">
+    <div class="top">
+      <div class="name">{{userinfo.name}}</div>
+      <div class="tel">{{userinfo.userType === '1' ? '个人账号' : '企业账号'}}</div>
+      <div class="tel" id="tel">****</div>
+    </div>
+    <section class="tab_my-main">
+      <ul class="tm-main-ul">
+        <!-- <li tapmode="active" id="msgcenter">
+          <div class="icon message "></div>
+          <div class="line-box">
+            <div class="text">消息中心</div>
+            <div class="msg" id="msgcount"></div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+        <li tapmode="active" v-for="(item, index) in menuArr" :key="item.icon" @click="changePage(index)">
+          <div class="icon" :class="item.icon"></div>
+          <div class="line-box">
+            <div class="text ">{{item.title}}</div>
+            <div class="msg" id="msgcount" v-if="item.title === '消息中心'"></div>
+            <div class="msg" id="prodopencount" v-if="item.title === '已开通的产品'"></div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li>
+  
+        <!-- <li tapmode="active" id="myLoan">
+          <div class="icon orders"></div>
+          <div class="line-box">
+            <div class="text ">我的贷款</div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li>
+  
+        <li tapmode="active" id="myquota">
+          <div class="icon limit"></div>
+          <div class="line-box">
+            <div class="text ">我的额度</div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+        <!-- <li tapmode="active" id="myproduct">
+          <div class="icon products"></div>
+          <div class="line-box">
+            <div class="text ">已开通产品</div>
+            <div class="msg" id="prodopencount"></div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+        <!-- <li tapmode="active" id="contactus">
+          <div class="icon contact"></div>
+          <div class="line-box">
+            <div class="text ">联系我们</div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+        <!-- <li tapmode="active" id="settings">
+          <div class="icon settings"></div>
+          <div class="line-box">
+            <div class="text">设置</div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+        <!-- <li tapmode="active" id="wallet">
+          <div class="icon wallet"></div>
+          <div class="line-box">
+            <div class="text">希望钱包</div>
+            <div class="arrow">
+              <i class="aui-iconfont aui-icon-right"></i>
+            </div>
+          </div>
+        </li> -->
+  
+      </ul>
+  
+  
+    </section>
   </div>
-  <section class="tab_my-main">
-    <ul class="tm-main-ul">
-      <li tapmode="active" id="msgcenter">
-        <div class="icon message "></div>
-        <div class="line-box">
-          <div class="text">消息中心</div>
-          <div class="msg" id="msgcount">
-            <!-- 5条新消息 -->
-          </div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="billlist">
-        <div class="icon bill"></div>
-        <div class="line-box">
-          <div class="text ">我的账单</div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="myLoan">
-        <div class="icon orders"></div>
-        <div class="line-box">
-          <div class="text ">我的贷款</div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="myquota">
-        <div class="icon limit"></div>
-        <div class="line-box">
-          <div class="text ">我的额度</div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="myproduct">
-        <div class="icon products"></div>
-        <div class="line-box">
-          <div class="text ">已开通产品</div>
-          <div class="msg" id="prodopencount">
-            <!-- 5 -->
-          </div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="contactus">
-        <div class="icon contact"></div>
-        <div class="line-box">
-          <div class="text ">联系我们</div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-      <li tapmode="active" id="settings">
-        <div class="icon settings"></div>
-        <div class="line-box">
-          <div class="text">设置</div>
-          <div class="arrow">
-            <i class="aui-iconfont aui-icon-right"></i>
-          </div>
-        </div>
-      </li>
-
-    </ul>
-
-
-  </section>
   <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript">
-    function xxx() {
-
-    }
-  </script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 </body>
 </html>
