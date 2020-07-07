@@ -106,6 +106,15 @@ const routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
-  }
+  },
+  // 合同页
+  agreement: {
+    name: 'agreement',
+    title: '查看合同',
+    url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
 }
 export default routerConfig

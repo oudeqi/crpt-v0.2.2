@@ -381,6 +381,76 @@ var runtime = (function (exports) {
       // Re-yield the result returned by the delegate method.
       return info;
     }
+<<<<<<< HEAD
+=======
+  });
+}
+
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
+>>>>>>> 778c54ebe590660eb0fefa9d21cb715ae467de86
 
     // The delegate iterator is finished, so forget it and continue with
     // the outer generator.
@@ -388,9 +458,48 @@ var runtime = (function (exports) {
     return ContinueSentinel;
   }
 
+<<<<<<< HEAD
   // Define Generator.prototype.{next,throw,return} in terms of the
   // unified ._invoke helper method.
   defineIteratorMethods(Gp);
+=======
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
+    }
+  }]);
+>>>>>>> 778c54ebe590660eb0fefa9d21cb715ae467de86
 
   Gp[toStringTagSymbol] = "Generator";
 

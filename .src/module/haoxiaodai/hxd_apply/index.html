@@ -17,11 +17,11 @@
   <body>
     <div id="app">
       <section class="header">
-        <div class="logo">{{productInfo.short}}</div>
-        <div class="name">{{productInfo.name}}</div>
+        <div class="logo">{{productInfo.productShort}}</div>
+        <div class="name">{{productInfo.producName}}</div>
         <div class="loan">
           <div class="num">
-            {{productInfo.loan}}
+            {{productInfo.creditAmount}}
             <span class="unit">万</span>
           </div>
           <div class="label">最高额度(元)</div>
@@ -74,17 +74,33 @@
             type="checkbox"
             id="checkbox"
             name="type"
+            :checked="isChecked"
+            @change="handleCheckBox"
           />
         </label>
         <div class="agreement_content">
           <span>已阅读并同意</span>
-          <span class="ac" v-for="item in agreements" :key="item.id"
-            >《{{item.title}}》</span
+          <span
+            class="ac"
+            v-for="item in productInfo.unsignContract"
+            :key="item.contractFileId"
+            >《
+            <b @click="handleToAgreement(item.contractFileId)"
+              >{{item.contractName}}</b
+            >
+            》</span
           >
         </div>
       </div>
       <div v-if="!hasApply" class="bottom-box">
-        <div class="btn btn-normal">我要申请</div>
+        <button
+          class="btn btn-normal"
+          :class="{disabled: creditStatus !== 0}"
+          :disabled="creditStatus !== 0 && isChecked"
+          @click="handleSubmit"
+        >
+          {{btnText}}
+        </button>
       </div>
     </div>
 

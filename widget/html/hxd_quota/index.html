@@ -19,7 +19,7 @@
       <div class="pd">
         <section class="header">
           <div class="label">我的额度</div>
-          <div class="amount">￥{{'1,000,000'}}</div>
+          <div class="amount">￥{{productTotalLimit}}</div>
         </section>
       </div>
       <div class="box">
@@ -27,18 +27,18 @@
         <ul class="list">
           <li class="cell"
             v-for="(item ,index) in list"
-            :class="[{active: index === 0, bigmg: item.month === 1}]"
+            :class="[{active: index === 0, isYear: item.showYear}]"
             :key="item.id"
           >
             <div class="l">
-              <div class="txt1">{{item.date}}</div>
+              <div class="txt1">{{item.changeDate}}</div>
             </div>
             <div class="r">
-              <div class="txt1">{{item.text}}</div>
-              <div class="txt2">提升后总额度{{item.total}}</div>
+              <div class="txt1">{{item.opType}}</div>
+              <div class="txt2">提升后总额度{{item.limitAmount}}</div>
             </div>
             <div class="month">{{item.month}}月</div>
-            <div v-if="item.month === 12" class="year">{{item.year}}</div>
+            <div v-if="item.showYear" class="year">{{item.showYear}}</div>
           </li>
         </ul>
       </div>

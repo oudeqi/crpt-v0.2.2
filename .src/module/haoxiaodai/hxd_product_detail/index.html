@@ -12,7 +12,7 @@
       content="telephone=no,email=no,date=no,address=no"
     />
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
   </head>
   <body>
     <div id="app">
@@ -21,56 +21,58 @@
           <li class="cell">
             <div class="title">
               我的额度信息
-              <span class="status">已冻结</span>
+              <span class="status"
+              :class="`status-${productInfo.amountStatus}`"
+              >{{productInfo.amountStatusText}}</span>
             </div>
             <div class="main">
               <div class="md">
                 <span class="key">当前可用额度(元)</span>
-                <span class="val">5,000.00</span>
+                <span class="val">{{availableAmountTn}}</span>
               </div>
               <div class="md">
                 <a class="key">
                   总额度(元)
-                  <span class="gr">变化详情</span>
-                  <span class="arrow"></span>
+                  <span class="gr" @click="handleToChangeLog">变化详情</span>
+                  <b class="aui-iconfont aui-icon-right"></b>
                 </a>
-                <span class="val">502.00</span>
+                <span class="val">{{productTotalLimitTn}}</span>
               </div>
               <div class="md">
                 <span class="key">额度有效期</span>
-                <span class="val">至2020-1-23</span>
+                <span class="val">至{{productInfo.expireDate}}</span>
               </div>
             </div>
             <div class="footer">
               授信合同
-              <span class="topage gr">
+              <span class="topage gr" @click="handleToAgreement(productInfo.signContract[0].contractFileId)">
                 查看
-                <b class="arrow"></b>
+                <b class="aui-iconfont aui-icon-right"></b>
               </span>
             </div>
           </li>
 
           <li class="cell">
-            <div class="title">好销贷</div>
+            <div class="title">{{productInfo.producName}}</div>
             <div class="main">
               <div class="md">
                 <span class="key">日费用</span>
-                <span class="val">每万元收费2.1元</span>
+                <span class="val">每万元收费{{productInfo.exeInterest}}元</span>
               </div>
               <div class="md">
                 <span class="key">还款方式</span>
-                <span class="val">到期一次性还本付息</span>
+                <span class="val">{{productInfo.opType}}</span>
               </div>
               <div class="md">
                 <span class="key">还款期限(天)</span>
-                <span class="val">90</span>
+                <span class="val">{{productInfo.repayCycle}}</span>
               </div>
             </div>
             <div class="footer">
               产品介绍
-              <span class="topage gr">
+              <span class="topage gr" @click="handleToProductIntro">
                 查看
-                <b class="arrow"></b>
+                <b class="aui-iconfont aui-icon-right"></b>
               </span>
             </div>
           </li>

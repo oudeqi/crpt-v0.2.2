@@ -2,6 +2,7 @@ import { setPicker, setCityPicker } from "./picker";
 import { showLoading, hideLoading } from './loading'
 import { toast } from './toast'
 import { setRefreshHeaderInfo } from './gestures'
+import { dialog } from './dialog'
 /**
  * UI class
  * @author liyang
@@ -25,5 +26,8 @@ export default class UI {
   }
   setRefreshHeaderInfo(params) {
     return setRefreshHeaderInfo(params)
+  }
+  dialog(params) {
+    return dialog(params)
   }
 }

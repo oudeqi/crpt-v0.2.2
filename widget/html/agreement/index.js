@@ -1420,6 +1420,65 @@ function setRefreshHeaderInfo(_ref) {
   });
 }
 
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -1460,6 +1519,11 @@ var UI = /*#__PURE__*/function () {
     key: "setRefreshHeaderInfo",
     value: function setRefreshHeaderInfo$1(params) {
       return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
     }
   }]);
 
@@ -1902,6 +1966,11 @@ var Service = /*#__PURE__*/function () {
     value: function docx2html(id) {
       return http.get('/crpt-file/file/docx2html?id=' + id);
     }
+  }, {
+    key: "pdf2html",
+    value: function pdf2html(id) {
+      return http.get("/crpt-file/file/pdf2html?pdfFileId=".concat(id));
+    }
   }]);
 
   return Service;
@@ -1926,9 +1995,11 @@ var PageController = /*#__PURE__*/function (_Service) {
     _this = _super.apply(this, arguments);
 
     var _ref = api.pageParam || {},
-        id = _ref.id;
+        id = _ref.id,
+        type = _ref.type;
 
     _this.id = id;
+    _this.type = type || 'doc';
     return _this;
   }
 
@@ -1959,12 +2030,34 @@ var PageController = /*#__PURE__*/function (_Service) {
                   modal: false
                 });
                 _context.prev = 4;
-                _context.next = 7;
+                res = null;
+
+                if (!(this.type === 'doc')) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _context.next = 9;
                 return this.docx2html(this.id);
 
-              case 7:
+              case 9:
+                res = _context.sent;
+                _context.next = 16;
+                break;
+
+              case 12:
+                if (!(this.type === 'pdf')) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _context.next = 15;
+                return this.pdf2html(this.id);
+
+              case 15:
                 res = _context.sent;
 
+              case 16:
                 if (res.code === 200) {
                   $api.byId('doc').innerHTML = res.data.fileName;
                 } else {
@@ -1974,27 +2067,27 @@ var PageController = /*#__PURE__*/function (_Service) {
                   });
                 }
 
-                _context.next = 14;
+                _context.next = 22;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 19:
+                _context.prev = 19;
                 _context.t0 = _context["catch"](4);
                 api.toast({
                   msg: _context.t0.msg || '出错啦',
                   location: 'middle'
                 });
 
-              case 14:
+              case 22:
                 api.hideProgress();
                 api.refreshHeaderLoadDone();
 
-              case 16:
+              case 24:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[4, 11]]);
+        }, _callee, this, [[4, 19]]);
       }));
 
       function getPageData() {
