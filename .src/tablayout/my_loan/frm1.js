@@ -1,8 +1,9 @@
-import '../../../app.css'
+import '../../app.css'
 import './frm.less'
 
-import Router from '../../../router'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+
+import Router from '../../router'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import numeral from 'numeral'
 
 apiready = function () {
@@ -17,7 +18,7 @@ apiready = function () {
     }
     loading = true
     // 查询状态： 1-未还清 2-已还清 3-已失效
-    http.get(`/crpt-order/order/payInfo?status=1&pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
+    http.get(`/crpt-order/order/payInfo?status=2&pageSize=${pageSize}&pageNo=${pageNo}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {
@@ -61,8 +62,8 @@ apiready = function () {
     }
     data.forEach(item => {
       $api.append($api.byId('list'), `
-        <li tapmode data-id="${item.orderNo || ''}">
-          <div class="t">
+      <li tapmode data-id="${item.orderNo || ''}">
+<div class="t">
             <div class="row1">
               <span>业务单号：${item.orderNo || ''}</span>
               <i class="aui-iconfont aui-icon-right"></i>
@@ -89,8 +90,7 @@ apiready = function () {
 
             </div>
           </div>
-          
-        </li>
+      </li>
       `)
     })
   }
@@ -130,7 +130,7 @@ apiready = function () {
     }
     let id = li.dataset.id
     if (id) {
-      Router.openPage({ key: 'loan_details' }, { id })
+      Router.openPage({ key: 'loan_details', params: {pageParam: { id }}})
     } else {
       api.toast({ msg: 'id 不存在' })
     }

@@ -1945,11 +1945,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 贷款详情
+  // 押金贷贷款详情
   yjd_loan_details: {
     name: 'yjd_loan_details',
     title: '贷款详情',
     url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -1972,11 +1981,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 代养合同
-  yjd_contract: {
-    name: 'yjd_contract',
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
     title: '代养合同',
-    url: 'widget://html/yjd_contract/index.html',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -2172,10 +2190,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  myloan: {
-    name: 'html/myloan/win',
+  my_loan: {
+    name: 'html/my_loan/win',
     title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
+    url: 'widget://html/my_loan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -2305,7 +2323,7 @@ var page = new Vue({
     }],
     routeKeyArr: ['msgcenter', // 消息中心
     'billlist', // 我的账单
-    'myloan', // 我的贷款
+    'my_loan', // 我的贷款
     'myquota', // 我的额度
     'myproduct', // 已开通的产品
     'contactus', // 联系我们

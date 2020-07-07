@@ -68,7 +68,7 @@ function openBillDetails(id) {
     slidBackEnabled: true,
     navigationBar: navigationBarGreen
   });
-} // 我的贷款
+} // 修改密码
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 

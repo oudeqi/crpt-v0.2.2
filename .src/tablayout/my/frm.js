@@ -19,7 +19,7 @@ const page = new Vue({
     routeKeyArr: [
       'msgcenter', // 消息中心
       'billlist', // 我的账单
-      'myloan', // 我的贷款
+      'my_loan', // 我的贷款
       'myquota', // 我的额度
       'myproduct', // 已开通的产品
       'contactus', // 联系我们

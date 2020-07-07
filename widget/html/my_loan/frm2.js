@@ -171,11 +171,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 贷款详情
+  // 押金贷贷款详情
   yjd_loan_details: {
     name: 'yjd_loan_details',
     title: '贷款详情',
     url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -198,11 +207,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 代养合同
-  yjd_contract: {
-    name: 'yjd_contract',
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
     title: '代养合同',
-    url: 'widget://html/yjd_contract/index.html',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -398,10 +416,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  myloan: {
-    name: 'html/myloan/win',
+  my_loan: {
+    name: 'html/my_loan/win',
     title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
+    url: 'widget://html/my_loan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -3316,7 +3334,7 @@ apiready = function apiready() {
 
     loading = true; // 查询状态： 1-未还清 2-已还清 3-已失效
 
-    http.get("/crpt-order/order/payInfo?status=1&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
+    http.get("/crpt-order/order/payInfo?status=3&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo)).then(function (res) {
       loading = false;
       api.refreshHeaderLoadDone();
 
@@ -3362,7 +3380,7 @@ apiready = function apiready() {
       10: '已退货'
     };
     data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n          <div class=\"t\">\n            <div class=\"row1\">\n              <span>\u4E1A\u52A1\u5355\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"b\">\n              <div class=\"tit\">\n                <div class=\"amount\">\u8D37\u6B3E\u91D1\u989D(\u5143) \n                  <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n                </div>\n                <span class=\"num\">").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n              </div>\n            </div>\n            <div class=\"row2\">\n              <span>\u6536\u6B3E\u65B9</span>\n              ").concat(item.saleCustName || '', "\n            </div>\n            <div class=\"row2\">\n              <span>\u653E\u6B3E\u65F6\u95F4</span>\n              ").concat(item.orderTime || '', "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u8D37\u6B3E\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName || '', "</strong>\n\n            </div>\n          </div>\n          \n        </li>\n      "));
+      $api.append($api.byId('list'), "\n      <li tapmode data-id=\"".concat(item.orderNo || '', "\">\n<div class=\"t\">\n            <div class=\"row1\">\n              <span>\u4E1A\u52A1\u5355\u53F7\uFF1A").concat(item.orderNo || '', "</span>\n              <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n            <div class=\"b\">\n              <div class=\"tit\">\n                <div class=\"amount\">\u8D37\u6B3E\u91D1\u989D(\u5143) \n                  <span class=\"status ").concat(mapping[item.status], "\">").concat(mapping2[item.status] || '', "</span>\n                </div>\n                <span class=\"num\">").concat(numeral(item.payAmount).format('0,0.00'), "</span>\n              </div>\n            </div>\n            <div class=\"row2\">\n              <span>\u6536\u6B3E\u65B9</span>\n              ").concat(item.saleCustName || '', "\n            </div>\n            <div class=\"row2\">\n              <span>\u653E\u6B3E\u65F6\u95F4</span>\n              ").concat(item.orderTime || '', "\n            </div>\n            <div class=\"row3\">\n              <span class=\"label\">\u8D37\u6B3E\u4EA7\u54C1</span>\n              <strong class=\"produce\">").concat(item.productName || '', "</strong>\n\n            </div>\n          </div>\n      </li>\n      "));
     });
   }
 
@@ -3405,9 +3423,12 @@ apiready = function apiready() {
 
     if (id) {
       Router$1.openPage({
-        key: 'loan_details'
-      }, {
-        id: id
+        key: 'loan_details',
+        params: {
+          pageParam: {
+            id: id
+          }
+        }
       });
     } else {
       api.toast({

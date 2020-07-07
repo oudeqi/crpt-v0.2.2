@@ -995,11 +995,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 贷款详情
+  // 押金贷贷款详情
   yjd_loan_details: {
     name: 'yjd_loan_details',
     title: '贷款详情',
     url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -1022,11 +1031,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 代养合同
-  yjd_contract: {
-    name: 'yjd_contract',
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
     title: '代养合同',
-    url: 'widget://html/yjd_contract/index.html',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -1222,10 +1240,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  myloan: {
-    name: 'html/myloan/win',
+  my_loan: {
+    name: 'html/my_loan/win',
     title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
+    url: 'widget://html/my_loan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -3553,14 +3571,65 @@ function vmInit() {
           1: '申请中',
           2: '已审批通过',
           11: '待申请'
-        }
+        },
+        statusMapHXD: {
+          0: '未申请',
+          1: '已受理',
+          2: '成功',
+          3: '拒绝',
+          4: '异常'
+        },
+        hxd: {}
       };
     },
     mounted: function mounted() {
-      this.getPageData(1);
+      this.pageInit();
     },
     methods: {
       numeral: numeral,
+      handleHXDClick: function handleHXDClick() {
+        var status = this.hxd.creditStatus;
+        var productId = this.hxd.productId;
+
+        if (status === 0) {
+          // 立即开通
+          if (this.userinfo.userType === '1') {
+            // 个人用户
+            Router$1.openPage({
+              key: 'hxd_apply',
+              params: {
+                pageParam: {
+                  productId: productId
+                }
+              }
+            });
+          } else if (this.userinfo.userType === '2') {
+            // 企业用户
+            Router$1.openPage({
+              key: 'hxd_a_supply',
+              params: {
+                pageParam: {
+                  productId: productId
+                }
+              }
+            });
+          } else {
+            api.toast({
+              msg: '未知的用户类型',
+              location: 'middle'
+            });
+          }
+        } else {
+          Router$1.openPage({
+            key: 'hxd_u_apply',
+            params: {
+              pageParam: {
+                productId: productId
+              }
+            }
+          });
+        }
+      },
       loadMore: function loadMore() {
         var _this = this;
 
@@ -3579,60 +3648,30 @@ function vmInit() {
           }, _callee);
         }))();
       },
-      getPageData: function getPageData(currentPage) {
+      pageInit: function pageInit() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var pageSize, pageNo, res, _this2$list;
-
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  if (!_this2.loading) {
-                    _context2.next = 2;
-                    break;
-                  }
+                  api.showProgress({
+                    title: '加载中...',
+                    text: '',
+                    modal: false
+                  });
+                  _context2.next = 3;
+                  return _this2.getHXD();
 
-                  return _context2.abrupt("return");
+                case 3:
+                  _context2.next = 5;
+                  return _this2.getPageData(1);
 
-                case 2:
-                  _this2.loading = true;
-                  pageSize = _this2.pageSize;
-                  pageNo = currentPage || _this2.pageNo;
-                  _context2.next = 7;
-                  return http$1.get("/crpt-order/order/list/currentuser?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo));
+                case 5:
+                  api.hideProgress();
 
-                case 7:
-                  res = _context2.sent;
-                  api.refreshHeaderLoadDone();
-                  _this2.loading = false;
-                  _this2.total = res.data.count;
-                  _this2.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00');
-
-                  if (res.data.list && res.data.list.length > 0) {
-                    _this2.noData = false;
-                    _this2.noMore = false;
-                    _this2.pageNo = pageNo + 1;
-
-                    if (pageNo === 1) {
-                      _this2.list = res.data.list;
-                    } else {
-                      (_this2$list = _this2.list).push.apply(_this2$list, toConsumableArray(res.data.list));
-                    }
-                  } else {
-                    if (pageNo === 1) {
-                      _this2.noData = true;
-                    } else {
-                      _this2.noMore = true;
-                    }
-                  }
-
-                  setTimeout(function () {
-                    api.parseTapmode();
-                  }, 300);
-
-                case 14:
+                case 6:
                 case "end":
                   return _context2.stop();
               }
@@ -3640,8 +3679,124 @@ function vmInit() {
           }, _callee2);
         }))();
       },
+      getHXD: function getHXD() {
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+          var res;
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  _context3.prev = 0;
+                  _context3.next = 3;
+                  return http$1.get('/crpt-credit/credit/hxd/product/list');
+
+                case 3:
+                  res = _context3.sent;
+
+                  if (res.data && res.data[0]) {
+                    _this3.hxd = res.data[0];
+                  } else {
+                    api.toast({
+                      msg: res.msg || '未查询到好销贷产品',
+                      location: 'middle'
+                    });
+                  }
+
+                  _context3.next = 10;
+                  break;
+
+                case 7:
+                  _context3.prev = 7;
+                  _context3.t0 = _context3["catch"](0);
+                  api.toast({
+                    msg: _context3.t0.message || '出错啦',
+                    location: 'middle'
+                  });
+
+                case 10:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, null, [[0, 7]]);
+        }))();
+      },
+      getPageData: function getPageData(currentPage) {
+        var _this4 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+          var pageSize, pageNo, res, _this4$list;
+
+          return regenerator.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  if (!_this4.loading) {
+                    _context4.next = 2;
+                    break;
+                  }
+
+                  return _context4.abrupt("return");
+
+                case 2:
+                  _this4.loading = true;
+                  pageSize = _this4.pageSize;
+                  pageNo = currentPage || _this4.pageNo;
+                  _context4.prev = 5;
+                  _context4.next = 8;
+                  return http$1.get("/crpt-order/order/list/currentuser?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo));
+
+                case 8:
+                  res = _context4.sent;
+                  api.refreshHeaderLoadDone();
+                  _this4.loading = false;
+                  _this4.total = res.data.count;
+                  _this4.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00');
+
+                  if (res.data.list && res.data.list.length > 0) {
+                    _this4.noData = false;
+                    _this4.noMore = false;
+                    _this4.pageNo = pageNo + 1;
+
+                    if (pageNo === 1) {
+                      _this4.list = res.data.list;
+                    } else {
+                      (_this4$list = _this4.list).push.apply(_this4$list, toConsumableArray(res.data.list));
+                    }
+                  } else {
+                    if (pageNo === 1) {
+                      _this4.noData = true;
+                    } else {
+                      _this4.noMore = true;
+                    }
+                  }
+
+                  _context4.next = 19;
+                  break;
+
+                case 16:
+                  _context4.prev = 16;
+                  _context4.t0 = _context4["catch"](5);
+                  api.toast({
+                    msg: _context4.t0.message || '出错啦',
+                    location: 'middle'
+                  });
+
+                case 19:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, null, [[5, 16]]);
+        }))();
+      },
       handleBtnClick: function handleBtnClick(record) {
         // orderType 业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷）
+        var productId = record.productId;
+        var orderNo = record.orderNo;
+
         if (record.orderType === 1) {
           // 好销贷
           if (record.status === 11) {
@@ -3649,12 +3804,22 @@ function vmInit() {
             if (this.userinfo.userType === '1') {
               // 个人用户
               Router$1.openPage({
-                key: 'hxd_apply'
+                key: 'hxd_apply',
+                params: {
+                  pageParam: {
+                    productId: productId
+                  }
+                }
               });
             } else if (this.userinfo.userType === '2') {
               // 企业用户
               Router$1.openPage({
-                key: 'hxd_a_supply'
+                key: 'hxd_a_supply',
+                params: {
+                  pageParam: {
+                    productId: productId
+                  }
+                }
               });
             } else {
               api.toast({
@@ -3665,26 +3830,48 @@ function vmInit() {
           } else {
             // 继续开通
             Router$1.openPage({
-              key: 'hxd_u_apply'
+              key: 'hxd_u_apply',
+              params: {
+                pageParam: {
+                  productId: productId
+                }
+              }
             });
           }
         } else if (record.orderType === 4) {
           // 押金贷
-          Router$1.openPage({
-            key: 'yjd_loan_details'
-          });
+          // 业务单流程状态（押金贷专用，判断按钮展示及跳转页面）
+          //1：户口本未上传 2：待客户经理审核 3：客户经理审核不通过 4：待平台审核 5：平台审核不通过 6： 平台审核通过 7-待绑定银行卡 8-绑卡成功
+          if (record.orderFlowStatus === 8) {
+            // 继续申请跳到贷款签约
+            Router$1.openPage({
+              key: 'yjd_loan_signing'
+            });
+          } else {
+            api.toast({
+              msg: '押金贷业务单流程状态不正确',
+              location: 'middle'
+            });
+          }
         } else {
           // 其他
           Router$1.openPage({
-            key: 'loan_application'
-          }, {
-            id: record.orderNo
+            key: 'loan_application',
+            params: {
+              pageParam: {
+                id: orderNo
+              }
+            }
           });
         }
       },
       handleCancel: function handleCancel(record) {
         console.log(record.orderNo);
         console.log(record.status);
+        api.alert({
+          title: '提示',
+          msg: '功能开发中...'
+        });
       }
     }
   });
@@ -3700,7 +3887,7 @@ apiready = function apiready() {
   });
   var vm = vmInit();
   setRefreshHeaderInfo$1(function () {
-    vm.getPageData(1);
+    vm.pageInit();
   });
   api.addEventListener({
     name: 'scrolltobottom',

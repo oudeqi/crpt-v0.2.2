@@ -25,10 +25,10 @@ const routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  myloan: {
-    name: 'html/myloan/win',
+  my_loan: {
+    name: 'html/my_loan/win',
     title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
+    url: 'widget://html/my_loan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,

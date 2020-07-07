@@ -1,19 +1,6 @@
-/* aui reset */
-.aui-radio:checked,
-.aui-radio.aui-checked,
-.aui-checkbox:checked,
-.aui-checkbox.aui-checked {
-  background-color: #66BB6A !important;
-  border: solid 1px #66BB6A !important;
+[v-cloak] {
+  display: none !important;  
 }
-
-.aui-switch:checked {
-  border-color: #66BB6A !important;
-  background-color: #66BB6A !important;
-}
-
-/*1cb594 88dbcb 1aa689 5aae9c*/
-
 /*页面头部*/
 .app_header.white {
   background-color: #fff;

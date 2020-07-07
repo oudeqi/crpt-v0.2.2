@@ -217,6 +217,9 @@ input, textarea, button {
   color: #66bb6a;
   border: none;
 }
+[v-cloak] {
+  display: none !important;
+}
 * {
   padding: 0;
   margin: 0;

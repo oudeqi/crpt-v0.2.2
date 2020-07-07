@@ -55,18 +55,18 @@ apiready = function apiready() {
       h: 'auto'
     },
     frames: [{
-      name: 'html/myloan/frm/0',
-      url: 'widget://html/myloan/frm0.html',
+      name: 'html/my_loan/frm/0',
+      url: 'widget://html/my_loan/frm0.html',
       bounces: true,
       reload: true
     }, {
-      name: 'html/myloan/frm/1',
-      url: 'widget://html/myloan/frm1.html',
+      name: 'html/my_loan/frm/1',
+      url: 'widget://html/my_loan/frm1.html',
       bounces: true,
       reload: true
     }, {
-      name: 'html/myloan/frm/2',
-      url: 'widget://html/myloan/frm2.html',
+      name: 'html/my_loan/frm/2',
+      url: 'widget://html/my_loan/frm2.html',
       bounces: true,
       reload: true
     }]

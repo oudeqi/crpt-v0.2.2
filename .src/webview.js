@@ -504,19 +504,7 @@ function openBillDetails (id, {
   })
 }
 
-// 我的贷款
-function openMyLoan () {
-  api.openTabLayout({
-    name: 'html/myloan/win',
-    title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
+
 
 
 
@@ -1019,7 +1007,6 @@ export {
   openMsgList,
   openMsgDetails,
   openBillDetails,
-  openMyLoan,
   openChangePwd,
   openContactUs,
   openProductDetails,
