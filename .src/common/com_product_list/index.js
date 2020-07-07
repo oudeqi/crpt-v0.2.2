@@ -37,17 +37,27 @@ apiready = function () {
           this.getYjdTable()
         }
       },
-      getHxdTable () { // 好销贷
-        // Utils.UI.showLoading('加载中')
-        http.get('/crpt-credit/credit/hxd/product/list', {}).then(res => {
+      async getHxdTable () { // 好销贷
+        Utils.UI.showLoading('加载中')
+        try {
+          const res = await http.get('/crpt-credit/credit/hxd/product/list', {})
           this.hxdData = res.data
-          // Utils.UI.hideLoading()
-        })
+          Utils.UI.hideLoading()
+        } catch (err) {
+          Utils.UI.hideLoading()
+          // console.log(JSON.stringify(err))
+        }
       },
-      getYjdTable () { // 押金贷
-        http.get('/crpt-product/product/cooperation/fostercare/list', {}).then(res => {
+      async getYjdTable () { // 押金贷
+        Utils.UI.showLoading('加载中')
+        try {
+          const res = await http.get('/crpt-product/product/cooperation/fostercare/list', {})
           this.yjdData = res.data
-        })
+          Utils.UI.hideLoading()
+        } catch (err) {
+          Utils.UI.hideLoading()
+          // console.log(JSON.stringify(err))
+        }
       },
       changeHXD (item) { // 好销贷跳转
         /**

@@ -176,7 +176,7 @@ function openTabLayout (index) {
           scrollToTop: true,
           //其他继承自openFrame的参数
         }, {
-          title: "待申请",
+          title: "贷款申请",
           name: "tablayout/loan",
           url: "widget://html/loan/index.html",
           bounces: true,
@@ -446,20 +446,6 @@ function openAuthResult ({status, message, title, tips}) { // status: success er
   })
 }
 
-// 消息中心
-function openMsgCenter () {
-  api.openTabLayout({
-    name: 'html/msgcenter/win',
-    title: '消息中心',
-    url: 'widget://html/msgcenter/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
 // 账号动态/新闻通知列表
 function openMsgList (title) {
   api.openTabLayout({
@@ -480,20 +466,6 @@ function openMsgDetails () {
     name: 'html/msgdetails/win',
     title: '消息详情',
     url: 'widget://html/msgdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 账单列表
-function openBillList () {
-  api.openTabLayout({
-    name: 'html/billlist/win',
-    title: '我的账单',
-    url: 'widget://html/billlist/win.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -546,118 +518,7 @@ function openMyLoan () {
   })
 }
 
-// 订单详情
-function openOrderDetails (id) {
-  api.openTabLayout({
-    name: 'html/orderdetails/win',
-    title: '贷款详情',
-    url: 'widget://html/orderdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
 
-// 贷款申请
-function openLoanApplication (id) {
-  api.openTabLayout({
-    name: 'html/loanapplication/index',
-    title: '待申请',
-    url: 'widget://html/loanapplication/index.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
-  })
-}
-
-// 贷款确认
-function openLoanConfirm (id) {
-  api.openTabLayout({
-    name: 'html/loanconfirm/index',
-    title: '贷款确认',
-    url: 'widget://html/loanconfirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: {
-      hideBackButton: false,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal',
-      leftButtons: [
-        {
-          text: '',
-          color: '#fff',
-          iconPath: 'widget://image/back_white_big.png',
-        }
-      ]
-    }
-  })
-}
-
-// 我的额度
-function openMyQuota () {
-  api.openTabLayout({
-    name: 'html/myquota/win',
-    title: '我的额度',
-    url: 'widget://html/myquota/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
-
-// 我开通的产品
-function openMyProduct () {
-  api.openTabLayout({
-    name: 'html/myproduct/win',
-    title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 设置
-function openSettings () {
-  api.openTabLayout({
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
 
 
 // 修改密码
@@ -711,36 +572,6 @@ function openContactUs () {
         }
       ]
     }
-  })
-}
-
-// 还款计划
-function openRepayPlan (id) {
-  api.openTabLayout({
-    name: 'html/repayplan/win',
-    title: '还款计划',
-    url: 'widget://html/repayplan/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
-
-// 还款明细
-function openRepayRecord (id) {
-  api.openTabLayout({
-    name: 'html/repayrecord/win',
-    title: '还款记录',
-    url: 'widget://html/repayrecord/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: { id },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
   })
 }
 
@@ -1185,22 +1016,12 @@ export {
   openFaceUpload,
   openYuguEdu,
   openAuthResult,
-  openMsgCenter,
   openMsgList,
   openMsgDetails,
-  openBillList,
   openBillDetails,
   openMyLoan,
-  openOrderDetails,
-  openLoanApplication,
-  openLoanConfirm,
-  openMyQuota,
-  openMyProduct,
-  openSettings,
   openChangePwd,
   openContactUs,
-  openRepayPlan,
-  openRepayRecord,
   openProductDetails,
   openCityList,
   openProductRecommend,

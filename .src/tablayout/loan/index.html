@@ -5,52 +5,73 @@
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
   <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="header">
-    <div class="txt">待申请金额(元)</div>
-    <div class="num"><span id="total">***</span></div>
-  </div>
-  <div class="total" id="totalnum" style="display: none;">
-    <span>共<i id="count">*</i>笔</span>
-  </div>
-  <ul id="list">
+  <div id="app">
 
-    <!-- <li tapmode data-id="${item.orderNo || ''}">
-      <div class="row1">
-        <span>2018-12-21 10:00:00</span>
-        <span>待申请</span>
-      </div>
-      <div class="row2">
-        <div class="l">
-          <span>待申请金额(元)</span>
-          <strong>200,000.89</strong>
+    <section class="hxd">
+      <div class="hxdentry">
+        <div class="hxdentry-t">好销贷</div>
+        <div class="hxdentry-b">
+          <div class="hxdentry-num">
+            <strong>300<i>万元</i></strong>
+            <span>最高可申请</span>
+          </div>
+          <div class="hxdentry-txt">
+            <span>货物入库即可贷款</span>
+            <span>快速 大额 省钱</span>
+          </div>
+          <div class="hxdentry-btn">我要用款</div>
         </div>
-        <div tapmode="active" class="btn" data-id="${item.orderNo || ''}">去支付</div>
       </div>
-      <div class="row3">
-        <div class="l">
-          <strong>交易来源：重庆市涪陵区旺财饲料销售服务部</strong>
-          <span>产融订单号 74638374873499990</span>
+    </section>
+  
+    <section class="total">
+      <span>待申请(共{{total}}笔)</span>
+      <strong>{{ totalSum ? ('¥ ' + numeral(totalSum).format('¥ 0,0.00')) : ''}}</strong>
+    </section>
+    <!-- 
+      orderType 
+      业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷） 
+    -->
+    <ul class="list" id="list">
+      <li v-for="(item, index) in list" :key="index" class="item">
+        <div class="item-row1">
+          <span>{{item.orderTime || ''}}</span>
+          <span v-if="item.orderType === 4">已审批通过</span>
+          <span v-else>{{statusMap[item.status]}}</span>
         </div>
-        <div tapmode="active" class="btn" data-id="${item.orderNo || ''}">取消</div>
-      </div>
-    </li> -->
+        <div class="item-row2">
+          <div class="txt">
+            <span>待申请金额(元)</span>
+            <strong>{{numeral(item.payAmount || '').format('0,0.00')}}</strong>
+          </div>
+          <div v-if="item.orderType === 4" @click="handleBtnClick(item)" class="btn">查看</div>
+          <div v-else-if="item.status === 1 || item.status === 2" @click="handleBtnClick(item)" class="btn">继续申请</div>
+          <div v-else @click="handleBtnClick(item)" class="btn">立即申请</div>
+        </div>
+        <div class="item-row3">
+          <strong>收款方：{{item.saleCustName || ''}}</strong>
+          <span>业务单号：{{item.orderNo || ''}}</span>
+        </div>
+        <div v-if="(item.status === 1 || item.status === 2) && item.orderType === 1" class="item-row4">
+          <div class="btn cancel" @click="handleCancel(item)">取消</div>
+        </div>
+      </li>
+    </ul>
+    
+    <section v-if="loading" class="loading">加载中...</section>
+    <section v-if="!loading && noMore" class="nomore">无更多数据</section>
+    <section v-if="!loading && !noMore" class="loadmore">加载更多</section>
+    <section v-if="!loading && noData" class="nodata">
+      <div class="nodata-pic"></div>
+      <p class="nodata-desc">暂时没有数据哦</p>
+    </section>
+  </div>
 
+  
 
-
-  </ul>
-  <section class="def_place-img-box" id="empty-box">
-    <div class="place-img"></div>
-    <p class="place-tip">暂时没有数据哦</p>
-  </section>
   <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript">
-    function xxx() {
-
-    }
-  </script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 </body>
 </html>

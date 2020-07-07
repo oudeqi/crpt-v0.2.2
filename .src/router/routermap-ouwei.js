@@ -80,6 +80,60 @@ const routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 贷款申请
+  loan_application: {
+    name: 'loan_application',
+    title: '待申请',
+    url: 'widget://html/loan_application/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款确认
+  loan_confirm: {
+    name: 'loan_confirm',
+    title: '贷款确认',
+    url: 'widget://html/loan_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款详情
+  yjd_loan_details: {
+    name: 'yjd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款计划
+  repay_plan: {
+    name: 'repay_plan',
+    title: '还款计划',
+    url: 'widget://html/repay_plan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款记录
+  repay_record: {
+    name: 'repay_record',
+    title: '还款记录',
+    url: 'widget://html/repay_record/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 代养合同
+  yjd_contract: {
+    name: 'yjd_contract',
+    title: '代养合同',
+    url: 'widget://html/yjd_contract/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 }
 

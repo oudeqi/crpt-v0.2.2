@@ -84,7 +84,7 @@ function openTabLayout(index) {
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
-        title: "待申请",
+        title: "贷款申请",
         name: "tablayout/loan",
         url: "widget://html/loan/index.html",
         bounces: true,

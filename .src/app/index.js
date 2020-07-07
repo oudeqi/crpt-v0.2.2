@@ -1,44 +1,40 @@
 import {
-  // openDrawerLayout,
-  openAgreement,
-  openLoanConfirm,
-  openSendAddress,
-  openDanbaoKaitong,
-  openDanbaoRenList,
-  openDanbaoRenForm,
-  openMsgCenter,
   openTabLayout,
   openRegLogin,
-  openReg,
-  openGerenLogin,
-  openQiyeLogin,
-  openSendCode,
-  openFindPwd,
-  openBaseinfoFill,
   openTodoAuthGeren,
   openTodoAuthQiye,
-  openCompanyInfo,
-  openIDcardUpload,
-  openIDcardInfo,
-  openFaceAuth,
-  openFaceUpload,
-  openYuguEdu,
-  openAuthResult,
-  openBillList,
-  openBillDetails,
-  openMyProduct,
-  openMyQuota,
-  openSettings,
-  openContactUs,
-  openProductDetails,
-  openProductRecommend
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
+import http from '../http/index.js'
 // $api.setStorage()
 // $api.getStorage()
 // $api.rmStorage()
 // $api.clearStorage()
+
+// 保存设备信息
+function saveDeviceMes() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const sendJson = {
+          networkType: api.connectionType, // 网络类型
+          deviceType: api.uiMode, // 设备类型
+          deviceModel: api.deviceModel, // 设备型号（手机型号）
+          deviceUniqueSymbol: api.deviceId, // 设备唯一标识
+          longitude: position.coords.longitude, // 经度
+          latitude: position.coords.latitude // 纬度
+        }
+        http.post('/crpt-cust/customer/device/info/save', {body: sendJson}).then(res => {
+          // console.log(JSON.stringify(res))
+        }).catch (err => {
+          console.log(JSON.stringify(err))
+        })
+      });
+  } else {
+    alert("不支持定位功能");
+  }
+}
 
 class App {
 
@@ -53,40 +49,14 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
 
-    // openTodoAuthQiye({status: 'error', tips: 'message'})
-    // return
-    // Router.openPage({key: 'hxd_apply'})
+    // Router.openPage({ key: 'yjd_contract', params: {pageParam: { id: 12 }}})
     // return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
-      // openIDcardUpload()
-      // openSendAddress({
-      //   gtCreditId: '1258945510237147136',
-      //   gtId: '1263411018323742721'
-      // })
-      // openDanbaoRenList({
-      //   gtCreditId: '1268076050915659776',
-      //   productId: '4',
-      //   demandMoney: '50',
-      //   gtId: '1268076050995986433'
-      // })
-      // return
-      // openSendCode({ tel: '18989193377', userType: 1 })
-      // return
-      // openDanbaoKaitong({step: 0, creditStatus: 2})
-      // return
-      Router.openPage({
-        key: 'hxd_product_detail', params: {
-          pageParam: {
-            productId: '1'
-          }
-        }
-      })
-      return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
-        // openTabLayout()
-        openTabLayout(1)
+        openTabLayout()
+        saveDeviceMes()
       } else {
         const userType = userinfo.userType
         if (userType === '1') {
@@ -99,7 +69,6 @@ class App {
       openRegLogin()
     }
   }
-
   bindEvent() {
     // 云修复完成
     api.addEventListener({
@@ -134,5 +103,4 @@ apiready = function () {
   const ctrl = new App()
   ctrl.init()
   ctrl.bindEvent()
-
 }

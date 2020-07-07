@@ -48,7 +48,7 @@ function openContactUs() {
       }]
     }
   });
-} // 还款计划
+} // 订单详情
 
 
 function openProductDetails() {

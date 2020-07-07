@@ -878,7 +878,7 @@ function openTabLayout(index) {
         scrollToTop: true //其他继承自openFrame的参数
 
       }, {
-        title: "待申请",
+        title: "贷款申请",
         name: "tablayout/loan",
         url: "widget://html/loan/index.html",
         bounces: true,
@@ -2302,6 +2302,60 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 贷款申请
+  loan_application: {
+    name: 'loan_application',
+    title: '待申请',
+    url: 'widget://html/loan_application/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款确认
+  loan_confirm: {
+    name: 'loan_confirm',
+    title: '贷款确认',
+    url: 'widget://html/loan_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款详情
+  yjd_loan_details: {
+    name: 'yjd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款计划
+  repay_plan: {
+    name: 'repay_plan',
+    title: '还款计划',
+    url: 'widget://html/repay_plan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款记录
+  repay_record: {
+    name: 'repay_record',
+    title: '还款记录',
+    url: 'widget://html/repay_record/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 代养合同
+  yjd_contract: {
+    name: 'yjd_contract',
+    title: '代养合同',
+    url: 'widget://html/yjd_contract/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -2471,6 +2525,83 @@ var routerHXDConfig = {
 };
 
 var routerConfig = {
+  // 消息中心
+  msgcenter: {
+    name: 'html/msgcenter/win',
+    title: '消息中心',
+    url: 'widget://html/msgcenter/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的账单
+  billlist: {
+    name: 'html/billlist/win',
+    title: '我的账单',
+    url: 'widget://html/billlist/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的贷款
+  myloan: {
+    name: 'html/myloan/win',
+    title: '我的贷款',
+    url: 'widget://html/myloan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: false,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的额度
+  myquota: {
+    name: 'html/myquota/win',
+    title: '我的额度',
+    url: 'widget://html/myquota/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 已开通的产品
+  myproduct: {
+    name: 'html/myproduct/win',
+    title: '我开通的产品',
+    url: 'widget://html/myproduct/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 联系我们
+  contactus: {
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 设置
+  settings: {
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
   // 我的钱包详情
   wallet: {
     name: 'wallet',

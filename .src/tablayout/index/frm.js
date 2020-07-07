@@ -1,6 +1,6 @@
 import '../../app.css'
 import './frm.less'
-import { openLeftPane, openSettings, openProductList, openDanbaoKaitong } from '../../webview.js'
+import { openProductList, openDanbaoKaitong } from '../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../config'
 import numeral from 'numeral'
 import Router from '../../router'
@@ -205,7 +205,7 @@ apiready = function () {
   //   if (ret.type === 'left') {
   //     openLeftPane()
   //   }else {
-  //     openSettings()
+
   //   }
   // })
 

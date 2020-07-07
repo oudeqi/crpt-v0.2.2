@@ -1,6 +1,5 @@
 import './index.css'
 
-import { openRepayPlan, openRepayRecord } from '../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../config.js'
 
 class Service {

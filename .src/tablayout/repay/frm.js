@@ -1,8 +1,9 @@
 import '../../app.css'
 import './frm.css'
 
-import { openLeftPane, openContactUs, openBillList } from '../../webview.js'
+// import { openLeftPane, openContactUs, openBillList } from '../../webview.js'
 import { http, setRefreshHeaderInfo } from '../../config.js'
+import Router from '../../router'
 import moment from 'moment'
 import numeral from 'numeral'
 import find from 'lodash/find'
@@ -133,11 +134,13 @@ apiready = function () {
   }
 
   document.querySelector('#contactus').onclick = function (event) {
-    openContactUs()
+    Router.openPage({ key: 'contactus' })
+    // openContactUs()
   }
 
   document.querySelector('#billlist').onclick = function (event) {
-    openBillList()
+    // openBillList()
+    Router.openPage({ key: 'billlist' })
   }
 
 
