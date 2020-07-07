@@ -279,6 +279,9 @@ html, body {
   margin-bottom: 12px;
   position: relative;
 }
+.cell.isYear {
+  margin-top: 56px;
+}
 .cell.bigmg {
   margin-bottom: 56px;
 }

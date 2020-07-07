@@ -534,6 +534,65 @@ function setRefreshHeaderInfo(_ref) {
   });
 }
 
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -574,6 +633,11 @@ var UI = /*#__PURE__*/function () {
     key: "setRefreshHeaderInfo",
     value: function setRefreshHeaderInfo$1(params) {
       return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
     }
   }]);
 
@@ -2357,6 +2421,16 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
     navigationBar: navigationBarWhite$1
   },
   // 我的贷款
@@ -2428,6 +2502,15 @@ var routerConfig = {
     name: 'com_product_list',
     title: '产品列表',
     url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  // 合同页
+  agreement: {
+    name: 'agreement',
+    title: '查看合同',
+    url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
@@ -2698,7 +2781,7 @@ var App = /*#__PURE__*/function () {
       // 6：人工审核不通过
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
-      // Router.openPage({ key: 'yjd_contract', params: {pageParam: { id: 12 }}})
+      // Router.openPage({ key: 'billlist'})
       // return
       var userinfo = $api.getStorage('userinfo');
 

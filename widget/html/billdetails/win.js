@@ -580,6 +580,65 @@ function setRefreshHeaderInfo(_ref) {
   });
 }
 
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -620,6 +679,11 @@ var UI = /*#__PURE__*/function () {
     key: "setRefreshHeaderInfo",
     value: function setRefreshHeaderInfo$1(params) {
       return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
     }
   }]);
 
@@ -7457,13 +7521,14 @@ apiready = function apiready() {
     }
   });
   var pageParam = api.pageParam || {};
-  var id = pageParam.id,
-      billDate = pageParam.billDate,
-      sumRepayTotalAmount = pageParam.sumRepayTotalAmount,
-      sumRepayPrincipalAmount = pageParam.sumRepayPrincipalAmount,
-      sumServiceFee = pageParam.sumServiceFee,
-      sumRepayPenaltyAmount = pageParam.sumRepayPenaltyAmount,
-      sumRepayInterestAmount = pageParam.sumRepayInterestAmount;
+  console.log(JSON.stringify(pageParam.list));
+  var _pageParam$list = pageParam.list,
+      billDate = _pageParam$list.billDate,
+      sumRepayTotalAmount = _pageParam$list.sumRepayTotalAmount,
+      sumRepayPrincipalAmount = _pageParam$list.sumRepayPrincipalAmount,
+      sumServiceFee = _pageParam$list.sumServiceFee,
+      sumRepayPenaltyAmount = _pageParam$list.sumRepayPenaltyAmount,
+      sumRepayInterestAmount = _pageParam$list.sumRepayInterestAmount;
   var loading = false; // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
 
   $api.byId('billDate').innerHTML = billDate || '';
@@ -7473,7 +7538,7 @@ apiready = function apiready() {
   $api.byId('sumRepayPenaltyAmount').innerHTML = numeral(sumRepayPenaltyAmount).format('0,0.00');
   $api.byId('sumRepayInterestAmount').innerHTML = numeral(sumRepayInterestAmount).format('0,0.00');
 
-  function getPageData(id, cb) {
+  function getPageData(cb) {
     if (loading) {
       return;
     }
@@ -7486,7 +7551,7 @@ apiready = function apiready() {
     loading = true;
     http.post("/crpt-credit/credit/repay/mybill/billdetail", {
       body: {
-        orderNo: id
+        orderNo: pageParam.list.orderNo
       }
     }).then(function (res) {
       loading = false;
@@ -7511,7 +7576,7 @@ apiready = function apiready() {
   }
 
   function initPageData() {
-    getPageData(id, function (res) {
+    getPageData(function (res) {
       $api.byId('bankName').innerHTML = res.bankName || '';
       $api.byId('account').innerHTML = res.account || '';
       var list = res.list;

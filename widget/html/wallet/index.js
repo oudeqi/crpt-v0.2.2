@@ -364,6 +364,65 @@ function setRefreshHeaderInfo(_ref) {
   });
 }
 
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -404,6 +463,11 @@ var UI = /*#__PURE__*/function () {
     key: "setRefreshHeaderInfo",
     value: function setRefreshHeaderInfo$1(params) {
       return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
     }
   }]);
 
@@ -2083,7 +2147,6 @@ apiready = function apiready() {
     },
     mounted: function mounted() {
       this.getData();
-      this.getLocation();
     },
     methods: {
       getData: function getData() {
@@ -2092,20 +2155,6 @@ apiready = function apiready() {
         http$1.get('/crpt-cust/customer/account/hope/account/info', {}).then(function (res) {
           _this.accountData = res.data;
         });
-      },
-      getLocation: function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            latitude = position.coords.latitude; //获取纬度
-
-            longitude = position.coords.longitude; //获取经度
-
-            console.log(latitude);
-            console.log(longitude);
-          });
-        } else {
-          alert("不支持定位功能");
-        }
       }
     }
   });

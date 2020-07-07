@@ -1,7 +1,7 @@
-import '../../../app.css'
+import '../../app.css'
 import './win.less'
 
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
 
@@ -14,15 +14,15 @@ apiready = function () {
     }
   });
   let pageParam = api.pageParam || {}
+  console.log(JSON.stringify(pageParam.list))
   let {
-    id, // '1103'
     billDate,
     sumRepayTotalAmount,
     sumRepayPrincipalAmount,
     sumServiceFee,
     sumRepayPenaltyAmount,
     sumRepayInterestAmount,
-  } = pageParam
+  } = pageParam.list
   let loading = false
 
   // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
@@ -33,7 +33,7 @@ apiready = function () {
   $api.byId('sumRepayPenaltyAmount').innerHTML = numeral(sumRepayPenaltyAmount).format('0,0.00')
   $api.byId('sumRepayInterestAmount').innerHTML = numeral(sumRepayInterestAmount).format('0,0.00')
 
-  function getPageData (id, cb) {
+  function getPageData (cb) {
     if (loading) {
       return
     }
@@ -45,7 +45,7 @@ apiready = function () {
     loading = true
     http.post(`/crpt-credit/credit/repay/mybill/billdetail`, {
       body: {
-        orderNo: id
+        orderNo: pageParam.list.orderNo
       }
     }).then(res => {
       loading = false
@@ -86,7 +86,7 @@ apiready = function () {
   }
 
   function initPageData() {
-    getPageData(id, function (res) {
+    getPageData(function (res) {
       $api.byId('bankName').innerHTML = res.bankName || ''
       $api.byId('account').innerHTML = res.account || ''
       let list = res.list

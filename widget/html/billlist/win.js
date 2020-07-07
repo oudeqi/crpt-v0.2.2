@@ -1,729 +1,8 @@
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: 'rgba(102,187,106,1)',
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-}; // 打开侧滑
-
-
-function openRegLogin() {
-  api.openTabLayout({
-    name: 'html/reglogin/index',
-    url: 'widget://html/reglogin/index.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
-
-
-function openBillDetails(id) {
-  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      billDate = _ref5.billDate,
-      sumRepayTotalAmount = _ref5.sumRepayTotalAmount,
-      sumRepayPrincipalAmount = _ref5.sumRepayPrincipalAmount,
-      sumServiceFee = _ref5.sumServiceFee,
-      sumRepayPenaltyAmount = _ref5.sumRepayPenaltyAmount,
-      sumRepayInterestAmount = _ref5.sumRepayInterestAmount;
-
-  api.openTabLayout({
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: {
-      id: id,
-      billDate: billDate,
-      sumRepayTotalAmount: sumRepayTotalAmount,
-      sumRepayPrincipalAmount: sumRepayPrincipalAmount,
-      sumServiceFee: sumServiceFee,
-      sumRepayPenaltyAmount: sumRepayPenaltyAmount,
-      sumRepayInterestAmount: sumRepayInterestAmount
-    },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  });
-} // 修改密码
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
-
-var base64 = createCommonjsModule(function (module, exports) {
-(function (global, factory) {
-     module.exports = factory(global)
-        ;
-}((
-    typeof self !== 'undefined' ? self
-        : typeof window !== 'undefined' ? window
-        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
-: commonjsGlobal
-), function(global) {
-    // existing version for noConflict()
-    global = global || {};
-    var _Base64 = global.Base64;
-    var version = "2.5.2";
-    // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
-        } catch (err) {
-            buffer = undefined;
-        }
-    }
-    // constants
-    var b64chars
-        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    var b64tab = function(bin) {
-        var t = {};
-        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
-        return t;
-    }(b64chars);
-    var fromCharCode = String.fromCharCode;
-    // encoder stuff
-    var cb_utob = function(c) {
-        if (c.length < 2) {
-            var cc = c.charCodeAt(0);
-            return cc < 0x80 ? c
-                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
-                                + fromCharCode(0x80 | (cc & 0x3f)))
-                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        } else {
-            var cc = 0x10000
-                + (c.charCodeAt(0) - 0xD800) * 0x400
-                + (c.charCodeAt(1) - 0xDC00);
-            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
-                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        }
-    };
-    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
-    var utob = function(u) {
-        return u.replace(re_utob, cb_utob);
-    };
-    var cb_encode = function(ccc) {
-        var padlen = [0, 2, 1][ccc.length % 3],
-        ord = ccc.charCodeAt(0) << 16
-            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
-            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
-        chars = [
-            b64chars.charAt( ord >>> 18),
-            b64chars.charAt((ord >>> 12) & 63),
-            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
-            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
-        ];
-        return chars.join('');
-    };
-    var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
-    } : function(b) {
-        return b.replace(/[\s\S]{1,3}/g, cb_encode);
-    };
-    var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
-        return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
-    };
-    var encode = function(u, urisafe) {
-        return !urisafe
-            ? _encode(u)
-            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
-                return m0 == '+' ? '-' : '_';
-            }).replace(/=/g, '');
-    };
-    var encodeURI = function(u) { return encode(u, true) };
-    // decoder stuff
-    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
-    var cb_btou = function(cccc) {
-        switch(cccc.length) {
-        case 4:
-            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
-                |    ((0x3f & cccc.charCodeAt(1)) << 12)
-                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
-                |     (0x3f & cccc.charCodeAt(3)),
-            offset = cp - 0x10000;
-            return (fromCharCode((offset  >>> 10) + 0xD800)
-                    + fromCharCode((offset & 0x3FF) + 0xDC00));
-        case 3:
-            return fromCharCode(
-                ((0x0f & cccc.charCodeAt(0)) << 12)
-                    | ((0x3f & cccc.charCodeAt(1)) << 6)
-                    |  (0x3f & cccc.charCodeAt(2))
-            );
-        default:
-            return  fromCharCode(
-                ((0x1f & cccc.charCodeAt(0)) << 6)
-                    |  (0x3f & cccc.charCodeAt(1))
-            );
-        }
-    };
-    var btou = function(b) {
-        return b.replace(re_btou, cb_btou);
-    };
-    var cb_decode = function(cccc) {
-        var len = cccc.length,
-        padlen = len % 4,
-        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
-            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
-            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
-            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
-        chars = [
-            fromCharCode( n >>> 16),
-            fromCharCode((n >>>  8) & 0xff),
-            fromCharCode( n         & 0xff)
-        ];
-        chars.length -= [0, 0, 2, 1][padlen];
-        return chars.join('');
-    };
-    var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
-        return a.replace(/\S{1,4}/g, cb_decode);
-    };
-    var atob = function(a) {
-        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
-    };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
-        ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
-        }
-        : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
-        }
-        : function(a) { return btou(_atob(a)) };
-    var decode = function(a){
-        return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
-        );
-    };
-    var noConflict = function() {
-        var Base64 = global.Base64;
-        global.Base64 = _Base64;
-        return Base64;
-    };
-    // export Base64
-    global.Base64 = {
-        VERSION: version,
-        atob: atob,
-        btoa: btoa,
-        fromBase64: decode,
-        toBase64: encode,
-        utob: utob,
-        encode: encode,
-        encodeURI: encodeURI,
-        btou: btou,
-        decode: decode,
-        noConflict: noConflict,
-        __buffer__: buffer
-    };
-    // if ES5 is available, make Base64.extendString() available
-    if (typeof Object.defineProperty === 'function') {
-        var noEnum = function(v){
-            return {value:v,enumerable:false,writable:true,configurable:true};
-        };
-        global.Base64.extendString = function () {
-            Object.defineProperty(
-                String.prototype, 'fromBase64', noEnum(function () {
-                    return decode(this)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64', noEnum(function (urisafe) {
-                    return encode(this, urisafe)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64URI', noEnum(function () {
-                    return encode(this, true)
-                }));
-        };
-    }
-    //
-    // export Base64 to the namespace
-    //
-    if (global['Meteor']) { // Meteor.js
-        Base64 = global.Base64;
-    }
-    // module.exports and AMD are mutually exclusive.
-    // module.exports has precedence.
-    if ( module.exports) {
-        module.exports.Base64 = global.Base64;
-    }
-    // that's it!
-    return {Base64: global.Base64}
-}));
-});
-var base64_1 = base64.Base64;
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var classCallCheck = _classCallCheck;
-
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
-
-// 系统顶部导航配置
-var navigationBarProfile = {
-  background: '#fff',
-  color: '#303133',
-  fontSize: 18,
-  fontWeight: 500,
-  leftButtons: [{
-    text: '',
-    color: 'rgba(102,187,106,1)',
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-};
-
-/**
- * 打开授信资料录入页面
- */
-
-function openPageCreditInformation() {
-  api.openTabLayout({
-    title: '授信资料录入',
-    name: 'html/credit_information/index',
-    url: 'widget://html/credit_information/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1. 打开担保业务申请表页面
- */
-
-function openGuaranteeApplicationIndex(_ref) {
-  var pageParam = _ref.pageParam;
-  api.openTabLayout({
-    title: '担保业务申请表',
-    name: 'html/guarantee_application_index/index',
-    url: 'widget://html/guarantee_application_index/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 2. 打开反担保人列表页面
- */
-
-/**
- * 3. 文件送达地址列表页面
- */
-
-/**
- * 4. 其他附件上传页面
- */
-
-function openAttachmentInfo(_ref2) {
-  var pageParam = _ref2.pageParam;
-  api.openTabLayout({
-    title: '附件上传',
-    name: 'html/attachment_info/index',
-    url: 'widget://html/attachment_info/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.1 打开房产信息录入页面
- */
-
-function openGuaranteeApplicationHouse(_ref3) {
-  var pageParam = _ref3.pageParam;
-  api.openTabLayout({
-    title: '房产信息',
-    name: 'html/guarantee_application_house/index',
-    url: 'widget://html/guarantee_application_house/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.2 打开车辆信息录入页面
- */
-
-function openGuaranteeApplicationCar(_ref4) {
-  var pageParam = _ref4.pageParam;
-  api.openTabLayout({
-    title: '车辆信息',
-    name: 'html/guarantee_application_car/index',
-    url: 'widget://html/guarantee_application_car/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.3 打开家庭成员信息录入页面
- */
-
-function openGuaranteeApplicationFamily(_ref5) {
-  var pageParam = _ref5.pageParam;
-  api.openTabLayout({
-    title: '家庭成员信息',
-    name: 'html/guarantee_application_family/index',
-    url: 'widget://html/guarantee_application_family/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-function closeCurrentWinAndRefresh(_ref6) {
-  var winName = _ref6.winName,
-      frameName = _ref6.frameName,
-      script = _ref6.script;
-  //  关闭当前win并刷新指定页面
-  api.execScript({
-    name: winName,
-    frameName: frameName,
-    script: script
-  });
-  setTimeout(function () {
-    api.closeWin();
-  }, 300);
-}
-
-var rmap = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-  openAttachmentInfo: openAttachmentInfo,
-  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
-});
-
-/**
- * Router class
- * @author liyang
- * @desc 路由类
- */
-
-var Router = function Router() {
-  classCallCheck(this, Router);
-
-  _extends_1(this, rmap);
-};
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
-
-var openPicker = function openPicker(params, options) {
-  var UIActionSelector = api.require('UIActionSelector');
-
-  UIActionSelector.open({
-    datas: params.data,
-    layout: {
-      row: options.row,
-      col: options.col,
-      height: 40,
-      size: 18,
-      sizeActive: 18,
-      rowSpacing: 5,
-      colSpacing: 10,
-      maskBg: 'rgba(0,0,0,0.2)',
-      bg: '#fff',
-      color: '#333',
-      colorActive: '#f00',
-      colorSelected: '#000'
-    },
-    animation: true,
-    cancel: {
-      text: '取消',
-      size: 15,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      // bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#ccc'
-    },
-    ok: {
-      text: '确定',
-      size: 15,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      // bgActive: '#ccc',
-      color: 'rgba(102,187,106,1)',
-      colorActive: '#ccc'
-    },
-    title: {
-      text: '请选择',
-      size: 15,
-      h: 50,
-      bg: '#fff',
-      color: '#888'
-    },
-    fixedOn: api.frameName
-  }, function (ret, err) {
-    if (ret.eventType === 'ok') {
-      params.success && params.success(ret.selectedInfo);
-    }
-  });
-  return UIActionSelector;
-};
-/**
- * @authro liyang
- * @desc 表单单选框picker
- * @params params: { data, success }
- */
-
-
-var setPicker = function setPicker(params) {
-  return openPicker(params, {
-    row: 5,
-    col: 1
-  });
-};
-/**
- * @authro liyang
- * @desc 城市选择框picker
- * @params params: { data, success }
- */
-
-var setCityPicker = function setCityPicker(params) {
-  return openPicker(params, {
-    row: 5,
-    col: 3
-  });
-};
-
-var showLoading = function showLoading() {
-  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
-  api.showProgress({
-    title: title,
-    text: '',
-    modal: true
-  });
-};
-var hideLoading = function hideLoading() {
-  api.hideProgress();
-};
-
-var toast = function toast(msg) {
-  api.toast({
-    msg: msg,
-    location: 'middle'
-  });
-};
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function setRefreshHeaderInfo(_ref) {
-  var success = _ref.success,
-      fail = _ref.fail,
-      _ref$options = _ref.options,
-      options = _ref$options === void 0 ? {} : _ref$options;
-  api.setRefreshHeaderInfo(_objectSpread({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, options), function (ret, error) {
-    if (error) {
-      fail && fail(error);
-    } else {
-      success && success(ret);
-    }
-  });
-}
-
-/**
- * UI class
- * @author liyang
- * @desc UI类
- */
-
-var UI = /*#__PURE__*/function () {
-  function UI() {
-    classCallCheck(this, UI);
-  }
-
-  createClass(UI, [{
-    key: "setPicker",
-    value: function setPicker$1(params) {
-      return setPicker(params);
-    }
-  }, {
-    key: "setCityPicker",
-    value: function setCityPicker$1(params) {
-      return setCityPicker(params);
-    }
-  }, {
-    key: "showLoading",
-    value: function showLoading$1(params) {
-      return showLoading(params);
-    }
-  }, {
-    key: "hideLoading",
-    value: function hideLoading$1(params) {
-      return hideLoading();
-    }
-  }, {
-    key: "toast",
-    value: function toast$1(params) {
-      return toast(params);
-    }
-  }, {
-    key: "setRefreshHeaderInfo",
-    value: function setRefreshHeaderInfo$1(params) {
-      return setRefreshHeaderInfo(params);
-    }
-  }]);
-
-  return UI;
-}();
-
-/**
- * File class
- * @author liyang
- * @desc File类
- */
-var File = /*#__PURE__*/function () {
-  function File() {
-    classCallCheck(this, File);
-  }
-
-  createClass(File, [{
-    key: "actionSheet",
-    value: function actionSheet(title, buttons, cb) {
-      api.actionSheet({
-        title: title,
-        cancelTitle: '取消',
-        buttons: buttons
-      }, function (ret, err) {
-        var index = ret.buttonIndex; // index 从1开始
-
-        if (index !== buttons.length + 1) {
-          cb(index - 1);
-        }
-      });
-    }
-  }, {
-    key: "getPicture",
-    value: function getPicture(sourceType, cb) {
-      // library         //图片库
-      // camera          //相机
-      // album           //相册
-      api.getPicture({
-        sourceType: sourceType,
-        encodingType: 'png',
-        mediaValue: 'pic',
-        destinationType: 'file',
-        allowEdit: false,
-        quality: 20,
-        targetWidth: 1000,
-        // targetHeight: 300,
-        saveToPhotoAlbum: false
-      }, cb);
-    }
-  }]);
-
-  return File;
-}();
-
-var codeMapFilter = function codeMapFilter(list) {
-  var codeMap = {};
-  list.filter(function (item, i) {
-    return !!item.valid;
-  }).forEach(function (el, k) {
-    codeMap[el.code] = el.name;
-  });
-  return codeMap;
-};
 
 var runtime_1 = createCommonjsModule(function (module) {
 /**
@@ -1496,186 +775,745 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-var BaiduSDK = /*#__PURE__*/function () {
-  function BaiduSDK() {
-    classCallCheck(this, BaiduSDK);
-
-    this.ajaxUrls = {
-      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
-      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
-      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
-      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
-    };
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
   }
 
-  createClass(BaiduSDK, [{
-    key: "getToken",
-    value: function getToken() {
-      return http.get(this.ajaxUrls.URL_TOKEN, null, {
-        headers: {}
-      });
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
+function openRegLogin() {
+  api.openTabLayout({
+    name: 'html/reglogin/index',
+    url: 'widget://html/reglogin/index.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  });
+} // 个人登录
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
-  }, {
-    key: "CarVerify",
-    value: function () {
-      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
-        var self, res;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                self = this;
-                _context.next = 3;
-                return this.getToken();
 
-              case 3:
-                res = _context.sent;
+    return target;
+  };
 
-                if (!(res.code === 200)) {
-                  _context.next = 6;
-                  break;
-                }
+  return _extends.apply(this, arguments);
+}
 
-                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                }));
+module.exports = _extends;
+});
 
-              case 6:
-                return _context.abrupt("return", Promise.reject(res));
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function CarVerify(_x) {
-        return _CarVerify.apply(this, arguments);
-      }
-
-      return CarVerify;
-    }()
-  }, {
-    key: "IdcardVerify",
-    value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
-        var res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context2.sent;
-
-                if (!(res.code === 200)) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function IdcardVerify(_x2) {
-        return _IdcardVerify.apply(this, arguments);
-      }
-
-      return IdcardVerify;
-    }()
-  }, {
-    key: "BankVerify",
-    value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
-        var res;
-        return regenerator.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context3.sent;
-
-                if (!(res.code === 200)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context3.abrupt("return", _context3.sent);
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function BankVerify(_x3) {
-        return _BankVerify.apply(this, arguments);
-      }
-
-      return BankVerify;
-    }()
-  }]);
-
-  return BaiduSDK;
-}();
-
-var OCR = {
-  Baidu: new BaiduSDK()
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
 };
 
 /**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
+ * 打开授信资料录入页面
  */
 
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
+function openPageCreditInformation() {
+  api.openTabLayout({
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1. 打开担保业务申请表页面
+ */
 
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-  this.OCR = OCR;
+function openGuaranteeApplicationIndex(_ref) {
+  var pageParam = _ref.pageParam;
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 2. 打开反担保人列表页面
+ */
+
+/**
+ * 3. 文件送达地址列表页面
+ */
+
+/**
+ * 4. 其他附件上传页面
+ */
+
+function openAttachmentInfo(_ref2) {
+  var pageParam = _ref2.pageParam;
+  api.openTabLayout({
+    title: '附件上传',
+    name: 'html/attachment_info/index',
+    url: 'widget://html/attachment_info/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.1 打开房产信息录入页面
+ */
+
+function openGuaranteeApplicationHouse(_ref3) {
+  var pageParam = _ref3.pageParam;
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.2 打开车辆信息录入页面
+ */
+
+function openGuaranteeApplicationCar(_ref4) {
+  var pageParam = _ref4.pageParam;
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.3 打开家庭成员信息录入页面
+ */
+
+function openGuaranteeApplicationFamily(_ref5) {
+  var pageParam = _ref5.pageParam;
+  api.openTabLayout({
+    title: '家庭成员信息',
+    name: 'html/guarantee_application_family/index',
+    url: 'widget://html/guarantee_application_family/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+function closeCurrentWinAndRefresh(_ref6) {
+  var winName = _ref6.winName,
+      frameName = _ref6.frameName,
+      script = _ref6.script;
+  //  关闭当前win并刷新指定页面
+  api.execScript({
+    name: winName,
+    frameName: frameName,
+    script: script
+  });
+  setTimeout(function () {
+    api.closeWin();
+  }, 300);
+}
+
+var rmap = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = function Router() {
+  classCallCheck(this, Router);
+
+  _extends_1(this, rmap);
 };
 
-var Utils$1 = new Utils();
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
+var openPicker = function openPicker(params, options) {
+  var UIActionSelector = api.require('UIActionSelector');
+
+  UIActionSelector.open({
+    datas: params.data,
+    layout: {
+      row: options.row,
+      col: options.col,
+      height: 40,
+      size: 18,
+      sizeActive: 18,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#fff',
+      color: '#333',
+      colorActive: '#f00',
+      colorSelected: '#000'
+    },
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#ccc'
+    },
+    ok: {
+      text: '确定',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
+    },
+    title: {
+      text: '请选择',
+      size: 15,
+      h: 50,
+      bg: '#fff',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      params.success && params.success(ret.selectedInfo);
+    }
+  });
+  return UIActionSelector;
+};
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
+
+var showLoading = function showLoading() {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  api.showProgress({
+    title: title,
+    text: '',
+    modal: true
+  });
+};
+var hideLoading = function hideLoading() {
+  api.hideProgress();
+};
+
+var toast = function toast(msg) {
+  api.toast({
+    msg: msg,
+    location: 'middle'
+  });
+};
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function setRefreshHeaderInfo(_ref) {
+  var success = _ref.success,
+      fail = _ref.fail,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options;
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      fail && fail(error);
+    } else {
+      success && success(ret);
+    }
+  });
+}
+
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    classCallCheck(this, UI);
+  }
+
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
+    }
+  }]);
+
+  return UI;
+}();
+
+/**
+ * File class
+ * @author liyang
+ * @desc File类
+ */
+var File = /*#__PURE__*/function () {
+  function File() {
+    classCallCheck(this, File);
+  }
+
+  createClass(File, [{
+    key: "actionSheet",
+    value: function actionSheet(title, buttons, cb) {
+      api.actionSheet({
+        title: title,
+        cancelTitle: '取消',
+        buttons: buttons
+      }, function (ret, err) {
+        var index = ret.buttonIndex; // index 从1开始
+
+        if (index !== buttons.length + 1) {
+          cb(index - 1);
+        }
+      });
+    }
+  }, {
+    key: "getPicture",
+    value: function getPicture(sourceType, cb) {
+      // library         //图片库
+      // camera          //相机
+      // album           //相册
+      api.getPicture({
+        sourceType: sourceType,
+        encodingType: 'png',
+        mediaValue: 'pic',
+        destinationType: 'file',
+        allowEdit: false,
+        quality: 20,
+        targetWidth: 1000,
+        // targetHeight: 300,
+        saveToPhotoAlbum: false
+      }, cb);
+    }
+  }]);
+
+  return File;
+}();
+
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
+
+var base64 = createCommonjsModule(function (module, exports) {
+(function (global, factory) {
+     module.exports = factory(global)
+        ;
+}((
+    typeof self !== 'undefined' ? self
+        : typeof window !== 'undefined' ? window
+        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
+: commonjsGlobal
+), function(global) {
+    // existing version for noConflict()
+    global = global || {};
+    var _Base64 = global.Base64;
+    var version = "2.5.2";
+    // if node.js and NOT React Native, we use Buffer
+    var buffer;
+    if ( module.exports) {
+        try {
+            buffer = eval("require('buffer').Buffer");
+        } catch (err) {
+            buffer = undefined;
+        }
+    }
+    // constants
+    var b64chars
+        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    var b64tab = function(bin) {
+        var t = {};
+        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
+        return t;
+    }(b64chars);
+    var fromCharCode = String.fromCharCode;
+    // encoder stuff
+    var cb_utob = function(c) {
+        if (c.length < 2) {
+            var cc = c.charCodeAt(0);
+            return cc < 0x80 ? c
+                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
+                                + fromCharCode(0x80 | (cc & 0x3f)))
+                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        } else {
+            var cc = 0x10000
+                + (c.charCodeAt(0) - 0xD800) * 0x400
+                + (c.charCodeAt(1) - 0xDC00);
+            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
+                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        }
+    };
+    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+    var utob = function(u) {
+        return u.replace(re_utob, cb_utob);
+    };
+    var cb_encode = function(ccc) {
+        var padlen = [0, 2, 1][ccc.length % 3],
+        ord = ccc.charCodeAt(0) << 16
+            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
+            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
+        chars = [
+            b64chars.charAt( ord >>> 18),
+            b64chars.charAt((ord >>> 12) & 63),
+            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
+            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
+        ];
+        return chars.join('');
+    };
+    var btoa = global.btoa ? function(b) {
+        return global.btoa(b);
+    } : function(b) {
+        return b.replace(/[\s\S]{1,3}/g, cb_encode);
+    };
+    var _encode = function(u) {
+        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+        return isUint8Array ? u.toString('base64')
+            : btoa(utob(String(u)));
+    };
+    var encode = function(u, urisafe) {
+        return !urisafe
+            ? _encode(u)
+            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
+                return m0 == '+' ? '-' : '_';
+            }).replace(/=/g, '');
+    };
+    var encodeURI = function(u) { return encode(u, true) };
+    // decoder stuff
+    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
+    var cb_btou = function(cccc) {
+        switch(cccc.length) {
+        case 4:
+            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
+                |    ((0x3f & cccc.charCodeAt(1)) << 12)
+                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
+                |     (0x3f & cccc.charCodeAt(3)),
+            offset = cp - 0x10000;
+            return (fromCharCode((offset  >>> 10) + 0xD800)
+                    + fromCharCode((offset & 0x3FF) + 0xDC00));
+        case 3:
+            return fromCharCode(
+                ((0x0f & cccc.charCodeAt(0)) << 12)
+                    | ((0x3f & cccc.charCodeAt(1)) << 6)
+                    |  (0x3f & cccc.charCodeAt(2))
+            );
+        default:
+            return  fromCharCode(
+                ((0x1f & cccc.charCodeAt(0)) << 6)
+                    |  (0x3f & cccc.charCodeAt(1))
+            );
+        }
+    };
+    var btou = function(b) {
+        return b.replace(re_btou, cb_btou);
+    };
+    var cb_decode = function(cccc) {
+        var len = cccc.length,
+        padlen = len % 4,
+        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
+            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
+            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
+            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
+        chars = [
+            fromCharCode( n >>> 16),
+            fromCharCode((n >>>  8) & 0xff),
+            fromCharCode( n         & 0xff)
+        ];
+        chars.length -= [0, 0, 2, 1][padlen];
+        return chars.join('');
+    };
+    var _atob = global.atob ? function(a) {
+        return global.atob(a);
+    } : function(a){
+        return a.replace(/\S{1,4}/g, cb_decode);
+    };
+    var atob = function(a) {
+        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
+    };
+    var _decode = buffer ?
+        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+        ? function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : buffer.from(a, 'base64')).toString();
+        }
+        : function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : new buffer(a, 'base64')).toString();
+        }
+        : function(a) { return btou(_atob(a)) };
+    var decode = function(a){
+        return _decode(
+            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+                .replace(/[^A-Za-z0-9\+\/]/g, '')
+        );
+    };
+    var noConflict = function() {
+        var Base64 = global.Base64;
+        global.Base64 = _Base64;
+        return Base64;
+    };
+    // export Base64
+    global.Base64 = {
+        VERSION: version,
+        atob: atob,
+        btoa: btoa,
+        fromBase64: decode,
+        toBase64: encode,
+        utob: utob,
+        encode: encode,
+        encodeURI: encodeURI,
+        btou: btou,
+        decode: decode,
+        noConflict: noConflict,
+        __buffer__: buffer
+    };
+    // if ES5 is available, make Base64.extendString() available
+    if (typeof Object.defineProperty === 'function') {
+        var noEnum = function(v){
+            return {value:v,enumerable:false,writable:true,configurable:true};
+        };
+        global.Base64.extendString = function () {
+            Object.defineProperty(
+                String.prototype, 'fromBase64', noEnum(function () {
+                    return decode(this)
+                }));
+            Object.defineProperty(
+                String.prototype, 'toBase64', noEnum(function (urisafe) {
+                    return encode(this, urisafe)
+                }));
+            Object.defineProperty(
+                String.prototype, 'toBase64URI', noEnum(function () {
+                    return encode(this, true)
+                }));
+        };
+    }
+    //
+    // export Base64 to the namespace
+    //
+    if (global['Meteor']) { // Meteor.js
+        Base64 = global.Base64;
+    }
+    // module.exports and AMD are mutually exclusive.
+    // module.exports has precedence.
+    if ( module.exports) {
+        module.exports.Base64 = global.Base64;
+    }
+    // that's it!
+    return {Base64: global.Base64}
+}));
+});
+var base64_1 = base64.Base64;
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1860,1034 +1698,935 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function setRefreshHeaderInfo$1(successCallback, errorCallback) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread$1({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, options), function (ret, error) {
-    if (error) {
-      errorCallback && errorCallback(error);
-    } else {
-      successCallback && successCallback(ret);
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
     }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
+var dev$1 = 'http://crptdev.liuheco.com';
+var baseUrl$1 =  dev$1 ;
+
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
+
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
   });
 }
 
-var numeral = createCommonjsModule(function (module) {
-/*! @preserve
- * numeral.js
- * version : 2.0.6
- * author : Adam Draper
- * license : MIT
- * http://adamwdraper.github.com/Numeral-js/
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
+
+/**
+ * @author Sunning
+ * 存放部分方法
+ */
+var filter = {
+  /**
+   * @author Sunning
+   * 数字格式化为千分位   1000 ==> 1,000
+   * @param {Object} s 要格式化的数字
+   * @param {Object} n 保留几位小数
+   */
+  formatNumber: function formatNumber(s, n) {
+    if (s === '-' || !s) {
+      return '-';
+    } else {
+      if (n === 0) {
+        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      } else {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
+        var positive = s.toString().split('-');
+        var l;
+        var r;
+
+        if (positive.length > 1) {
+          l = positive[1].split('.')[0].split('').reverse();
+          r = positive[1].split('.')[1];
+        } else {
+          l = s.split('.')[0].split('').reverse();
+          r = s.split('.')[1];
+        }
+
+        var t = '';
+
+        for (var i = 0; i < l.length; i++) {
+          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+        }
+
+        var result = t.split('').reverse().join('') + '.' + r;
+        if (positive.length > 1) result = '-' + result;
+        return result;
+      }
+    }
+  },
+
+  /**
+   * author: Sunning
+   * 将数字格式化为千分位
+   * @param {Object} value 需要转化的数字
+   */
+  toThousands: function toThousands(value) {
+    if (value === '' || value === undefined || value === null) {
+      return '';
+    }
+
+    value = String(value); // 强制转化为转化为字符串
+
+    var isDecimal = value.split('.');
+
+    if (isDecimal.length === 1) {
+      // 如果长度为1表示没有小数，否则表示有小数
+      return this.formatNumber(value, 0);
+    } else {
+      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
+    }
+  }
+};
+
+// 主题色
+var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
+
+var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
+
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: textColor,
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: themeMainColor,
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+}; // 绿色底导航
+
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: themeMainColor,
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+};
+
+/**
+ * themeMainColor 主题色
+ * textColor 导航文字黑色
+ * navigationBarWhite 浅色底导航
+ * navigationBarGreen 绿色底导航
  */
 
-(function (global, factory) {
-    if ( module.exports) {
-        module.exports = factory();
-    } else {
-        global.numeral = factory();
+var routerMap = {
+  yjd_select_contract: {
+    name: 'yjd_select_contract',
+    title: '选择代养合同',
+    url: 'widget://html/yjd_select_contract/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_confirm: {
+    name: 'yjd_apply_confirm',
+    title: '申请贷款',
+    url: 'widget://html/yjd_apply_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_hukouben_upload: {
+    name: 'yjd_hukouben_upload',
+    title: '上传户口本',
+    url: 'widget://html/yjd_hukouben_upload/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_status: {
+    name: 'yjd_apply_status',
+    title: '贷款申请',
+    url: 'widget://html/yjd_apply_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_result: {
+    name: 'yjd_apply_result',
+    title: '贷款申请',
+    url: 'widget://html/yjd_apply_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_loan_signing: {
+    name: 'yjd_loan_signing',
+    title: '贷款签约',
+    url: 'widget://html/yjd_loan_signing/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_signing_result: {
+    name: 'yjd_signing_result',
+    title: '签约结果',
+    url: 'widget://html/yjd_signing_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_account_open: {
+    name: 'yjd_account_open',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷产品详情
+  yjd_product_detail: {
+    name: 'yjd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/yjd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 贷款申请
+  loan_application: {
+    name: 'loan_application',
+    title: '待申请',
+    url: 'widget://html/loan_application/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款确认
+  loan_confirm: {
+    name: 'loan_confirm',
+    title: '贷款确认',
+    url: 'widget://html/loan_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 押金贷贷款详情
+  yjd_loan_details: {
+    name: 'yjd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款计划
+  repay_plan: {
+    name: 'repay_plan',
+    title: '还款计划',
+    url: 'widget://html/repay_plan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款记录
+  repay_record: {
+    name: 'repay_record',
+    title: '还款记录',
+    url: 'widget://html/repay_record/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
+    title: '代养合同',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+var routerHXDConfig = {
+  // 好销贷授信申请
+  hxd_apply: {
+    name: 'hxd_apply',
+    title: '产品介绍',
+    url: 'widget://html/hxd_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请补充企业信息
+  hxd_a_supply: {
+    name: 'hxd_a_supply',
+    title: '补充企业信息',
+    url: 'widget://html/hxd_a_supply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请成功/失败
+  hxd_a_success: {
+    name: 'hxd_a_success',
+    title: '产品开通',
+    url: 'widget://html/hxd_a_success/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 好销贷产品详情
+  hxd_product_detail: {
+    name: 'hxd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/hxd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷额度变化详情
+  hxd_quota: {
+    name: 'hxd_quota',
+    title: '额度变化详情',
+    url: 'widget://html/hxd_quota/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款申请
+  hxd_u_apply: {
+    name: 'hxd_u_apply',
+    title: '申请用款',
+    url: 'widget://html/hxd_u_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款确认
+  hxd_u_confirm: {
+    name: 'hxd_u_confirm',
+    title: '用款确认',
+    url: 'widget://html/hxd_u_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款校验
+  hxd_u_smscode: {
+    name: 'hxd_u_smscode',
+    title: '用款校验',
+    url: 'widget://html/hxd_u_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款结果
+  hxd_u_result: {
+    name: 'hxd_u_result',
+    title: '审核结果',
+    url: 'widget://html/hxd_u_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算
+  hxd_r_try: {
+    name: 'hxd_r_try',
+    title: '还款试算',
+    url: 'widget://html/hxd_r_try/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算详情页
+  hxd_r_try_detail: {
+    name: 'hxd_r_try_detail',
+    title: '还款试算详情',
+    url: 'widget://html/hxd_r_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_smscode: {
+    name: 'hxd_r_smscode',
+    title: '还款校验',
+    url: 'widget://html/hxd_r_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_result: {
+    name: 'hxd_r_result',
+    title: '还款结果',
+    url: 'widget://html/hxd_r_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户申请
+  hxd_jf_apply: {
+    name: 'hxd_jf_apply',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户成功页
+  hxd_jf_account: {
+    name: 'hxd_jf_account',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_account/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户企业补充信息
+  hxd_jf_enterprise: {
+    name: 'hxd_jf_enterprise',
+    title: '开通信息补充',
+    url: 'widget://html/hxd_jf_enterprise/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户结果
+  hxd_jf_result: {
+    name: 'hxd_jf_result',
+    title: '开户结果',
+    url: 'widget://html/hxd_jf_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户状态查看
+  hxd_jf_status: {
+    name: 'hxd_jf_status',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+var routerConfig = {
+  // 消息中心
+  msgcenter: {
+    name: 'html/msgcenter/win',
+    title: '消息中心',
+    url: 'widget://html/msgcenter/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的账单
+  billlist: {
+    name: 'html/billlist/win',
+    title: '我的账单',
+    url: 'widget://html/billlist/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的贷款
+  my_loan: {
+    name: 'html/my_loan/win',
+    title: '我的贷款',
+    url: 'widget://html/my_loan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: false,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的额度
+  myquota: {
+    name: 'html/myquota/win',
+    title: '我的额度',
+    url: 'widget://html/myquota/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 已开通的产品
+  myproduct: {
+    name: 'html/myproduct/win',
+    title: '我开通的产品',
+    url: 'widget://html/myproduct/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 联系我们
+  contactus: {
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 设置
+  settings: {
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的钱包详情
+  wallet: {
+    name: 'wallet',
+    title: '希望钱包',
+    url: 'widget://html/wallet/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 通用产品列表
+  com_product_list: {
+    name: 'com_product_list',
+    title: '产品列表',
+    url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 合同页
+  agreement: {
+    name: 'agreement',
+    title: '查看合同',
+    url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var Router$1 = /*#__PURE__*/function () {
+  function Router() {
+    classCallCheck(this, Router);
+  }
+
+  createClass(Router, [{
+    key: "openPage",
+    // 打开window级别页面
+    value: function openPage(_ref) {
+      var key = _ref.key,
+          params = _ref.params;
+      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
     }
-}(commonjsGlobal, function () {
-    /************************************
-        Variables
-    ************************************/
+  }]);
 
-    var numeral,
-        _,
-        VERSION = '2.0.6',
-        formats = {},
-        locales = {},
-        defaults = {
-            currentLocale: 'en',
-            zeroFormat: null,
-            nullFormat: null,
-            defaultFormat: '0,0',
-            scalePercentBy100: true
-        },
-        options = {
-            currentLocale: defaults.currentLocale,
-            zeroFormat: defaults.zeroFormat,
-            nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat,
-            scalePercentBy100: defaults.scalePercentBy100
-        };
+  return Router;
+}();
 
-
-    /************************************
-        Constructors
-    ************************************/
-
-    // Numeral prototype object
-    function Numeral(input, number) {
-        this._input = input;
-
-        this._value = number;
-    }
-
-    numeral = function(input) {
-        var value,
-            kind,
-            unformatFunction,
-            regexp;
-
-        if (numeral.isNumeral(input)) {
-            value = input.value();
-        } else if (input === 0 || typeof input === 'undefined') {
-            value = 0;
-        } else if (input === null || _.isNaN(input)) {
-            value = null;
-        } else if (typeof input === 'string') {
-            if (options.zeroFormat && input === options.zeroFormat) {
-                value = 0;
-            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
-                value = null;
-            } else {
-                for (kind in formats) {
-                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
-
-                    if (regexp && input.match(regexp)) {
-                        unformatFunction = formats[kind].unformat;
-
-                        break;
-                    }
-                }
-
-                unformatFunction = unformatFunction || numeral._.stringToNumber;
-
-                value = unformatFunction(input);
-            }
-        } else {
-            value = Number(input)|| null;
-        }
-
-        return new Numeral(input, value);
-    };
-
-    // version number
-    numeral.version = VERSION;
-
-    // compare numeral object
-    numeral.isNumeral = function(obj) {
-        return obj instanceof Numeral;
-    };
-
-    // helper functions
-    numeral._ = _ = {
-        // formats numbers separators, decimals places, signs, abbreviations
-        numberToFormat: function(value, format, roundingFunction) {
-            var locale = locales[numeral.options.currentLocale],
-                negP = false,
-                optDec = false,
-                leadingCount = 0,
-                abbr = '',
-                trillion = 1000000000000,
-                billion = 1000000000,
-                million = 1000000,
-                thousand = 1000,
-                decimal = '',
-                neg = false,
-                abbrForce, // force abbreviation
-                abs,
-                int,
-                precision,
-                signed,
-                thousands,
-                output;
-
-            // make sure we never format a null value
-            value = value || 0;
-
-            abs = Math.abs(value);
-
-            // see if we should use parentheses for negative number or if we should prefix with a sign
-            // if both are present we default to parentheses
-            if (numeral._.includes(format, '(')) {
-                negP = true;
-                format = format.replace(/[\(|\)]/g, '');
-            } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
-                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
-                format = format.replace(/[\+|\-]/g, '');
-            }
-
-            // see if abbreviation is wanted
-            if (numeral._.includes(format, 'a')) {
-                abbrForce = format.match(/a(k|m|b|t)?/);
-
-                abbrForce = abbrForce ? abbrForce[1] : false;
-
-                // check for space before abbreviation
-                if (numeral._.includes(format, ' a')) {
-                    abbr = ' ';
-                }
-
-                format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
-
-                if (abs >= trillion && !abbrForce || abbrForce === 't') {
-                    // trillion
-                    abbr += locale.abbreviations.trillion;
-                    value = value / trillion;
-                } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
-                    // billion
-                    abbr += locale.abbreviations.billion;
-                    value = value / billion;
-                } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
-                    // million
-                    abbr += locale.abbreviations.million;
-                    value = value / million;
-                } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
-                    // thousand
-                    abbr += locale.abbreviations.thousand;
-                    value = value / thousand;
-                }
-            }
-
-            // check for optional decimals
-            if (numeral._.includes(format, '[.]')) {
-                optDec = true;
-                format = format.replace('[.]', '.');
-            }
-
-            // break number and format
-            int = value.toString().split('.')[0];
-            precision = format.split('.')[1];
-            thousands = format.indexOf(',');
-            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
-
-            if (precision) {
-                if (numeral._.includes(precision, '[')) {
-                    precision = precision.replace(']', '');
-                    precision = precision.split('[');
-                    decimal = numeral._.toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
-                } else {
-                    decimal = numeral._.toFixed(value, precision.length, roundingFunction);
-                }
-
-                int = decimal.split('.')[0];
-
-                if (numeral._.includes(decimal, '.')) {
-                    decimal = locale.delimiters.decimal + decimal.split('.')[1];
-                } else {
-                    decimal = '';
-                }
-
-                if (optDec && Number(decimal.slice(1)) === 0) {
-                    decimal = '';
-                }
-            } else {
-                int = numeral._.toFixed(value, 0, roundingFunction);
-            }
-
-            // check abbreviation again after rounding
-            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
-                int = String(Number(int) / 1000);
-
-                switch (abbr) {
-                    case locale.abbreviations.thousand:
-                        abbr = locale.abbreviations.million;
-                        break;
-                    case locale.abbreviations.million:
-                        abbr = locale.abbreviations.billion;
-                        break;
-                    case locale.abbreviations.billion:
-                        abbr = locale.abbreviations.trillion;
-                        break;
-                }
-            }
-
-
-            // format number
-            if (numeral._.includes(int, '-')) {
-                int = int.slice(1);
-                neg = true;
-            }
-
-            if (int.length < leadingCount) {
-                for (var i = leadingCount - int.length; i > 0; i--) {
-                    int = '0' + int;
-                }
-            }
-
-            if (thousands > -1) {
-                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
-            }
-
-            if (format.indexOf('.') === 0) {
-                int = '';
-            }
-
-            output = int + decimal + (abbr ? abbr : '');
-
-            if (negP) {
-                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
-            } else {
-                if (signed >= 0) {
-                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
-                } else if (neg) {
-                    output = '-' + output;
-                }
-            }
-
-            return output;
-        },
-        // unformats numbers separators, decimals places, signs, abbreviations
-        stringToNumber: function(string) {
-            var locale = locales[options.currentLocale],
-                stringOriginal = string,
-                abbreviations = {
-                    thousand: 3,
-                    million: 6,
-                    billion: 9,
-                    trillion: 12
-                },
-                abbreviation,
-                value,
-                regexp;
-
-            if (options.zeroFormat && string === options.zeroFormat) {
-                value = 0;
-            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
-                value = null;
-            } else {
-                value = 1;
-
-                if (locale.delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
-                }
-
-                for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
-
-                    if (stringOriginal.match(regexp)) {
-                        value *= Math.pow(10, abbreviations[abbreviation]);
-                        break;
-                    }
-                }
-
-                // check for negative number
-                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
-
-                // remove non numbers
-                string = string.replace(/[^0-9\.]+/g, '');
-
-                value *= Number(string);
-            }
-
-            return value;
-        },
-        isNaN: function(value) {
-            return typeof value === 'number' && isNaN(value);
-        },
-        includes: function(string, search) {
-            return string.indexOf(search) !== -1;
-        },
-        insert: function(string, subString, start) {
-            return string.slice(0, start) + subString + string.slice(start);
-        },
-        reduce: function(array, callback /*, initialValue*/) {
-            if (this === null) {
-                throw new TypeError('Array.prototype.reduce called on null or undefined');
-            }
-
-            if (typeof callback !== 'function') {
-                throw new TypeError(callback + ' is not a function');
-            }
-
-            var t = Object(array),
-                len = t.length >>> 0,
-                k = 0,
-                value;
-
-            if (arguments.length === 3) {
-                value = arguments[2];
-            } else {
-                while (k < len && !(k in t)) {
-                    k++;
-                }
-
-                if (k >= len) {
-                    throw new TypeError('Reduce of empty array with no initial value');
-                }
-
-                value = t[k++];
-            }
-            for (; k < len; k++) {
-                if (k in t) {
-                    value = callback(value, t[k], k, t);
-                }
-            }
-            return value;
-        },
-        /**
-         * Computes the multiplier necessary to make x >= 1,
-         * effectively eliminating miscalculations caused by
-         * finite precision.
-         */
-        multiplier: function (x) {
-            var parts = x.toString().split('.');
-
-            return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
-        },
-        /**
-         * Given a variable number of arguments, returns the maximum
-         * multiplier that must be used to normalize an operation involving
-         * all of them.
-         */
-        correctionFactor: function () {
-            var args = Array.prototype.slice.call(arguments);
-
-            return args.reduce(function(accum, next) {
-                var mn = _.multiplier(next);
-                return accum > mn ? accum : mn;
-            }, 1);
-        },
-        /**
-         * Implementation of toFixed() that treats floats more like decimals
-         *
-         * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
-         * problems for accounting- and finance-related software.
-         */
-        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
-            var splitValue = value.toString().split('.'),
-                minDecimals = maxDecimals - (optionals || 0),
-                boundedPrecision,
-                optionalsRegExp,
-                power,
-                output;
-
-            // Use the smallest precision value possible to avoid errors from floating point representation
-            if (splitValue.length === 2) {
-              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
-            } else {
-              boundedPrecision = minDecimals;
-            }
-
-            power = Math.pow(10, boundedPrecision);
-
-            // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
-
-            if (optionals > maxDecimals - boundedPrecision) {
-                optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
-                output = output.replace(optionalsRegExp, '');
-            }
-
-            return output;
-        }
-    };
-
-    // avaliable options
-    numeral.options = options;
-
-    // avaliable formats
-    numeral.formats = formats;
-
-    // avaliable formats
-    numeral.locales = locales;
-
-    // This function sets the current locale.  If
-    // no arguments are passed in, it will simply return the current global
-    // locale key.
-    numeral.locale = function(key) {
-        if (key) {
-            options.currentLocale = key.toLowerCase();
-        }
-
-        return options.currentLocale;
-    };
-
-    // This function provides access to the loaded locale data.  If
-    // no arguments are passed in, it will simply return the current
-    // global locale object.
-    numeral.localeData = function(key) {
-        if (!key) {
-            return locales[options.currentLocale];
-        }
-
-        key = key.toLowerCase();
-
-        if (!locales[key]) {
-            throw new Error('Unknown locale : ' + key);
-        }
-
-        return locales[key];
-    };
-
-    numeral.reset = function() {
-        for (var property in defaults) {
-            options[property] = defaults[property];
-        }
-    };
-
-    numeral.zeroFormat = function(format) {
-        options.zeroFormat = typeof(format) === 'string' ? format : null;
-    };
-
-    numeral.nullFormat = function (format) {
-        options.nullFormat = typeof(format) === 'string' ? format : null;
-    };
-
-    numeral.defaultFormat = function(format) {
-        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
-    };
-
-    numeral.register = function(type, name, format) {
-        name = name.toLowerCase();
-
-        if (this[type + 's'][name]) {
-            throw new TypeError(name + ' ' + type + ' already registered.');
-        }
-
-        this[type + 's'][name] = format;
-
-        return format;
-    };
-
-
-    numeral.validate = function(val, culture) {
-        var _decimalSep,
-            _thousandSep,
-            _currSymbol,
-            _valArray,
-            _abbrObj,
-            _thousandRegEx,
-            localeData,
-            temp;
-
-        //coerce val to string
-        if (typeof val !== 'string') {
-            val += '';
-
-            if (console.warn) {
-                console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
-            }
-        }
-
-        //trim whitespaces from either sides
-        val = val.trim();
-
-        //if val is just digits return true
-        if (!!val.match(/^\d+$/)) {
-            return true;
-        }
-
-        //if val is empty return false
-        if (val === '') {
-            return false;
-        }
-
-        //get the decimal and thousands separator from numeral.localeData
-        try {
-            //check if the culture is understood by numeral. if not, default it to current locale
-            localeData = numeral.localeData(culture);
-        } catch (e) {
-            localeData = numeral.localeData(numeral.locale());
-        }
-
-        //setup the delimiters and currency symbol based on culture/locale
-        _currSymbol = localeData.currency.symbol;
-        _abbrObj = localeData.abbreviations;
-        _decimalSep = localeData.delimiters.decimal;
-        if (localeData.delimiters.thousands === '.') {
-            _thousandSep = '\\.';
-        } else {
-            _thousandSep = localeData.delimiters.thousands;
-        }
-
-        // validating currency symbol
-        temp = val.match(/^[^\d]+/);
-        if (temp !== null) {
-            val = val.substr(1);
-            if (temp[0] !== _currSymbol) {
-                return false;
-            }
-        }
-
-        //validating abbreviation symbol
-        temp = val.match(/[^\d]+$/);
-        if (temp !== null) {
-            val = val.slice(0, -1);
-            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
-                return false;
-            }
-        }
-
-        _thousandRegEx = new RegExp(_thousandSep + '{2}');
-
-        if (!val.match(/[^\d.,]/g)) {
-            _valArray = val.split(_decimalSep);
-            if (_valArray.length > 2) {
-                return false;
-            } else {
-                if (_valArray.length < 2) {
-                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
-                } else {
-                    if (_valArray[0].length === 1) {
-                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
-                    } else {
-                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
-                    }
-                }
-            }
-        }
-
-        return false;
-    };
-
-
-    /************************************
-        Numeral Prototype
-    ************************************/
-
-    numeral.fn = Numeral.prototype = {
-        clone: function() {
-            return numeral(this);
-        },
-        format: function(inputString, roundingFunction) {
-            var value = this._value,
-                format = inputString || options.defaultFormat,
-                kind,
-                output,
-                formatFunction;
-
-            // make sure we have a roundingFunction
-            roundingFunction = roundingFunction || Math.round;
-
-            // format based on value
-            if (value === 0 && options.zeroFormat !== null) {
-                output = options.zeroFormat;
-            } else if (value === null && options.nullFormat !== null) {
-                output = options.nullFormat;
-            } else {
-                for (kind in formats) {
-                    if (format.match(formats[kind].regexps.format)) {
-                        formatFunction = formats[kind].format;
-
-                        break;
-                    }
-                }
-
-                formatFunction = formatFunction || numeral._.numberToFormat;
-
-                output = formatFunction(value, format, roundingFunction);
-            }
-
-            return output;
-        },
-        value: function() {
-            return this._value;
-        },
-        input: function() {
-            return this._input;
-        },
-        set: function(value) {
-            this._value = Number(value);
-
-            return this;
-        },
-        add: function(value) {
-            var corrFactor = _.correctionFactor.call(null, this._value, value);
-
-            function cback(accum, curr, currI, O) {
-                return accum + Math.round(corrFactor * curr);
-            }
-
-            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
-
-            return this;
-        },
-        subtract: function(value) {
-            var corrFactor = _.correctionFactor.call(null, this._value, value);
-
-            function cback(accum, curr, currI, O) {
-                return accum - Math.round(corrFactor * curr);
-            }
-
-            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
-
-            return this;
-        },
-        multiply: function(value) {
-            function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
-            }
-
-            this._value = _.reduce([this._value, value], cback, 1);
-
-            return this;
-        },
-        divide: function(value) {
-            function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
-            }
-
-            this._value = _.reduce([this._value, value], cback);
-
-            return this;
-        },
-        difference: function(value) {
-            return Math.abs(numeral(this._value).subtract(value).value());
-        }
-    };
-
-    /************************************
-        Default Locale && Format
-    ************************************/
-
-    numeral.register('locale', 'en', {
-        delimiters: {
-            thousands: ',',
-            decimal: '.'
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
-        },
-        ordinal: function(number) {
-            var b = number % 10;
-            return (~~(number % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
-        },
-        currency: {
-            symbol: '$'
-        }
-    });
-
-    
-
-(function() {
-        numeral.register('format', 'bps', {
-            regexps: {
-                format: /(BPS)/,
-                unformat: /(BPS)/
-            },
-            format: function(value, format, roundingFunction) {
-                var space = numeral._.includes(format, ' BPS') ? ' ' : '',
-                    output;
-
-                value = value * 10000;
-
-                // check for space before BPS
-                format = format.replace(/\s?BPS/, '');
-
-                output = numeral._.numberToFormat(value, format, roundingFunction);
-
-                if (numeral._.includes(output, ')')) {
-                    output = output.split('');
-
-                    output.splice(-1, 0, space + 'BPS');
-
-                    output = output.join('');
-                } else {
-                    output = output + space + 'BPS';
-                }
-
-                return output;
-            },
-            unformat: function(string) {
-                return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
-            }
-        });
-})();
-
-
-(function() {
-        var decimal = {
-            base: 1000,
-            suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-        },
-        binary = {
-            base: 1024,
-            suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
-        };
-
-    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
-            return decimal.suffixes.indexOf(item) < 0;
-        }));
-        var unformatRegex = allSuffixes.join('|');
-        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
-        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
-
-    numeral.register('format', 'bytes', {
-        regexps: {
-            format: /([0\s]i?b)/,
-            unformat: new RegExp(unformatRegex)
-        },
-        format: function(value, format, roundingFunction) {
-            var output,
-                bytes = numeral._.includes(format, 'ib') ? binary : decimal,
-                suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
-                power,
-                min,
-                max;
-
-            // check for space before
-            format = format.replace(/\s?i?b/, '');
-
-            for (power = 0; power <= bytes.suffixes.length; power++) {
-                min = Math.pow(bytes.base, power);
-                max = Math.pow(bytes.base, power + 1);
-
-                if (value === null || value === 0 || value >= min && value < max) {
-                    suffix += bytes.suffixes[power];
-
-                    if (min > 0) {
-                        value = value / min;
-                    }
-
-                    break;
-                }
-            }
-
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            return output + suffix;
-        },
-        unformat: function(string) {
-            var value = numeral._.stringToNumber(string),
-                power,
-                bytesMultiplier;
-
-            if (value) {
-                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
-                    if (numeral._.includes(string, decimal.suffixes[power])) {
-                        bytesMultiplier = Math.pow(decimal.base, power);
-
-                        break;
-                    }
-
-                    if (numeral._.includes(string, binary.suffixes[power])) {
-                        bytesMultiplier = Math.pow(binary.base, power);
-
-                        break;
-                    }
-                }
-
-                value *= (bytesMultiplier || 1);
-            }
-
-            return value;
-        }
-    });
-})();
-
-
-(function() {
-        numeral.register('format', 'currency', {
-        regexps: {
-            format: /(\$)/
-        },
-        format: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
-                symbols = {
-                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
-                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
-                },
-                output,
-                symbol,
-                i;
-
-            // strip format of spaces and $
-            format = format.replace(/\s?\$\s?/, '');
-
-            // format the number
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            // update the before and after based on value
-            if (value >= 0) {
-                symbols.before = symbols.before.replace(/[\-\(]/, '');
-                symbols.after = symbols.after.replace(/[\-\)]/, '');
-            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
-                symbols.before = '-' + symbols.before;
-            }
-
-            // loop through each before symbol
-            for (i = 0; i < symbols.before.length; i++) {
-                symbol = symbols.before[i];
-
-                switch (symbol) {
-                    case '$':
-                        output = numeral._.insert(output, locale.currency.symbol, i);
-                        break;
-                    case ' ':
-                        output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
-                        break;
-                }
-            }
-
-            // loop through each after symbol
-            for (i = symbols.after.length - 1; i >= 0; i--) {
-                symbol = symbols.after[i];
-
-                switch (symbol) {
-                    case '$':
-                        output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
-                        break;
-                    case ' ':
-                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
-                        break;
-                }
-            }
-
-
-            return output;
-        }
-    });
-})();
-
-
-(function() {
-        numeral.register('format', 'exponential', {
-        regexps: {
-            format: /(e\+|e-)/,
-            unformat: /(e\+|e-)/
-        },
-        format: function(value, format, roundingFunction) {
-            var output,
-                exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
-                parts = exponential.split('e');
-
-            format = format.replace(/e[\+|\-]{1}0/, '');
-
-            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
-
-            return output + 'e' + parts[1];
-        },
-        unformat: function(string) {
-            var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
-                value = Number(parts[0]),
-                power = Number(parts[1]);
-
-            power = numeral._.includes(string, 'e-') ? power *= -1 : power;
-
-            function cback(accum, curr, currI, O) {
-                var corrFactor = numeral._.correctionFactor(accum, curr),
-                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
-                return num;
-            }
-
-            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
-        }
-    });
-})();
-
-
-(function() {
-        numeral.register('format', 'ordinal', {
-        regexps: {
-            format: /(o)/
-        },
-        format: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
-                output,
-                ordinal = numeral._.includes(format, ' o') ? ' ' : '';
-
-            // check for space before
-            format = format.replace(/\s?o/, '');
-
-            ordinal += locale.ordinal(value);
-
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            return output + ordinal;
-        }
-    });
-})();
-
-
-(function() {
-        numeral.register('format', 'percentage', {
-        regexps: {
-            format: /(%)/,
-            unformat: /(%)/
-        },
-        format: function(value, format, roundingFunction) {
-            var space = numeral._.includes(format, ' %') ? ' ' : '',
-                output;
-
-            if (numeral.options.scalePercentBy100) {
-                value = value * 100;
-            }
-
-            // check for space before %
-            format = format.replace(/\s?\%/, '');
-
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            if (numeral._.includes(output, ')')) {
-                output = output.split('');
-
-                output.splice(-1, 0, space + '%');
-
-                output = output.join('');
-            } else {
-                output = output + space + '%';
-            }
-
-            return output;
-        },
-        unformat: function(string) {
-            var number = numeral._.stringToNumber(string);
-            if (numeral.options.scalePercentBy100) {
-                return number * 0.01;
-            }
-            return number;
-        }
-    });
-})();
-
-
-(function() {
-        numeral.register('format', 'time', {
-        regexps: {
-            format: /(:)/,
-            unformat: /(:)/
-        },
-        format: function(value, format, roundingFunction) {
-            var hours = Math.floor(value / 60 / 60),
-                minutes = Math.floor((value - (hours * 60 * 60)) / 60),
-                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
-
-            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-        },
-        unformat: function(string) {
-            var timeArray = string.split(':'),
-                seconds = 0;
-
-            // turn hours and minutes into seconds and add them all up
-            if (timeArray.length === 3) {
-                // hours
-                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
-                // minutes
-                seconds = seconds + (Number(timeArray[1]) * 60);
-                // seconds
-                seconds = seconds + Number(timeArray[2]);
-            } else if (timeArray.length === 2) {
-                // minutes
-                seconds = seconds + (Number(timeArray[0]) * 60);
-                // seconds
-                seconds = seconds + Number(timeArray[1]);
-            }
-            return Number(seconds);
-        }
-    });
-})();
-
-return numeral;
-}));
-});
+var Router$2 = new Router$1();
 
 apiready = function apiready() {
   api.addEventListener({
@@ -2897,83 +2636,145 @@ apiready = function apiready() {
       api.closeWin();
     }
   });
-  var loading = false;
+  var page = new Vue({
+    el: '#app',
+    data: {
+      dataArr: [],
+      statusObj: {
+        1: '正常',
+        2: '未按期还款',
+        3: '今日还款'
+      },
+      filter: filter
+    },
+    mounted: function mounted() {
+      var _this = this;
 
-  function getPageData(cb) {
-    if (loading) {
-      return;
-    }
+      return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.getData();
 
-    loading = true;
-    http.post("/crpt-credit/credit/repay/mybill/billlist").then(function (res) {
-      loading = false;
-      api.refreshHeaderLoadDone();
+                Utils$1.UI.setRefreshHeaderInfo({
+                  success: function success() {
+                    _this.getData();
 
-      if (res && res.data.list.length > 0) {
-        cb(res.data.list);
-      } else {
-        api.toast({
-          msg: '无数据'
+                    setTimeout(function () {
+                      api.refreshHeaderLoadDone();
+                    }, 0);
+                  },
+                  fail: function fail() {
+                    api.refreshHeaderLoadDone();
+                  }
+                }); // this.creditStatusObj = await filterDict('creditStatus')
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    methods: {
+      getData: function getData() {
+        var _this2 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var res;
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _this2.dataArr = [];
+                  Utils$1.UI.showLoading('加载中');
+                  _context2.prev = 2;
+                  _context2.next = 5;
+                  return http$1.post('/crpt-credit/credit/repay/mybill/billlist');
+
+                case 5:
+                  res = _context2.sent;
+
+                  _this2["package"](res.data.list);
+
+                  Utils$1.UI.hideLoading();
+                  _context2.next = 13;
+                  break;
+
+                case 10:
+                  _context2.prev = 10;
+                  _context2.t0 = _context2["catch"](2);
+                  Utils$1.UI.hideLoading();
+
+                case 13:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[2, 10]]);
+        }))();
+      },
+
+      /**
+       * @author Sunning
+       * 按照年份组装数据
+       */
+      "package": function _package(data) {
+        var map = {};
+        data.forEach(function (item) {
+          var y = new Date(item.billDate).getFullYear();
+
+          if (!map[y]) {
+            map[y] = [];
+          }
+
+          map[y].push(item);
+        });
+
+        for (var k in map) {
+          this.dataArr.push({
+            year: k,
+            show: true,
+            children: map[k]
+          });
+        }
+      },
+      packBill: function packBill(billDate) {
+        // 组装账单title
+        if (billDate) {
+          var a = billDate.split('-');
+          return "".concat(a[1] > 9 ? a[1] : a[1].split('')[1], "\u6708").concat(a[2], "\u65E5\u8D26\u5355");
+        } else {
+          return '';
+        }
+      },
+      collapse: function collapse(index) {
+        if (this.dataArr[index].show) {
+          // 如果为展开
+          this.dataArr[index].show = false;
+        } else {
+          this.dataArr[index].show = true;
+        }
+      },
+      showList: function showList(isShow) {
+        if (isShow) {
+          return 'child show';
+        } else {
+          return 'child hide';
+        }
+      },
+      changePage: function changePage(list) {
+        Router$2.openPage({
+          key: 'billdetails',
+          params: {
+            pageParam: {
+              list: list
+            }
+          }
         });
       }
-    })["catch"](function (error) {
-      loading = false;
-      api.refreshHeaderLoadDone();
-      api.toast({
-        msg: error.msg || '数据加载失败'
-      });
-    });
-  }
-
-  function appendList(data) {
-    // 1、正常（页面不做展示）
-    // 2、未按期还款
-    // 3、今日还款
-    data.forEach(function (item) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.orderNo || '', "\"\n          data-billdate=\"").concat(item.billDate || '', "\"\n          data-sumrepaytotalamount=\"").concat(item.sumRepayTotalAmount || 0, "\"\n          data-sumrepayprincipalamount=\"").concat(item.sumRepayPrincipalAmount || 0, "\"\n          data-sumserviceFee=\"").concat(item.sumServiceFee || 0, "\"\n          data-sumrepaypenaltyamount=\"").concat(item.sumRepayPenaltyAmount || 0, "\"\n          data-sumrepayinterestamount=\"").concat(item.sumRepayInterestAmount || 0, "\"\n        >\n          <div class=\"t\">\n            <div class=\"tit\">").concat(item.billDate, " \u8D26\u5355</div>\n            ").concat(item.status === 2 ? '<div class="status warning"> <i></i> 未按期还款</div>' : item.status === 3 ? '<div class="status normal">今日还款</div>' : '', "\n            <div class=\"product\">").concat(item.productName, "</div>\n          </div>\n          <div class=\"b\">\n            <div class=\"text\">\n              <strong>\u5E94\u8FD8 ").concat(numeral(item.sumRepayTotalAmount).format('0,0.00'), "\u5143</strong>\n              <p>\n                \u672C\u91D1").concat(numeral(item.sumRepayPrincipalAmount).format('0,0.00'), " + \u8D39\u7528").concat(numeral(item.sumServiceFee).format('0,0.00'), " + \u903E\u671F\u7F5A\u606F").concat(numeral(item.sumRepayPenaltyAmount).format('0,0.00'), "\n              </p>\n            </div>\n            <div class=\"icon\">\n                <i class=\"aui-iconfont aui-icon-right\"></i>\n            </div>\n          </div>\n        </li>\n      "));
-    });
-  }
-
-  function refresh() {
-    getPageData(function (data) {
-      $api.byId('list').innerHTML = '';
-      appendList(data);
-    });
-  }
-
-  setRefreshHeaderInfo$1(function (ret, err) {
-    refresh();
+    }
   });
-  api.refreshHeaderLoading();
-
-  document.querySelector('#list').onclick = function (event) {
-    var li = $api.closest(event.target, 'li');
-
-    if (!li) {
-      return;
-    }
-
-    var id = li.dataset.id;
-    var billDate = li.dataset.billdate;
-    var sumRepayTotalAmount = li.dataset.sumrepaytotalamount;
-    var sumRepayPrincipalAmount = li.dataset.sumrepayprincipalamount;
-    var sumServiceFee = li.dataset.sumserviceFee;
-    var sumRepayPenaltyAmount = li.dataset.sumrepaypenaltyamount;
-    var sumRepayInterestAmount = li.dataset.sumrepayinterestamount;
-
-    if (id) {
-      openBillDetails(id, {
-        billDate: billDate,
-        sumRepayTotalAmount: sumRepayTotalAmount,
-        sumRepayPrincipalAmount: sumRepayPrincipalAmount,
-        sumServiceFee: sumServiceFee,
-        sumRepayPenaltyAmount: sumRepayPenaltyAmount,
-        sumRepayInterestAmount: sumRepayInterestAmount
-      });
-    } else {
-      api.toast({
-        msg: 'id 不存在'
-      });
-    }
-  };
 };

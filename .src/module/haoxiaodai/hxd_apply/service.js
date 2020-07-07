@@ -5,7 +5,9 @@ const service = {
     return http.get(`/crpt-credit/credit/jf/product/detail`, { values: params })
   },
   postSignJF: (params) => {
-    return http.post(`/crpt-credit/credit/jf/apply/sign`, { body: params })
+    return http.post(`/crpt-credit/credit/jf/apply/sign?productId=${params.productId}`, null, {
+      timeout: 10
+    })
   }
 }
 export default service

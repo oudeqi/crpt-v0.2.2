@@ -393,4 +393,10 @@ html, body {
 .bottom-box {
   padding: 12px 0 38px 0;
   background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }

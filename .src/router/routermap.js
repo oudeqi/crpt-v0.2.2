@@ -22,6 +22,16 @@ const routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
     navigationBar: navigationBarWhite
   },
   // 我的贷款
@@ -96,6 +106,15 @@ const routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
-  }
+  },
+  // 合同页
+  agreement: {
+    name: 'agreement',
+    title: '查看合同',
+    url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
 }
 export default routerConfig
