@@ -49,7 +49,7 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
 
-    // Router.openPage({ key: 'yjd_contract', params: {pageParam: { id: 12 }}})
+    // Router.openPage({ key: 'billlist'})
     // return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {

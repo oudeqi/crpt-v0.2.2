@@ -22,6 +22,16 @@ const routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
     navigationBar: navigationBarWhite
   },
   // 我的贷款

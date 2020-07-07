@@ -475,34 +475,34 @@ function openMsgDetails () {
 }
 
 // 账单详情
-function openBillDetails (id, {
-  billDate,
-  sumRepayTotalAmount,
-  sumRepayPrincipalAmount,
-  sumServiceFee,
-  sumRepayPenaltyAmount,
-  sumRepayInterestAmount,
-} = {}) {
-  api.openTabLayout({
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: {
-      id,
-      billDate,
-      sumRepayTotalAmount,
-      sumRepayPrincipalAmount,
-      sumServiceFee,
-      sumRepayPenaltyAmount,
-      sumRepayInterestAmount,
-    },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
+// function openBillDetails (id, {
+//   billDate,
+//   sumRepayTotalAmount,
+//   sumRepayPrincipalAmount,
+//   sumServiceFee,
+//   sumRepayPenaltyAmount,
+//   sumRepayInterestAmount,
+// } = {}) {
+//   api.openTabLayout({
+//     name: 'html/billdetails/win',
+//     title: '账单详情',
+//     url: 'widget://html/billdetails/win.html',
+//     bgColor: '#fff',
+//     reload: true,
+//     pageParam: {
+//       id,
+//       billDate,
+//       sumRepayTotalAmount,
+//       sumRepayPrincipalAmount,
+//       sumServiceFee,
+//       sumRepayPenaltyAmount,
+//       sumRepayInterestAmount,
+//     },
+//     bounces: true,
+//     slidBackEnabled: true,
+//     navigationBar: navigationBarGreen
+//   })
+// }
 
 // 我的贷款
 function openMyLoan () {
@@ -1018,7 +1018,7 @@ export {
   openAuthResult,
   openMsgList,
   openMsgDetails,
-  openBillDetails,
+  // openBillDetails,
   openMyLoan,
   openChangePwd,
   openContactUs,

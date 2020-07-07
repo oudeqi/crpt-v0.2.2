@@ -395,6 +395,16 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
     navigationBar: navigationBarWhite
   },
   // 我的贷款
@@ -475,7 +485,7 @@ var routerConfig = {
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+var profile = _objectSpread(_objectSpread(_objectSpread({}, routerHXDConfig), routerMap), routerConfig);
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -492,7 +502,7 @@ var Router = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$1({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$1(_objectSpread$1({}, profile[key]), params));
     }
   }]);
 

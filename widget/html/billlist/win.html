@@ -10,19 +10,50 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
-  <ul id="list">
-
-    
-
-
-  </ul>
+  <div id="app">
+    <div class="box">
+      <ul>
+        <li v-for="(item, index) in dataArr" ref="menuItem">
+          <a href="#" @click="collapse(index)">
+            <i class="icon collapse-down" v-if="item.show"></i>
+            <i class="icon collapse-up" v-else></i>
+            <span>{{item.year}}年</span>
+          </a>
+          <div :class="showList(item.show)">
+            <ul>
+              <li tapmode v-for="list in item.children" @click="changePage(list)">
+                <div class="t">
+                  <div class="tit">{{packBill(list.billDate)}}</div>
+                  <div class="status" v-if="list.status === 1">{{statusObj[list.status]}}</div>
+                  <div class="status warning" v-if="list.status === 2">
+                    <i></i>{{statusObj[list.status]}}
+                  </div>
+                  <div class="status normal" v-if="list.status === 3">
+                    <i></i>{{statusObj[list.status]}}
+                  </div>
+                  <div class="product">{{list.productName}}</div>
+                </div>
+                <div class="b">
+                  <div class="text">
+                    <strong>应还{{filter.toThousands(list.sumRepayTotalAmount)}}元</strong>
+                    <p v-if="list.status === 1">本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 费用{{filter.toThousands(list.sumServiceFee)}}</p>
+                    <p v-else>本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 费用{{filter.toThousands(list.sumServiceFee)}} + 逾期罚息{{filter.toThousands(list.sumRepayPenaltyAmount)}}</p>
+                  </div>
+                  <div class="icon">
+                    <i class="aui-iconfont aui-icon-right"></i>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
 
   <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript">
-    function xxx() {
-
-    }
-  </script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 
   <script src="./win.js"></script></body>
 </html>
