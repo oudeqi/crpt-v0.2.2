@@ -75,9 +75,14 @@ class App {
       // return
       // openDanbaoKaitong({step: 0, creditStatus: 2})
       // return
-      // Router.openPage({ key: 'yjd_account_open' })
-
-      // return
+      Router.openPage({
+        key: 'hxd_product_detail', params: {
+          pageParam: {
+            productId: '1'
+          }
+        }
+      })
+      return
       const authStatus = $api.getStorage('authStatus') || {}
       if (authStatus.status === 1) {
         // openTabLayout()

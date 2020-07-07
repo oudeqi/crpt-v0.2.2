@@ -4,6 +4,8 @@ import service from './service';
 
 apiready = function () {
   let pageParam = api.pageParam || {};
+  const dialogBox = api.require('dialogBox');
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -77,6 +79,9 @@ apiready = function () {
           Utils.UI.toast('请上传营业执照')
           return
         }
+        Utils.UI.dialog({title: '请确认提交资料是否正确，提交之后无法修改' , callback: this.handleSubmit})
+      },
+      async handleSubmit() {
         try {
           Utils.UI.showLoading('提交中')
           const res = await service.postCompanyInfo({
@@ -93,7 +98,7 @@ apiready = function () {
           })
           console.log(res)
         } catch (error) {
-          if(error.msg) {
+          if (error.msg) {
             Utils.UI.toast(`${error.code} - ${error.msg}`)
           }
           console.log(JSON.stringify(error))
@@ -101,5 +106,6 @@ apiready = function () {
         Utils.UI.hideLoading()
       }
     },
+    
   })
 }

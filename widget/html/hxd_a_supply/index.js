@@ -1195,6 +1195,65 @@ function setRefreshHeaderInfo(_ref) {
   });
 }
 
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
+
+  var dialogBox = api.require('dialogBox');
+
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
+
 /**
  * UI class
  * @author liyang
@@ -1235,6 +1294,11 @@ var UI = /*#__PURE__*/function () {
     key: "setRefreshHeaderInfo",
     value: function setRefreshHeaderInfo$1(params) {
       return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
     }
   }]);
 
@@ -2080,6 +2144,9 @@ var service = {
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
+
+  var dialogBox = api.require('dialogBox');
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -2155,7 +2222,6 @@ apiready = function apiready() {
         var _this3 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var res;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -2178,47 +2244,69 @@ apiready = function apiready() {
                   return _context.abrupt("return");
 
                 case 6:
-                  _context.prev = 6;
-                  Utils$1.UI.showLoading('提交中');
-                  _context.next = 10;
-                  return service.postCompanyInfo({
-                    productId: _this3.productId,
-                    provinceName: _this3.pcd.province.name,
-                    provinceCode: _this3.pcd.province.code,
-                    cityName: _this3.pcd.city.name,
-                    cityCode: _this3.pcd.city.code,
-                    zoneName: _this3.pcd.district.name,
-                    zoneCode: _this3.pcd.district.code,
-                    addr: _this3.address
-                  }, {
-                    businessLicense: _this3.businessLicense
+                  Utils$1.UI.dialog({
+                    title: '请确认提交资料是否正确，提交之后无法修改',
+                    callback: _this3.handleSubmit
                   });
 
-                case 10:
-                  res = _context.sent;
-                  console.log(res);
-                  _context.next = 18;
-                  break;
-
-                case 14:
-                  _context.prev = 14;
-                  _context.t0 = _context["catch"](6);
-
-                  if (_context.t0.msg) {
-                    Utils$1.UI.toast("".concat(_context.t0.code, " - ").concat(_context.t0.msg));
-                  }
-
-                  console.log(JSON.stringify(_context.t0));
-
-                case 18:
-                  Utils$1.UI.hideLoading();
-
-                case 19:
+                case 7:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[6, 14]]);
+          }, _callee);
+        }))();
+      },
+      handleSubmit: function handleSubmit() {
+        var _this4 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var res;
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.prev = 0;
+                  Utils$1.UI.showLoading('提交中');
+                  _context2.next = 4;
+                  return service.postCompanyInfo({
+                    productId: _this4.productId,
+                    provinceName: _this4.pcd.province.name,
+                    provinceCode: _this4.pcd.province.code,
+                    cityName: _this4.pcd.city.name,
+                    cityCode: _this4.pcd.city.code,
+                    zoneName: _this4.pcd.district.name,
+                    zoneCode: _this4.pcd.district.code,
+                    addr: _this4.address
+                  }, {
+                    businessLicense: _this4.businessLicense
+                  });
+
+                case 4:
+                  res = _context2.sent;
+                  console.log(res);
+                  _context2.next = 12;
+                  break;
+
+                case 8:
+                  _context2.prev = 8;
+                  _context2.t0 = _context2["catch"](0);
+
+                  if (_context2.t0.msg) {
+                    Utils$1.UI.toast("".concat(_context2.t0.code, " - ").concat(_context2.t0.msg));
+                  }
+
+                  console.log(JSON.stringify(_context2.t0));
+
+                case 12:
+                  Utils$1.UI.hideLoading();
+
+                case 13:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[0, 8]]);
         }))();
       }
     }

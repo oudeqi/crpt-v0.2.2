@@ -1,30 +1,11 @@
 import './index.less'
-
-const page = new Vue({
-  el: '#app',
-  data: {
-    status: 1,
-    textLabel: {
-      1: {
-        tips: "您已成功开通好消贷",
-        label: "您的授信额度为",
-        amount: "1,000,000",
-        cbName: "查看产品详情"
-      },
-      0: {
-        tips: "开通失败",
-        label: "你失败了，这次你彻底申请失败了",
-        amount: "0",
-        cbName: "开通更多产品"
-      }
-    }
-  },
-  methods: {
-
-  },
-})
-
+import service from './../hxd_apply/service'
+import Router from '../../../router';
+import Utils from '../../../utils';
+import filter from './../../../utils/filter'
+import { openTabLayout } from '../../../webview.js'
 apiready = function () {
+  const pageParam = api.pageParam || {}
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -32,6 +13,60 @@ apiready = function () {
       api.closeWin();
     }
   });
-  // alert(Vue)
+  const page = new Vue({
+    el: '#app',
+    data: {
+      creditStatus: 0,
+      productInfo: {}
+    },
+    computed: {
+      creditAmountTn: function () {
+        return filter.toThousands(this.productInfo.creditAmount * 10000)
+      },
+    },
+    methods: {
+      async handleGetProductDetail() {
+        try {
+          Utils.UI.showLoading('加载中')
+          const res = await service.getProductInfo({ productId: pageParam.productId })
+          if (res.code === 200) {
+            this.productInfo = {
+              productShort: '销',
+              creditAmount: res.data.creditAmount,
+              producName: res.data.productName,
+              refusedReason: res.data.refusedReason
+            }
+            this.creditStatus = res.data.creditStatus
+          }
+        } catch (error) {
+          if (error.msg) {
+            Utils.UI.toast(`${error.code} : ${error.msg}`)
+          }
+        }
+        Utils.UI.hideLoading()
+      },
+      handleToPageDetail() {
+        Router.openPage({
+          key: 'hxd_product_detail',
+          params: {
+            pageParam: {
+              productId: pageParam.productId
+            }
+          }
+        })
+      },
+      handleToProductList() {
+        Router.openPage({
+          key: 'com_product_list'
+        })
+      },
+      handleToHome() {
+        openTabLayout(0)
+      }
+    },
+    mounted() {
+      this.handleGetProductDetail()
+    }
+  })
 
 }
