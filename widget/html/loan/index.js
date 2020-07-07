@@ -3671,7 +3671,7 @@ function vmInit() {
         } else if (record.orderType === 4) {
           // 押金贷
           Router$1.openPage({
-            key: 'loan_details'
+            key: 'yjd_loan_details'
           });
         } else {
           // 其他

@@ -81,7 +81,7 @@ function vmInit () {
             Router.openPage({ key: 'hxd_u_apply' })
           }
         } else if (record.orderType === 4) { // 押金贷
-          Router.openPage({ key: 'loan_details' })
+          Router.openPage({ key: 'yjd_loan_details' })
         } else { // 其他
           Router.openPage({ key: 'loan_application' }, {id: record.orderNo})
         }
