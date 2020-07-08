@@ -44,7 +44,7 @@
     <section v-if="!noData && loading" class="loading">加载中...</section>
     <section v-if="!noData && !loading && noMore" class="nomore">无更多数据</section>
     <section v-if="!noData && !loading && !noMore" class="loadmore">加载更多</section>
-    <section v-if="list.length===0 noData && !loading" class="nodata">
+    <section v-if="list.length===0 && noData && !loading" class="nodata">
       <div class="nodata-pic"></div>
       <p class="nodata-desc">暂时没有数据哦</p>
     </section>
