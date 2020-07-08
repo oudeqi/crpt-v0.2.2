@@ -3856,7 +3856,7 @@ function vmInit() {
                     }
                   }
 
-                  _context4.next = 19;
+                  _context4.next = 21;
                   break;
 
                 case 16:
@@ -3866,8 +3866,10 @@ function vmInit() {
                     msg: _context4.t0.message || '出错啦',
                     location: 'middle'
                   });
+                  api.refreshHeaderLoadDone();
+                  _this4.loading = false;
 
-                case 19:
+                case 21:
                 case "end":
                   return _context4.stop();
               }
@@ -3883,7 +3885,7 @@ function vmInit() {
         if (record.orderType === 1) {
           // 好销贷
           if (record.status === 11) {
-            // 立即开通
+            // 待申请，立即开通
             if (this.userinfo.userType === '1') {
               // 个人用户
               Router$1.openPage({
@@ -3910,10 +3912,21 @@ function vmInit() {
                 location: 'middle'
               });
             }
-          } else {
-            // 继续开通
+          } else if (record.status === 1) {
+            // 申请中，继续开通
             Router$1.openPage({
               key: 'hxd_u_apply',
+              params: {
+                pageParam: {
+                  productId: productId
+                }
+              }
+            });
+          } else if (record.status === 2) {
+            // 已审批通过，未放款，去详情
+            // TODO 参数待定
+            Router$1.openPage({
+              key: 'hxd_d_detail',
               params: {
                 pageParam: {
                   productId: productId

@@ -5,41 +5,41 @@
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
   <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 <body>
-  <section class="container">
+  <section class="container" id="app" v-cloak>
     <div class="content">
       <div class="content-t">
         <div class="content-row">
           <span>代养合同编号</span>
-          <strong>72658736000</strong>
+          <strong>{{pageParam.outCode}}</strong>
         </div>
         <div class="content-row">
           <span>收款方</span>
-          <strong>成都阳光农业服务有限公司</strong>
+          <strong>{{pageParam.payee}}</strong>
         </div>
         <div class="content-row">
           <span>签订日期</span>
-          <strong>2019-12-12</strong>
+          <strong>{{pageParam.signedDate}}</strong>
         </div>
       </div>
       <div class="content-b">
         <div class="content-row">
           <span>应收保证金(元)</span>
-          <strong>200,000.00</strong>
+          <strong>{{pageParam.receivableBond}}</strong>
         </div>
         <div class="content-row">
           <span>已收保证金(元)</span>
-          <strong>200,000.00</strong>
+          <strong>{{pageParam.receivedBond}}</strong>
         </div>
         <div class="content-row">
           <span>剩余应收保证金(元)</span>
-          <strong>200,000.00</strong>
+          <strong>{{pageParam.surplusReceivableBond}}</strong>
         </div>
       </div>
     </div>
   </section>
   <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 </body>
 </html>

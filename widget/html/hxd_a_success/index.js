@@ -792,28 +792,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-// 导航布局
-
-
 function openTabLayout(index) {
   api.openTabLayout({
     name: 'tabLayout',
@@ -888,7 +866,7 @@ function openTabLayout(index) {
       }, {
         title: "还款",
         name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
+        url: "widget://html/repay/index.html",
         bounces: true,
         reload: true,
         scrollToTop: true //其他继承自openFrame的参数

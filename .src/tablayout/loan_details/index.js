@@ -48,13 +48,18 @@ function vmInit () {
         return this.pageParam.id
       }
     },
-    mounted () {
-      console.log(this.id)
-      this.getPageData()
+    mounted: function () {
+      this.pageInit()
     },
     methods: {
 
       numeral: numeral,
+
+      async pageInit () {
+        api.showProgress({ title: '加载中...', text: '', modal: false })
+        await this.getPageData()
+        api.hideProgress()
+      },
 
       async getPageData () {
         // 业务单状态：
@@ -79,12 +84,14 @@ function vmInit () {
         Router.openPage({ key: 'repay_record', params: {pageParam: { id }}})
       },
 
-      developping () {
+      openLoanContract () {
         api.alert({
           title: '提示',
           msg: '功能开发中...',
         })
-      }
+        // let id = this.id
+        // Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
+      },
 
     }
   })

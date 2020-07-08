@@ -61,12 +61,17 @@ function vmInit () {
       }
     },
     mounted () {
-      console.log(this.id)
-      this.getPageData()
+      this.pageInit()
     },
     methods: {
 
       numeral: numeral,
+
+      async pageInit () {
+        api.showProgress({ title: '加载中...', text: '', modal: false })
+        await this.getPageData()
+        api.hideProgress()
+      },
 
       async getPageData () {
         // 业务单状态：
@@ -92,9 +97,29 @@ function vmInit () {
         Router.openPage({ key: 'repay_record', params: {pageParam: { id }}})
       },
 
-      openContract (key) {
+      openLoanContract () {
         let id = this.id
-        Router.openPage({ key: key, params: {pageParam: { id }}})
+        Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
+      },
+
+      openDaiyangContract () {
+        let data = this.data
+        let {
+          outCode, // 代养合同编号
+          payee, // 收款方
+          signedDate, // 签订日期
+          receivableBond, // 应收保证金
+          receivedBond, // 已收保证金
+          surplusReceivableBond, // 剩余应收保证金
+        } = data
+        Router.openPage({ key: key, params: {pageParam: {
+          outCode,
+          payee,
+          signedDate,
+          receivableBond,
+          receivedBond,
+          surplusReceivableBond,
+        }}})
       },
 
       developping () {

@@ -14,10 +14,10 @@
         <strong>{{data.totalAmount ? numeral(data.totalAmount).format('0,0.00') : ''}}</strong>
       </div>
       <div v-else class="header-num">
-        <span>剩余未还本金(元)</span>
+        <span v-if="data.surplusPrincipalAmount">剩余未还本金(元)</span>
         <strong>{{data.surplusPrincipalAmount ? numeral(data.surplusPrincipalAmount).format('0,0.00') : ''}}</strong>
       </div>
-      <div :class="['header-status', statusMapping[data.status] || '']">{{mapping[data.status] || ''}}</div>
+      <div v-if="data.status" :class="['header-status', statusMapping[data.status] || '']">{{mapping[data.status] || ''}}</div>
     </section>
   
     <section class="content">
@@ -43,7 +43,7 @@
         </div> -->
         <div class="card-row">
           <span class="card-label">合 同</span>
-          <span @click="developping()" class="card-btn arrowbtn">查看</span>
+          <span @click="openLoanContract()" class="card-btn arrowbtn">查看</span>
         </div>
       </div>
   
@@ -64,7 +64,7 @@
         </div>
       </div>
   
-      <div class="card">
+      <div class="card" v-if="data.orderNo">
         <div class="card-head">业务单明细</div>
         <div class="card-block">
           <p><span>业务单号</span><strong>{{data.orderNo}}</strong></p>

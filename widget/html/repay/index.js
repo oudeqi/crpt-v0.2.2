@@ -1,3 +1,50 @@
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+var arrayLikeToArray = _arrayLikeToArray;
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+
+var arrayWithoutHoles = _arrayWithoutHoles;
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+var iterableToArray = _iterableToArray;
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+var unsupportedIterableToArray = _unsupportedIterableToArray;
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var nonIterableSpread = _nonIterableSpread;
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+
+var toConsumableArray = _toConsumableArray;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -792,529 +839,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var classCallCheck = _classCallCheck;
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
-
-// 主题色
-var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
-
-var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
-
-var navigationBarWhite = {
-  hideBackButton: false,
-  background: '#fff',
-  color: textColor,
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: themeMainColor,
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-}; // 绿色底导航
-
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: themeMainColor,
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-};
-
-/**
- * themeMainColor 主题色
- * textColor 导航文字黑色
- * navigationBarWhite 浅色底导航
- * navigationBarGreen 绿色底导航
- */
-
-var routerMap = {
-  yjd_select_contract: {
-    name: 'yjd_select_contract',
-    title: '选择代养合同',
-    url: 'widget://html/yjd_select_contract/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_confirm: {
-    name: 'yjd_apply_confirm',
-    title: '申请贷款',
-    url: 'widget://html/yjd_apply_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_hukouben_upload: {
-    name: 'yjd_hukouben_upload',
-    title: '上传户口本',
-    url: 'widget://html/yjd_hukouben_upload/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_status: {
-    name: 'yjd_apply_status',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_result: {
-    name: 'yjd_apply_result',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_loan_signing: {
-    name: 'yjd_loan_signing',
-    title: '贷款签约',
-    url: 'widget://html/yjd_loan_signing/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_signing_result: {
-    name: 'yjd_signing_result',
-    title: '签约结果',
-    url: 'widget://html/yjd_signing_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_account_open: {
-    name: 'yjd_account_open',
-    title: '开通新网账户',
-    url: 'widget://html/yjd_account_open/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷产品详情
-  yjd_product_detail: {
-    name: 'yjd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/yjd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 贷款申请
-  loan_application: {
-    name: 'loan_application',
-    title: '待申请',
-    url: 'widget://html/loan_application/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 贷款确认
-  loan_confirm: {
-    name: 'loan_confirm',
-    title: '贷款确认',
-    url: 'widget://html/loan_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 押金贷贷款详情
-  yjd_loan_details: {
-    name: 'yjd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/yjd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 公用的贷款详情
-  loan_details: {
-    name: 'loan_details',
-    title: '贷款详情',
-    url: 'widget://html/loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款计划
-  repay_plan: {
-    name: 'repay_plan',
-    title: '还款计划',
-    url: 'widget://html/repay_plan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款记录
-  repay_record: {
-    name: 'repay_record',
-    title: '还款记录',
-    url: 'widget://html/repay_record/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷代养合同
-  yjd_contract_daiyang: {
-    name: 'yjd_contract_daiyang',
-    title: '代养合同',
-    url: 'widget://html/yjd_contract_daiyang/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷贷款合同
-  yjd_contract_loan: {
-    name: 'yjd_contract_loan',
-    title: '贷款合同',
-    url: 'widget://html/yjd_contract_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerHXDConfig = {
-  // 好销贷授信申请
-  hxd_apply: {
-    name: 'hxd_apply',
-    title: '产品介绍',
-    url: 'widget://html/hxd_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷授信申请补充企业信息
-  hxd_a_supply: {
-    name: 'hxd_a_supply',
-    title: '补充企业信息',
-    url: 'widget://html/hxd_a_supply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷授信申请成功/失败
-  hxd_a_success: {
-    name: 'hxd_a_success',
-    title: '产品开通',
-    url: 'widget://html/hxd_a_success/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 好销贷产品详情
-  hxd_product_detail: {
-    name: 'hxd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/hxd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷额度变化详情
-  hxd_quota: {
-    name: 'hxd_quota',
-    title: '额度变化详情',
-    url: 'widget://html/hxd_quota/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款申请
-  hxd_u_apply: {
-    name: 'hxd_u_apply',
-    title: '申请用款',
-    url: 'widget://html/hxd_u_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款确认
-  hxd_u_confirm: {
-    name: 'hxd_u_confirm',
-    title: '用款确认',
-    url: 'widget://html/hxd_u_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款校验
-  hxd_u_smscode: {
-    name: 'hxd_u_smscode',
-    title: '用款校验',
-    url: 'widget://html/hxd_u_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款结果
-  hxd_u_result: {
-    name: 'hxd_u_result',
-    title: '审核结果',
-    url: 'widget://html/hxd_u_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款试算
-  hxd_r_try: {
-    name: 'hxd_r_try',
-    title: '还款试算',
-    url: 'widget://html/hxd_r_try/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款试算详情页
-  hxd_r_try_detail: {
-    name: 'hxd_r_try_detail',
-    title: '还款试算详情',
-    url: 'widget://html/hxd_r_try_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款校验页
-  hxd_r_smscode: {
-    name: 'hxd_r_smscode',
-    title: '还款校验',
-    url: 'widget://html/hxd_r_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款校验页
-  hxd_r_result: {
-    name: 'hxd_r_result',
-    title: '还款结果',
-    url: 'widget://html/hxd_r_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户申请
-  hxd_jf_apply: {
-    name: 'hxd_jf_apply',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户成功页
-  hxd_jf_account: {
-    name: 'hxd_jf_account',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_account/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户企业补充信息
-  hxd_jf_enterprise: {
-    name: 'hxd_jf_enterprise',
-    title: '开通信息补充',
-    url: 'widget://html/hxd_jf_enterprise/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户结果
-  hxd_jf_result: {
-    name: 'hxd_jf_result',
-    title: '开户结果',
-    url: 'widget://html/hxd_jf_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户状态查看
-  hxd_jf_status: {
-    name: 'hxd_jf_status',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerConfig = {
-  // 消息中心
-  msgcenter: {
-    name: 'html/msgcenter/win',
-    title: '消息中心',
-    url: 'widget://html/msgcenter/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的账单
-  billlist: {
-    name: 'html/billlist/win',
-    title: '我的账单',
-    url: 'widget://html/billlist/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  billdetails: {
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的贷款
-  my_loan: {
-    name: 'html/my_loan/win',
-    title: '我的贷款',
-    url: 'widget://html/my_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
-    title: '我的额度',
-    url: 'widget://html/myquota/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
-    title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 联系我们
-  contactus: {
-    name: 'html/contactus/win',
-    title: '联系我们',
-    url: 'widget://html/contactus/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 设置
-  settings: {
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的钱包详情
-  wallet: {
-    name: 'wallet',
-    title: '希望钱包',
-    url: 'widget://html/wallet/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 通用产品列表
-  com_product_list: {
-    name: 'com_product_list',
-    title: '产品列表',
-    url: 'widget://html/com_product_list/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 合同页
-  agreement: {
-    name: 'agreement',
-    title: '查看合同',
-    url: 'widget://html/agreement/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
-
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var Router = /*#__PURE__*/function () {
-  function Router() {
-    classCallCheck(this, Router);
-  }
-
-  createClass(Router, [{
-    key: "openPage",
-    // 打开window级别页面
-    value: function openPage(_ref) {
-      var key = _ref.key,
-          params = _ref.params;
-      api.openTabLayout(_objectSpread$1({}, profile[key], {}, params));
-    }
-  }]);
-
-  return Router;
-}();
-
-var Router$1 = new Router();
-
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -1324,481 +848,6 @@ function openRegLogin() {
     slidBackEnabled: false
   });
 } // 个人登录
-
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
-
-// 系统顶部导航配置
-var navigationBarProfile = {
-  background: '#fff',
-  color: '#303133',
-  fontSize: 18,
-  fontWeight: 500,
-  leftButtons: [{
-    text: '',
-    color: 'rgba(102,187,106,1)',
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-};
-
-/**
- * 打开授信资料录入页面
- */
-
-function openPageCreditInformation() {
-  api.openTabLayout({
-    title: '授信资料录入',
-    name: 'html/credit_information/index',
-    url: 'widget://html/credit_information/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1. 打开担保业务申请表页面
- */
-
-function openGuaranteeApplicationIndex(_ref) {
-  var pageParam = _ref.pageParam;
-  api.openTabLayout({
-    title: '担保业务申请表',
-    name: 'html/guarantee_application_index/index',
-    url: 'widget://html/guarantee_application_index/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 2. 打开反担保人列表页面
- */
-
-/**
- * 3. 文件送达地址列表页面
- */
-
-/**
- * 4. 其他附件上传页面
- */
-
-function openAttachmentInfo(_ref2) {
-  var pageParam = _ref2.pageParam;
-  api.openTabLayout({
-    title: '附件上传',
-    name: 'html/attachment_info/index',
-    url: 'widget://html/attachment_info/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.1 打开房产信息录入页面
- */
-
-function openGuaranteeApplicationHouse(_ref3) {
-  var pageParam = _ref3.pageParam;
-  api.openTabLayout({
-    title: '房产信息',
-    name: 'html/guarantee_application_house/index',
-    url: 'widget://html/guarantee_application_house/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.2 打开车辆信息录入页面
- */
-
-function openGuaranteeApplicationCar(_ref4) {
-  var pageParam = _ref4.pageParam;
-  api.openTabLayout({
-    title: '车辆信息',
-    name: 'html/guarantee_application_car/index',
-    url: 'widget://html/guarantee_application_car/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-/**
- * 1.3 打开家庭成员信息录入页面
- */
-
-function openGuaranteeApplicationFamily(_ref5) {
-  var pageParam = _ref5.pageParam;
-  api.openTabLayout({
-    title: '家庭成员信息',
-    name: 'html/guarantee_application_family/index',
-    url: 'widget://html/guarantee_application_family/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    pageParam: pageParam,
-    navigationBar: navigationBarProfile
-  });
-}
-function closeCurrentWinAndRefresh(_ref6) {
-  var winName = _ref6.winName,
-      frameName = _ref6.frameName,
-      script = _ref6.script;
-  //  关闭当前win并刷新指定页面
-  api.execScript({
-    name: winName,
-    frameName: frameName,
-    script: script
-  });
-  setTimeout(function () {
-    api.closeWin();
-  }, 300);
-}
-
-var rmap = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	openPageCreditInformation: openPageCreditInformation,
-	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-	openAttachmentInfo: openAttachmentInfo,
-	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
-});
-
-/**
- * Router class
- * @author liyang
- * @desc 路由类
- */
-
-var Router$2 = function Router() {
-  classCallCheck(this, Router);
-
-  _extends_1(this, rmap);
-};
-
-var openPicker = function openPicker(params, options) {
-  var UIActionSelector = api.require('UIActionSelector');
-
-  UIActionSelector.open({
-    datas: params.data,
-    layout: {
-      row: options.row,
-      col: options.col,
-      height: 40,
-      size: 18,
-      sizeActive: 18,
-      rowSpacing: 5,
-      colSpacing: 10,
-      maskBg: 'rgba(0,0,0,0.2)',
-      bg: '#fff',
-      color: '#333',
-      colorActive: '#f00',
-      colorSelected: '#000'
-    },
-    animation: true,
-    cancel: {
-      text: '取消',
-      size: 15,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      // bgActive: '#ccc',
-      color: '#888',
-      colorActive: '#ccc'
-    },
-    ok: {
-      text: '确定',
-      size: 15,
-      w: 90,
-      h: 35,
-      bg: '#fff',
-      // bgActive: '#ccc',
-      color: 'rgba(102,187,106,1)',
-      colorActive: '#ccc'
-    },
-    title: {
-      text: '请选择',
-      size: 15,
-      h: 50,
-      bg: '#fff',
-      color: '#888'
-    },
-    fixedOn: api.frameName
-  }, function (ret, err) {
-    if (ret.eventType === 'ok') {
-      params.success && params.success(ret.selectedInfo);
-    }
-  });
-  return UIActionSelector;
-};
-/**
- * @authro liyang
- * @desc 表单单选框picker
- * @params params: { data, success }
- */
-
-
-var setPicker = function setPicker(params) {
-  return openPicker(params, {
-    row: 5,
-    col: 1
-  });
-};
-/**
- * @authro liyang
- * @desc 城市选择框picker
- * @params params: { data, success }
- */
-
-var setCityPicker = function setCityPicker(params) {
-  return openPicker(params, {
-    row: 5,
-    col: 3
-  });
-};
-
-var showLoading = function showLoading() {
-  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
-  api.showProgress({
-    title: title,
-    text: '',
-    modal: true
-  });
-};
-var hideLoading = function hideLoading() {
-  api.hideProgress();
-};
-
-var toast = function toast(msg) {
-  api.toast({
-    msg: msg,
-    location: 'middle'
-  });
-};
-
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function setRefreshHeaderInfo(_ref) {
-  var success = _ref.success,
-      fail = _ref.fail,
-      _ref$options = _ref.options,
-      options = _ref$options === void 0 ? {} : _ref$options;
-  api.setRefreshHeaderInfo(_objectSpread$2({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, options), function (ret, error) {
-    if (error) {
-      fail && fail(error);
-    } else {
-      success && success(ret);
-    }
-  });
-}
-
-function dialog(_ref) {
-  var title = _ref.title,
-      callback = _ref.callback;
-
-  var dialogBox = api.require('dialogBox');
-
-  dialogBox.alert({
-    texts: {
-      // title: '确认',
-      content: title,
-      leftBtnTitle: '取消',
-      rightBtnTitle: '确认提交'
-    },
-    styles: {
-      bg: '#fff',
-      w: 300,
-      corner: 6,
-      content: {
-        color: '#606266',
-        size: 16,
-        marginT: 30
-      },
-      left: {
-        marginB: 7,
-        marginL: 20,
-        w: 130,
-        h: 35,
-        corner: 2,
-        bg: '#fff',
-        size: 16,
-        color: '#606266'
-      },
-      right: {
-        marginB: 7,
-        marginL: 10,
-        w: 130,
-        h: 35,
-        corner: 2,
-        bg: '#fff',
-        size: 16,
-        color: '#66BB6A'
-      }
-    }
-  }, function (ret) {
-    if (ret.eventType == 'left') {
-      dialogBox.close({
-        dialogName: 'alert'
-      });
-    } else {
-      dialogBox.close({
-        dialogName: 'alert'
-      });
-      setTimeout(function () {
-        callback && callback();
-      }, 100);
-    }
-  });
-}
-
-/**
- * UI class
- * @author liyang
- * @desc UI类
- */
-
-var UI = /*#__PURE__*/function () {
-  function UI() {
-    classCallCheck(this, UI);
-  }
-
-  createClass(UI, [{
-    key: "setPicker",
-    value: function setPicker$1(params) {
-      return setPicker(params);
-    }
-  }, {
-    key: "setCityPicker",
-    value: function setCityPicker$1(params) {
-      return setCityPicker(params);
-    }
-  }, {
-    key: "showLoading",
-    value: function showLoading$1(params) {
-      return showLoading(params);
-    }
-  }, {
-    key: "hideLoading",
-    value: function hideLoading$1(params) {
-      return hideLoading();
-    }
-  }, {
-    key: "toast",
-    value: function toast$1(params) {
-      return toast(params);
-    }
-  }, {
-    key: "setRefreshHeaderInfo",
-    value: function setRefreshHeaderInfo$1(params) {
-      return setRefreshHeaderInfo(params);
-    }
-  }, {
-    key: "dialog",
-    value: function dialog$1(params) {
-      return dialog(params);
-    }
-  }]);
-
-  return UI;
-}();
-
-/**
- * File class
- * @author liyang
- * @desc File类
- */
-var File = /*#__PURE__*/function () {
-  function File() {
-    classCallCheck(this, File);
-  }
-
-  createClass(File, [{
-    key: "actionSheet",
-    value: function actionSheet(title, buttons, cb) {
-      api.actionSheet({
-        title: title,
-        cancelTitle: '取消',
-        buttons: buttons
-      }, function (ret, err) {
-        var index = ret.buttonIndex; // index 从1开始
-
-        if (index !== buttons.length + 1) {
-          cb(index - 1);
-        }
-      });
-    }
-  }, {
-    key: "getPicture",
-    value: function getPicture(sourceType, cb) {
-      // library         //图片库
-      // camera          //相机
-      // album           //相册
-      api.getPicture({
-        sourceType: sourceType,
-        encodingType: 'png',
-        mediaValue: 'pic',
-        destinationType: 'file',
-        allowEdit: false,
-        quality: 20,
-        targetWidth: 1000,
-        // targetHeight: 300,
-        saveToPhotoAlbum: false
-      }, cb);
-    }
-  }]);
-
-  return File;
-}();
-
-var codeMapFilter = function codeMapFilter(list) {
-  var codeMap = {};
-  list.filter(function (item, i) {
-    return !!item.valid;
-  }).forEach(function (el, k) {
-    codeMap[el.code] = el.name;
-  });
-  return codeMap;
-};
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -2012,188 +1061,506 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
 
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
-var whiteList = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert = false;
+var classCallCheck = _classCallCheck;
 
-function ajax(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
-
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
-    } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
 
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
-    api.ajax({
-      url: baseUrl + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers)
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
+    return target;
+  };
 
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          // 表单校验未过专属code
-          if (ret.code === 202) {
-            var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert) {
-            hasAlert = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert = false;
-              api.closeWin({
-                name: 'html/register/index'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/index'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
+  return _extends.apply(this, arguments);
+}
 
-          reject(error);
-        }
+module.exports = _extends;
+});
 
-        reject(error);
-      }
+// 系统顶部导航配置
+var navigationBarProfile = {
+  background: '#fff',
+  color: '#303133',
+  fontSize: 18,
+  fontWeight: 500,
+  leftButtons: [{
+    text: '',
+    color: 'rgba(102,187,106,1)',
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+};
 
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
+/**
+ * 打开授信资料录入页面
+ */
 
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
-    });
+function openPageCreditInformation() {
+  api.openTabLayout({
+    title: '授信资料录入',
+    name: 'html/credit_information/index',
+    url: 'widget://html/credit_information/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1. 打开担保业务申请表页面
+ */
+
+function openGuaranteeApplicationIndex(_ref) {
+  var pageParam = _ref.pageParam;
+  api.openTabLayout({
+    title: '担保业务申请表',
+    name: 'html/guarantee_application_index/index',
+    url: 'widget://html/guarantee_application_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 2. 打开反担保人列表页面
+ */
+
+/**
+ * 3. 文件送达地址列表页面
+ */
+
+/**
+ * 4. 其他附件上传页面
+ */
+
+function openAttachmentInfo(_ref2) {
+  var pageParam = _ref2.pageParam;
+  api.openTabLayout({
+    title: '附件上传',
+    name: 'html/attachment_info/index',
+    url: 'widget://html/attachment_info/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.1 打开房产信息录入页面
+ */
+
+function openGuaranteeApplicationHouse(_ref3) {
+  var pageParam = _ref3.pageParam;
+  api.openTabLayout({
+    title: '房产信息',
+    name: 'html/guarantee_application_house/index',
+    url: 'widget://html/guarantee_application_house/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.2 打开车辆信息录入页面
+ */
+
+function openGuaranteeApplicationCar(_ref4) {
+  var pageParam = _ref4.pageParam;
+  api.openTabLayout({
+    title: '车辆信息',
+    name: 'html/guarantee_application_car/index',
+    url: 'widget://html/guarantee_application_car/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+/**
+ * 1.3 打开家庭成员信息录入页面
+ */
+
+function openGuaranteeApplicationFamily(_ref5) {
+  var pageParam = _ref5.pageParam;
+  api.openTabLayout({
+    title: '家庭成员信息',
+    name: 'html/guarantee_application_family/index',
+    url: 'widget://html/guarantee_application_family/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    pageParam: pageParam,
+    navigationBar: navigationBarProfile
+  });
+}
+function closeCurrentWinAndRefresh(_ref6) {
+  var winName = _ref6.winName,
+      frameName = _ref6.frameName,
+      script = _ref6.script;
+  //  关闭当前win并刷新指定页面
+  api.execScript({
+    name: winName,
+    frameName: frameName,
+    script: script
+  });
+  setTimeout(function () {
+    api.closeWin();
+  }, 300);
+}
+
+var rmap = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openAttachmentInfo: openAttachmentInfo,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+});
+
+/**
+ * Router class
+ * @author liyang
+ * @desc 路由类
+ */
+
+var Router = function Router() {
+  classCallCheck(this, Router);
+
+  _extends_1(this, rmap);
+};
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
+var openPicker = function openPicker(params, options) {
+  var UIActionSelector = api.require('UIActionSelector');
+
+  UIActionSelector.open({
+    datas: params.data,
+    layout: {
+      row: options.row,
+      col: options.col,
+      height: 40,
+      size: 18,
+      sizeActive: 18,
+      rowSpacing: 5,
+      colSpacing: 10,
+      maskBg: 'rgba(0,0,0,0.2)',
+      bg: '#fff',
+      color: '#333',
+      colorActive: '#f00',
+      colorSelected: '#000'
+    },
+    animation: true,
+    cancel: {
+      text: '取消',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: '#888',
+      colorActive: '#ccc'
+    },
+    ok: {
+      text: '确定',
+      size: 15,
+      w: 90,
+      h: 35,
+      bg: '#fff',
+      // bgActive: '#ccc',
+      color: 'rgba(102,187,106,1)',
+      colorActive: '#ccc'
+    },
+    title: {
+      text: '请选择',
+      size: 15,
+      h: 50,
+      bg: '#fff',
+      color: '#888'
+    },
+    fixedOn: api.frameName
+  }, function (ret, err) {
+    if (ret.eventType === 'ok') {
+      params.success && params.success(ret.selectedInfo);
+    }
+  });
+  return UIActionSelector;
+};
+/**
+ * @authro liyang
+ * @desc 表单单选框picker
+ * @params params: { data, success }
+ */
+
+
+var setPicker = function setPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 1
+  });
+};
+/**
+ * @authro liyang
+ * @desc 城市选择框picker
+ * @params params: { data, success }
+ */
+
+var setCityPicker = function setCityPicker(params) {
+  return openPicker(params, {
+    row: 5,
+    col: 3
+  });
+};
+
+var showLoading = function showLoading() {
+  var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '正在加载...';
+  api.showProgress({
+    title: title,
+    text: '',
+    modal: true
+  });
+};
+var hideLoading = function hideLoading() {
+  api.hideProgress();
+};
+
+var toast = function toast(msg) {
+  api.toast({
+    msg: msg,
+    location: 'middle'
+  });
+};
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function setRefreshHeaderInfo(_ref) {
+  var success = _ref.success,
+      fail = _ref.fail,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options;
+  api.setRefreshHeaderInfo(_objectSpread({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      fail && fail(error);
+    } else {
+      success && success(ret);
+    }
   });
 }
 
-var http = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
+function dialog(_ref) {
+  var title = _ref.title,
+      callback = _ref.callback;
 
-    return ajax('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
+  var dialogBox = api.require('dialogBox');
 
-    return ajax('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
+  dialogBox.alert({
+    texts: {
+      // title: '确认',
+      content: title,
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确认提交'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner: 6,
+      content: {
+        color: '#606266',
+        size: 16,
+        marginT: 30
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#606266'
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#fff',
+        size: 16,
+        color: '#66BB6A'
+      }
+    }
+  }, function (ret) {
+    if (ret.eventType == 'left') {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    } else {
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+      setTimeout(function () {
+        callback && callback();
+      }, 100);
+    }
+  });
+}
 
-    return ajax('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
+/**
+ * UI class
+ * @author liyang
+ * @desc UI类
+ */
 
-    return ajax('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    classCallCheck(this, UI);
   }
-}; // 统一ios和android的输入框，下标都从0开始
+
+  createClass(UI, [{
+    key: "setPicker",
+    value: function setPicker$1(params) {
+      return setPicker(params);
+    }
+  }, {
+    key: "setCityPicker",
+    value: function setCityPicker$1(params) {
+      return setCityPicker(params);
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading$1(params) {
+      return showLoading(params);
+    }
+  }, {
+    key: "hideLoading",
+    value: function hideLoading$1(params) {
+      return hideLoading();
+    }
+  }, {
+    key: "toast",
+    value: function toast$1(params) {
+      return toast(params);
+    }
+  }, {
+    key: "setRefreshHeaderInfo",
+    value: function setRefreshHeaderInfo$1(params) {
+      return setRefreshHeaderInfo(params);
+    }
+  }, {
+    key: "dialog",
+    value: function dialog$1(params) {
+      return dialog(params);
+    }
+  }]);
+
+  return UI;
+}();
+
+/**
+ * File class
+ * @author liyang
+ * @desc File类
+ */
+var File = /*#__PURE__*/function () {
+  function File() {
+    classCallCheck(this, File);
+  }
+
+  createClass(File, [{
+    key: "actionSheet",
+    value: function actionSheet(title, buttons, cb) {
+      api.actionSheet({
+        title: title,
+        cancelTitle: '取消',
+        buttons: buttons
+      }, function (ret, err) {
+        var index = ret.buttonIndex; // index 从1开始
+
+        if (index !== buttons.length + 1) {
+          cb(index - 1);
+        }
+      });
+    }
+  }, {
+    key: "getPicture",
+    value: function getPicture(sourceType, cb) {
+      // library         //图片库
+      // camera          //相机
+      // album           //相册
+      api.getPicture({
+        sourceType: sourceType,
+        encodingType: 'png',
+        mediaValue: 'pic',
+        destinationType: 'file',
+        allowEdit: false,
+        quality: 20,
+        targetWidth: 1000,
+        // targetHeight: 300,
+        saveToPhotoAlbum: false
+      }, cb);
+    }
+  }]);
+
+  return File;
+}();
+
+var codeMapFilter = function codeMapFilter(list) {
+  var codeMap = {};
+  list.filter(function (item, i) {
+    return !!item.valid;
+  }).forEach(function (el, k) {
+    codeMap[el.code] = el.name;
+  });
+  return codeMap;
+};
 
 var BaiduSDK = /*#__PURE__*/function () {
   function BaiduSDK() {
@@ -2367,7 +1734,7 @@ var OCR = {
 var Utils = function Utils() {
   classCallCheck(this, Utils);
 
-  this.Router = new Router$2();
+  this.Router = new Router();
   this.UI = new UI();
   this.File = new File();
   this.DictFilter = codeMapFilter;
@@ -2376,12 +1743,214 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert = false;
+
+function ajax(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+}; // 统一ios和android的输入框，下标都从0开始
+
+function setRefreshHeaderInfo$1(successCallback, errorCallback) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  api.setRefreshHeaderInfo(_objectSpread$1({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      errorCallback && errorCallback(error);
+    } else {
+      successCallback && successCallback(ret);
+    }
+  });
+}
+
 var dev$1 = 'http://crptdev.liuheco.com';
 var baseUrl$1 =  dev$1 ;
 
-function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var whiteList$1 = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2426,7 +1995,7 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$4({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -3570,55 +3139,29 @@ return numeral;
 }));
 });
 
+// import find from 'lodash/find'
+
 function vmInit() {
   return new Vue({
     el: '#app',
     data: function data() {
       return {
-        pageParam: api.pageParam || {},
-        appcodeMap: {
-          1: 'EBS',
-          2: '客户',
-          3: '产融'
-        },
-        mapping: {
-          1: '申请中',
-          2: '已审批通过',
-          3: '已拒绝',
-          4: '已撤销',
-          5: '还款中',
-          6: '到期结清',
-          7: '提前结清',
-          8: '逾期还款中',
-          9: '逾期已结清',
-          10: '已退货',
-          11: '待申请',
-          12: '已取消'
-        },
-        statusMapping: {
-          3: 'refused',
-          4: 'cancel',
-          5: 'repaying',
-          6: 'normalOver',
-          7: 'earlyOver',
-          8: 'overdue',
-          9: 'overdueOver',
-          10: 'back'
-        },
-        data: {}
+        pageSize: 20,
+        pageNo: 1,
+        total: '*',
+        totalSum: '***',
+        list: [],
+        noData: true,
+        noMore: false,
+        loading: false
       };
-    },
-    computed: {
-      id: function id() {
-        return this.pageParam.id;
-      }
     },
     mounted: function mounted() {
       this.pageInit();
     },
     methods: {
       numeral: numeral,
-      pageInit: function pageInit() {
+      loadMore: function loadMore() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
@@ -3626,18 +3169,9 @@ function vmInit() {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  api.showProgress({
-                    title: '加载中...',
-                    text: '',
-                    modal: false
-                  });
-                  _context.next = 3;
-                  return _this.getPageData();
+                  _this.getPageData();
 
-                case 3:
-                  api.hideProgress();
-
-                case 4:
+                case 1:
                 case "end":
                   return _context.stop();
               }
@@ -3645,73 +3179,103 @@ function vmInit() {
           }, _callee);
         }))();
       },
-      getPageData: function getPageData() {
+      pageInit: function pageInit() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var id, res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  // 业务单状态：
-                  // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
-                  // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-                  id = _this2.id;
-                  _context2.prev = 1;
-                  _context2.next = 4;
-                  return http$1.get("/crpt-order/order/detail/app?orderNo=".concat(id));
+                  api.showProgress({
+                    title: '加载中...',
+                    text: '',
+                    modal: false
+                  });
+                  _context2.next = 3;
+                  return _this2.getPageData(1);
+
+                case 3:
+                  api.hideProgress();
 
                 case 4:
-                  res = _context2.sent;
-                  _this2.data = res.data;
-                  _context2.next = 11;
-                  break;
-
-                case 8:
-                  _context2.prev = 8;
-                  _context2.t0 = _context2["catch"](1);
-                  api.toast({
-                    msg: _context2.t0.msg || '请求发生错误',
-                    location: 'middle'
-                  });
-
-                case 11:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[1, 8]]);
+          }, _callee2);
         }))();
       },
-      openPlan: function openPlan() {
-        var id = this.id;
-        Router$1.openPage({
-          key: 'repay_plan',
-          params: {
-            pageParam: {
-              id: id
+      getPageData: function getPageData(currentPage) {
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+          var pageSize, pageNo, res, _this3$list;
+
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  if (!_this3.loading) {
+                    _context3.next = 2;
+                    break;
+                  }
+
+                  return _context3.abrupt("return");
+
+                case 2:
+                  _this3.loading = true;
+                  pageSize = _this3.pageSize;
+                  pageNo = currentPage || _this3.pageNo;
+                  _context3.prev = 5;
+                  _context3.next = 8;
+                  return http$1.get("credit/mine/repay/list?pageIndex=".concat(pageNo, "&pageSize=").concat(pageSize));
+
+                case 8:
+                  res = _context3.sent;
+                  api.refreshHeaderLoadDone();
+                  _this3.loading = false;
+                  _this3.total = res.data.count;
+                  _this3.totalSum = numeral(res.data.repayPrincipalAmount || 0).format('0,0.00');
+
+                  if (res.data.repayList && res.data.repayList.length > 0) {
+                    _this3.noData = false;
+                    _this3.noMore = false;
+                    _this3.pageNo = pageNo + 1;
+
+                    if (pageNo === 1) {
+                      _this3.list = res.data.repayList;
+                    } else {
+                      (_this3$list = _this3.list).push.apply(_this3$list, toConsumableArray(res.data.repayList));
+                    }
+                  } else {
+                    if (pageNo === 1) {
+                      _this3.noData = true;
+                    } else {
+                      _this3.noMore = true;
+                    }
+                  }
+
+                  _context3.next = 21;
+                  break;
+
+                case 16:
+                  _context3.prev = 16;
+                  _context3.t0 = _context3["catch"](5);
+                  api.toast({
+                    msg: _context3.t0.message || '出错啦',
+                    location: 'middle'
+                  });
+                  api.refreshHeaderLoadDone();
+                  _this3.loading = false;
+
+                case 21:
+                case "end":
+                  return _context3.stop();
+              }
             }
-          }
-        });
-      },
-      openRecord: function openRecord() {
-        var id = this.id;
-        Router$1.openPage({
-          key: 'repay_record',
-          params: {
-            pageParam: {
-              id: id
-            }
-          }
-        });
-      },
-      openLoanContract: function openLoanContract() {
-        api.alert({
-          title: '提示',
-          msg: '功能开发中...'
-        }); // let id = this.id
-        // Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
+          }, _callee3, null, [[5, 16]]);
+        }))();
       }
     }
   });
@@ -3719,11 +3283,22 @@ function vmInit() {
 
 apiready = function apiready() {
   api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
+    name: 'keyback'
+  }, function () {
+    api.closeWidget({
+      silent: false
+    });
   });
-  vmInit();
+  var vm = vmInit();
+  setRefreshHeaderInfo$1(function () {
+    vm.pageInit();
+  });
+  api.addEventListener({
+    name: 'scrolltobottom',
+    extra: {
+      threshold: 100
+    }
+  }, function () {
+    vm.getPageData();
+  });
 };

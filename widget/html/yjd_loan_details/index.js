@@ -3626,49 +3626,75 @@ function vmInit() {
       }
     },
     mounted: function mounted() {
-      console.log(this.id);
-      this.getPageData();
+      this.pageInit();
     },
     methods: {
       numeral: numeral,
-      getPageData: function getPageData() {
+      pageInit: function pageInit() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var id, url, res;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
+                  api.showProgress({
+                    title: '加载中...',
+                    text: '',
+                    modal: false
+                  });
+                  _context.next = 3;
+                  return _this.getPageData();
+
+                case 3:
+                  api.hideProgress();
+
+                case 4:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      getPageData: function getPageData() {
+        var _this2 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var id, url, res;
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
                   // 业务单状态：
                   // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
                   // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-                  id = _this.id;
-                  url = _this.url[_this.status];
-                  _context.prev = 2;
-                  _context.next = 5;
+                  id = _this2.id;
+                  url = _this2.url[_this2.status];
+                  _context2.prev = 2;
+                  _context2.next = 5;
                   return http$1.get("".concat(url, "?orderId=").concat(id));
 
                 case 5:
-                  res = _context.sent;
-                  _this.data = res.data;
-                  _context.next = 12;
+                  res = _context2.sent;
+                  _this2.data = res.data;
+                  _context2.next = 12;
                   break;
 
                 case 9:
-                  _context.prev = 9;
-                  _context.t0 = _context["catch"](2);
+                  _context2.prev = 9;
+                  _context2.t0 = _context2["catch"](2);
                   api.toast({
-                    msg: _context.t0.msg || '请求发生错误',
+                    msg: _context2.t0.msg || '请求发生错误',
                     location: 'middle'
                   });
 
                 case 12:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee, null, [[2, 9]]);
+          }, _callee2, null, [[2, 9]]);
         }))();
       },
       openPlan: function openPlan() {
@@ -3693,13 +3719,35 @@ function vmInit() {
           }
         });
       },
-      openContract: function openContract(key) {
+      openLoanContract: function openLoanContract() {
         var id = this.id;
+        Router$1.openPage({
+          key: 'yjd_contract_loan',
+          params: {
+            pageParam: {
+              id: id
+            }
+          }
+        });
+      },
+      openDaiyangContract: function openDaiyangContract() {
+        var data = this.data;
+        var outCode = data.outCode,
+            payee = data.payee,
+            signedDate = data.signedDate,
+            receivableBond = data.receivableBond,
+            receivedBond = data.receivedBond,
+            surplusReceivableBond = data.surplusReceivableBond;
         Router$1.openPage({
           key: key,
           params: {
             pageParam: {
-              id: id
+              outCode: outCode,
+              payee: payee,
+              signedDate: signedDate,
+              receivableBond: receivableBond,
+              receivedBond: receivedBond,
+              surplusReceivableBond: surplusReceivableBond
             }
           }
         });

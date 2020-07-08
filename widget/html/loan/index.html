@@ -30,7 +30,7 @@
       </div>
     </section>
   
-    <section class="total">
+    <section v-if="list.length > 0" class="total">
       <span>待申请(共{{total}}笔)</span>
       <strong>{{ totalSum ? ('¥ ' + numeral(totalSum).format('¥ 0,0.00')) : ''}}</strong>
     </section>
@@ -60,16 +60,14 @@
       </li>
     </ul>
     
-    <section v-if="loading" class="loading">加载中...</section>
-    <section v-if="!loading && noMore" class="nomore">无更多数据</section>
-    <section v-if="!loading && !noMore" class="loadmore">加载更多</section>
-    <section v-if="!loading && noData" class="nodata">
-      <div class="nodata-pic"></div>
-      <p class="nodata-desc">暂时没有数据哦</p>
+    <section v-if="!noData && loading" class="app_list_loading">加载中...</section>
+    <section v-if="!noData && !loading && noMore" class="app_list_nomore">无更多数据</section>
+    <section v-if="!noData && !loading && !noMore" class="app_list_loadmore">加载更多</section>
+    <section v-if="list.length===0 && noData && !loading" class="app_list_nodata">
+      <div class="app_list_nodata_pic"></div>
+      <p class="app_list_nodata_desc">暂时没有数据哦</p>
     </section>
   </div>
-
-  
 
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>

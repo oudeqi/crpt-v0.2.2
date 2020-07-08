@@ -6,27 +6,52 @@
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
   <link rel="stylesheet" type="text/css" href="../../css/api.css" >
-  <link rel="stylesheet" type="text/css" href="../../css/aui.css" >
 
   <link rel="stylesheet" href="./frm1.css"></head>
 <body>
-
-
-
-  <ul id="list">
+  <div id="app" v-cloak>
     
-
-
-
-  </ul>
-
+    <ul>
+      <li v-for="(item, index) in list" @click="openDetails(item)">
+        <div class="t">
+          <div class="row1">
+            <span>业务单号：{{item.orderNo || ''}}</span>
+            <i class="aui-iconfont aui-icon-right"></i>
+          </div>
+          <div class="b">
+            <div class="tit">
+              <div class="amount">贷款金额(元) 
+                <span :class="['status', mapping[item.status]]">{{mapping2[item.status] || ''}}</span>
+              </div>
+              <span class="num">{{numeral(item.payAmount).format('0,0.00')}}</span>
+            </div>
+          </div>
+          <div class="row2">
+            <span>收款方</span>
+            {{item.saleCustName || ''}}
+          </div>
+          <div class="row2">
+            <span>放款时间</span>
+            {{item.orderTime || ''}}
+          </div>
+          <div class="row3">
+            <span class="label">贷款产品</span>
+            <strong class="produce">{{item.productName || ''}}</strong>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <section v-if="!noData && loading" class="loading">加载中...</section>
+    <section v-if="!noData && !loading && noMore" class="nomore">无更多数据</section>
+    <section v-if="!noData && !loading && !noMore" class="loadmore">加载更多</section>
+    <section v-if="list.length===0 noData && !loading" class="nodata">
+      <div class="nodata-pic"></div>
+      <p class="nodata-desc">暂时没有数据哦</p>
+    </section>
+  </div>
 
   <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript">
-    function xxx() {
-
-    }
-  </script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 
   <script src="./frm1.js"></script></body>
 </html>

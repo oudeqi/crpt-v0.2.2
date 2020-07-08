@@ -14,7 +14,7 @@
         <span>剩余未还本金(元)</span>
         <strong>{{data.repayPrincipalAmount ? numeral(data.repayPrincipalAmount).format('0,0.00') : ''}}</strong>
       </div>
-      <div :class="['header-status', statusMapping[data.status] || '']">{{mapping[data.status] || ''}}</div>
+      <div v-if="data.status" :class="['header-status', statusMapping[data.status] || '']">{{mapping[data.status] || ''}}</div>
     </section>
   
     <section class="content">
@@ -40,7 +40,7 @@
         </div> -->
         <div class="card-row">
           <span class="card-label">合 同</span>
-          <span @click="openContract('yjd_contract_loan')" class="card-btn arrowbtn">查看</span>
+          <span @click="openLoanContract()" class="card-btn arrowbtn">查看</span>
         </div>
       </div>
   
@@ -61,13 +61,13 @@
         </div>
       </div>
   
-      <div class="card">
+      <div class="card" v-if="data.orderNo">
         <div class="card-head">业务单明细</div>
         <div class="card-block">
           <p><span>业务单号</span><strong>{{data.orderNo}}</strong></p>
           <p><span>申请金额(元)</span><strong>{{data.totalAmount}}</strong></p>
           <p><span>下单时间</span><strong>{{data.orderTime || ''}}</strong></p>
-          <p><span>代养合同编号</span><strong v-if="data.outCode" @click="openContract('yjd_contract_daiyang')" class="arrowbtn">{{data.outCode}}</strong></p>
+          <p><span>代养合同编号</span><strong v-if="data.outCode" @click="openDaiyangContract()" class="arrowbtn">{{data.outCode}}</strong></p>
           <p><span>收款方</span><strong>{{data.payee || ''}}</strong></p>
         </div>
       </div>

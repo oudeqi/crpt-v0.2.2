@@ -111,6 +111,8 @@ function vmInit () {
           }
         } catch (error) {
           api.toast({ msg: error.message || '出错啦', location: 'middle' })
+          api.refreshHeaderLoadDone()
+          this.loading = false
         }
       },
 
@@ -118,7 +120,7 @@ function vmInit () {
         let productId = record.productId
         let orderNo = record.orderNo
         if (record.orderType === 1) { // 好销贷
-          if (record.status === 11) { // 立即开通
+          if (record.status === 11) { // 待申请，立即开通
             if (this.userinfo.userType === '1') { // 个人用户
               Router.openPage({ key: 'hxd_apply', params: { pageParam: {productId}}})
             } else if (this.userinfo.userType === '2') { // 企业用户
@@ -126,8 +128,11 @@ function vmInit () {
             } else {
               api.toast({ msg: '未知的用户类型', location: 'middle' })
             }
-          } else { // 继续开通
+          } else if (record.status === 1) { // 申请中，继续开通
             Router.openPage({ key: 'hxd_u_apply', params: { pageParam: {productId}}})
+          } else if (record.status === 2) { // 已审批通过，未放款，去详情
+            // TODO 参数待定
+            Router.openPage({ key: 'hxd_d_detail', params: { pageParam: {productId}}})
           }
         } else if (record.orderType === 4) { // 押金贷
           // 业务单流程状态（押金贷专用，判断按钮展示及跳转页面）
