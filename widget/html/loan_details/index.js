@@ -1192,6 +1192,7 @@ var routerConfig = {
     slidBackEnabled: true,
     navigationBar: navigationBarGreen
   },
+  // 账单详情
   billdetails: {
     name: 'html/billdetails/win',
     title: '账单详情',
@@ -1280,6 +1281,15 @@ var routerConfig = {
     name: 'agreement',
     title: '查看合同',
     url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款试算页面
+  com_repay_trial: {
+    name: 'com_repay_trial',
+    title: '还款试算',
+    url: 'widget://html/com_repay_trial/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
