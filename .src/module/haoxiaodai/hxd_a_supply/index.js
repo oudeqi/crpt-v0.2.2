@@ -1,6 +1,7 @@
 import './index.less'
 import Utils from './../../../utils'
 import service from './service';
+import Router from '../../../router';
 
 apiready = function () {
   let pageParam = api.pageParam || {};
@@ -96,7 +97,16 @@ apiready = function () {
           }, {
             businessLicense: this.businessLicense,
           })
-          console.log(res)
+          if(res.code === 200) {
+            Router.openPage({
+              key: 'hxd_apply',
+              params: {
+                pageParam: {
+                  productId: pageParam.productId
+                }
+              }
+            })
+          }
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(`${error.code} - ${error.msg}`)

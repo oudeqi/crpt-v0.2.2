@@ -67,7 +67,7 @@ apiready = function () {
          * companyExtId === -1 企业用户，并且未填写过信息
          */
         const userType = ($api.getStorage('userinfo') || {}).userType
-        if (item.creditStatus === 0 && Number(userType) === 2 && item.companyExtId === -1) {
+        if (item.creditStatus === 0 && Number(userType) === 2 && Number(item.companyExtId) === -1) {
           Router.openPage({ key: 'hxd_a_supply', params: {
             pageParam: {productId: item.productId}
           }})

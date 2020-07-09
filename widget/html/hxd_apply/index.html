@@ -76,7 +76,7 @@
             @change="handleCheckBox"
           >
         </label>
-        <div class="agreement_content">
+        <div class="agreement_content" v-if="creditStatus !== 0 && creditStatus !== 3">
           <span>已阅读并同意</span>
           <span class="ac"
             v-for="item in productInfo.unsignContract"
@@ -89,8 +89,8 @@
       </div>
       <div v-if="!hasApply" class="bottom-box">
         <button class="btn btn-normal"
-          :class="{disabled: creditStatus !== 0}"
-          :disabled="creditStatus !== 0 && isChecked"
+          :class="{disabled: creditStatus !== 0 && creditStatus !== 3}"
+          :disabled="creditStatus !== 0 && creditStatus !== 3 && isChecked"
           @click="handleSubmit"
         >
           {{btnText}}

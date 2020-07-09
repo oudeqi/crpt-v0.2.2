@@ -2471,10 +2471,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
+  my_quota: {
+    name: 'html/my_quota/index',
     title: '我的额度',
-    url: 'widget://html/myquota/win.html',
+    url: 'widget://html/my_quota/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -2778,7 +2778,7 @@ apiready = function apiready() {
          */
         var userType = ($api.getStorage('userinfo') || {}).userType;
 
-        if (item.creditStatus === 0 && Number(userType) === 2 && item.companyExtId === -1) {
+        if (item.creditStatus === 0 && Number(userType) === 2 && Number(item.companyExtId) === -1) {
           Router$2.openPage({
             key: 'hxd_a_supply',
             params: {

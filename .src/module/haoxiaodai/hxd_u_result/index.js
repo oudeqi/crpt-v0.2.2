@@ -3,7 +3,9 @@ import './index.less'
 import filter from './../../../utils/filter'
 import Utils from '../../../utils';
 import Router from '../../../router';
-
+import {
+  openTabLayout,
+} from '../../../webview'
 
 
 apiready = function () {
@@ -28,7 +30,14 @@ apiready = function () {
       successTotalAmount: filter.toThousands(pageParam.successTotalAmount)
     },
     methods: {
-      
+      handleToMyloan() {
+        Router.openPage({
+          key: 'my_loan'
+        })
+      },
+      handleToHome() {
+        openTabLayout()
+      }
     },
     mounted() {
       // this.handleStartTimer()

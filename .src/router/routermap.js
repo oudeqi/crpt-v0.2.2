@@ -47,10 +47,10 @@ const routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
+  my_quota: {
+    name: 'html/my_quota/index',
     title: '我的额度',
-    url: 'widget://html/myquota/win.html',
+    url: 'widget://html/my_quota/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
