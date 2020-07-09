@@ -131,26 +131,6 @@ var defineProperty = _defineProperty;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-// 导航布局
 
 
 function openTabLayout(index) {
@@ -227,7 +207,7 @@ function openTabLayout(index) {
       }, {
         title: "还款",
         name: "tablayout/repay",
-        url: "widget://html/repay/frm.html",
+        url: "widget://html/repay/index.html",
         bounces: true,
         reload: true,
         scrollToTop: true //其他继承自openFrame的参数

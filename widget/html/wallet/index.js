@@ -2149,7 +2149,6 @@ apiready = function apiready() {
     },
     mounted: function mounted() {
       this.getData();
-      this.getLocation();
     },
     methods: {
       getData: function getData() {
@@ -2158,20 +2157,6 @@ apiready = function apiready() {
         http$1.get('/crpt-cust/customer/account/hope/account/info', {}).then(function (res) {
           _this.accountData = res.data;
         });
-      },
-      getLocation: function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            latitude = position.coords.latitude; //获取纬度
-
-            longitude = position.coords.longitude; //获取经度
-
-            console.log(latitude);
-            console.log(longitude);
-          });
-        } else {
-          alert("不支持定位功能");
-        }
       }
     }
   });

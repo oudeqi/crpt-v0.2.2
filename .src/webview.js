@@ -89,26 +89,6 @@ function openSlidLayout (fn) {
   }, fn)
 }
 
-/*
-list: [{
-  text: '',
-  iconPath: 'widget://image/tabLayout/index.png',
-  selectedIconPath: 'widget://image/tabLayout/index_active.png'
-}, {
-  text: '订单',
-  iconPath: 'widget://image/tabLayout/order.png',
-  selectedIconPath: 'widget://image/tabLayout/order_active.png'
-}, {
-  text: '还款',
-  iconPath: 'widget://image/tabLayout/repay.png',
-  selectedIconPath: 'widget://image/tabLayout/repay_active.png'
-}, {
-  text: '我的',
-  iconPath: 'widget://image/tabLayout/mine.png',
-  selectedIconPath: 'widget://image/tabLayout/mine_active.png'
-}],
-*/
-
 // 导航布局
 function openTabLayout (index) {
   api.openTabLayout({
@@ -186,7 +166,7 @@ function openTabLayout (index) {
         }, {
           title: "还款",
           name: "tablayout/repay",
-          url: "widget://html/repay/frm.html",
+          url: "widget://html/repay/index.html",
           bounces: true,
           reload: true,
           scrollToTop: true,
@@ -504,19 +484,7 @@ function openBillDetails (id, {
   })
 }
 
-// 我的贷款
-function openMyLoan () {
-  api.openTabLayout({
-    name: 'html/myloan/win',
-    title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  })
-}
+
 
 
 
@@ -1019,7 +987,6 @@ export {
   openMsgList,
   openMsgDetails,
   openBillDetails,
-  openMyLoan,
   openChangePwd,
   openContactUs,
   openProductDetails,

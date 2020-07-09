@@ -59,7 +59,7 @@ class App {
         }
       }
     })
-    Router.openPage({ key: 'hxd_u_confirm', params: { pageParam: { productId: '1', orderIds: JSON.stringify(['1280790546171846657']) } } })
+    // Router.openPage({ key: 'hxd_u_confirm', params: { pageParam: { productId: '1', orderIds: JSON.stringify(['1280790546171846657']) } } })
     return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
