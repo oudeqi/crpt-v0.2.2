@@ -91,13 +91,13 @@ function vmInit () {
       openDetails (record) {
         // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
         if (String(record.orderType) === '1') { // 好销贷
-          Router.openPage({ key: 'hxd_d_detail', params: {pageParam: { id: record.orderNo }}})
+          Router.openPage({ key: 'hxd_loan_details', params: {pageParam: { id: record.orderId }}})
         } else if (String(record.orderType) === '2') { // 以前的
           Router.openPage({ key: 'loan_details', params: {pageParam: { id: record.orderNo }}})
         } else if (String(record.orderType) === '3') { // 以前的
           Router.openPage({ key: 'loan_details', params: {pageParam: { id: record.orderNo }}})
         } else if (String(record.orderType) === '4') { // 押金贷
-          Router.openPage({ key: 'yjd_loan_details', params: {pageParam: { id: record.orderNo }}})
+          Router.openPage({ key: 'yjd_loan_details', params: {pageParam: { id: record.orderId }}})
         } else {
           api.toast({ msg: '未知的产品', location: 'middle' })
         }

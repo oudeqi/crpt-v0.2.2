@@ -57,7 +57,7 @@ function vmInit () {
         return this.pageParam.id
       },
       status: function () {
-        return this.pageParam.status
+        return this.pageParam.status || 'valid'
       }
     },
     mounted () {

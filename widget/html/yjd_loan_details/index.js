@@ -3632,7 +3632,7 @@ function vmInit() {
         return this.pageParam.id;
       },
       status: function status() {
-        return this.pageParam.status;
+        return this.pageParam.status || 'valid';
       }
     },
     mounted: function mounted() {

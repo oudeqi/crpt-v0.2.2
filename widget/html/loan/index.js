@@ -3665,7 +3665,8 @@ function vmInit() {
           2: '已审批通过',
           11: '待申请'
         },
-        statusMapHXD: {
+        hxdShouxinStatusMap: {
+          // 授信状态
           0: '未申请',
           1: '已受理',
           2: '成功',
@@ -3681,11 +3682,11 @@ function vmInit() {
     methods: {
       numeral: numeral,
       handleHXDClick: function handleHXDClick() {
-        var status = this.hxd.creditStatus;
+        var creditStatus = this.hxd.creditStatus;
         var productId = this.hxd.productId;
 
-        if (status === 0) {
-          // 立即开通
+        if (creditStatus === 0 || creditStatus === 1) {
+          // 未申请 立即开通 // 已受理 继续开通
           if (this.userinfo.userType === '1') {
             // 个人用户
             Router$1.openPage({
@@ -3712,7 +3713,8 @@ function vmInit() {
               location: 'middle'
             });
           }
-        } else {
+        } else if (creditStatus === 2) {
+          // 成功 我要用款
           Router$1.openPage({
             key: 'hxd_u_apply',
             params: {
@@ -3720,6 +3722,11 @@ function vmInit() {
                 productId: productId
               }
             }
+          });
+        } else {
+          api.toast({
+            msg: '好销贷授信状态不正确',
+            location: 'middle'
           });
         }
       },
@@ -3890,11 +3897,33 @@ function vmInit() {
         // orderType 业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷）
         var productId = record.productId;
         var orderNo = record.orderNo;
+        var orderId = record.orderId;
 
         if (record.orderType === 1) {
           // 好销贷
-          if (record.status === 11) {
-            // 待申请，立即开通
+          // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加
+          if (record.status === 1) {
+            // 申请中 继续申请
+            Router$1.openPage({
+              key: 'hxd_u_apply',
+              params: {
+                pageParam: {
+                  productId: productId
+                }
+              }
+            });
+          } else if (record.status === 2) {
+            // 已审批通过，未放款 去详情
+            Router$1.openPage({
+              key: 'hxd_loan_details',
+              params: {
+                pageParam: {
+                  id: orderId
+                }
+              }
+            });
+          } else if (record.status === 11) {
+            // 待申请 立即申请
             if (this.userinfo.userType === '1') {
               // 个人用户
               Router$1.openPage({
@@ -3921,27 +3950,6 @@ function vmInit() {
                 location: 'middle'
               });
             }
-          } else if (record.status === 1) {
-            // 申请中，继续开通
-            Router$1.openPage({
-              key: 'hxd_u_apply',
-              params: {
-                pageParam: {
-                  productId: productId
-                }
-              }
-            });
-          } else if (record.status === 2) {
-            // 已审批通过，未放款，去详情
-            // TODO 参数待定
-            Router$1.openPage({
-              key: 'hxd_d_detail',
-              params: {
-                pageParam: {
-                  productId: productId
-                }
-              }
-            });
           }
         } else if (record.orderType === 4) {
           // 押金贷
@@ -4001,21 +4009,5 @@ apiready = function apiready() {
     }
   }, function () {
     vm.getPageData();
-  }); // document.querySelector('#list').onclick = function (event) {
-  //   let applyBtn = $api.closest(event.target, '.apply')
-  //   let cancelBtn = $api.closest(event.target, '.cancel')
-  //   if (cancelBtn) {
-  //     api.alert({
-  //       title: '提示',
-  //       msg: '功能开发中...',
-  //     })
-  //   } else if (applyBtn) {
-  //     let id = applyBtn.dataset.id
-  //     if (id) {
-  //       Router.openPage({ key: 'loan_application' }, { id })
-  //     } else {
-  //       api.toast({ msg: 'id 不存在' })
-  //     }
-  //   }
-  // }
+  });
 };

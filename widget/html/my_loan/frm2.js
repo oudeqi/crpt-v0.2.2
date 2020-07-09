@@ -3804,10 +3804,10 @@ function vmInit() {
         if (String(record.orderType) === '1') {
           // 好销贷
           Router$1.openPage({
-            key: 'hxd_d_detail',
+            key: 'hxd_loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                id: record.orderId
               }
             }
           });
@@ -3837,7 +3837,8 @@ function vmInit() {
             key: 'yjd_loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                id: record.orderId,
+                status: 'invalid'
               }
             }
           });

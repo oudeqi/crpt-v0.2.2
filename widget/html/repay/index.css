@@ -426,22 +426,31 @@ html, body {
 
 .total {
   padding: 17px 14px 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .total strong {
-    width:42px;
     height:22px;
     font-size:16px;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     color:rgba(48,49,51,1);
     line-height:22px;
-    display: inline-block;
+    display: block;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
 .total span {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
     margin-left: 8px;
-    width:210px;
     height:20px;
     font-size:14px;
     font-family:PingFang-SC-Medium,PingFang-SC;
