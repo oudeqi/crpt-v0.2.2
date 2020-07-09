@@ -164,6 +164,15 @@ const routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
 }
 
 export default routerHXDConfig

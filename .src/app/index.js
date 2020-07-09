@@ -49,8 +49,8 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
 
-    // Router.openPage({ key: 'com_repay_trial'})
-    // return
+    Router.openPage({ key: 'hxd_loan_details'})
+    return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}
