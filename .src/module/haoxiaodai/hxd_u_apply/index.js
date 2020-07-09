@@ -2,7 +2,7 @@ import './index.less'
 import service from './service';
 import filter from './../../../utils/filter'
 import Utils from '../../../utils';
-import Router from '../../../utils/router';
+import Router from '../../../router';
 
 apiready = function () {
   const pageParam = api.pageParam || {}
@@ -20,16 +20,16 @@ apiready = function () {
     data: {
       // isWarning: true,
       EBSOrders: [],
-      availableAmount: 0, // 当前可用额度
+      amount: 0, // 当前可用额度
       useAmount: '', // 勾选用款金额
       productId: pageParam.productId
     },
     computed: {
       isWarning: function () {
-        return this.availableAmount < this.useAmount
+        return this.amount < this.useAmount
       },
-      availableAmountTn: function () {
-        return filter.toThousands(this.availableAmount)
+      amountTn: function () {
+        return filter.toThousands(this.amount)
       },
       useAmountTn: function () {
         return filter.toThousands(this.useAmount)
@@ -47,17 +47,17 @@ apiready = function () {
                 isSelected: false
               }
             })
-            this.availableAmount = res.data.availableAmount
+            this.amount = res.data.amount
           } else {
             this.EBSOrders = []
-            this.availableAmount = ''
+            this.amount = ''
           }
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(error.msg)
           }
           this.EBSOrders = []
-          this.availableAmount = ''
+          this.amount = ''
         }
         Utils.UI.hideLoading()
       },
@@ -77,20 +77,35 @@ apiready = function () {
           Utils.UI.showLoading('提交中')
           const res = await service.postApply({
             productId: this.productId,
-            orderIds: _list
+            orderIds: _list,
+            applyAmount: this.calculateUseAmount()
           })
           if (res.code === 200) {
-            alert('ok')
-            Router.openPage({
-              key: 'hxd_u_confirm',
-              params: {
-                pageParam: { productId: this.productId }
-              }
-            })
+            Utils.UI.toast('申请已提交')
+            const successListStr = JSON.stringify(res.data.successList)
+            const failListStr = JSON.stringify(res.data.failList)
+            setTimeout(() => {
+              Router.openPage({
+                key: 'hxd_u_confirm',
+                params: {
+                  pageParam: {
+                    productId: this.productId,
+                    successListStr,
+                    failListStr,
+                    orderIds: JSON.stringify(res.data.successList.map(item => item.orderId))
+                  }
+                }
+              })
+            }, 50);
+          } else {
+            this.handleGetEBSOrders()
           }
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(`${error.code} : ${error.msg}`)
+          }
+          if(error.code) {
+            this.handleGetEBSOrders()
           }
         }
         Utils.UI.hideLoading('')

@@ -51,6 +51,7 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 }
       let end = new Date().getTime()
       let dis = (end - start) / 1000
       console.log('/************* ' + dis + 's **********/')
+      console.log(JSON.stringify(ret))
       if (ret) {
         if (ret.code === 200) {
           resolve(ret)
@@ -58,7 +59,8 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 }
           // 表单校验未过专属code
           if (ret.code === 202) {
             const data = ret.data
-            Utils.UI.toast(data[0].msg)
+            data && Utils.UI.toast(data[0].msg)
+            ret.msg && Utils.UI.toast(ret.msg)
             resolve(ret)
           } else {
             reject(ret)

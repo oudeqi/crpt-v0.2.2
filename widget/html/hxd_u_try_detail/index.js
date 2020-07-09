@@ -2066,15 +2066,83 @@ var http$1 = {
 };
 
 var service = {
-  getProductInfo: function getProductInfo(params) {
-    return http$1.get("/crpt-credit/credit/jf/product/detail", {
+  postBankInterest: function postBankInterest(params) {
+    return http$1.get("/crpt-credit/credit/hxd/query/bank/interest", {
       values: params
     });
   },
-  postSignJF: function postSignJF(params) {
-    return http$1.post("/crpt-credit/credit/jf/apply/sign?productId=".concat(params.productId), null, {
-      timeout: 10
+  postCalculatorPlan: function postCalculatorPlan(params) {
+    return http$1.post("/crpt-credit/credit/hxd/calculator/for/apply", {
+      body: params
     });
+  }
+};
+
+/**
+ * @author Sunning
+ * 存放部分方法
+ */
+var filter = {
+  /**
+   * @author Sunning
+   * 数字格式化为千分位   1000 ==> 1,000
+   * @param {Object} s 要格式化的数字
+   * @param {Object} n 保留几位小数
+   */
+  formatNumber: function formatNumber(s, n) {
+    if (s === '-' || !s) {
+      return '-';
+    } else {
+      if (n === 0) {
+        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      } else {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
+        var positive = s.toString().split('-');
+        var l;
+        var r;
+
+        if (positive.length > 1) {
+          l = positive[1].split('.')[0].split('').reverse();
+          r = positive[1].split('.')[1];
+        } else {
+          l = s.split('.')[0].split('').reverse();
+          r = s.split('.')[1];
+        }
+
+        var t = '';
+
+        for (var i = 0; i < l.length; i++) {
+          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+        }
+
+        var result = t.split('').reverse().join('') + '.' + r;
+        if (positive.length > 1) result = '-' + result;
+        return result;
+      }
+    }
+  },
+
+  /**
+   * author: Sunning
+   * 将数字格式化为千分位
+   * @param {Object} value 需要转化的数字
+   */
+  toThousands: function toThousands(value) {
+    if (value === '' || value === undefined || value === null) {
+      return '';
+    }
+
+    value = String(value); // 强制转化为转化为字符串
+
+    var isDecimal = value.split('.');
+
+    if (isDecimal.length === 1) {
+      // 如果长度为1表示没有小数，否则表示有小数
+      return this.formatNumber(value, 0);
+    } else {
+      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
+    }
   }
 };
 
@@ -2554,91 +2622,7 @@ var Router$1 = /*#__PURE__*/function () {
   return Router;
 }();
 
-var Router$2 = new Router$1();
-
-/**
- * @author Sunning
- * 存放部分方法
- */
-var filter = {
-  /**
-   * @author Sunning
-   * 数字格式化为千分位   1000 ==> 1,000
-   * @param {Object} s 要格式化的数字
-   * @param {Object} n 保留几位小数
-   */
-  formatNumber: function formatNumber(s, n) {
-    if (s === '-' || !s) {
-      return '-';
-    } else {
-      if (n === 0) {
-        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      } else {
-        n = n > 0 && n <= 20 ? n : 2;
-        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
-        var positive = s.toString().split('-');
-        var l;
-        var r;
-
-        if (positive.length > 1) {
-          l = positive[1].split('.')[0].split('').reverse();
-          r = positive[1].split('.')[1];
-        } else {
-          l = s.split('.')[0].split('').reverse();
-          r = s.split('.')[1];
-        }
-
-        var t = '';
-
-        for (var i = 0; i < l.length; i++) {
-          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
-        }
-
-        var result = t.split('').reverse().join('') + '.' + r;
-        if (positive.length > 1) result = '-' + result;
-        return result;
-      }
-    }
-  },
-
-  /**
-   * author: Sunning
-   * 将数字格式化为千分位
-   * @param {Object} value 需要转化的数字
-   */
-  toThousands: function toThousands(value) {
-    if (value === '' || value === undefined || value === null) {
-      return '';
-    }
-
-    value = String(value); // 强制转化为转化为字符串
-
-    var isDecimal = value.split('.');
-
-    if (isDecimal.length === 1) {
-      // 如果长度为1表示没有小数，否则表示有小数
-      return this.formatNumber(value, 0);
-    } else {
-      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
-    }
-  }
-};
-
-var filterDict = function filterDict(type) {
-  var Obj = {};
-  var sendJson = {
-    type: type,
-    valid: 1
-  };
-  return http.post('/crpt-biz/dict/codelist', {
-    body: sendJson
-  }).then(function (res) {
-    res.data.map(function (item) {
-      Obj[item.code] = item.name;
-    });
-    return Obj;
-  });
-};
+new Router$1();
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
@@ -2652,151 +2636,86 @@ apiready = function apiready() {
   var page = new Vue({
     el: '#app',
     data: {
-      creditStatus: 0,
-      productInfo: {},
-      duebillTypeMap: {},
-      creditAmountStatusMap: {}
+      dealDays: 90,
+      plan: {},
+      serviceMoney: 0
     },
-    computed: {
-      productTotalLimitTn: function productTotalLimitTn() {
-        return filter.toThousands(this.productInfo.productTotalLimit);
-      },
-      availableAmountTn: function availableAmountTn() {
-        return filter.toThousands(this.productInfo.availableAmount);
-      }
+    mounted: function mounted() {
+      this.handlePostPlan();
     },
     methods: {
-      handleGetProductDetail: function handleGetProductDetail() {
+      handleChange: function handleChange(event) {
+        this.dealDays = event.target.value;
+        this.handlePostPlan();
+      },
+      handlePostPlan: function handlePostPlan() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var duebillTypeMap, creditAmountStatusMap, res;
+          var resInterest, bankBackInterest, serviceMoney, res;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  Utils$1.UI.showLoading('加载中'); // 还款方式码表
+                  Utils$1.UI.showLoading('查询中'); // const resInterest = await service.postBankInterest({ productId: pageParam.productId })
 
-                  _context.next = 4;
-                  return filterDict('duebillType');
+                  resInterest = {
+                    code: 200,
+                    data: {
+                      bankBackInterest: '0.00038',
+                      serviceMoney: 3.8
+                    }
+                  };
 
-                case 4:
-                  duebillTypeMap = _context.sent;
-
-                  if (duebillTypeMap) {
-                    _this.duebillTypeMap = duebillTypeMap;
-                  } // 授信额度状态码表
-
-
-                  _context.next = 8;
-                  return filterDict('creditAmountStatus');
-
-                case 8:
-                  creditAmountStatusMap = _context.sent;
-
-                  if (creditAmountStatusMap) {
-                    _this.creditAmountStatusMap = creditAmountStatusMap;
+                  if (!(resInterest.code === 200)) {
+                    _context.next = 11;
+                    break;
                   }
 
-                  _context.next = 12;
-                  return service.getProductInfo({
-                    productId: pageParam.productId
+                  bankBackInterest = resInterest.data.bankBackInterest;
+                  serviceMoney = resInterest.data.serviceMoney;
+                  _this.serviceMoney = serviceMoney;
+                  _context.next = 9;
+                  return service.postCalculatorPlan({
+                    dealDays: _this.dealDays,
+                    bankBackInterest: bankBackInterest,
+                    needApplyAmount: pageParam.needApplyAmount
                   });
 
-                case 12:
+                case 9:
                   res = _context.sent;
 
                   if (res.code === 200) {
-                    _this.productInfo = {
-                      creditAmount: res.data.creditAmount,
-                      producName: res.data.productName,
-                      signContract: [res.data.signContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
-                      exeInterest: res.data.exeInterest,
-                      opType: _this.duebillTypeMap[res.data.opType],
-                      repayCycle: res.data.repayCycle,
-                      productTotalLimit: res.data.productTotalLimit,
-                      availableAmount: res.data.availableAmount,
-                      expireDate: res.data.expireDate,
-                      amountStatus: res.data.amountStatus,
-                      amountStatusText: _this.creditAmountStatusMap[res.data.amountStatus]
+                    _this.plan = {
+                      calRepayAmount: filter.toThousands(res.data.calRepayAmount),
+                      calServiceFee: filter.toThousands(res.data.calServiceFee)
                     };
-                    _this.creditStatus = res.data.creditStatus;
                   }
 
-                  _context.next = 19;
+                case 11:
+                  _context.next = 16;
                   break;
 
-                case 16:
-                  _context.prev = 16;
+                case 13:
+                  _context.prev = 13;
                   _context.t0 = _context["catch"](0);
 
                   if (_context.t0.msg) {
-                    Utils$1.UI.toast("".concat(_context.t0.code, " : ").concat(_context.t0.msg));
+                    Utils$1.UI.toast(_context.t0.msg);
                   }
 
-                case 19:
+                case 16:
                   Utils$1.UI.hideLoading();
 
-                case 20:
+                case 17:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 16]]);
+          }, _callee, null, [[0, 13]]);
         }))();
-      },
-      handleToChangeLog: function handleToChangeLog() {
-        Router$2.openPage({
-          key: 'hxd_quota',
-          params: {
-            pageParam: {
-              productId: pageParam.productId,
-              productTotalLimit: filter.toThousands(this.productInfo.productTotalLimit)
-            }
-          }
-        });
-      },
-      handleToAgreement: function handleToAgreement(id) {
-        Router$2.openPage({
-          key: 'agreement',
-          params: {
-            pageParam: {
-              id: id,
-              type: 'pdf'
-            }
-          }
-        });
-      },
-      handleToProductIntro: function handleToProductIntro() {
-        Router$2.openPage({
-          key: 'hxd_apply',
-          params: {
-            pageParam: {
-              productId: pageParam.productId,
-              hasApply: true
-            }
-          }
-        });
       }
-    },
-    mounted: function mounted() {
-      var _this2 = this;
-
-      Utils$1.UI.setRefreshHeaderInfo({
-        success: function success() {
-          _this2.handleGetProductDetail();
-
-          setTimeout(function () {
-            api.refreshHeaderLoadDone();
-          }, 0);
-        },
-        fail: function fail() {
-          api.refreshHeaderLoadDone();
-        }
-      });
-      this.handleGetProductDetail();
     }
-  }); // alert(Vue)
+  });
 };

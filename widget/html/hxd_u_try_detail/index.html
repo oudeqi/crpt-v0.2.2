@@ -1,0 +1,56 @@
+<!doctype html>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+    <meta name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    >
+    <meta name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    >
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" >
+    
+  
+  <link rel="stylesheet" href="./index.css"></head>
+  <body>
+    <div id="app">
+      <div class="box">
+        
+        <section class="total">
+          <div class="top">
+            <div class="t1 label">
+              <div class="lb">每万元日费用</div>
+              <div class="val">{{serviceMoney}}元</div>
+            </div>
+            <div class="t1 label">
+              <div class="lb">用款天数</div>
+              <div class="val"><input class="ipt" type="tel" maxlength="3" :value="dealDays" @blur="handleChange">天</div>
+            </div>
+          </div>
+        </section>
+        <div class="main">
+          <div class="middle">本次还款试算仅做参考，实际金额以我的账单为准</div>
+          <ul class="list">
+            <li class="cel">
+              <div class="key1">
+                <span class="label">预计共应还</span>
+              </div>
+              <div class="key2">
+                <span class="kt">{{plan.calRepayAmount}}元</span>
+                <span class="kb">含费用{{plan.calServiceFee}}元</span>
+              </div>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  
+  <script src="./index.js"></script></body>
+</html>

@@ -18,7 +18,7 @@
     <div id="app">
       <section class="header">
         <p class="tips">验证码已发送至手机号</p>
-        <p class="phone">134****0094</p>
+        <p class="phone">{{hidePhone}}</p>
         <div class="code">
           <input
             type="tel"
@@ -36,7 +36,7 @@
           </div>
         </div>
         <p v-if="isCounter" class="timer">{{count}}s后重新发送</p>
-        <p v-else class="timer" @click="handleStartTimer">重新获取</p>
+        <p v-else class="timer" @click="handleGetSMSCode">重新获取</p>
       </section>
       <div class="markup">
         <p class="p1 mg">没收到短信？</p>
@@ -47,7 +47,7 @@
           <span class="b">4009990099</span>
         </p>
       </div>
-      <div class="btn">确定</div>
+      <div class="btn" @click="handleSubmit">确定</div>
     </div>
 
     <script type="text/javascript" src="../../script/api.js"></script>

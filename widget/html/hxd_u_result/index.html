@@ -17,36 +17,23 @@
   <body>
     <div id="app">
       <div class="header">
-        <div v-if="status === 1" class="mb">
+        <div v-if="successList.length >= 1" class="mb">
           <div class="logo"></div>
-          <div class="tips">2笔订单用款成功，共150,000.00元</div>
+          <div class="tips">{{successList.length}}笔订单用款成功，共{{successTotalAmount}}元</div>
           <div class="orders">
-            <div class="tit">业务单号</div>
-            <div class="ord">12412421</div>
-            <div class="ord">12412421</div>
+            <div class="ord" v-for="item in successList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.orderNo}}</div>
           </div>
         </div>
-        <div v-else-if="status === 2" class="mb s2">
-          <div class="logo"></div>
-          <div class="tips">2笔订单处理中</div>
-        </div>
-        <div v-else-if="status === 3" class="mb s2">
-          <div class="logo">这里倒计时</div>
-          <div class="tips">用款申请提交成功，正在等待审批结果</div>
-        </div>
-        <div v-else class="mb">
+        
+        <div v-if="failList.length >= 1" class="mb">
           <div class="logo fail"></div>
-          <div class="tips">2笔订单用款失败</div>
+          <div class="tips">{{failList.length}}笔订单用款失败</div>
           <div class="orders">
-            <div class="tit">失败原因</div>
-            <div class="ord">您所选的订单有更新，请重新选择单据</div>
-            <div class="tit">业务单号</div>
-            <div class="ord">12412421</div>
-            <div class="ord">12412421</div>
+              <div class="ord" v-for="item in failList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.orderNo}}</div>
           </div>
         </div>
       </div>
-      <div v-if="status !== 3">
+      <div>
         <div class="btn btn-normal">查看我的贷款</div>
         <div class="btn btn-prime">返回首页</div>
       </div>

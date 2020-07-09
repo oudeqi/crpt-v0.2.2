@@ -274,10 +274,10 @@ var routerHXDConfig = {
     navigationBar: navigationBarWhite
   },
   // 好销贷用款确认
-  hxd_u_try_detail: {
-    name: 'hxd_u_try_detail',
+  hxd_u_try: {
+    name: 'hxd_u_try',
     title: '用款试算',
-    url: 'widget://html/hxd_u_try_detail/index.html',
+    url: 'widget://html/hxd_u_try/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
