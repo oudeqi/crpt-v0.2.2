@@ -3668,9 +3668,9 @@ function vmInit() {
         total: '*',
         totalSum: '',
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData',
+        // hasMore,noMore,noData
         statusMap: {
           1: '申请中',
           2: '已审批通过',
@@ -3860,8 +3860,7 @@ function vmInit() {
                   _this4.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00');
 
                   if (res.data.list && res.data.list.length > 0) {
-                    _this4.noData = false;
-                    _this4.noMore = false;
+                    _this4.more = 'hasMore';
                     _this4.pageNo = pageNo + 1;
 
                     if (pageNo === 1) {
@@ -3871,9 +3870,9 @@ function vmInit() {
                     }
                   } else {
                     if (pageNo === 1) {
-                      _this4.noData = true;
+                      _this4.more = 'noData';
                     } else {
-                      _this4.noMore = true;
+                      _this4.more = 'noMore';
                     }
                   }
 

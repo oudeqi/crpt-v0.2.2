@@ -18,9 +18,8 @@ function vmInit () {
         total: '*',
         totalSum: '',
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData', // hasMore,noMore,noData
         statusMap: {
           1: '申请中',
           2: '已审批通过',
@@ -94,8 +93,7 @@ function vmInit () {
           this.total = res.data.count
           this.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00')
           if (res.data.list && res.data.list.length > 0) {
-            this.noData = false
-            this.noMore = false
+            this.more = 'hasMore'
             this.pageNo = pageNo + 1
             if (pageNo === 1) {
               this.list = res.data.list
@@ -104,9 +102,9 @@ function vmInit () {
             }
           } else {
             if (pageNo === 1) {
-              this.noData = true
+              this.more = 'noData'
             } else {
-              this.noMore = true
+              this.more = 'noMore'
             }
           }
         } catch (error) {
