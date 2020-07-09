@@ -67,8 +67,8 @@ function vmInit () {
         // 业务单状态：
         // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
         // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-        // let id = this.id
-        let id = '1280032544158498817' // 26496114
+        let id = this.id
+        // let id = '1280032544158498817' // 26496114
         try {
           let res = await http.get(`/crpt-order/order/hxd/query/order/info/detail?orderId=${id}`)
           this.data = res.data
