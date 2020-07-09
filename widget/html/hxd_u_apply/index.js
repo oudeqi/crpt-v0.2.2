@@ -1316,7 +1316,16 @@ var base64 = createCommonjsModule(function (module, exports) {
     // existing version for noConflict()
     global = global || {};
     var _Base64 = global.Base64;
-    var version = "2.6.1";
+    var version = "2.5.2";
+    // if node.js and NOT React Native, we use Buffer
+    var buffer;
+    if ( module.exports) {
+        try {
+            buffer = eval("require('buffer').Buffer");
+        } catch (err) {
+            buffer = undefined;
+        }
+    }
     // constants
     var b64chars
         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -1363,29 +1372,24 @@ var base64 = createCommonjsModule(function (module, exports) {
         ];
         return chars.join('');
     };
-    var btoa = global.btoa && typeof global.btoa == 'function'
-        ? function(b){ return global.btoa(b) } : function(b) {
-        if (b.match(/[^\x00-\xFF]/)) throw new RangeError(
-            'The string contains invalid characters.'
-        );
+    var btoa = global.btoa ? function(b) {
+        return global.btoa(b);
+    } : function(b) {
         return b.replace(/[\s\S]{1,3}/g, cb_encode);
     };
     var _encode = function(u) {
-        return btoa(utob(String(u)));
+        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+        return isUint8Array ? u.toString('base64')
+            : btoa(utob(String(u)));
     };
     var encode = function(u, urisafe) {
         return !urisafe
-            ? _encode(String(u))
+            ? _encode(u)
             : _encode(String(u)).replace(/[+\/]/g, function(m0) {
                 return m0 == '+' ? '-' : '_';
             }).replace(/=/g, '');
     };
     var encodeURI = function(u) { return encode(u, true) };
-    var fromUint8Array = function(a) {
-        return btoa(Array.from(a, function(c) {
-            return String.fromCharCode(c)
-        }).join(''));
-    };
     // decoder stuff
     var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
     var cb_btou = function(cccc) {
@@ -1429,25 +1433,30 @@ var base64 = createCommonjsModule(function (module, exports) {
         chars.length -= [0, 0, 2, 1][padlen];
         return chars.join('');
     };
-    var _atob = global.atob && typeof global.atob == 'function'
-        ? function(a){ return global.atob(a) } : function(a){
+    var _atob = global.atob ? function(a) {
+        return global.atob(a);
+    } : function(a){
         return a.replace(/\S{1,4}/g, cb_decode);
     };
     var atob = function(a) {
         return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
     };
-    var _decode = function(a) { return btou(_atob(a)) };
+    var _decode = buffer ?
+        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+        ? function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : buffer.from(a, 'base64')).toString();
+        }
+        : function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : new buffer(a, 'base64')).toString();
+        }
+        : function(a) { return btou(_atob(a)) };
     var decode = function(a){
         return _decode(
-            String(a).replace(/[-_]/g, function(m0) {
-                return m0 == '-' ? '+' : '/'
-            }).replace(/[^A-Za-z0-9\+\/]/g, '')
+            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+                .replace(/[^A-Za-z0-9\+\/]/g, '')
         );
-    };
-    var toUint8Array = function(a) {
-        return Uint8Array.from(atob(a), function(c) {
-            return c.charCodeAt(0);
-        });
     };
     var noConflict = function() {
         var Base64 = global.Base64;
@@ -1467,8 +1476,7 @@ var base64 = createCommonjsModule(function (module, exports) {
         btou: btou,
         decode: decode,
         noConflict: noConflict,
-        fromUint8Array: fromUint8Array,
-        toUint8Array: toUint8Array
+        __buffer__: buffer
     };
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
@@ -1556,7 +1564,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1(_objectSpread$1(_objectSpread$1({}, Authorization), contentType), headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1921,7 +1929,7 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, Authorization), contentType), headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2495,6 +2503,15 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -2711,11 +2728,7 @@ apiready = function apiready() {
 
                   if (res.data) {
                     _this.EBSOrders = res.data.warehouseOrderlist.map(function (item) {
-<<<<<<< HEAD
-                      return _objectSpread$3(_objectSpread$3({}, item), {}, {
-=======
                       return _objectSpread$5({}, item, {
->>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
                         isSelected: false
                       });
                     });
