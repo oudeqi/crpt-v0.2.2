@@ -2386,6 +2386,15 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
   }
 };
 
@@ -2793,8 +2802,6 @@ var App = /*#__PURE__*/function () {
       //     }
       //   }
       // })
-      // Router.openPage({ key: 'hxd_u_confirm', params: { pageParam: { productId: '1', orderIds: JSON.stringify(['1280790546171846657']) } } })
-      // Router.openPage({ key: 'my_quota' })
       // return
       var userinfo = $api.getStorage('userinfo');
 

@@ -1,50 +1,3 @@
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-var arrayLikeToArray = _arrayLikeToArray;
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
-}
-
-var arrayWithoutHoles = _arrayWithoutHoles;
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
-
-var iterableToArray = _iterableToArray;
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-
-var unsupportedIterableToArray = _unsupportedIterableToArray;
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-var nonIterableSpread = _nonIterableSpread;
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
-}
-
-var toConsumableArray = _toConsumableArray;
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -1400,218 +1353,6 @@ function openRegLogin() {
   });
 } // 个人登录
 
-var base64 = createCommonjsModule(function (module, exports) {
-(function (global, factory) {
-     module.exports = factory(global)
-        ;
-}((
-    typeof self !== 'undefined' ? self
-        : typeof window !== 'undefined' ? window
-        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
-: commonjsGlobal
-), function(global) {
-    // existing version for noConflict()
-    global = global || {};
-    var _Base64 = global.Base64;
-    var version = "2.5.2";
-    // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
-        } catch (err) {
-            buffer = undefined;
-        }
-    }
-    // constants
-    var b64chars
-        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    var b64tab = function(bin) {
-        var t = {};
-        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
-        return t;
-    }(b64chars);
-    var fromCharCode = String.fromCharCode;
-    // encoder stuff
-    var cb_utob = function(c) {
-        if (c.length < 2) {
-            var cc = c.charCodeAt(0);
-            return cc < 0x80 ? c
-                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
-                                + fromCharCode(0x80 | (cc & 0x3f)))
-                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        } else {
-            var cc = 0x10000
-                + (c.charCodeAt(0) - 0xD800) * 0x400
-                + (c.charCodeAt(1) - 0xDC00);
-            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
-                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        }
-    };
-    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
-    var utob = function(u) {
-        return u.replace(re_utob, cb_utob);
-    };
-    var cb_encode = function(ccc) {
-        var padlen = [0, 2, 1][ccc.length % 3],
-        ord = ccc.charCodeAt(0) << 16
-            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
-            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
-        chars = [
-            b64chars.charAt( ord >>> 18),
-            b64chars.charAt((ord >>> 12) & 63),
-            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
-            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
-        ];
-        return chars.join('');
-    };
-    var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
-    } : function(b) {
-        return b.replace(/[\s\S]{1,3}/g, cb_encode);
-    };
-    var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
-        return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
-    };
-    var encode = function(u, urisafe) {
-        return !urisafe
-            ? _encode(u)
-            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
-                return m0 == '+' ? '-' : '_';
-            }).replace(/=/g, '');
-    };
-    var encodeURI = function(u) { return encode(u, true) };
-    // decoder stuff
-    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
-    var cb_btou = function(cccc) {
-        switch(cccc.length) {
-        case 4:
-            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
-                |    ((0x3f & cccc.charCodeAt(1)) << 12)
-                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
-                |     (0x3f & cccc.charCodeAt(3)),
-            offset = cp - 0x10000;
-            return (fromCharCode((offset  >>> 10) + 0xD800)
-                    + fromCharCode((offset & 0x3FF) + 0xDC00));
-        case 3:
-            return fromCharCode(
-                ((0x0f & cccc.charCodeAt(0)) << 12)
-                    | ((0x3f & cccc.charCodeAt(1)) << 6)
-                    |  (0x3f & cccc.charCodeAt(2))
-            );
-        default:
-            return  fromCharCode(
-                ((0x1f & cccc.charCodeAt(0)) << 6)
-                    |  (0x3f & cccc.charCodeAt(1))
-            );
-        }
-    };
-    var btou = function(b) {
-        return b.replace(re_btou, cb_btou);
-    };
-    var cb_decode = function(cccc) {
-        var len = cccc.length,
-        padlen = len % 4,
-        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
-            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
-            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
-            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
-        chars = [
-            fromCharCode( n >>> 16),
-            fromCharCode((n >>>  8) & 0xff),
-            fromCharCode( n         & 0xff)
-        ];
-        chars.length -= [0, 0, 2, 1][padlen];
-        return chars.join('');
-    };
-    var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
-        return a.replace(/\S{1,4}/g, cb_decode);
-    };
-    var atob = function(a) {
-        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
-    };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
-        ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
-        }
-        : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
-        }
-        : function(a) { return btou(_atob(a)) };
-    var decode = function(a){
-        return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
-        );
-    };
-    var noConflict = function() {
-        var Base64 = global.Base64;
-        global.Base64 = _Base64;
-        return Base64;
-    };
-    // export Base64
-    global.Base64 = {
-        VERSION: version,
-        atob: atob,
-        btoa: btoa,
-        fromBase64: decode,
-        toBase64: encode,
-        utob: utob,
-        encode: encode,
-        encodeURI: encodeURI,
-        btou: btou,
-        decode: decode,
-        noConflict: noConflict,
-        __buffer__: buffer
-    };
-    // if ES5 is available, make Base64.extendString() available
-    if (typeof Object.defineProperty === 'function') {
-        var noEnum = function(v){
-            return {value:v,enumerable:false,writable:true,configurable:true};
-        };
-        global.Base64.extendString = function () {
-            Object.defineProperty(
-                String.prototype, 'fromBase64', noEnum(function () {
-                    return decode(this)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64', noEnum(function (urisafe) {
-                    return encode(this, urisafe)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64URI', noEnum(function () {
-                    return encode(this, true)
-                }));
-        };
-    }
-    //
-    // export Base64 to the namespace
-    //
-    if (global['Meteor']) { // Meteor.js
-        Base64 = global.Base64;
-    }
-    // module.exports and AMD are mutually exclusive.
-    // module.exports has precedence.
-    if ( module.exports) {
-        module.exports.Base64 = global.Base64;
-    }
-    // that's it!
-    return {Base64: global.Base64}
-}));
-});
-var base64_1 = base64.Base64;
-
 var _extends_1 = createCommonjsModule(function (module) {
 function _extends() {
   module.exports = _extends = Object.assign || function (target) {
@@ -1771,14 +1512,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-  openAttachmentInfo: openAttachmentInfo,
-  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -2087,186 +1828,217 @@ var codeMapFilter = function codeMapFilter(list) {
   return codeMap;
 };
 
-var BaiduSDK = /*#__PURE__*/function () {
-  function BaiduSDK() {
-    classCallCheck(this, BaiduSDK);
-
-    this.ajaxUrls = {
-      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
-      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
-      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
-      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
-    };
-  }
-
-  createClass(BaiduSDK, [{
-    key: "getToken",
-    value: function getToken() {
-      return http.get(this.ajaxUrls.URL_TOKEN, null, {
-        headers: {}
-      });
+var base64 = createCommonjsModule(function (module, exports) {
+(function (global, factory) {
+     module.exports = factory(global)
+        ;
+}((
+    typeof self !== 'undefined' ? self
+        : typeof window !== 'undefined' ? window
+        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
+: commonjsGlobal
+), function(global) {
+    // existing version for noConflict()
+    global = global || {};
+    var _Base64 = global.Base64;
+    var version = "2.5.2";
+    // if node.js and NOT React Native, we use Buffer
+    var buffer;
+    if ( module.exports) {
+        try {
+            buffer = eval("require('buffer').Buffer");
+        } catch (err) {
+            buffer = undefined;
+        }
     }
-  }, {
-    key: "CarVerify",
-    value: function () {
-      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
-        var self, res;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                self = this;
-                _context.next = 3;
-                return this.getToken();
-
-              case 3:
-                res = _context.sent;
-
-                if (!(res.code === 200)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
+    // constants
+    var b64chars
+        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    var b64tab = function(bin) {
+        var t = {};
+        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
+        return t;
+    }(b64chars);
+    var fromCharCode = String.fromCharCode;
+    // encoder stuff
+    var cb_utob = function(c) {
+        if (c.length < 2) {
+            var cc = c.charCodeAt(0);
+            return cc < 0x80 ? c
+                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
+                                + fromCharCode(0x80 | (cc & 0x3f)))
+                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        } else {
+            var cc = 0x10000
+                + (c.charCodeAt(0) - 0xD800) * 0x400
+                + (c.charCodeAt(1) - 0xDC00);
+            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
+                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        }
+    };
+    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+    var utob = function(u) {
+        return u.replace(re_utob, cb_utob);
+    };
+    var cb_encode = function(ccc) {
+        var padlen = [0, 2, 1][ccc.length % 3],
+        ord = ccc.charCodeAt(0) << 16
+            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
+            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
+        chars = [
+            b64chars.charAt( ord >>> 18),
+            b64chars.charAt((ord >>> 12) & 63),
+            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
+            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
+        ];
+        return chars.join('');
+    };
+    var btoa = global.btoa ? function(b) {
+        return global.btoa(b);
+    } : function(b) {
+        return b.replace(/[\s\S]{1,3}/g, cb_encode);
+    };
+    var _encode = function(u) {
+        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+        return isUint8Array ? u.toString('base64')
+            : btoa(utob(String(u)));
+    };
+    var encode = function(u, urisafe) {
+        return !urisafe
+            ? _encode(u)
+            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
+                return m0 == '+' ? '-' : '_';
+            }).replace(/=/g, '');
+    };
+    var encodeURI = function(u) { return encode(u, true) };
+    // decoder stuff
+    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
+    var cb_btou = function(cccc) {
+        switch(cccc.length) {
+        case 4:
+            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
+                |    ((0x3f & cccc.charCodeAt(1)) << 12)
+                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
+                |     (0x3f & cccc.charCodeAt(3)),
+            offset = cp - 0x10000;
+            return (fromCharCode((offset  >>> 10) + 0xD800)
+                    + fromCharCode((offset & 0x3FF) + 0xDC00));
+        case 3:
+            return fromCharCode(
+                ((0x0f & cccc.charCodeAt(0)) << 12)
+                    | ((0x3f & cccc.charCodeAt(1)) << 6)
+                    |  (0x3f & cccc.charCodeAt(2))
+            );
+        default:
+            return  fromCharCode(
+                ((0x1f & cccc.charCodeAt(0)) << 6)
+                    |  (0x3f & cccc.charCodeAt(1))
+            );
+        }
+    };
+    var btou = function(b) {
+        return b.replace(re_btou, cb_btou);
+    };
+    var cb_decode = function(cccc) {
+        var len = cccc.length,
+        padlen = len % 4,
+        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
+            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
+            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
+            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
+        chars = [
+            fromCharCode( n >>> 16),
+            fromCharCode((n >>>  8) & 0xff),
+            fromCharCode( n         & 0xff)
+        ];
+        chars.length -= [0, 0, 2, 1][padlen];
+        return chars.join('');
+    };
+    var _atob = global.atob ? function(a) {
+        return global.atob(a);
+    } : function(a){
+        return a.replace(/\S{1,4}/g, cb_decode);
+    };
+    var atob = function(a) {
+        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
+    };
+    var _decode = buffer ?
+        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+        ? function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : buffer.from(a, 'base64')).toString();
+        }
+        : function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : new buffer(a, 'base64')).toString();
+        }
+        : function(a) { return btou(_atob(a)) };
+    var decode = function(a){
+        return _decode(
+            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+                .replace(/[^A-Za-z0-9\+\/]/g, '')
+        );
+    };
+    var noConflict = function() {
+        var Base64 = global.Base64;
+        global.Base64 = _Base64;
+        return Base64;
+    };
+    // export Base64
+    global.Base64 = {
+        VERSION: version,
+        atob: atob,
+        btoa: btoa,
+        fromBase64: decode,
+        toBase64: encode,
+        utob: utob,
+        encode: encode,
+        encodeURI: encodeURI,
+        btou: btou,
+        decode: decode,
+        noConflict: noConflict,
+        __buffer__: buffer
+    };
+    // if ES5 is available, make Base64.extendString() available
+    if (typeof Object.defineProperty === 'function') {
+        var noEnum = function(v){
+            return {value:v,enumerable:false,writable:true,configurable:true};
+        };
+        global.Base64.extendString = function () {
+            Object.defineProperty(
+                String.prototype, 'fromBase64', noEnum(function () {
+                    return decode(this)
                 }));
-
-              case 6:
-                return _context.abrupt("return", Promise.reject(res));
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function CarVerify(_x) {
-        return _CarVerify.apply(this, arguments);
-      }
-
-      return CarVerify;
-    }()
-  }, {
-    key: "IdcardVerify",
-    value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
-        var res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context2.sent;
-
-                if (!(res.code === 200)) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function IdcardVerify(_x2) {
-        return _IdcardVerify.apply(this, arguments);
-      }
-
-      return IdcardVerify;
-    }()
-  }, {
-    key: "BankVerify",
-    value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
-        var res;
-        return regenerator.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context3.sent;
-
-                if (!(res.code === 200)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context3.abrupt("return", _context3.sent);
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function BankVerify(_x3) {
-        return _BankVerify.apply(this, arguments);
-      }
-
-      return BankVerify;
-    }()
-  }]);
-
-  return BaiduSDK;
-}();
-
-var OCR = {
-  Baidu: new BaiduSDK()
-};
-
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router$2();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-  this.OCR = OCR;
-};
-
-var Utils$1 = new Utils();
+            Object.defineProperty(
+                String.prototype, 'toBase64', noEnum(function (urisafe) {
+                    return encode(this, urisafe)
+                }));
+            Object.defineProperty(
+                String.prototype, 'toBase64URI', noEnum(function () {
+                    return encode(this, true)
+                }));
+        };
+    }
+    //
+    // export Base64 to the namespace
+    //
+    if (global['Meteor']) { // Meteor.js
+        Base64 = global.Base64;
+    }
+    // module.exports and AMD are mutually exclusive.
+    // module.exports has precedence.
+    if ( module.exports) {
+        module.exports.Base64 = global.Base64;
+    }
+    // that's it!
+    return {Base64: global.Base64}
+}));
+});
+var base64_1 = base64.Base64;
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2451,24 +2223,186 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-function setRefreshHeaderInfo$1(successCallback, errorCallback) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  api.setRefreshHeaderInfo(_objectSpread$3({
-    // loadingImg: 'widget://image/refresh.png',
-    bgColor: 'rgba(0,0,0,0)',
-    textColor: '#bfbfbf',
-    textDown: '下拉刷新',
-    textUp: '松开刷新',
-    textLoading: '加载中...',
-    showTime: false
-  }, options), function (ret, error) {
-    if (error) {
-      errorCallback && errorCallback(error);
-    } else {
-      successCallback && successCallback(ret);
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
     }
-  });
-}
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router$2();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
 
 var dev$1 = 'http://crptdev.liuheco.com';
 var baseUrl$1 =  dev$1 ;
@@ -3666,19 +3600,49 @@ return numeral;
 }));
 });
 
+var filterDict = function filterDict(type) {
+  var Obj = {};
+  var sendJson = {
+    type: type,
+    valid: 1
+  };
+  return http.post('/crpt-biz/dict/codelist', {
+    body: sendJson
+  }).then(function (res) {
+    res.data.map(function (item) {
+      Obj[item.code] = item.name;
+    });
+    return Obj;
+  });
+};
+
 function vmInit() {
   return new Vue({
     el: '#app',
     data: function data() {
       return {
-        pageSize: 20,
-        pageNo: 1,
-        total: null,
-        list: [],
-        loading: false,
-        more: 'noData',
-        // hasMore,noMore,noData
+        pageParam: api.pageParam || {},
+        duebillTypeObj: {},
+        appcodeMap: {
+          1: 'EBS',
+          2: '客户',
+          3: '产融'
+        },
         mapping: {
+          1: '申请中',
+          2: '已审批通过',
+          3: '已拒绝',
+          4: '已撤销',
+          5: '还款中',
+          6: '到期结清',
+          7: '提前结清',
+          8: '逾期还款中',
+          9: '逾期已结清',
+          10: '已退货',
+          11: '待申请',
+          12: '已取消'
+        },
+        statusMapping: {
           3: 'refused',
           4: 'cancel',
           5: 'repaying',
@@ -3688,41 +3652,40 @@ function vmInit() {
           9: 'overdueOver',
           10: 'back'
         },
-        mapping2: {
-          3: '已拒绝',
-          4: '已撤销',
-          5: '还款中',
-          6: '到期结清',
-          7: '提前结清',
-          8: '逾期还款中',
-          9: '逾期已结清',
-          10: '已退货'
-        }
+        data: {}
       };
     },
+    computed: {
+      id: function id() {
+        return this.pageParam.id;
+      }
+    },
     mounted: function mounted() {
-      this.pageInit();
+      var _this = this;
+
+      return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.pageInit();
+
+                _context.next = 3;
+                return filterDict('duebillType');
+
+              case 3:
+                _this.duebillTypeObj = _context.sent;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     methods: {
       numeral: numeral,
-      loadMore: function loadMore() {
-        var _this = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          return regenerator.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _this.getPageData();
-
-                case 1:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        }))();
-      },
       pageInit: function pageInit() {
         var _this2 = this;
 
@@ -3737,7 +3700,7 @@ function vmInit() {
                     modal: false
                   });
                   _context2.next = 3;
-                  return _this2.getPageData(1);
+                  return _this2.getPageData();
 
                 case 3:
                   api.hideProgress();
@@ -3750,139 +3713,90 @@ function vmInit() {
           }, _callee2);
         }))();
       },
-      getPageData: function getPageData(currentPage) {
+      getPageData: function getPageData() {
         var _this3 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var pageSize, pageNo, res, _this3$list;
-
+          var id, res;
           return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  if (!_this3.loading) {
-                    _context3.next = 2;
-                    break;
-                  }
+                  // 业务单状态：
+                  // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
+                  // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
+                  id = _this3.id; // let id = '1280032544158498817' // 26496114
 
-                  return _context3.abrupt("return");
+                  _context3.prev = 1;
+                  _context3.next = 4;
+                  return http$1.get("/crpt-order/order/hxd/query/order/info/detail?orderId=".concat(id));
 
-                case 2:
-                  _this3.loading = true;
-                  pageSize = _this3.pageSize;
-                  pageNo = currentPage || _this3.pageNo;
-                  _context3.prev = 5;
-                  _context3.next = 8;
-                  return http$1.get("/crpt-order/order/payInfo?status=2&pageSize=".concat(pageSize, "&pageNo=").concat(pageNo));
-
-                case 8:
+                case 4:
                   res = _context3.sent;
-                  api.refreshHeaderLoadDone();
-                  _this3.loading = false;
-                  _this3.total = res.data.count;
-
-                  if (res.data.list && res.data.list.length > 0) {
-                    _this3.more = 'hasMore';
-                    _this3.pageNo = pageNo + 1;
-
-                    if (pageNo === 1) {
-                      _this3.list = res.data.list;
-                    } else {
-                      (_this3$list = _this3.list).push.apply(_this3$list, toConsumableArray(res.data.list));
-                    }
-                  } else {
-                    if (pageNo === 1) {
-                      _this3.more = 'noData';
-                    } else {
-                      _this3.more = 'noMore';
-                    }
-                  }
-
-                  _context3.next = 20;
+                  _this3.data = res.data;
+                  _context3.next = 11;
                   break;
 
-                case 15:
-                  _context3.prev = 15;
-                  _context3.t0 = _context3["catch"](5);
+                case 8:
+                  _context3.prev = 8;
+                  _context3.t0 = _context3["catch"](1);
                   api.toast({
-                    msg: _context3.t0.message || '出错啦',
+                    msg: _context3.t0.msg || '请求发生错误',
                     location: 'middle'
                   });
-                  api.refreshHeaderLoadDone();
-                  _this3.loading = false;
 
-                case 20:
+                case 11:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[5, 15]]);
+          }, _callee3, null, [[1, 8]]);
         }))();
       },
-      openDetails: function openDetails(record) {
-        // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
-        if (String(record.orderType) === '1') {
-          // 好销贷
-          Router$1.openPage({
-            key: 'hxd_loan_details',
-            params: {
-              pageParam: {
-                id: record.orderId
-              }
+      openPlan: function openPlan() {
+        var id = this.id;
+        Router$1.openPage({
+          key: 'repay_plan',
+          params: {
+            pageParam: {
+              id: id
             }
-          });
-        } else if (String(record.orderType) === '2') {
-          // 以前的
-          Router$1.openPage({
-            key: 'loan_details',
-            params: {
-              pageParam: {
-                id: record.orderNo
-              }
+          }
+        });
+      },
+      openRecord: function openRecord() {
+        var id = this.id;
+        Router$1.openPage({
+          key: 'repay_record',
+          params: {
+            pageParam: {
+              id: id
             }
-          });
-        } else if (String(record.orderType) === '3') {
-          // 以前的
-          Router$1.openPage({
-            key: 'loan_details',
-            params: {
-              pageParam: {
-                id: record.orderNo
-              }
+          }
+        });
+      },
+      openLoanContract: function openLoanContract() {
+        Router$1.openPage({
+          key: 'agreement',
+          params: {
+            pageParam: {
+              type: 'pdf',
+              id: this.data.signContractId
             }
-          });
-        } else if (String(record.orderType) === '4') {
-          // 押金贷
-          Router$1.openPage({
-            key: 'yjd_loan_details',
-            params: {
-              pageParam: {
-                id: record.orderId
-              }
-            }
-          });
-        } else {
-          api.toast({
-            msg: '未知的产品',
-            location: 'middle'
-          });
-        }
+          }
+        });
       }
     }
   });
 }
 
 apiready = function apiready() {
-  var vm = vmInit();
-  setRefreshHeaderInfo$1(function () {
-    vm.pageInit();
-  });
   api.addEventListener({
-    name: 'scrolltobottom',
-    extra: {
-      threshold: 100
+    name: 'navitembtn'
+  }, function (ret) {
+    if (ret.type === 'left') {
+      api.closeWin();
     }
-  }, function () {
-    vm.getPageData();
   });
+  vmInit();
 };

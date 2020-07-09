@@ -4,26 +4,18 @@ import './index.css'
 import Router from '../../../router'
 import http from '../../../http'
 import numeral from 'numeral'
-
+import filterDict from '../../../utils/dict_filter/filter.js'
 function vmInit () {
   return new Vue({
     el: '#app',
     data: function () {
       return {
         pageParam: api.pageParam || {},
-        url: {
-          invalid: '/crpt-order/order/yjd/loan/detail/invalid/query',
-          valid: '/crpt-order/order/yjd/loan/detail/query',
-        },
+        duebillTypeObj: {},
         appcodeMap: {
           1: 'EBS',
           2: '客户',
           3: '产融',
-        },
-        repayTypeMap: {
-          4: '到期还本付息',
-          5: '等额本息',
-          7: '先息后本',
         },
         mapping: {
           1: '申请中',
@@ -55,13 +47,11 @@ function vmInit () {
     computed: {
       id: function () {
         return this.pageParam.id
-      },
-      status: function () {
-        return this.pageParam.status || 'valid'
       }
     },
-    mounted () {
+    async mounted () {
       this.pageInit()
+      this.duebillTypeObj = await filterDict('duebillType')
     },
     methods: {
 
@@ -78,57 +68,28 @@ function vmInit () {
         // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
         // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
         let id = this.id
-        let url = this.url[this.status]
+        // let id = '1280032544158498817' // 26496114
         try {
-          let res = await http.get(`${url}?orderId=${id}`)
+          let res = await http.get(`/crpt-order/order/hxd/query/order/info/detail?orderId=${id}`)
           this.data = res.data
         } catch (error) {
           api.toast({ msg: error.msg || '请求发生错误', location: 'middle' })
         }
       },
-
       openPlan () {
         let id = this.id
         Router.openPage({ key: 'repay_plan', params: {pageParam: { id }}})
       },
-
       openRecord () {
         let id = this.id
         Router.openPage({ key: 'repay_record', params: {pageParam: { id }}})
       },
-
       openLoanContract () {
-        let id = this.id
-        Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
-      },
-
-      openDaiyangContract () {
-        let data = this.data
-        let {
-          outCode, // 代养合同编号
-          payee, // 收款方
-          signedDate, // 签订日期
-          receivableBond, // 应收保证金
-          receivedBond, // 已收保证金
-          surplusReceivableBond, // 剩余应收保证金
-        } = data
-        Router.openPage({ key: key, params: {pageParam: {
-          outCode,
-          payee,
-          signedDate,
-          receivableBond,
-          receivedBond,
-          surplusReceivableBond,
+        Router.openPage({ key: 'agreement', params: {pageParam: {
+          type: 'pdf',
+          id: this.data.signContractId
         }}})
-      },
-
-      developping () {
-        api.alert({
-          title: '提示',
-          msg: '功能开发中...',
-        })
       }
-
     }
   })
 }
@@ -143,7 +104,5 @@ apiready = function () {
       api.closeWin()
     }
   })
-
   vmInit()
-
 }

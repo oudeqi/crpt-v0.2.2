@@ -2067,6 +2067,13 @@ var PageController = /*#__PURE__*/function (_Service) {
 
               case 16:
                 if (res.code === 200) {
+                  // var REG_BODY = /<body[^>]*>([\s\S]*)<\/body>/;
+                  // function getBody(content){
+                  //     var result = REG_BODY.exec(content);
+                  //     if(result && result.length === 2)
+                  //         return result[1];
+                  //     return content.replace(/\\n/g, '');
+                  // }
                   $api.byId('doc').innerHTML = res.data.fileName;
                 } else {
                   api.toast({

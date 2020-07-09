@@ -40,6 +40,13 @@ class PageController extends Service {
         res = await this.pdf2html(this.id)
       }
       if (res.code === 200) {
+        // var REG_BODY = /<body[^>]*>([\s\S]*)<\/body>/;
+        // function getBody(content){
+        //     var result = REG_BODY.exec(content);
+        //     if(result && result.length === 2)
+        //         return result[1];
+        //     return content.replace(/\\n/g, '');
+        // }
         $api.byId('doc').innerHTML = res.data.fileName
       } else {
         api.toast({ msg: '获取协议内容失败', location: 'middle' })
