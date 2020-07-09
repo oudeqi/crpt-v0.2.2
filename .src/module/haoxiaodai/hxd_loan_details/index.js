@@ -52,7 +52,6 @@ function vmInit () {
     async mounted () {
       this.pageInit()
       this.duebillTypeObj = await filterDict('duebillType')
-      console.log(JSON.stringify(this.duebillTypeObj))
     },
     methods: {
 

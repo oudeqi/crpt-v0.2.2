@@ -48,10 +48,6 @@ class App {
     // 6：人工审核不通过
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
-<<<<<<< HEAD
-
-    Router.openPage({ key: 'hxd_loan_details'})
-=======
     Router.openPage({
       key: 'hxd_u_result',
       params: {
@@ -63,8 +59,6 @@ class App {
         }
       }
     })
-    // Router.openPage({ key: 'hxd_u_confirm', params: { pageParam: { productId: '1', orderIds: JSON.stringify(['1280790546171846657']) } } })
->>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
     return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
