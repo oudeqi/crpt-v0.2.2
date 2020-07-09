@@ -1992,6 +1992,7 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
+      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {
@@ -2000,7 +2001,8 @@ function ajax$1(method, url) {
           // 表单校验未过专属code
           if (ret.code === 202) {
             var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
             resolve(ret);
           } else {
             reject(ret);
@@ -3143,9 +3145,9 @@ function vmInit() {
         total: '*',
         totalSum: '***',
         list: [],
-        noData: true,
-        noMore: false,
-        loading: false
+        loading: false,
+        more: 'noData' // hasMore,noMore,noData
+
       };
     },
     mounted: function mounted() {
@@ -3221,7 +3223,7 @@ function vmInit() {
                   pageNo = currentPage || _this3.pageNo;
                   _context3.prev = 5;
                   _context3.next = 8;
-                  return http$1.get("credit/mine/repay/list?pageIndex=".concat(pageNo, "&pageSize=").concat(pageSize));
+                  return http$1.get("/crpt-credit/credit/mine/repay/list?pageIndex=".concat(pageNo, "&pageSize=").concat(pageSize));
 
                 case 8:
                   res = _context3.sent;
@@ -3231,8 +3233,7 @@ function vmInit() {
                   _this3.totalSum = numeral(res.data.repayPrincipalAmount || 0).format('0,0.00');
 
                   if (res.data.repayList && res.data.repayList.length > 0) {
-                    _this3.noData = false;
-                    _this3.noMore = false;
+                    _this3.more = 'hasMore';
                     _this3.pageNo = pageNo + 1;
 
                     if (pageNo === 1) {
@@ -3242,9 +3243,9 @@ function vmInit() {
                     }
                   } else {
                     if (pageNo === 1) {
-                      _this3.noData = true;
+                      _this3.more = 'noData';
                     } else {
-                      _this3.noMore = true;
+                      _this3.more = 'noMore';
                     }
                   }
 

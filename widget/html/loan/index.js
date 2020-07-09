@@ -1115,6 +1115,15 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
   // 好销贷用款校验
   hxd_u_smscode: {
     name: 'hxd_u_smscode',
@@ -2508,6 +2517,7 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
+      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {
@@ -2516,7 +2526,8 @@ function ajax$1(method, url) {
           // 表单校验未过专属code
           if (ret.code === 202) {
             var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
             resolve(ret);
           } else {
             reject(ret);
@@ -3658,9 +3669,9 @@ function vmInit() {
         total: '*',
         totalSum: '',
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData',
+        // hasMore,noMore,noData
         statusMap: {
           1: '申请中',
           2: '已审批通过',
@@ -3850,8 +3861,7 @@ function vmInit() {
                   _this4.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00');
 
                   if (res.data.list && res.data.list.length > 0) {
-                    _this4.noData = false;
-                    _this4.noMore = false;
+                    _this4.more = 'hasMore';
                     _this4.pageNo = pageNo + 1;
 
                     if (pageNo === 1) {
@@ -3861,9 +3871,9 @@ function vmInit() {
                     }
                   } else {
                     if (pageNo === 1) {
-                      _this4.noData = true;
+                      _this4.more = 'noData';
                     } else {
-                      _this4.noMore = true;
+                      _this4.more = 'noMore';
                     }
                   }
 

@@ -291,6 +291,15 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
   // 好销贷用款校验
   hxd_u_smscode: {
     name: 'hxd_u_smscode',

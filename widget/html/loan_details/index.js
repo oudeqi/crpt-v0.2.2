@@ -1068,6 +1068,15 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
   // 好销贷用款校验
   hxd_u_smscode: {
     name: 'hxd_u_smscode',
@@ -2442,6 +2451,7 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
+      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {
@@ -2450,7 +2460,8 @@ function ajax$1(method, url) {
           // 表单校验未过专属code
           if (ret.code === 202) {
             var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
             resolve(ret);
           } else {
             reject(ret);

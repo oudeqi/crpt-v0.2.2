@@ -1316,7 +1316,16 @@ var base64 = createCommonjsModule(function (module, exports) {
     // existing version for noConflict()
     global = global || {};
     var _Base64 = global.Base64;
-    var version = "2.6.1";
+    var version = "2.5.2";
+    // if node.js and NOT React Native, we use Buffer
+    var buffer;
+    if ( module.exports) {
+        try {
+            buffer = eval("require('buffer').Buffer");
+        } catch (err) {
+            buffer = undefined;
+        }
+    }
     // constants
     var b64chars
         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -1363,29 +1372,24 @@ var base64 = createCommonjsModule(function (module, exports) {
         ];
         return chars.join('');
     };
-    var btoa = global.btoa && typeof global.btoa == 'function'
-        ? function(b){ return global.btoa(b) } : function(b) {
-        if (b.match(/[^\x00-\xFF]/)) throw new RangeError(
-            'The string contains invalid characters.'
-        );
+    var btoa = global.btoa ? function(b) {
+        return global.btoa(b);
+    } : function(b) {
         return b.replace(/[\s\S]{1,3}/g, cb_encode);
     };
     var _encode = function(u) {
-        return btoa(utob(String(u)));
+        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+        return isUint8Array ? u.toString('base64')
+            : btoa(utob(String(u)));
     };
     var encode = function(u, urisafe) {
         return !urisafe
-            ? _encode(String(u))
+            ? _encode(u)
             : _encode(String(u)).replace(/[+\/]/g, function(m0) {
                 return m0 == '+' ? '-' : '_';
             }).replace(/=/g, '');
     };
     var encodeURI = function(u) { return encode(u, true) };
-    var fromUint8Array = function(a) {
-        return btoa(Array.from(a, function(c) {
-            return String.fromCharCode(c)
-        }).join(''));
-    };
     // decoder stuff
     var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
     var cb_btou = function(cccc) {
@@ -1429,25 +1433,30 @@ var base64 = createCommonjsModule(function (module, exports) {
         chars.length -= [0, 0, 2, 1][padlen];
         return chars.join('');
     };
-    var _atob = global.atob && typeof global.atob == 'function'
-        ? function(a){ return global.atob(a) } : function(a){
+    var _atob = global.atob ? function(a) {
+        return global.atob(a);
+    } : function(a){
         return a.replace(/\S{1,4}/g, cb_decode);
     };
     var atob = function(a) {
         return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
     };
-    var _decode = function(a) { return btou(_atob(a)) };
+    var _decode = buffer ?
+        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+        ? function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : buffer.from(a, 'base64')).toString();
+        }
+        : function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : new buffer(a, 'base64')).toString();
+        }
+        : function(a) { return btou(_atob(a)) };
     var decode = function(a){
         return _decode(
-            String(a).replace(/[-_]/g, function(m0) {
-                return m0 == '-' ? '+' : '/'
-            }).replace(/[^A-Za-z0-9\+\/]/g, '')
+            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+                .replace(/[^A-Za-z0-9\+\/]/g, '')
         );
-    };
-    var toUint8Array = function(a) {
-        return Uint8Array.from(atob(a), function(c) {
-            return c.charCodeAt(0);
-        });
     };
     var noConflict = function() {
         var Base64 = global.Base64;
@@ -1467,8 +1476,7 @@ var base64 = createCommonjsModule(function (module, exports) {
         btou: btou,
         decode: decode,
         noConflict: noConflict,
-        fromUint8Array: fromUint8Array,
-        toUint8Array: toUint8Array
+        __buffer__: buffer
     };
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
@@ -1556,7 +1564,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1(_objectSpread$1(_objectSpread$1({}, Authorization), contentType), headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1921,7 +1929,7 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, Authorization), contentType), headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2054,6 +2062,87 @@ var http$1 = {
       tag: tag,
       timeout: timeout
     });
+  }
+};
+
+var service = {
+  postBankInterest: function postBankInterest(params) {
+    return http$1.get("/crpt-credit/credit/hxd/query/bank/interest", {
+      values: params
+    });
+  },
+  postCalculatorPlan: function postCalculatorPlan(params) {
+    return http$1.post("/crpt-credit/credit/hxd/calculator/for/apply", {
+      body: params
+    });
+  }
+};
+
+/**
+ * @author Sunning
+ * 存放部分方法
+ */
+var filter = {
+  /**
+   * @author Sunning
+   * 数字格式化为千分位   1000 ==> 1,000
+   * @param {Object} s 要格式化的数字
+   * @param {Object} n 保留几位小数
+   */
+  formatNumber: function formatNumber(s, n) {
+    if (s === '-' || !s) {
+      return '-';
+    } else {
+      if (n === 0) {
+        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      } else {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
+        var positive = s.toString().split('-');
+        var l;
+        var r;
+
+        if (positive.length > 1) {
+          l = positive[1].split('.')[0].split('').reverse();
+          r = positive[1].split('.')[1];
+        } else {
+          l = s.split('.')[0].split('').reverse();
+          r = s.split('.')[1];
+        }
+
+        var t = '';
+
+        for (var i = 0; i < l.length; i++) {
+          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+        }
+
+        var result = t.split('').reverse().join('') + '.' + r;
+        if (positive.length > 1) result = '-' + result;
+        return result;
+      }
+    }
+  },
+
+  /**
+   * author: Sunning
+   * 将数字格式化为千分位
+   * @param {Object} value 需要转化的数字
+   */
+  toThousands: function toThousands(value) {
+    if (value === '' || value === undefined || value === null) {
+      return '';
+    }
+
+    value = String(value); // 强制转化为转化为字符串
+
+    var isDecimal = value.split('.');
+
+    if (isDecimal.length === 1) {
+      // 如果长度为1表示没有小数，否则表示有小数
+      return this.formatNumber(value, 0);
+    } else {
+      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
+    }
   }
 };
 
@@ -2414,15 +2503,6 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
-  },
-  // 好销贷贷款详情
-  hxd_loan_details: {
-    name: 'hxd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/hxd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
   }
 };
 
@@ -2556,7 +2636,7 @@ var routerConfig = {
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3(_objectSpread$3(_objectSpread$3({}, routerHXDConfig), routerMap), routerConfig);
+var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2573,250 +2653,107 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$4(_objectSpread$4({}, profile[key]), params));
+      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
     }
   }]);
 
   return Router;
 }();
 
-var Router$2 = new Router$1();
-
-/**
- * @author Sunning
- * 存放部分方法
- */
-var filter = {
-  /**
-   * @author Sunning
-   * 数字格式化为千分位   1000 ==> 1,000
-   * @param {Object} s 要格式化的数字
-   * @param {Object} n 保留几位小数
-   */
-  formatNumber: function formatNumber(s, n) {
-    if (s === '-' || !s) {
-      return '-';
-    } else {
-      if (n === 0) {
-        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      } else {
-        n = n > 0 && n <= 20 ? n : 2;
-        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
-        var positive = s.toString().split('-');
-        var l;
-        var r;
-
-        if (positive.length > 1) {
-          l = positive[1].split('.')[0].split('').reverse();
-          r = positive[1].split('.')[1];
-        } else {
-          l = s.split('.')[0].split('').reverse();
-          r = s.split('.')[1];
-        }
-
-        var t = '';
-
-        for (var i = 0; i < l.length; i++) {
-          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
-        }
-
-        var result = t.split('').reverse().join('') + '.' + r;
-        if (positive.length > 1) result = '-' + result;
-        return result;
-      }
-    }
-  },
-
-  /**
-   * author: Sunning
-   * 将数字格式化为千分位
-   * @param {Object} value 需要转化的数字
-   */
-  toThousands: function toThousands(value) {
-    if (value === '' || value === undefined || value === null) {
-      return '';
-    }
-
-    value = String(value); // 强制转化为转化为字符串
-
-    var isDecimal = value.split('.');
-
-    if (isDecimal.length === 1) {
-      // 如果长度为1表示没有小数，否则表示有小数
-      return this.formatNumber(value, 0);
-    } else {
-      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
-    }
-  }
-};
+new Router$1();
 
 apiready = function apiready() {
-  var page = new Vue({
-    el: '#app',
-    data: {
-      filter: filter,
-      hxdData: [],
-      yjdData: [],
-      pageParam: api.pageParam || {}
-    },
-    mounted: function mounted() {
-      var _this = this;
-
-      return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.handleGetData();
-
-                Utils$1.UI.setRefreshHeaderInfo({
-                  success: function success() {
-                    _this.handleGetData();
-
-                    setTimeout(function () {
-                      api.refreshHeaderLoadDone();
-                    }, 0);
-                  },
-                  fail: function fail() {
-                    api.refreshHeaderLoadDone();
-                  }
-                }); // this.creditStatusObj = await filterDict('creditStatus')
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    methods: {
-      handleGetData: function handleGetData() {
-        if (this.pageParam.pageFrom === 'gongyingshang') {
-          this.getHxdTable();
-        } else {
-          this.getYjdTable();
-        }
-      },
-      getHxdTable: function getHxdTable() {
-        var _this2 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res;
-          return regenerator.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  // 好销贷
-                  Utils$1.UI.showLoading('加载中');
-                  _context2.prev = 1;
-                  _context2.next = 4;
-                  return http$1.get('/crpt-credit/credit/hxd/product/list', {});
-
-                case 4:
-                  res = _context2.sent;
-                  _this2.hxdData = res.data;
-                  Utils$1.UI.hideLoading();
-                  _context2.next = 12;
-                  break;
-
-                case 9:
-                  _context2.prev = 9;
-                  _context2.t0 = _context2["catch"](1);
-                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
-
-                case 12:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, null, [[1, 9]]);
-        }))();
-      },
-      getYjdTable: function getYjdTable() {
-        var _this3 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var res;
-          return regenerator.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  // 押金贷
-                  Utils$1.UI.showLoading('加载中');
-                  _context3.prev = 1;
-                  _context3.next = 4;
-                  return http$1.get('/crpt-product/product/cooperation/fostercare/list', {});
-
-                case 4:
-                  res = _context3.sent;
-                  _this3.yjdData = res.data;
-                  Utils$1.UI.hideLoading();
-                  _context3.next = 12;
-                  break;
-
-                case 9:
-                  _context3.prev = 9;
-                  _context3.t0 = _context3["catch"](1);
-                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
-
-                case 12:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3, null, [[1, 9]]);
-        }))();
-      },
-      changeHXD: function changeHXD(item) {
-        // 好销贷跳转
-
-        /**
-         * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
-         * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
-         * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
-         * companyExtId === -1 企业用户，并且未填写过信息
-         */
-        var userType = ($api.getStorage('userinfo') || {}).userType;
-
-        if (item.creditStatus === 0 && Number(userType) === 2 && item.companyExtId === -1) {
-          Router$2.openPage({
-            key: 'hxd_a_supply',
-            params: {
-              pageParam: {
-                productId: item.productId
-              }
-            }
-          });
-        } else {
-          Router$2.openPage({
-            key: 'hxd_apply',
-            params: {
-              pageParam: {
-                productId: item.productId
-              }
-            }
-          });
-        }
-      },
-      changeYJD: function changeYJD(item) {
-        // 押金贷跳转
-        Router$2.openPage({
-          key: 'yjd_product_detail',
-          params: {
-            pageParam: {
-              item: item
-            }
-          }
-        });
-      }
-    }
-  });
+  var pageParam = api.pageParam || {};
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
       api.closeWin();
     }
-  }); // alert(Vue)
+  });
+  var page = new Vue({
+    el: '#app',
+    data: {
+      dealDays: 90,
+      plan: {},
+      serviceMoney: 0
+    },
+    mounted: function mounted() {
+      this.handlePostPlan();
+    },
+    methods: {
+      handleChange: function handleChange(event) {
+        this.dealDays = event.target.value;
+        this.handlePostPlan();
+      },
+      handlePostPlan: function handlePostPlan() {
+        var _this = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+          var resInterest, bankBackInterest, serviceMoney, res;
+          return regenerator.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.prev = 0;
+                  Utils$1.UI.showLoading('查询中'); // const resInterest = await service.postBankInterest({ productId: pageParam.productId })
+
+                  resInterest = {
+                    code: 200,
+                    data: {
+                      bankBackInterest: '0.00038',
+                      serviceMoney: 3.8
+                    }
+                  };
+
+                  if (!(resInterest.code === 200)) {
+                    _context.next = 11;
+                    break;
+                  }
+
+                  bankBackInterest = resInterest.data.bankBackInterest;
+                  serviceMoney = resInterest.data.serviceMoney;
+                  _this.serviceMoney = serviceMoney;
+                  _context.next = 9;
+                  return service.postCalculatorPlan({
+                    dealDays: _this.dealDays,
+                    bankBackInterest: bankBackInterest,
+                    needApplyAmount: pageParam.needApplyAmount
+                  });
+
+                case 9:
+                  res = _context.sent;
+
+                  if (res.code === 200) {
+                    _this.plan = {
+                      calRepayAmount: filter.toThousands(res.data.calRepayAmount),
+                      calServiceFee: filter.toThousands(res.data.calServiceFee)
+                    };
+                  }
+
+                case 11:
+                  _context.next = 16;
+                  break;
+
+                case 13:
+                  _context.prev = 13;
+                  _context.t0 = _context["catch"](0);
+
+                  if (_context.t0.msg) {
+                    Utils$1.UI.toast(_context.t0.msg);
+                  }
+
+                case 16:
+                  Utils$1.UI.hideLoading();
+
+                case 17:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, null, [[0, 13]]);
+        }))();
+      }
+    }
+  });
 };

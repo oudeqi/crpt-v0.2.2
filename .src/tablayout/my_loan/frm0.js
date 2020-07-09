@@ -16,9 +16,8 @@ function vmInit () {
         pageNo: 1,
         total: null,
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData', // hasMore,noMore,noData
         mapping: {
           3: 'refused',
           4: 'cancel',
@@ -68,8 +67,7 @@ function vmInit () {
           this.loading = false
           this.total = res.data.count
           if (res.data.list && res.data.list.length > 0) {
-            this.noData = false
-            this.noMore = false
+            this.more = 'hasMore'
             this.pageNo = pageNo + 1
             if (pageNo === 1) {
               this.list = res.data.list
@@ -78,9 +76,9 @@ function vmInit () {
             }
           } else {
             if (pageNo === 1) {
-              this.noData = true
+              this.more = 'noData'
             } else {
-              this.noMore = true
+              this.more = 'noMore'
             }
           }
         } catch (error) {
@@ -91,7 +89,18 @@ function vmInit () {
       },
 
       openDetails (record) {
-        Router.openPage({ key: 'loan_details', params: {pageParam: { id: record.orderNo }}})
+        // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
+        if (String(record.orderType) === '1') { // 好销贷
+          Router.openPage({ key: 'hxd_d_detail', params: {pageParam: { id: record.orderNo }}})
+        } else if (String(record.orderType) === '2') { // 以前的
+          Router.openPage({ key: 'loan_details', params: {pageParam: { id: record.orderNo }}})
+        } else if (String(record.orderType) === '3') { // 以前的
+          Router.openPage({ key: 'loan_details', params: {pageParam: { id: record.orderNo }}})
+        } else if (String(record.orderType) === '4') { // 押金贷
+          Router.openPage({ key: 'yjd_loan_details', params: {pageParam: { id: record.orderNo }}})
+        } else {
+          api.toast({ msg: '未知的产品', location: 'middle' })
+        }
       }
 
     },

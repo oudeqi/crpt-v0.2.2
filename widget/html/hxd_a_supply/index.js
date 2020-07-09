@@ -1996,6 +1996,7 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
+      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {
@@ -2004,7 +2005,8 @@ function ajax$1(method, url) {
           // 表单校验未过专属code
           if (ret.code === 202) {
             var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
             resolve(ret);
           } else {
             reject(ret);

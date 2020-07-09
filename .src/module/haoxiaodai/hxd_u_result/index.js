@@ -1,15 +1,13 @@
 import './index.less'
+// import service from './service';
+import filter from './../../../utils/filter'
+import Utils from '../../../utils';
+import Router from '../../../router';
 
-const page = new Vue({
-  el: '#app',
-  data: {
-    status: 1
-  },
-  methods: {
-  },
-})
+
 
 apiready = function () {
+  const pageParam = api.pageParam || {}
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -17,6 +15,24 @@ apiready = function () {
       api.closeWin();
     }
   });
-  // alert(Vue)
+  const page = new Vue({
+    el: '#app',
+    data: {
+      // count: 60,
+      // timer: null,
+      // smscode: "",
+      // isCounter: false,
+      // orderIds: JSON.parse(pageParam.orderIds),
+      successList: pageParam.successList,
+      failList: pageParam.failList,
+      successTotalAmount: filter.toThousands(pageParam.successTotalAmount)
+    },
+    methods: {
+      
+    },
+    mounted() {
+      // this.handleStartTimer()
+    }
+  })
 
 }

@@ -1556,7 +1556,11 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
+<<<<<<< HEAD
       headers: _objectSpread$1(_objectSpread$1(_objectSpread$1({}, Authorization), contentType), headers)
+=======
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2120,6 +2124,18 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+<<<<<<< HEAD
+=======
+  },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
   },
   // 好销贷用款校验
   hxd_u_smscode: {
@@ -2219,6 +2235,7 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+<<<<<<< HEAD
   },
   // 好销贷贷款详情
   hxd_loan_details: {
@@ -2228,6 +2245,8 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+=======
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
   }
 };
 
@@ -2361,7 +2380,11 @@ var routerConfig = {
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+<<<<<<< HEAD
 var profile = _objectSpread$2(_objectSpread$2(_objectSpread$2({}, routerHXDConfig), routerMap), routerConfig);
+=======
+var profile = _objectSpread$2({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2378,7 +2401,11 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
+<<<<<<< HEAD
       api.openTabLayout(_objectSpread$3(_objectSpread$3({}, profile[key]), params));
+=======
+      api.openTabLayout(_objectSpread$3({}, profile[key], {}, params));
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
     }
   }]);
 
@@ -2405,8 +2432,38 @@ var App = /*#__PURE__*/function () {
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
       Router$2.openPage({
+<<<<<<< HEAD
         key: 'hxd_loan_details'
       });
+=======
+        key: 'hxd_u_result',
+        params: {
+          pageParam: {
+            // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
+            successTotalAmount: '1202934',
+            successList: [{
+              "loanNo": "20200709092255ZYSQ00001",
+              "orderId": "1280790546171846657",
+              "processStatus": 3,
+              "status": 1,
+              "orderNo": "202007081707167911",
+              "contractName": "飞一般的柑橘",
+              "contractId": "669"
+            }],
+            failList: [{
+              "loanNo": "20200709092255ZYSQ00001",
+              "orderId": "1280790546171846657",
+              "processStatus": 3,
+              "status": 1,
+              "orderNo": "202007081707167911",
+              "contractName": "飞一般的柑橘",
+              "contractId": "669"
+            }]
+          }
+        }
+      }); // Router.openPage({ key: 'hxd_u_confirm', params: { pageParam: { productId: '1', orderIds: JSON.stringify(['1280790546171846657']) } } })
+
+>>>>>>> f2156f769231af91e86c3e5a20ee3c7b190e183e
       return;
     }
   }, {
