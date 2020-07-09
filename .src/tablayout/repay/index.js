@@ -18,9 +18,8 @@ function vmInit () {
         total: '*',
         totalSum: '***',
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData', // hasMore,noMore,noData
       }
     },
     mounted: function () {
@@ -42,14 +41,13 @@ function vmInit () {
         let pageSize =  this.pageSize
         let pageNo = currentPage || this.pageNo
         try {
-          let res = await http.get(`credit/mine/repay/list?pageIndex=${pageNo}&pageSize=${pageSize}`)
+          let res = await http.get(`/crpt-credit/credit/mine/repay/list?pageIndex=${pageNo}&pageSize=${pageSize}`)
           api.refreshHeaderLoadDone()
           this.loading = false
           this.total = res.data.count
           this.totalSum = numeral(res.data.repayPrincipalAmount || 0).format('0,0.00')
           if (res.data.repayList && res.data.repayList.length > 0) {
-            this.noData = false
-            this.noMore = false
+            this.more = 'hasMore'
             this.pageNo = pageNo + 1
             if (pageNo === 1) {
               this.list = res.data.repayList
@@ -58,9 +56,9 @@ function vmInit () {
             }
           } else {
             if (pageNo === 1) {
-              this.noData = true
+              this.more = 'noData'
             } else {
-              this.noMore = true
+              this.more = 'noMore'
             }
           }
         } catch (error) {

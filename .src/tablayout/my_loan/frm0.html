@@ -39,13 +39,15 @@
         </div>
       </li>
     </ul>
-    <section v-if="!noData && loading" class="loading">加载中...</section>
-    <section v-if="!noData && !loading && noMore" class="nomore">无更多数据</section>
-    <section v-if="!noData && !loading && !noMore" class="loadmore">加载更多</section>
-    <section v-if="list.length===0 && noData && !loading" class="nodata">
+    
+    <section v-if="loading && more !== 'noData'" class="loading">加载中...</section>
+    <section v-if="!loading && more === 'noMore'" class="nomore">无更多数据</section>
+    <section v-if="!loading && more === 'hasMore'" class="loadmore">加载更多</section>
+    <section v-if="more === 'noData'" class="nodata">
       <div class="nodata-pic"></div>
       <p class="nodata-desc">暂时没有数据哦</p>
     </section>
+
   </div>
 
   <script type="text/javascript" src="../../script/api.js"></script>

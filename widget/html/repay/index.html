@@ -41,10 +41,10 @@
 
     </section>
 
-    <section v-if="!noData && loading" class="app_list_loading">加载中...</section>
-    <section v-if="!noData && !loading && noMore" class="app_list_nomore">无更多数据</section>
-    <section v-if="!noData && !loading && !noMore" class="app_list_loadmore">加载更多</section>
-    <section v-if="list.length===0 && noData && !loading" class="app_list_nodata">
+    <section v-if="loading && more !== 'noData'" class="app_list_loading">加载中...</section>
+    <section v-if="!loading && more === 'noMore'" class="app_list_nomore">无更多数据</section>
+    <section v-if="!loading && more === 'hasMore'" class="app_list_loadmore">加载更多</section>
+    <section v-if="more === 'noData'" class="app_list_nodata">
       <div class="app_list_nodata_pic"></div>
       <p class="app_list_nodata_desc">暂时没有还款项目</p>
     </section>

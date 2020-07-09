@@ -3655,9 +3655,9 @@ function vmInit() {
         pageNo: 1,
         total: null,
         list: [],
-        noData: true,
-        noMore: false,
         loading: false,
+        more: 'noData',
+        // hasMore,noMore,noData
         mapping: {
           3: 'refused',
           4: 'cancel',
@@ -3762,8 +3762,7 @@ function vmInit() {
                   _this3.total = res.data.count;
 
                   if (res.data.list && res.data.list.length > 0) {
-                    _this3.noData = false;
-                    _this3.noMore = false;
+                    _this3.more = 'hasMore';
                     _this3.pageNo = pageNo + 1;
 
                     if (pageNo === 1) {
@@ -3773,9 +3772,9 @@ function vmInit() {
                     }
                   } else {
                     if (pageNo === 1) {
-                      _this3.noData = true;
+                      _this3.more = 'noData';
                     } else {
-                      _this3.noMore = true;
+                      _this3.more = 'noMore';
                     }
                   }
 
@@ -3801,14 +3800,53 @@ function vmInit() {
         }))();
       },
       openDetails: function openDetails(record) {
-        Router$1.openPage({
-          key: 'loan_details',
-          params: {
-            pageParam: {
-              id: record.orderNo
+        // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
+        if (String(record.orderType) === '1') {
+          // 好销贷
+          Router$1.openPage({
+            key: 'hxd_d_detail',
+            params: {
+              pageParam: {
+                id: record.orderNo
+              }
             }
-          }
-        });
+          });
+        } else if (String(record.orderType) === '2') {
+          // 以前的
+          Router$1.openPage({
+            key: 'loan_details',
+            params: {
+              pageParam: {
+                id: record.orderNo
+              }
+            }
+          });
+        } else if (String(record.orderType) === '3') {
+          // 以前的
+          Router$1.openPage({
+            key: 'loan_details',
+            params: {
+              pageParam: {
+                id: record.orderNo
+              }
+            }
+          });
+        } else if (String(record.orderType) === '4') {
+          // 押金贷
+          Router$1.openPage({
+            key: 'yjd_loan_details',
+            params: {
+              pageParam: {
+                id: record.orderNo
+              }
+            }
+          });
+        } else {
+          api.toast({
+            msg: '未知的产品',
+            location: 'middle'
+          });
+        }
       }
     }
   });
