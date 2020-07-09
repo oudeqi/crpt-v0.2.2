@@ -1,40 +1,10 @@
 import './index.less'
-
-const page = new Vue({
-  el: '#app',
-  data: {
-    count: 60,
-    timer: null,
-    smscode: "",
-    isCounter: false
-  },
-  methods: {
-    handleChange(e) {
-      this.smscode = e.target.value.slice(0, 6);
-    },
-    handleStartTimer() {
-      if (this.timer) {
-        this.timer = null;
-      }
-      this.isCounter = true;
-      this.timer = setInterval(() => {
-        if (this.count >= 1) {
-          this.count = this.count - 1;
-        } else {
-          clearInterval(this.timer);
-          this.isCounter = false;
-          this.count = 60;
-          this.timer = null;
-        }
-      }, 1000);
-    }
-  },
-  mounted() {
-    this.handleStartTimer()
-  }
-})
+import service from './service';
+import Utils from '../../../utils';
+import Router from '../../../router';
 
 apiready = function () {
+  const pageParam = api.pageParam || {}
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -42,6 +12,90 @@ apiready = function () {
       api.closeWin();
     }
   });
-  // alert(Vue)
+  const page = new Vue({
+    el: '#app',
+    data: {
+      count: 60,
+      timer: null,
+      smscode: "",
+      isCounter: false,
+      orderIds: JSON.parse(pageParam.orderIds),
+      successList: JSON.parse(pageParam.successListStr),
+      failList: JSON.parse(pageParam.failListStr),
+      phone: pageParam.phone,
+      hidePhone: pageParam.phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2")
+    },
+    methods: {
+      handleChange(e) {
+        this.smscode = e.target.value.slice(0, 6);
+      },
+      handleStartTimer() {
+        if (this.timer) {
+          this.timer = null;
+        }
+        this.isCounter = true;
+        this.timer = setInterval(() => {
+          if (this.count >= 1) {
+            this.count = this.count - 1;
+          } else {
+            clearInterval(this.timer);
+            this.isCounter = false;
+            this.count = 60;
+            this.timer = null;
+          }
+        }, 1000);
+      },
+      async handleGetSMSCode() {
+        Utils.UI.showLoading('发送中...')
+        try {
+          const res = await service.postAgainSendSMSCode({
+            phone: this.phone
+          })
+          if (res.code === 200) {
+            this.handleStartTimer()
+          }
+        } catch (error) {
+          if (error.msg) {
+            Utils.UI.toast(error.msg)
+          }
+        }
+        Utils.UI.hideLoading()
+      },
+      async handleSubmit() {
+        Utils.UI.showLoading('支用校验中')
+        try {
+          const res = await service.postVerify({
+            phone: this.phone,
+            orderIds: this.orderIds,
+            verification: this.smscode.slice(0, 6)
+          })
+          if (res.code === 200) {
+            this.successList = res.data.successList
+            this.failList = this.failList.concact(res.data.failList)
+            this.successTotalAmount = res.data.successTotalAmount
+            
+            // 跳转结果页
+            Router.openPage({
+              key: 'hxd_u_result',
+              params: {
+                successList: this.successList,
+                failList: this.failList,
+                successTotalAmount: res.data.successTotalAmount
+              }
+            })
+          }
+        } catch (error) {
+          if (error.msg) {
+            Utils.UI.toast(error.msg)
+          }
+        }
+        Utils.UI.hideLoading()
+      }
+    },
+    mounted() {
+      this.handleStartTimer()
+    }
+  })
+
 
 }

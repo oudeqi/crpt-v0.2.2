@@ -65,6 +65,15 @@ const routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
   // 好销贷用款校验
   hxd_u_smscode: {
     name: 'hxd_u_smscode',
@@ -164,6 +173,15 @@ const routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
 }
 
 export default routerHXDConfig

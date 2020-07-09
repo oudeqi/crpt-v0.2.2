@@ -19,69 +19,94 @@
       <div class="pd">
         <div class="header">
           <p class="label">用款金额</p>
-          <p class="num">120,000.00</p>
+          <p class="num">{{amount}}</p>
         </div>
         <div class="main">
-          <div class="total">共{{2}}笔入库单</div>
+          <div class="total">共{{warehouseOrderlist.length}}笔入库单</div>
           <ul class="list">
             <li class="cell"
-              v-for="(item, index) in (isFolder ? [orders[0]] : orders)"
+              v-for="(item, index) in (isFolder ? [warehouseOrderlist[0]] : warehouseOrderlist)"
               :key="item.orderId"
             >
-              <div class="l">{{index}}</div>
+              <div class="l">{{index + 1 < 10 ? '0' : ''}}{{index + 1}}</div>
               <div class="r">
-                <div class="title">{{item.title}}</div>
+                <div class="title">{{item.buyCustName}}</div>
                 <div class="num">
                   <div class="can">
                     <div class="lb">可用金额</div>
-                    <div class="n">{{item.can}}</div>
+                    <div class="n">{{item.wareAvailableAmount}}</div>
                   </div>
                   <div class="can left">
                     <div class="lb">金额</div>
-                    <div class="n">{{item.left}}</div>
+                    <div class="n">{{item.wareShouldPayAmount}}</div>
                   </div>
                 </div>
                 <div class="date">
                   下单日期:
-                  <span>{{item.date}}</span>
+                  <span>{{item.wareOrderTime}}</span>
                 </div>
-                <div class="orderId">入库单编号: {{item.orderId}}</div>
+                <div class="orderId">
+                  入库单编号: {{item.expWarehouseOrderNo}}
+                </div>
               </div>
             </li>
           </ul>
-          <div class="footer" @click="handleFolder">
+          <div v-if="warehouseOrderlist.length >= 2"
+            class="footer"
+            @click="handleFolder"
+          >
             {{!isFolder ? '收起' : '展开'}}
           </div>
         </div>
         <div class="repay-b">
           <div class="item">
-            <span class="k">还款方式</span>
+            <span class="k">金服好销贷</span>
             <span class="v">到期一次性还本付息</span>
           </div>
-          <div class="item">
+          <div class="item" @click="handleToUseTry">
             <span class="k">还款计划试算</span>
             <span class="v">
               <i class="aui-iconfont aui-icon-right"></i>
             </span>
           </div>
         </div>
-        <div class="app_agreement">
-          <label>
-            <input class="app_checkbox"
-              type="checkbox"
-              id="checkbox"
-              name="type"
-            >
-          </label>
-          <div class="agreement_content">
-            <span>已阅读并同意</span>
-            <span class="ac" v-for="item in agreements" :key="item.id"
-              >《{{item.title}}》</span>
-          </div>
-        </div>
+        
       </div>
       <div class="bottom-box">
-        <div class="btn btn-normal">用款确认</div>
+        <div class="btn btn-normal" @click="handleBtnClickConfirm">用款确认</div>
+      </div>
+      <div class="popup"
+        v-show="isShowPop"
+        @click.stop.prevent.self="handleClosePop"
+      >
+        <section class="content">
+          <div class="close">x</div>
+          <div class="pheader">协议确认</div>
+          <div class="blkc no-account">
+            <p class="tips">
+              在用款过程中，您需要通过点击“同意”的形式接受每笔入库单协议。请仔细阅读、充分理解协议内容后再点击同意。
+            </p>
+            <div class="
+            ">
+              <ul class="s-list">
+                <li class="s-cell" v-for="item in agreements" :key="item.orderId">
+                  <div class="cube">
+                    <div class="oi">
+                      业务单号：{{item.orderNo}}
+                    </div>
+                    <div class="name" @click="handleToAgreement(item.contractId)">
+                      《{{item.contractName}}》
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="b-group">
+              <div class="btn" @click="handleAgree">同意</div>
+              <div class="btn btn-prime" @click="handleDisagree">不同意</div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
