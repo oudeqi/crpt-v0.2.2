@@ -177,6 +177,11 @@ const openUIInput = (dom, form, key, options = {}, cb) => {
   })
 }
 
+const isIdCardNo = no => {
+  let no15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/.test(no)
+  let no18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/.test(no)
+  return no15 || no18
+}
 const isPhoneNo = phone => (/^1[3456789]\d{9}$/.test(phone))
 const phoneNoFormat = (tel, tag = '****') => {
   let a = String(tel).substring(0, 3)
@@ -551,6 +556,7 @@ export {
   openUIInput,
   resetUIInputPosi,
   isPhoneNo,
+  isIdCardNo,
   phoneNoFormat,
   loginSuccessCallback,
   ActionSheet,

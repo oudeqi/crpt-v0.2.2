@@ -4,7 +4,7 @@ html, body {
   background-color: rgba(255,255,255,1);
 }
 
-section {
+.card {
   background-color: #fff;
   margin-top: 12px;
 }
@@ -48,14 +48,14 @@ section {
   border-bottom: 1px solid #ededed;
   position: relative;
   & .label {
-    width: 80px;
+    width: 90px;
     flex-shrink: 0;
     color: #000;
   }
   & .ipt {
     height: 100%;
-    /*border: 1px solid red;*/
     flex-grow: 1;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -63,6 +63,8 @@ section {
     margin-right: 80px;
     & input {
       font-size: 16px;
+      display: block;
+      width: 100%;
     }
     & input::placeholder {
       color: #aaa;
@@ -78,7 +80,6 @@ section {
   }
   & .icon {
     position: absolute;
-    /*border: 1px solid red;*/
     top: 0;
     right: 0;
     width: 50px;
@@ -86,9 +87,12 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    & .aui-iconfont {
-      color: #666;
-      font-weight: bold;
+    .arrow-r {
+      width: 16px;
+      height: 16px;
+      margin-left: 4px;
+      background: url(../../image/arrow-r.png) no-repeat center;
+      background-size: contain;
     }
   }
 }

@@ -1,7 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+input, textarea {
+  outline: none;
+  border: none;
+}
 [v-cloak] {
   display: none !important;  
 }
-
 .app_list_loading, .app_list_nomore, .app_list_loadmore {
   padding-top: 10px;
   padding-bottom: 20px;
@@ -9,14 +18,12 @@
   font-size: 15px;
   color: #999;
 }
-
 .app_list_nodata {
   margin: 0 auto;
   margin-top: 100px;
   width: 100%;
   height: 300px;
 }
-
 .app_list_nodata .app_list_nodata_pic {
     background: url(../../image/default/empty.png) center no-repeat;
     background-size: 100%;
@@ -24,25 +31,20 @@
     height: 60px;
     margin: 0 auto;
   }
-
 .app_list_nodata .app_list_nodata_desc {
     font-size: 14px;
     color: #999;
     text-align: center;
     width: 100%;
   }
-
 /*页面头部*/
-
 .app_header.white {
   background-color: #fff;
 }
-
 .app_header {
   background-color: #66BB6A;
   position: relative;
 }
-
 .app_header div {
     width: 55px;
     height: 44px;
@@ -58,25 +60,20 @@
         -ms-flex-pack: center;
             justify-content: center;
   }
-
 .app_header div .aui-iconfont {
       color: #fff;
       font-weight: bold;
       font-size: 20px;
     }
-
 .app_header div.active {
       background-color: #88dbcb;
     }
-
 .app_header div:first-child {
     left: 0;
   }
-
 .app_header div:last-child {
     right: 0;
   }
-
 .app_header h1 {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -93,9 +90,7 @@
     height: 44px;
     padding: 0 44px;
   }
-
 /*块状按钮*/
-
 .app_btn {
   height:50px;
   background:rgba(102,187,106,1);
@@ -113,15 +108,12 @@
       -ms-flex-pack: center;
           justify-content: center;
 }
-
 .app_btn.active {
     background-color: rgba(102, 187, 106, 0.75);
   }
-
 .app_btn.loading {
     background-color: rgba(102, 187, 106, 0.75);
   }
-
 .app_plain_btn {
   height:50px;
   background:rgba(255,255,255,1);
@@ -140,7 +132,6 @@
   font-weight:500;
   color:rgba(102,187,106,1);
 }
-
 .tab {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -148,11 +139,9 @@
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
-
 .tab label input {
       display: none;
     }
-
 .tab label span {
       height:42px;
       line-height:42px;
@@ -162,18 +151,14 @@
       font-weight: normal;
       border-bottom: 4px solid #fff;
     }
-
 .tab label input:checked + span {
       color: #66BB6A;
       border-bottom: 4px solid rgba(102,187,106,1);
     }
-
 /*输入框组*/
-
 .app_ipt_group {
   padding-top: 20px;
 }
-
 .app_ipt_group .item {
     height: 54px;
     display: -webkit-box;
@@ -187,7 +172,6 @@
             justify-content: center;
     border-bottom: 1px solid rgba(234,234,234,1);
   }
-
 .app_ipt_group .item .icon {
       width: 50px;
       height: 100%;
@@ -203,17 +187,14 @@
           -ms-flex-pack: center;
               justify-content: center;
     }
-
 .app_ipt_group .item .icon .aui-iconfont {
         font-size: 22px;
         color: #666;
       }
-
 .app_ipt_group .item .icon .aui-icon-unlock:before {
         position: relative;
         left: 4px;
       }
-
 .app_ipt_group .item .ipt {
       -webkit-box-flex: 1;
           -ms-flex-positive: 1;
@@ -223,13 +204,11 @@
       top: 2px;
       margin-right: 20px;
     }
-
 .app_ipt_group .item .ipt input {
         width: 100%;
         border: 0;
         outline: 0;
       }
-
 .app_ipt_group .item .btn {
       -ms-flex-negative: 0;
           flex-shrink: 0;
@@ -239,16 +218,13 @@
       font-weight: normal;
       color: #66BB6A;
     }
-
 .app_ipt_group .item .btn.active {
         color:rgba(144,147,153,1);
         padding-right: 3px;
       }
-
 .app_ipt_group .item .btn.loading {
         color: #666;
       }
-
 .app_checkbox {
   width:16px;
   height:16px;
@@ -261,14 +237,12 @@
   -webkit-appearance: none;
   -webkit-user-select: none;
 }
-
 .app_checkbox:checked {
     background-image: url(../../image/form/checked.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
   }
-
 .app_agreement {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -278,42 +252,35 @@
           align-items: flex-start;
 
 }
-
 .app_agreement label {
     -ms-flex-negative: 0;
         flex-shrink: 0;
     margin-right: 10px;
   }
-
 .app_agreement .agreement_content {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
     padding-top: 1px;
   }
-
 .app_agreement .agreement_content ul {
       display: inline;
     }
-
 .app_agreement .agreement_content ul li {
         display: inline;
       }
-
 .app_agreement .agreement_content strong {
       display: inline;
       font-size:15px;
       font-weight:normal;
       color:rgba(144,147,153,1);
     }
-
 .app_agreement .agreement_content span {
       display: inline;
       font-size:15px;
       font-weight:normal;
       color:rgba(144,147,153,1);
     }
-
 .app_agreement .agreement_content li {
       display: inline;
       font-size:15px;
@@ -322,34 +289,27 @@
       padding-left: 0;
       padding-right: 1px;
     }
-
 .app_agreement .agreement_content li.active {
         padding-left: 1px;
         padding-right: 0;
       }
-
 /*连接按钮*/
-
 .app_link_btn {
   padding-left: 0;
   padding-right: 1px;
   font-size:16px;
   color:rgba(102,187,106,1);
 }
-
 .app_link_btn.active {
     padding-left: 1px;
     padding-right: 0px;
   }
-
 /*文字按钮*/
-
 .app_text_btn {
   padding-left: 0;
   padding-right: 1px;
   color: #66BB6A;
 }
-
 .app_text_btn.active {
     color: rgba(102, 187, 106, 0.75);
     padding-left: 1px;
@@ -362,7 +322,7 @@ html, body {
   background-color: rgba(255,255,255,1);
 }
 
-section {
+.card {
   background-color: #fff;
   margin-top: 12px;
 }
@@ -423,7 +383,7 @@ section {
 }
 
 .ipt-box .label {
-    width: 80px;
+    width: 90px;
     -ms-flex-negative: 0;
         flex-shrink: 0;
     color: #000;
@@ -431,10 +391,10 @@ section {
 
 .ipt-box .ipt {
     height: 100%;
-    /*border: 1px solid red;*/
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -450,6 +410,8 @@ section {
 
 .ipt-box .ipt input {
       font-size: 16px;
+      display: block;
+      width: 100%;
     }
 
 .ipt-box .ipt input::-webkit-input-placeholder {
@@ -484,7 +446,6 @@ section {
 
 .ipt-box .icon {
     position: absolute;
-    /*border: 1px solid red;*/
     top: 0;
     right: 0;
     width: 50px;
@@ -500,9 +461,12 @@ section {
             justify-content: center;
   }
 
-.ipt-box .icon .aui-iconfont {
-      color: #666;
-      font-weight: bold;
+.ipt-box .icon .arrow-r {
+      width: 16px;
+      height: 16px;
+      margin-left: 4px;
+      background: url(../../image/arrow-r.png) no-repeat center;
+      background-size: contain;
     }
 
 .submit {

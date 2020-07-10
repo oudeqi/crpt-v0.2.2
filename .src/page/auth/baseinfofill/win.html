@@ -6,131 +6,180 @@
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
   <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 </head>
 
 <body>
-  <section>
-    <div class="tit">请填写<span id="userType1">***</span>的个人信息</div>
-    <div class="indent">
-      <div class="ipt-box">
-        <div class="label">婚姻状况</div>
-        <div class="ipt" id="marriage">
-          <input type="text" placeholder="请选择" disabled value="">
-        </div>
-        <div class="icon">
-          <i class="aui-iconfont aui-icon-right"></i>
-        </div>
+
+  <section id="app">
+
+    <section class="card">
+      <div class="tit">
+        请填写
+        <span v-if="String(userType)==='2'">法定代表人</span>
+        <span v-else>您</span>
+        的个人信息
       </div>
-      <div class="ipt-box">
-        <div class="label">子女状况</div>
-        <div class="ipt" id="isChildren">
-          <input type="text" placeholder="请选择" disabled value="">
-        </div>
-        <div class="icon">
-          <i class="aui-iconfont aui-icon-right"></i>
-        </div>
-      </div>
-      <div class="ipt-box">
-        <div class="label">教育情况</div>
-        <div class="ipt" id="education">
-          <input type="text" placeholder="请选择" disabled value="">
-        </div>
-        <div class="icon">
-          <i class="aui-iconfont aui-icon-right"></i>
-        </div>
-      </div>
-      <div class="ipt-box">
-        <div class="label">户籍地址</div>
-        <div class="ipt" id="permanentAddress">
-          <input type="text" placeholder="请选择" disabled value="">
-        </div>
-        <div class="icon">
-          <i class="aui-iconfont aui-icon-right"></i>
-        </div>
-      </div>
-      <div class="ipt-box">
-        <div class="label">工作单位</div>
-        <div class="ipt">
-          <input id="workCompany" type="text" name="workCompany" placeholder="请输入" value="">
-        </div>
-      </div>
-      <div class="ipt-box">
-        <div class="label">从事畜牧<br />行业年限</div>
-        <div class="ipt">
-          <input id="animalHusbandryYear" type="tel" name="animalHusbandryYear" placeholder="请输入" value="">
-        </div>
-      </div>
-      <div class="indent-tit">现居住信息</div>
       <div class="indent">
         <div class="ipt-box">
-          <div class="label">省市地区</div>
-          <div class="ipt" id="address">
+          <div class="label">婚姻状况</div>
+          <div class="ipt" id="marriage" @click="handleMarriageClick()">
             <input type="text" placeholder="请选择" disabled value="">
           </div>
-          <div class="icon">
-            <i class="aui-iconfont aui-icon-right"></i>
+          <div class="icon" @click="handleMarriageClick()">
+            <i class="arrow-r"></i>
           </div>
         </div>
         <div class="ipt-box">
-          <div class="label">详细地址</div>
-          <div class="ipt">
-            <input id="addrDetail" type="text" name="addrDetail" placeholder="请输入" value="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="tit">请填写<span id="userType2">***</span>的联系人信息</div>
-    <div class="indent">
-      <div class="indent-tit">直属亲属</div>
-      <div class="indent">
-        <div class="ipt-box">
-          <div class="label">亲属关系</div>
-          <div class="ipt" id="relationship">
+          <div class="label">子女状况</div>
+          <div class="ipt" id="isChildren" @click="handleChildrenClick()">
             <input type="text" placeholder="请选择" disabled value="">
           </div>
-          <div class="icon">
-            <i class="aui-iconfont aui-icon-right"></i>
+          <div class="icon" @click="handleChildrenClick()">
+            <i class="arrow-r"></i>
           </div>
         </div>
         <div class="ipt-box">
-          <div class="label">姓名</div>
-          <div class="ipt">
-            <input id="relationName" type="text" name="relationName" placeholder="请输入" value="">
+          <div class="label">学历情况</div>
+          <div class="ipt" id="education" @click="handleEducationClick()">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon" @click="handleEducationClick()">
+            <i class="arrow-r"></i>
           </div>
         </div>
         <div class="ipt-box">
-          <div class="label">手机号</div>
+          <div class="label">学位情况</div>
+          <div class="ipt" id="academicDegree" @click="handleAcademicDegreeClick()">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon" @click="handleAcademicDegreeClick()">
+            <i class="arrow-r"></i>
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">户籍地址</div>
+          <div class="ipt" id="permanentAddress" @click="handlePermanentAddressClick()">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon" @click="handlePermanentAddressClick()">
+            <i class="arrow-r"></i>
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">是否为农户</div>
+          <div class="ipt" id="isPeasant" @click="handleIsPeasantClick()">
+            <input type="text" placeholder="请选择" disabled value="">
+          </div>
+          <div class="icon" @click="handleIsPeasantClick()">
+            <i class="arrow-r"></i>
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">工作单位</div>
           <div class="ipt">
-            <input id="relationPhone" type="tel" name="relationPhone" placeholder="请输入" value="">
+            <input v-model="postData.workCompany" type="text" placeholder="请输入">
+          </div>
+        </div>
+        <div class="ipt-box">
+          <div class="label">从事畜牧<br />行业年限</div>
+          <div class="ipt">
+            <input v-model="postData.animalHusbandryYear" type="tel" placeholder="请输入">
+          </div>
+        </div>
+        
+        <div class="indent-tit">现居住信息</div>
+        <div class="indent">
+          <div class="ipt-box">
+            <div class="label">省市地区</div>
+            <div class="ipt" id="address" @click="handleAddressClick()">
+              <input type="text" placeholder="请选择" disabled value="">
+            </div>
+            <div class="icon" @click="handleAddressClick()">
+              <i class="arrow-r"></i>
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">详细地址</div>
+            <div class="ipt">
+              <input v-model="postData.addrDetail" type="text" placeholder="请输入">
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">居住状况</div>
+            <div class="ipt" id="livingConditions" @click="handleLivingConditionsClick()">
+              <input type="text" placeholder="请选择" disabled value="">
+            </div>
+            <div class="icon" @click="handleLivingConditionsClick()">
+              <i class="arrow-r"></i>
+            </div>
           </div>
         </div>
       </div>
-      <div class="indent-tit">其他联系人</div>
+    </section>
+  
+    <section class="card">
+      <div class="tit">
+        请填写
+        <span v-if="String(userType)==='2'">法定代表人</span>
+        <span v-else>您</span>
+        的联系人信息
+      </div>
       <div class="indent">
-        <div class="ipt-box">
-          <div class="label">姓名</div>
-          <div class="ipt">
-            <input id="otherName" type="text" name="otherName" placeholder="请输入" value="">
+        <div class="indent-tit">直属亲属</div>
+        <div class="indent">
+          <div class="ipt-box">
+            <div class="label">亲属关系</div>
+            <div class="ipt" id="relationship" @click="handleRelationshipClick()">
+              <input type="text" placeholder="请选择" disabled value="">
+            </div>
+            <div class="icon" @click="handleRelationshipClick()">
+              <i class="arrow-r"></i>
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">姓名</div>
+            <div class="ipt">
+              <input type="text" v-model="postData.relationName" placeholder="请输入">
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">手机号</div>
+            <div class="ipt">
+              <input type="tel" v-model="postData.relationPhone" placeholder="请输入">
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">身份证号码</div>
+            <div class="ipt">
+              <input type="number" v-model="postData.idNumber" placeholder="请输入">
+            </div>
           </div>
         </div>
-        <div class="ipt-box">
-          <div class="label">手机号</div>
-          <div class="ipt">
-            <input id="otherPhone" type="tel" name="otherPhone" placeholder="请输入" value="">
+        <div class="indent-tit">其他联系人</div>
+        <div class="indent">
+          <div class="ipt-box">
+            <div class="label">姓名</div>
+            <div class="ipt">
+              <input type="text" v-model="postData.otherName" placeholder="请输入">
+            </div>
+          </div>
+          <div class="ipt-box">
+            <div class="label">手机号</div>
+            <div class="ipt">
+              <input type="tel" v-model="postData.otherPhone" placeholder="请输入">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  
+    <section class="submit" class="card">
+      <div :class="['app_btn', {loading:loading}]" @click="submit()" tapmode="active">提交</div>
+    </section>
 
-  <section class="submit">
-    <div class="app_btn" tapmode="active" id="submit">提交</div>
   </section>
 
   <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 </body>
 </html>
