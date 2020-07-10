@@ -48,18 +48,18 @@ class App {
     // 6：人工审核不通过
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
-    Router.openPage({
-      key: 'hxd_u_result',
-      params: {
-        pageParam: {
-          // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-          successTotalAmount: '1202934',
-          successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-          failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-        }
-      }
-    })
-    return
+    // Router.openPage({
+    //   key: 'hxd_u_result',
+    //   params: {
+    //     pageParam: {
+    //       // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
+    //       successTotalAmount: '1202934',
+    //       successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
+    //       failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
+    //     }
+    //   }
+    // })
+    // return
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

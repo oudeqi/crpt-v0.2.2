@@ -407,8 +407,6 @@ html, body {
       display: block;
       height:22px;
       font-size:16px;
-      font-weight:500;
-      font-family:PingFangSC-Medium,PingFang SC;
       color:rgba(144,147,153,1);
       line-height:22px;
     }
@@ -437,8 +435,7 @@ html, body {
 .total strong {
     height:22px;
     font-size:16px;
-    font-family:PingFangSC-Medium,PingFang SC;
-    font-weight:500;
+    font-weight: normal;
     color:rgba(48,49,51,1);
     line-height:22px;
     display: block;
@@ -453,7 +450,6 @@ html, body {
     margin-left: 8px;
     height:20px;
     font-size:14px;
-    font-family:PingFang-SC-Medium,PingFang-SC;
     color:rgba(144,147,153,1);
     line-height:20px;
   }
@@ -489,7 +485,6 @@ html, body {
 .card-item .card-row1 .card-num {
       height:22px;
       font-size:16px;
-      font-family:PingFangSC-Medium,PingFang SC;
       color:rgba(48,49,51,1);
       line-height:22px;
     }
@@ -508,22 +503,33 @@ html, body {
       color:rgba(238,83,84,1);
     }
 
+.card-item .card-row1 .card-tag__grag {
+      width:60px;
+      height:16px;
+      line-height: 16px;
+      text-align: center;
+      background:#eee;
+      border-radius:2px;
+      font-size:10px;
+      font-family:PingFang-SC-Medium,PingFang-SC;
+      font-weight:500;
+      color:#ccc;
+    }
+
 .card-item .card-row2 {
     margin-top: 12px;
     height:32px;
     background:rgba(102,187,106,0.1);
     border-radius:4px;
     font-size:14px;
-    font-family:PingFang-SC-Medium,PingFang-SC;
     color:rgba(48,49,51,1);
     line-height:32px;
   }
 
 .card-item .card-row3 {
-    margin-top: 6px;
+    margin-top: 10px;
     height:20px;
     font-size:14px;
-    font-family:PingFang-SC-Medium,PingFang-SC;
     color:rgba(144,147,153,1);
     line-height:20px;
   }
@@ -570,7 +576,6 @@ html, body {
       background:rgba(102,187,106,1);
       border-radius:18px;
       font-size:16px;
-      font-family:PingFang-SC-Medium,PingFang-SC;
       color:rgba(255,255,255,1);
       display: -webkit-box;
       display: -ms-flexbox;
@@ -587,239 +592,3 @@ html, body {
         background:rgba(220,224,232,1);
       }
 
-.container {
-  padding: 15px;
-}
-
-.secl {
-  background-color: #fff;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.secl_header {
-  height: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-}
-
-.secl_header .btn {
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    width: 80px;
-  }
-
-.secl_header .tit {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
-
-.active {
-  background-color: #aaa;
-  color: #fff;
-}
-
-.secl_body {
-  text-align: center;
-  border-top: 1px solid #f3f3f3;
-  padding: 20px;
-  height: 155px;
-}
-
-.secl_body p {
-    font-size: 16px;
-    color: #999;
-  }
-
-.secl_body p strong {
-      color: orange;
-      font-size: 30px;
-      font-weight: bold;
-    }
-
-.secl_body p span {
-      color: #999;
-    }
-
-.secl_body .warning {
-    background-color: orange;
-    font-size: 14px;
-    color: #fff;
-    padding: 0 6px;
-    border-radius: 4px;
-  }
-
-.loading {
-  padding-top: 40px;
-  color: #999;
-}
-
-.nodata {
-  padding-top: 50px;
-  color: #999;
-  text-align: center;
-}
-
-ul {
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-ul li {
-    border-bottom: 1px solid #f3f3f3;
-    background: #fff;
-    padding: 15px;
-  }
-
-.row1 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-}
-
-.row1 .name {
-    color: #333;
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-  }
-
-.row1 .warning {
-    color: orange;
-    font-size: 14px;
-    margin-right: 10px;
-  }
-
-.row1 .data {
-    color: #999;
-    font-size: 14px;
-  }
-
-.row1 .data.red {
-      color: red;
-    }
-
-.row2 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  margin-top: 10px;
-}
-
-.row2 .txt {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-  }
-
-.row2 .txt strong {
-      font-size: 20px;
-      margin-right: 10px;
-    }
-
-.row2 .txt span {
-      color: #999;
-      font-size: 14px;
-    }
-
-.row2 .txt i {
-      color: #999;
-      font-size: 15px;
-      font-style: normal;
-    }
-
-.row2 .btn {
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-    height: 28px;
-    padding: 0 10px;
-    background: #66BB6A;
-    color: #fff;
-    font-size: 14px;
-    border-radius: 4px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
-
-.row2 .btn.disabled {
-    background-color: #aaa;
-  }
-
-.tips {
-  text-align: center;
-  font-size: 14px;
-  color: #aaa;
-  padding-top: 20px;
-}
-
-.contactus {
-  padding: 40px;
-  text-align: center;
-  color: #66BB6A;
-}
-
-.contactus span {
-    text-decoration: underline;
-  }
-
-.listTit {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 20px 10px 8px;
-}
-
-.listTit strong {
-    font-size: 15px;
-    color: #999;
-    font-weight: normal;
-  }
-
-.listTit span {
-    text-decoration: underline;
-    color: #66BB6A;
-    font-size: 15px;
-  }

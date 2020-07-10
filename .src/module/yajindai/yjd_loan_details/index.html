@@ -20,7 +20,7 @@
     <section class="content">
       <div class="plan" v-if="status === 'valid'">
         <div class="plan-tit">还款计划</div>
-        <div class="plan-desc">（剩余{{data.surplusRepayPeriod || '*'}}期未还清）</div>
+        <div class="plan-desc">（剩余{{data.surplusRepayPeriod}}期未还清）</div>
         <div class="plan-btn arrowbtn" @click="openPlan()">查看</div>
       </div>
   

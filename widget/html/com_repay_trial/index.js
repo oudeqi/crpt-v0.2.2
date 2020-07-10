@@ -2527,7 +2527,6 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
-      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {

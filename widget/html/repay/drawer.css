@@ -242,8 +242,119 @@ input, textarea {
   padding-right: 0px;
 }
 
-
-
+.container {
+  background-color: #fff;
+}
+.header {
+  height: 56px;
+  position: relative;
+  text-align: center;
+  line-height: 56px;
+  font-size:16px;
+  color:rgba(96,98,102,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0 12px;
+}
+.tips {
+  font-size:18px;
+  color:rgba(48,49,51,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 52px;
+  line-height: 52px;
+  margin: 0 12px;
+}
+.app_list_loading {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+.list {
+  margin: 0;
+  padding: 0 12px;
+  height: 450px;
+  overflow-y: scroll;
+}
+.list-item {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(245,245,245,1);
+}
+.list-item:last-child {
+    border-bottom: 0;
+  }
+.list-item .item-row1 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+.list-item .item-row1 .item-stage {
+      height:22px;
+      font-size:16px;
+      color:rgba(48,49,51,1);
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      margin-right: 10px;
+    }
+.list-item .item-row1 .item-tag {
+      width:60px;
+      height:16px;
+      line-height: 16px;
+      text-align: center;
+      background:rgba(238,83,84,0.1);
+      border-radius:2px;
+      border:1px solid rgba(238,83,84,1);
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      font-size:10px;
+      font-family:PingFang-SC-Medium,PingFang-SC;
+      font-weight:500;
+      color:rgba(238,83,84,1);
+    }
+.list-item .item-row1 .item-num {
+      height:22px;
+      font-size:16px;
+      color:rgba(48,49,51,1);
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      text-align: right;
+    }
+.list-item .item-row2 {
+    margin-top: 2px;
+    text-align: right;
+  }
+.list-item .item-row2 span {
+      height:20px;
+      font-size:14px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+.list-item .item-row2 .item-divide {
+      display: inline-block;
+      vertical-align: middle;
+      width:1px;
+      height:18px;
+      background:rgba(245,245,245,1);
+      margin: 0 8px;
+    }
+.list-item .item-row3 {
+    margin-top: 2px;
+    height:20px;
+    font-size:14px;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+    text-align: right;
+  }
 html, body {
   background-color: rgba(0,0,0,0);
 }
@@ -256,83 +367,66 @@ html, body {
   bottom: 0;
   width: 100%;
   height: 100%;
-  padding: 24px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
 }
 
-.full-mask .dialog {
+.full-mask .drawer {
     width: 100%;
     height: auto;
+    min-height: 300px;
     background-color: #fff;
-    border-radius: 6px;
+    position: relative;
   }
 
-.full-mask .dialog .dialog-header {
-      height: 60px;
-      line-height: 60px;
-      text-align: center;
-      font-size:16px;
-      font-weight:500;
-      color:rgba(48,49,51,1);
-      border-bottom: 1px solid rgba(245,245,245,1);
+.full-mask .drawer .drawer-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 20px;
+      height: 20px;
     }
 
-.full-mask .dialog .dialog-content {
-      min-height: 100px;
-    }
-
-.full-mask .dialog .dialog-footer {
-      height: 60px;
-      border-top: 1px solid rgba(245,245,245,1);
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: stretch;
-          -ms-flex-align: stretch;
-              align-items: stretch;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-    }
-
-.full-mask .dialog .dialog-footer .dialog-btn {
-        font-size:16px;
-        font-weight:bold;
-        color:#aaa;
-        -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-                flex-grow: 1;
-        width: 100%;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
-        border-right: 1px solid rgba(245,245,245,1);
+.full-mask .drawer .drawer-close::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(45deg);
+                transform: translateX(10px) rotateZ(45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
       }
 
-.full-mask .dialog .dialog-footer .dialog-btn:last-child {
-          margin-right: 0;
-          color:rgba(102,187,106,1);
-        }
+.full-mask .drawer .drawer-close::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(-45deg);
+                transform: translateX(10px) rotateZ(-45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
+      }
 
-.full-mask .dialog .dialog-footer .dialog-btn.active {
-          color: red !important;
-        }
+.full-mask .drawer .dialog-content {
+      min-height: 100px;
+    }
 
 

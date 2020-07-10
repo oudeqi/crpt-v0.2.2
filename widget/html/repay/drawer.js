@@ -1,3 +1,50 @@
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+var arrayLikeToArray = _arrayLikeToArray;
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+
+var arrayWithoutHoles = _arrayWithoutHoles;
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+var iterableToArray = _iterableToArray;
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+var unsupportedIterableToArray = _unsupportedIterableToArray;
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var nonIterableSpread = _nonIterableSpread;
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+
+var toConsumableArray = _toConsumableArray;
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -775,6 +822,20 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
+var AppDrawer = {
+  template: "\n    <div class=\"full-mask\" @click=\"onMaskClick\">\n      <div class=\"drawer\">\n        <div class=\"drawer-content\">\n          <slot></slot>\n        </div>\n        <div class=\"drawer-close\" @click=\"onClick\"></div>\n      </div>\n    </div>\n  ",
+  methods: {
+    onClick: function onClick() {
+      this.$emit('on-close');
+    },
+    onMaskClick: function onMaskClick(e) {
+      if (e.target.className.includes('dialog-mask')) {
+        this.$emit('update:show', false);
+      }
+    }
+  }
+};
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -969,14 +1030,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	openPageCreditInformation: openPageCreditInformation,
-	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-	openAttachmentInfo: openAttachmentInfo,
-	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+  __proto__: null,
+  openPageCreditInformation: openPageCreditInformation,
+  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+  openAttachmentInfo: openAttachmentInfo,
+  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -2064,766 +2125,1165 @@ var http$1 = {
   }
 };
 
-// 主题色
-var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
-
-var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
-
-var navigationBarWhite = {
-  hideBackButton: false,
-  background: '#fff',
-  color: textColor,
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: themeMainColor,
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-}; // 绿色底导航
-
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: themeMainColor,
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-};
-
-/**
- * themeMainColor 主题色
- * textColor 导航文字黑色
- * navigationBarWhite 浅色底导航
- * navigationBarGreen 绿色底导航
+var numeral = createCommonjsModule(function (module) {
+/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
  */
 
-var routerMap = {
-  yjd_select_contract: {
-    name: 'yjd_select_contract',
-    title: '选择代养合同',
-    url: 'widget://html/yjd_select_contract/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_confirm: {
-    name: 'yjd_apply_confirm',
-    title: '申请贷款',
-    url: 'widget://html/yjd_apply_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_hukouben_upload: {
-    name: 'yjd_hukouben_upload',
-    title: '上传户口本',
-    url: 'widget://html/yjd_hukouben_upload/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_status: {
-    name: 'yjd_apply_status',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_result: {
-    name: 'yjd_apply_result',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_loan_signing: {
-    name: 'yjd_loan_signing',
-    title: '贷款签约',
-    url: 'widget://html/yjd_loan_signing/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_signing_result: {
-    name: 'yjd_signing_result',
-    title: '签约结果',
-    url: 'widget://html/yjd_signing_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_account_open: {
-    name: 'yjd_account_open',
-    title: '开通新网账户',
-    url: 'widget://html/yjd_account_open/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷产品详情
-  yjd_product_detail: {
-    name: 'yjd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/yjd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 贷款申请
-  loan_application: {
-    name: 'loan_application',
-    title: '待申请',
-    url: 'widget://html/loan_application/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 贷款确认
-  loan_confirm: {
-    name: 'loan_confirm',
-    title: '贷款确认',
-    url: 'widget://html/loan_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 押金贷贷款详情
-  yjd_loan_details: {
-    name: 'yjd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/yjd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 公用的贷款详情
-  loan_details: {
-    name: 'loan_details',
-    title: '贷款详情',
-    url: 'widget://html/loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款计划
-  repay_plan: {
-    name: 'repay_plan',
-    title: '还款计划',
-    url: 'widget://html/repay_plan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款记录
-  repay_record: {
-    name: 'repay_record',
-    title: '还款记录',
-    url: 'widget://html/repay_record/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷代养合同
-  yjd_contract_daiyang: {
-    name: 'yjd_contract_daiyang',
-    title: '代养合同',
-    url: 'widget://html/yjd_contract_daiyang/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷贷款合同
-  yjd_contract_loan: {
-    name: 'yjd_contract_loan',
-    title: '贷款合同',
-    url: 'widget://html/yjd_contract_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerHXDConfig = {
-  // 好销贷授信申请
-  hxd_apply: {
-    name: 'hxd_apply',
-    title: '产品介绍',
-    url: 'widget://html/hxd_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷授信申请补充企业信息
-  hxd_a_supply: {
-    name: 'hxd_a_supply',
-    title: '补充企业信息',
-    url: 'widget://html/hxd_a_supply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷授信申请成功/失败
-  hxd_a_success: {
-    name: 'hxd_a_success',
-    title: '产品开通',
-    url: 'widget://html/hxd_a_success/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 好销贷产品详情
-  hxd_product_detail: {
-    name: 'hxd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/hxd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷额度变化详情
-  hxd_quota: {
-    name: 'hxd_quota',
-    title: '额度变化详情',
-    url: 'widget://html/hxd_quota/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款申请
-  hxd_u_apply: {
-    name: 'hxd_u_apply',
-    title: '申请用款',
-    url: 'widget://html/hxd_u_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款确认
-  hxd_u_confirm: {
-    name: 'hxd_u_confirm',
-    title: '用款确认',
-    url: 'widget://html/hxd_u_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款确认
-  hxd_u_try_detail: {
-    name: 'hxd_u_try_detail',
-    title: '用款试算',
-    url: 'widget://html/hxd_u_try_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款校验
-  hxd_u_smscode: {
-    name: 'hxd_u_smscode',
-    title: '用款校验',
-    url: 'widget://html/hxd_u_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷用款结果
-  hxd_u_result: {
-    name: 'hxd_u_result',
-    title: '审核结果',
-    url: 'widget://html/hxd_u_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款试算
-  hxd_r_try: {
-    name: 'hxd_r_try',
-    title: '还款试算',
-    url: 'widget://html/hxd_r_try/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款试算详情页
-  hxd_r_try_detail: {
-    name: 'hxd_r_try_detail',
-    title: '还款试算详情',
-    url: 'widget://html/hxd_r_try_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款校验页
-  hxd_r_smscode: {
-    name: 'hxd_r_smscode',
-    title: '还款校验',
-    url: 'widget://html/hxd_r_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷还款校验页
-  hxd_r_result: {
-    name: 'hxd_r_result',
-    title: '还款结果',
-    url: 'widget://html/hxd_r_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户申请
-  hxd_jf_apply: {
-    name: 'hxd_jf_apply',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户成功页
-  hxd_jf_account: {
-    name: 'hxd_jf_account',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_account/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户企业补充信息
-  hxd_jf_enterprise: {
-    name: 'hxd_jf_enterprise',
-    title: '开通信息补充',
-    url: 'widget://html/hxd_jf_enterprise/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户结果
-  hxd_jf_result: {
-    name: 'hxd_jf_result',
-    title: '开户结果',
-    url: 'widget://html/hxd_jf_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷金服开户状态查看
-  hxd_jf_status: {
-    name: 'hxd_jf_status',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销贷贷款详情
-  hxd_loan_details: {
-    name: 'hxd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/hxd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerConfig = {
-  // 消息中心
-  msgcenter: {
-    name: 'html/msgcenter/win',
-    title: '消息中心',
-    url: 'widget://html/msgcenter/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的账单
-  billlist: {
-    name: 'html/billlist/win',
-    title: '我的账单',
-    url: 'widget://html/billlist/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 账单详情
-  billdetails: {
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的贷款
-  my_loan: {
-    name: 'html/my_loan/win',
-    title: '我的贷款',
-    url: 'widget://html/my_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
-    title: '我的额度',
-    url: 'widget://html/myquota/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
-    title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 联系我们
-  contactus: {
-    name: 'html/contactus/win',
-    title: '联系我们',
-    url: 'widget://html/contactus/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 设置
-  settings: {
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的钱包详情
-  wallet: {
-    name: 'wallet',
-    title: '希望钱包',
-    url: 'widget://html/wallet/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 通用产品列表
-  com_product_list: {
-    name: 'com_product_list',
-    title: '产品列表',
-    url: 'widget://html/com_product_list/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 合同页
-  agreement: {
-    name: 'agreement',
-    title: '查看合同',
-    url: 'widget://html/agreement/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款试算页面
-  com_repay_trial: {
-    name: 'com_repay_trial',
-    title: '还款试算',
-    url: 'widget://html/com_repay_trial/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
-
-function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var Router$1 = /*#__PURE__*/function () {
-  function Router() {
-    classCallCheck(this, Router);
-  }
-
-  createClass(Router, [{
-    key: "openPage",
-    // 打开window级别页面
-    value: function openPage(_ref) {
-      var key = _ref.key,
-          params = _ref.params;
-      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
-    }
-  }]);
-
-  return Router;
-}();
-
-var Router$2 = new Router$1();
-
-/**
- * @author Sunning
- * 存放部分方法
- */
-var filter = {
-  /**
-   * @author Sunning
-   * 数字格式化为千分位   1000 ==> 1,000
-   * @param {Object} s 要格式化的数字
-   * @param {Object} n 保留几位小数
-   */
-  formatNumber: function formatNumber(s, n) {
-    if (s === '-' || !s) {
-      return '-';
+(function (global, factory) {
+    if ( module.exports) {
+        module.exports = factory();
     } else {
-      if (n === 0) {
-        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      } else {
-        n = n > 0 && n <= 20 ? n : 2;
-        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
-        var positive = s.toString().split('-');
-        var l;
-        var r;
+        global.numeral = factory();
+    }
+}(commonjsGlobal, function () {
+    /************************************
+        Variables
+    ************************************/
 
-        if (positive.length > 1) {
-          l = positive[1].split('.')[0].split('').reverse();
-          r = positive[1].split('.')[1];
+    var numeral,
+        _,
+        VERSION = '2.0.6',
+        formats = {},
+        locales = {},
+        defaults = {
+            currentLocale: 'en',
+            zeroFormat: null,
+            nullFormat: null,
+            defaultFormat: '0,0',
+            scalePercentBy100: true
+        },
+        options = {
+            currentLocale: defaults.currentLocale,
+            zeroFormat: defaults.zeroFormat,
+            nullFormat: defaults.nullFormat,
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
+        };
+
+
+    /************************************
+        Constructors
+    ************************************/
+
+    // Numeral prototype object
+    function Numeral(input, number) {
+        this._input = input;
+
+        this._value = number;
+    }
+
+    numeral = function(input) {
+        var value,
+            kind,
+            unformatFunction,
+            regexp;
+
+        if (numeral.isNumeral(input)) {
+            value = input.value();
+        } else if (input === 0 || typeof input === 'undefined') {
+            value = 0;
+        } else if (input === null || _.isNaN(input)) {
+            value = null;
+        } else if (typeof input === 'string') {
+            if (options.zeroFormat && input === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                for (kind in formats) {
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+
+                    if (regexp && input.match(regexp)) {
+                        unformatFunction = formats[kind].unformat;
+
+                        break;
+                    }
+                }
+
+                unformatFunction = unformatFunction || numeral._.stringToNumber;
+
+                value = unformatFunction(input);
+            }
         } else {
-          l = s.split('.')[0].split('').reverse();
-          r = s.split('.')[1];
+            value = Number(input)|| null;
         }
 
-        var t = '';
+        return new Numeral(input, value);
+    };
 
-        for (var i = 0; i < l.length; i++) {
-          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+    // version number
+    numeral.version = VERSION;
+
+    // compare numeral object
+    numeral.isNumeral = function(obj) {
+        return obj instanceof Numeral;
+    };
+
+    // helper functions
+    numeral._ = _ = {
+        // formats numbers separators, decimals places, signs, abbreviations
+        numberToFormat: function(value, format, roundingFunction) {
+            var locale = locales[numeral.options.currentLocale],
+                negP = false,
+                optDec = false,
+                leadingCount = 0,
+                abbr = '',
+                trillion = 1000000000000,
+                billion = 1000000000,
+                million = 1000000,
+                thousand = 1000,
+                decimal = '',
+                neg = false,
+                abbrForce, // force abbreviation
+                abs,
+                int,
+                precision,
+                signed,
+                thousands,
+                output;
+
+            // make sure we never format a null value
+            value = value || 0;
+
+            abs = Math.abs(value);
+
+            // see if we should use parentheses for negative number or if we should prefix with a sign
+            // if both are present we default to parentheses
+            if (numeral._.includes(format, '(')) {
+                negP = true;
+                format = format.replace(/[\(|\)]/g, '');
+            } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
+                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
+                format = format.replace(/[\+|\-]/g, '');
+            }
+
+            // see if abbreviation is wanted
+            if (numeral._.includes(format, 'a')) {
+                abbrForce = format.match(/a(k|m|b|t)?/);
+
+                abbrForce = abbrForce ? abbrForce[1] : false;
+
+                // check for space before abbreviation
+                if (numeral._.includes(format, ' a')) {
+                    abbr = ' ';
+                }
+
+                format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
+
+                if (abs >= trillion && !abbrForce || abbrForce === 't') {
+                    // trillion
+                    abbr += locale.abbreviations.trillion;
+                    value = value / trillion;
+                } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
+                    // billion
+                    abbr += locale.abbreviations.billion;
+                    value = value / billion;
+                } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
+                    // million
+                    abbr += locale.abbreviations.million;
+                    value = value / million;
+                } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
+                    // thousand
+                    abbr += locale.abbreviations.thousand;
+                    value = value / thousand;
+                }
+            }
+
+            // check for optional decimals
+            if (numeral._.includes(format, '[.]')) {
+                optDec = true;
+                format = format.replace('[.]', '.');
+            }
+
+            // break number and format
+            int = value.toString().split('.')[0];
+            precision = format.split('.')[1];
+            thousands = format.indexOf(',');
+            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
+
+            if (precision) {
+                if (numeral._.includes(precision, '[')) {
+                    precision = precision.replace(']', '');
+                    precision = precision.split('[');
+                    decimal = numeral._.toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                } else {
+                    decimal = numeral._.toFixed(value, precision.length, roundingFunction);
+                }
+
+                int = decimal.split('.')[0];
+
+                if (numeral._.includes(decimal, '.')) {
+                    decimal = locale.delimiters.decimal + decimal.split('.')[1];
+                } else {
+                    decimal = '';
+                }
+
+                if (optDec && Number(decimal.slice(1)) === 0) {
+                    decimal = '';
+                }
+            } else {
+                int = numeral._.toFixed(value, 0, roundingFunction);
+            }
+
+            // check abbreviation again after rounding
+            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+                int = String(Number(int) / 1000);
+
+                switch (abbr) {
+                    case locale.abbreviations.thousand:
+                        abbr = locale.abbreviations.million;
+                        break;
+                    case locale.abbreviations.million:
+                        abbr = locale.abbreviations.billion;
+                        break;
+                    case locale.abbreviations.billion:
+                        abbr = locale.abbreviations.trillion;
+                        break;
+                }
+            }
+
+
+            // format number
+            if (numeral._.includes(int, '-')) {
+                int = int.slice(1);
+                neg = true;
+            }
+
+            if (int.length < leadingCount) {
+                for (var i = leadingCount - int.length; i > 0; i--) {
+                    int = '0' + int;
+                }
+            }
+
+            if (thousands > -1) {
+                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
+            }
+
+            if (format.indexOf('.') === 0) {
+                int = '';
+            }
+
+            output = int + decimal + (abbr ? abbr : '');
+
+            if (negP) {
+                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
+            } else {
+                if (signed >= 0) {
+                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
+                } else if (neg) {
+                    output = '-' + output;
+                }
+            }
+
+            return output;
+        },
+        // unformats numbers separators, decimals places, signs, abbreviations
+        stringToNumber: function(string) {
+            var locale = locales[options.currentLocale],
+                stringOriginal = string,
+                abbreviations = {
+                    thousand: 3,
+                    million: 6,
+                    billion: 9,
+                    trillion: 12
+                },
+                abbreviation,
+                value,
+                regexp;
+
+            if (options.zeroFormat && string === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                value = 1;
+
+                if (locale.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                }
+
+                for (abbreviation in abbreviations) {
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+
+                    if (stringOriginal.match(regexp)) {
+                        value *= Math.pow(10, abbreviations[abbreviation]);
+                        break;
+                    }
+                }
+
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                // remove non numbers
+                string = string.replace(/[^0-9\.]+/g, '');
+
+                value *= Number(string);
+            }
+
+            return value;
+        },
+        isNaN: function(value) {
+            return typeof value === 'number' && isNaN(value);
+        },
+        includes: function(string, search) {
+            return string.indexOf(search) !== -1;
+        },
+        insert: function(string, subString, start) {
+            return string.slice(0, start) + subString + string.slice(start);
+        },
+        reduce: function(array, callback /*, initialValue*/) {
+            if (this === null) {
+                throw new TypeError('Array.prototype.reduce called on null or undefined');
+            }
+
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+
+            var t = Object(array),
+                len = t.length >>> 0,
+                k = 0,
+                value;
+
+            if (arguments.length === 3) {
+                value = arguments[2];
+            } else {
+                while (k < len && !(k in t)) {
+                    k++;
+                }
+
+                if (k >= len) {
+                    throw new TypeError('Reduce of empty array with no initial value');
+                }
+
+                value = t[k++];
+            }
+            for (; k < len; k++) {
+                if (k in t) {
+                    value = callback(value, t[k], k, t);
+                }
+            }
+            return value;
+        },
+        /**
+         * Computes the multiplier necessary to make x >= 1,
+         * effectively eliminating miscalculations caused by
+         * finite precision.
+         */
+        multiplier: function (x) {
+            var parts = x.toString().split('.');
+
+            return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
+        },
+        /**
+         * Given a variable number of arguments, returns the maximum
+         * multiplier that must be used to normalize an operation involving
+         * all of them.
+         */
+        correctionFactor: function () {
+            var args = Array.prototype.slice.call(arguments);
+
+            return args.reduce(function(accum, next) {
+                var mn = _.multiplier(next);
+                return accum > mn ? accum : mn;
+            }, 1);
+        },
+        /**
+         * Implementation of toFixed() that treats floats more like decimals
+         *
+         * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
+         * problems for accounting- and finance-related software.
+         */
+        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+            var splitValue = value.toString().split('.'),
+                minDecimals = maxDecimals - (optionals || 0),
+                boundedPrecision,
+                optionalsRegExp,
+                power,
+                output;
+
+            // Use the smallest precision value possible to avoid errors from floating point representation
+            if (splitValue.length === 2) {
+              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+            } else {
+              boundedPrecision = minDecimals;
+            }
+
+            power = Math.pow(10, boundedPrecision);
+
+            // Multiply up by precision, round accurately, then divide and use native toFixed():
+            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+
+            if (optionals > maxDecimals - boundedPrecision) {
+                optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
+                output = output.replace(optionalsRegExp, '');
+            }
+
+            return output;
+        }
+    };
+
+    // avaliable options
+    numeral.options = options;
+
+    // avaliable formats
+    numeral.formats = formats;
+
+    // avaliable formats
+    numeral.locales = locales;
+
+    // This function sets the current locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    numeral.locale = function(key) {
+        if (key) {
+            options.currentLocale = key.toLowerCase();
         }
 
-        var result = t.split('').reverse().join('') + '.' + r;
-        if (positive.length > 1) result = '-' + result;
-        return result;
-      }
-    }
-  },
+        return options.currentLocale;
+    };
 
-  /**
-   * author: Sunning
-   * 将数字格式化为千分位
-   * @param {Object} value 需要转化的数字
-   */
-  toThousands: function toThousands(value) {
-    if (value === '' || value === undefined || value === null) {
-      return '';
-    }
+    // This function provides access to the loaded locale data.  If
+    // no arguments are passed in, it will simply return the current
+    // global locale object.
+    numeral.localeData = function(key) {
+        if (!key) {
+            return locales[options.currentLocale];
+        }
 
-    value = String(value); // 强制转化为转化为字符串
+        key = key.toLowerCase();
 
-    var isDecimal = value.split('.');
+        if (!locales[key]) {
+            throw new Error('Unknown locale : ' + key);
+        }
 
-    if (isDecimal.length === 1) {
-      // 如果长度为1表示没有小数，否则表示有小数
-      return this.formatNumber(value, 0);
-    } else {
-      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
-    }
-  }
-};
+        return locales[key];
+    };
 
-apiready = function apiready() {
-  var page = new Vue({
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
+        }
+    };
+
+    numeral.zeroFormat = function(format) {
+        options.zeroFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.nullFormat = function (format) {
+        options.nullFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.defaultFormat = function(format) {
+        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    };
+
+    numeral.register = function(type, name, format) {
+        name = name.toLowerCase();
+
+        if (this[type + 's'][name]) {
+            throw new TypeError(name + ' ' + type + ' already registered.');
+        }
+
+        this[type + 's'][name] = format;
+
+        return format;
+    };
+
+
+    numeral.validate = function(val, culture) {
+        var _decimalSep,
+            _thousandSep,
+            _currSymbol,
+            _valArray,
+            _abbrObj,
+            _thousandRegEx,
+            localeData,
+            temp;
+
+        //coerce val to string
+        if (typeof val !== 'string') {
+            val += '';
+
+            if (console.warn) {
+                console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
+            }
+        }
+
+        //trim whitespaces from either sides
+        val = val.trim();
+
+        //if val is just digits return true
+        if (!!val.match(/^\d+$/)) {
+            return true;
+        }
+
+        //if val is empty return false
+        if (val === '') {
+            return false;
+        }
+
+        //get the decimal and thousands separator from numeral.localeData
+        try {
+            //check if the culture is understood by numeral. if not, default it to current locale
+            localeData = numeral.localeData(culture);
+        } catch (e) {
+            localeData = numeral.localeData(numeral.locale());
+        }
+
+        //setup the delimiters and currency symbol based on culture/locale
+        _currSymbol = localeData.currency.symbol;
+        _abbrObj = localeData.abbreviations;
+        _decimalSep = localeData.delimiters.decimal;
+        if (localeData.delimiters.thousands === '.') {
+            _thousandSep = '\\.';
+        } else {
+            _thousandSep = localeData.delimiters.thousands;
+        }
+
+        // validating currency symbol
+        temp = val.match(/^[^\d]+/);
+        if (temp !== null) {
+            val = val.substr(1);
+            if (temp[0] !== _currSymbol) {
+                return false;
+            }
+        }
+
+        //validating abbreviation symbol
+        temp = val.match(/[^\d]+$/);
+        if (temp !== null) {
+            val = val.slice(0, -1);
+            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+                return false;
+            }
+        }
+
+        _thousandRegEx = new RegExp(_thousandSep + '{2}');
+
+        if (!val.match(/[^\d.,]/g)) {
+            _valArray = val.split(_decimalSep);
+            if (_valArray.length > 2) {
+                return false;
+            } else {
+                if (_valArray.length < 2) {
+                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
+                } else {
+                    if (_valArray[0].length === 1) {
+                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    } else {
+                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
+
+
+    /************************************
+        Numeral Prototype
+    ************************************/
+
+    numeral.fn = Numeral.prototype = {
+        clone: function() {
+            return numeral(this);
+        },
+        format: function(inputString, roundingFunction) {
+            var value = this._value,
+                format = inputString || options.defaultFormat,
+                kind,
+                output,
+                formatFunction;
+
+            // make sure we have a roundingFunction
+            roundingFunction = roundingFunction || Math.round;
+
+            // format based on value
+            if (value === 0 && options.zeroFormat !== null) {
+                output = options.zeroFormat;
+            } else if (value === null && options.nullFormat !== null) {
+                output = options.nullFormat;
+            } else {
+                for (kind in formats) {
+                    if (format.match(formats[kind].regexps.format)) {
+                        formatFunction = formats[kind].format;
+
+                        break;
+                    }
+                }
+
+                formatFunction = formatFunction || numeral._.numberToFormat;
+
+                output = formatFunction(value, format, roundingFunction);
+            }
+
+            return output;
+        },
+        value: function() {
+            return this._value;
+        },
+        input: function() {
+            return this._input;
+        },
+        set: function(value) {
+            this._value = Number(value);
+
+            return this;
+        },
+        add: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+
+            function cback(accum, curr, currI, O) {
+                return accum + Math.round(corrFactor * curr);
+            }
+
+            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
+
+            return this;
+        },
+        subtract: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+
+            function cback(accum, curr, currI, O) {
+                return accum - Math.round(corrFactor * curr);
+            }
+
+            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+
+            return this;
+        },
+        multiply: function(value) {
+            function cback(accum, curr, currI, O) {
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
+            }
+
+            this._value = _.reduce([this._value, value], cback, 1);
+
+            return this;
+        },
+        divide: function(value) {
+            function cback(accum, curr, currI, O) {
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
+            }
+
+            this._value = _.reduce([this._value, value], cback);
+
+            return this;
+        },
+        difference: function(value) {
+            return Math.abs(numeral(this._value).subtract(value).value());
+        }
+    };
+
+    /************************************
+        Default Locale && Format
+    ************************************/
+
+    numeral.register('locale', 'en', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function(number) {
+            var b = number % 10;
+            return (~~(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    });
+
+    
+
+(function() {
+        numeral.register('format', 'bps', {
+            regexps: {
+                format: /(BPS)/,
+                unformat: /(BPS)/
+            },
+            format: function(value, format, roundingFunction) {
+                var space = numeral._.includes(format, ' BPS') ? ' ' : '',
+                    output;
+
+                value = value * 10000;
+
+                // check for space before BPS
+                format = format.replace(/\s?BPS/, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + 'BPS');
+
+                    output = output.join('');
+                } else {
+                    output = output + space + 'BPS';
+                }
+
+                return output;
+            },
+            unformat: function(string) {
+                return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
+            }
+        });
+})();
+
+
+(function() {
+        var decimal = {
+            base: 1000,
+            suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        },
+        binary = {
+            base: 1024,
+            suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+        };
+
+    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+            return decimal.suffixes.indexOf(item) < 0;
+        }));
+        var unformatRegex = allSuffixes.join('|');
+        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
+        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
+
+    numeral.register('format', 'bytes', {
+        regexps: {
+            format: /([0\s]i?b)/,
+            unformat: new RegExp(unformatRegex)
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                bytes = numeral._.includes(format, 'ib') ? binary : decimal,
+                suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
+                power,
+                min,
+                max;
+
+            // check for space before
+            format = format.replace(/\s?i?b/, '');
+
+            for (power = 0; power <= bytes.suffixes.length; power++) {
+                min = Math.pow(bytes.base, power);
+                max = Math.pow(bytes.base, power + 1);
+
+                if (value === null || value === 0 || value >= min && value < max) {
+                    suffix += bytes.suffixes[power];
+
+                    if (min > 0) {
+                        value = value / min;
+                    }
+
+                    break;
+                }
+            }
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + suffix;
+        },
+        unformat: function(string) {
+            var value = numeral._.stringToNumber(string),
+                power,
+                bytesMultiplier;
+
+            if (value) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                    if (numeral._.includes(string, decimal.suffixes[power])) {
+                        bytesMultiplier = Math.pow(decimal.base, power);
+
+                        break;
+                    }
+
+                    if (numeral._.includes(string, binary.suffixes[power])) {
+                        bytesMultiplier = Math.pow(binary.base, power);
+
+                        break;
+                    }
+                }
+
+                value *= (bytesMultiplier || 1);
+            }
+
+            return value;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'currency', {
+        regexps: {
+            format: /(\$)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                symbols = {
+                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
+                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                },
+                output,
+                symbol,
+                i;
+
+            // strip format of spaces and $
+            format = format.replace(/\s?\$\s?/, '');
+
+            // format the number
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            // update the before and after based on value
+            if (value >= 0) {
+                symbols.before = symbols.before.replace(/[\-\(]/, '');
+                symbols.after = symbols.after.replace(/[\-\)]/, '');
+            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+                symbols.before = '-' + symbols.before;
+            }
+
+            // loop through each before symbol
+            for (i = 0; i < symbols.before.length; i++) {
+                symbol = symbols.before[i];
+
+                switch (symbol) {
+                    case '$':
+                        output = numeral._.insert(output, locale.currency.symbol, i);
+                        break;
+                    case ' ':
+                        output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
+                        break;
+                }
+            }
+
+            // loop through each after symbol
+            for (i = symbols.after.length - 1; i >= 0; i--) {
+                symbol = symbols.after[i];
+
+                switch (symbol) {
+                    case '$':
+                        output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                        break;
+                    case ' ':
+                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
+                        break;
+                }
+            }
+
+
+            return output;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'exponential', {
+        regexps: {
+            format: /(e\+|e-)/,
+            unformat: /(e\+|e-)/
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
+                parts = exponential.split('e');
+
+            format = format.replace(/e[\+|\-]{1}0/, '');
+
+            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
+
+            return output + 'e' + parts[1];
+        },
+        unformat: function(string) {
+            var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
+                value = Number(parts[0]),
+                power = Number(parts[1]);
+
+            power = numeral._.includes(string, 'e-') ? power *= -1 : power;
+
+            function cback(accum, curr, currI, O) {
+                var corrFactor = numeral._.correctionFactor(accum, curr),
+                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+                return num;
+            }
+
+            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'ordinal', {
+        regexps: {
+            format: /(o)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                output,
+                ordinal = numeral._.includes(format, ' o') ? ' ' : '';
+
+            // check for space before
+            format = format.replace(/\s?o/, '');
+
+            ordinal += locale.ordinal(value);
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + ordinal;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'percentage', {
+        regexps: {
+            format: /(%)/,
+            unformat: /(%)/
+        },
+        format: function(value, format, roundingFunction) {
+            var space = numeral._.includes(format, ' %') ? ' ' : '',
+                output;
+
+            if (numeral.options.scalePercentBy100) {
+                value = value * 100;
+            }
+
+            // check for space before %
+            format = format.replace(/\s?\%/, '');
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            if (numeral._.includes(output, ')')) {
+                output = output.split('');
+
+                output.splice(-1, 0, space + '%');
+
+                output = output.join('');
+            } else {
+                output = output + space + '%';
+            }
+
+            return output;
+        },
+        unformat: function(string) {
+            var number = numeral._.stringToNumber(string);
+            if (numeral.options.scalePercentBy100) {
+                return number * 0.01;
+            }
+            return number;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'time', {
+        regexps: {
+            format: /(:)/,
+            unformat: /(:)/
+        },
+        format: function(value, format, roundingFunction) {
+            var hours = Math.floor(value / 60 / 60),
+                minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+
+            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        },
+        unformat: function(string) {
+            var timeArray = string.split(':'),
+                seconds = 0;
+
+            // turn hours and minutes into seconds and add them all up
+            if (timeArray.length === 3) {
+                // hours
+                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+                // minutes
+                seconds = seconds + (Number(timeArray[1]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[2]);
+            } else if (timeArray.length === 2) {
+                // minutes
+                seconds = seconds + (Number(timeArray[0]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[1]);
+            }
+            return Number(seconds);
+        }
+    });
+})();
+
+return numeral;
+}));
+});
+
+function vmInit() {
+  return new Vue({
     el: '#app',
-    data: {
-      filter: filter,
-      hxdData: [],
-      yjdData: [],
-      pageParam: api.pageParam || {}
+    components: {
+      'app-drawer': AppDrawer
+    },
+    data: function data() {
+      return {
+        pageParam: api.pageParam || {},
+        pageSize: 100,
+        pageNo: 1,
+        total: '*',
+        list: [],
+        loading: false,
+        more: 'noData' // hasMore,noMore,noData
+
+      };
+    },
+    computed: {
+      id: function id() {
+        return this.pageParam.id;
+      },
+      date: function date() {
+        return this.pageParam.date;
+      },
+      money: function money() {
+        return this.pageParam.money;
+      }
     },
     mounted: function mounted() {
-      var _this = this;
-
-      return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.handleGetData();
-
-                Utils$1.UI.setRefreshHeaderInfo({
-                  success: function success() {
-                    _this.handleGetData();
-
-                    setTimeout(function () {
-                      api.refreshHeaderLoadDone();
-                    }, 0);
-                  },
-                  fail: function fail() {
-                    api.refreshHeaderLoadDone();
-                  }
-                }); // this.creditStatusObj = await filterDict('creditStatus')
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      console.log(this.id);
+      this.pageInit();
     },
     methods: {
-      handleGetData: function handleGetData() {
-        if (this.pageParam.pageFrom === 'gongyingshang') {
-          this.getHxdTable();
-        } else {
-          this.getYjdTable();
-        }
+      numeral: numeral,
+      onClose: function onClose() {
+        api.closeFrame({
+          name: 'drawer'
+        });
       },
-      getHxdTable: function getHxdTable() {
+      pageInit: function pageInit() {
+        var _this = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+          return regenerator.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _this.getPageData(1);
+
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      loadMore: function loadMore() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  // 好销贷
-                  Utils$1.UI.showLoading('加载中');
-                  _context2.prev = 1;
-                  _context2.next = 4;
-                  return http$1.get('/crpt-credit/credit/hxd/product/list', {});
+                  _this2.getPageData();
 
-                case 4:
-                  res = _context2.sent;
-                  _this2.hxdData = res.data;
-                  Utils$1.UI.hideLoading();
-                  _context2.next = 12;
-                  break;
-
-                case 9:
-                  _context2.prev = 9;
-                  _context2.t0 = _context2["catch"](1);
-                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
-
-                case 12:
+                case 1:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[1, 9]]);
+          }, _callee2);
         }))();
       },
-      getYjdTable: function getYjdTable() {
+      getPageData: function getPageData(currentPage) {
         var _this3 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var res;
+          var pageSize, pageNo, id, res, _this3$list;
+
           return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  // 押金贷
-                  Utils$1.UI.showLoading('加载中');
-                  _context3.prev = 1;
-                  _context3.next = 4;
-                  return http$1.get('/crpt-product/product/cooperation/fostercare/list', {});
+                  if (!_this3.loading) {
+                    _context3.next = 2;
+                    break;
+                  }
 
-                case 4:
-                  res = _context3.sent;
-                  _this3.yjdData = res.data;
-                  Utils$1.UI.hideLoading();
-                  _context3.next = 12;
-                  break;
+                  return _context3.abrupt("return");
+
+                case 2:
+                  _this3.loading = true;
+                  pageSize = _this3.pageSize;
+                  pageNo = currentPage || _this3.pageNo;
+                  id = _this3.id;
+                  _context3.prev = 6;
+                  _context3.next = 9;
+                  return http$1.get("/crpt-credit/credit/repay/query/repayplan?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo, "&orderNo=").concat(id));
 
                 case 9:
-                  _context3.prev = 9;
-                  _context3.t0 = _context3["catch"](1);
-                  Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
+                  res = _context3.sent;
+                  _this3.loading = false;
+                  _this3.total = res.data.count;
 
-                case 12:
+                  if (res.data.list && res.data.list.length > 0) {
+                    _this3.more = 'hasMore';
+                    _this3.pageNo = pageNo + 1;
+
+                    if (pageNo === 1) {
+                      _this3.list = res.data.list;
+                    } else {
+                      (_this3$list = _this3.list).push.apply(_this3$list, toConsumableArray(res.data.list));
+                    }
+                  } else {
+                    if (pageNo === 1) {
+                      _this3.more = 'noData';
+                    } else {
+                      _this3.more = 'noMore';
+                    }
+                  }
+
+                  _context3.next = 19;
+                  break;
+
+                case 15:
+                  _context3.prev = 15;
+                  _context3.t0 = _context3["catch"](6);
+                  api.toast({
+                    msg: _context3.t0.message || '出错啦',
+                    location: 'middle'
+                  });
+                  _this3.loading = false;
+
+                case 19:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[1, 9]]);
+          }, _callee3, null, [[6, 15]]);
         }))();
-      },
-      changeHXD: function changeHXD(item) {
-        // 好销贷跳转
-
-        /**
-         * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
-         * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页
-         * 授信状态1 ，2 ==> hxd_apply  授信申请页（产品详情)
-         * companyExtId === -1 企业用户，并且未填写过信息
-         */
-        var userType = ($api.getStorage('userinfo') || {}).userType;
-
-        if (item.creditStatus === 0 && Number(userType) === 2 && item.companyExtId === -1) {
-          Router$2.openPage({
-            key: 'hxd_a_supply',
-            params: {
-              pageParam: {
-                productId: item.productId
-              }
-            }
-          });
-        } else {
-          Router$2.openPage({
-            key: 'hxd_apply',
-            params: {
-              pageParam: {
-                productId: item.productId
-              }
-            }
-          });
-        }
-      },
-      changeYJD: function changeYJD(item) {
-        // 押金贷跳转
-        Router$2.openPage({
-          key: 'yjd_product_detail',
-          params: {
-            pageParam: {
-              item: item
-            }
-          }
-        });
       }
     }
   });
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  }); // alert(Vue)
+}
+
+apiready = function apiready() {
+  var vm = vmInit();
 };
