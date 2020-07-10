@@ -37,7 +37,7 @@
             <div class="right" @click="changeHXD(item)" v-if="item.creditStatus === 1">
               <p class="line">授信处理中</p>
             </div>
-            <div class="right" v-if="item.creditStatus === 3">
+            <div class="right" @click="changeHXD(item)" v-if="item.creditStatus === 3">
               <p class="reject">已拒绝</p>
               <span class="grey">{{item.refusedReason}}</span>
             </div>

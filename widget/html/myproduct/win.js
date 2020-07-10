@@ -2002,7 +2002,7 @@ apiready = function apiready() {
 
   function appendList(data) {
     data.forEach(function (item, index) {
-      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <div class=\"logo logo-").concat(index % 2, "\">").concat(item.productName.slice(0, 1), "</div>\n            <div class=\"desc\">\n                <strong>").concat(item.productName || '***', "</strong>\n                <div class=\"b\">\n                    \u5F00\u901A\u65F6\u95F4 ").concat(item.openDate || '', "\n                </div>\n            </div>\n          </div>\n          <span class=\"bank\">").concat(item.bankName || '***', "\uFF08").concat(item.account || '***', "\uFF09</span>\n        </li>\n      "));
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <div class=\"logo logo-").concat(index % 2, "\">").concat(item.productName ? item.productName.slice(0, 1) : '', "</div>\n            <div class=\"desc\">\n                <strong>").concat(item.productName || '***', "</strong>\n                <div class=\"b\">\n                    \u5F00\u901A\u65F6\u95F4 ").concat(item.openDate || '', "\n                </div>\n            </div>\n          </div>\n          <span class=\"bank\">").concat(item.bankName || '***', "\uFF08").concat(item.account || '***', "\uFF09</span>\n        </li>\n      "));
     });
   }
 

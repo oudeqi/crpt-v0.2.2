@@ -1361,6 +1361,99 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
+function openTabLayout(index) {
+  api.openTabLayout({
+    name: 'tabLayout',
+    bgColor: '#fff',
+    reload: true,
+    delay: 300,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'normal' // leftButtons: [{
+      //   // text: '设置',
+      //   // color: '#fff',
+      //   // fontSize: 16,
+      //   iconPath: 'widget://image/avatar.png',
+      // }],
+      // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      //   // iconPath: 'widget://image/settings@2x.png'
+      // }]
+
+    },
+    tabBar: {
+      animated: false,
+      scrollEnabled: true,
+      selectedColor: '#66BB6A',
+      color: '#606266',
+      index: index || 0,
+      fontSize: 12,
+      // preload: 4,
+      list: [{
+        text: "首页",
+        iconPath: "widget://image/tablayout/shouye.png",
+        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+      }, {
+        text: "贷款",
+        iconPath: "widget://image/tablayout/loan.png",
+        selectedIconPath: "widget://image/tablayout/loan_active.png"
+      }, {
+        text: "还款",
+        iconPath: "widget://image/tablayout/huankuan.png",
+        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+      }, {
+        text: "我的",
+        iconPath: "widget://image/tablayout/wode.png",
+        selectedIconPath: "widget://image/tablayout/wode_active.png"
+      }],
+      frames: [{
+        title: "首页",
+        //tab切换时对应的标题
+        name: "tablayout/index",
+        url: "widget://html/index/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "贷款申请",
+        name: "tablayout/loan",
+        url: "widget://html/loan/index.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "还款",
+        name: "tablayout/repay",
+        url: "widget://html/repay/index.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "我的",
+        name: "tablayout/my",
+        url: "widget://html/my/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }]
+    }
+  });
+} // 注册
+
+
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -2362,10 +2455,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
+  my_quota: {
+    name: 'html/my_quota/index',
     title: '我的额度',
-    url: 'widget://html/myquota/win.html',
+    url: 'widget://html/my_quota/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -2470,7 +2563,7 @@ var Router$1 = /*#__PURE__*/function () {
   return Router;
 }();
 
-new Router$1();
+var Router$2 = new Router$1();
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
@@ -2493,7 +2586,16 @@ apiready = function apiready() {
       failList: pageParam.failList,
       successTotalAmount: filter.toThousands(pageParam.successTotalAmount)
     },
-    methods: {},
+    methods: {
+      handleToMyloan: function handleToMyloan() {
+        Router$2.openPage({
+          key: 'my_loan'
+        });
+      },
+      handleToHome: function handleToHome() {
+        openTabLayout();
+      }
+    },
     mounted: function mounted() {// this.handleStartTimer()
     }
   });

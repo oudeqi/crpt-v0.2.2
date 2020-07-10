@@ -1,0 +1,84 @@
+<!-- 好销贷用款试算详情frame -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="bg"></div>
+        <div class="top">
+          <div class="chart" id="chart"></div>
+          <div class="txt">
+            <p>可用额度(元)</p>
+            <p id="availab">{{availablAmount}}</p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div id="total">{{limitAmount}}</div>
+              <div>总额度(元)</div>
+            </div>
+            <div class="col">
+              <div id="used">{{loanAmount}}</div>
+              <div>已用额度(元)</div>
+            </div>
+          </div>
+          <div class="tips">当前额度为已开通产品的额度</div>
+          <!-- <div class="contactus">
+            <span class="contactus-btn">获取更多额度</span>
+          </div> -->
+        </div>
+
+        <section class="detail">
+          <div class="list_header">
+            <span class="label">额度明细</span>
+            <span class="label"
+              >全部额度 <i class="aui-iconfont aui-icon-right"></i
+            ></span>
+          </div>
+          <ul>
+            <li v-for="item in list" :key="`${item.productName}-${item.vaild_date}`">
+              <div class="row1">
+                <span class="pname">{{item.productName}}</span>
+                <span class="date">有效期 {{item.expireDate || ''}}</span>
+              </div>
+              <div class="row2">
+                <div class="cell">
+                  <div class="amount">{{item.limitAmount}}</div>
+                  <div class="a-txt">总额度(元)</div>
+                </div>
+                <div class="cell">
+                  <div class="amount">{{item.loanAmount}}</div>
+                  <div class="a-txt">已用额度(元)</div>
+                </div>
+                <div class="cell">
+                  <div class="amount green">{{item.availableAmount}}</div>
+                  <div class="a-txt">可用额度(元)</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="contactus">
+          <span id="contactus" class="contactus-btn" @click="handleToContactUs">联系客服</span>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/echarts.min.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

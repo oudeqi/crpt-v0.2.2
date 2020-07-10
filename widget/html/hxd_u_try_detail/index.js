@@ -2066,13 +2066,13 @@ var http$1 = {
 
 var service = {
   postBankInterest: function postBankInterest(params) {
-    return http$1.get("/crpt-credit/credit/hxd/query/bank/interest", {
-      values: params
+    return http$1.post("/crpt-credit/credit/hxd/query/bank/interest", {
+      body: params
     });
   },
   postCalculatorPlan: function postCalculatorPlan(params) {
-    return http$1.post("/crpt-credit/credit/hxd/calculator/for/apply", {
-      body: params
+    return http$1.get("/crpt-credit/credit/hxd/calculator/for/apply", {
+      values: params
     });
   }
 };
@@ -2560,10 +2560,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
+  my_quota: {
+    name: 'html/my_quota/index',
     title: '我的额度',
-    url: 'widget://html/myquota/win.html',
+    url: 'widget://html/my_quota/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,

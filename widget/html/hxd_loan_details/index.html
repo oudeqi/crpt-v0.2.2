@@ -41,7 +41,7 @@
           <p><span>还款方式</span><strong>{{duebillTypeObj[data.repayType]}}</strong></p>
           <p><span>使用产品</span><strong>{{data.proName}}</strong></p>
         </div>
-        <div class="card-row">
+        <div class="card-row" v-if="data.signContractId">
           <span class="card-label">合 同</span>
           <span @click="openLoanContract()" class="card-btn arrowbtn">查看</span>
         </div>
@@ -67,11 +67,11 @@
       <div class="card" v-if="data.orderId">
         <div class="card-head">关联入库单</div>
         <div class="card-block">
-          <h3>{{data.buyCustName}}</h3>
-          <span>金额(元)</span>
-          <br><strong>{{data.amount ? numeral(data.amount).format('0,0.00') : ''}}</strong>
-          <p><span>下单日期:</span><strong>{{data.wareOrderTime}}</strong></p>
-          <p><span>入库单编号:</span><strong>{{data.expWarehouseOrderNo}}</strong></p>
+          <h3 style="font-size: 16px;margin-bottom: 10px;">{{data.buyCustName}}</h3>
+          <p><span>金额(元)</span></p>
+          <p><span style="font-size: 20px !important;">{{data.amount ? numeral(data.amount).format('0,0.00') : ''}}</span></p>
+          <p><span>下单日期:</span><strong style="text-align: left;">{{data.wareOrderTime}}</strong></p>
+          <p><span>入库单编号:</span><strong style="text-align: left;">{{data.expWarehouseOrderNo}}</strong></p>
         </div>
       </div>
   

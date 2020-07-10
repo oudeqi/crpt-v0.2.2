@@ -45,7 +45,7 @@ apiready = function () {
       $api.append($api.byId('list'), `
         <li tapmode data-id="${item.productId || ''}">
           <div class="t">
-            <div class="logo logo-${index % 2}">${item.productName.slice(0, 1)}</div>
+            <div class="logo logo-${index % 2}">${item.productName ? item.productName.slice(0, 1) : ''}</div>
             <div class="desc">
                 <strong>${item.productName || '***'}</strong>
                 <div class="b">

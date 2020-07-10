@@ -171,20 +171,11 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 押金贷贷款详情
+  // 贷款详情
   yjd_loan_details: {
     name: 'yjd_loan_details',
     title: '贷款详情',
     url: 'widget://html/yjd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 公用的贷款详情
-  loan_details: {
-    name: 'loan_details',
-    title: '贷款详情',
-    url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -207,20 +198,11 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 押金贷代养合同
-  yjd_contract_daiyang: {
-    name: 'yjd_contract_daiyang',
+  // 代养合同
+  yjd_contract: {
+    name: 'yjd_contract',
     title: '代养合同',
-    url: 'widget://html/yjd_contract_daiyang/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷贷款合同
-  yjd_contract_loan: {
-    name: 'yjd_contract_loan',
-    title: '贷款合同',
-    url: 'widget://html/yjd_contract_loan/index.html',
+    url: 'widget://html/yjd_contract/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -292,10 +274,10 @@ var routerHXDConfig = {
     navigationBar: navigationBarWhite
   },
   // 好销贷用款确认
-  hxd_u_try_detail: {
-    name: 'hxd_u_try_detail',
+  hxd_u_try: {
+    name: 'hxd_u_try',
     title: '用款试算',
-    url: 'widget://html/hxd_u_try_detail/index.html',
+    url: 'widget://html/hxd_u_try/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -398,15 +380,6 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
-  },
-  // 好销贷贷款详情
-  hxd_loan_details: {
-    name: 'hxd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/hxd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
   }
 };
 
@@ -431,24 +404,13 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 账单详情
-  billdetails: {
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  my_loan: {
-    name: 'html/my_loan/win',
+  myloan: {
+    name: 'html/myloan/win',
     title: '我的贷款',
-    url: 'widget://html/my_loan/index.html',
+    url: 'widget://html/myloan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -456,10 +418,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  my_quota: {
-    name: 'html/my_quota/index',
+  myquota: {
+    name: 'html/myquota/win',
     title: '我的额度',
-    url: 'widget://html/my_quota/index.html',
+    url: 'widget://html/myquota/win.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -522,15 +484,6 @@ var routerConfig = {
     name: 'agreement',
     title: '查看合同',
     url: 'widget://html/agreement/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款试算页面
-  com_repay_trial: {
-    name: 'com_repay_trial',
-    title: '还款试算',
-    url: 'widget://html/com_repay_trial/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
