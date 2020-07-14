@@ -2725,15 +2725,20 @@ apiready = function apiready() {
                   res = _context2.sent;
                   _this2.hxdData = res.data;
                   Utils$1.UI.hideLoading();
-                  _context2.next = 12;
+                  _context2.next = 13;
                   break;
 
                 case 9:
                   _context2.prev = 9;
                   _context2.t0 = _context2["catch"](1);
+
+                  if (_context2.t0.msg) {
+                    Utils$1.UI.toast("".concat(_context2.t0.code, " : ").concat(_context2.t0.msg));
+                  }
+
                   Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
 
-                case 12:
+                case 13:
                 case "end":
                   return _context2.stop();
               }
@@ -2760,15 +2765,20 @@ apiready = function apiready() {
                   res = _context3.sent;
                   _this3.yjdData = res.data;
                   Utils$1.UI.hideLoading();
-                  _context3.next = 12;
+                  _context3.next = 13;
                   break;
 
                 case 9:
                   _context3.prev = 9;
                   _context3.t0 = _context3["catch"](1);
+
+                  if (_context3.t0.msg) {
+                    Utils$1.UI.toast("".concat(_context3.t0.code, " : ").concat(_context3.t0.msg));
+                  }
+
                   Utils$1.UI.hideLoading(); // console.log(JSON.stringify(err))
 
-                case 12:
+                case 13:
                 case "end":
                   return _context3.stop();
               }

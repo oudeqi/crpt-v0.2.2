@@ -4,6 +4,28 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+});
+
 var runtime_1 = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -833,28 +855,6 @@ function _classCallCheck(instance, Constructor) {
 }
 
 var classCallCheck = _classCallCheck;
-
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
 
 // 系统顶部导航配置
 var navigationBarProfile = {
@@ -2645,26 +2645,21 @@ apiready = function apiready() {
       isFolder: true,
       hasApply: !!pageParam.hasApply,
       // 是否是申请过，默认为false
-      agreements: [{
-        id: 1,
-        title: "授信合同1111"
-      }, {
-        id: 2,
-        title: "授信合同高校的"
-      }],
       mapRes: {
         0: '我要申请',
         1: '授信处理中',
         2: '授信成功',
-        3: '授信失败'
+        3: '我要申请' // 拒绝了也可以重新申请
+
       },
       productInfo: {
         productShort: '',
         creditAmount: '',
         producName: '',
-        signedContract: '',
+        // signedContract: [],
         productSlogan: ''
       },
+      contractList: [],
       creditStatus: 0,
       introduction: intro,
       QA: qa,
@@ -2751,19 +2746,31 @@ apiready = function apiready() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res;
+          var form, res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   Utils$1.UI.showLoading('加载中');
                   _context2.prev = 1;
-                  _context2.next = 4;
-                  return service.getProductInfo({
+                  // const mapRes = await filterDict('creditStatus')
+                  // if (mapRes.code === 200) {
+                  //   this.mapRes = mapRes
+                  // }
+                  form = {
                     productId: pageParam.productId
-                  });
+                  };
 
-                case 4:
+                  if (_this.hasApply) {
+                    _extends_1(form, {
+                      query: 0
+                    });
+                  }
+
+                  _context2.next = 6;
+                  return service.getProductInfo(form);
+
+                case 6:
                   res = _context2.sent;
 
                   if (res.code === 200) {
@@ -2772,36 +2779,36 @@ apiready = function apiready() {
                       creditAmount: res.data.creditAmount,
                       producName: res.data.productName,
                       // unsignContract: [{ contractFileId: '669', contractName: '韭菜的自我修养' }], // 先搞个假的
-                      unsignContract: [res.data.unsignContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
-                      signContract: [res.data.signContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
+                      // unsignContract: [res.data.unsignContract || {}],// 后端只返回了一个合同，并且是对象不是list
+                      // signContract: [res.data.signContract || {}],// 后端只返回了一个合同，并且是对象不是list
                       productSlogan: res.data.productSlogan
-                    };
+                    }; // 优先展示已签署，已签署没有，再展示未签署
+
+                    _this.contractList = res.data.signedContract ? [res.data.signedContract] : res.data.unsignContract && [res.data.unsignContract] || [];
                     _this.btnText = _this.mapRes[res.data.creditStatus];
                     _this.creditStatus = res.data.creditStatus;
                   }
 
-                  _context2.next = 11;
+                  _context2.next = 13;
                   break;
 
-                case 8:
-                  _context2.prev = 8;
+                case 10:
+                  _context2.prev = 10;
                   _context2.t0 = _context2["catch"](1);
 
                   if (_context2.t0.msg) {
                     Utils$1.UI.toast("".concat(_context2.t0.code, " : ").concat(_context2.t0.msg));
                   }
 
-                case 11:
+                case 13:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[1, 8]]);
+          }, _callee2, null, [[1, 10]]);
         }))();
       }
     },
@@ -2820,7 +2827,19 @@ apiready = function apiready() {
           api.refreshHeaderLoadDone();
         }
       });
-      this.handleGetProductDetail();
+      this.handleGetProductDetail(); // api.openFrame({
+      //   name: 'cbpage',
+      //   url: 'http://192.168.43.119:3000/crpt-h5/xw_callback/close',
+      //   rect: {
+      //     x: 0,
+      //     y: 60,
+      //     w: 'auto',
+      //     h: 'auto'
+      //   },
+      //   pageParam: {
+      //     name: 'test'
+      //   }
+      // });
     }
   });
 };

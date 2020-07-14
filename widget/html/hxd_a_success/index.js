@@ -2798,7 +2798,8 @@ apiready = function apiready() {
                   Utils$1.UI.showLoading('加载中');
                   _context.next = 4;
                   return service.getProductInfo({
-                    productId: pageParam.productId
+                    productId: pageParam.productId,
+                    query: 0
                   });
 
                 case 4:
@@ -2856,6 +2857,20 @@ apiready = function apiready() {
       }
     },
     mounted: function mounted() {
+      var _this2 = this;
+
+      Utils$1.UI.setRefreshHeaderInfo({
+        success: function success() {
+          _this2.handleGetProductDetail();
+
+          setTimeout(function () {
+            api.refreshHeaderLoadDone();
+          }, 0);
+        },
+        fail: function fail() {
+          api.refreshHeaderLoadDone();
+        }
+      });
       this.handleGetProductDetail();
     }
   });
