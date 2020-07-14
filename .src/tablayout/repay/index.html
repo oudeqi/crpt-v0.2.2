@@ -23,18 +23,22 @@
     </section>
 
     <section class="card">
-
+      <!-- orderType {"1":"入库单","2":"发票单","3":"饲料订单","4":"代养合同"} -->
+      <!-- 
+        repayStatus
+        {"1":"申请中","2":"已审批通过","3":"已拒绝","4":"已撤销","5":"还款中","6":"到期结清",
+        "7":"提前结清","8":"逾期还款中","9":"逾期已结清","10":"已退货","11":"已作废"} -->
       <div v-for="(item, index) in list" :key="index" class="card-item">
         <div class="card-row1">
-          <span class="card-num">待还本金{{numeral(item.repayPrincipalAmount).format('0,0.00')}}</span>
-          <!-- <span class="card-tag">未按期还款</span> -->
-          <!-- 可提前还款 -->
+          <span class="card-num">待还本金 {{numeral(item.repayPrincipalAmount).format('0,0.00')}}</span>
+          <span v-if="String(item.repayStatus) === '8'" class="card-tag">未按期还款</span>
+          <!-- <span v-if="String(item.repayStatus) === '5'" class="card-tag__grag">可提前还款</span> -->
         </div>
-        <div class="card-row2">【{{item.productName}}】{{item.loanInPocketTime}} 用款{{numeral(item.loanAmount).format('0,0.00')}}元</div>
+        <div class="card-row2">【{{item.productName}}】{{item.loanInPocketTime ? item.loanInPocketTime.split(' ')[0] : ''}} 用款{{numeral(item.loanAmount).format('0,0.00')}}元</div>
         <div class="card-row3">业务单号：{{item.orderNo}}</div>
         <div class="card-row4">
-          <span class="card-arrowbtn">还剩{{item.lastRepayPeriod}}期</span>
-          <span class="card-btn disabled">去还款</span>
+          <span @click="repayRemain(item)" class="card-arrowbtn">还剩{{item.lastRepayPeriod}}期</span>
+          <span @click="repay(item)" :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>
         </div>
       </div>
 

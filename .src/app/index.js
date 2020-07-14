@@ -3,6 +3,7 @@ import {
   openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
+  openBaseinfoFill,
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'

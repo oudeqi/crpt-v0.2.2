@@ -1244,7 +1244,7 @@ var rmap = /*#__PURE__*/Object.freeze({
  * @desc 路由类
  */
 
-var Router = function Router() {
+var Router$1 = function Router() {
   classCallCheck(this, Router);
 
   _extends_1(this, rmap);
@@ -1734,7 +1734,7 @@ var OCR = {
 var Utils = function Utils() {
   classCallCheck(this, Utils);
 
-  this.Router = new Router();
+  this.Router = new Router$1();
   this.UI = new UI();
   this.File = new File();
   this.DictFilter = codeMapFilter;
@@ -2000,7 +2000,6 @@ function ajax$1(method, url) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
       console.log('/************* ' + dis + 's **********/');
-      console.log(JSON.stringify(ret));
 
       if (ret) {
         if (ret.code === 200) {
@@ -3141,7 +3140,29 @@ return numeral;
 }));
 });
 
+// import moment from 'moment'
 // import find from 'lodash/find'
+
+function openDialog(orderNo, loanInPocketTime, loanAmount) {
+  api.openFrame({
+    reload: true,
+    name: 'drawer',
+    bounces: false,
+    bgColor: 'rgba(0,0,0,0,0)',
+    url: 'widget://html/repay/drawer.html',
+    rect: {
+      x: 0,
+      y: 0,
+      w: 'auto',
+      h: 'auto'
+    },
+    pageParam: {
+      id: orderNo,
+      date: loanInPocketTime,
+      money: loanAmount
+    }
+  });
+}
 
 function vmInit() {
   return new Vue({
@@ -3154,53 +3175,46 @@ function vmInit() {
         totalSum: '***',
         list: [],
         loading: false,
-        more: 'noData' // hasMore,noMore,noData
-
+        more: 'noData',
+        // hasMore,noMore,noData
+        repayStatusMap: {}
       };
     },
-    mounted: function mounted() {
-      this.pageInit();
-    },
+    mounted: function () {
+      var _mounted = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.pageInit();
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function mounted() {
+        return _mounted.apply(this, arguments);
+      }
+
+      return mounted;
+    }(),
     methods: {
       numeral: numeral,
       loadMore: function loadMore() {
         var _this = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          return regenerator.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _this.getPageData();
-
-                case 1:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        }))();
-      },
-      pageInit: function pageInit() {
-        var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  api.showProgress({
-                    title: '加载中...',
-                    text: '',
-                    modal: false
-                  });
-                  _context2.next = 3;
-                  return _this2.getPageData(1);
+                  _this.getPageData();
 
-                case 3:
-                  api.hideProgress();
-
-                case 4:
+                case 1:
                 case "end":
                   return _context2.stop();
               }
@@ -3208,33 +3222,64 @@ function vmInit() {
           }, _callee2);
         }))();
       },
-      getPageData: function getPageData(currentPage) {
-        var _this3 = this;
+      pageInit: function pageInit() {
+        var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var pageSize, pageNo, res, _this3$list;
-
           return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
+                  api.showProgress({
+                    title: '加载中...',
+                    text: '',
+                    modal: false
+                  }); // this.repayStatusMap = await filterDict('duebillStatus') // orderType
+                  // orderType {"1":"入库单","2":"发票单","3":"饲料订单","4":"代养合同"}
+                  // repayStatus {"1":"申请中","2":"已审批通过","3":"已拒绝","4":"已撤销","5":"还款中","6":"到期结清",
+                  // "7":"提前结清","8":"逾期还款中","9":"逾期已结清","10":"已退货","11":"已作废"}
+
+                  _context3.next = 3;
+                  return _this2.getPageData(1);
+
+                case 3:
+                  api.hideProgress();
+
+                case 4:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        }))();
+      },
+      getPageData: function getPageData(currentPage) {
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+          var pageSize, pageNo, res, _this3$list;
+
+          return regenerator.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
                   if (!_this3.loading) {
-                    _context3.next = 2;
+                    _context4.next = 2;
                     break;
                   }
 
-                  return _context3.abrupt("return");
+                  return _context4.abrupt("return");
 
                 case 2:
                   _this3.loading = true;
                   pageSize = _this3.pageSize;
                   pageNo = currentPage || _this3.pageNo;
-                  _context3.prev = 5;
-                  _context3.next = 8;
+                  _context4.prev = 5;
+                  _context4.next = 8;
                   return http$1.get("/crpt-credit/credit/mine/repay/list?pageIndex=".concat(pageNo, "&pageSize=").concat(pageSize));
 
                 case 8:
-                  res = _context3.sent;
+                  res = _context4.sent;
                   api.refreshHeaderLoadDone();
                   _this3.loading = false;
                   _this3.total = res.data.count;
@@ -3257,14 +3302,14 @@ function vmInit() {
                     }
                   }
 
-                  _context3.next = 21;
+                  _context4.next = 21;
                   break;
 
                 case 16:
-                  _context3.prev = 16;
-                  _context3.t0 = _context3["catch"](5);
+                  _context4.prev = 16;
+                  _context4.t0 = _context4["catch"](5);
                   api.toast({
-                    msg: _context3.t0.message || '出错啦',
+                    msg: _context4.t0.message || '出错啦',
                     location: 'middle'
                   });
                   api.refreshHeaderLoadDone();
@@ -3272,11 +3317,47 @@ function vmInit() {
 
                 case 21:
                 case "end":
-                  return _context3.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee3, null, [[5, 16]]);
+          }, _callee4, null, [[5, 16]]);
         }))();
+      },
+      repay: function repay(record) {
+        var loanId = record.loanId,
+            orderType = record.orderType,
+            repayStatus = record.repayStatus,
+            productName = record.productName;
+
+        if (String(repayStatus) === '8') {
+          api.toast({
+            msg: '未按期还款的订单不支持线上还款',
+            location: 'middle'
+          });
+          return;
+        }
+
+        if (String(orderType) === '4') {
+          Router.openPage({
+            key: 'com_repay_trial',
+            params: {
+              pageParam: {
+                loanId: loanId
+              }
+            }
+          });
+        } else {
+          api.alert({
+            title: '提示',
+            msg: "".concat(productName, "\u7684\u8FD8\u6B3E\u529F\u80FD\u6B63\u5728\u5F00\u53D1\u4E2D...")
+          });
+        }
+      },
+      repayRemain: function repayRemain(record) {
+        var orderNo = record.orderNo,
+            loanInPocketTime = record.loanInPocketTime,
+            loanAmount = record.loanAmount;
+        openDialog(orderNo, loanInPocketTime, loanAmount);
       }
     }
   });

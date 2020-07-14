@@ -1,0 +1,103 @@
+.container {
+  background-color: #fff;
+}
+.header {
+  height: 56px;
+  position: relative;
+  text-align: center;
+  line-height: 56px;
+  font-size:16px;
+  color:rgba(96,98,102,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+  box-sizing: border-box;
+  margin: 0 12px;
+}
+.tips {
+  font-size:18px;
+  color:rgba(48,49,51,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+  box-sizing: border-box;
+  height: 52px;
+  line-height: 52px;
+  margin: 0 12px;
+}
+
+.app_list_loading {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+
+.list {
+  margin: 0;
+  padding: 0 12px;
+  height: 450px;
+  overflow-y: scroll;
+}
+.list-item {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(245,245,245,1);
+  &:last-child {
+    border-bottom: 0;
+  }
+  .item-row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .item-stage {
+      height:22px;
+      font-size:16px;
+      color:rgba(48,49,51,1);
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+    .item-tag {
+      width:60px;
+      height:16px;
+      line-height: 16px;
+      text-align: center;
+      background:rgba(238,83,84,0.1);
+      border-radius:2px;
+      border:1px solid rgba(238,83,84,1);
+      flex-shrink: 0;
+      font-size:10px;
+      font-family:PingFang-SC-Medium,PingFang-SC;
+      font-weight:500;
+      color:rgba(238,83,84,1);
+    }
+    .item-num {
+      height:22px;
+      font-size:16px;
+      color:rgba(48,49,51,1);
+      flex-grow: 1;
+      text-align: right;
+    }
+  }
+  .item-row2 {
+    margin-top: 2px;
+    text-align: right;
+    span {
+      height:20px;
+      font-size:14px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .item-divide {
+      display: inline-block;
+      vertical-align: middle;
+      width:1px;
+      height:18px;
+      background:rgba(245,245,245,1);
+      margin: 0 8px;
+    }
+  }
+  .item-row3 {
+    margin-top: 2px;
+    height:20px;
+    font-size:14px;
+    color:rgba(144,147,153,1);
+    line-height:20px;
+    text-align: right;
+  }
+}

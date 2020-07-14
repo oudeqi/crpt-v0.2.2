@@ -51,7 +51,6 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 }
       let end = new Date().getTime()
       let dis = (end - start) / 1000
       console.log('/************* ' + dis + 's **********/')
-      console.log(JSON.stringify(ret))
       if (ret) {
         if (ret.code === 200) {
           resolve(ret)
