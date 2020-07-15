@@ -2084,6 +2084,23 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite$1
   },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
+    navigationBar: navigationBarWhite$1
+  },
   yjd_hukouben_upload: {
     name: 'yjd_hukouben_upload',
     title: '上传户口本',
@@ -2131,6 +2148,13 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -2791,15 +2815,8 @@ var App = /*#__PURE__*/function () {
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({
-      //   key: 'hxd_u_result',
-      //   params: {
-      //     pageParam: {
-      //       // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-      //       successTotalAmount: '1202934',
-      //       successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-      //       failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-      //     }
-      //   }
+      //   key: 'yjd_account_open',
+      //   params: { }
       // })
       // return
       var userinfo = $api.getStorage('userinfo');

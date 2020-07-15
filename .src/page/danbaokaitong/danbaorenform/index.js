@@ -491,7 +491,7 @@ class PageController extends Service {
         if (index === 0) {
           sourceType = 'camera'
         } else {
-          sourceType = 'album'
+          sourceType = 'library'
         }
         getPicture(sourceType, async (ret, err) => {
           if (ret) {
@@ -528,7 +528,7 @@ class PageController extends Service {
         if (index === 0) {
           sourceType = 'camera'
         } else {
-          sourceType = 'album'
+          sourceType = 'library'
         }
         getPicture(sourceType, (ret, err) => {
           if (ret) {

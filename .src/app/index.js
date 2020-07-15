@@ -4,6 +4,7 @@ import {
   openTodoAuthGeren,
   openTodoAuthQiye,
   openBaseinfoFill,
+  openFaceAuth,
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -50,15 +51,8 @@ class App {
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
     // Router.openPage({
-    //   key: 'hxd_u_result',
-    //   params: {
-    //     pageParam: {
-    //       // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-    //       successTotalAmount: '1202934',
-    //       successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-    //       failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-    //     }
-    //   }
+    //   key: 'yjd_account_open',
+    //   params: { }
     // })
     // return
     const userinfo = $api.getStorage('userinfo')

@@ -96,6 +96,23 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
+    navigationBar: navigationBarWhite
+  },
   yjd_hukouben_upload: {
     name: 'yjd_hukouben_upload',
     title: '上传户口本',
@@ -144,6 +161,13 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
+  },
   // 押金贷产品详情
   yjd_product_detail: {
     name: 'yjd_product_detail',
@@ -171,11 +195,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 贷款详情
+  // 押金贷贷款详情
   yjd_loan_details: {
     name: 'yjd_loan_details',
     title: '贷款详情',
     url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -198,11 +231,20 @@ var routerMap = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 代养合同
-  yjd_contract: {
-    name: 'yjd_contract',
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
     title: '代养合同',
-    url: 'widget://html/yjd_contract/index.html',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -274,10 +316,10 @@ var routerHXDConfig = {
     navigationBar: navigationBarWhite
   },
   // 好销贷用款确认
-  hxd_u_try: {
-    name: 'hxd_u_try',
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
     title: '用款试算',
-    url: 'widget://html/hxd_u_try/index.html',
+    url: 'widget://html/hxd_u_try_detail/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
@@ -380,6 +422,15 @@ var routerHXDConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -404,13 +455,24 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 账单详情
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
     navigationBar: navigationBarWhite
   },
   // 我的贷款
-  myloan: {
-    name: 'html/myloan/win',
+  my_loan: {
+    name: 'html/my_loan/win',
     title: '我的贷款',
-    url: 'widget://html/myloan/index.html',
+    url: 'widget://html/my_loan/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: false,
@@ -418,10 +480,10 @@ var routerConfig = {
     navigationBar: navigationBarWhite
   },
   // 我的额度
-  myquota: {
-    name: 'html/myquota/win',
+  my_quota: {
+    name: 'html/my_quota/index',
     title: '我的额度',
-    url: 'widget://html/myquota/win.html',
+    url: 'widget://html/my_quota/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -487,6 +549,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 还款试算页面
+  com_repay_trial: {
+    name: 'com_repay_trial',
+    title: '还款试算',
+    url: 'widget://html/com_repay_trial/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -519,59 +590,25 @@ var Router = /*#__PURE__*/function () {
 
 var Router$1 = new Router();
 
-var page = new Vue({
-  el: '#app',
-  data: {
-    status: 3,
-    isShowPop: false
-  },
-  methods: {
-    handleOpenDetailFrame: function handleOpenDetailFrame() {
-      Router$1.openPage({
-        key: 'hxd_r_try_detail'
-      }); // api.openFrame({
-      //   name: "hxd_r_try_frm",
-      //   url: "widget://html/hxd_r_try/frm.html",
-      //   // animation: {
-      //   //   type: 'fade',
-      //   //   duration: 300
-      //   // },
-      //   // background: rgba(48, 49, 51, 0.6);
-      //   bgColor: 'rgba(48, 49, 51, 0.6);',
-      //   rect: {
-      //     // x: 0,
-      //     // y: 0,
-      //     // w: "auto",
-      //     // h: "auto"
-      //     x: 0,
-      //     y: 0,
-      //     w: 'auto',
-      //     h: 'auto'
-      //   },
-      //   bounces: true,
-      //   opaque: true,
-      //   vScrollBarEnabled: false,
-      //   scrollEnabled: false,
-      //   fixedOn: api.frameName,
-      //   fixed: true
-      // });
-    },
-    handleOpenPop: function handleOpenPop() {
-      this.isShowPop = true;
-    },
-    handleClosePop: function handleClosePop() {
-      this.isShowPop = false;
-    }
-  },
-  mounted: function mounted() {}
-});
-
 apiready = function apiready() {
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  }); // alert(Vue)
+  var _ref = api.pageParam || {},
+      productId = _ref.productId;
+
+  console.log(productId);
+
+  $api.byId('btn').onclick = function () {
+    Router$1.openPage({
+      key: 'yjd_select_contract',
+      params: {
+        pageParam: {
+          productId: productId
+        }
+      }
+    });
+    api.closeWin();
+  };
+
+  $api.byId('back').onclick = function () {
+    api.closeWin();
+  };
 };

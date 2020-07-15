@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container" id="app">
-      <div class="tips">请选择需要贷款的放养合同</div>
+      <div class="tips" v-if="list.length>0">请选择需要贷款的放养合同</div>
       <div class="selcect-list">
         <list-item v-for="(item, index) in list" :key="index" :selected.sync="selected" :data="item"></list-item>
         <!-- <label>
@@ -48,8 +48,14 @@
 
       </div>
 
+      <section v-if="loading && more !== 'noData'" class="app_list_loading">加载中...</section>
+      <section v-if="more === 'noData'" class="app_list_nodata">
+        <div class="app_list_nodata_pic"></div>
+        <p class="app_list_nodata_desc">暂时没有数据哦</p>
+      </section>
+
       <div class="fixed-btn">
-        <div class="app_btn" @click="next">下一步</div>
+        <div :class="['app_btn', {disabled: !selected}]" @click="next">下一步</div>
       </div>
 
     </div>

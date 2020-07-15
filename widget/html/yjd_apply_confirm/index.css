@@ -467,6 +467,10 @@ html, body {
       background-size: contain;
     }
 
+.upload .upload-main.nobg::after {
+        display: none;
+      }
+
 .upload .upload-main .upload-pic {
       max-height: 100%;
       max-width: 100%;
@@ -542,6 +546,51 @@ html, body {
       font-size:16px;
       color:rgba(192,196,204,1);
     }
+
+.listgroup {
+  margin-top: 12px;
+  background-color: #fff;
+}
+
+.listgroup-item {
+  height:50px;
+  padding-left: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  background:rgba(255,255,255,1);
+  position: relative;
+  font-size:16px;
+  color:rgba(48,49,51,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+}
+
+.listgroup-item:last-child {
+    border-bottom: 0;
+  }
+
+.listgroup-item::after {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-image: url(../../image/arrow-r.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 
 .bottom-btn {
   margin-top: 10px;

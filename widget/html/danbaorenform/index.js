@@ -3090,7 +3090,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     if (index === 0) {
                       sourceType = 'camera';
                     } else {
-                      sourceType = 'album';
+                      sourceType = 'library';
                     }
 
                     getPicture(sourceType, /*#__PURE__*/function () {
@@ -3214,7 +3214,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     if (index === 0) {
                       sourceType = 'camera';
                     } else {
-                      sourceType = 'album';
+                      sourceType = 'library';
                     }
 
                     getPicture(sourceType, function (ret, err) {

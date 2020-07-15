@@ -2221,7 +2221,7 @@ function vmInit() {
     data: function data() {
       return {
         service: new Service(),
-        userinfo: $api.getStorage('userinfo'),
+        userinfo: $api.getStorage('userinfo') || {},
         urlMap: {
           1: '/crpt-cust/saas/personinfo/submission',
           2: '/crpt-cust/saas/legalinfo/submission'
@@ -2307,9 +2307,10 @@ function vmInit() {
     },
     watch: {
       marriage: function marriage(newValue) {
-        if (['20', '21', '22', '23'].includes(String(newValue))) {
+        if (['20'].includes(String(newValue))) {
           // {"1":"配偶","2":"子女","3":"父母","4":"其他"}
           // 20 已婚 21 初婚 22 再婚 23 复婚 这四种情况亲属关系直接为配偶，不让用户选择
+          // 20 这种情况亲属关系直接为配偶，不让用户选择
           if (String(this.postData.relationship) !== '1') {
             this.postData.relationship = '1';
             $api.dom($api.byId('relationship'), 'input').value = '配偶';
@@ -2473,9 +2474,9 @@ function vmInit() {
       handleRelationshipClick: function handleRelationshipClick() {
         var _this10 = this;
 
-        if (['20', '21', '22', '23'].includes(String(this.marriage))) {
+        if (['20'].includes(String(this.marriage))) {
           api.toast({
-            msg: '婚姻状况为已婚、初婚、再婚、复婚时亲属关系只能选择配偶',
+            msg: '婚姻状况为已婚时，亲属关系只能选择配偶',
             location: 'middle'
           });
           return;
