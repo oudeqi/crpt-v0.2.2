@@ -107,6 +107,7 @@ apiready = function apiready() {
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
+      openTabLayout(2);
       api.closeWin();
     }
   }); // alert(Vue)

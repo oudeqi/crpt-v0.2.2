@@ -16,6 +16,7 @@ apiready = function () {
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
+      openTabLayout(2)
       api.closeWin();
     }
   });
