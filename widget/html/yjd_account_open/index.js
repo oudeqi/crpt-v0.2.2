@@ -2108,6 +2108,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2121,6 +2122,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2613,6 +2615,15 @@ var routerConfig = {
     name: 'com_repay_trial',
     title: '还款试算',
     url: 'widget://html/com_repay_trial/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
