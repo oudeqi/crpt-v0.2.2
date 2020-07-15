@@ -37,15 +37,15 @@
           <div class="result">
             <div class="n">
               <div class="txt">还款总额(元)</div>
-              <div class="amount b">{{filter.toThousands(tirialData.totalRepayment) || '-'}}</div>
+              <div class="amount b">{{filter.toThousands(tirialData.totalAmnt) || '-'}}</div>
             </div>
             <div class="n">
               <div class="txt">本金(元)</div>
-              <div class="amount">{{filter.toThousands(tirialData.repayPrincipal) || '-'}}</div>
+              <div class="amount">{{filter.toThousands(tirialData.principalAmnt) || '-'}}</div>
             </div>
             <div class="n">
               <div class="txt">利息(元)</div>
-              <div class="amount">{{filter.toThousands(tirialData.interest) || '-'}}</div>
+              <div class="amount">{{filter.toThousands(tirialData.interestAmnt) || '-'}}</div>
             </div>
             <!-- <div class="detail-btn" v-if="tirialData && tirialData.totalRepayment" @click="handleOpenDetailFrame">
               详情<i class="icon-right"></i>
@@ -55,9 +55,10 @@
       </div>
 
       <div class="bottom-box">
-        <div class="btn btn-normal" @click="handleOpenPop">确定</div>
+        <div class="btn btn-normal" :class="{'disabled': cannotClick}" @click="handleOpenPop">还款</div>
       </div>
-      <div class="popup" v-show="isShowPop" @click.stop.prevent.self="handleClosePop">
+
+      <!-- <div class="popup" v-show="isShowPop" @click.stop.prevent.self="handleClosePop">
         <section class="content">
           <div class="close">x</div>
           <div class="pheader">扣款确认</div>
@@ -108,7 +109,7 @@
             </div>
           </div>
         </section>
-      </div>
+      </div> -->
     </div>
 
     <script type="text/javascript" src="../../script/api.js"></script>

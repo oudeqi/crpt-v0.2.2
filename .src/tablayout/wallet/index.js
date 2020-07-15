@@ -1,6 +1,7 @@
 import './index.less'
 import http from '../../http/index.js'
 import filter from '../../utils/filter'
+import Utils from '../../utils'
 
 apiready = function () {
   api.addEventListener({
@@ -21,10 +22,15 @@ apiready = function () {
       this.getData()
     },
     methods: {
-      getData () {
-        http.get('/crpt-cust/customer/account/hope/account/info', {}).then(res => {
+      async getData () {
+        Utils.UI.showLoading('加载中')
+        try {
+          const res = await http.get('/crpt-cust/customer/account/hope/account/info', {})
           this.accountData = res.data
-        })
+          Utils.UI.hideLoading()
+        } catch (err) {
+          Utils.UI.hideLoading()
+        }
       }
     }
   })

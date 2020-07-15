@@ -61,6 +61,9 @@ class App {
     //   }
     // })
     // return
+    // Router.openPage({key: 'com_repay_trial'})
+    // return
+    openTabLayout(2)
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

@@ -125,6 +125,15 @@ const routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 }
 export default routerConfig
