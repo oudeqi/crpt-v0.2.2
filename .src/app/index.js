@@ -61,9 +61,9 @@ class App {
     //   }
     // })
     // return
-    // Router.openPage({key: 'com_repay_trial'})
+    // Router.openPage({key: 'my_quota'})
     // return
-    openTabLayout(2)
+    // openTabLayout(0)
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

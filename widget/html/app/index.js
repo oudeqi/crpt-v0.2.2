@@ -76,6 +76,7 @@ function openTabLayout(index) {
       background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
+      shadow: 'transparent',
       fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
@@ -2030,6 +2031,7 @@ var navigationBarWhite$1 = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2043,6 +2045,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2803,9 +2806,9 @@ var App = /*#__PURE__*/function () {
       //   }
       // })
       // return
-      // Router.openPage({key: 'com_repay_trial'})
+      // Router.openPage({key: 'my_quota'})
       // return
-      openTabLayout(2);
+      // openTabLayout(0)
       var userinfo = $api.getStorage('userinfo');
 
       if (userinfo) {

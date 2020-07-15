@@ -2151,6 +2151,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2164,6 +2165,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{

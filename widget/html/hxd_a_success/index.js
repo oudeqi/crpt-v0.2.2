@@ -807,6 +807,7 @@ function openTabLayout(index) {
       background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
+      shadow: 'transparent',
       fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
@@ -2171,6 +2172,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2184,6 +2186,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
