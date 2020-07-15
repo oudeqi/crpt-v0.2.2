@@ -61,8 +61,8 @@ class App {
     //   }
     // })
     // return
-    // Router.openPage({key: 'my_quota'})
-    // return
+    Router.openPage({key: 'com_product_list'})
+    return
     // openTabLayout(0)
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
