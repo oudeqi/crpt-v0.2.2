@@ -37,15 +37,15 @@
           <div class="result">
             <div class="n">
               <div class="txt">还款总额(元)</div>
-              <div class="amount b">{{filter.toThousands(tirialData.totalRepayment) || '-'}}</div>
+              <div class="amount b">{{filter.toThousands(tirialData.totalAmnt) || '-'}}</div>
             </div>
             <div class="n">
               <div class="txt">本金(元)</div>
-              <div class="amount">{{filter.toThousands(tirialData.repayPrincipal) || '-'}}</div>
+              <div class="amount">{{filter.toThousands(tirialData.principalAmnt) || '-'}}</div>
             </div>
             <div class="n">
               <div class="txt">利息(元)</div>
-              <div class="amount">{{filter.toThousands(tirialData.interest) || '-'}}</div>
+              <div class="amount">{{filter.toThousands(tirialData.interestAmnt) || '-'}}</div>
             </div>
             
           </div>
@@ -53,60 +53,10 @@
       </div>
 
       <div class="bottom-box">
-        <div class="btn btn-normal" @click="handleOpenPop">确定</div>
+        <div class="btn btn-normal" :class="{'disabled': cannotClick}" @click="handleOpenPop">还款</div>
       </div>
-      <div class="popup" v-show="isShowPop" @click.stop.prevent.self="handleClosePop">
-        <section class="content">
-          <div class="close">x</div>
-          <div class="pheader">扣款确认</div>
-          <div v-if="status === 1" class="blkc no-account">
-            <p class="tips">您未开通【转账还款通道】，无法进行线上还款操作。</p>
-            <div class="cube">为方便您还款，建议您开通【转账还款通道】，不受银行卡扣款限额限制，资金安全、信息透明。</div>
-            <div class="markup">您也可以联系您的业务员通过线下转账的方式进行还款</div>
-            <div class="b-group">
-              <div class="btn">去申请开通</div>
-              <div class="btn btn-prime">暂不需要开通</div>
-            </div>
-          </div>
-          <div v-if="status === 2" class="blkc no-enough">
-            <p class="tips">您的【转账还款通道】余额小于本次还款总额，建议您充值后再进行还款</p>
-            <div class="total flx">
-              <div class="lbe">还款总额(元)</div>
-              <div class="n">2020.55</div>
-            </div>
-            <div class="you flx">
-              <div class="lbe">转账还款通道余额(元)</div>
-              <div class="n">
-                <div class="num">20.55</div>
-                <div class="warning">余额不足</div>
-              </div>
-            </div>
-            <div class="b-group">
-              <div class="btn">去转账还款通道</div>
-              <div class="btn btn-prime">暂不还款</div>
-            </div>
-          </div>
-          <div v-if="status === 3" class="blkc okok">
-            <p class="tips">您的【转账还款通道】余额充足，可以进行提前还款</p>
-            <div class="total flx">
-              <div class="lbe">还款总额(元)</div>
-              <div class="n">2020.55</div>
-            </div>
-            <div class="total flx">
-              <div class="lbe">转账还款通道余额(元)</div>
-              <div class="n">20.55</div>
-            </div>
-            <div class="total flx end">
-              <div class="lbe">本次还款金额(元)</div>
-              <div class="n gr">2020.55</div>
-            </div>
-            <div class="b-group">
-              <div class="btn">确认</div>
-              <div class="btn btn-prime">去转账还款通道</div>
-            </div>
-          </div>
-        </section>
-      </div>
+
+      
     </div>
 
     <script type="text/javascript" src="../../script/api.js"></script>

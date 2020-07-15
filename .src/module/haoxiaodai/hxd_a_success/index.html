@@ -31,7 +31,10 @@
             </p>
           </div>
           <div v-else-if="creditStatus === 3">
-            <div class="label">{{1}}</div>
+            <div class="label">{{refusedReason}}</div>
+          </div>
+          <div v-else-if="creditStatus === 1">
+            <div class="label">授信申请中</div>
           </div>
         </div>
       </div>

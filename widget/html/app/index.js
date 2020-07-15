@@ -41,119 +41,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-// api.lockSlidPane();
-// api.unlockSlidPane
-var navigationBarWhite = {
-  hideBackButton: false,
-  background: '#fff',
-  color: 'rgba(48,49,51,1)',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: 'rgba(102,187,106,1)',
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-};
-
-
-function openTabLayout(index) {
-  api.openTabLayout({
-    name: 'tabLayout',
-    bgColor: '#fff',
-    reload: true,
-    delay: 300,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: {
-      hideBackButton: true,
-      background: 'rgba(102,187,106,1)',
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'normal' // leftButtons: [{
-      //   // text: '设置',
-      //   // color: '#fff',
-      //   // fontSize: 16,
-      //   iconPath: 'widget://image/avatar.png',
-      // }],
-      // rightButtons: [{
-      //   text: '设置',
-      //   color: '#fff',
-      //   fontSize: 16,
-      //   // iconPath: 'widget://image/settings@2x.png'
-      // }]
-
-    },
-    tabBar: {
-      animated: false,
-      scrollEnabled: true,
-      selectedColor: '#66BB6A',
-      color: '#606266',
-      index: index || 0,
-      fontSize: 12,
-      // preload: 4,
-      list: [{
-        text: "首页",
-        iconPath: "widget://image/tablayout/shouye.png",
-        selectedIconPath: "widget://image/tablayout/shouye_active.png"
-      }, {
-        text: "贷款",
-        iconPath: "widget://image/tablayout/loan.png",
-        selectedIconPath: "widget://image/tablayout/loan_active.png"
-      }, {
-        text: "还款",
-        iconPath: "widget://image/tablayout/huankuan.png",
-        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
-      }, {
-        text: "我的",
-        iconPath: "widget://image/tablayout/wode.png",
-        selectedIconPath: "widget://image/tablayout/wode_active.png"
-      }],
-      frames: [{
-        title: "首页",
-        //tab切换时对应的标题
-        name: "tablayout/index",
-        url: "widget://html/index/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "贷款申请",
-        name: "tablayout/loan",
-        url: "widget://html/loan/index.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "还款",
-        name: "tablayout/repay",
-        url: "widget://html/repay/index.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }, {
-        title: "我的",
-        name: "tablayout/my",
-        url: "widget://html/my/frm.html",
-        bounces: true,
-        reload: true,
-        scrollToTop: true //其他继承自openFrame的参数
-
-      }]
-    }
-  });
-} // 注册
-
-
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -163,43 +50,6 @@ function openRegLogin() {
     slidBackEnabled: false
   });
 } // 个人登录
-
-
-function openTodoAuthGeren() {
-  api.openTabLayout({
-    name: 'html/todoauthgeren/win',
-    title: '待完成',
-    url: 'widget://html/todoauthgeren/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
-    })
-  });
-}
-
-function openTodoAuthQiye() {
-  api.openTabLayout({
-    name: 'html/todoauthqiye/win',
-    title: '待完成',
-    url: 'widget://html/todoauthqiye/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: false,
-    animation: {
-      type: 'none'
-    },
-    navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
-    })
-  });
-} // 企业信息确认
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -488,16 +338,16 @@ var toast = function toast(msg) {
   });
 };
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function setRefreshHeaderInfo(_ref) {
   var success = _ref.success,
       fail = _ref.fail,
       _ref$options = _ref.options,
       options = _ref$options === void 0 ? {} : _ref$options;
-  api.setRefreshHeaderInfo(_objectSpread$1({
+  api.setRefreshHeaderInfo(_objectSpread({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
     textColor: '#bfbfbf',
@@ -1466,16 +1316,7 @@ var base64 = createCommonjsModule(function (module, exports) {
     // existing version for noConflict()
     global = global || {};
     var _Base64 = global.Base64;
-    var version = "2.5.2";
-    // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
-        } catch (err) {
-            buffer = undefined;
-        }
-    }
+    var version = "2.6.1";
     // constants
     var b64chars
         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -1522,24 +1363,29 @@ var base64 = createCommonjsModule(function (module, exports) {
         ];
         return chars.join('');
     };
-    var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
-    } : function(b) {
+    var btoa = global.btoa && typeof global.btoa == 'function'
+        ? function(b){ return global.btoa(b) } : function(b) {
+        if (b.match(/[^\x00-\xFF]/)) throw new RangeError(
+            'The string contains invalid characters.'
+        );
         return b.replace(/[\s\S]{1,3}/g, cb_encode);
     };
     var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
-        return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
+        return btoa(utob(String(u)));
     };
     var encode = function(u, urisafe) {
         return !urisafe
-            ? _encode(u)
+            ? _encode(String(u))
             : _encode(String(u)).replace(/[+\/]/g, function(m0) {
                 return m0 == '+' ? '-' : '_';
             }).replace(/=/g, '');
     };
     var encodeURI = function(u) { return encode(u, true) };
+    var fromUint8Array = function(a) {
+        return btoa(Array.from(a, function(c) {
+            return String.fromCharCode(c)
+        }).join(''));
+    };
     // decoder stuff
     var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
     var cb_btou = function(cccc) {
@@ -1583,30 +1429,25 @@ var base64 = createCommonjsModule(function (module, exports) {
         chars.length -= [0, 0, 2, 1][padlen];
         return chars.join('');
     };
-    var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
+    var _atob = global.atob && typeof global.atob == 'function'
+        ? function(a){ return global.atob(a) } : function(a){
         return a.replace(/\S{1,4}/g, cb_decode);
     };
     var atob = function(a) {
         return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
     };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
-        ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
-        }
-        : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
-        }
-        : function(a) { return btou(_atob(a)) };
+    var _decode = function(a) { return btou(_atob(a)) };
     var decode = function(a){
         return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
+            String(a).replace(/[-_]/g, function(m0) {
+                return m0 == '-' ? '+' : '/'
+            }).replace(/[^A-Za-z0-9\+\/]/g, '')
         );
+    };
+    var toUint8Array = function(a) {
+        return Uint8Array.from(atob(a), function(c) {
+            return c.charCodeAt(0);
+        });
     };
     var noConflict = function() {
         var Base64 = global.Base64;
@@ -1626,7 +1467,8 @@ var base64 = createCommonjsModule(function (module, exports) {
         btou: btou,
         decode: decode,
         noConflict: noConflict,
-        __buffer__: buffer
+        fromUint8Array: fromUint8Array,
+        toUint8Array: toUint8Array
     };
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
@@ -1665,9 +1507,9 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var dev = 'http://crptdev.liuheco.com';
 var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
@@ -1714,7 +1556,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1(_objectSpread$1(_objectSpread$1({}, Authorization), contentType), headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2034,10 +1876,11 @@ var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
 var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
 
-var navigationBarWhite$1 = {
+var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2051,6 +1894,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2074,7 +1918,7 @@ var routerMap = {
     url: 'widget://html/yjd_select_contract/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_apply_confirm: {
     name: 'yjd_apply_confirm',
@@ -2082,7 +1926,7 @@ var routerMap = {
     url: 'widget://html/yjd_apply_confirm/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_face_auth: {
     name: 'yjd_face_auth',
@@ -2107,7 +1951,7 @@ var routerMap = {
     url: 'widget://html/yjd_hukouben_upload/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_apply_status: {
     name: 'yjd_apply_status',
@@ -2115,7 +1959,7 @@ var routerMap = {
     url: 'widget://html/yjd_apply_status/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_apply_result: {
     name: 'yjd_apply_result',
@@ -2123,7 +1967,7 @@ var routerMap = {
     url: 'widget://html/yjd_apply_result/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_loan_signing: {
     name: 'yjd_loan_signing',
@@ -2131,7 +1975,7 @@ var routerMap = {
     url: 'widget://html/yjd_loan_signing/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_signing_result: {
     name: 'yjd_signing_result',
@@ -2139,7 +1983,7 @@ var routerMap = {
     url: 'widget://html/yjd_signing_result/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_account_open: {
     name: 'yjd_account_open',
@@ -2147,7 +1991,7 @@ var routerMap = {
     url: 'widget://html/yjd_account_open/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   yjd_account_open_xinwang: {
     name: 'yjd_account_open_xinwang',
@@ -2163,7 +2007,7 @@ var routerMap = {
     url: 'widget://html/yjd_product_detail/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 贷款申请
   loan_application: {
@@ -2190,7 +2034,7 @@ var routerMap = {
     url: 'widget://html/yjd_loan_details/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 公用的贷款详情
   loan_details: {
@@ -2199,7 +2043,7 @@ var routerMap = {
     url: 'widget://html/loan_details/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 还款计划
   repay_plan: {
@@ -2208,7 +2052,7 @@ var routerMap = {
     url: 'widget://html/repay_plan/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 还款记录
   repay_record: {
@@ -2217,7 +2061,7 @@ var routerMap = {
     url: 'widget://html/repay_record/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 押金贷代养合同
   yjd_contract_daiyang: {
@@ -2226,7 +2070,7 @@ var routerMap = {
     url: 'widget://html/yjd_contract_daiyang/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 押金贷贷款合同
   yjd_contract_loan: {
@@ -2235,7 +2079,7 @@ var routerMap = {
     url: 'widget://html/yjd_contract_loan/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -2247,7 +2091,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_apply/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷授信申请补充企业信息
   hxd_a_supply: {
@@ -2256,7 +2100,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_a_supply/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷授信申请成功/失败
   hxd_a_success: {
@@ -2274,7 +2118,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_product_detail/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷额度变化详情
   hxd_quota: {
@@ -2283,7 +2127,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_quota/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷用款申请
   hxd_u_apply: {
@@ -2292,7 +2136,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_u_apply/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷用款确认
   hxd_u_confirm: {
@@ -2301,7 +2145,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_u_confirm/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷用款确认
   hxd_u_try_detail: {
@@ -2310,7 +2154,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_u_try_detail/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷用款校验
   hxd_u_smscode: {
@@ -2319,7 +2163,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_u_smscode/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷用款结果
   hxd_u_result: {
@@ -2328,7 +2172,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_u_result/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷还款试算
   hxd_r_try: {
@@ -2337,7 +2181,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_r_try/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷还款试算详情页
   hxd_r_try_detail: {
@@ -2346,7 +2190,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_r_try_detail/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷还款校验页
   hxd_r_smscode: {
@@ -2355,7 +2199,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_r_smscode/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷还款校验页
   hxd_r_result: {
@@ -2364,7 +2208,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_r_result/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷金服开户申请
   hxd_jf_apply: {
@@ -2373,7 +2217,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_jf_apply/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷金服开户成功页
   hxd_jf_account: {
@@ -2382,7 +2226,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_jf_account/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷金服开户企业补充信息
   hxd_jf_enterprise: {
@@ -2391,7 +2235,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_jf_enterprise/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷金服开户结果
   hxd_jf_result: {
@@ -2400,7 +2244,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_jf_result/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷金服开户状态查看
   hxd_jf_status: {
@@ -2409,7 +2253,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_jf_status/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 好销贷贷款详情
   hxd_loan_details: {
@@ -2418,7 +2262,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_loan_details/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -2432,7 +2276,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 我的账单
   billlist: {
@@ -2454,7 +2298,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 我的贷款
   my_loan: {
@@ -2465,7 +2309,7 @@ var routerConfig = {
     reload: true,
     bounces: false,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 我的额度
   my_quota: {
@@ -2487,7 +2331,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 联系我们
   contactus: {
@@ -2509,7 +2353,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 我的钱包详情
   wallet: {
@@ -2518,7 +2362,7 @@ var routerConfig = {
     url: 'widget://html/wallet/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 通用产品列表
   com_product_list: {
@@ -2527,7 +2371,7 @@ var routerConfig = {
     url: 'widget://html/com_product_list/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 合同页
   agreement: {
@@ -2536,7 +2380,7 @@ var routerConfig = {
     url: 'widget://html/agreement/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
   },
   // 还款试算页面
   com_repay_trial: {
@@ -2545,18 +2389,27 @@ var routerConfig = {
     url: 'widget://html/com_repay_trial/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
+
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$2(_objectSpread$2(_objectSpread$2({}, routerHXDConfig), routerMap), routerConfig);
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
-
-function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Router$1 = /*#__PURE__*/function () {
   function Router() {
@@ -2569,233 +2422,14 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$3(_objectSpread$3({}, profile[key]), params));
     }
   }]);
 
   return Router;
 }();
 
-new Router$1();
-
-var dev$1 = 'http://crptdev.liuheco.com';
-var baseUrl$1 =  dev$1 ;
-
-function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var whiteList$1 = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert$1 = false;
-
-function ajax$1(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
-
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
-    } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    }
-
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList$1.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
-    api.ajax({
-      url: baseUrl$1 + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread$5({}, Authorization, {}, contentType, {}, headers)
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
-
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          // 表单校验未过专属code
-          if (ret.code === 202) {
-            var _data = ret.data;
-            _data && Utils$1.UI.toast(_data[0].msg);
-            ret.msg && Utils$1.UI.toast(ret.msg);
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert$1) {
-            hasAlert$1 = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert$1 = false;
-              api.closeWin({
-                name: 'html/register/index'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/index'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
-
-          reject(error);
-        }
-
-        reject(error);
-      }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
-    });
-  });
-}
-
-var http$1 = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
-
-    return ajax$1('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
-
-    return ajax$1('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
-
-    return ajax$1('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
-
-    return ajax$1('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax$1('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  }
-};
-
-// $api.getStorage()
-// $api.rmStorage()
-// $api.clearStorage()
-// 保存设备信息
-
-function saveDeviceMes() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var sendJson = {
-        networkType: api.connectionType,
-        // 网络类型
-        deviceType: api.uiMode,
-        // 设备类型
-        deviceModel: api.deviceModel,
-        // 设备型号（手机型号）
-        deviceUniqueSymbol: api.deviceId,
-        // 设备唯一标识
-        longitude: position.coords.longitude,
-        // 经度
-        latitude: position.coords.latitude // 纬度
-
-      };
-      http$1.post('/crpt-cust/customer/device/info/save', {
-        body: sendJson
-      }).then(function (res) {// console.log(JSON.stringify(res))
-      })["catch"](function (err) {
-        console.log(JSON.stringify(err));
-      });
-    });
-  } else {
-    alert("不支持定位功能");
-  }
-}
+var Router$2 = new Router$1();
 
 var App = /*#__PURE__*/function () {
   function App() {
@@ -2819,26 +2453,10 @@ var App = /*#__PURE__*/function () {
       //   params: { }
       // })
       // return
-      var userinfo = $api.getStorage('userinfo');
-
-      if (userinfo) {
-        var authStatus = $api.getStorage('authStatus') || {};
-
-        if (authStatus.status === 1) {
-          openTabLayout();
-          saveDeviceMes();
-        } else {
-          var userType = userinfo.userType;
-
-          if (userType === '1') {
-            openTodoAuthGeren();
-          } else {
-            openTodoAuthQiye();
-          }
-        }
-      } else {
-        openRegLogin();
-      }
+      Router$2.openPage({
+        key: 'com_product_list'
+      });
+      return; // openTabLayout(0)
     }
   }, {
     key: "bindEvent",

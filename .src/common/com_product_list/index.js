@@ -44,6 +44,9 @@ apiready = function () {
           this.hxdData = res.data
           Utils.UI.hideLoading()
         } catch (err) {
+          if(err.msg) {
+            Utils.UI.toast(`${err.code} : ${err.msg}`)
+          }
           Utils.UI.hideLoading()
           // console.log(JSON.stringify(err))
         }
@@ -55,6 +58,9 @@ apiready = function () {
           this.yjdData = res.data
           Utils.UI.hideLoading()
         } catch (err) {
+          if(err.msg) {
+            Utils.UI.toast(`${err.code} : ${err.msg}`)
+          }
           Utils.UI.hideLoading()
           // console.log(JSON.stringify(err))
         }

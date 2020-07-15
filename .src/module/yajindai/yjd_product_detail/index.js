@@ -25,7 +25,9 @@ apiready = function () {
           key: this.detailData.openHopeAccountFlag === 1 ?
           'yjd_select_contract' : // 选择代养合同
           'yjd_account_open' // 开通新网账户
-        })
+          , params: {
+            pageParam: {productId: this.pageParam.item.id}
+          }})
       }
     },
   })

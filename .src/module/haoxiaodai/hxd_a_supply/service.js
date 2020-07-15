@@ -1,4 +1,5 @@
-import http from './../../../http'
+// import http from './../../../http'
+import { http } from './../../../config'
 
 const service = {
   postCompanyInfo: (params, files) => {

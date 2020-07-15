@@ -13,12 +13,14 @@ apiready = function () {
       filter,
       principal: '',
       tips: '',
-      totalAmount: 20000,
+      totalAmount: 0,
       tirialData: {},
-      pageParam: api.pageParam || {}
+      pageParam: api.pageParam || {},
+      cannotClick: true
     },
     computed:{
       principalTn () {
+        this.cannotClick = true
         return filter.toThousands(this.principal)
       }
     },
@@ -36,20 +38,22 @@ apiready = function () {
       async retialAmount () { // 获取试算结果
         Utils.UI.showLoading('加载中')
         try {
-          this.pageParam.loanId = '12'
-          const res = await http.get('/crpt-credit/credit/yjd/repay/try?repayPrincipal=' + this.principal + '&loanId=' + this.pageParam.loanId)
+          // this.pageParam.loanId = '12'
+          const res = await http.get(`/crpt-credit/credit/yjd/repay/try?repayPrincipal=${this.principal}&loanId=${this.pageParam.loanId}&planId=${this.pageParam.planId}`)
           this.tirialData = res.data
+          this.cannotClick = false
           Utils.UI.hideLoading()
         } catch (err) {
           Utils.UI.hideLoading()
         }
       },
-      async repayAll () { // 还全部金额
+      async repayAll () { // 获取全部金额
         Utils.UI.showLoading('加载中')
         try {
-          this.pageParam.loanId = '12'
+          // this.pageParam.loanId = '12'
           const res = await http.get('/crpt-credit/credit/yjd/repay/remain/principal?loanId=' + this.pageParam.loanId)
           this.principal = res.data
+          this.totalAmount = res.data
           Utils.UI.hideLoading()
         } catch (err) {
           Utils.UI.hideLoading()
@@ -85,14 +89,29 @@ apiready = function () {
         // });
         
       },
-      handleOpenPop() {
-        this.isShowPop = true
+      async handleOpenPop() { // 确认还款
+        if (!this.cannotClick) {
+          const sendJson = this.tirialData
+          sendJson.loanId = this.pageParam.loanId
+          sendJson.planId = this.pageParam.planId
+          Utils.UI.showLoading('还款提交中')
+          try {
+            const res = await http.post('/crpt-credit/credit/yjd/repay/affirm', {body: sendJson})
+            Utils.UI.hideLoading()
+            Router.openPage({key: 'com_repay_result'})
+          } catch (err) {
+            Utils.UI.hideLoading()
+          }
+        }
+        // this.isShowPop = true
       },
       handleClosePop() {
         this.isShowPop = false
       }
     },
-    mounted() { }
+    mounted() {
+      this.repayAll()
+    }
   })
   api.addEventListener({
     name: 'navitembtn'

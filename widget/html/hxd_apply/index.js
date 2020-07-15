@@ -4,6 +4,28 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
+var _extends_1 = createCommonjsModule(function (module) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+});
+
 var runtime_1 = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -834,28 +856,6 @@ function _classCallCheck(instance, Constructor) {
 
 var classCallCheck = _classCallCheck;
 
-var _extends_1 = createCommonjsModule(function (module) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-});
-
 // 系统顶部导航配置
 var navigationBarProfile = {
   background: '#fff',
@@ -1340,16 +1340,7 @@ var base64 = createCommonjsModule(function (module, exports) {
     // existing version for noConflict()
     global = global || {};
     var _Base64 = global.Base64;
-    var version = "2.5.2";
-    // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
-        } catch (err) {
-            buffer = undefined;
-        }
-    }
+    var version = "2.6.1";
     // constants
     var b64chars
         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -1396,24 +1387,29 @@ var base64 = createCommonjsModule(function (module, exports) {
         ];
         return chars.join('');
     };
-    var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
-    } : function(b) {
+    var btoa = global.btoa && typeof global.btoa == 'function'
+        ? function(b){ return global.btoa(b) } : function(b) {
+        if (b.match(/[^\x00-\xFF]/)) throw new RangeError(
+            'The string contains invalid characters.'
+        );
         return b.replace(/[\s\S]{1,3}/g, cb_encode);
     };
     var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
-        return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
+        return btoa(utob(String(u)));
     };
     var encode = function(u, urisafe) {
         return !urisafe
-            ? _encode(u)
+            ? _encode(String(u))
             : _encode(String(u)).replace(/[+\/]/g, function(m0) {
                 return m0 == '+' ? '-' : '_';
             }).replace(/=/g, '');
     };
     var encodeURI = function(u) { return encode(u, true) };
+    var fromUint8Array = function(a) {
+        return btoa(Array.from(a, function(c) {
+            return String.fromCharCode(c)
+        }).join(''));
+    };
     // decoder stuff
     var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
     var cb_btou = function(cccc) {
@@ -1457,30 +1453,25 @@ var base64 = createCommonjsModule(function (module, exports) {
         chars.length -= [0, 0, 2, 1][padlen];
         return chars.join('');
     };
-    var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
+    var _atob = global.atob && typeof global.atob == 'function'
+        ? function(a){ return global.atob(a) } : function(a){
         return a.replace(/\S{1,4}/g, cb_decode);
     };
     var atob = function(a) {
         return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
     };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
-        ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
-        }
-        : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
-        }
-        : function(a) { return btou(_atob(a)) };
+    var _decode = function(a) { return btou(_atob(a)) };
     var decode = function(a){
         return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
+            String(a).replace(/[-_]/g, function(m0) {
+                return m0 == '-' ? '+' : '/'
+            }).replace(/[^A-Za-z0-9\+\/]/g, '')
         );
+    };
+    var toUint8Array = function(a) {
+        return Uint8Array.from(atob(a), function(c) {
+            return c.charCodeAt(0);
+        });
     };
     var noConflict = function() {
         var Base64 = global.Base64;
@@ -1500,7 +1491,8 @@ var base64 = createCommonjsModule(function (module, exports) {
         btou: btou,
         decode: decode,
         noConflict: noConflict,
-        __buffer__: buffer
+        fromUint8Array: fromUint8Array,
+        toUint8Array: toUint8Array
     };
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
@@ -1588,7 +1580,7 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1(_objectSpread$1(_objectSpread$1({}, Authorization), contentType), headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1953,7 +1945,7 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, Authorization), contentType), headers)
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2110,6 +2102,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2123,6 +2116,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2618,13 +2612,22 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+var profile = _objectSpread$3(_objectSpread$3(_objectSpread$3({}, routerHXDConfig), routerMap), routerConfig);
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2641,7 +2644,7 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$4(_objectSpread$4({}, profile[key]), params));
     }
   }]);
 
@@ -2668,26 +2671,21 @@ apiready = function apiready() {
       isFolder: true,
       hasApply: !!pageParam.hasApply,
       // 是否是申请过，默认为false
-      agreements: [{
-        id: 1,
-        title: "授信合同1111"
-      }, {
-        id: 2,
-        title: "授信合同高校的"
-      }],
       mapRes: {
         0: '我要申请',
         1: '授信处理中',
         2: '授信成功',
-        3: '授信失败'
+        3: '我要申请' // 拒绝了也可以重新申请
+
       },
       productInfo: {
         productShort: '',
         creditAmount: '',
         producName: '',
-        signedContract: '',
+        // signedContract: [],
         productSlogan: ''
       },
+      contractList: [],
       creditStatus: 0,
       introduction: intro,
       QA: qa,
@@ -2774,19 +2772,31 @@ apiready = function apiready() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res;
+          var form, res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   Utils$1.UI.showLoading('加载中');
                   _context2.prev = 1;
-                  _context2.next = 4;
-                  return service.getProductInfo({
+                  // const mapRes = await filterDict('creditStatus')
+                  // if (mapRes.code === 200) {
+                  //   this.mapRes = mapRes
+                  // }
+                  form = {
                     productId: pageParam.productId
-                  });
+                  };
 
-                case 4:
+                  if (_this.hasApply) {
+                    _extends_1(form, {
+                      query: 0
+                    });
+                  }
+
+                  _context2.next = 6;
+                  return service.getProductInfo(form);
+
+                case 6:
                   res = _context2.sent;
 
                   if (res.code === 200) {
@@ -2795,36 +2805,36 @@ apiready = function apiready() {
                       creditAmount: res.data.creditAmount,
                       producName: res.data.productName,
                       // unsignContract: [{ contractFileId: '669', contractName: '韭菜的自我修养' }], // 先搞个假的
-                      unsignContract: [res.data.unsignContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
-                      signContract: [res.data.signContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
+                      // unsignContract: [res.data.unsignContract || {}],// 后端只返回了一个合同，并且是对象不是list
+                      // signContract: [res.data.signContract || {}],// 后端只返回了一个合同，并且是对象不是list
                       productSlogan: res.data.productSlogan
-                    };
+                    }; // 优先展示已签署，已签署没有，再展示未签署
+
+                    _this.contractList = res.data.signedContract ? [res.data.signedContract] : res.data.unsignContract && [res.data.unsignContract] || [];
                     _this.btnText = _this.mapRes[res.data.creditStatus];
                     _this.creditStatus = res.data.creditStatus;
                   }
 
-                  _context2.next = 11;
+                  _context2.next = 13;
                   break;
 
-                case 8:
-                  _context2.prev = 8;
+                case 10:
+                  _context2.prev = 10;
                   _context2.t0 = _context2["catch"](1);
 
                   if (_context2.t0.msg) {
                     Utils$1.UI.toast("".concat(_context2.t0.code, " : ").concat(_context2.t0.msg));
                   }
 
-                case 11:
+                case 13:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[1, 8]]);
+          }, _callee2, null, [[1, 10]]);
         }))();
       }
     },
@@ -2843,7 +2853,19 @@ apiready = function apiready() {
           api.refreshHeaderLoadDone();
         }
       });
-      this.handleGetProductDetail();
+      this.handleGetProductDetail(); // api.openFrame({
+      //   name: 'cbpage',
+      //   url: 'http://192.168.43.119:3000/crpt-h5/xw_callback/close',
+      //   rect: {
+      //     x: 0,
+      //     y: 60,
+      //     w: 'auto',
+      //     h: 'auto'
+      //   },
+      //   pageParam: {
+      //     name: 'test'
+      //   }
+      // });
     }
   });
 };

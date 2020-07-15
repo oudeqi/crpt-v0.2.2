@@ -92,17 +92,24 @@ function openTabLayout(index) {
 } // 注册
 
 apiready = function apiready() {
-  openTabLayout();
-
-  document.querySelector('#openDrawerPane').onclick = function () {
-    api.openDrawerPane({
-      type: 'left'
-    });
-  };
-
-  document.querySelector('#openSlidPane').onclick = function () {
-    api.openSlidPane({
-      type: 'left'
-    });
-  };
+  var page = new Vue({
+    el: '#app',
+    data: {
+      status: 1
+    },
+    methods: {
+      changePage: function changePage() {
+        // 跳转到还款页面
+        openTabLayout(2);
+      }
+    }
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      openTabLayout(2);
+      api.closeWin();
+    }
+  }); // alert(Vue)
 };

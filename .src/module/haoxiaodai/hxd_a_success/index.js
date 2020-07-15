@@ -28,7 +28,7 @@ apiready = function () {
       async handleGetProductDetail() {
         try {
           Utils.UI.showLoading('加载中')
-          const res = await service.getProductInfo({ productId: pageParam.productId })
+          const res = await service.getProductInfo({ productId: pageParam.productId, query: 0 })
           if (res.code === 200) {
             this.productInfo = {
               productShort: '销',
@@ -65,6 +65,17 @@ apiready = function () {
       }
     },
     mounted() {
+      Utils.UI.setRefreshHeaderInfo({
+        success: () => {
+          this.handleGetProductDetail()
+          setTimeout(() => {
+            api.refreshHeaderLoadDone()
+          }, 0);
+        },
+        fail: () => {
+          api.refreshHeaderLoadDone()
+        },
+      })
       this.handleGetProductDetail()
     }
   })

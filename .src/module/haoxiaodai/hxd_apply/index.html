@@ -67,7 +67,10 @@
         </div>
       </section>
 
-      <div v-if="!hasApply" class="app_agreement">
+      <div
+        v-if="!hasApply"
+        class="app_agreement"
+      >
         <label>
           <input
             class="app_checkbox"
@@ -76,13 +79,14 @@
             name="type"
             :checked="isChecked"
             @change="handleCheckBox"
+            v-if="creditStatus === 0"
           />
         </label>
-        <div class="agreement_content" v-if="creditStatus !== 0 && creditStatus !== 3">
+        <div class="agreement_content">
           <span>已阅读并同意</span>
           <span
             class="ac"
-            v-for="item in productInfo.unsignContract"
+            v-for="item in contractList"
             :key="item.contractFileId"
             >《
             <b @click="handleToAgreement(item.contractFileId)"

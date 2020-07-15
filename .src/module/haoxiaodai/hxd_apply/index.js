@@ -22,23 +22,20 @@ apiready = function () {
     data: {
       isFolder: true,
       hasApply: !!pageParam.hasApply, // 是否是申请过，默认为false
-      agreements: [
-        { id: 1, title: "授信合同1111" },
-        { id: 2, title: "授信合同高校的" }
-      ],
       mapRes: {
         0: '我要申请',
         1: '授信处理中',
         2: '授信成功',
-        3: '授信失败'
+        3: '我要申请'  // 拒绝了也可以重新申请
       },
       productInfo: {
         productShort: '',
         creditAmount: '',
         producName: '',
-        signedContract: '',
+        // signedContract: [],
         productSlogan: ''
       },
+      contractList: [],
       creditStatus: 0,
       introduction: intro,
       QA: qa,
@@ -75,7 +72,7 @@ apiready = function () {
           const res = await service.postSignJF({
             productId: pageParam.productId
           })
-          if(res.code === 200) {
+          if (res.code === 200) {
             Router.openPage({
               key: 'hxd_a_success',
               params: {
@@ -99,17 +96,30 @@ apiready = function () {
           // if (mapRes.code === 200) {
           //   this.mapRes = mapRes
           // }
-          const res = await service.getProductInfo({ productId: pageParam.productId })
+          let form = {
+            productId: pageParam.productId
+          }
+          if(this.hasApply) {
+            Object.assign(form, {
+              query: 0
+            })
+          }
+          const res = await service.getProductInfo(form)
           if (res.code === 200) {
             this.productInfo = {
               productShort: '销',
               creditAmount: res.data.creditAmount,
               producName: res.data.productName,
               // unsignContract: [{ contractFileId: '669', contractName: '韭菜的自我修养' }], // 先搞个假的
-              unsignContract: [res.data.unsignContract || {}],// 后端只返回了一个合同，并且是对象不是list
-              signContract: [res.data.signContract || {}],// 后端只返回了一个合同，并且是对象不是list
+              // unsignContract: [res.data.unsignContract || {}],// 后端只返回了一个合同，并且是对象不是list
+              // signContract: [res.data.signContract || {}],// 后端只返回了一个合同，并且是对象不是list
               productSlogan: res.data.productSlogan
             }
+            // 优先展示已签署，已签署没有，再展示未签署
+            this.contractList = res.data.signedContract
+              ? [res.data.signedContract]
+              : res.data.unsignContract && [res.data.unsignContract] || []
+
             this.btnText = this.mapRes[res.data.creditStatus]
             this.creditStatus = res.data.creditStatus
 
@@ -137,6 +147,20 @@ apiready = function () {
       })
 
       this.handleGetProductDetail()
+
+      // api.openFrame({
+      //   name: 'cbpage',
+      //   url: 'http://192.168.43.119:3000/crpt-h5/xw_callback/close',
+      //   rect: {
+      //     x: 0,
+      //     y: 60,
+      //     w: 'auto',
+      //     h: 'auto'
+      //   },
+      //   pageParam: {
+      //     name: 'test'
+      //   }
+      // });
     }
   })
 

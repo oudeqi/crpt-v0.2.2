@@ -1,7 +1,7 @@
 import '../../app.css'
 import './index.css'
 
-// import Router from '../../router'
+import Router from '../../router'
 import { setRefreshHeaderInfo } from '../../config.js'
 import http from '../../http'
 import numeral from 'numeral'
@@ -101,18 +101,19 @@ function vmInit () {
       },
 
       repay (record) {
-        let { loanId, orderType, repayStatus, productName } = record
+        let { loanId, orderType, repayStatus, productName, planId } = record
         if (String(repayStatus) === '8') {
           api.toast({ msg: '未按期还款的订单不支持线上还款', location: 'middle' })
           return
         }
         if (String(orderType) === '4') {
-          Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId }}})
+          Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
         } else {
-          api.alert({
-            title: '提示',
-            msg: `${productName}的还款功能正在开发中...`,
-          })
+          Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
+          // api.alert({
+          //   title: '提示',
+          //   msg: `${productName}的还款功能正在开发中...`,
+          // })
         }
       },
 
