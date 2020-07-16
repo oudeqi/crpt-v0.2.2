@@ -1967,7 +1967,7 @@ apiready = function apiready() {
       if (index === 0) {
         sourceType = 'camera';
       } else {
-        sourceType = 'album';
+        sourceType = 'library';
       }
 
       getPicture(sourceType, function (ret, err) {

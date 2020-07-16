@@ -1,0 +1,83 @@
+.content {
+  padding-top: 78px;
+  padding-bottom: 50px;
+  .tips1 {
+    height:22px;
+    font-size:16px;
+    color:rgba(144,147,153,1);
+    line-height:22px;
+    text-align: center;
+  }
+  .phone {
+    margin-top: 8px;
+    text-align: center;
+    height:33px;
+    font-size:24px;
+    font-weight:600;
+    color:rgba(48,49,51,1);
+    line-height:33px;
+  }
+  .tips2 {
+    margin-top: 8px;
+    text-align: center;
+    height:22px;
+    font-size:16px;
+    color:rgba(144,147,153,1);
+    line-height:22px;
+  }
+  .hidden-ipt {
+    border: 1px solid red;
+    opacity: 0;
+  }
+  .ipt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    .ipt-item {
+      width:48px;
+      height:48px;
+      background:rgba(255,255,255,1);
+      border-radius:6px;
+      border:1px solid rgba(192,196,204,1);
+      margin: 0 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #333;
+      font-size: 30px;
+    }
+  }
+
+  .countdown {
+    text-align: center;
+    margin-top: 40px;
+    height:22px;
+    font-size:16px;
+    font-weight:500;
+    color:rgba(102,187,106,1);
+    line-height:22px;
+  }
+
+  .fq {
+    margin-top: 16px;
+    padding-left: 24px;
+    .tit {
+      height:22px;
+      font-size:16px;
+      color:rgba(144,147,153,1);
+      line-height:22px;
+    }
+    .desc {
+      margin-top: 12px;
+      height:20px;
+      font-size:14px;
+      color:rgba(144,147,153,1);
+      line-height:20px;
+      strong {
+        color:rgba(102,187,106,1);
+      }
+    }
+  }
+}

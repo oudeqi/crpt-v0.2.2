@@ -2154,6 +2154,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2167,6 +2168,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2198,6 +2200,23 @@ var routerMap = {
     url: 'widget://html/yjd_apply_confirm/index.html',
     bgColor: '#fff',
     reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
     navigationBar: navigationBarWhite
   },
   yjd_hukouben_upload: {
@@ -2247,6 +2266,13 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -2635,6 +2661,15 @@ var routerConfig = {
     name: 'com_repay_trial',
     title: '还款试算',
     url: 'widget://html/com_repay_trial/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite

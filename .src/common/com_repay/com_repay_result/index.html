@@ -1,0 +1,68 @@
+<!-- 好销贷还款结果页-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/aui.css" /> -->
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <div v-if="status === 1" class="mb">
+          <div class="logo"></div>
+          <div class="tips">提交成功</div>
+          <div class="markup mg50">还款成功后可在还款记录中查询</div>
+        </div>
+        <!-- <div v-else-if="status === 2" class="mb s2">
+          <div class="logo"></div>
+          <div class="tips">还款成功</div>
+          <div class="markup">500.00元</div>
+          <div class="markup pd16">共3笔订单</div>
+        </div>
+        <div v-else-if="status === 3" class="mb s2">
+          <div class="logo fail"></div>
+          <div class="tips">还款失败</div>
+          <div class="markup">500.00元还款成功</div>
+          <div class="markup pd16">1500元还款失败</div>
+          <div class="orders">
+            <div class="tit">失败原因</div>
+            <div class="ord">您所选的订单有更新，请重新选择单据</div>
+          </div>
+        </div>
+        <div v-else class="mb">
+          <div class="logo fail"></div>
+          <div class="tips">2笔订单用款失败</div>
+          <div class="orders">
+            <div class="tit">失败原因</div>
+            <div class="ord">您所选的订单有更新，请重新选择单据</div>
+            <div class="tit">业务单号</div>
+            <div class="ord">12412421</div>
+            <div class="ord">12412421</div>
+          </div>
+        </div> -->
+      </div>
+      <div v-if="status === 1">
+        <div class="btn btn-normal" @click="changePage">确认</div>
+      </div>
+      <!-- <div v-else-if="status === 2">
+        <div class="btn btn-normal">查看我的还款</div>
+        <div class="btn btn-prime">继续还款</div>
+      </div>
+      <div v-else-if="status === 3">
+        <div class="btn btn-normal">重新还款</div>
+      </div> -->
+    </div>
+
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  </body>
+</html>

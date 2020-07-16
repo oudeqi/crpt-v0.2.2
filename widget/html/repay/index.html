@@ -37,7 +37,8 @@
         <div class="card-row3">业务单号：{{item.orderNo}}</div>
         <div class="card-row4">
           <span @click="repayRemain(item)" class="card-arrowbtn">还剩{{item.lastRepayPeriod}}期</span>
-          <span @click="repay(item)" :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>
+          
+          <span @click="repay(item)" :class="['card-btn', {disabled: String(item.repayStatus) === '8' && String(item.orderType) !== '4'}]">去还款</span>
         </div>
       </div>
 

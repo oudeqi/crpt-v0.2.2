@@ -919,6 +919,7 @@ function openTabLayout(index) {
       background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
+      shadow: 'transparent',
       fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',

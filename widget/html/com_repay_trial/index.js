@@ -827,6 +827,7 @@ var navigationBarWhite = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -840,6 +841,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -871,6 +873,23 @@ var routerMap = {
     url: 'widget://html/yjd_apply_confirm/index.html',
     bgColor: '#fff',
     reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
     navigationBar: navigationBarWhite
   },
   yjd_hukouben_upload: {
@@ -920,6 +939,13 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -1311,6 +1337,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -1341,7 +1376,7 @@ var Router = /*#__PURE__*/function () {
   return Router;
 }();
 
-new Router();
+var Router$1 = new Router();
 
 /**
  * @author Sunning
@@ -1596,7 +1631,7 @@ var rmap = /*#__PURE__*/Object.freeze({
  * @desc 路由类
  */
 
-var Router$1 = function Router() {
+var Router$2 = function Router() {
   classCallCheck(this, Router);
 
   _extends_1(this, rmap);
@@ -2463,7 +2498,7 @@ var OCR = {
 var Utils = function Utils() {
   classCallCheck(this, Utils);
 
-  this.Router = new Router$1();
+  this.Router = new Router$2();
   this.UI = new UI();
   this.File = new File();
   this.DictFilter = codeMapFilter;
@@ -2666,12 +2701,14 @@ apiready = function apiready() {
       filter: filter,
       principal: '',
       tips: '',
-      totalAmount: 20000,
+      totalAmount: 0,
       tirialData: {},
-      pageParam: api.pageParam || {}
+      pageParam: api.pageParam || {},
+      cannotClick: true
     },
     computed: {
       principalTn: function principalTn() {
+        this.cannotClick = true;
         return filter.toThousands(this.principal);
       }
     },
@@ -2699,13 +2736,13 @@ apiready = function apiready() {
                   // 获取试算结果
                   Utils$1.UI.showLoading('加载中');
                   _context.prev = 1;
-                  _this.pageParam.loanId = '12';
-                  _context.next = 5;
-                  return http$1.get('/crpt-credit/credit/yjd/repay/try?repayPrincipal=' + _this.principal + '&loanId=' + _this.pageParam.loanId);
+                  _context.next = 4;
+                  return http$1.get("/crpt-credit/credit/yjd/repay/try?repayPrincipal=".concat(_this.principal, "&loanId=").concat(_this.pageParam.loanId, "&planId=").concat(_this.pageParam.planId));
 
-                case 5:
+                case 4:
                   res = _context.sent;
                   _this.tirialData = res.data;
+                  _this.cannotClick = false;
                   Utils$1.UI.hideLoading();
                   _context.next = 13;
                   break;
@@ -2732,16 +2769,16 @@ apiready = function apiready() {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  // 还全部金额
+                  // 获取全部金额
                   Utils$1.UI.showLoading('加载中');
                   _context2.prev = 1;
-                  _this2.pageParam.loanId = '12';
-                  _context2.next = 5;
+                  _context2.next = 4;
                   return http$1.get('/crpt-credit/credit/yjd/repay/remain/principal?loanId=' + _this2.pageParam.loanId);
 
-                case 5:
+                case 4:
                   res = _context2.sent;
                   _this2.principal = res.data;
+                  _this2.totalAmount = res.data;
                   Utils$1.UI.hideLoading();
                   _context2.next = 13;
                   break;
@@ -2788,13 +2825,58 @@ apiready = function apiready() {
         // });
       },
       handleOpenPop: function handleOpenPop() {
-        this.isShowPop = true;
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+          var sendJson, res;
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  if (_this3.cannotClick) {
+                    _context3.next = 16;
+                    break;
+                  }
+
+                  sendJson = _this3.tirialData;
+                  sendJson.loanId = _this3.pageParam.loanId;
+                  sendJson.planId = _this3.pageParam.planId;
+                  Utils$1.UI.showLoading('还款提交中');
+                  _context3.prev = 5;
+                  _context3.next = 8;
+                  return http$1.post('/crpt-credit/credit/yjd/repay/affirm', {
+                    body: sendJson
+                  });
+
+                case 8:
+                  res = _context3.sent;
+                  Utils$1.UI.hideLoading();
+                  Router$1.openPage({
+                    key: 'com_repay_result'
+                  });
+                  _context3.next = 16;
+                  break;
+
+                case 13:
+                  _context3.prev = 13;
+                  _context3.t0 = _context3["catch"](5);
+                  Utils$1.UI.hideLoading();
+
+                case 16:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, null, [[5, 13]]);
+        }))();
       },
       handleClosePop: function handleClosePop() {
         this.isShowPop = false;
       }
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {
+      this.repayAll();
+    }
   });
   api.addEventListener({
     name: 'navitembtn'

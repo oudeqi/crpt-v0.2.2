@@ -1,104 +1,53 @@
 import '../../../styles/common.less'
 import './index.css'
 
+import { openTabLayout } from '../../../webview'
+
 function vmInit () {
   return new Vue({
     el: '#app',
     data: function () {
-      return {}
+      return {
+        pageParam: api.pageParam || {},
+        currentSeconds: 3
+      }
+    },
+    computed: {
+      status: function () { // 申请状态
+        return this.pageParam.status || 'success'
+      }
     },
     mounted: function () {
-      
+      if (this.status === 'success') {
+        this.countDown()
+      }
     },
     methods: {
-      next () {
-        console.log('zxczxczxczx===')
+      countDown () {
+        let timer = setInterval(() => {
+          this.currentSeconds--
+          if (this.currentSeconds === 0) {
+            clearInterval(timer)
+            setTimeout(() => {
+              openTabLayout(1)
+            }, 1000)
+          }
+        }, 1000)
       }
     },
   })
-}
-
-function openDialog ({path, title, webViewH=400, titleH=60, tapClose=true}) {
-  winWidth = api.winWidth
-  api.require('dialogBox').webView({
-    tapClose,
-    path,
-    texts: {
-      title,
-    },
-    styles: {
-      bg: '#fff',
-      corner: 6,
-      w: winWidth - 24 * 2,
-      h: titleH + webViewH,
-      title: {
-        h: titleH,
-        size: 16,
-        color: 'rgba(48,49,51,1)'
-      },
-      upDividingLine: {
-        width: 1,
-        color: 'rgba(245,245,245,1)'
-      },
-      webView: {
-        h: webViewH,
-        bg: '#fff',
-      },
-      downDividingLine: {
-        width: 1,
-        color: 'rgba(245,245,245,1)'
-      },
-    }
-  }, function(ret) {
-    if (ret.eventType == 'left') {
-      var dialogBox = api.require('dialogBox')
-      dialogBox.close({
-        dialogName: 'webView'
-      })
-    }
-  })
-}
-
-function openDialog2 () {
-  api.openFrame({
-    reload: true,
-    name: 'dialog',
-    bounces: false,
-    bgColor: 'rgba(0,0,0,0,0)',
-    url: 'widget://html/yjd_apply_result/contract-msg.html',
-    rect: {
-      x: 0,
-      y: 0,
-      w: 'auto',
-      h: 'auto'
-    },
-    pageParam: {
-      id: '2'
-    }
-});
 }
 
 apiready = function () {
   
   api.addEventListener({
     name: 'navitembtn'
-  }, function (ret, err) {
+  }, function (ret) {
     if (ret.type === 'left') {
       api.closeWin()
     }
   })
 
   const vm = vmInit()
-  api.parseTapmode()
-  
-
-  // $api.byId('msg').onclick = function () {
-  //   openDialog2()
-  //   // openDialog({
-  //   //   title: '代养合同信息',
-  //   //   path: 'widget://html/yjd_apply_result/contract-msg.html?id=12',
-  //   //   webViewH: 500
-  //   // })
-  // }
 
 }

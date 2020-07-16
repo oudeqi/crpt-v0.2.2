@@ -34,7 +34,7 @@ apiready = function() {
         if (index === 0) {
           sourceType = 'camera'
         } else {
-          sourceType = 'album'
+          sourceType = 'library'
         }
         getPicture(sourceType, function(ret, err) {
           if (ret) {
@@ -62,7 +62,7 @@ apiready = function() {
         if (index === 0) {
           sourceType = 'camera'
         } else {
-          sourceType = 'album'
+          sourceType = 'library'
         }
         getPicture(sourceType, function(ret, err) {
           if (ret) {

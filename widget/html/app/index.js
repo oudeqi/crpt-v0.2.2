@@ -76,6 +76,7 @@ function openTabLayout(index) {
       background: 'rgba(102,187,106,1)',
       color: '#fff',
       fontSize: 18,
+      shadow: 'transparent',
       fontWeight: 'normal' // leftButtons: [{
       //   // text: '设置',
       //   // color: '#fff',
@@ -2038,6 +2039,7 @@ var navigationBarWhite$1 = {
   hideBackButton: false,
   background: '#fff',
   color: textColor,
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2051,6 +2053,7 @@ var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
+  shadow: 'transparent',
   fontSize: 18,
   fontWeight: 'bold',
   leftButtons: [{
@@ -2082,6 +2085,23 @@ var routerMap = {
     url: 'widget://html/yjd_apply_confirm/index.html',
     bgColor: '#fff',
     reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
     navigationBar: navigationBarWhite$1
   },
   yjd_hukouben_upload: {
@@ -2131,6 +2151,13 @@ var routerMap = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -2522,6 +2549,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
   }
 };
 
@@ -2791,19 +2827,13 @@ var App = /*#__PURE__*/function () {
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({
-      //   key: 'hxd_u_confirm',
-      //   params: {
-      //     pageParam: {
-      //       orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-      //       warehouseOrderNos: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-      //       phone: '13122319838',
-      //       // successTotalAmount: '1202934',
-      //       // successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-      //       // failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-      //     }
-      //   }
+      //   key: 'yjd_account_open',
+      //   params: { }
       // })
       // return
+      // Router.openPage({key: 'com_product_list'})
+      // return
+      // openTabLayout(0)
       var userinfo = $api.getStorage('userinfo');
 
       if (userinfo) {

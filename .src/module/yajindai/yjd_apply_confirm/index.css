@@ -145,6 +145,11 @@ html, body {
       background-position: center;
       background-size: contain;
     }
+    &.nobg {
+      &::after {
+        display: none;
+      }
+    }
     .upload-pic {
       max-height: 100%;
       max-width: 100%;
@@ -197,6 +202,43 @@ html, body {
       font-size:16px;
       color:rgba(192,196,204,1);
     }
+  }
+}
+
+
+.listgroup {
+  margin-top: 12px;
+  background-color: #fff;
+}
+.listgroup-item {
+  height:50px;
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background:rgba(255,255,255,1);
+  position: relative;
+  font-size:16px;
+  color:rgba(48,49,51,1);
+  border-bottom: 1px solid rgba(245,245,245,1);
+  &:last-child {
+    border-bottom: 0;
+  }
+  &::after {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-image: url(../../image/arrow-r.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
 

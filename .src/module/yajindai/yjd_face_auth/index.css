@@ -1,0 +1,48 @@
+html, body {
+  background-color: #fff;
+}
+.container {
+  padding: 24px;
+}
+
+.take-face {
+  width: 202px;
+  height: 197px;
+  margin: 0 auto;
+  margin-top: 100px;
+  background-image: url(../../image/auth/take-face.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.tit {
+  color: #66BB6A;
+  border-bottom: 1px solid #ededed;
+  height: 50px;
+  line-height: 50px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+ul {
+  color: #8d9daa;
+  margin-top: 10px;
+  & li {
+    height: 30px;
+    line-height: 30px;
+    & strong {
+      color: #66BB6A;
+      font-weight: normal;
+      padding: 0 2px;
+    }
+  }
+}
+
+.btn-box {
+  margin-top: 40px;
+}
+.text-btn {
+  margin-top: 20px;
+  text-align: center;
+}

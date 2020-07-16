@@ -8,10 +8,10 @@
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
   </head>
   <body>
-    <div class="container" id="app">
+    <div class="container" id="app" v-cloak>
 
       <div class="top">
-        <strong>200,000</strong>
+        <strong>{{numeral(availableValue).format('0,0.00')}}</strong>
         <span>最高可贷金额(元)</span>
       </div>
 
@@ -19,7 +19,7 @@
         <div class="middle-label">申请金额</div>
         <div class="middle-ipt">
           <span>￥</span>
-          <input type="tel" placeholder="请输入申请金额">
+          <input type="number" v-model="applyMoney" placeholder="请输入申请金额">
         </div>
         <!-- <div class="middle-addon">
           <span>手续费</span>
@@ -29,43 +29,57 @@
 
       <div class="bottom">
         <div class="bottom-row">
-          <span class="bottom-label">贷款利率</span><span class="bottom-value">4.8%</span>
+          <span class="bottom-label">贷款利率</span><span class="bottom-value">{{productDetails.interestRate || ''}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">贷款期限(月)</span><span class="bottom-value">7</span>
+          <span class="bottom-label">贷款期限(月)</span><span class="bottom-value">{{productDetails.loanTerm || ''}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">贷款到期日</span><span class="bottom-value">2020-04-01</span>
+          <span class="bottom-label">贷款到期日</span><span class="bottom-value">{{productDetails.loanDueDate || ''}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">还款方式</span><span class="bottom-value">到期还本付息</span>
+          <span class="bottom-label">还款方式</span><span class="bottom-value">{{repayTypeMap[productDetails.repayType]}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">借款人姓名</span><span class="bottom-value">王振</span>
+          <span class="bottom-label">借款人姓名</span><span class="bottom-value">{{name}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">贷款收款账号</span><span class="bottom-value">13869509523</span>
+          <span class="bottom-label">贷款收款账号</span><span class="bottom-value">{{loanPayeeAccountNo}}</span>
         </div>
         <div class="bottom-row">
-          <span class="bottom-label">贷款收款账户名称</span><span class="bottom-value">德阳农业服务有限公司</span>
+          <span class="bottom-label">贷款收款账户名称</span><span class="bottom-value">{{loanPayeeAccountName}}</span>
         </div>
       </div>
 
       <div class="upload">
-        <div class="upload-main">
-          <img class="upload-pic" src="" alt="">
-          <div class="upload-btn"></div>
+        <div :class="['upload-main', {nobg: pic}]">
+          <img class="upload-pic" :src="pic" alt="">
+          <div class="upload-btn" @click="selectPicture()"></div>
         </div>
         <div class="upload-txt">点击上传营业执照</div>
       </div>
 
       <div class="code">
         <div class="code-tit">统一社会信用代码</div>
-        <input class="code-ipt" type="text" placeholder="请输入">
+        <input class="code-ipt" v-model="companyCode" type="text" placeholder="请输入">
+      </div>
+
+      <div class="code">
+        <div class="code-tit">从业人数</div>
+        <input class="code-ipt" v-decimal-keeps="0" v-model="workerCount" type="number" placeholder="请输入">
+      </div>
+
+      <div class="code">
+        <div class="code-tit">资产总额(万元)</div>
+        <input class="code-ipt" v-decimal-keeps="2" v-model="totalAssets" type="number" placeholder="请输入">
+      </div>
+
+      <div class="listgroup">
+        <div class="listgroup-item" @click="openDialog()">代养合同信息</div>
       </div>
 
       <div class="bottom-btn">
-        <div class="app_btn disabled">立即申请</div>
+        <div :class="['app_btn', {disabled: !submitBtnEnable}]" @click="submit()">立即申请</div>
       </div>
 
     </div>
