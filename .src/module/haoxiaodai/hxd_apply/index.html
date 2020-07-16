@@ -32,8 +32,8 @@
           <h4 class="tit">产品介绍</h4>
 
           <ul class="list">
-            <li class="cell" v-for="(item) in introduction" :key="item.title">
-              <div class="icon"></div>
+            <li class="cell" v-for="(item, index) in introduction" :key="item.title">
+              <div class="icon" :class="`p-icon-${index}`"></div>
               <div class="desc">
                 <p class="c-title">{{item.title}}</p>
                 <p class="c-detail">{{item.detail}}</p>

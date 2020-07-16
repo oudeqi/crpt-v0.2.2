@@ -2071,6 +2071,11 @@ var service = {
     });
   },
   postApply: function postApply(params) {
+    return http$1.post("/crpt-credit/credit/hxd/apply/warehouse/order/list", {
+      body: params
+    });
+  },
+  postQueryApply: function postQueryApply(params) {
     return http$1.post("/crpt-credit/credit/hxd/query/warehouse/order/apply/info", {
       body: params
     });
@@ -2709,7 +2714,7 @@ apiready = function apiready() {
 
   var page = new Vue({
     el: '#app',
-    data: {
+    data: defineProperty({
       status: 1,
       isFolder: true,
       isShowPop: false,
@@ -2717,10 +2722,13 @@ apiready = function apiready() {
       needApplyAmount: '',
       warehouseOrderlist: [],
       agreements: [],
-      successList: pageParam.successListStr ? JSON.parse(pageParam.successListStr) : [],
-      failList: pageParam.failListStr ? JSON.parse(pageParam.failListStr) : [],
-      errorCount: 0
-    },
+      successList: [],
+      failList: [],
+      errorCount: 0,
+      hasApply: false,
+      processStatus: 1,
+      maxErrorRetry: 20
+    }, "status", pageParam.status || 11),
     methods: {
       handleFolder: function handleFolder() {
         this.isFolder = !this.isFolder;
@@ -2738,7 +2746,9 @@ apiready = function apiready() {
                   Utils$1.UI.showLoading('查询中');
                   _context.next = 4;
                   return service.postConfirmOrders({
-                    orderIds: JSON.parse(pageParam.orderIds)
+                    warehouseOrderNos: JSON.parse(pageParam.warehouseOrderNos),
+                    status: String(_this.status),
+                    amount: pageParam.amount
                   });
 
                 case 4:
@@ -2748,6 +2758,7 @@ apiready = function apiready() {
                     _this.warehouseOrderlist = res.data.warehouseOrderlist;
                     _this.needApplyAmount = res.data.amount;
                     _this.amount = filter.toThousands(res.data.amount);
+                    _this.processStatus = res.data.warehouseOrderlist[0].processStatus;
                   }
 
                   _context.next = 11;
@@ -2776,46 +2787,114 @@ apiready = function apiready() {
         this.isShowPop = true;
       },
       handleBtnClickConfirm: function handleBtnClickConfirm() {
-        Utils$1.UI.showLoading('正在提交');
-        this.handlePollingPostApply();
-      },
-      // 轮询金服结果
-      handlePollingPostApply: function handlePollingPostApply() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res, successFlag, orderIds;
+          var res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  _context2.prev = 0;
-                  _context2.next = 3;
+                  Utils$1.UI.showLoading('正在提交');
+
+                  if (!(_this2.processStatus === 1)) {
+                    _context2.next = 16;
+                    break;
+                  }
+
+                  _context2.prev = 2;
+                  _context2.next = 5;
                   return service.postApply({
-                    orderIds: JSON.parse(pageParam.orderIds)
+                    productId: pageParam.productId,
+                    applyAmount: _this2.needApplyAmount,
+                    orderIds: _this2.warehouseOrderlist.map(function (item) {
+                      return item.orderId;
+                    })
+                  });
+
+                case 5:
+                  res = _context2.sent;
+
+                  if (res.code === 200) {
+                    // 申请提交成功，开始轮询金服返回结果
+                    _this2.processStatus = res.data.successList[0].processStatus;
+
+                    _this2.handlePollingPostApply();
+                  } else {
+                    Utils$1.UI.hideLoading();
+                  }
+
+                  _context2.next = 14;
+                  break;
+
+                case 9:
+                  _context2.prev = 9;
+                  _context2.t0 = _context2["catch"](2);
+
+                  if (_context2.t0.msg) {
+                    Utils$1.UI.toast("".concat(_context2.t0.code, ": ").concat(_context2.t0.msg));
+                  }
+
+                  _this2.handleGetConfirmOrders();
+
+                  Utils$1.UI.hideLoading();
+
+                case 14:
+                  _context2.next = 17;
+                  break;
+
+                case 16:
+                  _this2.handlePollingPostApply();
+
+                case 17:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[2, 9]]);
+        }))();
+      },
+      // 轮询金服结果
+      handlePollingPostApply: function handlePollingPostApply() {
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+          var res, successFlag, orderIds;
+          return regenerator.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  _context3.prev = 0;
+                  _context3.next = 3;
+                  return service.postQueryApply({
+                    orderIds: _this3.warehouseOrderlist.map(function (item) {
+                      return item.orderId;
+                    })
                   });
 
                 case 3:
-                  res = _context2.sent;
+                  res = _context3.sent;
 
                   if (res.code === 200) {
                     successFlag = res.data.successFlag; //  1: 轮询单条或全部成功已返回结果
 
                     if (successFlag === 1) {
                       // 更新successList，并join failList
-                      _this2.successList = res.data.successList;
-                      _this2.failList = _this2.failList.concat(res.data.failList); // todo 弹起合同弹框，查询合同
+                      _this3.successList = res.data.successList;
+                      _this3.failList = _this3.failList.concat(res.data.failList); // todo 弹起合同弹框，查询合同
 
-                      _this2.handleOpenPop();
+                      _this3.handleOpenPop();
 
-                      orderIds = _this2.successList.map(function (item, i) {
+                      orderIds = _this3.successList.map(function (item, i) {
                         return item.orderId;
                       });
                       Utils$1.UI.hideLoading();
-                      _this2.agreements = res.data.successList; // this.handlePostContractList(orderIds)
+                      _this3.agreements = res.data.successList; // this.handlePostContractList(orderIds)
                     } else if (successFlag === 0) {
                       // 0: 继续轮询
-                      _this2.handlePollingPostApply();
+                      setTimeout(function () {
+                        _this3.handlePollingPostApply();
+                      }, 1000);
                     } else {
                       // 2: 全部失败 终止轮询 跳到结果失败页
                       Utils$1.UI.hideLoading();
@@ -2824,61 +2903,14 @@ apiready = function apiready() {
                           key: 'hxd_u_result',
                           params: {
                             pageParam: {
-                              successListStr: JSON.stringify(_this2.successList),
-                              failListStr: JSON.stringify(_this2.failList)
+                              // orderIds: this.successList.map((item) => item.orderId) || [],
+                              successList: JSON.stringify(_this3.successList || []),
+                              failList: JSON.stringify(_this3.failList || [])
                             }
                           }
                         });
                       }, 50);
                     }
-                  }
-
-                  _context2.next = 10;
-                  break;
-
-                case 7:
-                  _context2.prev = 7;
-                  _context2.t0 = _context2["catch"](0);
-
-                  // 如果服务本身报错或响应超时，只允许retry 5次
-                  if (_this2.errorCount <= 4) {
-                    _this2.handlePollingPostApply();
-
-                    _this2.errorCount = _this2.errorCount + 1;
-                  } else {
-                    Utils$1.UI.hideLoading();
-                    Utils$1.UI.toast('查询超时');
-                  }
-
-                case 10:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, null, [[0, 7]]);
-        }))();
-      },
-      // 查询合同
-      handlePostContractList: function handlePostContractList(orderIds) {
-        var _this3 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var res;
-          return regenerator.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.prev = 0;
-                  _context3.next = 3;
-                  return service.postContractList({
-                    orderIds: orderIds
-                  });
-
-                case 3:
-                  res = _context3.sent;
-
-                  if (res.code === 200) {
-                    _this3.agreements = res.data;
                   }
 
                   _context3.next = 10;
@@ -2888,8 +2920,14 @@ apiready = function apiready() {
                   _context3.prev = 7;
                   _context3.t0 = _context3["catch"](0);
 
-                  if (_context3.t0.msg) {
-                    Utils$1.UI.toast(_context3.t0.msg);
+                  // 如果服务本身报错或响应超时，只允许retry 5次
+                  if (_this3.errorCount <= _this3.maxErrorRetry) {
+                    _this3.handlePollingPostApply();
+
+                    _this3.errorCount = _this3.errorCount + 1;
+                  } else {
+                    Utils$1.UI.hideLoading();
+                    Utils$1.UI.toast('查询超时');
                   }
 
                 case 10:
@@ -2900,33 +2938,75 @@ apiready = function apiready() {
           }, _callee3, null, [[0, 7]]);
         }))();
       },
+      // 查询合同
+      handlePostContractList: function handlePostContractList(orderIds) {
+        var _this4 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+          var res;
+          return regenerator.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.prev = 0;
+                  _context4.next = 3;
+                  return service.postContractList({
+                    orderIds: orderIds
+                  });
+
+                case 3:
+                  res = _context4.sent;
+
+                  if (res.code === 200) {
+                    _this4.agreements = res.data;
+                  }
+
+                  _context4.next = 10;
+                  break;
+
+                case 7:
+                  _context4.prev = 7;
+                  _context4.t0 = _context4["catch"](0);
+
+                  if (_context4.t0.msg) {
+                    Utils$1.UI.toast(_context4.t0.msg);
+                  }
+
+                case 10:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, null, [[0, 7]]);
+        }))();
+      },
       handleClosePop: function handleClosePop() {
         this.isShowPop = false;
       },
       handleToUseTry: function handleToUseTry() {
-        var _this4 = this;
+        var _this5 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
-          return regenerator.wrap(function _callee4$(_context4) {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
+          return regenerator.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
                   Router$2.openPage({
                     key: 'hxd_u_try_detail',
                     params: {
                       pageParam: {
                         productId: pageParam.productId,
-                        needApplyAmount: _this4.needApplyAmount
+                        needApplyAmount: _this5.needApplyAmount
                       }
                     }
                   });
 
                 case 1:
                 case "end":
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4);
+          }, _callee5);
         }))();
       },
       handleToAgreement: function handleToAgreement(id) {
@@ -2941,30 +3021,30 @@ apiready = function apiready() {
         });
       },
       handleAgree: function handleAgree() {
-        var _this5 = this;
+        var _this6 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee6() {
           var res;
-          return regenerator.wrap(function _callee5$(_context5) {
+          return regenerator.wrap(function _callee6$(_context6) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context6.prev = _context6.next) {
                 case 0:
-                  if (!(_this5.agreements.length < 1)) {
-                    _context5.next = 3;
+                  if (!(_this6.agreements.length < 1)) {
+                    _context6.next = 3;
                     break;
                   }
 
                   Utils$1.UI.toast('服务异常');
-                  return _context5.abrupt("return");
+                  return _context6.abrupt("return");
 
                 case 3:
                   Utils$1.UI.showLoading('提交中');
-                  _context5.prev = 4;
-                  _context5.next = 7;
+                  _context6.prev = 4;
+                  _context6.next = 7;
                   return service$1.postSendSMSCode();
 
                 case 7:
-                  res = _context5.sent;
+                  res = _context6.sent;
 
                   if (res.code === 200) {
                     Utils$1.UI.hideLoading();
@@ -2973,30 +3053,30 @@ apiready = function apiready() {
                       params: {
                         pageParam: {
                           phone: res.data.phone,
-                          orderIds: JSON.stringify(_this5.successList.map(function (item) {
+                          orderIds: JSON.stringify(_this6.successList.map(function (item) {
                             return item.orderId;
                           })),
-                          successListStr: JSON.stringify(_this5.successList),
-                          failListStr: JSON.stringify(_this5.failList)
+                          successList: JSON.stringify(_this6.successList || []),
+                          failList: JSON.stringify(_this6.failList || [])
                         }
                       }
                     });
                   }
 
-                  _context5.next = 14;
+                  _context6.next = 14;
                   break;
 
                 case 11:
-                  _context5.prev = 11;
-                  _context5.t0 = _context5["catch"](4);
+                  _context6.prev = 11;
+                  _context6.t0 = _context6["catch"](4);
                   Utils$1.UI.hideLoading();
 
                 case 14:
                 case "end":
-                  return _context5.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee5, null, [[4, 11]]);
+          }, _callee6, null, [[4, 11]]);
         }))();
       },
       handleDisagree: function handleDisagree() {
@@ -3004,7 +3084,22 @@ apiready = function apiready() {
       }
     },
     mounted: function mounted() {
+      var _this7 = this;
+
       this.handleGetConfirmOrders();
+      Utils$1.UI.setRefreshHeaderInfo({
+        success: function success() {
+          _this7.handleGetConfirmOrders();
+
+          _this7.useAmount = '';
+          setTimeout(function () {
+            api.refreshHeaderLoadDone();
+          }, 0);
+        },
+        fail: function fail() {
+          api.refreshHeaderLoadDone();
+        }
+      });
     }
   });
 };

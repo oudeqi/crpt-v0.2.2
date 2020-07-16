@@ -2582,8 +2582,8 @@ apiready = function apiready() {
       // smscode: "",
       // isCounter: false,
       // orderIds: JSON.parse(pageParam.orderIds),
-      successList: pageParam.successList,
-      failList: pageParam.failList,
+      successList: JSON.parse(pageParam.successList),
+      failList: JSON.parse(pageParam.failList),
       successTotalAmount: filter.toThousands(pageParam.successTotalAmount)
     },
     methods: {

@@ -533,6 +533,9 @@ html, body {
   text-align: right;
   padding: 0 5px;
 }
+.header .single .num-ipt.war {
+  color: #ea5c39;
+}
 .main {
   min-height: calc(100vh - 222px);
 }

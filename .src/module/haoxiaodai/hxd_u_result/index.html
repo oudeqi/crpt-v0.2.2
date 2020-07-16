@@ -18,7 +18,7 @@
     <div id="app">
       <div class="header">
         <div v-if="successList.length >= 1" class="mb">
-          <div class="logo"></div>
+          <div class="logo success"></div>
           <div class="tips">{{successList.length}}笔订单用款成功，共{{successTotalAmount}}元</div>
           <div class="orders">
             <div class="ord" v-for="item in successList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.orderNo}}</div>
@@ -36,7 +36,7 @@
           <div class="logo fail"></div>
           <div class="tips">{{failList.length}}笔订单用款失败</div>
           <div class="orders">
-              <div class="ord" v-for="item in failList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.orderNo}}</div>
+              <div class="ord" v-for="item in failList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.warehouseOrderNo}}</div>
           </div>
         </div>
       </div>

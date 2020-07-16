@@ -3924,10 +3924,13 @@ function vmInit() {
           if (record.status === 1) {
             // 申请中 继续申请
             Router$1.openPage({
-              key: 'hxd_u_apply',
+              key: 'hxd_u_confirm',
               params: {
                 pageParam: {
-                  productId: productId
+                  productId: productId,
+                  warehouseOrderNos: JSON.stringify(record.warehouseOrderNo && [record.warehouseOrderNo] || []),
+                  status: record.status,
+                  amount: record.payAmount
                 }
               }
             });

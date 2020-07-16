@@ -2775,8 +2775,9 @@ apiready = function apiready() {
   var page = new Vue({
     el: '#app',
     data: {
-      creditStatus: 0,
-      productInfo: {}
+      creditStatus: 2,
+      productInfo: {},
+      refusedReason: ''
     },
     computed: {
       creditAmountTn: function creditAmountTn() {
@@ -2826,14 +2827,18 @@ apiready = function apiready() {
                   }
 
                 case 11:
+                  _context.prev = 11;
+                  return _context.finish(11);
+
+                case 13:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 8]]);
+          }, _callee, null, [[0, 8, 11, 13]]);
         }))();
       },
       handleToPageDetail: function handleToPageDetail() {

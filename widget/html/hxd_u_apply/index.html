@@ -23,13 +23,13 @@
             <span class="num" :class="{war: isWarning}"
               >{{amountTn}}</span>
           </p>
-          <div v-if="EBSOrders.length >= 2" class="can use">
+          <div v-if="selectedNumber >= 2" class="can use">
             <span class="label">用款金额(元)</span>
             <div class="num" :class="{war: isWarning}">
               {{useAmountTn}}
             </div>
           </div>
-          <div v-else-if="EBSOrders.length === 1" class="can use single">
+          <div v-else-if="selectedNumber === 1" class="can use single">
             <span class="label">用款金额(元)</span>
             <input class="num-ipt"
               type="text"
@@ -39,11 +39,11 @@
               maxlength="10"
             >
           </div>
-          <div v-if="EBSOrders.length === 0" class="can use">
+          <div v-if="selectedNumber === 0" class="can use">
             <span class="label">用款金额(元)</span>
             <div class="num" :class="{war: isWarning}">0</div>
           </div>
-          <div v-if="isWarning" class="warning">用款金额已超出当前可用额度</div>
+          <div v-if="isWarning" class="warning">用款金额不在范围之内</div>
           <div v-else class="warning calm">1000≤用款金额≤可用金额</div>
         </div>
         <section v-if="EBSOrders.length >= 1" class="main">

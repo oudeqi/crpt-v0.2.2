@@ -27,9 +27,13 @@ apiready = function () {
       needApplyAmount: '',
       warehouseOrderlist: [],
       agreements: [],
-      successList: pageParam.successListStr ? JSON.parse(pageParam.successListStr) : [],
-      failList: pageParam.failListStr ? JSON.parse(pageParam.failListStr) : [],
-      errorCount: 0
+      successList: [],
+      failList: [],
+      errorCount: 0,
+      hasApply: false,
+      processStatus: 1,
+      maxErrorRetry: 20,
+      status: pageParam.status || 11 // 用来区分是从单条入库单列表进来，还是从正常流程进来
     },
     methods: {
       handleFolder() {
@@ -38,14 +42,17 @@ apiready = function () {
       async handleGetConfirmOrders() {
         // let ids = ['1280041840938172417', '1280032548025647106']
         try {
-          Utils.UI.showLoading('查询中')
+          Utils.UI.showLoading('查询中')   
           const res = await service.postConfirmOrders({
-            orderIds: JSON.parse(pageParam.orderIds)
+            warehouseOrderNos: JSON.parse(pageParam.warehouseOrderNos),
+            status: String(this.status),
+            amount: pageParam.amount
           })
           if (res.code === 200) {
             this.warehouseOrderlist = res.data.warehouseOrderlist
             this.needApplyAmount = res.data.amount
             this.amount = filter.toThousands(res.data.amount)
+            this.processStatus = res.data.warehouseOrderlist[0].processStatus
           }
         } catch (error) {
           if (error.msg) {
@@ -57,15 +64,38 @@ apiready = function () {
       handleOpenPop() {
         this.isShowPop = true
       },
-      handleBtnClickConfirm() {
+      async handleBtnClickConfirm() {
         Utils.UI.showLoading('正在提交')
-        this.handlePollingPostApply()
+        if(this.processStatus === 1) {
+          try {
+            const res = await service.postApply({
+              productId: pageParam.productId,
+              applyAmount: this.needApplyAmount,
+              orderIds: this.warehouseOrderlist.map((item) => item.orderId)
+            })
+            if (res.code === 200) {
+              // 申请提交成功，开始轮询金服返回结果
+              this.processStatus = res.data.successList[0].processStatus
+              this.handlePollingPostApply()
+            } else {
+              Utils.UI.hideLoading()
+            }
+          } catch (error) {
+            if (error.msg) {
+              Utils.UI.toast(`${error.code}: ${error.msg}`)
+            }
+            this.handleGetConfirmOrders()
+            Utils.UI.hideLoading()
+          }
+        }else {
+          this.handlePollingPostApply()
+        }
       },
       // 轮询金服结果
       async handlePollingPostApply() {
         try {
-          const res = await service.postApply({
-            orderIds: JSON.parse(pageParam.orderIds)
+          const res = await service.postQueryApply({
+            orderIds: this.warehouseOrderlist.map((item) => item.orderId)
           })
           if (res.code === 200) {
             const { successFlag } = res.data
@@ -85,7 +115,9 @@ apiready = function () {
               // this.handlePostContractList(orderIds)
             } else if (successFlag === 0) {
               // 0: 继续轮询
-              this.handlePollingPostApply()
+              setTimeout(() => {
+                this.handlePollingPostApply()
+              }, 1000);
             } else {
               // 2: 全部失败 终止轮询 跳到结果失败页
               Utils.UI.hideLoading()
@@ -94,8 +126,9 @@ apiready = function () {
                   key: 'hxd_u_result',
                   params: {
                     pageParam: {
-                      successListStr: JSON.stringify(this.successList),
-                      failListStr: JSON.stringify(this.failList),
+                      // orderIds: this.successList.map((item) => item.orderId) || [],
+                      successList: JSON.stringify(this.successList || []),
+                      failList: JSON.stringify(this.failList || []),
                     }
                   }
                 })
@@ -104,7 +137,7 @@ apiready = function () {
           }
         } catch (error) {
           // 如果服务本身报错或响应超时，只允许retry 5次
-          if (this.errorCount <= 4) {
+          if (this.errorCount <= this.maxErrorRetry) {
             this.handlePollingPostApply()
             this.errorCount = this.errorCount + 1
           } else {
@@ -154,7 +187,7 @@ apiready = function () {
         })
       },
       async handleAgree() {
-        if(this.agreements.length < 1) {
+        if (this.agreements.length < 1) {
           Utils.UI.toast('服务异常')
           return
         }
@@ -162,7 +195,7 @@ apiready = function () {
         try {
           // 调用首次发短信接口，获取手机号
           const res = await smsService.postSendSMSCode()
-          if(res.code === 200) {
+          if (res.code === 200) {
             Utils.UI.hideLoading()
             Router.openPage({
               key: 'hxd_u_smscode',
@@ -170,8 +203,8 @@ apiready = function () {
                 pageParam: {
                   phone: res.data.phone,
                   orderIds: JSON.stringify(this.successList.map((item) => item.orderId)),
-                  successListStr: JSON.stringify(this.successList),
-                  failListStr: JSON.stringify(this.failList),
+                  successList: JSON.stringify(this.successList || []),
+                  failList: JSON.stringify(this.failList || []),
                 }
               }
             })
@@ -186,6 +219,18 @@ apiready = function () {
     },
     mounted() {
       this.handleGetConfirmOrders()
+      Utils.UI.setRefreshHeaderInfo({
+        success: () => {
+          this.handleGetConfirmOrders()
+          this.useAmount = ''
+          setTimeout(() => {
+            api.refreshHeaderLoadDone()
+          }, 0);
+        },
+        fail: () => {
+          api.refreshHeaderLoadDone()
+        },
+      })
     }
   })
 

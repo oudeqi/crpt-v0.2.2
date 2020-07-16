@@ -792,6 +792,99 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
+function openTabLayout(index) {
+  api.openTabLayout({
+    name: 'tabLayout',
+    bgColor: '#fff',
+    reload: true,
+    delay: 300,
+    slidBackEnabled: false,
+    animation: {
+      type: 'none'
+    },
+    navigationBar: {
+      hideBackButton: true,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'normal' // leftButtons: [{
+      //   // text: '设置',
+      //   // color: '#fff',
+      //   // fontSize: 16,
+      //   iconPath: 'widget://image/avatar.png',
+      // }],
+      // rightButtons: [{
+      //   text: '设置',
+      //   color: '#fff',
+      //   fontSize: 16,
+      //   // iconPath: 'widget://image/settings@2x.png'
+      // }]
+
+    },
+    tabBar: {
+      animated: false,
+      scrollEnabled: true,
+      selectedColor: '#66BB6A',
+      color: '#606266',
+      index: index || 0,
+      fontSize: 12,
+      // preload: 4,
+      list: [{
+        text: "首页",
+        iconPath: "widget://image/tablayout/shouye.png",
+        selectedIconPath: "widget://image/tablayout/shouye_active.png"
+      }, {
+        text: "贷款",
+        iconPath: "widget://image/tablayout/loan.png",
+        selectedIconPath: "widget://image/tablayout/loan_active.png"
+      }, {
+        text: "还款",
+        iconPath: "widget://image/tablayout/huankuan.png",
+        selectedIconPath: "widget://image/tablayout/huankuan_active.png"
+      }, {
+        text: "我的",
+        iconPath: "widget://image/tablayout/wode.png",
+        selectedIconPath: "widget://image/tablayout/wode_active.png"
+      }],
+      frames: [{
+        title: "首页",
+        //tab切换时对应的标题
+        name: "tablayout/index",
+        url: "widget://html/index/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "贷款申请",
+        name: "tablayout/loan",
+        url: "widget://html/loan/index.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "还款",
+        name: "tablayout/repay",
+        url: "widget://html/repay/index.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }, {
+        title: "我的",
+        name: "tablayout/my",
+        url: "widget://html/my/frm.html",
+        bounces: true,
+        reload: true,
+        scrollToTop: true //其他继承自openFrame的参数
+
+      }]
+    }
+  });
+} // 注册
+
+
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -2626,8 +2719,8 @@ apiready = function apiready() {
       smscode: "",
       isCounter: false,
       orderIds: JSON.parse(pageParam.orderIds),
-      successList: JSON.parse(pageParam.successListStr),
-      failList: JSON.parse(pageParam.failListStr),
+      successList: JSON.parse(pageParam.successList),
+      failList: JSON.parse(pageParam.failList),
       phone: pageParam.phone,
       hidePhone: pageParam.phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2")
     },
@@ -2722,15 +2815,17 @@ apiready = function apiready() {
 
                   if (res.code === 200) {
                     _this3.successList = res.data.successList;
-                    _this3.failList = _this3.failList.concact(res.data.failList);
+                    _this3.failList = _this3.failList.concat(res.data.failList);
                     _this3.successTotalAmount = res.data.successTotalAmount; // 跳转结果页
 
                     Router$2.openPage({
                       key: 'hxd_u_result',
                       params: {
-                        successList: _this3.successList,
-                        failList: _this3.failList,
-                        successTotalAmount: res.data.successTotalAmount
+                        pageParam: {
+                          successList: JSON.stringify(_this3.successList),
+                          failList: JSON.stringify(_this3.failList),
+                          successTotalAmount: res.data.successTotalAmount
+                        }
                       }
                     });
                   }
@@ -2742,8 +2837,15 @@ apiready = function apiready() {
                   _context2.prev = 8;
                   _context2.t0 = _context2["catch"](1);
 
-                  if (_context2.t0.msg) {
-                    Utils$1.UI.toast(_context2.t0.msg);
+                  if (_context2.t0 && _context2.t0.code === 1) {
+                    Utils$1.UI.toast('已提交，请等待审核结果');
+                    setTimeout(function () {
+                      openTabLayout(1);
+                    }, 1000);
+                  } else {
+                    if (_context2.t0.msg) {
+                      Utils$1.UI.toast(_context2.t0.msg);
+                    }
                   }
 
                 case 11:

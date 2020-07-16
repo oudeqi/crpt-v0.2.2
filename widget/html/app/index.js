@@ -2791,13 +2791,15 @@ var App = /*#__PURE__*/function () {
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({
-      //   key: 'hxd_u_result',
+      //   key: 'hxd_u_confirm',
       //   params: {
       //     pageParam: {
-      //       // orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
-      //       successTotalAmount: '1202934',
-      //       successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
-      //       failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
+      //       orderIds: JSON.stringify(['1280041840938172417', '1280032548025647106']),
+      //       warehouseOrderNos: JSON.stringify(['1280041840938172417', '1280032548025647106']),
+      //       phone: '13122319838',
+      //       // successTotalAmount: '1202934',
+      //       // successList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
+      //       // failList: [{"loanNo":"20200709092255ZYSQ00001","orderId":"1280790546171846657","processStatus":3,"status":1,"orderNo":"202007081707167911","contractName":"飞一般的柑橘","contractId":"669"}],
       //     }
       //   }
       // })

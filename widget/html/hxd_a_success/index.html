@@ -18,10 +18,11 @@
     <div id="app">
       <div class="header">
         <div class="icon">
-          <div class="up"></div>
-          <div class="below"></div>
+          <div class="up" :class="{fail: creditStatus === 3}"></div>
         </div>
-        <p v-if="creditStatus === 2" class="tips">您已成功开通{{productInfo.producName}}</p>
+        <p v-if="creditStatus === 2" class="tips">
+          您已成功开通{{productInfo.producName}}
+        </p>
         <p v-if="creditStatus === 3" class="tips">开通失败</p>
         <div class="desc">
           <div v-if="creditStatus === 2">
@@ -38,8 +39,18 @@
           </div>
         </div>
       </div>
-      <div v-if="creditStatus === 2" class="btn btn-normal mgt" @click="handleToPageDetail">查看产品详情</div>
-      <div v-if="creditStatus === 3" class="btn btn-normal mgt" @click="handleToProductList">开通更多产品</div>
+      <div v-if="creditStatus === 2"
+        class="btn btn-normal mgt"
+        @click="handleToPageDetail"
+      >
+        查看产品详情
+      </div>
+      <div v-if="creditStatus === 3"
+        class="btn btn-normal mgt"
+        @click="handleToProductList"
+      >
+        开通更多产品
+      </div>
       <div class="btn btn-prime" @click="handleToHome">进入首页</div>
     </div>
 
