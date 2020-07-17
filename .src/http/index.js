@@ -3,6 +3,7 @@ import {
 } from './../webview.js'
 import Utils from "./../utils"
 import { baseUrl } from './config'
+import key from './../../widget/cert/gateway.crpt-cloud.liuheco.com.key'
 
 const whiteList = [ // 白名单里不带token，否则后端会报错
   '/sms/smsverificationcode',
@@ -46,6 +47,10 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 }
         ...Authorization,
         ...contentType,
         ...headers
+      },
+      certificate: __buildEnv__ === 'development' ? null : {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
+        password: key
       }
     }, (ret, error) => {
       let end = new Date().getTime()
