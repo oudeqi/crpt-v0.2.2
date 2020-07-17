@@ -102,18 +102,24 @@ function vmInit () {
 
       repay (record) {
         let { loanId, orderType, repayStatus, productName, planId } = record
-        if (String(repayStatus) === '8') {
-          api.toast({ msg: '未按期还款的订单不支持线上还款', location: 'middle' })
-          return
-        }
-        if (String(orderType) === '4') {
-          Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
-        } else {
-          Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
-          // api.alert({
-          //   title: '提示',
-          //   msg: `${productName}的还款功能正在开发中...`,
-          // })
+        if (String(orderType) === '4') { // 押金贷
+          if (String(repayResult) !== '1') {
+            Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
+          }
+        } else if (String(orderType) === '1') { // 好销贷
+          if (String(repayStatus) === '8') {
+            api.toast({ msg: '未按期还款的订单不支持线上还款', location: 'middle' })
+          } else {
+            api.alert({
+              title: '提示',
+              msg: `${productName}的还款功能正在开发中...`,
+            })
+          }
+        } else { // 其他贷款
+          api.alert({
+            title: '提示',
+            msg: `${productName}的还款功能正在开发中...`,
+          })
         }
       },
 

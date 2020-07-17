@@ -39,7 +39,10 @@
         <div class="card-row4">
           <span @click="repayRemain(item)" class="card-arrowbtn">还剩{{item.lastRepayPeriod}}期</span>
           <!-- 好销贷逾期，不能线上还款，只能联系客户；押金带逾期可以线上还款 -->
-          <span @click="repay(item)" :class="['card-btn', {disabled: String(item.repayStatus) === '8' && String(item.orderType) !== '4'}]">去还款</span>
+          <!-- 押金贷款：还款结果，1 等待中，2 成功，3 失败 -->
+          <span v-if="String(item.orderType) === '4' && String(item.repayResult) === '1'" :class="['card-btn', 'disabled']">还款中</span>
+          <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1'" class="['card-btn']">去还款</span>
+          <span @click="repay(item)" v-else :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>
         </div>
       </div>
 

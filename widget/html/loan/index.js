@@ -4009,17 +4009,16 @@ function vmInit() {
           // 押金贷
           // 业务单流程状态（押金贷专用，判断按钮展示及跳转页面）
           //1：户口本未上传 2：待客户经理审核 3：客户经理审核不通过 4：待平台审核 5：平台审核不通过 6： 平台审核通过 7-待绑定银行卡 8-绑卡成功
-          if (record.orderFlowStatus === 8) {
-            // 继续申请跳到贷款签约
-            Router$1.openPage({
-              key: 'yjd_loan_signing'
-            });
-          } else {
-            api.toast({
-              msg: '押金贷业务单流程状态不正确',
-              location: 'middle'
-            });
-          }
+          // if (record.orderFlowStatus === 8) { // 继续申请跳到贷款签约
+          //   Router.openPage({ key: 'yjd_loan_signing' })
+          // } else {
+          //   api.toast({ msg: '押金贷业务单流程状态不正确', location: 'middle' })
+          // }
+          api.alert({
+            // 押金贷直接提示当前状态
+            title: '提示',
+            msg: '新网押金贷正在申请中...'
+          });
         } else {
           // 其他
           Router$1.openPage({

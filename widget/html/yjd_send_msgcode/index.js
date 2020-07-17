@@ -2696,7 +2696,7 @@ var Service = /*#__PURE__*/function () {
   createClass(Service, null, [{
     key: "preAuth",
     value: function preAuth() {
-      return http$1.get('/crpt-credit/credit/openloan/prebindcardphnm/submit');
+      return http$1.post('/crpt-credit/credit/openloan/prebindcardphnm/submit');
     }
   }, {
     key: "auth",
@@ -2816,7 +2816,7 @@ function vmInit() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var _this$preAuthData, _this$preAuthData$uni, uniqueCode, _this$preAuthData$ban, bankCardNo, _this$preAuthData$use, userId, postData;
+          var _this$preAuthData, _this$preAuthData$uni, uniqueCode, _this$preAuthData$ban, bankCardNo, _this$preAuthData$use, userId, postData, res;
 
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
@@ -2855,14 +2855,23 @@ function vmInit() {
                   postData = _objectSpread$5({}, _this.createLoanOrderArgus, {
                     userId: _this.preAuthData.userId
                   });
-                  console.log(JSON.stringify(postData));
-                  _context.next = 13;
+                  _context.next = 12;
                   return Service.createLoanOrder(postData);
 
-                case 13:
-                  Router$2.openPage({
-                    key: 'yjd_apply_result'
-                  });
+                case 12:
+                  res = _context.sent;
+
+                  if (res.code === 200) {
+                    Router$2.openPage({
+                      key: 'yjd_apply_result'
+                    });
+                  } else {
+                    api.toast({
+                      msg: res.msg || '创建贷款申请失败',
+                      location: 'middle'
+                    });
+                  }
+
                   _context.next = 19;
                   break;
 
@@ -2950,6 +2959,10 @@ function vmInit() {
 
                 case 2:
                   res = _context3.sent;
+                  api.toast({
+                    msg: '验证码发送成功',
+                    location: 'middle'
+                  });
                   _res$data = res.data, uniqueCode = _res$data.uniqueCode, bankCardNo = _res$data.bankCardNo, userId = _res$data.userId;
                   _this3.preAuthData = {
                     uniqueCode: uniqueCode,
@@ -2957,7 +2970,7 @@ function vmInit() {
                     userId: userId
                   };
 
-                case 5:
+                case 6:
                 case "end":
                   return _context3.stop();
               }
@@ -2988,4 +3001,11 @@ function vmInit() {
 
 apiready = function apiready() {
   var vm = vmInit();
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
 };

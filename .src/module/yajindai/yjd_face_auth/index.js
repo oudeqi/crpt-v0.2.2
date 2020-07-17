@@ -80,7 +80,7 @@ function vmInit () {
                 bankCardMobile,
                 bankCardName,
               }}})
-            }, 3000)
+            }, 1500)
           } else {
             api.toast({ msg: resOcr.data.info || '认证失败', location: 'middle' })
           }

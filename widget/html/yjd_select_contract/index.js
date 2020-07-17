@@ -3750,14 +3750,14 @@ function vmInit() {
                   _this2.loading = true;
                   _context2.prev = 3;
                   _context2.next = 6;
-                  return Service.getContract(_this2.productId || '2');
+                  return Service.getContract(_this2.productId || '');
 
                 case 6:
                   res = _context2.sent;
                   api.refreshHeaderLoadDone();
 
-                  if (res.data.list && res.data.list.length > 0) {
-                    _this2.list = res.data.list;
+                  if (res.data && res.data.length > 0) {
+                    _this2.list = res.data;
                     _this2.more = 'hasMore';
                   } else {
                     _this2.more = 'noData';
@@ -3786,34 +3786,48 @@ function vmInit() {
         }))();
       },
       next: function next() {
-        console.log(JSON.stringify(this.selected)); // if (this.selected) {}
+        if (this.selected) {
+          var productId = this.productId;
 
-        var productId = this.productId;
+          var _ref2 = this.selected || {},
+              id = _ref2.id,
+              loanPayeeAccountNo = _ref2.loanPayeeAccountNo,
+              loanPayeeAccountName = _ref2.loanPayeeAccountName,
+              surplusReceivableBond = _ref2.surplusReceivableBond;
 
-        var _ref2 = this.selected || {},
-            id = _ref2.id,
-            loanPayeeAccountNo = _ref2.loanPayeeAccountNo,
-            loanPayeeAccountName = _ref2.loanPayeeAccountName,
-            surplusReceivableBond = _ref2.surplusReceivableBond;
-
-        Router$1.openPage({
-          key: 'yjd_apply_confirm',
-          params: {
-            pageParam: {
-              id: id,
-              productId: productId,
-              loanPayeeAccountNo: loanPayeeAccountNo,
-              loanPayeeAccountName: loanPayeeAccountName,
-              surplusReceivableBond: surplusReceivableBond
+          Router$1.openPage({
+            key: 'yjd_apply_confirm',
+            params: {
+              pageParam: {
+                id: id,
+                productId: productId,
+                loanPayeeAccountNo: loanPayeeAccountNo,
+                loanPayeeAccountName: loanPayeeAccountName,
+                surplusReceivableBond: surplusReceivableBond
+              }
             }
+          });
+        } else {
+          if (this.list.length > 0) {
+            api.toast({
+              msg: '请选择代养合同',
+              location: 'middle'
+            });
           }
-        });
+        }
       }
     }
   });
 }
 
 apiready = function apiready() {
+  // 关闭新网开虚拟户的流程
+  api.closeWin({
+    name: 'yjd_account_open'
+  });
+  api.closeWin({
+    name: 'yjd_account_open_xinwang'
+  });
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {

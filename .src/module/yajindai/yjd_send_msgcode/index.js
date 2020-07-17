@@ -6,7 +6,7 @@ import Router from '../../../router'
 
 class Service {
   static preAuth () {
-    return http.get('/crpt-credit/credit/openloan/prebindcardphnm/submit')
+    return http.post('/crpt-credit/credit/openloan/prebindcardphnm/submit')
   }
 
   static auth ({smsCode, uniqueCode, bankCardNo, userId}) {
@@ -104,9 +104,12 @@ function vmInit () {
             await Service.auth({uniqueCode, bankCardNo, userId, smsCode: this.inputValue})
             // 创建贷款订单
             let postData = { ...this.createLoanOrderArgus, userId: this.preAuthData.userId }
-            console.log(JSON.stringify(postData))
-            await Service.createLoanOrder(postData)
-            Router.openPage({ key: 'yjd_apply_result' })
+            const res = await Service.createLoanOrder(postData)
+            if (res.code === 200) {
+              Router.openPage({ key: 'yjd_apply_result' })
+            } else {
+              api.toast({ msg: res.msg || '创建贷款申请失败', location: 'middle' })
+            }
           } catch (e) {
             api.toast({ msg: e.msg || '出错啦', location: 'middle' })
           }
@@ -135,6 +138,7 @@ function vmInit () {
 
       async __sendCode () {
         let res = await Service.preAuth()
+        api.toast({ msg: '验证码发送成功', location: 'middle' })
         let {
           uniqueCode, // 预签约唯一码
           bankCardNo, // 银行卡卡号
@@ -166,5 +170,13 @@ function vmInit () {
 apiready = function () {
 
   const vm = vmInit()
+
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret) {
+    if (ret.type === 'left') {
+      api.closeWin()
+    }
+  })
 
 }

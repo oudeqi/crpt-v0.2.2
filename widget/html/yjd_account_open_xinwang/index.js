@@ -1,3 +1,23 @@
+var timer = null;
+
+function getOpenAccountStatus(productId) {
+  http.get('/crpt-product//product/yjd/detail/' + productId).then(function (res) {
+    var openAccountStatus = String(res.data.openHopeAccountFlag);
+
+    if (res.code === 200 && openAccountStatus === '1') {
+      clearInterval(timer);
+      Router.openPage({
+        key: 'yjd_select_contract',
+        params: {
+          pageParam: {
+            productId: productId
+          }
+        }
+      });
+    }
+  });
+}
+
 apiready = function apiready() {
   var statusBar = document.querySelector('#status_bar');
   $api.fixStatusBar(statusBar);
@@ -9,9 +29,7 @@ apiready = function apiready() {
 
   api.openFrame({
     name: 'yjd_account_open_xinwang_frm',
-    // url: url.includes('http://') ? url : 'http://' + url,
-    url: 'widget://html/yjd_account_open_xinwang/xw-openaccount-test.html',
-    // TODO  这里需要透传productId到新网h5，再透传到success页面
+    url: url.includes('http://') ? url : 'http://' + url,
     rect: {
       x: 0,
       y: offset.h,
@@ -30,4 +48,7 @@ apiready = function apiready() {
 
     }
   });
+  timer = setInterval(function () {
+    getOpenAccountStatus();
+  }, 1500);
 };

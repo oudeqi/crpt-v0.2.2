@@ -2764,7 +2764,7 @@ function vmInit() {
                           }
                         }
                       });
-                    }, 3000);
+                    }, 1500);
                   } else {
                     api.toast({
                       msg: resOcr.data.info || '认证失败',

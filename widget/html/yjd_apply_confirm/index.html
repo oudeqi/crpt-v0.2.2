@@ -28,7 +28,7 @@
 
       <div class="bottom">
         <div class="bottom-row">
-          <span class="bottom-label">贷款利率</span><span class="bottom-value">{{productDetails.interestRate || ''}}</span>
+          <span class="bottom-label">贷款利率</span><span class="bottom-value">{{productDetails.interestRate || ''}}%</span>
         </div>
         <div class="bottom-row">
           <span class="bottom-label">贷款期限(月)</span><span class="bottom-value">{{productDetails.loanTerm || ''}}</span>
@@ -65,12 +65,12 @@
 
       <div class="code">
         <div class="code-tit">从业人数</div>
-        <input class="code-ipt" v-decimal-keeps="0" v-model="workerCount" type="number" placeholder="请输入">
+        <input class="code-ipt" v-model="workerCount" type="number" placeholder="请输入">
       </div>
 
       <div class="code">
         <div class="code-tit">资产总额(万元)</div>
-        <input class="code-ipt" v-decimal-keeps="2" v-model="totalAssets" type="number" placeholder="请输入">
+        <input class="code-ipt" v-model="totalAssets" type="number" placeholder="请输入">
       </div>
 
       <div class="listgroup">

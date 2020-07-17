@@ -3814,7 +3814,7 @@ function vmInit() {
       },
       id: function id() {
         // 代养合同id
-        return this.pageParam.productId;
+        return this.pageParam.id;
       },
       productId: function productId() {
         // 产品id

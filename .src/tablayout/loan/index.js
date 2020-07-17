@@ -123,28 +123,32 @@ function vmInit () {
         if (record.orderType === 1) { // 好销贷
           // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加
            if (record.status === 1) { // 申请中 继续申请
-            Router.openPage({ key: 'hxd_u_apply', params: { pageParam: {productId}}})
+            Router.openPage({key: 'hxd_u_apply', params: {pageParam: { productId }}})
           } else if (record.status === 2) { // 已审批通过，未放款 去详情
-            Router.openPage({ key: 'hxd_loan_details', params: { pageParam: {id: orderId}}})
+            Router.openPage({key: 'hxd_loan_details', params: {pageParam: { id: orderId }}})
           } else if (record.status === 11) { // 待申请 立即申请
             if (this.userinfo.userType === '1') { // 个人用户
-              Router.openPage({ key: 'hxd_apply', params: { pageParam: {productId}}})
+              Router.openPage({key: 'hxd_apply', params: {pageParam: { productId }}})
             } else if (this.userinfo.userType === '2') { // 企业用户
-              Router.openPage({ key: 'hxd_a_supply', params: { pageParam: {productId}}})
+              Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId }}})
             } else {
-              api.toast({ msg: '未知的用户类型', location: 'middle' })
+              api.toast({ msg: '未知的用户类型', location: 'middle'})
             }
           }
         } else if (record.orderType === 4) { // 押金贷
           // 业务单流程状态（押金贷专用，判断按钮展示及跳转页面）
           //1：户口本未上传 2：待客户经理审核 3：客户经理审核不通过 4：待平台审核 5：平台审核不通过 6： 平台审核通过 7-待绑定银行卡 8-绑卡成功
-          if (record.orderFlowStatus === 8) { // 继续申请跳到贷款签约
-            Router.openPage({ key: 'yjd_loan_signing' })
-          } else {
-            api.toast({ msg: '押金贷业务单流程状态不正确', location: 'middle' })
-          }
+          // if (record.orderFlowStatus === 8) { // 继续申请跳到贷款签约
+          //   Router.openPage({ key: 'yjd_loan_signing' })
+          // } else {
+          //   api.toast({ msg: '押金贷业务单流程状态不正确', location: 'middle' })
+          // }
+          api.alert({ // 押金贷直接提示当前状态
+            title: '提示',
+            msg: '新网押金贷正在申请中...',
+          })
         } else { // 其他
-          Router.openPage({ key: 'loan_application', params: { pageParam: {id: orderNo}}})
+          Router.openPage({key: 'loan_application', params: {pageParam: { id: orderNo }}})
         }
       },
 

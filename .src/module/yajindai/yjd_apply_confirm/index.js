@@ -111,7 +111,7 @@ function vmInit () {
         && this.totalAssets
       },
       id: function () { // 代养合同id
-        return this.pageParam.productId
+        return this.pageParam.id
       },
       productId: function () { // 产品id
         return this.pageParam.productId
@@ -274,6 +274,7 @@ function vmInit () {
 
 
 apiready = function () {
+
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret) {
