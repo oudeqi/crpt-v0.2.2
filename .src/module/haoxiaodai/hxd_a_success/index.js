@@ -16,8 +16,9 @@ apiready = function () {
   const page = new Vue({
     el: '#app',
     data: {
-      creditStatus: 0,
-      productInfo: {}
+      creditStatus: 2,
+      productInfo: {},
+      refusedReason: ''
     },
     computed: {
       creditAmountTn: function () {
@@ -42,6 +43,7 @@ apiready = function () {
           if (error.msg) {
             Utils.UI.toast(`${error.code} : ${error.msg}`)
           }
+        } finally {
         }
         Utils.UI.hideLoading()
       },

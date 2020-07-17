@@ -311,6 +311,17 @@ html, body {
       -ms-flex: none;
           flex: none;
   margin-right: 12px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.introduction .intro .list .cell .icon.p-icon-0 {
+  background-image: url(../../image/hxd/hxd_a_0.png);
+}
+.introduction .intro .list .cell .icon.p-icon-1 {
+  background-image: url(../../image/hxd/hxd_a_1.png);
+}
+.introduction .intro .list .cell .icon.p-icon-2 {
+  background-image: url(../../image/hxd/hxd_a_2.png);
 }
 .introduction .intro .list .cell .desc .c-title {
   font-size: 16px;

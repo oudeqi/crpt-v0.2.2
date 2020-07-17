@@ -6,9 +6,10 @@ import {
 } from './webview.js'
 import { Base64 } from 'js-base64'
 import Utils from "./utils"
+import key from './../widget/cert/gateway.crpt-cloud.liuheco.com.key'
 
 const dev = 'http://crptdev.liuheco.com'
-const uat = 'http://gateway.test.crpt-cloud.liuheco.com'
+const uat = 'https://gateway.crpt-cloud.liuheco.com'
 const prod = 'http://gateway.crpt-cloud.app.oak.net.cn'
 export const baseUrl = __buildEnv__ === 'development' ? dev : __buildEnv__ === 'testing' ? uat : prod
 const whiteList = [ // 白名单里不带token，否则后端会报错
@@ -53,7 +54,11 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
         ...Authorization,
         ...contentType,
         ...headers
-      } 
+      },
+      certificate: __buildEnv__ === 'development' ? null : {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
+        password: key
+      }
     }, (ret, error) => {
       let end = new Date().getTime()
       let dis = (end - start) / 1000

@@ -1564,7 +1564,8 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1879,8 +1880,12 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-var dev$1 = 'http://crptdev.liuheco.com';
-var baseUrl$1 =  dev$1 ;
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["development"]; // export const baseUrl = "development" === 'development' ? dev : "development" === 'testing' ? uat : prod
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1929,7 +1934,8 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2070,8 +2076,8 @@ var service = {
       body: params
     });
   },
-  postApply: function postApply(params) {
-    return http$1.post("/crpt-credit/credit/hxd/apply/warehouse/order/list", {
+  postCustApply: function postCustApply(params) {
+    return http$1.post("/crpt-credit/credit/hxd/check/cust/apply/order/list", {
       body: params
     });
   }
@@ -2727,11 +2733,32 @@ apiready = function apiready() {
       // 当前可用额度
       useAmount: '',
       // 勾选用款金额
-      productId: pageParam.productId
+      productId: pageParam.productId,
+      selectedNumber: 0
     },
     computed: {
       isWarning: function isWarning() {
-        return this.amount < this.useAmount;
+        // 当选中入库单=1时，需要前端控制
+        if (this.selectedNumber === 1) {
+          var flag = false;
+
+          if (this.useAmount < 1000 || this.useAmount > this.amount) {
+            flag = true;
+          }
+
+          if (this.useAmount > this.EBSOrders.filter(function (item) {
+            return item.isSelected;
+          })[0].wareAvailableAmount) {
+            flag = true;
+          }
+
+          return flag;
+        } else if (this.selectedNumber > 1) {
+          // 多条入库单时，只校验入库单之和是否与总额度大小
+          return !(this.useAmount < this.amount);
+        } else {
+          return false;
+        }
       },
       amountTn: function amountTn() {
         return filter.toThousands(this.amount);
@@ -2770,9 +2797,10 @@ apiready = function apiready() {
                   } else {
                     _this.EBSOrders = [];
                     _this.amount = '';
+                    _this.useAmount = '';
                   }
 
-                  _context.next = 13;
+                  _context.next = 14;
                   break;
 
                 case 8:
@@ -2785,11 +2813,12 @@ apiready = function apiready() {
 
                   _this.EBSOrders = [];
                   _this.amount = '';
-
-                case 13:
-                  Utils$1.UI.hideLoading();
+                  _this.useAmount = '';
 
                 case 14:
+                  Utils$1.UI.hideLoading();
+
+                case 15:
                 case "end":
                   return _context.stop();
               }
@@ -2798,23 +2827,28 @@ apiready = function apiready() {
         }))();
       },
       handleSelect: function handleSelect(index) {
+        // 如果选了之后是多条，则屏蔽修改框，否则打开修改框
         this.EBSOrders[index].isSelected = !this.EBSOrders[index].isSelected;
-        this.useAmount = filter.toThousands(this.calculateUseAmount());
+        this.selectedNumber = this.EBSOrders.filter(function (item) {
+          return item.isSelected;
+        }).length;
+        this.useAmount = this.calculateUseAmount(); // this.useAmount = filter.toThousands(this.calculateUseAmount())
       },
       calculateUseAmount: function calculateUseAmount() {
         var _list = this.EBSOrders.filter(function (item) {
           return item.isSelected;
         });
 
-        return _list.reduce(function (prev, item, i) {
+        var m = _list.reduce(function (prev, item, i) {
           return prev + item.wareAvailableAmount;
         }, 0) || '';
+        return Number(m).toFixed(2);
       },
       postApplySubmit: function postApplySubmit() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var _list, res, successListStr, failListStr;
+          var _list, res, isOK;
 
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
@@ -2828,10 +2862,11 @@ apiready = function apiready() {
                   _context2.prev = 1;
                   Utils$1.UI.showLoading('提交中');
                   _context2.next = 5;
-                  return service.postApply({
+                  return service.postCustApply({
                     productId: _this2.productId,
                     orderIds: _list,
-                    applyAmount: _this2.calculateUseAmount()
+                    applyAmount: _this2.useAmount // applyAmount: this.calculateUseAmount()
+
                   });
 
                 case 5:
@@ -2839,25 +2874,18 @@ apiready = function apiready() {
 
                   if (res.code === 200) {
                     Utils$1.UI.toast('申请已提交');
-                    successListStr = JSON.stringify(res.data.successList);
-                    failListStr = JSON.stringify(res.data.failList);
                     setTimeout(function () {
                       Router$2.openPage({
                         key: 'hxd_u_confirm',
                         params: {
                           pageParam: {
                             productId: _this2.productId,
-                            successListStr: successListStr,
-                            failListStr: failListStr,
-                            orderIds: JSON.stringify(res.data.successList.map(function (item) {
-                              return item.orderId;
-                            }))
+                            warehouseOrderNos: JSON.stringify(res.data.warehouseOrderNos),
+                            amount: res.data.applyAmount
                           }
                         }
                       });
                     }, 50);
-                  } else {
-                    _this2.handleGetEBSOrders();
                   }
 
                   _context2.next = 13;
@@ -2869,14 +2897,15 @@ apiready = function apiready() {
 
                   if (_context2.t0.msg) {
                     Utils$1.UI.toast("".concat(_context2.t0.code, " : ").concat(_context2.t0.msg));
-                  }
+                  } // 如果超额
 
-                  if (_context2.t0.code) {
-                    _this2.handleGetEBSOrders();
+
+                  if (_context2.t0.code === 7006) {
+                    isOK = confirm('用款金额已超出可用额度，已为您调整用款信息');
                   }
 
                 case 13:
-                  Utils$1.UI.hideLoading('');
+                  Utils$1.UI.hideLoading();
 
                 case 14:
                 case "end":
@@ -2903,16 +2932,14 @@ apiready = function apiready() {
       }
     },
     mounted: function mounted() {
-      var _this3 = this;
-
       api.parseTapmode();
       Utils$1.UI.setRefreshHeaderInfo({
         success: function success() {
-          _this3.handleGetEBSOrders();
-
-          setTimeout(function () {
-            api.refreshHeaderLoadDone();
-          }, 0);
+          window.reload(); // this.handleGetEBSOrders()
+          // this.useAmount = ''
+          // setTimeout(() => {
+          //   api.refreshHeaderLoadDone()
+          // }, 0);
         },
         fail: function fail() {
           api.refreshHeaderLoadDone();

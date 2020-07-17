@@ -22,11 +22,27 @@ apiready = function () {
       EBSOrders: [],
       amount: 0, // 当前可用额度
       useAmount: '', // 勾选用款金额
-      productId: pageParam.productId
+      productId: pageParam.productId,
+      selectedNumber: 0
     },
     computed: {
       isWarning: function () {
-        return this.amount < this.useAmount
+        // 当选中入库单=1时，需要前端控制
+        if (this.selectedNumber === 1) {
+          let flag = false
+          if (this.useAmount < 1000 || this.useAmount > this.amount) {
+            flag = true
+          }
+          if (this.useAmount > this.EBSOrders.filter(item => item.isSelected)[0].wareAvailableAmount) {
+            flag = true
+          }
+          return flag
+        } else if (this.selectedNumber > 1) {
+          // 多条入库单时，只校验入库单之和是否与总额度大小
+          return !(this.useAmount < this.amount)
+        } else {
+          return false
+        }
       },
       amountTn: function () {
         return filter.toThousands(this.amount)
@@ -51,6 +67,7 @@ apiready = function () {
           } else {
             this.EBSOrders = []
             this.amount = ''
+            this.useAmount = ''
           }
         } catch (error) {
           if (error.msg) {
@@ -58,57 +75,61 @@ apiready = function () {
           }
           this.EBSOrders = []
           this.amount = ''
+          this.useAmount = ''
         }
         Utils.UI.hideLoading()
       },
       handleSelect(index) {
+        // 如果选了之后是多条，则屏蔽修改框，否则打开修改框
+
         this.EBSOrders[index].isSelected = !this.EBSOrders[index].isSelected
-        this.useAmount = filter.toThousands(this.calculateUseAmount())
+
+        this.selectedNumber = this.EBSOrders.filter((item) => item.isSelected).length
+        this.useAmount = this.calculateUseAmount()
+        // this.useAmount = filter.toThousands(this.calculateUseAmount())
       },
       calculateUseAmount() {
         let _list = this.EBSOrders.filter((item) => item.isSelected)
-        return _list.reduce((prev, item, i) => {
+        let m = _list.reduce((prev, item, i) => {
           return prev + item.wareAvailableAmount
         }, 0) || ''
+        return Number(m).toFixed(2)
       },
       async postApplySubmit() {
         let _list = this.EBSOrders.filter((item) => item.isSelected).map((item) => item.orderId)
         try {
           Utils.UI.showLoading('提交中')
-          const res = await service.postApply({
+          const res = await service.postCustApply({
             productId: this.productId,
             orderIds: _list,
-            applyAmount: this.calculateUseAmount()
+            applyAmount: this.useAmount
+            // applyAmount: this.calculateUseAmount()
           })
           if (res.code === 200) {
             Utils.UI.toast('申请已提交')
-            const successListStr = JSON.stringify(res.data.successList)
-            const failListStr = JSON.stringify(res.data.failList)
             setTimeout(() => {
               Router.openPage({
                 key: 'hxd_u_confirm',
                 params: {
                   pageParam: {
                     productId: this.productId,
-                    successListStr,
-                    failListStr,
-                    orderIds: JSON.stringify(res.data.successList.map(item => item.orderId))
+                    warehouseOrderNos: JSON.stringify(res.data.warehouseOrderNos),
+                    amount: res.data.applyAmount
                   }
                 }
               })
             }, 50);
-          } else {
-            this.handleGetEBSOrders()
           }
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(`${error.code} : ${error.msg}`)
           }
-          if(error.code) {
-            this.handleGetEBSOrders()
+          // 如果超额
+          if (error.code === 7006) {
+            let isOK = confirm('用款金额已超出可用额度，已为您调整用款信息')
           }
         }
-        Utils.UI.hideLoading('')
+        Utils.UI.hideLoading()
       },
       handleSubmit() {
         let _list = this.EBSOrders.filter((item) => item.isSelected)
@@ -127,10 +148,12 @@ apiready = function () {
 
       Utils.UI.setRefreshHeaderInfo({
         success: () => {
-          this.handleGetEBSOrders()
-          setTimeout(() => {
-            api.refreshHeaderLoadDone()
-          }, 0);
+          window.reload()
+          // this.handleGetEBSOrders()
+          // this.useAmount = ''
+          // setTimeout(() => {
+          //   api.refreshHeaderLoadDone()
+          // }, 0);
         },
         fail: () => {
           api.refreshHeaderLoadDone()

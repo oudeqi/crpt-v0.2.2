@@ -2192,7 +2192,8 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2507,8 +2508,12 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-var dev$1 = 'http://crptdev.liuheco.com';
-var baseUrl$1 =  dev$1 ;
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["development"]; // export const baseUrl = "development" === 'development' ? dev : "development" === 'testing' ? uat : prod
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2557,7 +2562,8 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$4({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$4({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;

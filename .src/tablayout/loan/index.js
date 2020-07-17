@@ -7,7 +7,7 @@ import { setRefreshHeaderInfo } from '../../config.js'
 import http from '../../http'
 import numeral from 'numeral'
 
-function vmInit () {
+function vmInit() {
   return new Vue({
     el: '#app',
     data: function () {
@@ -41,36 +41,36 @@ function vmInit () {
     methods: {
       numeral: numeral,
 
-      handleHXDClick () {
+      handleHXDClick() {
         let creditStatus = this.hxd.creditStatus
         let productId = this.hxd.productId
         if (creditStatus === 0 || creditStatus === 1) { // 未申请 立即开通 // 已受理 继续开通
           if (this.userinfo.userType === '1') { // 个人用户
-            Router.openPage({ key: 'hxd_apply', params: { pageParam: { productId }}})
+            Router.openPage({ key: 'hxd_apply', params: { pageParam: { productId } } })
           } else if (this.userinfo.userType === '2') { // 企业用户
-            Router.openPage({ key: 'hxd_a_supply', params: { pageParam: { productId }}})
+            Router.openPage({ key: 'hxd_a_supply', params: { pageParam: { productId } } })
           } else {
             api.toast({ msg: '未知的用户类型', location: 'middle' })
           }
         } else if (creditStatus === 2) { // 成功 我要用款
-          Router.openPage({ key: 'hxd_u_apply', params: { pageParam: { productId }}})
+          Router.openPage({ key: 'hxd_u_apply', params: { pageParam: { productId } } })
         } else {
           api.toast({ msg: '好销贷授信状态不正确', location: 'middle' })
         }
       },
 
-      async loadMore () {
+      async loadMore() {
         this.getPageData()
       },
 
-      async pageInit () {
+      async pageInit() {
         api.showProgress({ title: '加载中...', text: '', modal: false })
         await this.getHXD()
         await this.getPageData(1)
         api.hideProgress()
       },
 
-      async getHXD () {
+      async getHXD() {
         try {
           let res = await http.get('/crpt-credit/credit/hxd/product/list')
           if (res.data && res.data[0]) {
@@ -83,10 +83,10 @@ function vmInit () {
         }
       },
 
-      async getPageData (currentPage) {
+      async getPageData(currentPage) {
         if (this.loading) { return }
         this.loading = true
-        let pageSize =  this.pageSize
+        let pageSize = this.pageSize
         let pageNo = currentPage || this.pageNo
         try {
           let res = await http.get(`/crpt-order/order/list/currentuser?pageSize=${pageSize}&pageNo=${pageNo}`)
@@ -116,21 +116,31 @@ function vmInit () {
         }
       },
 
-      handleBtnClick (record) { // orderType 业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷）
+      handleBtnClick(record) { // orderType 业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷）
         let productId = record.productId
         let orderNo = record.orderNo
         let orderId = record.orderId
         if (record.orderType === 1) { // 好销贷
           // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加
-           if (record.status === 1) { // 申请中 继续申请
-            Router.openPage({key: 'hxd_u_apply', params: {pageParam: { productId }}})
+          if (record.status === 1) { // 申请中 继续申请
+            Router.openPage({
+              key: 'hxd_u_confirm',
+              params: {
+                pageParam: {
+                  productId,
+                  warehouseOrderNos: JSON.stringify(record.warehouseOrderNo && [record.warehouseOrderNo] || []),
+                  status: record.status,
+                  amount: record.payAmount
+                }
+              }
+            })
           } else if (record.status === 2) { // 已审批通过，未放款 去详情
-            Router.openPage({key: 'hxd_loan_details', params: {pageParam: { id: orderId }}})
+            Router.openPage({ key: 'hxd_loan_details', params: { pageParam: { id: orderId } } })
           } else if (record.status === 11) { // 待申请 立即申请
             if (this.userinfo.userType === '1') { // 个人用户
-              Router.openPage({key: 'hxd_apply', params: {pageParam: { productId }}})
+              Router.openPage({ key: 'hxd_apply', params: { pageParam: { productId } } })
             } else if (this.userinfo.userType === '2') { // 企业用户
-              Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId }}})
+              Router.openPage({ key: 'hxd_a_supply', params: { pageParam: { productId } } })
             } else {
               api.toast({ msg: '未知的用户类型', location: 'middle'})
             }
@@ -152,12 +162,12 @@ function vmInit () {
         }
       },
 
-      handleCancel (record) {
+      handleCancel(record) {
         console.log(record.orderNo)
         console.log(record.status)
         api.alert({
           title: '提示',
-          msg: '功能开发中...',
+          msg: '好销贷取消贷款申请功能正在开发中...',
         })
       }
 
@@ -169,7 +179,7 @@ apiready = function () {
 
   api.addEventListener({
     name: 'keyback'
-  }, function() {
+  }, function () {
     api.closeWidget({
       silent: false
     })
@@ -177,7 +187,7 @@ apiready = function () {
 
   const vm = vmInit()
 
-  setRefreshHeaderInfo(function() {
+  setRefreshHeaderInfo(function () {
     vm.pageInit()
   })
 
@@ -186,7 +196,7 @@ apiready = function () {
     extra: {
       threshold: 100
     }
-  }, function() {
+  }, function () {
     vm.getPageData()
   })
 

@@ -2,7 +2,9 @@ import './index.less'
 import service from './service';
 import Utils from '../../../utils';
 import Router from '../../../router';
-
+import {
+  openTabLayout,
+} from '../../../webview'
 apiready = function () {
   const pageParam = api.pageParam || {}
   api.addEventListener({
@@ -20,8 +22,8 @@ apiready = function () {
       smscode: "",
       isCounter: false,
       orderIds: JSON.parse(pageParam.orderIds),
-      successList: JSON.parse(pageParam.successListStr),
-      failList: JSON.parse(pageParam.failListStr),
+      successList: JSON.parse(pageParam.successList),
+      failList: JSON.parse(pageParam.failList),
       phone: pageParam.phone,
       hidePhone: pageParam.phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2")
     },
@@ -71,22 +73,31 @@ apiready = function () {
           })
           if (res.code === 200) {
             this.successList = res.data.successList
-            this.failList = this.failList.concact(res.data.failList)
+            this.failList = this.failList.concat(res.data.failList)
             this.successTotalAmount = res.data.successTotalAmount
-            
+
             // 跳转结果页
             Router.openPage({
               key: 'hxd_u_result',
               params: {
-                successList: this.successList,
-                failList: this.failList,
-                successTotalAmount: res.data.successTotalAmount
+                pageParam: {
+                  successList: JSON.stringify(this.successList),
+                  failList: JSON.stringify(this.failList),
+                  successTotalAmount: res.data.successTotalAmount
+                }
               }
             })
           }
         } catch (error) {
-          if (error.msg) {
-            Utils.UI.toast(error.msg)
+          if(error && error.code === 1) {
+            Utils.UI.toast('已提交，请等待审核结果')
+            setTimeout(() => {
+              openTabLayout(1)
+            }, 1000);
+          }else {
+            if (error.msg) {
+              Utils.UI.toast(error.msg)
+            }
           }
         }
         Utils.UI.hideLoading()
@@ -96,6 +107,4 @@ apiready = function () {
       this.handleStartTimer()
     }
   })
-
-
 }

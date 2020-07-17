@@ -28,3 +28,5 @@ yarn-error.log*
 .project
 npm-debug.log
 bower_components
+
+*.zip

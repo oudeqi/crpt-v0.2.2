@@ -1726,7 +1726,8 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2618,8 +2619,8 @@ apiready = function apiready() {
       // smscode: "",
       // isCounter: false,
       // orderIds: JSON.parse(pageParam.orderIds),
-      successList: pageParam.successList,
-      failList: pageParam.failList,
+      successList: JSON.parse(pageParam.successList),
+      failList: JSON.parse(pageParam.failList),
       successTotalAmount: filter.toThousands(pageParam.successTotalAmount)
     },
     methods: {

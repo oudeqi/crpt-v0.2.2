@@ -1658,7 +1658,8 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1973,8 +1974,12 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-var dev$1 = 'http://crptdev.liuheco.com';
-var baseUrl$1 =  dev$1 ;
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["development"]; // export const baseUrl = "development" === 'development' ? dev : "development" === 'testing' ? uat : prod
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2023,7 +2028,8 @@ function ajax$1(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2811,8 +2817,9 @@ apiready = function apiready() {
   var page = new Vue({
     el: '#app',
     data: {
-      creditStatus: 0,
-      productInfo: {}
+      creditStatus: 2,
+      productInfo: {},
+      refusedReason: ''
     },
     computed: {
       creditAmountTn: function creditAmountTn() {
@@ -2862,14 +2869,18 @@ apiready = function apiready() {
                   }
 
                 case 11:
+                  _context.prev = 11;
+                  return _context.finish(11);
+
+                case 13:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 8]]);
+          }, _callee, null, [[0, 8, 11, 13]]);
         }))();
       },
       handleToPageDetail: function handleToPageDetail() {

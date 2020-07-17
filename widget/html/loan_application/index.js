@@ -2305,7 +2305,8 @@ function ajax(method, url) {
       data: data,
       tag: tag,
       timeout: timeout,
-      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers)
+      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers),
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
