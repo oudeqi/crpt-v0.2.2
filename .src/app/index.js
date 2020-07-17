@@ -59,8 +59,12 @@ class App {
     // return
     // openTabLayout(0)
     const userinfo = $api.getStorage('userinfo')
+    console.log('userinfo----------')
+    console.log(JSON.stringify(userinfo))
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}
+      console.log('authStatus----------')
+      console.log(JSON.stringify(authStatus))
       if (authStatus.status === 1) {
         openTabLayout()
         saveDeviceMes()
