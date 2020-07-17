@@ -62,6 +62,6 @@
 	<permission name="hardware" />
   <preference name="useWKWebView" value="true" />
   <preference name="WKWebViewRecoveryMode" value="reload"/>
+  <preference name="checkSslTrusted" value="false" />
 
 </widget>
-
