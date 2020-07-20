@@ -1,6 +1,23 @@
 import '../../../styles/common.less'
 import './index.css'
 
+let timer = null
+
+function getOpenAccountStatus (productId) {
+  http.get('/crpt-product//product/yjd/detail/' + productId).then(res => {
+    const openAccountStatus = String(res.data.openHopeAccountFlag)
+    if (res.code === 200 && openAccountStatus === '1') {
+      clearInterval(timer)
+      Router.openPage({
+        key: 'yjd_select_contract',
+        params: {
+          pageParam: { productId }
+        }
+      })
+    }
+  })
+}
+
 apiready = function () {
   
   const statusBar = document.querySelector('#status_bar')
@@ -9,9 +26,7 @@ apiready = function () {
   const { url, productId } = api.pageParam || {}
   api.openFrame({
     name: 'yjd_account_open_xinwang_frm',
-    // url: url.includes('http://') ? url : 'http://' + url,
-    url: 'widget://html/yjd_account_open_xinwang/xw-openaccount-test.html',
-    // TODO  这里需要透传productId到新网h5，再透传到success页面
+    url: url.includes('http://') ? url : 'http://' + url,
     rect: {
       x: 0,
       y: offset.h,
@@ -29,5 +44,9 @@ apiready = function () {
       // height:  3, // type 为 page 时进度条高度，默认值为3，数字类型
     }
   })
+
+  timer = setInterval(function () {
+    getOpenAccountStatus()
+  }, 1500)
   
 }

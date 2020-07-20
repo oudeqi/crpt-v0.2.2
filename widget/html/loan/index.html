@@ -47,14 +47,19 @@
             <span>待申请金额(元)</span>
             <strong>{{numeral(item.payAmount || '').format('0,0.00')}}</strong>
           </div>
-          <div v-if="item.status === 1" @click="handleBtnClick(item)" class="btn">继续申请</div>
-          <div v-if="item.status === 2" @click="handleBtnClick(item)" class="btn">查 看</div>
-          <div v-if="item.status === 11" @click="handleBtnClick(item)" class="btn">立即申请</div>
+          
+          <div v-if="String(item.orderType) === 4" @click="handleBtnClick(item)" class="btn disabled">申请中</div>
+          <div v-else>
+            <div v-if="item.status === 1" @click="handleBtnClick(item)" class="btn">继续申请</div>
+            <div v-if="item.status === 2" @click="handleBtnClick(item)" class="btn">查 看</div>
+            <div v-if="item.status === 11" @click="handleBtnClick(item)" class="btn">立即申请</div>
+          </div>
         </div>
         <div class="item-row3">
           <strong>收款方：{{item.saleCustName || ''}}</strong>
           <span>业务单号：{{item.orderNo || ''}}</span>
         </div>
+        
         <div v-if="(item.status === 1 || item.status === 2) && item.orderType === 1" class="item-row4">
           <div class="btn cancel" @click="handleCancel(item)">取消</div>
         </div>

@@ -27,8 +27,7 @@
               <div class="item-row2">
                 <span>本金{{numeral(item.repayPrincipalAmount).format('0,0.00')}}元</span>
                 <i class="item-divide"></i>
-                
-                <span>利息{{numeral(item.repayPrincipalAmount).format('0,0.00')}}元</span>
+                <span>利息{{numeral(item.repayInterestAmount).format('0,0.00')}}元</span>
                 <i v-if="String(item.status) === '1'" class="item-divide"></i>
                 <span v-if="String(item.status) === '1'">逾期罚息{{numeral(item.repayPenaltyAmount).format('0,0.00')}}元</span>
                 

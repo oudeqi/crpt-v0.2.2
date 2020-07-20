@@ -97,10 +97,10 @@ function vmInit () {
         if (this.loading) { return }
         this.loading = true
         try {
-          const res = await Service.getContract(this.productId || '2')
+          const res = await Service.getContract(this.productId || '')
           api.refreshHeaderLoadDone()
-          if (res.data.list && res.data.list.length > 0) {
-            this.list = res.data.list
+          if (res.data && res.data.length > 0) {
+            this.list = res.data
             this.more = 'hasMore'
           } else {
             this.more = 'noData'
@@ -112,14 +112,17 @@ function vmInit () {
       },
 
       next () {
-        console.log(JSON.stringify(this.selected))
-        // if (this.selected) {}
-        const productId = this.productId
-        const { id, loanPayeeAccountNo, loanPayeeAccountName, surplusReceivableBond }= this.selected || {}
-        Router.openPage({ key: 'yjd_apply_confirm', params: { pageParam: {
-          id, productId, loanPayeeAccountNo, loanPayeeAccountName, surplusReceivableBond
-        }}})
-        
+        if (this.selected) {
+          const productId = this.productId
+          const { id, loanPayeeAccountNo, loanPayeeAccountName, surplusReceivableBond }= this.selected || {}
+          Router.openPage({ key: 'yjd_apply_confirm', params: { pageParam: {
+            id, productId, loanPayeeAccountNo, loanPayeeAccountName, surplusReceivableBond
+          }}})
+        } else {
+          if (this.list.length > 0) {
+            api.toast({ msg: '请选择代养合同', location: 'middle' })
+          }
+        }
       }
 
     },
@@ -127,6 +130,10 @@ function vmInit () {
 }
 
 apiready = function () {
+
+  // 关闭新网开虚拟户的流程
+  api.closeWin({ name: 'yjd_account_open' })
+  api.closeWin({ name: 'yjd_account_open_xinwang' })
 
   api.addEventListener({
     name: 'navitembtn'

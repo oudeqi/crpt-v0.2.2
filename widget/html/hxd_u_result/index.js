@@ -1677,13 +1677,11 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-var key = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzry7QC6BpDme\nGRU0PfwBdc/owevQ616oMbSMpXbPH6GCVepi7DQ7UUqYa7eyhLsC4pteL1LYRquQ\nnfngvVuGFj+TT94bH3guTnb3Jkt+QK4KyMLHCzxDB47SQ/BpBYNmWYpEhonNLA7f\nyI81wBZMD7jGsndQWVhaWkjxHYt6VwxLa5BAnfchVvvftUL25esc7UjnWwWGrP7E\n5dVRKrz7GsrsqvqNeoNFyK6qo1IDoSlT3sG3KmaiTYLB8i4lYExBSw3h/0Mz0Xqj\nUBoAe+jECPA4Npv2ImX5nkV4KWxuTLrOUcD0eKn9elw4WaYFKqTUkpiI/15nC8rk\n3dGSt5wRAgMBAAECggEAJmRp3S4n2KG3TSgxJWKiduYW5GY/Dt2gEaUUFfhHhwvs\nnQ9v3qNZv+mXQN4nWU7JvVWeMjmdKr0Mr5T52tTl3rCSxlTKFxmUiehQzsdv/6Eu\nJomwxFE58QiWf9kP4FJhnoviekpilJ/ogya6JQSTT0/93RLmdYHh1CeR4LqLR8Ml\n3qPTxUwTuuAOBmw/KMjKxNo35Fxkm4oqE5kTrOCWvvhrE9Z2skPitBiGraJcfBld\nM8/1rJKRv/uSp+lg+xPVwUu00X7juVnyfRUkCsDTfh1GGE2S5WCaiHPOExJuE4gd\noD4rlQ1SeeKpW3qyXjvLBXP8zFugQesUBaDyIou8wQKBgQDxVDC5ak91prqgnyxg\nQnoIuxEJRCcrtsQQARAQM8Yz9Be1hWnxdo0EgwEsPnKueBA91IVn2/V4kdAgiELn\ngOMEIJRhTYmDNcviasEqgsh8AVT1p5CfTq0AXY4C/YwbvyxuidogdfFPQXOU7AnW\nYeTkix3HPmrzoT4CUTnsxTF3LwKBgQDR1TkuPaz+7Ibsq+FToUM9PLqAtm/i/akP\np8GoqGqUoPNsvn0KM7IlFKqiLYmh91KVk7FkOwAnVM9xnJ9RgFO5selt2AIK2vgn\nYAMoz7dTBVge1xhl5JIOzlS3jZpk2dRHl08jKqBR5SQEMiWrtvPGDt624RyyTxM3\n+pWRpz9QvwKBgHUUZkseI4ytpe9VKd9NgQ0JTHuVX/eaRMaK7XMe2zLLYlFDd6GY\n5VNiB0iix1qTjzWgDFTV5uJmw3V1BhhwdDLFZ5dJWcSZbd/b8Pkh2AgpUUGY2NYh\nAleiC8qxna68cd7y7CtBbSAJXfzLAv7KIZUrVPgb9SFbgcz4AUU4agYrAoGAWKF5\nz6BZjCwYKavIN2zsW9dk560nwXdni6dOU5Efw7vgVlR3uHFxk9wQ3wPhGLrA9VE3\nIqERRYu7O7/uQ5yywML3WGBfLHqlSuxxKTHju3uMZypvscpEL2DTw9xaFLM1yS+O\nS8pbgXwKJIOSCd/zQ/tP82tOlbp04bZEqws74T0CgYEAl89Jz8eyTHK2zq17gfrP\nJLtCRg7HeoO+/aJ8TT4YafU5je9WHSXwpqXjsHacI/WX/Rt46VByZ6F8Efb+nLS/\nbPHtt6qM440Waf7OBm70ZRy9UgbYwfjvoWkGmx2vz+BA1SONXZxWE7g78wNjaHAs\nrq6SWt2bXkij9UBk1EYD6Y8=\n-----END PRIVATE KEY-----";
-
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'https://gateway.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var dev = 'http://crptdev.liuheco.com';
+var baseUrl =  dev ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1729,10 +1727,7 @@ function ajax(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
-      certificate:  {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
-        password: key
-      }
+      certificate:  null 
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
