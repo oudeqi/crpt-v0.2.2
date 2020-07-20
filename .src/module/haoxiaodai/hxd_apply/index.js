@@ -2,7 +2,7 @@ import './index.less'
 import { qa, intro } from './config';
 import service from './service'
 import Utils from '../../../utils';
-import filterDict from '../../../utils/dict_filter/filter'
+import filter from './../../../utils/filter'
 import Router from '../../../router';
 
 apiready = function () {
@@ -41,6 +41,11 @@ apiready = function () {
       QA: qa,
       btnText: '我要申请',
       isChecked: false,
+    },
+    computed: {
+      creditAmountTn: function () {
+        return filter.toThousands(this.productInfo.creditAmount)
+      },
     },
     methods: {
       handleFolder() {
