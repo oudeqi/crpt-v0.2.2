@@ -3,6 +3,8 @@ import {
   openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
+  openIDcardUpload,
+  openFaceUpload,
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -53,6 +55,7 @@ class App {
     // Router.openPage({ key: 'yjd_select_contract', params: {
     //   pageParam: {list: {}}
     // }})
+    // openFaceUpload()
     // return
 
     const userinfo = $api.getStorage('userinfo')

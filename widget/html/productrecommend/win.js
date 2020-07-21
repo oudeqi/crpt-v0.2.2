@@ -3209,7 +3209,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
+var baseUrl$1 = ENV_URLS["testing"];
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -4005,7 +4005,7 @@ var PageController = /*#__PURE__*/function (_Service) {
       loading: false,
       userinfo: $api.getStorage('userinfo'),
       custType: ($api.getStorage('userinfo') || {}).custType,
-      userType: ($api.getStorage('userinfo') || {}).userType
+      userType: ($api.getStorage('userinfo') || {}).userType + ''
     };
     _this.el = {
       list: $api.byId('list'),
@@ -4063,7 +4063,7 @@ var PageController = /*#__PURE__*/function (_Service) {
             _this2.__goDanbao(id, name);
           } else if (String(type) === '3') {
             // 上游入库单贷款（好销贷）
-            if (_this2.userType === '1') {
+            if (_this2.state.userType === '1') {
               // 个人用户
               Router$2.openPage({
                 key: 'hxd_apply',
@@ -4073,7 +4073,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   }
                 }
               });
-            } else if (_this2.userType === '2') {
+            } else if (_this2.state.userType === '2') {
               // 企业用户
               Router$2.openPage({
                 key: 'hxd_a_supply',

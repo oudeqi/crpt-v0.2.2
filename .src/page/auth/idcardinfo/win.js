@@ -29,6 +29,13 @@ apiready = function() {
     nation, authority, timelimit, front, back
   } = pageParam
 
+  let userinfo = $api.getStorage('userinfo') || {}
+  if (userinfo.userType === '1') { // userType === '1' ? '个人账号' : '企业账号'
+    $api.byId('companyName').innerHTML = '“您”'
+  } else {
+    $api.byId('companyName').innerHTML = '“'+userinfo.name+'”法定代表人'
+  }
+
 
   $api.byId('name').value = name
   $api.byId('number').innerHTML = number || ''
@@ -97,6 +104,7 @@ apiready = function() {
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('next'), 'loading')
+      api.showProgress({ title: '加载中...', text: '', modal: false })
       http.upload('/crpt-cust/saas/realnameauth', {
         values: {
           name, gender, number, birthday, address,
@@ -107,6 +115,7 @@ apiready = function() {
           certImageBack: back
         }
       }).then(ret => {
+        api.hideProgress()
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('next'), 'loading')
         if (ret.data.result === 'NO') {
@@ -117,6 +126,7 @@ apiready = function() {
           openAuthResult({status: 'success'})
         }
       }).catch(error => {
+        api.hideProgress()
         api.toast({
           msg: error.msg || '实名认证失败'
         })

@@ -28,7 +28,7 @@ class PageController extends Service {
       loading: false,
       userinfo: $api.getStorage('userinfo'),
       custType: ($api.getStorage('userinfo') || {}).custType,
-      userType: ($api.getStorage('userinfo') || {}).userType
+      userType: ($api.getStorage('userinfo') || {}).userType + ''
     }
     this.el = {
       list: $api.byId('list'),
@@ -61,9 +61,9 @@ class PageController extends Service {
         } else if (String(type) === '2') { // 担保贷款
           this.__goDanbao(id, name)
         } else if (String(type) === '3') { // 上游入库单贷款（好销贷）
-          if (this.userType === '1') { // 个人用户
+          if (this.state.userType === '1') { // 个人用户
             Router.openPage({key: 'hxd_apply', params: {pageParam: { productId: id }}})
-          } else if (this.userType === '2') { // 企业用户
+          } else if (this.state.userType === '2') { // 企业用户
             Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId: id }}})
           } else {
             api.toast({ msg: '未知的用户类型', location: 'middle'})
