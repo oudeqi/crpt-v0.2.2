@@ -9,7 +9,7 @@
 </head>
 <body>
   <div id="app">
-    <div class="box">
+    <div class="box" v-if="dataArr && dataArr.length > 0">
       <ul>
         <li v-for="(item, index) in dataArr" ref="menuItem">
           <a href="#" @click="collapse(index)">
@@ -46,6 +46,9 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div v-else>
+      <p style="text-align: center;margin-top: 20px;">暂无数据</p>
     </div>
   </div>
   <!-- <ul id="list">
