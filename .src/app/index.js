@@ -3,8 +3,6 @@ import {
   openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
-  openBaseinfoFill,
-  openFaceAuth,
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -48,23 +46,18 @@ class App {
     // 4：人脸认证失败，待人工审核
     // 5：待补充基本信息
     // 6：人工审核不通过
-    // $api.clearStorage()
-    // Utils.Router.openPageCreditInformation()
-    // Router.openPage({
-    //   key: 'yjd_account_open',
-    //   params: { }
-    // })
+    // const windows = api.windows()
+    // let xx = windows.find(item => item.name === 'root')
+    // console.log(JSON.stringify(xx))
+
+    // Router.openPage({ key: 'yjd_select_contract', params: {
+    //   pageParam: {list: {}}
+    // }})
     // return
-    // Router.openPage({key: 'com_product_list'})
-    // return
-    // openTabLayout(0)
+
     const userinfo = $api.getStorage('userinfo')
-    console.log('userinfo----------')
-    console.log(JSON.stringify(userinfo))
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}
-      console.log('authStatus----------')
-      console.log(JSON.stringify(authStatus))
       if (authStatus.status === 1) {
         openTabLayout()
         saveDeviceMes()

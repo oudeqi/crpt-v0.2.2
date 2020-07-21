@@ -8,46 +8,43 @@ import { setRefreshHeaderInfo } from '../../../config.js'
 
 Vue.component('list-item', {
   template: `
-    <label>
-      <input type="radio" name="contract" @change="onRadioChange">
-      <div class="seclect-content">
-        <div class="seclect-content__top">
-          <div class="seclect-content__toprow">
-            <span class="key">放养合同编号</span>
-            <span class="value">{{data.outCode}}</span>
-          </div>
-          <div class="seclect-content__toprow">
-            <span class="key">收款方</span>
-            <span class="value">{{data.orgName}}</span>
-          </div>
-          <div class="seclect-content__toprow">
-            <span class="key">签订日期</span>
-            <span class="value">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>
-          </div>
+    <div :class="['seclect-content', {selected: selected && selected.id===data.id}]" @click="onSeclect">
+      <div class="seclect-content__top">
+        <div class="seclect-content__toprow">
+          <span class="key">代养合同编号</span>
+          <span class="value">{{data.outCode}}</span>
         </div>
-        <div class="seclect-content__bott">
-          <div class="seclect-content__bottrow">
-            <span class="key">应收保证金(元)</span>
-            <span class="value">{{numeral(data.receivableBond).format('0,0.00')}}</span>
-          </div>
-          <div class="seclect-content__bottrow">
-            <span class="key">已收保证金(元)</span>
-            <span class="value">{{numeral(data.receivedBond).format('0,0.00')}}</span>
-          </div>
-          <div class="seclect-content__bottrow">
-            <span class="key">剩余应收保证金(元)</span>
-            <span class="value seclect-content__value--emphasize">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>
-          </div>
+        <div class="seclect-content__toprow">
+          <span class="key">收款方</span>
+          <span class="value">{{data.orgName}}</span>
+        </div>
+        <div class="seclect-content__toprow">
+          <span class="key">签订日期</span>
+          <span class="value">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>
         </div>
       </div>
-    </label>
+      <div class="seclect-content__bott">
+        <div class="seclect-content__bottrow">
+          <span class="key">应收保证金(元)</span>
+          <span class="value">{{numeral(data.receivableBond).format('0,0.00')}}</span>
+        </div>
+        <div class="seclect-content__bottrow">
+          <span class="key">已收保证金(元)</span>
+          <span class="value">{{numeral(data.receivedBond).format('0,0.00')}}</span>
+        </div>
+        <div class="seclect-content__bottrow">
+          <span class="key">剩余应收保证金(元)</span>
+          <span class="value seclect-content__value--emphasize">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>
+        </div>
+      </div>
+    </div>
   `,
-  props: ['data'],
+  props: ['data', 'selected'],
   created: function () {
-    console.log(JSON.stringify(this.data))
+    // console.log(JSON.stringify(this.data))
   },
   methods: {
-    onRadioChange () {
+    onSeclect () {
       this.$emit('update:selected', this.data)
     }
   }
@@ -102,6 +99,9 @@ function vmInit () {
           if (res.data && res.data.length > 0) {
             this.list = res.data
             this.more = 'hasMore'
+            if (res.data.length === 1) {
+              this.selected = this.list[0]
+            }
           } else {
             this.more = 'noData'
           }

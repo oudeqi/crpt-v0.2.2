@@ -1,106 +1,110 @@
 import '../../app.css'
 import './win.less'
 
-import { http, setRefreshHeaderInfo } from '../../config.js'
+import http from '../../http'
+import { setRefreshHeaderInfo } from '../../config.js'
 import moment from 'moment'
 import numeral from 'numeral'
+
+function vmInit() {
+  return new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        pageParam: (api.pageParam || {}).list,
+        list: [],
+        loading: false,
+        more: 'noData', // hasMore,noMore,noData
+        bankName: '***',
+        account: '***',
+      }
+    },
+    computed: {
+      status: function () { // 1: '正常', 2: '未按期还款', 3: '今日还款'
+        return this.pageParam.status
+      },
+      productName: function () {
+        return this.pageParam.productName
+      },
+      orderNo: function () {
+        return this.pageParam.orderNo
+      },
+      billDate: function () {
+        return this.pageParam.billDate
+      },
+      sumRepayTotalAmount: function () {
+        return this.pageParam.sumRepayTotalAmount
+      }, 
+      sumRepayPrincipalAmount: function () {
+        return this.pageParam.sumRepayPrincipalAmount
+      }, 
+      sumServiceFee: function () {
+        return this.pageParam.sumServiceFee
+      }, 
+      sumRepayPenaltyAmount: function () {
+        return this.pageParam.sumRepayPenaltyAmount
+      }, 
+      sumRepayInterestAmount: function () {
+        return this.pageParam.sumRepayInterestAmount
+      }, 
+    },
+    mounted: async function () {
+      this.pageInit()
+    },
+    methods: {
+      numeral: numeral,
+      moment: moment,
+
+      async pageInit () {
+        api.showProgress({ title: '加载中...', text: '', modal: false })
+        await this.getPageData()
+        api.hideProgress()
+      },
+
+      async getPageData () {
+        if (this.loading) { return }
+        this.loading = true
+        try {
+          const res = await http.post(`/crpt-credit/credit/repay/mybill/billdetail`, {
+            body: { orderNo: this.orderNo }
+          })
+          api.refreshHeaderLoadDone()
+          this.loading = false
+          if (res.code === 200) {
+            this.bankName = res.data.bankName || ''
+            this.account = res.data.account || ''
+            if (res.data.list && res.data.list.length > 0) {
+              this.list = res.data.list
+            } else {
+              this.more = 'noData'
+            }
+          } else {
+            api.toast({ msg: res.msg || '出错啦', location: 'middle' })
+          }
+        } catch (error) {
+          api.toast({ msg: error.message || '出错啦', location: 'middle' })
+          api.refreshHeaderLoadDone()
+          this.loading = false
+        }
+      },
+
+    }
+  })
+}
 
 apiready = function () {
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeWin();
+      api.closeWin()
     }
-  });
-  let pageParam = api.pageParam || {}
-  console.log(JSON.stringify(pageParam.list))
-  let {
-    billDate,
-    sumRepayTotalAmount,
-    sumRepayPrincipalAmount,
-    sumServiceFee,
-    sumRepayPenaltyAmount,
-    sumRepayInterestAmount,
-  } = pageParam.list
-  let loading = false
-
-  // console.log(JSON.stringify(moment('2020年1月12日').format('YYYY/M/D')))
-  $api.byId('billDate').innerHTML = billDate || ''
-  $api.byId('sumRepayTotalAmount').innerHTML = numeral(sumRepayTotalAmount).format('0,0.00')
-  $api.byId('sumRepayPrincipalAmount').innerHTML = numeral(sumRepayPrincipalAmount).format('0,0.00')
-  $api.byId('sumServiceFee').innerHTML = numeral(sumServiceFee).format('0,0.00')
-  $api.byId('sumRepayPenaltyAmount').innerHTML = numeral(sumRepayPenaltyAmount).format('0,0.00')
-  $api.byId('sumRepayInterestAmount').innerHTML = numeral(sumRepayInterestAmount).format('0,0.00')
-
-  function getPageData (cb) {
-    if (loading) {
-      return
-    }
-    api.showProgress({
-      title: '加载中...',
-      text: '',
-      modal: false
-    })
-    loading = true
-    http.post(`/crpt-credit/credit/repay/mybill/billdetail`, {
-      body: {
-        orderNo: pageParam.list.orderNo
-      }
-    }).then(res => {
-      loading = false
-      api.hideProgress()
-      api.refreshHeaderLoadDone()
-      cb(res.data)
-    }).catch(error => {
-      loading = false
-      api.hideProgress()
-      api.refreshHeaderLoadDone()
-      api.toast({ msg: error.msg || '数据加载失败' })
-    })
-  }
-
-
-  function appendList (data) {
-    data.forEach(item => {
-      $api.append($api.byId('list'), `
-        <li>
-          <div class="t">
-            <div class="tit">
-              <span class="label">应还(元)</span>
-              <span class="amount">${numeral(item.repayTotalAmount).format('0,0.00')}</span>
-            </div>
-            <div class="msg">
-              <span>利息：${numeral(item.repayInterestAmount).format('0,0.00')}</span>
-              <span>本金 ${numeral(item.repayPrincipalAmount).format('0,0.00')} + 费用 ${numeral(item.serviceFee).format('0,0.00')}</span>
-            </div>
-          </div>
-          <div class="b">
-            <span>${item.repayDate}</span>
-            <span>第${item.curPeriod}/${item.repayPeriod}期</span>
-          </div>
-        </li>
-      `)
-    })
-    api.parseTapmode()
-  }
-
-  function initPageData() {
-    getPageData(function (res) {
-      $api.byId('bankName').innerHTML = res.bankName || ''
-      $api.byId('account').innerHTML = res.account || ''
-      let list = res.list
-      $api.byId('list').innerHTML = ''
-      appendList(list)
-    })
-  }
-
-  initPageData()
-
-  setRefreshHeaderInfo(function(ret, err) {
-    initPageData()
   })
 
+  const vm = vmInit()
 
+  setRefreshHeaderInfo(function(ret, err) {
+    vm.getPageData()
+  })
 
 }

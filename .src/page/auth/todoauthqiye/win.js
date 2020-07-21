@@ -10,11 +10,9 @@ import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../co
 apiready = function() {
 
   api.addEventListener({
-    name: 'navitembtn'
+    name: 'keyback'
   }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin()
-    }
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
   })
 
   let userinfo = $api.getStorage('userinfo')
@@ -248,17 +246,6 @@ apiready = function() {
             location: 'middle',
             global: true
           })
-          let windows = api.windows()
-          if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(win => {
-              // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
-                api.closeWin({
-                  name: win.name
-                })
-              }
-            })
-          }
           $api.clearStorage()
           openRegLogin()
         })

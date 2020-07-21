@@ -2,9 +2,10 @@ import '../../../app.css'
 import './win.css'
 
 import { openProductDetails, openTabLayout, openDanbaoKaitong } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { setRefreshHeaderInfo } from '../../../config.js'
 import numeral from 'numeral'
-
+import http from '../../../http'
+import Router from '../../../router'
 
 class Service {
   getData ({ custType } = {}) {
@@ -14,7 +15,7 @@ class Service {
   }
   // 获取担保状态
   queryDanbaoStatus () {
-     return http.get('/crpt-guarantee/gt/apply/query')
+    return http.get('/crpt-guarantee/gt/apply/query')
   }
 }
 
@@ -26,7 +27,8 @@ class PageController extends Service {
       pageNo: 1,
       loading: false,
       userinfo: $api.getStorage('userinfo'),
-      custType: ($api.getStorage('userinfo') || {}).custType
+      custType: ($api.getStorage('userinfo') || {}).custType,
+      userType: ($api.getStorage('userinfo') || {}).userType
     }
     this.el = {
       list: $api.byId('list'),
@@ -40,9 +42,9 @@ class PageController extends Service {
     // 下拉刷新
     setRefreshHeaderInfo((ret, err) => {
       this.state.pageNo = 1
-      this._getPageData(data => {
+      this.__getPageData(data => {
         this.el.list.innerHTML = ''
-        this._renderList(data)
+        this.__renderList(data)
         $api.byId('btnContainer').style.display = 'block'
       })
     })
@@ -52,10 +54,20 @@ class PageController extends Service {
       let li = $api.closest(event.target, 'li')
       if (btn) {
         let name = btn.dataset.name
-        let type = btn.dataset.type // 产品类型：1-信用贷款 2-担保贷款
+        let type = String(btn.dataset.type) // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销贷）
         let id = btn.dataset.id
-        if (type === '2' || type === 2) {
-          this._goDanbao(id, name)
+        if (String(type) === '1') { // 信用贷款（押金贷）
+          Router.openPage({key: 'yjd_account_open', params: {pageParam: { productId: id }}})
+        } else if (String(type) === '2') { // 担保贷款
+          this.__goDanbao(id, name)
+        } else if (String(type) === '3') { // 上游入库单贷款（好销贷）
+          if (this.userType === '1') { // 个人用户
+            Router.openPage({key: 'hxd_apply', params: {pageParam: { productId: id }}})
+          } else if (this.userType === '2') { // 企业用户
+            Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId: id }}})
+          } else {
+            api.toast({ msg: '未知的用户类型', location: 'middle'})
+          }
         } else {
           api.alert({
             title: '提示',
@@ -64,19 +76,15 @@ class PageController extends Service {
         }
       } else if (li) {
         let id = li.dataset.id
-        if (id) {
-          openProductDetails({
-            id,
-            open: 0 // 1 已开通， 0未开通
-          })
-        } else {
-          api.toast({ msg: 'id 不存在' })
-        }
+        openProductDetails({
+          id,
+          open: 0 // 1 已开通， 0未开通
+        })
       }
     }
   }
   // 去担保开通页面
-  _goDanbao (id, name) {
+  __goDanbao (id, name) {
     this.queryDanbaoStatus().then(res => {
       api.toast({
         msg: '已有开通的担保产品',
@@ -97,7 +105,7 @@ class PageController extends Service {
     })
   }
   // 生成列表
-  _renderList (arr) {
+  __renderList (arr) {
     arr.forEach(item => {
       $api.append(this.el.list, `
         <li tapmode data-id="${item.id || ''}">
@@ -123,7 +131,7 @@ class PageController extends Service {
     api.parseTapmode()
   }
   // 获取页面数据
-  _getPageData (cb) {
+  __getPageData (cb) {
     if (this.state.loading) { return }
     this.state.loading = true
     let { custType } = this.state

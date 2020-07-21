@@ -910,12 +910,12 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openDanbaoRenForm(_ref10) {
-  var gtCreditId = _ref10.gtCreditId,
-      gtCounterId = _ref10.gtCounterId,
-      type = _ref10.type,
-      status = _ref10.status,
-      flowStatus = _ref10.flowStatus;
+function openDanbaoRenForm(_ref9) {
+  var gtCreditId = _ref9.gtCreditId,
+      gtCounterId = _ref9.gtCounterId,
+      type = _ref9.type,
+      status = _ref9.status,
+      flowStatus = _ref9.flowStatus;
   api.openTabLayout({
     name: "html/danbaorenform/index",
     title: '担保人调查表',

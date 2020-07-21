@@ -2586,7 +2586,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {

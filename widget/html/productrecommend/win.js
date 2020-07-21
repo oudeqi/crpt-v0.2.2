@@ -239,9 +239,9 @@ function openRegLogin() {
 
 
 function openProductDetails() {
-  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      id = _ref6.id,
-      open = _ref6.open;
+  var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref5.id,
+      open = _ref5.open;
 
   api.openTabLayout({
     name: 'html/productdetails/win',
@@ -273,14 +273,14 @@ function openProductDetails() {
 
 
 function openDanbaoKaitong() {
-  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      step = _ref8.step,
-      _ref8$title = _ref8.title,
-      title = _ref8$title === void 0 ? '普惠担保' : _ref8$title,
-      productId = _ref8.productId,
-      creditStatus = _ref8.creditStatus,
-      _ref8$back = _ref8.back,
-      back = _ref8$back === void 0 ? false : _ref8$back;
+  var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      step = _ref7.step,
+      _ref7$title = _ref7.title,
+      title = _ref7$title === void 0 ? '普惠担保' : _ref7$title,
+      productId = _ref7.productId,
+      creditStatus = _ref7.creditStatus,
+      _ref7$back = _ref7.back,
+      back = _ref7$back === void 0 ? false : _ref7$back;
 
   var i = step;
 
@@ -3204,6 +3204,759 @@ return numeral;
 }));
 });
 
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
+
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
+
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers),
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
+        password: key
+      }
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
+
+// 主题色
+var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
+
+var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
+
+var navigationBarWhite = {
+  hideBackButton: false,
+  background: '#fff',
+  color: textColor,
+  shadow: 'transparent',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: themeMainColor,
+    iconPath: 'widget://image/back_green_big.png'
+  }]
+}; // 绿色底导航
+
+var navigationBarGreen = {
+  hideBackButton: false,
+  background: themeMainColor,
+  color: '#fff',
+  shadow: 'transparent',
+  fontSize: 18,
+  fontWeight: 'bold',
+  leftButtons: [{
+    text: '',
+    color: '#fff',
+    iconPath: 'widget://image/back_white_big.png'
+  }]
+};
+
+/**
+ * themeMainColor 主题色
+ * textColor 导航文字黑色
+ * navigationBarWhite 浅色底导航
+ * navigationBarGreen 绿色底导航
+ */
+
+var routerMap = {
+  yjd_select_contract: {
+    name: 'yjd_select_contract',
+    title: '选择代养合同',
+    url: 'widget://html/yjd_select_contract/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_confirm: {
+    name: 'yjd_apply_confirm',
+    title: '申请贷款',
+    url: 'widget://html/yjd_apply_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_face_auth: {
+    name: 'yjd_face_auth',
+    title: '人脸识别',
+    url: 'widget://html/yjd_face_auth/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_send_msgcode: {
+    name: 'yjd_send_msgcode',
+    title: '短信验证',
+    url: 'widget://html/yjd_send_msgcode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    softInputMode: 'pan',
+    navigationBar: navigationBarWhite
+  },
+  yjd_hukouben_upload: {
+    name: 'yjd_hukouben_upload',
+    title: '上传户口本',
+    url: 'widget://html/yjd_hukouben_upload/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_status: {
+    name: 'yjd_apply_status',
+    title: '贷款申请',
+    url: 'widget://html/yjd_apply_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_apply_result: {
+    name: 'yjd_apply_result',
+    title: '贷款申请',
+    url: 'widget://html/yjd_apply_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_loan_signing: {
+    name: 'yjd_loan_signing',
+    title: '贷款签约',
+    url: 'widget://html/yjd_loan_signing/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_signing_result: {
+    name: 'yjd_signing_result',
+    title: '签约结果',
+    url: 'widget://html/yjd_signing_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_account_open: {
+    name: 'yjd_account_open',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  yjd_account_open_xinwang: {
+    name: 'yjd_account_open_xinwang',
+    title: '开通新网账户',
+    url: 'widget://html/yjd_account_open_xinwang/index.html',
+    bgColor: '#fff',
+    reload: true
+  },
+  // 押金贷产品详情
+  yjd_product_detail: {
+    name: 'yjd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/yjd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 贷款申请
+  loan_application: {
+    name: 'loan_application',
+    title: '待申请',
+    url: 'widget://html/loan_application/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 贷款确认
+  loan_confirm: {
+    name: 'loan_confirm',
+    title: '贷款确认',
+    url: 'widget://html/loan_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 押金贷贷款详情
+  yjd_loan_details: {
+    name: 'yjd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/yjd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 公用的贷款详情
+  loan_details: {
+    name: 'loan_details',
+    title: '贷款详情',
+    url: 'widget://html/loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款计划
+  repay_plan: {
+    name: 'repay_plan',
+    title: '还款计划',
+    url: 'widget://html/repay_plan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款记录
+  repay_record: {
+    name: 'repay_record',
+    title: '还款记录',
+    url: 'widget://html/repay_record/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷代养合同
+  yjd_contract_daiyang: {
+    name: 'yjd_contract_daiyang',
+    title: '代养合同',
+    url: 'widget://html/yjd_contract_daiyang/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 押金贷贷款合同
+  yjd_contract_loan: {
+    name: 'yjd_contract_loan',
+    title: '贷款合同',
+    url: 'widget://html/yjd_contract_loan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+var routerHXDConfig = {
+  // 好销贷授信申请
+  hxd_apply: {
+    name: 'hxd_apply',
+    title: '产品介绍',
+    url: 'widget://html/hxd_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请补充企业信息
+  hxd_a_supply: {
+    name: 'hxd_a_supply',
+    title: '补充企业信息',
+    url: 'widget://html/hxd_a_supply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷授信申请成功/失败
+  hxd_a_success: {
+    name: 'hxd_a_success',
+    title: '产品开通',
+    url: 'widget://html/hxd_a_success/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarGreen
+  },
+  // 好销贷产品详情
+  hxd_product_detail: {
+    name: 'hxd_product_detail',
+    title: '产品详情',
+    url: 'widget://html/hxd_product_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷额度变化详情
+  hxd_quota: {
+    name: 'hxd_quota',
+    title: '额度变化详情',
+    url: 'widget://html/hxd_quota/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款申请
+  hxd_u_apply: {
+    name: 'hxd_u_apply',
+    title: '申请用款',
+    url: 'widget://html/hxd_u_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款确认
+  hxd_u_confirm: {
+    name: 'hxd_u_confirm',
+    title: '用款确认',
+    url: 'widget://html/hxd_u_confirm/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款确认
+  hxd_u_try_detail: {
+    name: 'hxd_u_try_detail',
+    title: '用款试算',
+    url: 'widget://html/hxd_u_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款校验
+  hxd_u_smscode: {
+    name: 'hxd_u_smscode',
+    title: '用款校验',
+    url: 'widget://html/hxd_u_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷用款结果
+  hxd_u_result: {
+    name: 'hxd_u_result',
+    title: '审核结果',
+    url: 'widget://html/hxd_u_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算
+  hxd_r_try: {
+    name: 'hxd_r_try',
+    title: '还款试算',
+    url: 'widget://html/hxd_r_try/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款试算详情页
+  hxd_r_try_detail: {
+    name: 'hxd_r_try_detail',
+    title: '还款试算详情',
+    url: 'widget://html/hxd_r_try_detail/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_smscode: {
+    name: 'hxd_r_smscode',
+    title: '还款校验',
+    url: 'widget://html/hxd_r_smscode/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷还款校验页
+  hxd_r_result: {
+    name: 'hxd_r_result',
+    title: '还款结果',
+    url: 'widget://html/hxd_r_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户申请
+  hxd_jf_apply: {
+    name: 'hxd_jf_apply',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_apply/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户成功页
+  hxd_jf_account: {
+    name: 'hxd_jf_account',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_account/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户企业补充信息
+  hxd_jf_enterprise: {
+    name: 'hxd_jf_enterprise',
+    title: '开通信息补充',
+    url: 'widget://html/hxd_jf_enterprise/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户结果
+  hxd_jf_result: {
+    name: 'hxd_jf_result',
+    title: '开户结果',
+    url: 'widget://html/hxd_jf_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷金服开户状态查看
+  hxd_jf_status: {
+    name: 'hxd_jf_status',
+    title: '转账还款通道',
+    url: 'widget://html/hxd_jf_status/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 好销贷贷款详情
+  hxd_loan_details: {
+    name: 'hxd_loan_details',
+    title: '贷款详情',
+    url: 'widget://html/hxd_loan_details/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+var routerConfig = {
+  // 消息中心
+  msgcenter: {
+    name: 'html/msgcenter/win',
+    title: '消息中心',
+    url: 'widget://html/msgcenter/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的账单
+  billlist: {
+    name: 'html/billlist/win',
+    title: '我的账单',
+    url: 'widget://html/billlist/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 账单详情
+  billdetails: {
+    name: 'html/billdetails/win',
+    title: '账单详情',
+    url: 'widget://html/billdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 我的贷款
+  my_loan: {
+    name: 'html/my_loan/win',
+    title: '我的贷款',
+    url: 'widget://html/my_loan/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: false,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的额度
+  my_quota: {
+    name: 'html/my_quota/index',
+    title: '我的额度',
+    url: 'widget://html/my_quota/index.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 已开通的产品
+  myproduct: {
+    name: 'html/myproduct/win',
+    title: '我开通的产品',
+    url: 'widget://html/myproduct/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 联系我们
+  contactus: {
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 设置
+  settings: {
+    name: 'html/settings/win',
+    title: '设置',
+    url: 'widget://html/settings/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarWhite
+  },
+  // 我的钱包详情
+  wallet: {
+    name: 'wallet',
+    title: '希望钱包',
+    url: 'widget://html/wallet/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 通用产品列表
+  com_product_list: {
+    name: 'com_product_list',
+    title: '产品列表',
+    url: 'widget://html/com_product_list/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 合同页
+  agreement: {
+    name: 'agreement',
+    title: '查看合同',
+    url: 'widget://html/agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款试算页面
+  com_repay_trial: {
+    name: 'com_repay_trial',
+    title: '还款试算',
+    url: 'widget://html/com_repay_trial/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 还款结果页面
+  com_repay_result: {
+    name: 'com_repay_result',
+    title: '还款结果',
+    url: 'widget://html/com_repay_result/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$4({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var Router$1 = /*#__PURE__*/function () {
+  function Router() {
+    classCallCheck(this, Router);
+  }
+
+  createClass(Router, [{
+    key: "openPage",
+    // 打开window级别页面
+    value: function openPage(_ref) {
+      var key = _ref.key,
+          params = _ref.params;
+      api.openTabLayout(_objectSpread$5({}, profile[key], {}, params));
+    }
+  }]);
+
+  return Router;
+}();
+
+var Router$2 = new Router$1();
+
 function _createSuper(Derived) { return function () { var Super = getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
@@ -3219,7 +3972,7 @@ var Service = /*#__PURE__*/function () {
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           custType = _ref.custType;
 
-      return http.get('/crpt-product/product/online/list', {
+      return http$1.get('/crpt-product/product/online/list', {
         values: {
           custType: custType
         }
@@ -3229,7 +3982,7 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "queryDanbaoStatus",
     value: function queryDanbaoStatus() {
-      return http.get('/crpt-guarantee/gt/apply/query');
+      return http$1.get('/crpt-guarantee/gt/apply/query');
     }
   }]);
 
@@ -3251,7 +4004,8 @@ var PageController = /*#__PURE__*/function (_Service) {
       pageNo: 1,
       loading: false,
       userinfo: $api.getStorage('userinfo'),
-      custType: ($api.getStorage('userinfo') || {}).custType
+      custType: ($api.getStorage('userinfo') || {}).custType,
+      userType: ($api.getStorage('userinfo') || {}).userType
     };
     _this.el = {
       list: $api.byId('list'),
@@ -3275,10 +4029,10 @@ var PageController = /*#__PURE__*/function (_Service) {
       setRefreshHeaderInfo$1(function (ret, err) {
         _this2.state.pageNo = 1;
 
-        _this2._getPageData(function (data) {
+        _this2.__getPageData(function (data) {
           _this2.el.list.innerHTML = '';
 
-          _this2._renderList(data);
+          _this2.__renderList(data);
 
           $api.byId('btnContainer').style.display = 'block';
         });
@@ -3290,12 +4044,51 @@ var PageController = /*#__PURE__*/function (_Service) {
 
         if (btn) {
           var name = btn.dataset.name;
-          var type = btn.dataset.type; // 产品类型：1-信用贷款 2-担保贷款
+          var type = String(btn.dataset.type); // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销贷）
 
           var id = btn.dataset.id;
 
-          if (type === '2' || type === 2) {
-            _this2._goDanbao(id, name);
+          if (String(type) === '1') {
+            // 信用贷款（押金贷）
+            Router$2.openPage({
+              key: 'yjd_account_open',
+              params: {
+                pageParam: {
+                  productId: id
+                }
+              }
+            });
+          } else if (String(type) === '2') {
+            // 担保贷款
+            _this2.__goDanbao(id, name);
+          } else if (String(type) === '3') {
+            // 上游入库单贷款（好销贷）
+            if (_this2.userType === '1') {
+              // 个人用户
+              Router$2.openPage({
+                key: 'hxd_apply',
+                params: {
+                  pageParam: {
+                    productId: id
+                  }
+                }
+              });
+            } else if (_this2.userType === '2') {
+              // 企业用户
+              Router$2.openPage({
+                key: 'hxd_a_supply',
+                params: {
+                  pageParam: {
+                    productId: id
+                  }
+                }
+              });
+            } else {
+              api.toast({
+                msg: '未知的用户类型',
+                location: 'middle'
+              });
+            }
           } else {
             api.alert({
               title: '提示',
@@ -3304,25 +4097,18 @@ var PageController = /*#__PURE__*/function (_Service) {
           }
         } else if (li) {
           var _id = li.dataset.id;
+          openProductDetails({
+            id: _id,
+            open: 0 // 1 已开通， 0未开通
 
-          if (_id) {
-            openProductDetails({
-              id: _id,
-              open: 0 // 1 已开通， 0未开通
-
-            });
-          } else {
-            api.toast({
-              msg: 'id 不存在'
-            });
-          }
+          });
         }
       };
     } // 去担保开通页面
 
   }, {
-    key: "_goDanbao",
-    value: function _goDanbao(id, name) {
+    key: "__goDanbao",
+    value: function __goDanbao(id, name) {
       this.queryDanbaoStatus().then(function (res) {
         api.toast({
           msg: '已有开通的担保产品',
@@ -3345,8 +4131,8 @@ var PageController = /*#__PURE__*/function (_Service) {
     } // 生成列表
 
   }, {
-    key: "_renderList",
-    value: function _renderList(arr) {
+    key: "__renderList",
+    value: function __renderList(arr) {
       var _this3 = this;
 
       arr.forEach(function (item) {
@@ -3356,8 +4142,8 @@ var PageController = /*#__PURE__*/function (_Service) {
     } // 获取页面数据
 
   }, {
-    key: "_getPageData",
-    value: function _getPageData(cb) {
+    key: "__getPageData",
+    value: function __getPageData(cb) {
       var _this4 = this;
 
       if (this.state.loading) {

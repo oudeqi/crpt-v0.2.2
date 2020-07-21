@@ -2306,6 +2306,9 @@ function vmInit() {
       };
     },
     computed: {
+      name: function name() {
+        return this.userinfo.name;
+      },
       custType: function custType() {
         return this.userinfo.custType;
       },
@@ -2333,7 +2336,7 @@ function vmInit() {
             this.postData.idNumber = '';
             api.alert({
               title: '提示',
-              msg: "\u5A5A\u59FB\u72B6\u51B5\u4E3A\u5DF2\u5A5A\u3001\u521D\u5A5A\u3001\u518D\u5A5A\u3001\u590D\u5A5A\u65F6\u4EB2\u5C5E\u5173\u7CFB\u53EA\u80FD\u9009\u62E9\u914D\u5076"
+              msg: "\u5A5A\u59FB\u72B6\u51B5\u4E3A\u5DF2\u5A5A\u65F6\u4EB2\u5C5E\u5173\u7CFB\u53EA\u80FD\u9009\u62E9\u914D\u5076"
             });
           }
         }
@@ -2608,7 +2611,7 @@ function vmInit() {
 
         if (postData.livingConditions === '') {
           api.toast({
-            msg: '请选择居居住状况',
+            msg: '请选择居住状况',
             location: 'middle'
           });
           valid = false;
@@ -2770,5 +2773,12 @@ function vmInit() {
 }
 
 apiready = function apiready() {
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
+    }
+  });
   vmInit();
 };

@@ -179,7 +179,8 @@ function openTodoAuthGeren() {
       type: 'none'
     },
     navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
+      hideBackButton: true,
+      leftButtons: []
     })
   });
 }
@@ -197,7 +198,8 @@ function openTodoAuthQiye() {
       type: 'none'
     },
     navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
+      hideBackButton: true,
+      leftButtons: []
     })
   });
 } // 企业信息确认
@@ -2463,7 +2465,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite$1
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {
@@ -2838,24 +2840,17 @@ var App = /*#__PURE__*/function () {
       // 4：人脸认证失败，待人工审核
       // 5：待补充基本信息
       // 6：人工审核不通过
-      // $api.clearStorage()
-      // Utils.Router.openPageCreditInformation()
-      // Router.openPage({
-      //   key: 'yjd_account_open',
-      //   params: { }
-      // })
+      // const windows = api.windows()
+      // let xx = windows.find(item => item.name === 'root')
+      // console.log(JSON.stringify(xx))
+      // Router.openPage({ key: 'yjd_select_contract', params: {
+      //   pageParam: {list: {}}
+      // }})
       // return
-      // Router.openPage({key: 'com_product_list'})
-      // return
-      // openTabLayout(0)
       var userinfo = $api.getStorage('userinfo');
-      console.log('userinfo----------');
-      console.log(JSON.stringify(userinfo));
 
       if (userinfo) {
         var authStatus = $api.getStorage('authStatus') || {};
-        console.log('authStatus----------');
-        console.log(JSON.stringify(authStatus));
 
         if (authStatus.status === 1) {
           openTabLayout();

@@ -2312,7 +2312,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {
@@ -2523,10 +2523,10 @@ apiready = function apiready() {
       } else {
         $api.byId('prodopencount').innerHTML = '';
       }
-    })["catch"](function (error) {
-      api.toast({
-        msg: error.msg || '获取信息失败'
-      });
+    })["catch"](function (error) {// 如果不去掉，登录状态过期会重复弹出提示
+      // api.toast({
+      //   msg: error.msg || '获取信息失败'
+      // })
     });
   }
 

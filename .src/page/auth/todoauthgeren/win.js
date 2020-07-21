@@ -10,11 +10,9 @@ import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../co
 apiready = function() {
 
   api.addEventListener({
-    name: 'navitembtn'
+    name: 'keyback'
   }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin()
-    }
+    // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
   })
 
   let userinfo = $api.getStorage('userinfo')
@@ -80,7 +78,7 @@ apiready = function() {
         <div class="badge">1</div>
         <div class="content">
           <strong>实名认证</strong>
-          <p>请准备您人的二代身份证</p>
+          <p>请准备您的二代身份证</p>
         </div>
       </div>
       `
@@ -142,7 +140,7 @@ apiready = function() {
         <div class="badge">3</div>
         <div class="content">
           <strong>补充基础信息</strong>
-          <p>请填写法定代表人的基础信息</p>
+          <p>请填写您的基础信息</p>
         </div>
       </div>
       `
@@ -245,17 +243,6 @@ apiready = function() {
             location: 'middle',
             global: true
           })
-          let windows = api.windows()
-          if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(win => {
-              // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
-                api.closeWin({
-                  name: win.name
-                })
-              }
-            })
-          }
           $api.clearStorage()
           openRegLogin()
         })

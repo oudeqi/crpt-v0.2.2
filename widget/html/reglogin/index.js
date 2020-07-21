@@ -2145,6 +2145,12 @@ var PageController = /*#__PURE__*/function (_Service) {
 }(Service);
 
 apiready = function apiready() {
+  api.closeWin({
+    name: 'html/todoauthgeren/win'
+  });
+  api.closeWin({
+    name: 'html/todoauthqiye/win'
+  });
   var ctrl = new PageController();
   ctrl.bindEvent();
   api.addEventListener({

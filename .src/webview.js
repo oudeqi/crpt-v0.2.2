@@ -277,6 +277,7 @@ function openBaseinfoFill () {
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
+    scrollToTop: true,
     slidBackEnabled: true,
     navigationBar: navigationBarGreen
   })
@@ -298,6 +299,7 @@ function openTodoAuthGeren () {
     navigationBar: {
       ...navigationBarWhite,
       hideBackButton: true,
+      leftButtons: []
     }
   })
 }
@@ -316,6 +318,7 @@ function openTodoAuthQiye () {
     navigationBar: {
       ...navigationBarWhite,
       hideBackButton: true,
+      leftButtons: []
     }
   })
 }
@@ -455,35 +458,6 @@ function openMsgDetails () {
   })
 }
 
-// 账单详情
-function openBillDetails (id, {
-  billDate,
-  sumRepayTotalAmount,
-  sumRepayPrincipalAmount,
-  sumServiceFee,
-  sumRepayPenaltyAmount,
-  sumRepayInterestAmount,
-} = {}) {
-  api.openTabLayout({
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: {
-      id,
-      billDate,
-      sumRepayTotalAmount,
-      sumRepayPrincipalAmount,
-      sumServiceFee,
-      sumRepayPenaltyAmount,
-      sumRepayInterestAmount,
-    },
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  })
-}
 
 
 
@@ -987,7 +961,6 @@ export {
   openAuthResult,
   openMsgList,
   openMsgDetails,
-  openBillDetails,
   openChangePwd,
   openContactUs,
   openProductDetails,

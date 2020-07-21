@@ -14,10 +14,7 @@
 
     <section class="card">
       <div class="tit">
-        请填写
-        <span v-if="String(userType)==='2'">法定代表人</span>
-        <span v-else>您</span>
-        的个人信息
+        <span>请填写</span><span v-if="String(userType)==='2'">“{{name}}”法定代表人</span><span v-else>“您”</span><span>的个人信息</span>
       </div>
       <div class="indent">
         <div class="ipt-box">
@@ -119,10 +116,7 @@
   
     <section class="card">
       <div class="tit">
-        请填写
-        <span v-if="String(userType)==='2'">法定代表人</span>
-        <span v-else>您</span>
-        的联系人信息
+        <span>请填写</span><span v-if="String(userType)==='2'">“{{name}}”法定代表人</span><span v-else>“您”</span><span>的联系人信息</span>
       </div>
       <div class="indent">
         <div class="indent-tit">直属亲属</div>
@@ -151,7 +145,7 @@
           <div class="ipt-box">
             <div class="label">身份证号码</div>
             <div class="ipt">
-              <input type="number" v-model="postData.idNumber" placeholder="请输入">
+              <input type="text" v-model="postData.idNumber" placeholder="请输入">
             </div>
           </div>
         </div>

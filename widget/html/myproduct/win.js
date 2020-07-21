@@ -52,9 +52,9 @@ function openContactUs() {
 
 
 function openProductDetails() {
-  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      id = _ref6.id,
-      open = _ref6.open;
+  var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref5.id,
+      open = _ref5.open;
 
   api.openTabLayout({
     name: 'html/productdetails/win',
