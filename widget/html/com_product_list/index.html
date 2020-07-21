@@ -16,9 +16,9 @@
   <link rel="stylesheet" href="./index.css"></head>
   <body>
     <div id="app">
-      <div class="product-list">
-        
-        <ul v-if="pageParam.pageFrom === 'gongyingshang'">
+      
+      <div class="product-list" v-if="pageParam.pageFrom === 'gongyingshang'">
+        <ul v-if="hxdData && hxdData.length > 0">
           <li v-for="item in hxdData" :key="item.productId">
             <div class="left">
               <h3>{{item.productTotalLimit}}万</h3>
@@ -43,9 +43,17 @@
             </div>
           </li>
         </ul>
+        <div v-else>
+          <p style="text-align: center;margin-top: 20px;background: #efefef;">暂无数据</p>
+        </div>
+          
 
-        
-        <ul v-if="pageParam.pageFrom === 'hezuoyanghu'">
+          
+      </div>
+
+      
+      <div class="product-list" v-if="pageParam.pageFrom === 'hezuoyanghu'">
+        <ul v-if="yjdData && yjdData.length > 0">
           <li v-for="item in yjdData" :key="item.id">
             <div class="left">
               <h3>{{filter.toThousands(item.totalLimit)}}</h3>
@@ -60,11 +68,10 @@
             </div>
           </li>
         </ul>
-          
-
-          
+        <div v-else>
+          <p style="text-align: center;margin-top: 20px;background: #efefef;">暂无数据</p>
+        </div>
       </div>
-
       
         
         
