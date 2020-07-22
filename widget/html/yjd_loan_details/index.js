@@ -3696,8 +3696,11 @@ function vmInit() {
       };
     },
     computed: {
-      id: function id() {
+      orderId: function orderId() {
         return this.pageParam.id;
+      },
+      orderNo: function orderNo() {
+        return this.pageParam.orderNo;
       },
       status: function status() {
         return this.pageParam.status || 'valid';
@@ -3739,7 +3742,7 @@ function vmInit() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var id, url, res;
+          var orderId, url, res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -3747,11 +3750,11 @@ function vmInit() {
                   // 业务单状态：
                   // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
                   // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-                  id = _this2.id;
+                  orderId = _this2.orderId;
                   url = _this2.url[_this2.status];
                   _context2.prev = 2;
                   _context2.next = 5;
-                  return http$1.get("".concat(url, "?orderId=").concat(id));
+                  return http$1.get("".concat(url, "?orderId=").concat(orderId));
 
                 case 5:
                   res = _context2.sent;
@@ -3776,34 +3779,34 @@ function vmInit() {
         }))();
       },
       openPlan: function openPlan() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_plan',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });
       },
       openRecord: function openRecord() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_record',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });
       },
       openLoanContract: function openLoanContract() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'yjd_contract_loan',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });

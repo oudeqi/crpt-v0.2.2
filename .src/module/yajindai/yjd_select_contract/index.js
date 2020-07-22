@@ -68,7 +68,6 @@ function vmInit () {
         loading: false,
         pageParam: api.pageParam || {},
         list: [],
-        loading: false,
         more: 'noData', // hasMore,noMore,noData
       }
     },
@@ -95,13 +94,10 @@ function vmInit () {
         this.loading = true
         try {
           const res = await Service.getContract(this.productId || '')
-          api.refreshHeaderLoadDone()
           if (res.data && res.data.length > 0) {
             this.list = res.data
             this.more = 'hasMore'
-            if (res.data.length === 1) {
-              this.selected = this.list[0]
-            }
+            this.selected = this.list[0]
           } else {
             this.more = 'noData'
           }
@@ -109,6 +105,7 @@ function vmInit () {
           api.toast({ msg: e.msg || '出错啦', location: 'middle' })
         }
         this.loading = false
+        api.refreshHeaderLoadDone()
       },
 
       next () {

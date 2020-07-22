@@ -8,15 +8,121 @@ import http from '../../../http'
 import Router from '../../../router'
 
 class Service {
-  getData ({ custType } = {}) {
-    return http.get('/crpt-product/product/online/list', {
-      values: { custType }
+  // 获取推荐列表
+  static getData (userType) {
+    // /crpt-product/product/online/list
+    // /crpt-product/product/online/list/after/register
+    return http.get('/crpt-product/product/online/list/after/register', {
+      values: { userType }
     })
   }
   // 获取担保状态
-  queryDanbaoStatus () {
+  static queryDanbaoStatus () {
     return http.get('/crpt-guarantee/gt/apply/query')
   }
+
+}
+
+
+function vmInit () {
+  return new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        loading: false,
+        userinfo: $api.getStorage('userinfo') || {},
+        list: [],
+        more: 'noData', // hasMore,noMore,noData
+      }
+    },
+    computed: {
+      custType: function () {
+        return this.userinfo.custType
+      },
+      userType: function () { // // 用户类型：1-个人 2-企业
+        return this.userinfo.userType + ''
+      }
+    },
+    mounted: function () {
+      this.initPage()
+    },
+    methods: {
+
+      numeral: numeral,
+
+      async initPage () {
+        api.showProgress({ title: '数据加载中...', text: '' })
+        await this.getpageList()
+        api.hideProgress()
+      },
+
+      async getpageList () {
+        if (this.loading) { return }
+        this.loading = true
+        try {
+          const res = await Service.getData(this.userType)
+          if (res.data && res.data.list && res.data.list.length > 0) {
+            this.list = res.data.list
+            this.more = 'hasMore'
+          } else {
+            this.more = 'noData'
+          }
+        } catch (e) {
+          api.toast({ msg: e.msg || '出错啦', location: 'middle' })
+        }
+        this.loading = false
+        api.refreshHeaderLoadDone()
+      },
+
+      goIndex () {
+        openTabLayout()
+      },
+
+      handleBtnClick (record) {
+        let name = record.name
+        let type = record.type + '' // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销贷）
+        let id = record.id
+        if (type === '1') { // 信用贷款（押金贷）
+          Router.openPage({key: 'yjd_account_open', params: {pageParam: { productId: id }}})
+        } else if (type === '2') { // 担保贷款
+          this.__goDanbao(id, name)
+        } else if (type === '3') { // 上游入库单贷款（好销贷）
+          if (this.userType === '1') { // 个人用户
+            Router.openPage({key: 'hxd_apply', params: {pageParam: { productId: id }}})
+          } else if (this.userType === '2') { // 企业用户
+            Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId: id }}})
+          } else {
+            api.toast({ msg: '未知的用户类型', location: 'middle'})
+          }
+        } else {
+          api.alert({
+            title: '提示',
+            msg: '功能开发中...',
+          })
+        }
+      },
+
+      // 去担保开通页面
+      __goDanbao (id, name) {
+        Service.queryDanbaoStatus().then(res => {
+          api.toast({ msg: '已有开通的担保产品', location: 'middle' })
+        }).catch(error => {
+          if (error.code === 3002) { // 无担保产品
+            openDanbaoKaitong({ step: 0, productId: id })
+          } else {
+            api.toast({ msg: error.msg || '查询担保状态失败', location: 'middle' })
+          }
+        })
+      },
+
+      handleItemClick (record) {
+        openProductDetails({
+          id: record.id,
+          open: 0 // 1 已开通， 0未开通
+        })
+      },
+    },
+  })
 }
 
 
@@ -28,7 +134,7 @@ class PageController extends Service {
       loading: false,
       userinfo: $api.getStorage('userinfo'),
       custType: ($api.getStorage('userinfo') || {}).custType,
-      userType: ($api.getStorage('userinfo') || {}).userType + ''
+      userType: ($api.getStorage('userinfo') || {}).userType + '' // 用户类型：1-个人 2-企业
     }
     this.el = {
       list: $api.byId('list'),
@@ -134,8 +240,8 @@ class PageController extends Service {
   __getPageData (cb) {
     if (this.state.loading) { return }
     this.state.loading = true
-    let { custType } = this.state
-    this.getData({ custType }).then(res => {
+    let { userType } = this.state
+    this.getData(userType).then(res => {
       this.state.loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.length > 0) {
@@ -164,8 +270,10 @@ apiready = function() {
     }
   })
 
-  const ctrl = new PageController()
-  ctrl.bindEvend()
-  api.refreshHeaderLoading()
+  const vm = vmInit()
+
+  setRefreshHeaderInfo(function() {
+    vm.getpageList()
+  })
 
 }

@@ -3868,45 +3868,51 @@ function vmInit() {
         }))();
       },
       openDetails: function openDetails(record) {
-        // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
-        if (String(record.orderType) === '1') {
+        var orderType = record.orderType,
+            orderId = record.orderId,
+            orderNo = record.orderNo; // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
+
+        if (String(orderType) === '1') {
           // 好销贷
           Router$1.openPage({
             key: 'hxd_loan_details',
             params: {
               pageParam: {
-                id: record.orderId
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '2') {
+        } else if (String(orderType) === '2') {
           // 以前的
           Router$1.openPage({
             key: 'loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '3') {
+        } else if (String(orderType) === '3') {
           // 以前的
           Router$1.openPage({
             key: 'loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '4') {
+        } else if (String(orderType) === '4') {
           // 押金贷
           Router$1.openPage({
             key: 'yjd_loan_details',
             params: {
               pageParam: {
-                id: record.orderId,
-                status: 'invalid'
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });

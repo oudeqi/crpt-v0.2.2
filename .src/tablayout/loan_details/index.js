@@ -44,8 +44,8 @@ function vmInit () {
       }
     },
     computed: {
-      id: function () {
-        return this.pageParam.id
+      orderNo: function () {
+        return this.pageParam.orderNo
       }
     },
     mounted: function () {
@@ -65,9 +65,9 @@ function vmInit () {
         // 业务单状态：
         // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
         // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-        let id = this.id
+        let orderNo = this.orderNo
         try {
-          let res = await http.get(`/crpt-order/order/detail/app?orderNo=${id}`)
+          let res = await http.get(`/crpt-order/order/detail/app?orderNo=${orderNo}`)
           this.data = res.data
         } catch (error) {
           api.toast({ msg: error.msg || '请求发生错误', location: 'middle' })
@@ -75,13 +75,13 @@ function vmInit () {
       },
 
       openPlan () {
-        let id = this.id
-        Router.openPage({ key: 'repay_plan', params: {pageParam: { id }}})
+        let orderNo = this.orderNo
+        Router.openPage({ key: 'repay_plan', params: {pageParam: { orderNo }}})
       },
 
       openRecord () {
-        let id = this.id
-        Router.openPage({ key: 'repay_record', params: {pageParam: { id }}})
+        let orderNo = this.orderNo
+        Router.openPage({ key: 'repay_record', params: {pageParam: { orderNo }}})
       },
 
       openLoanContract () {
@@ -89,8 +89,6 @@ function vmInit () {
           title: '提示',
           msg: '功能开发中...',
         })
-        // let id = this.id
-        // Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
       },
 
     }

@@ -2846,7 +2846,7 @@ var App = /*#__PURE__*/function () {
       // Router.openPage({ key: 'yjd_select_contract', params: {
       //   pageParam: {list: {}}
       // }})
-      // openFaceUpload()
+      // openProductRecommend()
       // return
       var userinfo = $api.getStorage('userinfo');
 

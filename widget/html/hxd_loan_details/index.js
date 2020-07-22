@@ -3704,8 +3704,11 @@ function vmInit() {
       };
     },
     computed: {
-      id: function id() {
-        return this.pageParam.id;
+      orderId: function orderId() {
+        return this.pageParam.orderId;
+      },
+      orderNo: function orderNo() {
+        return this.pageParam.orderNo;
       }
     },
     mounted: function mounted() {
@@ -3765,7 +3768,7 @@ function vmInit() {
         var _this3 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var id, res;
+          var orderId, res;
           return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
@@ -3773,11 +3776,11 @@ function vmInit() {
                   // 业务单状态：
                   // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
                   // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-                  id = _this3.id; // let id = '1280032544158498817' // 26496114
+                  orderId = _this3.orderId; // let id = '1280032544158498817' // 26496114
 
                   _context3.prev = 1;
                   _context3.next = 4;
-                  return http$1.get("/crpt-order/order/hxd/query/order/info/detail?orderId=".concat(id));
+                  return http$1.get("/crpt-order/order/hxd/query/order/info/detail?orderId=".concat(orderId));
 
                 case 4:
                   res = _context3.sent;
@@ -3802,23 +3805,23 @@ function vmInit() {
         }))();
       },
       openPlan: function openPlan() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_plan',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });
       },
       openRecord: function openRecord() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_record',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });

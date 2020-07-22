@@ -3687,8 +3687,8 @@ function vmInit() {
       };
     },
     computed: {
-      id: function id() {
-        return this.pageParam.id;
+      orderNo: function orderNo() {
+        return this.pageParam.orderNo;
       }
     },
     mounted: function mounted() {
@@ -3727,7 +3727,7 @@ function vmInit() {
         var _this2 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var id, res;
+          var orderNo, res;
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -3735,10 +3735,10 @@ function vmInit() {
                   // 业务单状态：
                   // 1-申请中,2-已审批通过,3-已拒绝,4-已撤销,5-还款中,6-到期结清,7-提前结清,
                   // 8-逾期还款中,9-逾期已结清,10-已退货 11-待申请 12-已取消
-                  id = _this2.id;
+                  orderNo = _this2.orderNo;
                   _context2.prev = 1;
                   _context2.next = 4;
-                  return http$1.get("/crpt-order/order/detail/app?orderNo=".concat(id));
+                  return http$1.get("/crpt-order/order/detail/app?orderNo=".concat(orderNo));
 
                 case 4:
                   res = _context2.sent;
@@ -3763,23 +3763,23 @@ function vmInit() {
         }))();
       },
       openPlan: function openPlan() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_plan',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });
       },
       openRecord: function openRecord() {
-        var id = this.id;
+        var orderNo = this.orderNo;
         Router$1.openPage({
           key: 'repay_record',
           params: {
             pageParam: {
-              id: id
+              orderNo: orderNo
             }
           }
         });
@@ -3788,8 +3788,7 @@ function vmInit() {
         api.alert({
           title: '提示',
           msg: '功能开发中...'
-        }); // let id = this.id
-        // Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { id }}})
+        });
       }
     }
   });

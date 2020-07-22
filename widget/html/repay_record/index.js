@@ -2926,7 +2926,7 @@ apiready = function apiready() {
   var pageNo = 1;
   var loading = false;
   var pageParam = api.pageParam || {};
-  var id = pageParam.id; // '9939393'
+  var orderNo = pageParam.orderNo; // '9939393'
   // 9939393
   // 1101
 
@@ -2936,7 +2936,7 @@ apiready = function apiready() {
     }
 
     loading = true;
-    http.get("/crpt-credit/credit/repay/query/repayrecord?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo, "&orderNo=").concat(id)).then(function (res) {
+    http.get("/crpt-credit/credit/repay/query/repayrecord?pageSize=".concat(pageSize, "&pageNo=").concat(pageNo, "&orderNo=").concat(orderNo)).then(function (res) {
       loading = false;
       api.refreshHeaderLoadDone();
       $api.byId('total').innerHTML = numeral(res.data.sumRepaidTotalAmount).format('0,0.00');

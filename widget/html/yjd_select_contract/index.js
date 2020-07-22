@@ -775,23 +775,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1827,6 +1810,23 @@ var numeral = createCommonjsModule(function (module) {
 return numeral;
 }));
 });
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
 
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
@@ -3698,14 +3698,14 @@ function vmInit() {
   return new Vue({
     el: '#app',
     data: function data() {
-      var _ref;
-
-      return _ref = {
+      return {
         selected: null,
         loading: false,
         pageParam: api.pageParam || {},
-        list: []
-      }, defineProperty(_ref, "loading", false), defineProperty(_ref, "more", 'noData'), _ref;
+        list: [],
+        more: 'noData' // hasMore,noMore,noData
+
+      };
     },
     computed: {
       productId: function productId() {
@@ -3767,50 +3767,47 @@ function vmInit() {
 
                 case 6:
                   res = _context2.sent;
-                  api.refreshHeaderLoadDone();
 
                   if (res.data && res.data.length > 0) {
                     _this2.list = res.data;
                     _this2.more = 'hasMore';
-
-                    if (res.data.length === 1) {
-                      _this2.selected = _this2.list[0];
-                    }
+                    _this2.selected = _this2.list[0];
                   } else {
                     _this2.more = 'noData';
                   }
 
-                  _context2.next = 14;
+                  _context2.next = 13;
                   break;
 
-                case 11:
-                  _context2.prev = 11;
+                case 10:
+                  _context2.prev = 10;
                   _context2.t0 = _context2["catch"](3);
                   api.toast({
                     msg: _context2.t0.msg || '出错啦',
                     location: 'middle'
                   });
 
-                case 14:
+                case 13:
                   _this2.loading = false;
+                  api.refreshHeaderLoadDone();
 
                 case 15:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[3, 11]]);
+          }, _callee2, null, [[3, 10]]);
         }))();
       },
       next: function next() {
         if (this.selected) {
           var productId = this.productId;
 
-          var _ref2 = this.selected || {},
-              id = _ref2.id,
-              loanPayeeAccountNo = _ref2.loanPayeeAccountNo,
-              loanPayeeAccountName = _ref2.loanPayeeAccountName,
-              surplusReceivableBond = _ref2.surplusReceivableBond;
+          var _ref = this.selected || {},
+              id = _ref.id,
+              loanPayeeAccountNo = _ref.loanPayeeAccountNo,
+              loanPayeeAccountName = _ref.loanPayeeAccountName,
+              surplusReceivableBond = _ref.surplusReceivableBond;
 
           Router$1.openPage({
             key: 'yjd_apply_confirm',

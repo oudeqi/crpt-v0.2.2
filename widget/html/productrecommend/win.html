@@ -10,22 +10,42 @@
 
   <link rel="stylesheet" href="./win.css"></head>
 <body>
+  <div id="app">
 
-  <div class="tips">
-    <div>根据您的资金需求，为您推荐以下产品</div>
-    <div>立即开通，用款更便捷</div>
+    <div class="tips">
+      <div>根据您的资金需求，为您推荐以下产品</div>
+      <div>立即开通，用款更便捷</div>
+    </div>
+  
+    <ul>
+      <li v-for="(item, index) in list" :key="index" @click="handleItemClick(item)" data-id="${item.id || ''}">
+        <div class="t">{{item.des || ''}}</div>
+        <div class="b">
+          <div class="num">
+            <div v-if="item.totalLimit > 0">
+              <strong>{{numeral(item.totalLimit).format('0,0')}}</strong><span>最高可贷(元)</span>
+            </div>
+            <div v-else>
+              <strong>{{item.interestRate}}%</strong><span>贷款利率</span>
+            </div>
+          </div>
+          <div class="txt">{{item.introduce || ''}}</div>
+          <div class="btn" @click="handleBtnClick(item)" data-id="${item.id || ''}" data-type="${item.type || ''}" data-name="${item.name || ''}">立即开通</div>
+        </div>
+      </li>
+    </ul>
+    <section v-if="more === 'noData'" class="app_list_nodata">
+      <div class="app_list_nodata_pic"></div>
+      <p class="app_list_nodata_desc">暂时没有推荐产品</p>
+    </section>
+  
+    <div class="btn-box">
+      <div class="app_btn" @click="goIndex()">跳 过</div>
+    </div>
+
   </div>
-
-  <ul id="list">
-    
-
-  </ul>
-
-  <div class="btn-box" id="btnContainer" style="display: none;">
-    <div class="app_btn" tapmode="active" id="goIndex">跳 过</div>
-  </div>
-
   <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
 
   <script src="./win.js"></script></body>
 </html>

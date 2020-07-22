@@ -1,6 +1,6 @@
 import '../../app.css'
 import './frm.css'
-import { http } from '../../config.js'
+import http from '../../http'
 import Router from '../../router'
 
 const page = new Vue({

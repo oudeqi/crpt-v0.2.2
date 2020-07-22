@@ -360,7 +360,6 @@ html, body {
   color: #66bb6a;
 }
 .active {
-  background-color: #ededed;
   position: relative;
   top: -1px;
 }
