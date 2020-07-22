@@ -3722,7 +3722,7 @@ function openDialog(orderNo, loanInPocketTime, loanAmount) {
     reload: true,
     name: 'drawer',
     bounces: false,
-    bgColor: 'rgba(0,0,0,0,0)',
+    bgColor: 'rgba(0,0,0,0)',
     url: 'widget://html/repay/drawer.html',
     rect: {
       x: 0,

@@ -151,7 +151,7 @@ function vmInit () {
             sourceType = 'library'
           }
           getPicture(sourceType, (ret, err) => {
-            if (ret) {
+            if (ret && ret.data) {
               this.__licenseUpload(ret.data)
             }
           })
@@ -195,7 +195,7 @@ function vmInit () {
           reload: true,
           name: 'dialog',
           bounces: false,
-          bgColor: 'rgba(0,0,0,0,0)',
+          bgColor: 'rgba(0,0,0,0)',
           url: 'widget://html/yjd_apply_confirm/contract-msg.html',
           rect: {
             x: 0,

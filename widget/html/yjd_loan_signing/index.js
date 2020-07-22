@@ -18,7 +18,7 @@ function openDialog() {
     reload: true,
     name: 'drawer',
     bounces: false,
-    bgColor: 'rgba(0,0,0,0,0)',
+    bgColor: 'rgba(0,0,0,0)',
     url: 'widget://html/yjd_loan_signing/drawer.html',
     rect: {
       x: 0,
