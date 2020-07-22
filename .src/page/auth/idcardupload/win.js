@@ -56,29 +56,30 @@ apiready = function() {
   document.querySelector('#back').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    if(api.systemType === 'ios') {
-      ActionSheet('请选择', btns, function (index) {
-        if (index === 0) {
-          sourceType = 'camera'
-        } else {
-          sourceType = 'library'
-        }
+    ActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'library'
+      }
+      if (api.systemType !== 'ios' && sourceType === 'camera') {
+        const cardcamera = api.require('cardcamera');
+        cardcamera.backIdCard({}, function(ret, err) {
+          if (ret.status) {
+            $api.dom($api.byId('back'), 'img').src = ret.data
+            back = ret.data
+          }
+        })
+      } else {
         getPicture(sourceType, function(ret, err) {
           if (ret) {
             $api.dom($api.byId('back'), 'img').src = ret.data
             back = ret.data
           }
         })
-      })
-    }else {
-      const cardcamera = api.require('cardcamera');
-      cardcamera.backIdCard({}, function(ret, err) {
-        if (ret.status) {
-          $api.dom($api.byId('back'), 'img').src = ret.data
-          back = ret.data
-        }
-      });
-    }
+      }
+      
+    })
   }
 
   // let idcard = {
