@@ -910,13 +910,13 @@ function openRegLogin() {
 } // 个人登录
 
 
-function openFangchan(_ref12) {
-  var gtId = _ref12.gtId,
-      flowStatus = _ref12.flowStatus,
-      gtCreditId = _ref12.gtCreditId,
-      type = _ref12.type,
-      gtCounterId = _ref12.gtCounterId,
-      _cb = _ref12._cb;
+function openFangchan(_ref11) {
+  var gtId = _ref11.gtId,
+      flowStatus = _ref11.flowStatus,
+      gtCreditId = _ref11.gtCreditId,
+      type = _ref11.type,
+      gtCounterId = _ref11.gtCounterId,
+      _cb = _ref11._cb;
   api.openTabLayout({
     title: '房产信息',
     name: 'html/guarantee_application_house/index',
@@ -947,13 +947,13 @@ function openFangchan(_ref12) {
 } // 车辆信息
 
 
-function openCheliang(_ref13) {
-  var gtId = _ref13.gtId,
-      flowStatus = _ref13.flowStatus,
-      gtCreditId = _ref13.gtCreditId,
-      type = _ref13.type,
-      gtCounterId = _ref13.gtCounterId,
-      _cb = _ref13._cb;
+function openCheliang(_ref12) {
+  var gtId = _ref12.gtId,
+      flowStatus = _ref12.flowStatus,
+      gtCreditId = _ref12.gtCreditId,
+      type = _ref12.type,
+      gtCounterId = _ref12.gtCounterId,
+      _cb = _ref12._cb;
   api.openTabLayout({
     title: '车辆信息',
     name: 'html/guarantee_application_car/index',

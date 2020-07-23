@@ -21,8 +21,8 @@
             <span>{{hxd.productTitle}}</span>
             <span>{{hxd.productSlogan}}</span>
           </div>
-          <div @click="handleHXDClick()" v-if="hxd.creditStatus === 0" class="hxdentry-btn">立即开通</div>
-          <div @click="handleHXDClick()" v-if="hxd.creditStatus === 1" class="hxdentry-btn">继续开通</div>
+          <div @click="handleHXDClick()" v-if="hxd.creditStatus === 0" class="hxdentry-btn">立即申请</div>
+          <div @click="handleHXDClick()" v-if="hxd.creditStatus === 1" class="hxdentry-btn">继续申请</div>
           <div @click="handleHXDClick()" v-if="hxd.creditStatus === 2" class="hxdentry-btn">我要用款</div>
         </div>
       </div>

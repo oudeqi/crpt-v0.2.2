@@ -775,23 +775,6 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1828,6 +1811,23 @@ return numeral;
 }));
 });
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
@@ -2255,7 +2255,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {
@@ -3486,7 +3486,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
+var baseUrl$1 = ENV_URLS["testing"];
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -3676,13 +3676,12 @@ var http$1 = {
 };
 
 Vue.component('list-item', {
-  template: "\n    <label>\n      <input type=\"radio\" name=\"contract\" @change=\"onRadioChange\">\n      <div class=\"seclect-content\">\n        <div class=\"seclect-content__top\">\n          <div class=\"seclect-content__toprow\">\n            <span class=\"key\">\u653E\u517B\u5408\u540C\u7F16\u53F7</span>\n            <span class=\"value\">{{data.outCode}}</span>\n          </div>\n          <div class=\"seclect-content__toprow\">\n            <span class=\"key\">\u6536\u6B3E\u65B9</span>\n            <span class=\"value\">{{data.orgName}}</span>\n          </div>\n          <div class=\"seclect-content__toprow\">\n            <span class=\"key\">\u7B7E\u8BA2\u65E5\u671F</span>\n            <span class=\"value\">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>\n          </div>\n        </div>\n        <div class=\"seclect-content__bott\">\n          <div class=\"seclect-content__bottrow\">\n            <span class=\"key\">\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n            <span class=\"value\">{{numeral(data.receivableBond).format('0,0.00')}}</span>\n          </div>\n          <div class=\"seclect-content__bottrow\">\n            <span class=\"key\">\u5DF2\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n            <span class=\"value\">{{numeral(data.receivedBond).format('0,0.00')}}</span>\n          </div>\n          <div class=\"seclect-content__bottrow\">\n            <span class=\"key\">\u5269\u4F59\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n            <span class=\"value seclect-content__value--emphasize\">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>\n          </div>\n        </div>\n      </div>\n    </label>\n  ",
-  props: ['data'],
-  created: function created() {
-    console.log(JSON.stringify(this.data));
+  template: "\n    <div :class=\"['seclect-content', {selected: selected && selected.id===data.id}]\" @click=\"onSeclect\">\n      <div class=\"seclect-content__top\">\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u4EE3\u517B\u5408\u540C\u7F16\u53F7</span>\n          <span class=\"value\">{{data.outCode}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u6536\u6B3E\u65B9</span>\n          <span class=\"value\">{{data.orgName}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u7B7E\u8BA2\u65E5\u671F</span>\n          <span class=\"value\">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>\n        </div>\n      </div>\n      <div class=\"seclect-content__bott\">\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value\">{{numeral(data.receivableBond).format('0,0.00')}}</span>\n        </div>\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5DF2\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value\">{{numeral(data.receivedBond).format('0,0.00')}}</span>\n        </div>\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5269\u4F59\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value seclect-content__value--emphasize\">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>\n        </div>\n      </div>\n    </div>\n  ",
+  props: ['data', 'selected'],
+  created: function created() {// console.log(JSON.stringify(this.data))
   },
   methods: {
-    onRadioChange: function onRadioChange() {
+    onSeclect: function onSeclect() {
       this.$emit('update:selected', this.data);
     }
   }
@@ -3707,14 +3706,14 @@ function vmInit() {
   return new Vue({
     el: '#app',
     data: function data() {
-      var _ref;
-
-      return _ref = {
+      return {
         selected: null,
         loading: false,
         pageParam: api.pageParam || {},
-        list: []
-      }, defineProperty(_ref, "loading", false), defineProperty(_ref, "more", 'noData'), _ref;
+        list: [],
+        more: 'noData' // hasMore,noMore,noData
+
+      };
     },
     computed: {
       productId: function productId() {
@@ -3776,46 +3775,47 @@ function vmInit() {
 
                 case 6:
                   res = _context2.sent;
-                  api.refreshHeaderLoadDone();
 
                   if (res.data && res.data.length > 0) {
                     _this2.list = res.data;
                     _this2.more = 'hasMore';
+                    _this2.selected = _this2.list[0];
                   } else {
                     _this2.more = 'noData';
                   }
 
-                  _context2.next = 14;
+                  _context2.next = 13;
                   break;
 
-                case 11:
-                  _context2.prev = 11;
+                case 10:
+                  _context2.prev = 10;
                   _context2.t0 = _context2["catch"](3);
                   api.toast({
                     msg: _context2.t0.msg || '出错啦',
                     location: 'middle'
                   });
 
-                case 14:
+                case 13:
                   _this2.loading = false;
+                  api.refreshHeaderLoadDone();
 
                 case 15:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[3, 11]]);
+          }, _callee2, null, [[3, 10]]);
         }))();
       },
       next: function next() {
         if (this.selected) {
           var productId = this.productId;
 
-          var _ref2 = this.selected || {},
-              id = _ref2.id,
-              loanPayeeAccountNo = _ref2.loanPayeeAccountNo,
-              loanPayeeAccountName = _ref2.loanPayeeAccountName,
-              surplusReceivableBond = _ref2.surplusReceivableBond;
+          var _ref = this.selected || {},
+              id = _ref.id,
+              loanPayeeAccountNo = _ref.loanPayeeAccountNo,
+              loanPayeeAccountName = _ref.loanPayeeAccountName,
+              surplusReceivableBond = _ref.surplusReceivableBond;
 
           Router$1.openPage({
             key: 'yjd_apply_confirm',

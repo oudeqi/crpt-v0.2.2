@@ -1,8 +1,7 @@
 import '../../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill, openAuthResult,
-openIDcardUpload, openIDcardInfo, openFaceUpload } from '../../../webview.js'
+import { openAuthResult,openFaceUpload } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
 
 apiready = function() {

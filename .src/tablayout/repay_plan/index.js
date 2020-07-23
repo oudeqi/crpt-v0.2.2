@@ -17,10 +17,7 @@ apiready = function () {
   let loading = false
 
   let pageParam = api.pageParam || {}
-  let id = pageParam.id // '9939393'
-
-  console.log('id')
-  console.log(id)
+  let orderNo = pageParam.orderNo // '9939393'
   // 9939393
   // 1101
 
@@ -29,7 +26,7 @@ apiready = function () {
       return
     }
     loading = true
-    http.get(`/crpt-credit/credit/repay/query/repayplan?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${id}`).then(res => {
+    http.get(`/crpt-credit/credit/repay/query/repayplan?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${orderNo}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       if (res && res.data.list.length > 0) {

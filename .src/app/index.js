@@ -3,8 +3,8 @@ import {
   openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
-  openBaseinfoFill,
-  openFaceAuth,
+  openProductRecommend,
+  openFaceUpload,
 } from '../webview.js'
 import Utils from '../utils'
 import Router from '../router'
@@ -61,7 +61,7 @@ class App {
     //   }
     // }})
     // return
-    // openTabLayout(0)
+
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./index.css"></head>
   <body>
     <div class="container" id="app">
-      <div class="tips" v-if="list.length>0">请选择需要贷款的放养合同</div>
+      <div class="tips">今天新录入的合同要等明天才能看到哦</div>
       <div class="selcect-list">
         <list-item v-for="(item, index) in list" :key="index" :selected.sync="selected" :data="item"></list-item>
         

@@ -1,8 +1,7 @@
 import '../../../app.css'
 import './win.css'
 
-import { openRegLogin, openBaseinfoFill,
-openIDcardUpload, openIDcardInfo } from '../../../webview.js'
+import { openIDcardInfo } from '../../../webview.js'
 import { http, ActionSheet, getPicture } from '../../../config.js'
 
 apiready = function() {
@@ -29,57 +28,58 @@ apiready = function() {
   document.querySelector('#front').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    if(api.systemType === 'ios') {
-      ActionSheet('请选择', btns, function (index) {
-        if (index === 0) {
-          sourceType = 'camera'
-        } else {
-          sourceType = 'library'
-        }
+    ActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'library'
+      }
+      if (api.systemType !== 'ios' && sourceType === 'camera') {
+        const cardcamera = api.require('cardcamera')
+        cardcamera.frontIdCard({}, function(ret, err) {
+          if (ret.status) {
+            $api.dom($api.byId('front'), 'img').src = ret.data
+            front = ret.data
+          }
+        })
+      } else {
         getPicture(sourceType, function(ret, err) {
           if (ret) {
             $api.dom($api.byId('front'), 'img').src = ret.data
             front = ret.data
           }
         })
-      })
-    }else {
-      const cardcamera = api.require('cardcamera');
-      cardcamera.frontIdCard({}, function(ret, err) {
-        if (ret.status) {
-          $api.dom($api.byId('front'), 'img').src = ret.data
-          front = ret.data
-        }
-      });
-    }
+      }
+    })
   }
 
   document.querySelector('#back').onclick = function () {
     let btns = ['相机', '相册']
     let sourceType = ''
-    if(api.systemType === 'ios') {
-      ActionSheet('请选择', btns, function (index) {
-        if (index === 0) {
-          sourceType = 'camera'
-        } else {
-          sourceType = 'library'
-        }
+    ActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera'
+      } else {
+        sourceType = 'library'
+      }
+      if (api.systemType !== 'ios' && sourceType === 'camera') {
+        const cardcamera = api.require('cardcamera');
+        cardcamera.backIdCard({}, function(ret, err) {
+          if (ret.status) {
+            $api.dom($api.byId('back'), 'img').src = ret.data
+            back = ret.data
+          }
+        })
+      } else {
         getPicture(sourceType, function(ret, err) {
           if (ret) {
             $api.dom($api.byId('back'), 'img').src = ret.data
             back = ret.data
           }
         })
-      })
-    }else {
-      const cardcamera = api.require('cardcamera');
-      cardcamera.backIdCard({}, function(ret, err) {
-        if (ret.status) {
-          $api.dom($api.byId('back'), 'img').src = ret.data
-          back = ret.data
-        }
-      });
-    }
+      }
+      
+    })
   }
 
   // let idcard = {

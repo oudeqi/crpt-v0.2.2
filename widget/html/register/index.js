@@ -153,7 +153,8 @@ function openTodoAuthGeren() {
       type: 'none'
     },
     navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
+      hideBackButton: true,
+      leftButtons: []
     })
   });
 }
@@ -171,7 +172,8 @@ function openTodoAuthQiye() {
       type: 'none'
     },
     navigationBar: _objectSpread({}, navigationBarWhite, {
-      hideBackButton: true
+      hideBackButton: true,
+      leftButtons: []
     })
   });
 } // 企业信息确认

@@ -916,14 +916,14 @@ function openRegLogin() {
 
 
 function openDanbaoKaitong() {
-  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      step = _ref8.step,
-      _ref8$title = _ref8.title,
-      title = _ref8$title === void 0 ? '普惠担保' : _ref8$title,
-      productId = _ref8.productId,
-      creditStatus = _ref8.creditStatus,
-      _ref8$back = _ref8.back,
-      back = _ref8$back === void 0 ? false : _ref8$back;
+  var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      step = _ref7.step,
+      _ref7$title = _ref7.title,
+      title = _ref7$title === void 0 ? '普惠担保' : _ref7$title,
+      productId = _ref7.productId,
+      creditStatus = _ref7.creditStatus,
+      _ref7$back = _ref7.back,
+      back = _ref7$back === void 0 ? false : _ref7$back;
 
   var i = step;
 

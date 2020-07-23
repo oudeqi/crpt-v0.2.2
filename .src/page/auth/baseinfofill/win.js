@@ -61,6 +61,9 @@ function vmInit () {
       }
     },
     computed: {
+      name: function () {
+        return this.userinfo.name
+      }, 
       custType: function () {
         return this.userinfo.custType
       },
@@ -88,7 +91,7 @@ function vmInit () {
             this.postData.idNumber = ''
             api.alert({
               title: '提示',
-              msg: `婚姻状况为已婚、初婚、再婚、复婚时亲属关系只能选择配偶`,
+              msg: `婚姻状况为已婚时亲属关系只能选择配偶`,
             })
           }
         }
@@ -263,7 +266,7 @@ function vmInit () {
           return valid
         }
         if (postData.livingConditions === '') {
-          api.toast({ msg: '请选择居居住状况', location: 'middle' })
+          api.toast({ msg: '请选择居住状况', location: 'middle' })
           valid = false
           return valid
         }
@@ -351,6 +354,14 @@ function vmInit () {
 }
 
 apiready = function () {
+
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin()
+    }
+  })
 
   vmInit()
 

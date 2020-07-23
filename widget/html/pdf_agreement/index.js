@@ -3,7 +3,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
+var baseUrl = ENV_URLS["testing"];
 
 function geiFixHeight() {
   var fixHeight = 0;

@@ -17,7 +17,7 @@ apiready = function () {
   let loading = false
 
   let pageParam = api.pageParam || {}
-  let id = pageParam.id // '9939393'
+  let orderNo = pageParam.orderNo // '9939393'
   // 9939393
   // 1101
 
@@ -26,7 +26,7 @@ apiready = function () {
       return
     }
     loading = true
-    http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${id}`).then(res => {
+    http.get(`/crpt-credit/credit/repay/query/repayrecord?pageSize=${pageSize}&pageNo=${pageNo}&orderNo=${orderNo}`).then(res => {
       loading = false
       api.refreshHeaderLoadDone()
       $api.byId('total').innerHTML = numeral(res.data.sumRepaidTotalAmount).format('0,0.00')

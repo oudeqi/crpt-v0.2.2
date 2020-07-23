@@ -25,7 +25,7 @@ function openMsgDetails() {
     slidBackEnabled: true,
     navigationBar: navigationBarWhite
   });
-} // 账单详情
+} // 修改密码
 
 apiready = function apiready() {
   api.addEventListener({

@@ -135,14 +135,14 @@ function vmInit() {
               }
             })
           } else if (record.status === 2) { // 已审批通过，未放款 去详情
-            Router.openPage({ key: 'hxd_loan_details', params: { pageParam: { id: orderId } } })
+            Router.openPage({key: 'hxd_loan_details', params: {pageParam: { id: orderId }}})
           } else if (record.status === 11) { // 待申请 立即申请
             if (this.userinfo.userType === '1') { // 个人用户
-              Router.openPage({ key: 'hxd_apply', params: { pageParam: { productId } } })
+              Router.openPage({key: 'hxd_apply', params: {pageParam: { productId }}})
             } else if (this.userinfo.userType === '2') { // 企业用户
-              Router.openPage({ key: 'hxd_a_supply', params: { pageParam: { productId } } })
+              Router.openPage({key: 'hxd_a_supply', params: {pageParam: { productId }}})
             } else {
-              api.toast({ msg: '未知的用户类型', location: 'middle'})
+              api.toast({msg: '未知的用户类型', location: 'middle'})
             }
           }
         } else if (record.orderType === 4) { // 押金贷

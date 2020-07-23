@@ -51,6 +51,7 @@ function openBaseinfoFill() {
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
+    scrollToTop: true,
     slidBackEnabled: true,
     navigationBar: navigationBarGreen
   });
@@ -2006,11 +2007,8 @@ function setRefreshHeaderInfo$1(successCallback, errorCallback) {
 
 apiready = function apiready() {
   api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
+    name: 'keyback'
+  }, function (ret, err) {// 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
   });
   var userinfo = $api.getStorage('userinfo');
 
@@ -2093,7 +2091,7 @@ apiready = function apiready() {
 
   function renderStep1(status) {
     if (status === 0) {
-      $api.byId('step1').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n        <div class=\"badge\">1</div>\n        <div class=\"content\">\n          <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          <p>\u8BF7\u51C6\u5907\u60A8\u4EBA\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n        </div>\n      </div>\n      ";
+      $api.byId('step1').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"realAuth\">\n        <div class=\"badge\">1</div>\n        <div class=\"content\">\n          <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n          <p>\u8BF7\u51C6\u5907\u60A8\u7684\u4E8C\u4EE3\u8EAB\u4EFD\u8BC1</p>\n        </div>\n      </div>\n      ";
     } else {
       $api.byId('step1').innerHTML = "\n      <div class=\"auth-block authpass\">\n        <div class=\"badge\">1</div>\n        <div class=\"content\">\n          <strong>\u5B9E\u540D\u8BA4\u8BC1</strong>\n        </div>\n      </div>\n      ";
     }
@@ -2120,7 +2118,7 @@ apiready = function apiready() {
 
   function renderStep3(status) {
     if (status === 0) {
-      $api.byId('step3').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n        <div class=\"badge\">3</div>\n        <div class=\"content\">\n          <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n          <p>\u8BF7\u586B\u5199\u6CD5\u5B9A\u4EE3\u8868\u4EBA\u7684\u57FA\u7840\u4FE1\u606F</p>\n        </div>\n      </div>\n      ";
+      $api.byId('step3').innerHTML = "\n      <div class=\"auth-block\" tapmode=\"active\" id=\"baseinfo\">\n        <div class=\"badge\">3</div>\n        <div class=\"content\">\n          <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n          <p>\u8BF7\u586B\u5199\u60A8\u7684\u57FA\u7840\u4FE1\u606F</p>\n        </div>\n      </div>\n      ";
     } else {
       $api.byId('step3').innerHTML = "\n      <div class=\"auth-block authpass\">\n        <div class=\"badge\">3</div>\n        <div class=\"content\">\n          <strong>\u8865\u5145\u57FA\u7840\u4FE1\u606F</strong>\n        </div>\n      </div>\n      ";
     }
@@ -2229,20 +2227,6 @@ apiready = function apiready() {
             location: 'middle',
             global: true
           });
-          var windows = api.windows();
-
-          if (windows && windows.length > 0) {
-            // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(function (win) {
-              // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
-                api.closeWin({
-                  name: win.name
-                });
-              }
-            });
-          }
-
           $api.clearStorage();
           openRegLogin();
         });

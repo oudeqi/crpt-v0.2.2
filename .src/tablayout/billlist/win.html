@@ -9,7 +9,7 @@
 </head>
 <body>
   <div id="app">
-    <div class="box">
+    <div class="box" v-if="dataArr && dataArr.length > 0">
       <ul>
         <li v-for="(item, index) in dataArr" ref="menuItem">
           <a href="#" @click="collapse(index)">
@@ -34,8 +34,8 @@
                 <div class="b">
                   <div class="text">
                     <strong>应还{{filter.toThousands(list.sumRepayTotalAmount)}}元</strong>
-                    <p v-if="list.status === 1">本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 费用{{filter.toThousands(list.sumServiceFee)}}</p>
-                    <p v-else>本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 费用{{filter.toThousands(list.sumServiceFee)}} + 逾期罚息{{filter.toThousands(list.sumRepayPenaltyAmount)}}</p>
+                    <p v-if="list.status === 1">本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 利息{{filter.toThousands(list.sumRepayInterestAmount)}}</p>
+                    <p v-else>本金{{filter.toThousands(list.sumRepayPrincipalAmount)}} + 利息{{filter.toThousands(list.sumRepayInterestAmount)}} + 逾期罚息{{filter.toThousands(list.sumRepayPenaltyAmount)}}</p>
                   </div>
                   <div class="icon">
                     <i class="aui-iconfont aui-icon-right"></i>
@@ -46,6 +46,9 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div v-else>
+      <p style="text-align: center;margin-top: 20px;">暂无数据</p>
     </div>
   </div>
   <!-- <ul id="list">

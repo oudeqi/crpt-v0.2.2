@@ -375,6 +375,7 @@ input, textarea {
       font-size:18px;
       color:rgba(48,49,51,1);
       line-height:25px;
+      padding-right: 6px;
     }
   .step .line {
     margin-top: 9px;
@@ -394,7 +395,7 @@ input, textarea {
       background:rgba(102,187,106,1);
       border-radius:2px
     }
-.step.step1 .step_list .step_item:nth-child(1) .icon, .step.step2 .step_list .step_item:nth-child(2) .icon, .step.step3 .step_list .step_item:nth-child(3) .icon {
+.step_list .step_item.active .icon {
   width:26px;
   height:26px;
   background:rgba(102,187,106,1);
@@ -405,39 +406,17 @@ input, textarea {
   color:rgba(255,255,255,1);
   line-height:24px;
 }
-.step.step1 .step_list .step_item:nth-child(1){
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
+.step_list .step_item.active .txt {
+      display: block;
     }
-.step.step1 .step_list .step_item:nth-child(1) .txt {
-        display: block;
-      }
-.step.step1 .line::after {
-      width: 33.33%;
-    }
-.step.step2 .step_list .step_item:nth-child(2){
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
-    }
-.step.step2 .step_list .step_item:nth-child(2) .txt {
-        display: block;
-      }
-.step.step2 .line::after {
-      width: 66.66%;
-    }
-.step.step3 .step_list .step_item:nth-child(3){
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
-    }
-.step.step3 .step_list .step_item:nth-child(3) .txt {
-        display: block;
-      }
-.step.step3 .line::after {
-      width: 99.99%;
-    }
+.step_list .step_item:nth-child(2) {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+.step .line::after {
+  width: 66.66%;
+}
 html, body {
   height: 100%;
   background-color: #fff;
@@ -532,7 +511,7 @@ html, body {
       height:40px;
       background-color:rgba(102,187,106,1);
       border-radius:20px;
-      background-image: url(../../image/auth/take.png);
+      background-image: url(../../image/auth/take-2.png);
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;

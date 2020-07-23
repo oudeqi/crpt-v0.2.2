@@ -1,6 +1,6 @@
 import '../../app.css'
 import './frm.css'
-import { http } from '../../config.js'
+import http from '../../http'
 import Router from '../../router'
 
 const page = new Vue({
@@ -50,6 +50,7 @@ apiready = function () {
     $api.byId('name').innerHTML = name
     $api.byId('type').innerHTML = userType === '1' ? '个人账号' : '企业账号'
   }
+
   function getInfo () {
     http.post('/crpt-cust/identification/myinfo').then(res => {
       $api.byId('tel').innerHTML = res.data.phone
@@ -64,9 +65,10 @@ apiready = function () {
         $api.byId('prodopencount').innerHTML = ''
       }
     }).catch(error => {
-      api.toast({
-        msg: error.msg || '获取信息失败'
-      })
+      // 如果不去掉，登录状态过期会重复弹出提示
+      // api.toast({
+      //   msg: error.msg || '获取信息失败'
+      // })
     })
   }
   getInfo()
@@ -86,4 +88,5 @@ apiready = function () {
       silent: false
     })
   })
+
 }

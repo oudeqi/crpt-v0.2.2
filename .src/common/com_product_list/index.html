@@ -16,9 +16,9 @@
   </head>
   <body>
     <div id="app">
-      <div class="product-list">
-        <!-- 好销贷产品列表 -->
-        <ul v-if="pageParam.pageFrom === 'gongyingshang'">
+      <!-- 好销贷产品列表 -->
+      <div class="product-list" v-if="pageParam.pageFrom === 'gongyingshang'">
+        <ul v-if="hxdData && hxdData.length > 0">
           <li v-for="item in hxdData" :key="item.productId">
             <div class="left">
               <h3>{{item.productTotalLimit}}万</h3>
@@ -43,23 +43,9 @@
             </div>
           </li>
         </ul>
-
-        <!-- 新网押金贷 -->
-        <ul v-if="pageParam.pageFrom === 'hezuoyanghu'">
-          <li v-for="item in yjdData" :key="item.id">
-            <div class="left">
-              <h3>{{filter.toThousands(item.totalLimit)}}</h3>
-              <div class="grey">最高额度(元)</div>
-            </div>
-            <div class="center">
-              <h4>{{item.title}}</h4>
-              <div class="grey">{{item.introduce}}</div>
-            </div>
-            <div class="right" @click="changeYJD(item)">
-              <button>立即申请</button>
-            </div>
-          </li>
-        </ul>
+        <div v-else>
+          <p style="text-align: center;margin-top: 20px;background: #efefef;">暂无数据</p>
+        </div>
           <!-- <li>
             <div class="left">
               <h3>200万</h3>
@@ -90,6 +76,27 @@
           </li> -->
       </div>
 
+      <!-- 新网押金贷 -->
+      <div class="product-list" v-if="pageParam.pageFrom === 'hezuoyanghu'">
+        <ul v-if="yjdData && yjdData.length > 0">
+          <li v-for="item in yjdData" :key="item.id">
+            <div class="left">
+              <h3>{{filter.toThousands(item.totalLimit)}}</h3>
+              <div class="grey">最高额度(元)</div>
+            </div>
+            <div class="center">
+              <h4>{{item.title}}</h4>
+              <div class="grey">{{item.introduce}}</div>
+            </div>
+            <div class="right" @click="changeYJD(item)">
+              <button>立即申请</button>
+            </div>
+          </li>
+        </ul>
+        <div v-else>
+          <p style="text-align: center;margin-top: 20px;background: #efefef;">暂无数据</p>
+        </div>
+      </div>
       <!-- <div class="product-list"> -->
         <!-- 好销贷 -->
         <!-- <div v-if="pageParam.pageFrom === 'gongyingshang'">

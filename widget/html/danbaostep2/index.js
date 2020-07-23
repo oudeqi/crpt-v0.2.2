@@ -1391,14 +1391,14 @@ function openRegLogin() {
 
 
 function openDanbaoKaitong() {
-  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      step = _ref8.step,
-      _ref8$title = _ref8.title,
-      title = _ref8$title === void 0 ? '普惠担保' : _ref8$title,
-      productId = _ref8.productId,
-      creditStatus = _ref8.creditStatus,
-      _ref8$back = _ref8.back,
-      back = _ref8$back === void 0 ? false : _ref8$back;
+  var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      step = _ref7.step,
+      _ref7$title = _ref7.title,
+      title = _ref7$title === void 0 ? '普惠担保' : _ref7$title,
+      productId = _ref7.productId,
+      creditStatus = _ref7.creditStatus,
+      _ref7$back = _ref7.back,
+      back = _ref7$back === void 0 ? false : _ref7$back;
 
   var i = step;
 
@@ -1467,12 +1467,12 @@ function openDanbaoKaitong() {
 
 
 function openDanbaoRenList() {
-  var _ref9 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      gtCreditId = _ref9.gtCreditId,
-      gtId = _ref9.gtId,
-      productId = _ref9.productId,
-      demandMoney = _ref9.demandMoney,
-      flowStatus = _ref9.flowStatus;
+  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      gtCreditId = _ref8.gtCreditId,
+      gtId = _ref8.gtId,
+      productId = _ref8.productId,
+      demandMoney = _ref8.demandMoney,
+      flowStatus = _ref8.flowStatus;
 
   api.openTabLayout({
     name: "html/danbaorenlist/index",
@@ -1513,10 +1513,10 @@ function openDanbaoRenList() {
 } // 担保人信息录入
 
 
-function openSendAddress(_ref11) {
-  var gtId = _ref11.gtId,
-      gtCreditId = _ref11.gtCreditId,
-      flowStatus = _ref11.flowStatus;
+function openSendAddress(_ref10) {
+  var gtId = _ref10.gtId,
+      gtCreditId = _ref10.gtCreditId,
+      flowStatus = _ref10.flowStatus;
   api.openTabLayout({
     name: "html/sendaddress/index",
     title: '文书送达地址',

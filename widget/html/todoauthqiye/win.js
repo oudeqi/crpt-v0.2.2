@@ -51,6 +51,7 @@ function openBaseinfoFill() {
     // softInputDismissMode: ['tap', 'interactive'],
     reload: true,
     bounces: true,
+    scrollToTop: true,
     slidBackEnabled: true,
     navigationBar: navigationBarGreen
   });
@@ -2008,11 +2009,8 @@ function setRefreshHeaderInfo$1(successCallback, errorCallback) {
 
 apiready = function apiready() {
   api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
+    name: 'keyback'
+  }, function (ret, err) {// 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
   });
   var userinfo = $api.getStorage('userinfo');
 
@@ -2232,20 +2230,6 @@ apiready = function apiready() {
             location: 'middle',
             global: true
           });
-          var windows = api.windows();
-
-          if (windows && windows.length > 0) {
-            // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
-            windows.forEach(function (win) {
-              // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
-                api.closeWin({
-                  name: win.name
-                });
-              }
-            });
-          }
-
           $api.clearStorage();
           openRegLogin();
         });

@@ -50,6 +50,10 @@ class PageController extends Service {
 }
 
 apiready = function() {
+
+  api.closeWin({ name: 'html/todoauthgeren/win' })
+  api.closeWin({ name: 'html/todoauthqiye/win' })
+
   const ctrl = new PageController()
   ctrl.bindEvent()
 

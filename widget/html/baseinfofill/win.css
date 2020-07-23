@@ -324,25 +324,19 @@ html, body {
 
 .card {
   background-color: #fff;
-  margin-top: 12px;
 }
 
 .tit {
-  height: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  padding: 15px 0;
   padding-left: 20px;
   border-bottom: 1px solid #ededed;
   position: relative;
   font-size: 15px;
 }
+
+.tit span {
+    display: inline;
+  }
 
 .tit:after {
     content: '';
@@ -350,8 +344,10 @@ html, body {
     width: 5px;
     height: 10px;
     position: absolute;
-    top: 20px;
+    top: 0;
+    bottom: 0;
     left: 0;
+    margin: auto;
     background-color: #66BB6A;
   }
 

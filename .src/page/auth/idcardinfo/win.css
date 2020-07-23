@@ -38,6 +38,8 @@
       font-size:18px;
       color:rgba(48,49,51,1);
       line-height:25px;
+      padding-right: 6px;
+      padding-left: 6px;
     }
   }
   .line {
@@ -70,20 +72,22 @@
   color:rgba(255,255,255,1);
   line-height:24px;
 }
-@for $i from 1 to 3 {
-	.step.step$(i) {
-    .step_list .step_item:nth-child($i){
-      flex-grow: 1;
-      .icon {
-        @extend activeIcon;
-      }
-      .txt {
-        display: block;
-      }
+
+.step .line::after {
+  width: 100%;
+}
+
+.step_list .step_item {
+  &.active {
+    .icon {
+      @extend activeIcon;
     }
-    .line::after {
-      width: 100%;
+    .txt {
+      display: block;
     }
+  }
+  &:nth-child(3) {
+    flex-grow: 1;
   }
 }
 

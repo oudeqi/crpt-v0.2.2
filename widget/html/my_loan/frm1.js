@@ -1292,7 +1292,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarWhite
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {
@@ -2523,7 +2523,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
+var baseUrl$1 = ENV_URLS["testing"];
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -3876,44 +3876,51 @@ function vmInit() {
         }))();
       },
       openDetails: function openDetails(record) {
-        // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
-        if (String(record.orderType) === '1') {
+        var orderType = record.orderType,
+            orderId = record.orderId,
+            orderNo = record.orderNo; // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
+
+        if (String(orderType) === '1') {
           // 好销贷
           Router$1.openPage({
             key: 'hxd_loan_details',
             params: {
               pageParam: {
-                id: record.orderId
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '2') {
+        } else if (String(orderType) === '2') {
           // 以前的
           Router$1.openPage({
             key: 'loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '3') {
+        } else if (String(orderType) === '3') {
           // 以前的
           Router$1.openPage({
             key: 'loan_details',
             params: {
               pageParam: {
-                id: record.orderNo
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
-        } else if (String(record.orderType) === '4') {
+        } else if (String(orderType) === '4') {
           // 押金贷
           Router$1.openPage({
             key: 'yjd_loan_details',
             params: {
               pageParam: {
-                id: record.orderId
+                orderId: orderId,
+                orderNo: orderNo
               }
             }
           });
