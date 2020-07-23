@@ -1,10 +1,12 @@
 import '../../../styles/common.less'
 import './index.css'
+import http from '../../../http'
+import Router from '../../../router'
 
 let timer = null
 
 function getOpenAccountStatus (productId) {
-  http.get('/crpt-product//product/yjd/detail/' + productId).then(res => {
+  http.get('/crpt-product/product/yjd/detail/' + productId).then(res => {
     const openAccountStatus = String(res.data.openHopeAccountFlag)
     if (res.code === 200 && openAccountStatus === '1') {
       clearInterval(timer)
@@ -26,7 +28,7 @@ apiready = function () {
   const { url, productId } = api.pageParam || {}
   api.openFrame({
     name: 'yjd_account_open_xinwang_frm',
-    url: url.includes('http://') ? url : 'http://' + url,
+    url: url,
     rect: {
       x: 0,
       y: offset.h,
@@ -46,7 +48,7 @@ apiready = function () {
   })
 
   timer = setInterval(function () {
-    getOpenAccountStatus()
-  }, 1500)
+    getOpenAccountStatus(productId)
+  }, 3000)
   
 }

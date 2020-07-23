@@ -3714,6 +3714,8 @@ function vmInit() {
     },
     mounted: function mounted() {
       this.initPage();
+      console.log('this.productId');
+      console.log(this.productId);
     },
     methods: {
       numeral: numeral,

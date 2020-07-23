@@ -78,6 +78,8 @@ function vmInit () {
     },
     mounted: function () {
       this.initPage()
+      console.log('this.productId')
+      console.log(this.productId)
     },
     methods: {
 
