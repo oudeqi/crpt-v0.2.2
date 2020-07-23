@@ -737,6 +737,23 @@ try {
 
 var regenerator = runtime_1;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -800,23 +817,6 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 var createClass = _createClass;
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
 
 function openRegLogin() {
   api.openTabLayout({
@@ -2677,6 +2677,10 @@ var Router$1 = /*#__PURE__*/function () {
 
 var Router$2 = new Router$1();
 
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var Service = /*#__PURE__*/function () {
   function Service() {
     classCallCheck(this, Service);
@@ -2699,6 +2703,44 @@ var Service = /*#__PURE__*/function () {
     value: function getBankInfo() {
       return http$1.get("/crpt-cust/cust/openloan/prebindcardphnm");
     }
+  }, {
+    key: "createLoanOrder",
+    value: function createLoanOrder(_ref) {
+      var id = _ref.id,
+          productId = _ref.productId,
+          maxLoanAmount = _ref.maxLoanAmount,
+          applyAmount = _ref.applyAmount,
+          interestRate = _ref.interestRate,
+          loanTerm = _ref.loanTerm,
+          loanDueDate = _ref.loanDueDate,
+          repayType = _ref.repayType,
+          custName = _ref.custName,
+          loanPayeeAccountNo = _ref.loanPayeeAccountNo,
+          loanPayeeAccountName = _ref.loanPayeeAccountName,
+          personalCertNo = _ref.personalCertNo,
+          enterpriseWorkers = _ref.enterpriseWorkers,
+          assetAmt = _ref.assetAmt,
+          userId = _ref.userId;
+      return http$1.post('/crpt-order/order/yjd/loan/apply', {
+        body: {
+          id: id,
+          productId: productId,
+          maxLoanAmount: maxLoanAmount,
+          applyAmount: applyAmount,
+          interestRate: interestRate,
+          loanTerm: loanTerm,
+          loanDueDate: loanDueDate,
+          repayType: repayType,
+          custName: custName,
+          loanPayeeAccountNo: loanPayeeAccountNo,
+          loanPayeeAccountName: loanPayeeAccountName,
+          personalCertNo: personalCertNo,
+          enterpriseWorkers: enterpriseWorkers,
+          assetAmt: assetAmt,
+          userId: userId
+        }
+      });
+    }
   }]);
 
   return Service;
@@ -2710,6 +2752,7 @@ function vmInit() {
     data: function data() {
       return {
         userinfo: $api.getStorage('userinfo') || {},
+        createLoanOrderArgus: $api.getStorage('createLoanOrderArgus') || {},
         bankInfo: null
       };
     },
@@ -2739,54 +2782,109 @@ function vmInit() {
           });
         });
       },
-      __startAuth: function __startAuth(file) {
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var resOcr, resBank, _resBank$data, bankCardNo, bankCardMobile, bankCardName;
+      __createLoan: function __createLoan(userId) {
+        var _this2 = this;
 
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+          var postData, res;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  // Router.openPage({key: 'yjd_send_msgcode', params: {pageParam: {
-                  //   bankCardNo: 'aaa',
-                  //   bankCardMobile: '18989193368',
-                  //   bankCardName: 'xinwangbank',
-                  // }}})
+                  _context.prev = 0;
+                  // TODO 少了userId
+                  postData = _objectSpread$5({}, _this2.createLoanOrderArgus, {
+                    userId: userId
+                  });
+                  _context.next = 4;
+                  return Service.createLoanOrder(postData);
+
+                case 4:
+                  res = _context.sent;
+
+                  if (res.code === 200) {
+                    Router$2.openPage({
+                      key: 'yjd_apply_result'
+                    });
+                  } else {
+                    api.toast({
+                      msg: res.msg || '创建贷款申请失败',
+                      location: 'middle'
+                    });
+                  }
+
+                  _context.next = 11;
+                  break;
+
+                case 8:
+                  _context.prev = 8;
+                  _context.t0 = _context["catch"](0);
+                  api.toast({
+                    msg: _context.t0.msg || '出错啦',
+                    location: 'middle'
+                  });
+
+                case 11:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, null, [[0, 8]]);
+        }))();
+      },
+      __startAuth: function __startAuth(file) {
+        var _this3 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var resOcr, resBank, _resBank$data, bankCardNo, bankCardMobile, bankCardName, xwBandBankFlag, userId;
+
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
                   api.showProgress({
                     title: '认证中...',
                     text: '',
                     modal: false
                   });
-                  _context.prev = 1;
-                  _context.next = 4;
+                  _context2.prev = 1;
+                  _context2.next = 4;
                   return Service.faceOcr(file);
 
                 case 4:
-                  resOcr = _context.sent;
-                  _context.next = 7;
+                  resOcr = _context2.sent;
+                  _context2.next = 7;
                   return Service.getBankInfo();
 
                 case 7:
-                  resBank = _context.sent;
+                  resBank = _context2.sent;
 
                   if (resOcr.code === 200 && resOcr.data.result === 'YES' && resBank.code === 200) {
-                    _resBank$data = resBank.data, bankCardNo = _resBank$data.bankCardNo, bankCardMobile = _resBank$data.bankCardMobile, bankCardName = _resBank$data.bankCardName;
+                    _resBank$data = resBank.data, bankCardNo = _resBank$data.bankCardNo, bankCardMobile = _resBank$data.bankCardMobile, bankCardName = _resBank$data.bankCardName, xwBandBankFlag = _resBank$data.xwBandBankFlag, userId = _resBank$data.userId;
                     api.toast({
                       msg: '认证成功',
                       location: 'middle'
                     });
-                    setTimeout(function () {
-                      Router$2.openPage({
-                        key: 'yjd_send_msgcode',
-                        params: {
-                          pageParam: {
-                            bankCardNo: bankCardNo,
-                            bankCardMobile: bankCardMobile,
-                            bankCardName: bankCardName
+
+                    if (String(xwBandBankFlag) === '1') {
+                      // 已经完成绑卡
+                      _this3.__createLoan(userId); // 创建贷款
+
+                    } else {
+                      // 未完成绑卡
+                      setTimeout(function () {
+                        Router$2.openPage({
+                          key: 'yjd_send_msgcode',
+                          params: {
+                            pageParam: {
+                              bankCardNo: bankCardNo,
+                              bankCardMobile: bankCardMobile,
+                              bankCardName: bankCardName
+                            }
                           }
-                        }
-                      });
-                    }, 1500);
+                        });
+                      }, 1500);
+                    }
                   } else {
                     api.toast({
                       msg: resOcr.data.info || '认证失败',
@@ -2794,14 +2892,14 @@ function vmInit() {
                     });
                   }
 
-                  _context.next = 14;
+                  _context2.next = 14;
                   break;
 
                 case 11:
-                  _context.prev = 11;
-                  _context.t0 = _context["catch"](1);
+                  _context2.prev = 11;
+                  _context2.t0 = _context2["catch"](1);
                   api.toast({
-                    msg: _context.t0.msg || '认证失败',
+                    msg: _context2.t0.msg || '认证失败',
                     location: 'middle'
                   });
 
@@ -2810,10 +2908,10 @@ function vmInit() {
 
                 case 15:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee, null, [[1, 11]]);
+          }, _callee2, null, [[1, 11]]);
         }))();
       }
     }
