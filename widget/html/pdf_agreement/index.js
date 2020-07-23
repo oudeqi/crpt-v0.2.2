@@ -48,10 +48,11 @@ apiready = function apiready() {
     url: frameUrl,
     title: '查看合同',
     useWKWebView: true,
+    fixedOn: 'ui_window',
     rect: {
       marginLeft: 0,
       //相对父页面左外边距的距离，数字类型
-      marginTop: h,
+      marginTop: 0,
       //相对父页面上外边距的距离，数字类型
       marginBottom: 0,
       //相对父页面下外边距的距离，数字类型

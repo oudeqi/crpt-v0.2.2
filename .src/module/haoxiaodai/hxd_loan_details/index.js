@@ -88,7 +88,7 @@ function vmInit () {
         Router.openPage({ key: 'repay_record', params: {pageParam: { orderNo }}})
       },
       openLoanContract () {
-        Router.openPage({ key: 'agreement', params: {pageParam: {
+        Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
           type: 'pdf',
           id: this.data.signContractId
         }}})

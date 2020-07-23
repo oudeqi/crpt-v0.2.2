@@ -91,7 +91,7 @@ function vmInit () {
       openDetails (record) {
         const { orderType, orderId, orderNo } = record
         // orderType 1-入库单、2-发票单、3-饲料订单、4-代养合同
-        if (String(orderType) === '1') { // 好销贷
+        if (String(orderType) === '1') { // 好销宝
           Router.openPage({ key: 'hxd_loan_details', params: {pageParam: { orderId, orderNo }}})
         } else if (String(orderType) === '2') { // 以前的
           Router.openPage({ key: 'loan_details', params: {pageParam: { orderId, orderNo }}})

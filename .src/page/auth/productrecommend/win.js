@@ -80,13 +80,13 @@ function vmInit () {
 
       handleBtnClick (record) {
         let name = record.name
-        let type = record.type + '' // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销贷）
+        let type = record.type + '' // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销宝）
         let id = record.id
         if (type === '1') { // 信用贷款（押金贷）
           Router.openPage({key: 'yjd_account_open', params: {pageParam: { productId: id }}})
         } else if (type === '2') { // 担保贷款
           this.__goDanbao(id, name)
-        } else if (type === '3') { // 上游入库单贷款（好销贷）
+        } else if (type === '3') { // 上游入库单贷款（好销宝）
           if (this.userType === '1') { // 个人用户
             Router.openPage({key: 'hxd_apply', params: {pageParam: { productId: id }}})
           } else if (this.userType === '2') { // 企业用户
@@ -160,13 +160,13 @@ class PageController extends Service {
       let li = $api.closest(event.target, 'li')
       if (btn) {
         let name = btn.dataset.name
-        let type = String(btn.dataset.type) // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销贷）
+        let type = String(btn.dataset.type) // 产品类型：1-信用贷款（押金贷） 2-担保贷款 3-上游入库单贷款（好销宝）
         let id = btn.dataset.id
         if (String(type) === '1') { // 信用贷款（押金贷）
           Router.openPage({key: 'yjd_account_open', params: {pageParam: { productId: id }}})
         } else if (String(type) === '2') { // 担保贷款
           this.__goDanbao(id, name)
-        } else if (String(type) === '3') { // 上游入库单贷款（好销贷）
+        } else if (String(type) === '3') { // 上游入库单贷款（好销宝）
           if (this.state.userType === '1') { // 个人用户
             Router.openPage({key: 'hxd_apply', params: {pageParam: { productId: id }}})
           } else if (this.state.userType === '2') { // 企业用户

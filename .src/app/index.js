@@ -64,7 +64,6 @@ class App {
     // let productId = '1282497823763111937'
     // Router.openPage({key: 'yjd_account_open_xinwang', params: {pageParam: { url, productId }}})
     // return
-
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

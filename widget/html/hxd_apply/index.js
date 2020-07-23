@@ -812,7 +812,7 @@ var qa = [{
 }];
 var intro = [{
   title: "产品简介",
-  detail: "好销贷是新希望六和与新希望金服联合推出的一款为供应商提供“提前收款”的在线融资产品"
+  detail: "好销宝是新希望六和与新希望金服联合推出的一款为供应商提供“提前收款”的在线融资产品"
 }, {
   title: "适用对象",
   detail: "与新希望六和股份下属饲料公司合作的上游供应商"
@@ -2395,7 +2395,7 @@ var routerMap = {
 };
 
 var routerHXDConfig = {
-  // 好销贷授信申请
+  // 好销宝授信申请
   hxd_apply: {
     name: 'hxd_apply',
     title: '产品介绍',
@@ -2404,7 +2404,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷授信申请补充企业信息
+  // 好销宝授信申请补充企业信息
   hxd_a_supply: {
     name: 'hxd_a_supply',
     title: '补充企业信息',
@@ -2413,7 +2413,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷授信申请成功/失败
+  // 好销宝授信申请成功/失败
   hxd_a_success: {
     name: 'hxd_a_success',
     title: '产品开通',
@@ -2422,7 +2422,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarGreen
   },
-  // 好销贷产品详情
+  // 好销宝产品详情
   hxd_product_detail: {
     name: 'hxd_product_detail',
     title: '产品详情',
@@ -2431,7 +2431,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷额度变化详情
+  // 好销宝额度变化详情
   hxd_quota: {
     name: 'hxd_quota',
     title: '额度变化详情',
@@ -2440,7 +2440,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷用款申请
+  // 好销宝用款申请
   hxd_u_apply: {
     name: 'hxd_u_apply',
     title: '申请用款',
@@ -2449,7 +2449,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷用款确认
+  // 好销宝用款确认
   hxd_u_confirm: {
     name: 'hxd_u_confirm',
     title: '用款确认',
@@ -2458,7 +2458,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷用款确认
+  // 好销宝用款确认
   hxd_u_try_detail: {
     name: 'hxd_u_try_detail',
     title: '用款试算',
@@ -2467,7 +2467,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷用款校验
+  // 好销宝用款校验
   hxd_u_smscode: {
     name: 'hxd_u_smscode',
     title: '用款校验',
@@ -2476,7 +2476,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷用款结果
+  // 好销宝用款结果
   hxd_u_result: {
     name: 'hxd_u_result',
     title: '审核结果',
@@ -2485,7 +2485,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷还款试算
+  // 好销宝还款试算
   hxd_r_try: {
     name: 'hxd_r_try',
     title: '还款试算',
@@ -2494,7 +2494,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷还款试算详情页
+  // 好销宝还款试算详情页
   hxd_r_try_detail: {
     name: 'hxd_r_try_detail',
     title: '还款试算详情',
@@ -2503,7 +2503,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷还款校验页
+  // 好销宝还款校验页
   hxd_r_smscode: {
     name: 'hxd_r_smscode',
     title: '还款校验',
@@ -2512,7 +2512,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷还款校验页
+  // 好销宝还款校验页
   hxd_r_result: {
     name: 'hxd_r_result',
     title: '还款结果',
@@ -2521,7 +2521,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷金服开户申请
+  // 好销宝金服开户申请
   hxd_jf_apply: {
     name: 'hxd_jf_apply',
     title: '转账还款通道',
@@ -2530,7 +2530,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷金服开户成功页
+  // 好销宝金服开户成功页
   hxd_jf_account: {
     name: 'hxd_jf_account',
     title: '转账还款通道',
@@ -2539,7 +2539,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷金服开户企业补充信息
+  // 好销宝金服开户企业补充信息
   hxd_jf_enterprise: {
     name: 'hxd_jf_enterprise',
     title: '开通信息补充',
@@ -2548,7 +2548,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷金服开户结果
+  // 好销宝金服开户结果
   hxd_jf_result: {
     name: 'hxd_jf_result',
     title: '开户结果',
@@ -2557,7 +2557,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷金服开户状态查看
+  // 好销宝金服开户状态查看
   hxd_jf_status: {
     name: 'hxd_jf_status',
     title: '转账还款通道',
@@ -2566,7 +2566,7 @@ var routerHXDConfig = {
     reload: true,
     navigationBar: navigationBarWhite
   },
-  // 好销贷贷款详情
+  // 好销宝贷款详情
   hxd_loan_details: {
     name: 'hxd_loan_details',
     title: '贷款详情',
@@ -2812,7 +2812,7 @@ apiready = function apiready() {
       },
       handleToAgreement: function handleToAgreement(id) {
         Router$2.openPage({
-          key: 'agreement',
+          key: 'pdf_agreement',
           params: {
             pageParam: {
               type: 'pdf',

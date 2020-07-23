@@ -37,7 +37,7 @@ apiready = function () {
           this.getYjdTable()
         }
       },
-      async getHxdTable() { // 好销贷
+      async getHxdTable() { // 好销宝
         Utils.UI.showLoading('加载中')
         try {
           const res = await http.get('/crpt-credit/credit/hxd/product/list', {})
@@ -65,7 +65,7 @@ apiready = function () {
           // console.log(JSON.stringify(err))
         }
       },
-      changeHXD(item) { // 好销贷跳转
+      changeHXD(item) { // 好销宝跳转
         /**
          * 授信状态0 + 个人用户1 ==> hxd_apply  授信申请页（产品详情)
          * 授信状态0 + 企业用户2 ==> hxd_a_supply  补充企业信息页

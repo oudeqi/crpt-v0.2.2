@@ -16,7 +16,7 @@
   </head>
   <body>
     <div id="app">
-      <!-- 好销贷产品列表 -->
+      <!-- 好销宝产品列表 -->
       <div class="product-list" v-if="pageParam.pageFrom === 'gongyingshang'">
         <ul v-if="hxdData && hxdData.length > 0">
           <li v-for="item in hxdData" :key="item.productId">
@@ -52,7 +52,7 @@
               <div class="grey">最高额度(元)</div>
             </div>
             <div class="center">
-              <h4>金服好销贷</h4>
+              <h4>金服好销宝</h4>
               <div class="grey">安全可靠 超长账期</div>
             </div>
             <div class="right">
@@ -66,7 +66,7 @@
               <div class="grey">最高额度(元)</div>
             </div>
             <div class="center">
-              <h4>金服好销贷</h4>
+              <h4>金服好销宝</h4>
               <div class="grey">安全可靠 超长账期</div>
             </div>
             <div class="right">
@@ -98,7 +98,7 @@
         </div>
       </div>
       <!-- <div class="product-list"> -->
-        <!-- 好销贷 -->
+        <!-- 好销宝 -->
         <!-- <div v-if="pageParam.pageFrom === 'gongyingshang'">
           <div class="card" v-for="item in hxdData" :key="item.productId">
             <div class="title">{{item.productTitle}}</div>

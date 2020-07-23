@@ -106,7 +106,7 @@ function vmInit () {
           if (String(repayResult) !== '1') {
             Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
           }
-        } else if (String(orderType) === '1') { // 好销贷
+        } else if (String(orderType) === '1') { // 好销宝
           if (String(repayStatus) === '8') {
             api.toast({ msg: '未按期还款的订单不支持线上还款', location: 'middle' })
           } else {
