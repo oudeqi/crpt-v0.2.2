@@ -1542,8 +1542,8 @@ var base64_1 = base64.Base64;
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'https://gateway.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1589,7 +1589,10 @@ function ajax(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
-      certificate:  null 
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
+      }
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1909,11 +1912,12 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["development"]; // export const baseUrl = "development" === 'development' ? dev : "development" === 'testing' ? uat : prod
+var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var whiteList$1 = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1959,7 +1963,10 @@ function ajax$1(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
-      certificate:  null 
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
+      }
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -2104,6 +2111,74 @@ var service = {
     return http$1.post("/crpt-credit/credit/jf/apply/sign?productId=".concat(params.productId), null, {
       timeout: 10
     });
+  }
+};
+
+/**
+ * @author Sunning
+ * 存放部分方法
+ */
+var filter = {
+  /**
+   * @author Sunning
+   * 数字格式化为千分位   1000 ==> 1,000
+   * @param {Object} s 要格式化的数字
+   * @param {Object} n 保留几位小数
+   */
+  formatNumber: function formatNumber(s, n) {
+    if (s === '-' || !s) {
+      return '-';
+    } else {
+      if (n === 0) {
+        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      } else {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
+        var positive = s.toString().split('-');
+        var l;
+        var r;
+
+        if (positive.length > 1) {
+          l = positive[1].split('.')[0].split('').reverse();
+          r = positive[1].split('.')[1];
+        } else {
+          l = s.split('.')[0].split('').reverse();
+          r = s.split('.')[1];
+        }
+
+        var t = '';
+
+        for (var i = 0; i < l.length; i++) {
+          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+        }
+
+        var result = t.split('').reverse().join('') + '.' + r;
+        if (positive.length > 1) result = '-' + result;
+        return result;
+      }
+    }
+  },
+
+  /**
+   * author: Sunning
+   * 将数字格式化为千分位
+   * @param {Object} value 需要转化的数字
+   */
+  toThousands: function toThousands(value) {
+    if (value === '' || value === undefined || value === null) {
+      return '';
+    }
+
+    value = String(value); // 强制转化为转化为字符串
+
+    var isDecimal = value.split('.');
+
+    if (isDecimal.length === 1) {
+      // 如果长度为1表示没有小数，否则表示有小数
+      return this.formatNumber(value, 0);
+    } else {
+      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
+    }
   }
 };
 
@@ -2635,6 +2710,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // pdf webview
+  pdf_agreement: {
+    name: 'pdf_agreement',
+    title: '查看合同',
+    url: 'widget://html/pdf_agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -2705,6 +2789,11 @@ apiready = function apiready() {
       QA: qa,
       btnText: '我要申请',
       isChecked: false
+    },
+    computed: {
+      creditAmountTn: function creditAmountTn() {
+        return filter.toThousands(this.productInfo.creditAmount);
+      }
     },
     methods: {
       handleFolder: function handleFolder() {

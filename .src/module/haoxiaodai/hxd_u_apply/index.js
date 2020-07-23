@@ -23,7 +23,8 @@ apiready = function () {
       amount: 0, // 当前可用额度
       useAmount: '', // 勾选用款金额
       productId: pageParam.productId,
-      selectedNumber: 0
+      selectedNumber: 0,
+      filter
     },
     computed: {
       isWarning: function () {
@@ -148,7 +149,7 @@ apiready = function () {
 
       Utils.UI.setRefreshHeaderInfo({
         success: () => {
-          window.reload()
+          window.location.reload()
           // this.handleGetEBSOrders()
           // this.useAmount = ''
           // setTimeout(() => {

@@ -55,7 +55,11 @@ class App {
     //   params: { }
     // })
     // return
-    // Router.openPage({key: 'com_product_list'})
+    // Router.openPage({key: 'pdf_agreement', params: {
+    //   pageParam: {
+    //     id: '1285541767242395649'
+    //   }
+    // }})
     // return
     // openTabLayout(0)
     const userinfo = $api.getStorage('userinfo')

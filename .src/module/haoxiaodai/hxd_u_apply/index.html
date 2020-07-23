@@ -65,11 +65,11 @@
               <div class="num">
                 <div class="can">
                   <div class="lb">可用金额</div>
-                  <div class="n">{{item.wareAvailableAmount}}</div>
+                  <div class="n">{{filter.toThousands(item.wareAvailableAmount)}}</div>
                 </div>
                 <div class="can left">
                   <div class="lb">金额</div>
-                  <div class="n">{{item.wareShouldPayAmount}}</div>
+                  <div class="n">{{filter.toThousands(item.wareShouldPayAmount)}}</div>
                 </div>
               </div>
               <div class="date">

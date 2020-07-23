@@ -1579,8 +1579,8 @@ var base64_1 = base64.Base64;
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var dev = 'http://crptdev.liuheco.com';
-var baseUrl =  dev ;
+var uat = 'https://gateway.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1626,7 +1626,10 @@ function ajax(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
-      certificate:  null 
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
+      }
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;
@@ -1946,11 +1949,12 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://gateway.crpt-cloud.app.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["development"]; // export const baseUrl = "development" === 'development' ? dev : "development" === 'testing' ? uat : prod
+var baseUrl$1 = ENV_URLS["testing"]; // export const baseUrl = "testing" === 'development' ? dev : "testing" === 'testing' ? uat : prod
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var whiteList$1 = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1996,7 +2000,10 @@ function ajax$1(method, url) {
       tag: tag,
       timeout: timeout,
       headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
-      certificate:  null 
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
+      }
     }, function (ret, error) {
       var end = new Date().getTime();
       var dis = (end - start) / 1000;

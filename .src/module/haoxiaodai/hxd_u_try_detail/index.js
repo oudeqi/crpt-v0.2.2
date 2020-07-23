@@ -26,6 +26,10 @@ apiready = function () {
     },
     methods: {
       handleChange(event){
+        if(event.target.value > 90 || event.target.value < 3) {
+          Utils.UI.toast('3天≤用款天数需要≤90天')
+          return
+        }
         this.dealDays = event.target.value
         this.handlePostPlan()
       },

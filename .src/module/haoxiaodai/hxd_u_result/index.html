@@ -36,7 +36,14 @@
           <div class="logo fail"></div>
           <div class="tips">{{failList.length}}笔订单用款失败</div>
           <div class="orders">
-              <div class="ord" v-for="item in failList" :key="item.orderId">业务单号: {{item.orderId}} 入库单号: {{item.warehouseOrderNo}}</div>
+              <div class="ord" v-for="item in failList" :key="item.orderId">
+                <div>
+                  业务单号: {{item.orderId}} 
+                </div>
+                <div>
+                  入库单号: {{item.warehouseOrderNo}}
+                </div>
+              </div>
           </div>
         </div>
       </div>
