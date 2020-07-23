@@ -149,6 +149,7 @@ apiready = function () {
 
       Utils.UI.setRefreshHeaderInfo({
         success: () => {
+          api.refreshHeaderLoadDone()
           window.location.reload()
           // this.handleGetEBSOrders()
           // this.useAmount = ''

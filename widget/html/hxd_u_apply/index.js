@@ -2952,6 +2952,7 @@ apiready = function apiready() {
       api.parseTapmode();
       Utils$1.UI.setRefreshHeaderInfo({
         success: function success() {
+          api.refreshHeaderLoadDone();
           window.location.reload(); // this.handleGetEBSOrders()
           // this.useAmount = ''
           // setTimeout(() => {

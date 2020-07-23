@@ -18,12 +18,26 @@
     <div id="app">
       <div class="header">
         <div class="icon">
-          <div class="up" :class="{fail: creditStatus === 3}"></div>
+          <div class="plogo"></div>
         </div>
-        <p v-if="creditStatus === 2" class="tips">
-          您已成功开通{{productInfo.producName}}
-        </p>
-        <p v-if="creditStatus === 3" class="tips">开通失败</p>
+        <div v-if="creditStatus === 2" class="stu">
+          <div class="up"></div>
+          <p class="tips">
+            您已成功开通{{productInfo.producName}}
+          </p>
+        </div>
+        <div v-if="creditStatus === 3" class="stu">
+          <div class="up fail"></div>
+          <p class="tips">
+            开通失败
+          </p>
+        </div>
+        <div v-if="creditStatus === 1" class="stu">
+          <div class="up ing"></div>
+          <p class="tips">
+            授信申请中...
+          </p>
+        </div>
         <div class="desc">
           <div v-if="creditStatus === 2">
             <div class="label">您的授信额度为</div>
@@ -32,10 +46,14 @@
             </p>
           </div>
           <div v-else-if="creditStatus === 3">
-            <div class="label">{{refusedReason}}</div>
+            <div class="label">失败原因</div>
+            <div class="reason">{{productInfo.refusedReason}}</div>
           </div>
           <div v-else-if="creditStatus === 1">
-            <div class="label">授信申请中</div>
+              <div class="label">您的授信额度为</div>
+              <p class="amount">
+                <span class="unit hg"> - </span>
+              </p>
           </div>
         </div>
       </div>

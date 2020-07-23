@@ -2855,9 +2855,9 @@ var App = /*#__PURE__*/function () {
       //   params: { }
       // })
       // return
-      // Router.openPage({key: 'pdf_agreement', params: {
+      // Router.openPage({key: 'hxd_a_success', params: {
       //   pageParam: {
-      //     id: '1285541767242395649'
+      //     productId: '1'
       //   }
       // }})
       // return
