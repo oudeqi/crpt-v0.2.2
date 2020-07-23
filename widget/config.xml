@@ -1,4 +1,4 @@
- <widget id="A6039969190486"  version="0.2.0">
+<widget id="A6039969190486" version="0.2.0">
 
   <name>IndustryFinance</name>
 
@@ -14,54 +14,54 @@
 
   </author>
 
-  <content src="html/app/index.html"/>
+  <content src="html/app/index.html" />
 
   <access origin="*" />
 
-  <permission name="UIInput"/>
-  <preference name="pageBounce" value="true"/>
-  <preference name="softInputMode" value="auto"/>
+  <permission name="UIInput" />
+  <preference name="pageBounce" value="true" />
+  <preference name="softInputMode" value="auto" />
   <preference name="softInputBarEnabled" value="false" />
 
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+  <preference name="appBackground" value="rgba(0,0,0,0.0)" />
 
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+  <preference name="windowBackground" value="rgba(0,0,0,0.0)" />
 
-	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)" />
 
-	<preference name="hScrollBarEnabled" value="false"/>
+  <preference name="hScrollBarEnabled" value="false" />
 
-	<preference name="vScrollBarEnabled" value="false"/>
+  <preference name="vScrollBarEnabled" value="false" />
 
-	<preference name="autoLaunch" value="true"/>
+  <preference name="autoLaunch" value="true" />
 
-	<preference name="fullScreen" value="false"/>
+  <preference name="fullScreen" value="false" />
 
-	<preference name="autoUpdate" value="true" />
+  <preference name="autoUpdate" value="true" />
 
-	<preference name="smartUpdate" value="false" />
+  <preference name="smartUpdate" value="false" />
 
-	<preference name="debug" value="true"/>
+  <preference name="debug" value="true" />
 
-	<preference name="statusBarAppearance" value="true"/>
+  <preference name="statusBarAppearance" value="true" />
 
-	<permission name="readPhoneState" />
+  <permission name="readPhoneState" />
 
-	<permission name="camera" />
+  <permission name="camera" />
 
-	<permission name="record" />
+  <permission name="record" />
 
-	<permission name="location" />
+  <permission name="location" />
 
-	<permission name="fileSystem" />
+  <permission name="fileSystem" />
 
-	<permission name="internet" />
+  <permission name="internet" />
 
-	<permission name="bootCompleted" />
+  <permission name="bootCompleted" />
 
-	<permission name="hardware" />
+  <permission name="hardware" />
   <preference name="useWKWebView" value="true" />
-  <preference name="WKWebViewRecoveryMode" value="reload"/>
+  <preference name="WKWebViewRecoveryMode" value="reload" />
   <preference name="checkSslTrusted" value="false" />
-
+  <meta-data name="com.baidu.lbsapi.API_KEY" value="9v96NtkeIqsqEgXYnYfblfDKfVqIN1Nh" />
 </widget>

@@ -2020,7 +2020,7 @@ var filterDict = function filterDict(type) {
 var ENV_URLS = {
   development: 'http://crptdev.liuheco.com',
   testing: 'https://gateway.crpt-cloud.liuheco.com',
-  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+  production: 'https://crpt-cloud.oak.net.cn'
 };
 var baseUrl$1 = ENV_URLS["testing"];
 

@@ -1,7 +1,7 @@
 var ENV_URLS = {
   development: 'http://crptdev.liuheco.com',
   testing: 'https://gateway.crpt-cloud.liuheco.com',
-  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+  production: 'https://crpt-cloud.oak.net.cn'
 };
 var baseUrl = ENV_URLS["testing"];
 

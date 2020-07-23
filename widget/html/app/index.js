@@ -2036,6 +2036,110 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
+function getRealLocation(cb) {
+  // 查询用户是否授过权
+  var resultList = api.hasPermission({
+    list: ['location']
+  }); // 从未授权过
+
+  if (!resultList[0].granted) {
+    // ios 有两种情况，未授权或拒绝授权，需要先弹出确认框让用户点击允许，再调用系统授权，否则可能出现直接跳往设置页面，ios审核会不通过
+    if (api.systemType === 'ios') {
+      // ios需要再次弹出模拟的让用户同意的跳往设置定位的模态框
+      api.confirm({
+        title: '使用App需要获取您的位置信息，是否允许',
+        // msg: 'testmsg',
+        buttons: ['允许', '不允许']
+      }, function (ret, err) {
+        var index = ret.buttonIndex;
+
+        if (index === 1) {
+          api.requestPermission({
+            list: ['location'] // code: 1
+
+          }, function (ret, err) {
+            // 已授权
+            if (ret.list[0].granted) {
+              getGPS(cb);
+            }
+          });
+        }
+      });
+    } else {
+      // 安卓直接调用询问
+      api.requestPermission({
+        list: ['location'] // code: 1
+
+      }, function (ret, err) {
+        // 已授权
+        if (ret.list[0].granted) {
+          // 调用 baiduMap获取经纬度
+          var bmLocation = api.require('bmLocation');
+
+          bmLocation.singleLocation({
+            reGeocode: false,
+            netWorkState: false
+          }, function (ret) {
+            var sta = ret.status;
+
+            if (sta) {
+              var latitude = ret.location.latitude;
+              var longitude = ret.location.longitude;
+              cb && cb({
+                latitude: latitude,
+                longitude: longitude
+              });
+            }
+          });
+        }
+      });
+    }
+  } else {
+    // 受过权
+    getGPS(cb);
+  }
+}
+
+function getGPS(cb) {
+  if (api.systemType === 'ios') {
+    // ios 直接获取经纬度信息
+    api.getLocation(function (ret, err) {
+      if (ret && ret.status) {
+        //获取位置信息成功
+        var latitude = ret.latitude;
+        var longitude = ret.longitude;
+        cb && cb({
+          latitude: latitude,
+          longitude: longitude
+        }); // alert(JSON.stringify(ret))
+      }
+    });
+  } else {
+    // android调用baiduMap
+    var bmLocation = api.require('bmLocation');
+
+    bmLocation.singleLocation({
+      reGeocode: false,
+      netWorkState: false
+    }, function (ret) {
+      var sta = ret.status;
+
+      if (sta) {
+        var latitude = ret.location.latitude;
+        var longitude = ret.location.longitude;
+        cb && cb({
+          latitude: latitude,
+          longitude: longitude
+        }); // var t = ret.timestamp;
+        // var str = '经度：' + lon + '<br>';
+        // str += '纬度：' + lat + '<br>';
+        // str += '更新时间：' + t + '<br>';
+        // api.alert({ msg: str });
+      }
+    });
+  }
+}
+
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
@@ -2608,7 +2712,7 @@ new Router$1();
 var ENV_URLS = {
   development: 'http://crptdev.liuheco.com',
   testing: 'https://gateway.crpt-cloud.liuheco.com',
-  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+  production: 'https://crpt-cloud.oak.net.cn'
 };
 var baseUrl$1 = ENV_URLS["testing"];
 
@@ -2805,32 +2909,48 @@ var http$1 = {
 // 保存设备信息
 
 function saveDeviceMes() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var sendJson = {
-        networkType: api.connectionType,
-        // 网络类型
-        deviceType: api.uiMode,
-        // 设备类型
-        deviceModel: api.deviceModel,
-        // 设备型号（手机型号）
-        deviceUniqueSymbol: api.deviceId,
-        // 设备唯一标识
-        longitude: position.coords.longitude,
-        // 经度
-        latitude: position.coords.latitude // 纬度
+  getRealLocation(function (params) {
+    console.log(params);
+    var sendJson = {
+      networkType: api.connectionType,
+      // 网络类型
+      deviceType: api.uiMode,
+      // 设备类型
+      deviceModel: api.deviceModel,
+      // 设备型号（手机型号）
+      deviceUniqueSymbol: api.deviceId,
+      // 设备唯一标识
+      longitude: params.longitude,
+      // 经度
+      latitude: params.latitude // 纬度
 
-      };
-      http$1.post('/crpt-cust/customer/device/info/save', {
-        body: sendJson
-      }).then(function (res) {// console.log(JSON.stringify(res))
-      })["catch"](function (err) {
-        console.log(JSON.stringify(err));
-      });
+    };
+    http$1.post('/crpt-cust/customer/device/info/save', {
+      body: sendJson
+    }).then(function (res) {// console.log(JSON.stringify(res))
+    })["catch"](function (err) {
+      console.log(JSON.stringify(err));
     });
-  } else {
-    alert("不支持定位功能");
-  }
+  }); // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(
+  //     function (position) {
+  //       const sendJson = {
+  //         networkType: api.connectionType, // 网络类型
+  //         deviceType: api.uiMode, // 设备类型
+  //         deviceModel: api.deviceModel, // 设备型号（手机型号）
+  //         deviceUniqueSymbol: api.deviceId, // 设备唯一标识
+  //         longitude: position.coords.longitude, // 经度
+  //         latitude: position.coords.latitude // 纬度
+  //       }
+  //       http.post('/crpt-cust/customer/device/info/save', { body: sendJson }).then(res => {
+  //         // console.log(JSON.stringify(res))
+  //       }).catch(err => {
+  //         console.log(JSON.stringify(err))
+  //       })
+  //     });
+  // } else {
+  //   alert("不支持定位功能");
+  // }
 }
 
 var App = /*#__PURE__*/function () {
@@ -2864,6 +2984,7 @@ var App = /*#__PURE__*/function () {
       // let productId = '1282497823763111937'
       // Router.openPage({key: 'yjd_account_open_xinwang', params: {pageParam: { url, productId }}})
       // return
+      // saveDeviceMes()
       var userinfo = $api.getStorage('userinfo');
 
       if (userinfo) {
