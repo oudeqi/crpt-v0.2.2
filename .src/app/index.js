@@ -56,9 +56,9 @@ class App {
     //   params: {}
     // })
     // return
-    // Router.openPage({key: 'pdf_agreement', params: {
+    // Router.openPage({key: 'hxd_a_success', params: {
     //   pageParam: {
-    //     id: '1285541767242395649'
+    //     productId: '1'
     //   }
     // }})
     // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'

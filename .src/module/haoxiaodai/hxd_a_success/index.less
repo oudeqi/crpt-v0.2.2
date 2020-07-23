@@ -21,19 +21,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .up {
+    .plogo {
       width: 65px;
       height: 65px;
-      // background: rgba(255, 255, 255, 1);
+      background: rgba(255, 255, 255, 1);
       border-radius: 50%;
-      background-size: 100%;
-      background-repeat: no-repeat;
-      background-image: url(../../image/hxd/hxd_a_success.png);
-      &.fail {
-        background-image: url(../../image/hxd/hxd_a_fail.png);
-      }
-
     }
+
     .below {
       width: 32px;
       height: 32px;
@@ -44,13 +38,33 @@ body {
       top: -16px;
     }
   }
-  .tips {
-    font-size: 16px;
-    font-family: PingFang-SC-Medium, PingFang-SC;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 1);
-    margin-top: 13px;
-    text-align: center;
+  .stu {
+    display: flex;
+    align-items: center;
+    margin-top: 19px;
+    .up {
+      width: 34px;
+      height: 34px;
+      // background: rgba(255, 255, 255, 1);
+      border-radius: 50%;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-image: url(../../image/hxd/hxd_a_success.png);
+      margin-right: 12px;
+      &.fail {
+        background-image: url(../../image/hxd/hxd_a_fail.png);
+      }
+      &.ing {
+        background-image: url(../../image/hxd/hxd_a_ing.png);
+      }
+    }
+    .tips {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+      // text-align: center;
+    }
   }
   .desc {
     background: rgba(255, 255, 255, 1);
@@ -58,7 +72,7 @@ body {
     border-radius: 6px;
     padding: 30px 0 49px;
     margin-top: 14px;
-    min-height: 180px;
+    min-height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,6 +85,14 @@ body {
       text-align: center;
       margin-bottom: 23px;
     }
+    .reason {
+      font-size: 16px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgb(115, 116, 117);
+      text-align: center;
+      padding: 0 20px;
+    }
     .amount {
       font-size: 40px;
       font-family: PingFangSC-Semibold, PingFang SC;
@@ -82,6 +104,12 @@ body {
         font-family: DINAlternate-Bold, DINAlternate;
         font-weight: bold;
         color: rgba(48, 49, 51, 1);
+        &.hg {
+          font-size: 40px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: rgba(48, 49, 51, 1);
+        }
       }
     }
   }
