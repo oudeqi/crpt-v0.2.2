@@ -6,7 +6,7 @@ import {
 } from './webview.js'
 import { Base64 } from 'js-base64'
 import Utils from "./utils"
-import key from './../widget/cert/gateway.crpt-cloud.liuheco.com.key'
+// import key from './../widget/cert/gateway.crpt-cloud.liuheco.com.key'
 
 const dev = 'http://crptdev.liuheco.com'
 const uat = 'https://gateway.crpt-cloud.liuheco.com'
@@ -57,7 +57,7 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
       },
       certificate: __buildEnv__ === 'development' ? null : {
         path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
-        password: key
+        // password: key
       }
     }, (ret, error) => {
       let end = new Date().getTime()

@@ -35,11 +35,11 @@
                 <div class="num">
                   <div class="can">
                     <div class="lb">可用金额</div>
-                    <div class="n">{{item.wareAvailableAmount}}</div>
+                    <div class="n">{{filter.toThousands(item.wareAvailableAmount)}}</div>
                   </div>
                   <div class="can left">
                     <div class="lb">金额</div>
-                    <div class="n">{{item.wareShouldPayAmount}}</div>
+                    <div class="n">{{filter.toThousands(item.wareShouldPayAmount)}}</div>
                   </div>
                 </div>
                 <div class="date">
@@ -107,7 +107,7 @@
             <div class="
             ">
               <ul class="s-list">
-                <li class="s-cell" v-for="item in agreements" :key="item.orderId">
+                <li class="s-cell" v-for="item in agreements" :key="item">
                   <div class="cube">
                     <div class="oi">
                       业务单号：{{item.orderNo}}

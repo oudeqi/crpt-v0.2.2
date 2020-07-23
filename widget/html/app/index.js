@@ -1668,8 +1668,6 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-var key = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzry7QC6BpDme\nGRU0PfwBdc/owevQ616oMbSMpXbPH6GCVepi7DQ7UUqYa7eyhLsC4pteL1LYRquQ\nnfngvVuGFj+TT94bH3guTnb3Jkt+QK4KyMLHCzxDB47SQ/BpBYNmWYpEhonNLA7f\nyI81wBZMD7jGsndQWVhaWkjxHYt6VwxLa5BAnfchVvvftUL25esc7UjnWwWGrP7E\n5dVRKrz7GsrsqvqNeoNFyK6qo1IDoSlT3sG3KmaiTYLB8i4lYExBSw3h/0Mz0Xqj\nUBoAe+jECPA4Npv2ImX5nkV4KWxuTLrOUcD0eKn9elw4WaYFKqTUkpiI/15nC8rk\n3dGSt5wRAgMBAAECggEAJmRp3S4n2KG3TSgxJWKiduYW5GY/Dt2gEaUUFfhHhwvs\nnQ9v3qNZv+mXQN4nWU7JvVWeMjmdKr0Mr5T52tTl3rCSxlTKFxmUiehQzsdv/6Eu\nJomwxFE58QiWf9kP4FJhnoviekpilJ/ogya6JQSTT0/93RLmdYHh1CeR4LqLR8Ml\n3qPTxUwTuuAOBmw/KMjKxNo35Fxkm4oqE5kTrOCWvvhrE9Z2skPitBiGraJcfBld\nM8/1rJKRv/uSp+lg+xPVwUu00X7juVnyfRUkCsDTfh1GGE2S5WCaiHPOExJuE4gd\noD4rlQ1SeeKpW3qyXjvLBXP8zFugQesUBaDyIou8wQKBgQDxVDC5ak91prqgnyxg\nQnoIuxEJRCcrtsQQARAQM8Yz9Be1hWnxdo0EgwEsPnKueBA91IVn2/V4kdAgiELn\ngOMEIJRhTYmDNcviasEqgsh8AVT1p5CfTq0AXY4C/YwbvyxuidogdfFPQXOU7AnW\nYeTkix3HPmrzoT4CUTnsxTF3LwKBgQDR1TkuPaz+7Ibsq+FToUM9PLqAtm/i/akP\np8GoqGqUoPNsvn0KM7IlFKqiLYmh91KVk7FkOwAnVM9xnJ9RgFO5selt2AIK2vgn\nYAMoz7dTBVge1xhl5JIOzlS3jZpk2dRHl08jKqBR5SQEMiWrtvPGDt624RyyTxM3\n+pWRpz9QvwKBgHUUZkseI4ytpe9VKd9NgQ0JTHuVX/eaRMaK7XMe2zLLYlFDd6GY\n5VNiB0iix1qTjzWgDFTV5uJmw3V1BhhwdDLFZ5dJWcSZbd/b8Pkh2AgpUUGY2NYh\nAleiC8qxna68cd7y7CtBbSAJXfzLAv7KIZUrVPgb9SFbgcz4AUU4agYrAoGAWKF5\nz6BZjCwYKavIN2zsW9dk560nwXdni6dOU5Efw7vgVlR3uHFxk9wQ3wPhGLrA9VE3\nIqERRYu7O7/uQ5yywML3WGBfLHqlSuxxKTHju3uMZypvscpEL2DTw9xaFLM1yS+O\nS8pbgXwKJIOSCd/zQ/tP82tOlbp04bZEqws74T0CgYEAl89Jz8eyTHK2zq17gfrP\nJLtCRg7HeoO+/aJ8TT4YafU5je9WHSXwpqXjsHacI/WX/Rt46VByZ6F8Efb+nLS/\nbPHtt6qM440Waf7OBm70ZRy9UgbYwfjvoWkGmx2vz+BA1SONXZxWE7g78wNjaHAs\nrq6SWt2bXkij9UBk1EYD6Y8=\n-----END PRIVATE KEY-----";
-
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1721,8 +1719,8 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
-        password: key
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
       }
     }, function (ret, error) {
       var end = new Date().getTime();
@@ -2566,6 +2564,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  // pdf webview
+  pdf_agreement: {
+    name: 'pdf_agreement',
+    title: '查看合同',
+    url: 'widget://html/pdf_agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
   }
 };
 
@@ -2608,6 +2615,7 @@ var baseUrl$1 = ENV_URLS["testing"];
 function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var whiteList$1 = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2654,8 +2662,8 @@ function ajax$1(method, url) {
       timeout: timeout,
       headers: _objectSpread$5({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
-        password: key
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
       }
     }, function (ret, error) {
       var end = new Date().getTime();
@@ -2840,11 +2848,17 @@ var App = /*#__PURE__*/function () {
       // 4：人脸认证失败，待人工审核
       // 5：待补充基本信息
       // 6：人工审核不通过
-      // const windows = api.windows()
-      // let xx = windows.find(item => item.name === 'root')
-      // console.log(JSON.stringify(xx))
-      // Router.openPage({ key: 'yjd_select_contract', params: {
-      //   pageParam: {list: {}}
+      // $api.clearStorage()
+      // Utils.Router.openPageCreditInformation()
+      // Router.openPage({
+      //   key: 'yjd_account_open',
+      //   params: { }
+      // })
+      // return
+      // Router.openPage({key: 'pdf_agreement', params: {
+      //   pageParam: {
+      //     id: '1285541767242395649'
+      //   }
       // }})
       // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
       // let productId = '1282497823763111937'

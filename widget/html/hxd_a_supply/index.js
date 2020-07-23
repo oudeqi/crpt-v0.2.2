@@ -1585,8 +1585,6 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-var key = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzry7QC6BpDme\nGRU0PfwBdc/owevQ616oMbSMpXbPH6GCVepi7DQ7UUqYa7eyhLsC4pteL1LYRquQ\nnfngvVuGFj+TT94bH3guTnb3Jkt+QK4KyMLHCzxDB47SQ/BpBYNmWYpEhonNLA7f\nyI81wBZMD7jGsndQWVhaWkjxHYt6VwxLa5BAnfchVvvftUL25esc7UjnWwWGrP7E\n5dVRKrz7GsrsqvqNeoNFyK6qo1IDoSlT3sG3KmaiTYLB8i4lYExBSw3h/0Mz0Xqj\nUBoAe+jECPA4Npv2ImX5nkV4KWxuTLrOUcD0eKn9elw4WaYFKqTUkpiI/15nC8rk\n3dGSt5wRAgMBAAECggEAJmRp3S4n2KG3TSgxJWKiduYW5GY/Dt2gEaUUFfhHhwvs\nnQ9v3qNZv+mXQN4nWU7JvVWeMjmdKr0Mr5T52tTl3rCSxlTKFxmUiehQzsdv/6Eu\nJomwxFE58QiWf9kP4FJhnoviekpilJ/ogya6JQSTT0/93RLmdYHh1CeR4LqLR8Ml\n3qPTxUwTuuAOBmw/KMjKxNo35Fxkm4oqE5kTrOCWvvhrE9Z2skPitBiGraJcfBld\nM8/1rJKRv/uSp+lg+xPVwUu00X7juVnyfRUkCsDTfh1GGE2S5WCaiHPOExJuE4gd\noD4rlQ1SeeKpW3qyXjvLBXP8zFugQesUBaDyIou8wQKBgQDxVDC5ak91prqgnyxg\nQnoIuxEJRCcrtsQQARAQM8Yz9Be1hWnxdo0EgwEsPnKueBA91IVn2/V4kdAgiELn\ngOMEIJRhTYmDNcviasEqgsh8AVT1p5CfTq0AXY4C/YwbvyxuidogdfFPQXOU7AnW\nYeTkix3HPmrzoT4CUTnsxTF3LwKBgQDR1TkuPaz+7Ibsq+FToUM9PLqAtm/i/akP\np8GoqGqUoPNsvn0KM7IlFKqiLYmh91KVk7FkOwAnVM9xnJ9RgFO5selt2AIK2vgn\nYAMoz7dTBVge1xhl5JIOzlS3jZpk2dRHl08jKqBR5SQEMiWrtvPGDt624RyyTxM3\n+pWRpz9QvwKBgHUUZkseI4ytpe9VKd9NgQ0JTHuVX/eaRMaK7XMe2zLLYlFDd6GY\n5VNiB0iix1qTjzWgDFTV5uJmw3V1BhhwdDLFZ5dJWcSZbd/b8Pkh2AgpUUGY2NYh\nAleiC8qxna68cd7y7CtBbSAJXfzLAv7KIZUrVPgb9SFbgcz4AUU4agYrAoGAWKF5\nz6BZjCwYKavIN2zsW9dk560nwXdni6dOU5Efw7vgVlR3uHFxk9wQ3wPhGLrA9VE3\nIqERRYu7O7/uQ5yywML3WGBfLHqlSuxxKTHju3uMZypvscpEL2DTw9xaFLM1yS+O\nS8pbgXwKJIOSCd/zQ/tP82tOlbp04bZEqws74T0CgYEAl89Jz8eyTHK2zq17gfrP\nJLtCRg7HeoO+/aJ8TT4YafU5je9WHSXwpqXjsHacI/WX/Rt46VByZ6F8Efb+nLS/\nbPHtt6qM440Waf7OBm70ZRy9UgbYwfjvoWkGmx2vz+BA1SONXZxWE7g78wNjaHAs\nrq6SWt2bXkij9UBk1EYD6Y8=\n-----END PRIVATE KEY-----";
-
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1638,8 +1636,8 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
-        password: key
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
       }
     }, function (ret, error) {
       var end = new Date().getTime();
@@ -1955,10 +1953,203 @@ var Utils = function Utils() {
 
 var Utils$1 = new Utils();
 
-// import http from './../../../http'
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://gateway.crpt-cloud.app.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["testing"];
+
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
+
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
+      certificate:  {
+        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert' // password: key
+
+      }
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'html/gerenlogin/index'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage();
+                openRegLogin();
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
+
 var service = {
   postCompanyInfo: function postCompanyInfo(params, files) {
-    return http.upload("/crpt-credit/credit/jf/company/completeInfo", {
+    return http$1.upload("/crpt-credit/credit/jf/company/completeInfo", {
       values: params,
       files: files
     });
@@ -2493,17 +2684,26 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // pdf webview
+  pdf_agreement: {
+    name: 'pdf_agreement',
+    title: '查看合同',
+    url: 'widget://html/pdf_agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
-
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$2({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Router$1 = /*#__PURE__*/function () {
   function Router() {
@@ -2516,7 +2716,7 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$3({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
     }
   }]);
 

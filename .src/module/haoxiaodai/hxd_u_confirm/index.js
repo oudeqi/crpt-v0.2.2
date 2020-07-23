@@ -25,7 +25,7 @@ apiready = function () {
       isShowPop: false,
       amount: '',
       needApplyAmount: '',
-      warehouseOrderlist: [],
+      warehouseOrderlist: [{}],
       agreements: [],
       successList: [],
       failList: [],
@@ -33,7 +33,8 @@ apiready = function () {
       hasApply: false,
       processStatus: 1,
       maxErrorRetry: 20,
-      status: pageParam.status || 11 // 用来区分是从单条入库单列表进来，还是从正常流程进来
+      status: pageParam.status || 11, // 用来区分是从单条入库单列表进来，还是从正常流程进来
+      filter
     },
     methods: {
       handleFolder() {

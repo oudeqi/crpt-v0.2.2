@@ -134,6 +134,15 @@ const routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // pdf webview
+  pdf_agreement: {
+    name: 'pdf_agreement',
+    title: '查看合同',
+    url: 'widget://html/pdf_agreement/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 }
 export default routerConfig
