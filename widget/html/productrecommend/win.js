@@ -3939,8 +3939,8 @@ var Service = /*#__PURE__*/function () {
     value: function getData(userType) {
       // /crpt-product/product/online/list
       // /crpt-product/product/online/list/after/register
-      return http$1.get('/crpt-product/product/online/list/after/register', {
-        values: {
+      return http$1.post('/crpt-product/product/online/list/after/register', {
+        body: {
           userType: userType
         }
       });
@@ -4033,8 +4033,8 @@ function vmInit() {
                 case 6:
                   res = _context2.sent;
 
-                  if (res.data && res.data.list && res.data.list.length > 0) {
-                    _this2.list = res.data.list;
+                  if (res.data && res.data.length > 0) {
+                    _this2.list = res.data;
                     _this2.more = 'hasMore';
                   } else {
                     _this2.more = 'noData';

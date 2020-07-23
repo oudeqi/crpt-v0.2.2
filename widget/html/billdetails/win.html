@@ -21,12 +21,16 @@
             <span class="amount big">{{numeral(sumRepayTotalAmount).format('0,0.00')}}</span>
           </div>
           <div class="total-txt">
-            本金 <span>{{numeral(sumRepayPrincipalAmount).format('0,0.00')}}</span>
-            ，利息 <span>{{numeral(sumRepayInterestAmount).format('0,0.00')}}</span>
-            <br>
-            费用 <span>{{numeral(sumServiceFee).format('0,0.00')}}</span>
-            <br>
-            <span v-if="sumRepayPenaltyAmount && String(sumRepayPenaltyAmount)!=='0'">逾期罚息 {{numeral(sumRepayPenaltyAmount).format('0,0.00')}}</span>
+            <div class="total-txt__row">
+              <span>本金 {{numeral(sumRepayPrincipalAmount).format('0,0.00')}}</span>
+              <span> + 利息 {{numeral(sumRepayInterestAmount).format('0,0.00')}}</span>
+            </div>
+            <div class="total-txt__row" v-if="sumServiceFee && String(sumServiceFee)!=='0'">
+              <span>费用 {{numeral(sumServiceFee).format('0,0.00')}}</span>
+            </div>
+            <div class="total-txt__row" v-if="sumRepayPenaltyAmount && String(sumRepayPenaltyAmount)!=='0'">
+              <span>逾期罚息 {{numeral(sumRepayPenaltyAmount).format('0,0.00')}}</span>
+            </div>
           </div>
         </div>
         <p v-if="String(status) === '1'" class="tips">账单日标注日期为最晚还款日期，实际还款日以新希望六和旗下饲料公司按合同结算贷款或您主动还款时，结清本次用款的时间为准。</p>
@@ -56,8 +60,10 @@
             <span>利息：{{numeral(item.repayInterestAmount).format('0,0.00')}}</span>
             <span>
               本金 {{numeral(item.repayPrincipalAmount).format('0,0.00')}}
-              +
-              费用 {{numeral(item.serviceFee).format('0,0.00')}}</span>
+              <span v-if="item.serviceFee && String(item.serviceFee)!=='0'">
+                + 费用 {{numeral(item.serviceFee).format('0,0.00')}}
+              </span>
+            </span>
           </div>
         </div>
         <div class="b">
@@ -67,7 +73,6 @@
       </li>
     </ul>
 
-    <section v-if="loading && more !== 'noData'" class="app_list_loading">加载中...</section>
     <section v-if="more === 'noData'" class="app_list_nodata">
       <div class="app_list_nodata_pic"></div>
       <p class="app_list_nodata_desc">暂时没有数据</p>
