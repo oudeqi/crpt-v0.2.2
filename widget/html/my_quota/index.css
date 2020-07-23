@@ -171,6 +171,8 @@ html, body {
 .detail .row2 {
   color: #66BB6A;
   margin-top: 5px;
+}
+.detail .row2 .cell {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -180,11 +182,13 @@ html, body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
 }
 .detail .row2 .cell .amount {
-  font-size: 20px;
-  font-family: DINAlternate-Bold, DINAlternate;
-  font-weight: bold;
+  font-size: 16px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
   color: #303133;
 }
 .detail .row2 .cell .amount.green {

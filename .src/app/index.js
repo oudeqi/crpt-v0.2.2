@@ -61,7 +61,6 @@ class App {
     //   }
     // }})
     // return
-
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}

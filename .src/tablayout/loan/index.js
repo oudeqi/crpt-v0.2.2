@@ -55,7 +55,7 @@ function vmInit() {
         } else if (creditStatus === 2) { // 成功 我要用款
           Router.openPage({ key: 'hxd_u_apply', params: { pageParam: { productId } } })
         } else {
-          api.toast({ msg: '好销贷授信状态不正确', location: 'middle' })
+          api.toast({ msg: '好销宝授信状态不正确', location: 'middle' })
         }
       },
 
@@ -76,7 +76,7 @@ function vmInit() {
           if (res.data && res.data[0]) {
             this.hxd = res.data[0]
           } else {
-            api.toast({ msg: res.msg || '未查询到好销贷产品', location: 'middle' })
+            api.toast({ msg: res.msg || '未查询到好销宝产品', location: 'middle' })
           }
         } catch (error) {
           api.toast({ msg: error.message || '出错啦', location: 'middle' })
@@ -116,11 +116,11 @@ function vmInit() {
         }
       },
 
-      handleBtnClick(record) { // orderType 业务单类型：业务单类型:1-入库单（好销贷）、2-发票单、3-饲料订单、4-代养合同（押金贷）
+      handleBtnClick(record) { // orderType 业务单类型：业务单类型:1-入库单（好销宝）、2-发票单、3-饲料订单、4-代养合同（押金贷）
         let productId = record.productId
         let orderNo = record.orderNo
         let orderId = record.orderId
-        if (record.orderType === 1) { // 好销贷
+        if (record.orderType === 1) { // 好销宝
           // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加
           if (record.status === 1) { // 申请中 继续申请
             Router.openPage({
@@ -167,7 +167,7 @@ function vmInit() {
         console.log(record.status)
         api.alert({
           title: '提示',
-          msg: '好销贷取消贷款申请功能正在开发中...',
+          msg: '好销宝取消贷款申请功能正在开发中...',
         })
       }
 

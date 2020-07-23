@@ -54,7 +54,7 @@ apiready = function () {
             this.productInfo = {
               creditAmount: res.data.creditAmount,
               producName: res.data.productName,
-              signContract: [res.data.signContract || {}],// 后端只返回了一个合同，并且是对象不是list
+              signedContract: [res.data.signedContract || {}],// 后端只返回了一个合同，并且是对象不是list
               exeInterest: res.data.exeInterest,
               opType: this.duebillTypeMap[res.data.opType],
               repayCycle: res.data.repayCycle,
@@ -86,7 +86,7 @@ apiready = function () {
       },
       handleToAgreement(id) {
         Router.openPage({
-          key: 'agreement',
+          key: 'pdf_agreement',
           params: {
             pageParam: {
               id: id,

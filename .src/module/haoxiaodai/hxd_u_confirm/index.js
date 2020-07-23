@@ -178,7 +178,7 @@ apiready = function () {
       },
       handleToAgreement(id) {
         Router.openPage({
-          key: 'agreement',
+          key: 'pdf_agreement',
           params: {
             pageParam: {
               id,
