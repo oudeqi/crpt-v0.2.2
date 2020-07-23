@@ -7843,6 +7843,7 @@ function vmInit() {
 
                     if (res.data.list && res.data.list.length > 0) {
                       _this2.list = res.data.list;
+                      _this2.more = 'hasMore';
                     } else {
                       _this2.more = 'noData';
                     }

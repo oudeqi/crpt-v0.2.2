@@ -12,8 +12,8 @@ class Service {
   static getData (userType) {
     // /crpt-product/product/online/list
     // /crpt-product/product/online/list/after/register
-    return http.get('/crpt-product/product/online/list/after/register', {
-      values: { userType }
+    return http.post('/crpt-product/product/online/list/after/register', {
+      body: { userType }
     })
   }
   // 获取担保状态
@@ -61,8 +61,8 @@ function vmInit () {
         this.loading = true
         try {
           const res = await Service.getData(this.userType)
-          if (res.data && res.data.list && res.data.list.length > 0) {
-            this.list = res.data.list
+          if (res.data && res.data.length > 0) {
+            this.list = res.data
             this.more = 'hasMore'
           } else {
             this.more = 'noData'

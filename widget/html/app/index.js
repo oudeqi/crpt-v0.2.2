@@ -2851,8 +2851,8 @@ var App = /*#__PURE__*/function () {
       // $api.clearStorage()
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({
-      //   key: 'yjd_account_open',
-      //   params: { }
+      //   key: 'billlist',
+      //   params: {}
       // })
       // return
       // Router.openPage({key: 'pdf_agreement', params: {
@@ -2863,6 +2863,7 @@ var App = /*#__PURE__*/function () {
       // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
       // let productId = '1282497823763111937'
       // Router.openPage({key: 'yjd_account_open_xinwang', params: {pageParam: { url, productId }}})
+      // openBaseinfoFill()
       // return
       var userinfo = $api.getStorage('userinfo');
 

@@ -75,6 +75,7 @@ function vmInit() {
             this.account = res.data.account || ''
             if (res.data.list && res.data.list.length > 0) {
               this.list = res.data.list
+              this.more = 'hasMore'
             } else {
               this.more = 'noData'
             }
