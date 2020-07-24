@@ -20,7 +20,7 @@ apiready = function () {
   const page = new Vue({
     el: '#app',
     data: {
-      status: 1,
+      // status: 1,
       isFolder: true,
       isShowPop: false,
       amount: '',
