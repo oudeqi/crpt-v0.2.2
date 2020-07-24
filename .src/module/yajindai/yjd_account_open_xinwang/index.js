@@ -48,8 +48,8 @@ apiready = function () {
     }
   })
 
-  // timer = setInterval(function () {
-  //   getOpenAccountStatus(productId)
-  // }, 3000)
+  timer = setInterval(function () {
+    getOpenAccountStatus(productId)
+  }, 3000)
   
 }
