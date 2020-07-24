@@ -5,7 +5,9 @@ const service = {
     return http.post(`/crpt-order/order/hxd/query/confirm/warehouse/order/list`, { body: params })
   },
   postApply: (params) => {
-    return http.post(`/crpt-credit/credit/hxd/apply/warehouse/order/list`, { body: params })
+    return http.post(`/crpt-credit/credit/hxd/apply/warehouse/order/list`, { body: params }, {
+      timeout: 60
+    })
   },
   postQueryApply: (params) => {
     return http.post(`/crpt-credit/credit/hxd/query/warehouse/order/apply/info`, { body: params })
