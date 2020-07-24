@@ -18,6 +18,10 @@ class Service {
   static getProductDetail (id) {
     return http.get(`/crpt-product/product/yjd/detail/${id}`)
   }
+
+  static getContract (type = 1) {
+    return http.get(`/crpt-biz/biz/fund/protocol/query/${type}`)
+  }
   
 }
 
@@ -90,6 +94,7 @@ function vmInit () {
         pageParam: api.pageParam || {},
         userinfo: $api.getStorage('userinfo') || {},
         productDetails: {},
+        contractList: [],
         repayTypeMap: {
           4: '到期还本付息',
           5: '等额本息',
@@ -99,6 +104,7 @@ function vmInit () {
         companyCode: '',
         workerCount: '',
         totalAssets: '',
+        agreed: false, // 是否同意协议
       }
     },
     computed: {
@@ -176,18 +182,49 @@ function vmInit () {
       async initPage () {
         api.showProgress({ title: '数据加载中...', text: '' })
         await this.__getProductDetail()
+        await this.__getContract()
         api.hideProgress()
+      },
+
+      async __getContract () {
+        try {
+          const res = await Service.getContract()
+          this.contractList = res.data || []
+          api.refreshHeaderLoadDone()
+        } catch (e) {
+          api.toast({ msg: e.msg || '获取贷款合同失败', location: 'middle' })
+          api.refreshHeaderLoadDone()
+        }
       },
 
       async  __getProductDetail () {
         try {
           const res = await Service.getProductDetail(this.productId)
-          api.refreshHeaderLoadDone()
           this.productDetails = res.data || {}
         } catch (e) {
           api.toast({ msg: e.msg || '获取产品详情失败', location: 'middle' })
           api.refreshHeaderLoadDone()
         }
+      },
+
+      handleContractCheckboxClick() {
+        // this.contractList
+        let mustRead = this.contractList.filter(item => String(item.isReadLimit) === '1')
+        if (mustRead.length > 0) {
+          console.log('object')
+          setTimeout(() => {
+            this.agreed = false
+            // this.openDialog()
+          })
+        } else {
+          setTimeout(() => {
+            this.agreed = true
+          })
+        }
+      },
+
+      handleContractClick (record) {
+        // isReadLimit 是否强制阅读   1：是   0：否
       },
 
       openDialog () {
@@ -261,6 +298,7 @@ function vmInit () {
           personalCertNo: this.companyCode, // 个人社会信用代码
           enterpriseWorkers: this.workerCount, // 从业人数
           assetAmt: this.totalAssets, // 资产总额（万元）
+          isReadAndAgree: 1, // 是否已经阅读并同意所有协议 1：是  0：否 
           userId: '' // 新网用户id
         }
         $api.setStorage('createLoanOrderArgus', createLoanOrderArgus)

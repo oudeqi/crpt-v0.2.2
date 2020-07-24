@@ -3728,6 +3728,12 @@ var Service = /*#__PURE__*/function () {
     value: function getProductDetail(id) {
       return http$1.get("/crpt-product/product/yjd/detail/".concat(id));
     }
+  }, {
+    key: "getContract",
+    value: function getContract() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      return http$1.get("/crpt-biz/biz/fund/protocol/query/".concat(type));
+    }
   }]);
 
   return Service;
@@ -3818,6 +3824,7 @@ function vmInit() {
         pageParam: api.pageParam || {},
         userinfo: $api.getStorage('userinfo') || {},
         productDetails: {},
+        contractList: [],
         repayTypeMap: {
           4: '到期还本付息',
           5: '等额本息',
@@ -3826,7 +3833,9 @@ function vmInit() {
         applyMoney: '',
         companyCode: '',
         workerCount: '',
-        totalAssets: ''
+        totalAssets: '',
+        agreed: false // 是否同意协议
+
       };
     },
     computed: {
@@ -3956,9 +3965,13 @@ function vmInit() {
                   return _this3.__getProductDetail();
 
                 case 3:
+                  _context2.next = 5;
+                  return _this3.__getContract();
+
+                case 5:
                   api.hideProgress();
 
-                case 4:
+                case 6:
                 case "end":
                   return _context2.stop();
               }
@@ -3966,7 +3979,7 @@ function vmInit() {
           }, _callee2);
         }))();
       },
-      __getProductDetail: function __getProductDetail() {
+      __getContract: function __getContract() {
         var _this4 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
@@ -3977,12 +3990,12 @@ function vmInit() {
                 case 0:
                   _context3.prev = 0;
                   _context3.next = 3;
-                  return Service.getProductDetail(_this4.productId);
+                  return Service.getContract();
 
                 case 3:
                   res = _context3.sent;
+                  _this4.contractList = res.data || [];
                   api.refreshHeaderLoadDone();
-                  _this4.productDetails = res.data || {};
                   _context3.next = 12;
                   break;
 
@@ -3990,7 +4003,7 @@ function vmInit() {
                   _context3.prev = 8;
                   _context3.t0 = _context3["catch"](0);
                   api.toast({
-                    msg: _context3.t0.msg || '获取产品详情失败',
+                    msg: _context3.t0.msg || '获取贷款合同失败',
                     location: 'middle'
                   });
                   api.refreshHeaderLoadDone();
@@ -4002,6 +4015,63 @@ function vmInit() {
             }
           }, _callee3, null, [[0, 8]]);
         }))();
+      },
+      __getProductDetail: function __getProductDetail() {
+        var _this5 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+          var res;
+          return regenerator.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.prev = 0;
+                  _context4.next = 3;
+                  return Service.getProductDetail(_this5.productId);
+
+                case 3:
+                  res = _context4.sent;
+                  _this5.productDetails = res.data || {};
+                  _context4.next = 11;
+                  break;
+
+                case 7:
+                  _context4.prev = 7;
+                  _context4.t0 = _context4["catch"](0);
+                  api.toast({
+                    msg: _context4.t0.msg || '获取产品详情失败',
+                    location: 'middle'
+                  });
+                  api.refreshHeaderLoadDone();
+
+                case 11:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, null, [[0, 7]]);
+        }))();
+      },
+      handleContractCheckboxClick: function handleContractCheckboxClick() {
+        var _this6 = this;
+
+        // this.contractList
+        var mustRead = this.contractList.filter(function (item) {
+          return String(item.isReadLimit) === '1';
+        });
+
+        if (mustRead.length > 0) {
+          console.log('object');
+          setTimeout(function () {
+            _this6.agreed = false; // this.openDialog()
+          });
+        } else {
+          setTimeout(function () {
+            _this6.agreed = true;
+          });
+        }
+      },
+      handleContractClick: function handleContractClick(record) {// isReadLimit 是否强制阅读   1：是   0：否
       },
       openDialog: function openDialog() {
         api.openFrame({
@@ -4123,6 +4193,8 @@ function vmInit() {
           // 从业人数
           assetAmt: this.totalAssets,
           // 资产总额（万元）
+          isReadAndAgree: 1,
+          // 是否已经阅读并同意所有协议 1：是  0：否 
           userId: '' // 新网用户id
 
         };

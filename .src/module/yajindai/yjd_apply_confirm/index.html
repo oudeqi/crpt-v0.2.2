@@ -59,23 +59,39 @@
         <div class="upload-txt">点击上传营业执照</div>
       </div>
 
-      <div class="code">
-        <div class="code-tit">统一社会信用代码</div>
-        <input class="code-ipt" v-model="companyCode" type="text" placeholder="请输入">
+      <div class="ipt-group">
+        <div class="ipt-group-item">
+          <div class="ipt-label">统一社会信用代码</div>
+          <div class="ipt-content">
+            <input type="text" v-model="companyCode" placeholder="请输入">
+          </div>
+        </div>
+        <div class="ipt-group-item">
+          <div class="ipt-label">从业人数</div>
+          <div class="ipt-content">
+            <input type="number" v-model="workerCount" placeholder="请输入">
+          </div>
+        </div>
+        <div class="ipt-group-item">
+          <div class="ipt-label">资产总额</div>
+          <div class="ipt-content">
+            <input type="number" v-model="totalAssets" placeholder="请输入">
+            <span class="ipt-addon">万元</span>
+          </div>
+        </div>
       </div>
 
-      <div class="code">
-        <div class="code-tit">从业人数</div>
-        <input class="code-ipt" v-model="workerCount" type="number" placeholder="请输入">
-      </div>
-
-      <div class="code">
-        <div class="code-tit">资产总额(万元)</div>
-        <input class="code-ipt" v-model="totalAssets" type="number" placeholder="请输入">
-      </div>
-
-      <div class="listgroup">
-        <div class="listgroup-item" @click="openDialog()">贷款合同</div>
+      <div class="app_agreement">
+        <label>
+          <input @click="handleContractCheckboxClick()" v-model="agreed" class="app_checkbox" type="checkbox" name="type">
+        </label>
+        <div class="agreement_content">
+          <strong>已阅读并同意</strong>
+          <ul>
+            <!-- isReadLimit 是否强制阅读   1：是   0：否 -->
+            <li @click="handleContractClick(item)" v-for="item in contractList" :key="item.protocolFileId">《{{item.fileName}}》</li>
+          </ul>
+        </div>
       </div>
 
       <div class="bottom-btn">
