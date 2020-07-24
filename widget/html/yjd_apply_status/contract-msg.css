@@ -277,7 +277,44 @@ html, body {
     background-color: #fff;
     border-radius: 6px;
     overflow: hidden;
+    position: relative;
   }
+
+.full-mask .dialog .dialog-close {
+      position: absolute;
+      top: 20px;
+      right: 14px;
+      width: 20px;
+      height: 20px;
+    }
+
+.full-mask .dialog .dialog-close::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(45deg);
+                transform: translateX(10px) rotateZ(45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
+      }
+
+.full-mask .dialog .dialog-close::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(-45deg);
+                transform: translateX(10px) rotateZ(-45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
+      }
 
 .full-mask .dialog .dialog-header {
       height: 60px;
@@ -291,6 +328,7 @@ html, body {
 
 .full-mask .dialog .dialog-content {
       min-height: 100px;
+      max-height: 450px;
       overflow: auto;
     }
 
@@ -333,8 +371,8 @@ html, body {
           color:rgba(102,187,106,1);
         }
 
-.full-mask .dialog .dialog-footer .dialog-btn.active {
-          color: red !important;
+.full-mask .dialog .dialog-footer .dialog-btn.disabled {
+          color: #aaa !important;
         }
 
 

@@ -55,7 +55,7 @@ apiready = function () {
           <div class="r">
             <div class="txt1">应还：${numeral(item.repayTotalAmount).format('0,0.00')}</div>
             <div class="txt2">本金：${numeral(item.repayPrincipalAmount).format('0,0.00')}</div>
-            <div class="txt2">费用：${numeral(item.serviceFee).format('0,0.00')}</div>
+            <div class="txt2">利息：${numeral(item.repayInterestAmount).format('0,0.00')}</div>
             ${
               item.status===1 ? `<div class="txt3">逾期罚息：${numeral(item.repayPenaltyAmount).format('0,0.00')}</div>` : ''
             }

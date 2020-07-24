@@ -16,7 +16,7 @@
       </div>
 
       <div class="middle">
-        <div class="middle-label">申请金额</div>
+        <div class="middle-label">申请金额(元)</div>
         <div class="middle-ipt">
           <span>￥</span>
           <input type="number" v-model="applyMoney" placeholder="请输入申请金额">
@@ -88,7 +88,6 @@
         <div class="agreement_content">
           <strong>已阅读并同意</strong>
           <ul>
-            <!-- isReadLimit 是否强制阅读   1：是   0：否 -->
             <li @click="handleContractClick(item)" v-for="item in contractList" :key="item.protocolFileId">《{{item.fileName}}》</li>
           </ul>
         </div>

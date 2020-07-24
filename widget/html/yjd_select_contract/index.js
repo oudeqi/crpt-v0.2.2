@@ -3675,8 +3675,15 @@ var http$1 = {
   }
 };
 
+/*
+<div class="seclect-content__bottrow">
+  <span class="key">已收保证金(元)</span>
+  <span class="value">{{numeral(data.receivedBond).format('0,0.00')}}</span>
+</div>
+*/
+
 Vue.component('list-item', {
-  template: "\n    <div :class=\"['seclect-content', {selected: selected && selected.id===data.id}]\" @click=\"onSeclect\">\n      <div class=\"seclect-content__top\">\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u4EE3\u517B\u5408\u540C\u7F16\u53F7</span>\n          <span class=\"value\">{{data.outCode}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u6536\u6B3E\u65B9</span>\n          <span class=\"value\">{{data.orgName}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u7B7E\u8BA2\u65E5\u671F</span>\n          <span class=\"value\">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>\n        </div>\n      </div>\n      <div class=\"seclect-content__bott\">\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value\">{{numeral(data.receivableBond).format('0,0.00')}}</span>\n        </div>\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5DF2\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value\">{{numeral(data.receivedBond).format('0,0.00')}}</span>\n        </div>\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5269\u4F59\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value seclect-content__value--emphasize\">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>\n        </div>\n      </div>\n    </div>\n  ",
+  template: "\n    <div :class=\"['seclect-content', {selected: selected && selected.id===data.id}]\" @click=\"onSeclect\">\n      <div class=\"seclect-content__top\">\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u4EE3\u517B\u5408\u540C\u7F16\u53F7</span>\n          <span class=\"value\">{{data.outCode}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u6536\u6B3E\u65B9</span>\n          <span class=\"value\">{{data.orgName}}</span>\n        </div>\n        <div class=\"seclect-content__toprow\">\n          <span class=\"key\">\u7B7E\u8BA2\u65E5\u671F</span>\n          <span class=\"value\">{{data.signedDate ? data.signedDate.split(' ')[0] : ''}}</span>\n        </div>\n      </div>\n      <div class=\"seclect-content__bott\">\n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value\">{{numeral(data.receivableBond).format('0,0.00')}}</span>\n        </div>\n        \n        <div class=\"seclect-content__bottrow\">\n          <span class=\"key\">\u5269\u4F59\u5E94\u6536\u4FDD\u8BC1\u91D1(\u5143)</span>\n          <span class=\"value seclect-content__value--emphasize\">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>\n        </div>\n      </div>\n    </div>\n  ",
   props: ['data', 'selected'],
   created: function created() {// console.log(JSON.stringify(this.data))
   },
@@ -3856,9 +3863,16 @@ apiready = function apiready() {
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
+      api.closeWin({
+        name: 'yjd_account_open'
+      });
+      api.closeWin({
+        name: 'yjd_account_open_xinwang'
+      });
       api.closeToWin({
         name: 'yjd_product_detail'
       });
+      api.closeWin();
     }
   });
   var vm = vmInit();

@@ -5,7 +5,12 @@ import numeral from 'numeral'
 import Router from '../../../router'
 import http from '../../../http'
 import { setRefreshHeaderInfo } from '../../../config.js'
-
+/*
+<div class="seclect-content__bottrow">
+  <span class="key">已收保证金(元)</span>
+  <span class="value">{{numeral(data.receivedBond).format('0,0.00')}}</span>
+</div>
+*/
 Vue.component('list-item', {
   template: `
     <div :class="['seclect-content', {selected: selected && selected.id===data.id}]" @click="onSeclect">
@@ -28,10 +33,7 @@ Vue.component('list-item', {
           <span class="key">应收保证金(元)</span>
           <span class="value">{{numeral(data.receivableBond).format('0,0.00')}}</span>
         </div>
-        <div class="seclect-content__bottrow">
-          <span class="key">已收保证金(元)</span>
-          <span class="value">{{numeral(data.receivedBond).format('0,0.00')}}</span>
-        </div>
+        
         <div class="seclect-content__bottrow">
           <span class="key">剩余应收保证金(元)</span>
           <span class="value seclect-content__value--emphasize">{{numeral(data.surplusReceivableBond).format('0,0.00')}}</span>
@@ -138,9 +140,10 @@ apiready = function () {
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
-      api.closeToWin({
-        name: 'yjd_product_detail'
-      })
+      api.closeWin({ name: 'yjd_account_open' })
+      api.closeWin({ name: 'yjd_account_open_xinwang' })
+      api.closeToWin({ name: 'yjd_product_detail' })
+      api.closeWin()
     }
   })
 

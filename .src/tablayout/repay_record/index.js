@@ -58,8 +58,8 @@ apiready = function () {
             <span>${numeral(item.curRepaidPrincipalAmount).format('0,0.00')}</span>
           </div>
           <div class="row2">
-            <span>费用</span>
-            <span>${numeral(item.curServiceFee).format('0,0.00')}</span>
+            <span>利息</span>
+            <span>${numeral(item.curRepaidInterestAmount).format('0,0.00')}</span>
           </div>
           <div class="row2">
             <span>逾期罚息</span>

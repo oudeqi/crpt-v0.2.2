@@ -35,6 +35,11 @@ function vmInit() {
         hxd: {}
       }
     },
+    computed: {
+      userType: function () {
+        return this.userinfo.userType + '' // 1个人，2企业
+      },
+    },
     mounted: function () {
       this.pageInit()
     },
@@ -65,7 +70,9 @@ function vmInit() {
 
       async pageInit() {
         api.showProgress({ title: '加载中...', text: '', modal: false })
-        await this.getHXD()
+        if (this.userType === '2') {
+          await this.getHXD()
+        }
         await this.getPageData(1)
         api.hideProgress()
       },

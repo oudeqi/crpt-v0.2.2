@@ -3752,6 +3752,11 @@ function vmInit() {
         hxd: {}
       };
     },
+    computed: {
+      userType: function userType() {
+        return this.userinfo.userType + ''; // 1个人，2企业
+      }
+    },
     mounted: function mounted() {
       this.pageInit();
     },
@@ -3837,17 +3842,23 @@ function vmInit() {
                     text: '',
                     modal: false
                   });
-                  _context2.next = 3;
+
+                  if (!(_this2.userType === '2')) {
+                    _context2.next = 4;
+                    break;
+                  }
+
+                  _context2.next = 4;
                   return _this2.getHXD();
 
-                case 3:
-                  _context2.next = 5;
+                case 4:
+                  _context2.next = 6;
                   return _this2.getPageData(1);
 
-                case 5:
+                case 6:
                   api.hideProgress();
 
-                case 6:
+                case 7:
                 case "end":
                   return _context2.stop();
               }

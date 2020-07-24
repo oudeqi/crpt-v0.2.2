@@ -22,6 +22,14 @@ class Service {
   static getContract (type = 1) {
     return http.get(`/crpt-biz/biz/fund/protocol/query/${type}`)
   }
+
+  static docx2html(id) {
+    return http.get('/crpt-file/file/docx2html?id=' + id)
+  }
+
+  static pdf2html(id) {
+    return http.get(`/crpt-file/file/pdf2html?pdfFileId=${id}`)
+  }
   
 }
 
@@ -115,6 +123,7 @@ function vmInit () {
         && this.companyCode
         && this.workerCount
         && this.totalAssets
+        && this.agreed
       },
       id: function () { // 代养合同id
         return this.pageParam.id
@@ -142,6 +151,11 @@ function vmInit () {
     },
     mounted: function () {
       this.initPage()
+      api.addEventListener({
+        name: 'contractagreed'
+      }, (ret, err) => {
+        this.agreed = true
+      })
     },
     methods: {
 
@@ -208,13 +222,32 @@ function vmInit () {
       },
 
       handleContractCheckboxClick() {
-        // this.contractList
-        let mustRead = this.contractList.filter(item => String(item.isReadLimit) === '1')
-        if (mustRead.length > 0) {
-          console.log('object')
+        if (this.agreed) { return }
+        let mustRead = this.contractList.find(item => String(item.isReadLimit) === '1')
+        if (mustRead) {
           setTimeout(() => {
             this.agreed = false
-            // this.openDialog()
+            api.showProgress({ title: '合同加载中...', text: '' })
+            Service.docx2html(mustRead.protocolFileId).then(res => {
+              api.hideProgress()
+              if (res.code === 200) {
+                $api.setStorage('yjd-loan-contract', res.data.fileName)
+                this.openDialog({
+                  title: mustRead.fileName,
+                  countdown: {
+                    desc: '同意',
+                    seconds: 8,
+                  }
+                })
+              } else {
+                $api.setStorage('yjd-loan-contract', '')
+                api.toast({ msg: res.msg || '合同加载失败', location: 'middle' })
+              }
+            }).catch(e => {
+              api.hideProgress()
+              $api.setStorage('yjd-loan-contract', '')
+              api.toast({ msg: e.msg || '合同加载失败', location: 'middle' })
+            })
           })
         } else {
           setTimeout(() => {
@@ -225,9 +258,34 @@ function vmInit () {
 
       handleContractClick (record) {
         // isReadLimit 是否强制阅读   1：是   0：否
+        let countdown = null
+        if (String(record.isReadLimit) === '1') {
+          countdown = {
+            desc: '同意',
+            seconds: 8,
+          }
+        }
+        api.showProgress({ title: '合同加载中...', text: '' })
+        Service.docx2html(record.protocolFileId).then(res => {
+          api.hideProgress()
+          if (res.code === 200) {
+            $api.setStorage('yjd-loan-contract', res.data.fileName)
+            this.openDialog({
+              title: record.fileName,
+              countdown
+            })
+          } else {
+            $api.setStorage('yjd-loan-contract', '')
+            api.toast({ msg: res.msg || '合同加载失败', location: 'middle' })
+          }
+        }).catch(e => {
+          api.hideProgress()
+          $api.setStorage('yjd-loan-contract', '')
+          api.toast({ msg: e.msg || '合同加载失败', location: 'middle' })
+        })
       },
 
-      openDialog () {
+      openDialog ({title, countdown}) {
         api.openFrame({
           reload: true,
           name: 'dialog',
@@ -240,9 +298,7 @@ function vmInit () {
             w: 'auto',
             h: 'auto'
           },
-          pageParam: {
-            id: '2'
-          }
+          pageParam: { title, countdown }
         })
       },
 
@@ -275,12 +331,24 @@ function vmInit () {
           api.toast({ msg: '从业人数不能输入小数', location: 'middle' })
           return
         }
+        if (parseInt(this.workerCount) === 0) {
+          api.toast({ msg: '从业人数不能为0', location: 'middle' })
+          return
+        }
         if (!this.totalAssets) {
           api.toast({ msg: '请输入资产总额', location: 'middle' })
           return
         }
         if (isNaN(this.totalAssets)) {
           api.toast({ msg: '资产总额只能输入数字', location: 'middle' })
+          return
+        }
+        if (parseInt(this.totalAssets) === 0) {
+          api.toast({ msg: '资产总额不能为0', location: 'middle' })
+          return
+        }
+        if (!this.agreed) {
+          api.toast({ msg: '请仔细阅读贷款合同并同意', location: 'middle' })
           return
         }
         let createLoanOrderArgus = {

@@ -3734,6 +3734,16 @@ var Service = /*#__PURE__*/function () {
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       return http$1.get("/crpt-biz/biz/fund/protocol/query/".concat(type));
     }
+  }, {
+    key: "docx2html",
+    value: function docx2html(id) {
+      return http$1.get('/crpt-file/file/docx2html?id=' + id);
+    }
+  }, {
+    key: "pdf2html",
+    value: function pdf2html(id) {
+      return http$1.get("/crpt-file/file/pdf2html?pdfFileId=".concat(id));
+    }
   }]);
 
   return Service;
@@ -3841,7 +3851,7 @@ function vmInit() {
     computed: {
       submitBtnEnable: function submitBtnEnable() {
         // 提交按钮是否可用
-        return this.productDetails.loanTerm && this.pic && this.applyMoney && this.companyCode && this.workerCount && this.totalAssets;
+        return this.productDetails.loanTerm && this.pic && this.applyMoney && this.companyCode && this.workerCount && this.totalAssets && this.agreed;
       },
       id: function id() {
         // 代养合同id
@@ -3875,12 +3885,19 @@ function vmInit() {
       }
     },
     mounted: function mounted() {
+      var _this = this;
+
       this.initPage();
+      api.addEventListener({
+        name: 'contractagreed'
+      }, function (ret, err) {
+        _this.agreed = true;
+      });
     },
     methods: {
       numeral: numeral,
       selectPicture: function selectPicture() {
-        var _this = this;
+        var _this2 = this;
 
         var btns = ['相机', '相册'];
         var sourceType = '';
@@ -3893,13 +3910,13 @@ function vmInit() {
 
           getPicture(sourceType, function (ret, err) {
             if (ret && ret.data) {
-              _this.__licenseUpload(ret.data);
+              _this2.__licenseUpload(ret.data);
             }
           });
         });
       },
       __licenseUpload: function __licenseUpload(file) {
-        var _this2 = this;
+        var _this3 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
           var res;
@@ -3919,7 +3936,7 @@ function vmInit() {
                   res = _context.sent;
 
                   if (res.code === 200) {
-                    _this2.pic = file;
+                    _this3.pic = file;
                     api.toast({
                       msg: '上传成功',
                       location: 'middle'
@@ -3932,7 +3949,7 @@ function vmInit() {
                 case 8:
                   _context.prev = 8;
                   _context.t0 = _context["catch"](1);
-                  _this2.pic = '';
+                  _this3.pic = '';
                   api.toast({
                     msg: _context.t0.msg || '出错啦',
                     location: 'middle'
@@ -3950,7 +3967,7 @@ function vmInit() {
         }))();
       },
       initPage: function initPage() {
-        var _this3 = this;
+        var _this4 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
           return regenerator.wrap(function _callee2$(_context2) {
@@ -3962,11 +3979,11 @@ function vmInit() {
                     text: ''
                   });
                   _context2.next = 3;
-                  return _this3.__getProductDetail();
+                  return _this4.__getProductDetail();
 
                 case 3:
                   _context2.next = 5;
-                  return _this3.__getContract();
+                  return _this4.__getContract();
 
                 case 5:
                   api.hideProgress();
@@ -3980,7 +3997,7 @@ function vmInit() {
         }))();
       },
       __getContract: function __getContract() {
-        var _this4 = this;
+        var _this5 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
           var res;
@@ -3994,7 +4011,7 @@ function vmInit() {
 
                 case 3:
                   res = _context3.sent;
-                  _this4.contractList = res.data || [];
+                  _this5.contractList = res.data || [];
                   api.refreshHeaderLoadDone();
                   _context3.next = 12;
                   break;
@@ -4017,7 +4034,7 @@ function vmInit() {
         }))();
       },
       __getProductDetail: function __getProductDetail() {
-        var _this5 = this;
+        var _this6 = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
           var res;
@@ -4027,11 +4044,11 @@ function vmInit() {
                 case 0:
                   _context4.prev = 0;
                   _context4.next = 3;
-                  return Service.getProductDetail(_this5.productId);
+                  return Service.getProductDetail(_this6.productId);
 
                 case 3:
                   res = _context4.sent;
-                  _this5.productDetails = res.data || {};
+                  _this6.productDetails = res.data || {};
                   _context4.next = 11;
                   break;
 
@@ -4053,27 +4070,104 @@ function vmInit() {
         }))();
       },
       handleContractCheckboxClick: function handleContractCheckboxClick() {
-        var _this6 = this;
+        var _this7 = this;
 
-        // this.contractList
-        var mustRead = this.contractList.filter(function (item) {
+        if (this.agreed) {
+          return;
+        }
+
+        var mustRead = this.contractList.find(function (item) {
           return String(item.isReadLimit) === '1';
         });
 
-        if (mustRead.length > 0) {
-          console.log('object');
+        if (mustRead) {
           setTimeout(function () {
-            _this6.agreed = false; // this.openDialog()
+            _this7.agreed = false;
+            api.showProgress({
+              title: '合同加载中...',
+              text: ''
+            });
+            Service.docx2html(mustRead.protocolFileId).then(function (res) {
+              api.hideProgress();
+
+              if (res.code === 200) {
+                $api.setStorage('yjd-loan-contract', res.data.fileName);
+
+                _this7.openDialog({
+                  title: mustRead.fileName,
+                  countdown: {
+                    desc: '同意',
+                    seconds: 8
+                  }
+                });
+              } else {
+                $api.setStorage('yjd-loan-contract', '');
+                api.toast({
+                  msg: res.msg || '合同加载失败',
+                  location: 'middle'
+                });
+              }
+            })["catch"](function (e) {
+              api.hideProgress();
+              $api.setStorage('yjd-loan-contract', '');
+              api.toast({
+                msg: e.msg || '合同加载失败',
+                location: 'middle'
+              });
+            });
           });
         } else {
           setTimeout(function () {
-            _this6.agreed = true;
+            _this7.agreed = true;
           });
         }
       },
-      handleContractClick: function handleContractClick(record) {// isReadLimit 是否强制阅读   1：是   0：否
+      handleContractClick: function handleContractClick(record) {
+        var _this8 = this;
+
+        // isReadLimit 是否强制阅读   1：是   0：否
+        var countdown = null;
+
+        if (String(record.isReadLimit) === '1') {
+          countdown = {
+            desc: '同意',
+            seconds: 8
+          };
+        }
+
+        api.showProgress({
+          title: '合同加载中...',
+          text: ''
+        });
+        Service.docx2html(record.protocolFileId).then(function (res) {
+          api.hideProgress();
+
+          if (res.code === 200) {
+            $api.setStorage('yjd-loan-contract', res.data.fileName);
+
+            _this8.openDialog({
+              title: record.fileName,
+              countdown: countdown
+            });
+          } else {
+            $api.setStorage('yjd-loan-contract', '');
+            api.toast({
+              msg: res.msg || '合同加载失败',
+              location: 'middle'
+            });
+          }
+        })["catch"](function (e) {
+          api.hideProgress();
+          $api.setStorage('yjd-loan-contract', '');
+          api.toast({
+            msg: e.msg || '合同加载失败',
+            location: 'middle'
+          });
+        });
       },
-      openDialog: function openDialog() {
+      openDialog: function openDialog(_ref) {
+        var title = _ref.title,
+            countdown = _ref.countdown;
         api.openFrame({
           reload: true,
           name: 'dialog',
@@ -4087,7 +4181,8 @@ function vmInit() {
             h: 'auto'
           },
           pageParam: {
-            id: '2'
+            title: title,
+            countdown: countdown
           }
         });
       },
@@ -4148,6 +4243,14 @@ function vmInit() {
           return;
         }
 
+        if (parseInt(this.workerCount) === 0) {
+          api.toast({
+            msg: '从业人数不能为0',
+            location: 'middle'
+          });
+          return;
+        }
+
         if (!this.totalAssets) {
           api.toast({
             msg: '请输入资产总额',
@@ -4159,6 +4262,22 @@ function vmInit() {
         if (isNaN(this.totalAssets)) {
           api.toast({
             msg: '资产总额只能输入数字',
+            location: 'middle'
+          });
+          return;
+        }
+
+        if (parseInt(this.totalAssets) === 0) {
+          api.toast({
+            msg: '资产总额不能为0',
+            location: 'middle'
+          });
+          return;
+        }
+
+        if (!this.agreed) {
+          api.toast({
+            msg: '请仔细阅读贷款合同并同意',
             location: 'middle'
           });
           return;

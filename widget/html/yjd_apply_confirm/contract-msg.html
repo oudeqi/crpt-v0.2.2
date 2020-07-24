@@ -11,20 +11,8 @@
   <body>
     <div class="container" id="app" v-cloak>
 
-      <app-dialog title="代养合同信息" :btns="['关闭']" @btn-click="onBtnClick">
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
-        <div>zxczxcxz</div>
+      <app-dialog :title="title" :show-close="true" :countdown="countdown" @countdown-callback="countdownCallback()" @close-click="handleCloseClick()">
+        <div class="contract-content" ref="contract"></div>
       </app-dialog>
       
 
