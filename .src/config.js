@@ -25,7 +25,7 @@ const whiteList = [ // 白名单里不带token，否则后端会报错
 
 let hasAlert = false
 
-function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20} = {}) {
+function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 } = {}) {
   return new Promise((resolve, reject) => {
     let token = ''
     if (headers.token) {
@@ -56,7 +56,9 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
         ...headers
       },
       certificate: __buildEnv__ === 'development' ? null : {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
+        path: __buildEnv__ === 'testing'
+          ? 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'
+          : 'widget://widget/cert/oak.net.cn.cert',
         // password: key
       }
     }, (ret, error) => {
@@ -68,11 +70,11 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
           resolve(ret)
         } else {
           // 表单校验未过专属code
-          if(ret.code === 202) {
+          if (ret.code === 202) {
             const data = ret.data
             Utils.UI.toast(data[0].msg)
             resolve(ret)
-          }else {
+          } else {
             reject(ret)
           }
         }
@@ -83,7 +85,7 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
             api.alert({
               title: '提示',
               msg: '登录状态已经过期，请重新登录！',
-            }, function(ret, err){
+            }, function (ret, err) {
               hasAlert = false
               api.closeWin({ name: 'html/register/index' })
               api.closeWin({ name: 'html/gerenlogin/index' })
@@ -115,11 +117,11 @@ function ajax (method, url, data = {}, { headers = {}, tag = null, timeout = 20}
 
 const http = {
   cancel: tag => api.cancelAjax({ tag }),
-  get: (url, data, { headers, tag, timeout } = {}) => ajax('get', url, data, {headers, tag, timeout}),
-  post: (url, data, { headers, tag, timeout } = {}) => ajax('post', url, data, {headers, tag, timeout}),
-  put: (url, data, { headers, tag, timeout } = {}) => ajax('put', url, data, {headers, tag, timeout}),
-  delete: (url, data, { headers, tag, timeout } = {}) => ajax('delete', url, data, {headers, tag, timeout}),
-  upload: (url, data, { headers, tag, timeout } = {}) => ajax('upload', url, data, {headers, tag, timeout})
+  get: (url, data, { headers, tag, timeout } = {}) => ajax('get', url, data, { headers, tag, timeout }),
+  post: (url, data, { headers, tag, timeout } = {}) => ajax('post', url, data, { headers, tag, timeout }),
+  put: (url, data, { headers, tag, timeout } = {}) => ajax('put', url, data, { headers, tag, timeout }),
+  delete: (url, data, { headers, tag, timeout } = {}) => ajax('delete', url, data, { headers, tag, timeout }),
+  upload: (url, data, { headers, tag, timeout } = {}) => ajax('upload', url, data, { headers, tag, timeout })
 }
 
 // 统一ios和android的输入框，下标都从0开始
@@ -176,8 +178,8 @@ const openUIInput = (dom, form, key, options = {}, cb) => {
     },
   }, function (ret) {
     cb && cb(ret.id)
-    UIInput.value({ id: ret.id }, function(value) {
-      form[key] = [ ret.id, value && value.msg ? value.msg : '' ]
+    UIInput.value({ id: ret.id }, function (value) {
+      form[key] = [ret.id, value && value.msg ? value.msg : '']
     })
   })
 }
@@ -199,12 +201,12 @@ const phoneNoFormat = (tel, tag = '****') => {
   }
 }
 
-function ActionSheet (title, buttons, cb) {
+function ActionSheet(title, buttons, cb) {
   api.actionSheet({
     title,
     cancelTitle: '取消',
     buttons
-  }, function(ret, err) {
+  }, function (ret, err) {
     let index = ret.buttonIndex // index 从1开始
     if (index !== buttons.length + 1) {
       cb(index - 1)
@@ -260,7 +262,7 @@ function CityList(pos = {}, cb) {
     hotTitle: '热门城市',
     fixedOn: api.frameName,
     placeholder: '输入城市名或首字母查询',
-  }, function(ret, err) {
+  }, function (ret, err) {
     if (ret.eventType === 'back') {
       // UICityList.close()
     } else if (ret.eventType === 'selected') {
@@ -270,7 +272,7 @@ function CityList(pos = {}, cb) {
   })
 }
 
-function CitySelector (cb) {
+function CitySelector(cb) {
   let UIActionSelector = api.require('UIActionSelector')
   UIActionSelector.open({
     datas: 'widget://res/city.json',
@@ -317,14 +319,14 @@ function CitySelector (cb) {
       color: '#888'
     },
     fixedOn: api.frameName
-  }, function(ret, err) {
+  }, function (ret, err) {
     if (ret.eventType === 'ok') {
       cb(ret.selectedInfo)
     }
   })
 }
 
-function getPicture (sourceType, cb) {
+function getPicture(sourceType, cb) {
   // library         //图片库
   // camera          //相机
   // album           //相册
@@ -341,7 +343,7 @@ function getPicture (sourceType, cb) {
   }, cb)
 }
 
-function initUIInput (dom, options = {}, cb) {
+function initUIInput(dom, options = {}, cb) {
   let UIInput = api.require('UIInput')
   let rect = $api.offset(dom)
   let {
@@ -379,7 +381,7 @@ function initUIInput (dom, options = {}, cb) {
       }
     },
   }, function (ret) {
-    UIInput.value({ id: ret.id }, function(value) {
+    UIInput.value({ id: ret.id }, function (value) {
       if (value) {
         cb && cb(value.msg)
       }
@@ -401,7 +403,7 @@ function initUIInput (dom, options = {}, cb) {
 //   "makeBy":"nh-cloud",
 //   "userId":"20"
 // }
-function loginSuccessCallback (userinfo) {
+function loginSuccessCallback(userinfo) {
   $api.setStorage('userinfo', userinfo) // 用户信息
   getAndStorageAuthStatus(function (status) {
     // 认证状态 int
@@ -424,7 +426,7 @@ function loginSuccessCallback (userinfo) {
   })
 }
 
-function getAndStorageAuthStatus (successCallback, errorCallback) {
+function getAndStorageAuthStatus(successCallback, errorCallback) {
   // 认证状态 int
   // 1：正常
   // 2：待实名认证
@@ -444,7 +446,7 @@ function getAndStorageAuthStatus (successCallback, errorCallback) {
 }
 
 
-function setRefreshHeaderInfo (successCallback, errorCallback, options = {}) {
+function setRefreshHeaderInfo(successCallback, errorCallback, options = {}) {
   api.setRefreshHeaderInfo({
     // loadingImg: 'widget://image/refresh.png',
     bgColor: 'rgba(0,0,0,0)',
@@ -463,7 +465,7 @@ function setRefreshHeaderInfo (successCallback, errorCallback, options = {}) {
   })
 }
 
-function appLogin (options, successCallback, errorCallback) {
+function appLogin(options, successCallback, errorCallback) {
   let pwd = ''
   if (options.verification) { // 在验证码登录的时候，密码必须设置为手机号码
     pwd = options.username
@@ -493,7 +495,7 @@ function appLogin (options, successCallback, errorCallback) {
   }, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
-    } 
+    }
   }).then(function (userinfo) {
     api.toast({
       msg: '登录成功',
@@ -510,7 +512,7 @@ function appLogin (options, successCallback, errorCallback) {
   })
 }
 
-function saveProtocolToStorage (arr = []) {
+function saveProtocolToStorage(arr = []) {
   let map = {}
   arr.forEach(item => {
     if (map[item.useNode]) {
@@ -523,7 +525,7 @@ function saveProtocolToStorage (arr = []) {
   $api.setStorage('protocol', map)
 }
 
-function getNodeProtocolFromStorage (useNode) {
+function getNodeProtocolFromStorage(useNode) {
   // useNode 1-用户注册，2-实名认证，3-产品开户，4-产品开通，5-产品绑卡
   let protocol = $api.getStorage('protocol') || {}
   if (protocol[useNode] && protocol[useNode].length > 0) {
@@ -533,7 +535,7 @@ function getNodeProtocolFromStorage (useNode) {
   }
 }
 
-function getProtocolFromNode (nodeArr, protocolType) {
+function getProtocolFromNode(nodeArr, protocolType) {
   // protocolType 1-个人，2-企业，3-通用
   let map = {}
   nodeArr.forEach(item => {
@@ -547,7 +549,7 @@ function getProtocolFromNode (nodeArr, protocolType) {
   if (map[protocolType] && map[protocolType].length > 0) {
     return map[protocolType]
   } else {
-    return  null
+    return null
   }
 }
 

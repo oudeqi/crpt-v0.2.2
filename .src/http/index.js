@@ -49,7 +49,9 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 }
         ...headers
       },
       certificate: __buildEnv__ === 'development' ? null : {
-        path: 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert',
+        path: __buildEnv__ === 'testing'
+          ? 'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'
+          : 'widget://widget/cert/oak.net.cn.cert',
         // password: key
       }
     }, (ret, error) => {
