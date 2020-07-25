@@ -19,31 +19,27 @@ class Service {
     return http.get(`/crpt-cust/cust/openloan/prebindcardphnm`)
   }
 
-  static createLoanOrder ({
-    id, // 代养合同id
-    productId, // 产品id
-    maxLoanAmount, // 最高可贷金额
-    applyAmount, // 申请金额
-    interestRate, // 贷款利率
-    loanTerm, // 贷款期限（单位：月
-    loanDueDate, // 贷款到期日
-    repayType, // 还款方式（标记：4-到期还本付息；5-等额本息；7-先息后本）
-    custName, // 借款人姓名
-    loanPayeeAccountNo, // 贷款收款账号
-    loanPayeeAccountName, // 贷款收款账户名称
-    personalCertNo, // 个人社会信用代码
-    enterpriseWorkers, // 从业人数
-    assetAmt, // 资产总额（万元）
-    userId // 新网用户id
-  }) {
+  static createLoanOrder (args) {
     return http.post('/crpt-order/order/yjd/loan/apply', {
-      body: {
-        id, productId, maxLoanAmount, applyAmount, interestRate, loanTerm,
-        loanDueDate, repayType, custName, loanPayeeAccountNo, loanPayeeAccountName,
-        personalCertNo, enterpriseWorkers, assetAmt, userId
-      }
+      body: args
     })
   }
+  // id, // 代养合同id
+  // productId, // 产品id
+  // maxLoanAmount, // 最高可贷金额
+  // applyAmount, // 申请金额
+  // interestRate, // 贷款利率
+  // loanTerm, // 贷款期限（单位：月
+  // loanDueDate, // 贷款到期日
+  // repayType, // 还款方式（标记：4-到期还本付息；5-等额本息；7-先息后本）
+  // custName, // 借款人姓名
+  // loanPayeeAccountNo, // 贷款收款账号
+  // loanPayeeAccountName, // 贷款收款账户名称
+  // personalCertNo, // 个人社会信用代码
+  // enterpriseWorkers, // 从业人数
+  // assetAmt, // 资产总额（万元）
+  // isReadAndAgree, // 是否已经阅读并同意所有协议 1：是  0：否 
+  // userId // 新网用户id
 
 }
 
@@ -77,7 +73,7 @@ function vmInit () {
             sourceType = 'library'
           }
           getPicture(sourceType, (ret, err) => {
-            if (ret) {
+            if (ret && ret.data) {
               this.__startAuth(ret.data)
             }
           })
@@ -86,7 +82,6 @@ function vmInit () {
 
       async __createLoan (userId) {
         try {
-          // TODO 少了userId
           let postData = { ...this.createLoanOrderArgus, userId }
           const res = await Service.createLoanOrder(postData)
           if (res.code === 200) {

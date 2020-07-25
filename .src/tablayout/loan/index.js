@@ -100,7 +100,7 @@ function vmInit() {
           api.refreshHeaderLoadDone()
           this.loading = false
           this.total = res.data.count
-          this.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00')
+          this.totalSum = res.data.totalAmount
           if (res.data.list && res.data.list.length > 0) {
             this.more = 'hasMore'
             this.pageNo = pageNo + 1

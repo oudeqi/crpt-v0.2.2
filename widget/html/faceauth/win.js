@@ -2012,7 +2012,7 @@ apiready = function apiready() {
       }
 
       getPicture(sourceType, function (ret, err) {
-        if (ret) {
+        if (ret && ret.data) {
           fn(ret.data);
         }
       });

@@ -39,11 +39,18 @@ function vmInit () {
         pageNo: 1,
         total: '*',
         totalSum: '***',
+        overdueExist: 0, // 是否存在逾期记录 0 否 1 是
         list: [],
         loading: false,
         more: 'noData', // hasMore,noMore,noData
         repayStatusMap: {},
+        userinfo: $api.getStorage('userinfo') || {},
       }
+    },
+    computed: {
+      userType: function () { // 1个人，2企业
+        return this.userinfo.userType + ''
+      },
     },
     mounted: async function () {
       
@@ -77,6 +84,7 @@ function vmInit () {
           api.refreshHeaderLoadDone()
           this.loading = false
           this.total = res.data.count
+          this.overdueExist = parseInt(res.data.overdueExist)
           this.totalSum = numeral(res.data.repayPrincipalAmount || 0).format('0,0.00')
           if (res.data.repayList && res.data.repayList.length > 0) {
             this.more = 'hasMore'

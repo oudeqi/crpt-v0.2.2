@@ -80,7 +80,7 @@ function vmInit () {
             sourceType = 'library'
           }
           getPicture(sourceType, (ret, err) => {
-            if (ret) {
+            if (ret && ret.data) {
               this.__bankCardOcr(ret.data)
             }
           })

@@ -25,7 +25,7 @@ apiready = function() {
         sourceType = 'library'
       }
       getPicture(sourceType, function(ret, err) {
-        if (ret) {
+        if (ret && ret.data) {
           $api.byId('pic').innerHTML = `<img src="${ret.data}" alt="">`
           facePic = ret.data
         }

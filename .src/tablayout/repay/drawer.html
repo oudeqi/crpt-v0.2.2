@@ -14,31 +14,32 @@
           <div class="header">详情</div>
           <div class="tips">{{date ? date.split(' ')[0] : ''}} 用款{{numeral(money).format('0,0.00')}}元</div>
 
-          <ul v-if="list.length>0" class="list">
-            <li v-for="(item, index) in list" :key="index"  class="list-item">
-              <div class="item-row1">
-                <span class="item-stage">{{item.curPeriod}}期</span>
-                <span v-if="String(item.status) === '1'" class="item-tag">未按期还款</span>
-                <!-- status 还款状态：1-逾期 0-未逾期 -->
-                <span class="item-num">{{numeral(item.repayTotalAmount).format('0,0.00')}}元</span>
-              </div>
-              <div class="item-row2">
-                <span>本金{{numeral(item.repayPrincipalAmount).format('0,0.00')}}元</span>
-                <i class="item-divide"></i>
-                <span>利息{{numeral(item.repayInterestAmount).format('0,0.00')}}元</span>
-                <i v-if="String(item.status) === '1'" class="item-divide"></i>
-                <span v-if="String(item.status) === '1'">逾期罚息{{numeral(item.repayPenaltyAmount).format('0,0.00')}}元</span>
-                
-              </div>
-              <div class="item-row3">{{item.repayDate}}</div>
-            </li>
-          </ul>
-
-          <section v-if="loading" class="app_list_loading">加载中...</section>
-          <section v-if="!loading && more === 'noData'" class="app_list_nodata">
-            <div class="app_list_nodata_pic"></div>
-            <p class="app_list_nodata_desc">暂时没有数据</p>
-          </section>
+          <div class="list-container">
+            <ul v-if="list.length>0" class="list">
+              <li v-for="(item, index) in list" :key="index"  class="list-item">
+                <div class="item-row1">
+                  <span class="item-stage">{{item.curPeriod}}期</span>
+                  <span v-if="String(item.status) === '1'" class="item-tag">未按期还款</span>
+                  <!-- status 还款状态：1-逾期 0-未逾期 -->
+                  <span class="item-num">{{numeral(item.repayTotalAmount).format('0,0.00')}}元</span>
+                </div>
+                <div class="item-row2">
+                  <span>本金{{numeral(item.repayPrincipalAmount).format('0,0.00')}}元</span>
+                  <i class="item-divide"></i>
+                  <span>利息{{numeral(item.repayInterestAmount).format('0,0.00')}}元</span>
+                  <i v-if="String(item.status) === '1'" class="item-divide"></i>
+                  <span v-if="String(item.status) === '1'">逾期罚息{{numeral(item.repayPenaltyAmount).format('0,0.00')}}元</span>
+                  
+                </div>
+                <div class="item-row3">{{item.repayDate}}</div>
+              </li>
+            </ul>
+            <section v-if="loading" class="app_list_loading">加载中...</section>
+            <section v-if="!loading && more === 'noData'" class="app_list_nodata">
+              <div class="app_list_nodata_pic"></div>
+              <p class="app_list_nodata_desc">暂时没有数据</p>
+            </section>
+          </div>
           
         </section>
       </app-drawer>

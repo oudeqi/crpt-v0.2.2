@@ -1992,7 +1992,7 @@ apiready = function apiready() {
         });
       } else {
         getPicture(sourceType, function (ret, err) {
-          if (ret) {
+          if (ret && ret.data) {
             $api.dom($api.byId('front'), 'img').src = ret.data;
             front = ret.data;
           }
@@ -2022,7 +2022,7 @@ apiready = function apiready() {
         });
       } else {
         getPicture(sourceType, function (ret, err) {
-          if (ret) {
+          if (ret && ret.data) {
             $api.dom($api.byId('back'), 'img').src = ret.data;
             back = ret.data;
           }

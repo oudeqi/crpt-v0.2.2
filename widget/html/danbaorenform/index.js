@@ -3103,7 +3103,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                           while (1) {
                             switch (_context2.prev = _context2.next) {
                               case 0:
-                                if (ret) {
+                                if (ret && ret.data) {
                                   _this8.__readIDCard(ret.data);
                                 }
 
@@ -3222,7 +3222,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                     }
 
                     getPicture(sourceType, function (ret, err) {
-                      if (ret) {
+                      if (ret && ret.data) {
                         _this9.__readBank(ret.data);
                       }
                     });

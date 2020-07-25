@@ -2705,42 +2705,27 @@ var Service = /*#__PURE__*/function () {
     }
   }, {
     key: "createLoanOrder",
-    value: function createLoanOrder(_ref) {
-      var id = _ref.id,
-          productId = _ref.productId,
-          maxLoanAmount = _ref.maxLoanAmount,
-          applyAmount = _ref.applyAmount,
-          interestRate = _ref.interestRate,
-          loanTerm = _ref.loanTerm,
-          loanDueDate = _ref.loanDueDate,
-          repayType = _ref.repayType,
-          custName = _ref.custName,
-          loanPayeeAccountNo = _ref.loanPayeeAccountNo,
-          loanPayeeAccountName = _ref.loanPayeeAccountName,
-          personalCertNo = _ref.personalCertNo,
-          enterpriseWorkers = _ref.enterpriseWorkers,
-          assetAmt = _ref.assetAmt,
-          userId = _ref.userId;
+    value: function createLoanOrder(args) {
       return http$1.post('/crpt-order/order/yjd/loan/apply', {
-        body: {
-          id: id,
-          productId: productId,
-          maxLoanAmount: maxLoanAmount,
-          applyAmount: applyAmount,
-          interestRate: interestRate,
-          loanTerm: loanTerm,
-          loanDueDate: loanDueDate,
-          repayType: repayType,
-          custName: custName,
-          loanPayeeAccountNo: loanPayeeAccountNo,
-          loanPayeeAccountName: loanPayeeAccountName,
-          personalCertNo: personalCertNo,
-          enterpriseWorkers: enterpriseWorkers,
-          assetAmt: assetAmt,
-          userId: userId
-        }
+        body: args
       });
-    }
+    } // id, // 代养合同id
+    // productId, // 产品id
+    // maxLoanAmount, // 最高可贷金额
+    // applyAmount, // 申请金额
+    // interestRate, // 贷款利率
+    // loanTerm, // 贷款期限（单位：月
+    // loanDueDate, // 贷款到期日
+    // repayType, // 还款方式（标记：4-到期还本付息；5-等额本息；7-先息后本）
+    // custName, // 借款人姓名
+    // loanPayeeAccountNo, // 贷款收款账号
+    // loanPayeeAccountName, // 贷款收款账户名称
+    // personalCertNo, // 个人社会信用代码
+    // enterpriseWorkers, // 从业人数
+    // assetAmt, // 资产总额（万元）
+    // isReadAndAgree, // 是否已经阅读并同意所有协议 1：是  0：否 
+    // userId // 新网用户id
+
   }]);
 
   return Service;
@@ -2776,7 +2761,7 @@ function vmInit() {
           }
 
           getPicture(sourceType, function (ret, err) {
-            if (ret) {
+            if (ret && ret.data) {
               _this.__startAuth(ret.data);
             }
           });
@@ -2792,7 +2777,6 @@ function vmInit() {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  // TODO 少了userId
                   postData = _objectSpread$5({}, _this2.createLoanOrderArgus, {
                     userId: userId
                   });

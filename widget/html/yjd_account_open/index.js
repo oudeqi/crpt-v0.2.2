@@ -2778,7 +2778,7 @@ function vmInit() {
           }
 
           getPicture(sourceType, function (ret, err) {
-            if (ret) {
+            if (ret && ret.data) {
               _this.__bankCardOcr(ret.data);
             }
           });

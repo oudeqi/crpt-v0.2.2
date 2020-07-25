@@ -35,7 +35,7 @@ apiready = function() {
         sourceType = 'library'
       }
       getPicture(sourceType, function(ret, err) {
-        if (ret) {
+        if (ret && ret.data) {
           fn(ret.data)
         }
       })

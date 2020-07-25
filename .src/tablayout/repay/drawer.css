@@ -26,12 +26,13 @@
   padding-top: 100px;
   padding-bottom: 200px;
 }
-
+.list-container {
+  height: 400px;
+  overflow-y: scroll;
+}
 .list {
   margin: 0;
   padding: 0 12px;
-  height: 450px;
-  overflow-y: scroll;
 }
 .list-item {
   padding: 16px 0;

@@ -19,7 +19,9 @@
 
     <section v-if="list.length > 0" class="total">
       <strong>共{{total}}笔</strong>
-      <span>未按期还款的订单不支持线上还款</span>
+      <!-- 是否存在逾期记录 0 否 1 是 -->
+      <span v-if="userType ==='2' && overdueExist===0">可提前还款</span>
+      <span v-if="userType ==='2' && overdueExist===1">未按期还款的订单不支持线上还款</span>
     </section>
 
     <section class="card">
@@ -40,6 +42,13 @@
           <span @click="repayRemain(item)" class="card-arrowbtn">还剩{{item.lastRepayPeriod}}期</span>
           <!-- 好销宝逾期，不能线上还款，只能联系客户；押金带逾期可以线上还款 -->
           <!-- 押金贷款：还款结果，1 等待中，2 成功，3 失败 -->
+          <!-- 
+            // orderType {"1":"入库单","2":"发票单","3":"饲料订单","4":"代养合同"}
+            // repayStatus 
+            // {"1":"申请中","2":"已审批通过","3":"已拒绝","4":"已撤销","5":"还款中","6":"到期结清",
+            // "7":"提前结清","8":"逾期还款中","9":"逾期已结清","10":"已退货","11":"已作废"}
+            // repayResult 押金贷专用字段 还款结果，1 等待中，2 成功，3 失败
+           -->
           <span v-if="String(item.orderType) === '4' && String(item.repayResult) === '1'" :class="['card-btn', 'disabled']">还款中</span>
           <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1'" class="['card-btn']">去还款</span>
           <span @click="repay(item)" v-else :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>

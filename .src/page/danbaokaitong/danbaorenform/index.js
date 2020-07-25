@@ -494,7 +494,7 @@ class PageController extends Service {
           sourceType = 'library'
         }
         getPicture(sourceType, async (ret, err) => {
-          if (ret) {
+          if (ret && ret.data) {
             this.__readIDCard(ret.data)
           }
         })
@@ -531,7 +531,7 @@ class PageController extends Service {
           sourceType = 'library'
         }
         getPicture(sourceType, (ret, err) => {
-          if (ret) {
+          if (ret && ret.data) {
             this.__readBank(ret.data)
           }
         })

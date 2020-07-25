@@ -3755,12 +3755,21 @@ function vmInit() {
         pageNo: 1,
         total: '*',
         totalSum: '***',
+        overdueExist: 0,
+        // 是否存在逾期记录 0 否 1 是
         list: [],
         loading: false,
         more: 'noData',
         // hasMore,noMore,noData
-        repayStatusMap: {}
+        repayStatusMap: {},
+        userinfo: $api.getStorage('userinfo') || {}
       };
+    },
+    computed: {
+      userType: function userType() {
+        // 1个人，2企业
+        return this.userinfo.userType + '';
+      }
     },
     mounted: function () {
       var _mounted = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
@@ -3865,6 +3874,7 @@ function vmInit() {
                   api.refreshHeaderLoadDone();
                   _this3.loading = false;
                   _this3.total = res.data.count;
+                  _this3.overdueExist = parseInt(res.data.overdueExist);
                   _this3.totalSum = numeral(res.data.repayPrincipalAmount || 0).format('0,0.00');
 
                   if (res.data.repayList && res.data.repayList.length > 0) {
@@ -3884,11 +3894,11 @@ function vmInit() {
                     }
                   }
 
-                  _context4.next = 21;
+                  _context4.next = 22;
                   break;
 
-                case 16:
-                  _context4.prev = 16;
+                case 17:
+                  _context4.prev = 17;
                   _context4.t0 = _context4["catch"](5);
                   api.toast({
                     msg: _context4.t0.message || '出错啦',
@@ -3897,12 +3907,12 @@ function vmInit() {
                   api.refreshHeaderLoadDone();
                   _this3.loading = false;
 
-                case 21:
+                case 22:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4, null, [[5, 16]]);
+          }, _callee4, null, [[5, 17]]);
         }))();
       },
       repay: function repay(record) {

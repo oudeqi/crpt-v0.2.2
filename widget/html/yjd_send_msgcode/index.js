@@ -2738,42 +2738,27 @@ var Service = /*#__PURE__*/function () {
     }
   }, {
     key: "createLoanOrder",
-    value: function createLoanOrder(_ref2) {
-      var id = _ref2.id,
-          productId = _ref2.productId,
-          maxLoanAmount = _ref2.maxLoanAmount,
-          applyAmount = _ref2.applyAmount,
-          interestRate = _ref2.interestRate,
-          loanTerm = _ref2.loanTerm,
-          loanDueDate = _ref2.loanDueDate,
-          repayType = _ref2.repayType,
-          custName = _ref2.custName,
-          loanPayeeAccountNo = _ref2.loanPayeeAccountNo,
-          loanPayeeAccountName = _ref2.loanPayeeAccountName,
-          personalCertNo = _ref2.personalCertNo,
-          enterpriseWorkers = _ref2.enterpriseWorkers,
-          assetAmt = _ref2.assetAmt,
-          userId = _ref2.userId;
+    value: function createLoanOrder(args) {
       return http$1.post('/crpt-order/order/yjd/loan/apply', {
-        body: {
-          id: id,
-          productId: productId,
-          maxLoanAmount: maxLoanAmount,
-          applyAmount: applyAmount,
-          interestRate: interestRate,
-          loanTerm: loanTerm,
-          loanDueDate: loanDueDate,
-          repayType: repayType,
-          custName: custName,
-          loanPayeeAccountNo: loanPayeeAccountNo,
-          loanPayeeAccountName: loanPayeeAccountName,
-          personalCertNo: personalCertNo,
-          enterpriseWorkers: enterpriseWorkers,
-          assetAmt: assetAmt,
-          userId: userId
-        }
+        body: args
       });
-    }
+    } // id, // 代养合同id
+    // productId, // 产品id
+    // maxLoanAmount, // 最高可贷金额
+    // applyAmount, // 申请金额
+    // interestRate, // 贷款利率
+    // loanTerm, // 贷款期限（单位：月
+    // loanDueDate, // 贷款到期日
+    // repayType, // 还款方式（标记：4-到期还本付息；5-等额本息；7-先息后本）
+    // custName, // 借款人姓名
+    // loanPayeeAccountNo, // 贷款收款账号
+    // loanPayeeAccountName, // 贷款收款账户名称
+    // personalCertNo, // 个人社会信用代码
+    // enterpriseWorkers, // 从业人数
+    // assetAmt, // 资产总额（万元）
+    // isReadAndAgree, // 是否已经阅读并同意所有协议 1：是  0：否 
+    // userId // 新网用户id
+
   }]);
 
   return Service;
