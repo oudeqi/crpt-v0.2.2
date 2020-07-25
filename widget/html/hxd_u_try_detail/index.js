@@ -2079,8 +2079,8 @@ var http$1 = {
 
 var service = {
   postBankInterest: function postBankInterest(params) {
-    return http$1.post("/crpt-credit/credit/hxd/query/bank/interest", {
-      body: params
+    return http$1.post("/crpt-credit/credit/hxd/query/bank/interest?productId=".concat(params.productId), null, {
+      timeout: 10
     });
   },
   postCalculatorPlan: function postCalculatorPlan(params) {
@@ -2766,32 +2766,31 @@ apiready = function apiready() {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  Utils$1.UI.showLoading('查询中'); // const resInterest = await service.postBankInterest({ productId: pageParam.productId })
+                  Utils$1.UI.showLoading('查询中');
+                  _context.next = 4;
+                  return service.postBankInterest({
+                    productId: 1
+                  });
 
-                  resInterest = {
-                    code: 200,
-                    data: {
-                      bankBackInterest: '0.00038',
-                      serviceMoney: 3.8
-                    }
-                  };
+                case 4:
+                  resInterest = _context.sent;
 
                   if (!(resInterest.code === 200)) {
-                    _context.next = 11;
+                    _context.next = 13;
                     break;
                   }
 
                   bankBackInterest = resInterest.data.bankBackInterest;
                   serviceMoney = resInterest.data.serviceMoney;
                   _this.serviceMoney = serviceMoney;
-                  _context.next = 9;
+                  _context.next = 11;
                   return service.postCalculatorPlan({
                     dealDays: _this.dealDays,
                     bankBackInterest: bankBackInterest,
                     needApplyAmount: pageParam.needApplyAmount
                   });
 
-                case 9:
+                case 11:
                   res = _context.sent;
 
                   if (res.code === 200) {
@@ -2801,27 +2800,27 @@ apiready = function apiready() {
                     };
                   }
 
-                case 11:
-                  _context.next = 16;
+                case 13:
+                  _context.next = 18;
                   break;
 
-                case 13:
-                  _context.prev = 13;
+                case 15:
+                  _context.prev = 15;
                   _context.t0 = _context["catch"](0);
 
                   if (_context.t0.msg) {
                     Utils$1.UI.toast(_context.t0.msg);
                   }
 
-                case 16:
+                case 18:
                   Utils$1.UI.hideLoading();
 
-                case 17:
+                case 19:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 13]]);
+          }, _callee, null, [[0, 15]]);
         }))();
       }
     }

@@ -3,6 +3,7 @@ import {
   openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
+  openDanbaoKaitong,
   openProductRecommend,
   openFaceUpload,
   openBaseinfoFill,
@@ -68,11 +69,8 @@ class App {
     // 6：人工审核不通过
     // $api.clearStorage()
     // Utils.Router.openPageCreditInformation()
-    // Router.openPage({
-    //   key: 'billlist',
-    //   params: {}
-    // })
-    // return
+    Router.openPage({ key: 'hxd_u_try_detail'})
+    return
     // Router.openPage({key: 'hxd_a_success', params: {
     //   pageParam: {
     //     productId: '1'

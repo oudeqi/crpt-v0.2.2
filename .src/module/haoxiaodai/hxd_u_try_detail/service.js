@@ -2,6 +2,9 @@ import http from './../../../http'
 
 const service = {
   postBankInterest: (params) => {
+    return http.post(`/crpt-credit/credit/hxd/query/bank/interest?productId=${params.productId}`, null, {
+      timeout: 10
+    })
     return http.post(`/crpt-credit/credit/hxd/query/bank/interest`, {body: params})
   },
   postCalculatorPlan: (params) => {

@@ -536,6 +536,13 @@ html, body {
   font-weight: 500;
   color: #303133;
 }
+.introduction .intro p {
+  font-size: 14px;
+  color: #909399;
+  line-height: 22px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
 .introduction .intro .list .cell {
   margin-top: 24px;
   display: -webkit-box;
@@ -607,4 +614,34 @@ html, body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   background-color: #fff;
+}
+.detail-main .detail-row {
+  margin: 14px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.detail-main .detail-row span {
+  height: 20px;
+  font-size: 15px;
+  color: #909399;
+  line-height: 20px;
+  display: block;
+  text-align: right;
+  width: calc(100% - 75px);
+}
+.detail-main .detail-row strong {
+  height: 20px;
+  font-size: 15px;
+  color: #303133;
+  line-height: 20px;
+  font-style: normal;
+  font-weight: normal;
+  width: 75px;
 }

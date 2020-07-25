@@ -36,14 +36,14 @@ apiready = function () {
       async handlePostPlan() {
         try {
           Utils.UI.showLoading('查询中')
-          // const resInterest = await service.postBankInterest({ productId: pageParam.productId })
-          const resInterest = {
-            code: 200,
-            data: {
-              bankBackInterest: '0.00038',
-              serviceMoney: 3.8
-            }
-          }
+          const resInterest = await service.postBankInterest({ productId: 1 })
+          // const resInterest = {
+          //   code: 200,
+          //   data: {
+          //     bankBackInterest: '0.00038',
+          //     serviceMoney: 3.8
+          //   }
+          // }
           if (resInterest.code === 200) {
             let bankBackInterest = resInterest.data.bankBackInterest
             let serviceMoney = resInterest.data.serviceMoney
