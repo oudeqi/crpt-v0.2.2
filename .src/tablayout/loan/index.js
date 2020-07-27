@@ -100,7 +100,7 @@ function vmInit() {
           api.refreshHeaderLoadDone()
           this.loading = false
           this.total = res.data.count
-          this.totalSum = res.data.totalAmount
+          this.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00')
           if (res.data.list && res.data.list.length > 0) {
             this.more = 'hasMore'
             this.pageNo = pageNo + 1
@@ -142,7 +142,7 @@ function vmInit() {
               }
             })
           } else if (record.status === 2) { // 已审批通过，未放款 去详情
-            Router.openPage({key: 'hxd_loan_details', params: {pageParam: { id: orderId }}})
+            Router.openPage({key: 'hxd_loan_details', params: {pageParam: { orderId }}})
           } else if (record.status === 11) { // 待申请 立即申请
             if (this.userinfo.userType === '1') { // 个人用户
               Router.openPage({key: 'hxd_apply', params: {pageParam: { productId }}})
