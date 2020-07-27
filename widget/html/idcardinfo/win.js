@@ -2547,21 +2547,9 @@ var Service = /*#__PURE__*/function () {
 }();
 
 apiready = function apiready() {
+  var unsignContractFileId = ''; // 未签约的pdf文件id
+
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
-  // let idcard = {
-  //   "code":200,
-  //   "msg":"",
-  //   "data":{
-  //     "name":"周永刚",
-  //     "gender":"男",
-  //     "number":"622424199409270411",
-  //     "birthday":"1994-09-27",
-  //     "address":"甘肃省通渭县平襄镇瓦石村高家庄社45号",
-  //     "nation":"汉",
-  //     "authority":"通渭县公安局",
-  //     "timelimit":"20110125-20210125"
-  //   }
-  // }
 
   var pageParam = api.pageParam || {};
   var name = pageParam.name,
@@ -2666,26 +2654,27 @@ apiready = function apiready() {
               res = _context.sent;
               tpl = "<li tapmode=\"active\" data-name=\"".concat(agreement.protocolName, "\" data-id=\"").concat(res.data.unsignContractFileId, "\">\u300A").concat(agreement.protocolName, "\u300B</li>");
               $api.byId('agreement').innerHTML = tpl;
-              _context.next = 26;
+              unsignContractFileId = res.data.unsignContractFileId;
+              _context.next = 27;
               break;
 
-            case 23:
-              _context.prev = 23;
+            case 24:
+              _context.prev = 24;
               _context.t0 = _context["catch"](15);
               api.toast({
                 msg: _context.t0.msg || '获取PDF文件失败',
                 location: 'middle'
               });
 
-            case 26:
+            case 27:
               api.hideProgress();
 
-            case 27:
+            case 28:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[15, 23]]);
+      }, _callee, null, [[15, 24]]);
     }));
     return _showProtocol.apply(this, arguments);
   }
@@ -2714,19 +2703,29 @@ apiready = function apiready() {
 
       if (!_name) {
         return api.toast({
-          msg: '请输入姓名'
+          msg: '请输入姓名',
+          location: 'middle'
         });
       }
 
       if (!gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
         return api.toast({
-          msg: '未完全识别，请重新上传'
+          msg: '未完全识别，请重新上传',
+          location: 'middle'
+        });
+      }
+
+      if (!unsignContractFileId) {
+        return api.toast({
+          msg: '获取协议失败',
+          location: 'middle'
         });
       }
 
       if (!$api.byId('checkbox').checked) {
         return api.toast({
-          msg: '请仔细阅读，并同意协议'
+          msg: '请仔细阅读，并同意协议',
+          location: 'middle'
         });
       }
 
@@ -2747,7 +2746,7 @@ apiready = function apiready() {
           nation: nation,
           authority: authority,
           timelimit: timelimit,
-          fileId: fileId // 已签章pdf的id
+          fileId: unsignContractFileId // 未签章的pdf文件id
 
         },
         files: {

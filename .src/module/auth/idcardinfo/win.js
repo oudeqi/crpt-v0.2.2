@@ -22,38 +22,19 @@ class Service {
 }
 
 apiready = function() {
-
+  let unsignContractFileId = '' // 未签约的pdf文件id
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
-
-  // let idcard = {
-  //   "code":200,
-  //   "msg":"",
-  //   "data":{
-  //     "name":"周永刚",
-  //     "gender":"男",
-  //     "number":"622424199409270411",
-  //     "birthday":"1994-09-27",
-  //     "address":"甘肃省通渭县平襄镇瓦石村高家庄社45号",
-  //     "nation":"汉",
-  //     "authority":"通渭县公安局",
-  //     "timelimit":"20110125-20210125"
-  //   }
-  // }
-
   let pageParam = api.pageParam || {}
   let {
     name, gender, number, birthday, address,
     nation, authority, timelimit, front, back
   } = pageParam
-
   let userinfo = $api.getStorage('userinfo') || {}
   if (userinfo.userType === '1') { // userType === '1' ? '个人账号' : '企业账号'
     $api.byId('companyName').innerHTML = '“您”'
   } else {
     $api.byId('companyName').innerHTML = '“'+userinfo.name+'”法定代表人'
   }
-
-
   $api.byId('name').value = name
   $api.byId('number').innerHTML = number || ''
   $api.byId('authority').innerHTML = authority || ''
@@ -99,6 +80,7 @@ apiready = function() {
       let res = await Service.getPDFId(agreement.protocolFileId)
       let tpl = `<li tapmode="active" data-name="${agreement.protocolName}" data-id="${res.data.unsignContractFileId}">《${agreement.protocolName}》</li>`
       $api.byId('agreement').innerHTML = tpl
+      unsignContractFileId = res.data.unsignContractFileId
     } catch (e) {
       api.toast({ msg: e.msg || '获取PDF文件失败', location: 'middle' })
     }
@@ -120,13 +102,16 @@ apiready = function() {
     if (submitStatus === 'notsubmit') {
       let name = $api.byId('name').value.trim()
       if (!name) {
-        return api.toast({ msg: '请输入姓名' })
+        return api.toast({ msg: '请输入姓名', location: 'middle' })
       }
       if (!gender || !number || !birthday || !address || !nation || !authority || !timelimit) {
-        return api.toast({ msg: '未完全识别，请重新上传' })
+        return api.toast({ msg: '未完全识别，请重新上传', location: 'middle' })
+      }
+      if (!unsignContractFileId) {
+        return api.toast({ msg: '获取协议失败', location: 'middle' })
       }
       if (!$api.byId('checkbox').checked) {
-        return api.toast({ msg: '请仔细阅读，并同意协议' })
+        return api.toast({ msg: '请仔细阅读，并同意协议', location: 'middle' })
       }
       submitStatus = 'submitting'
       $api.addCls($api.byId('next'), 'loading')
@@ -134,7 +119,8 @@ apiready = function() {
       http.upload('/crpt-cust/saas/realnameauth', {
         values: {
           name, gender, number, birthday, address,
-          nation, authority, timelimit, fileId // 已签章pdf的id
+          nation, authority, timelimit, 
+          fileId: unsignContractFileId // 未签章的pdf文件id
         },
         files: {
           certImageFront: front,
