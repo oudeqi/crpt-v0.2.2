@@ -82,23 +82,7 @@ apiready = function() {
     })
   }
 
-  // let idcard = {
-  //   "code":200,
-  //   "msg":"",
-  //   "data":{
-  //     "name":"周永刚",
-  //     "gender":"男",
-  //     "number":"622424199409270411",
-  //     "birthday":"1994-09-27",
-  //     "address":"甘肃省通渭县平襄镇瓦石村高家庄社45号",
-  //     "nation":"汉",
-  //     "authority":"通渭县公安局",
-  //     "timelimit":"20110125-20210125"
-  //   }
-  // }
-
   document.querySelector('#next').onclick = function () {
-    // openIDcardInfo()
     if (submitStatus === 'notsubmit') {
       if (!front) {
         return api.toast({ msg: '请选择身份证正面' })

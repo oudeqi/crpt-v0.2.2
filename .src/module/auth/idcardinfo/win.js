@@ -1,8 +1,25 @@
 import '../../../app.css'
 import './win.css'
 
-import { openAgreement, openAuthResult } from '../../../webview.js'
+import { openAuthResult } from '../../../webview.js'
 import { http, getNodeProtocolFromStorage, getProtocolFromNode } from '../../../config.js'
+import Router from '../../../router'
+
+class Service {
+
+  static getContract (type = 3) {
+    return http.get(`/crpt-biz/biz/fund/protocol/query/${type}`)
+  }
+
+  static getPDFId (id) {
+    return http.post(`/crpt-file/file/wordRelaceBookmark`, {
+      body: {
+        wordFileId: id
+      }
+    })
+    
+  }
+}
 
 apiready = function() {
 
@@ -56,14 +73,14 @@ apiready = function() {
     api.closeWin()
   }
 
-  function showProtocol () {
+  async function showProtocol () {
     const userinfo = $api.getStorage('userinfo') || {}
     let node = getNodeProtocolFromStorage(2)
     if (!node) {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
     }
-    let tyeeNode = getProtocolFromNode(node, userinfo.userType)
+    let tyeeNode = getProtocolFromNode(node, userinfo.userType) // protocolType 1-个人，2-企业，3-通用
     let tyeeNode3 = getProtocolFromNode(node, 3)
     let nodes = []
     if (tyeeNode) {
@@ -76,17 +93,26 @@ apiready = function() {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
     }
-    let tpl = nodes.map(item => {
-      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
-    })
-    $api.byId('agreement').innerHTML = tpl.join('')
+    api.showProgress({ title: '协议加载中...', text: '', modal: false })
+    let agreement = nodes[0]
+    try {
+      let res = await Service.getPDFId(agreement.protocolFileId)
+      let tpl = `<li tapmode="active" data-name="${agreement.protocolName}" data-id="${res.data.unsignContractFileId}">《${agreement.protocolName}》</li>`
+      $api.byId('agreement').innerHTML = tpl
+    } catch (e) {
+      api.toast({ msg: e.msg || '获取PDF文件失败', location: 'middle' })
+    }
+    api.hideProgress()
   }
 
   showProtocol()
   document.querySelector('#agreement').onclick = (e) => {
     let strong = $api.closest(e.target, 'li')
     if (strong) {
-      openAgreement(strong.dataset.id, strong.dataset.name)
+      Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
+        type: 'pdf',
+        id: strong.dataset.id
+      }}})
     }
   }
 
@@ -108,7 +134,7 @@ apiready = function() {
       http.upload('/crpt-cust/saas/realnameauth', {
         values: {
           name, gender, number, birthday, address,
-          nation, authority, timelimit
+          nation, authority, timelimit, fileId // 已签章pdf的id
         },
         files: {
           certImageFront: front,

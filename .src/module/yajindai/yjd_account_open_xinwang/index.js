@@ -29,7 +29,6 @@ apiready = function () {
   api.openFrame({
     name: 'yjd_account_open_xinwang_frm',
     url: url,
-    // url: 'https://gateway.crpt-cloud.liuheco.com/crpt-h5/xw_callback/close',
     rect: {
       x: 0,
       y: offset.h,
@@ -48,8 +47,8 @@ apiready = function () {
     }
   })
 
-  timer = setInterval(function () {
-    getOpenAccountStatus(productId)
-  }, 3000)
+  // timer = setInterval(function () {
+  //   getOpenAccountStatus(productId)
+  // }, 3000)
   
 }

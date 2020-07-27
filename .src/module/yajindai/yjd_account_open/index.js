@@ -31,7 +31,7 @@ class Service {
         cardNo,
         phone,
         verifyCode,
-        uniqueCode
+        uniqueCode,
       }
     })
   }
