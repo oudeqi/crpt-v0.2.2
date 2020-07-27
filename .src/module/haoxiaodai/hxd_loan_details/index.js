@@ -74,7 +74,7 @@ function vmInit () {
         // let id = '1280032544158498817' // 26496114
         try {
           let res = await http.get(`/crpt-order/order/hxd/query/order/info/detail?orderId=${orderId}`)
-          this.data = res.data
+          this.data = res.data || {}
         } catch (error) {
           api.toast({ msg: error.msg || '请求发生错误', location: 'middle' })
         }

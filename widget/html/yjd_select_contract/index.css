@@ -301,9 +301,17 @@ html, body {
 
 .seclect-content__toprow {
   margin: 12px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .seclect-content__toprow .key {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
     width: 90px;
     margin-right: 10px;
     font-size:14px;
@@ -311,6 +319,9 @@ html, body {
   }
 
 .seclect-content__toprow .value {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
     font-size:14px;
     font-weight:500;
     color:rgba(48,49,51,1);

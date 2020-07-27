@@ -41,13 +41,15 @@
         </div>
       </div>
 
-      <div class="contract">
-        <input type="checkbox" v-model="checked" class="app_checkbox">
-        <div class="contract-txt">
-          <span>已阅读并同意</span>
-          <strong>《用户服务协议》</strong>
-          <strong>《个人银行账户服务协议》</strong>
-          <strong>《银行快捷支付协议》</strong>
+      <div class="app_agreement">
+        <label>
+          <input v-model="checked" class="app_checkbox" type="checkbox" name="type">
+        </label>
+        <div class="agreement_content">
+          <strong>已阅读并同意</strong>
+          <ul>
+            <li @click="handleContractClick(item)" v-for="item in contractList" :key="item.protocolFileId">《{{item.fileName}}》</li>
+          </ul>
         </div>
       </div>
 

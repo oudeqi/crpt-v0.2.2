@@ -242,103 +242,151 @@ input, textarea {
   padding-right: 0px;
 }
 
+.contract-content {
+  padding: 12px;
+  overflow: hidden;
+}
+  .contract-content * {
+    white-space: normal !important;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+  .contract-content span {
+    display: inline !important;
+  }
+
+
 html, body {
-  background-color: #f5f5f5;
+  background-color: rgba(0,0,0,0);
 }
 
-.card {
-  margin-top: 12px;
-  height:106px;
-  background:rgba(255,255,255,1);
-  padding: 0 12px;
+.full-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0,0,0,0.7);
 }
 
-.card .card-t {
-    height: 54px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    border-bottom: 1px solid rgba(245,245,245,1);
+.full-mask .dialog {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
   }
 
-.card .card-t strong {
-      height:22px;
-      font-size:16px;
-      font-weight: bold;
-      color:rgba(48,49,51,1);
-      line-height:22px;
-      margin-right: 12px;
+.full-mask .dialog .dialog-close {
+      position: absolute;
+      top: 20px;
+      right: 14px;
+      width: 20px;
+      height: 20px;
     }
 
-.card .card-t span {
-      height:20px;
-      font-size:14px;
-      color:rgba(144,147,153,1);
-      line-height:20px;
-    }
+.full-mask .dialog .dialog-close::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(45deg);
+                transform: translateX(10px) rotateZ(45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
+      }
 
-.card .card-b {
-    height: 51px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    padding-right: 3px;
-  }
+.full-mask .dialog .dialog-close::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 1px;
+        height: 16px;
+        background-color: #aaa;
+        -webkit-transform: translateX(10px) rotateZ(-45deg);
+                transform: translateX(10px) rotateZ(-45deg);
+        -webkit-transform-origin: center;
+                transform-origin: center;
+      }
 
-.card .card-b input {
-      width: 100%;
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
+.full-mask .dialog .dialog-header {
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
       font-size:16px;
       font-weight:500;
       color:rgba(48,49,51,1);
+      border-bottom: 1px solid rgba(245,245,245,1);
     }
 
-.card .card-b input:disabled {
-        opacity: 1;
-        color:rgba(48,49,51,1);
+.full-mask .dialog .dialog-content {
+      min-height: 100px;
+      max-height: 450px;
+      overflow: auto;
+    }
+
+.full-mask .dialog .dialog-footer {
+      height: 60px;
+      border-top: 1px solid rgba(245,245,245,1);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: stretch;
+          -ms-flex-align: stretch;
+              align-items: stretch;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+
+.full-mask .dialog .dialog-footer .dialog-btn {
+        font-size:16px;
+        font-weight:bold;
+        color:#aaa;
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        border-right: 1px solid rgba(245,245,245,1);
       }
 
-.card .card-b input[disabled] {
-        opacity: 1;
-        color:rgba(48,49,51,1);
-      }
+.full-mask .dialog .dialog-footer .dialog-btn:last-child {
+          margin-right: 0;
+          color:rgba(102,187,106,1);
+        }
 
-.card .card-b .ocr-btn {
-      width:17px;
-      height:17px;
-      background-image: url(../../image/scan.png);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      -ms-flex-negative: 0;
-          flex-shrink: 0;
-      font-style: normal;
-    }
+.full-mask .dialog .dialog-footer .dialog-btn.disabled {
+          color: #aaa !important;
+        }
 
-.card .card-b .code-btn {
-      -ms-flex-negative: 0;
-          flex-shrink: 0;
-      height:22px;
-      font-size:16px;
-      font-weight:500;
-      color:rgba(74,144,226,1);
-      line-height:22px;
-      font-style: normal;
-    }
 
-.app_agreement {
-  margin-top: 20px;
-  padding: 0 12px;
-}
-
-.btn-box {
-  padding: 24px 12px;
-}

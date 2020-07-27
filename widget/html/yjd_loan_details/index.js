@@ -3705,7 +3705,7 @@ function vmInit() {
     },
     computed: {
       orderId: function orderId() {
-        return this.pageParam.id;
+        return this.pageParam.orderId;
       },
       orderNo: function orderNo() {
         return this.pageParam.orderNo;
@@ -3766,7 +3766,7 @@ function vmInit() {
 
                 case 5:
                   res = _context2.sent;
-                  _this2.data = res.data;
+                  _this2.data = res.data || {};
                   _context2.next = 12;
                   break;
 
@@ -3809,18 +3809,18 @@ function vmInit() {
         });
       },
       openLoanContract: function openLoanContract() {
-        var orderNo = this.orderNo;
         Router$1.openPage({
-          key: 'yjd_contract_loan',
+          key: 'pdf_agreement',
           params: {
             pageParam: {
-              orderNo: orderNo
+              type: 'pdf',
+              id: this.data.contractId
             }
           }
         });
       },
       openDaiyangContract: function openDaiyangContract() {
-        var data = this.data;
+        var data = this.data || {};
         var outCode = data.outCode,
             payee = data.payee,
             signedDate = data.signedDate,
@@ -3828,7 +3828,7 @@ function vmInit() {
             receivedBond = data.receivedBond,
             surplusReceivableBond = data.surplusReceivableBond;
         Router$1.openPage({
-          key: key,
+          key: 'yjd_contract_daiyang',
           params: {
             pageParam: {
               outCode: outCode,

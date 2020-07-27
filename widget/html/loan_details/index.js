@@ -3695,6 +3695,9 @@ function vmInit() {
       };
     },
     computed: {
+      orderId: function orderId() {
+        return this.pageParam.orderId;
+      },
       orderNo: function orderNo() {
         return this.pageParam.orderNo;
       }

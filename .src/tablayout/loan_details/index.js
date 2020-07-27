@@ -44,6 +44,9 @@ function vmInit () {
       }
     },
     computed: {
+      orderId: function () {
+        return this.pageParam.orderId
+      },
       orderNo: function () {
         return this.pageParam.orderNo
       }

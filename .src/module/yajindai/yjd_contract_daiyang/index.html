@@ -26,7 +26,7 @@
       <div class="content-b">
         <div class="content-row">
           <span>应收保证金(元)</span>
-          <strong>{{pageParam.receivableBond}}</strong>
+          <strong>{{pageParam.receivableBond ? numeral(pageParam.receivableBond).format('0,0.00') : ''}}</strong>
         </div>
         <!-- <div class="content-row">
           <span>已收保证金(元)</span>
@@ -34,7 +34,7 @@
         </div> -->
         <div class="content-row">
           <span>剩余应收保证金(元)</span>
-          <strong>{{pageParam.surplusReceivableBond}}</strong>
+          <strong>{{pageParam.surplusReceivableBond ? numeral(pageParam.surplusReceivableBond).format('0,0.00') : ''}}</strong>
         </div>
       </div>
     </div>

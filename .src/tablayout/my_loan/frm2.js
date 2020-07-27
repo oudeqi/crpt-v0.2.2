@@ -98,7 +98,7 @@ function vmInit () {
         } else if (String(orderType) === '3') { // 以前的
           Router.openPage({ key: 'loan_details', params: {pageParam: { orderId, orderNo }}})
         } else if (String(orderType) === '4') { // 押金贷
-          Router.openPage({ key: 'yjd_loan_details', params: {pageParam: { orderId, orderNo }}})
+          Router.openPage({ key: 'yjd_loan_details', params: {pageParam: { orderId, orderNo, status: 'invalid' }}})
         } else {
           api.toast({ msg: '未知的产品', location: 'middle' })
         }

@@ -2726,6 +2726,22 @@ var Service = /*#__PURE__*/function () {
         }
       });
     }
+  }, {
+    key: "getContract",
+    value: function getContract() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+      return http$1.get("/crpt-biz/biz/fund/protocol/query/".concat(type));
+    }
+  }, {
+    key: "docx2html",
+    value: function docx2html(id) {
+      return http$1.get('/crpt-file/file/docx2html?id=' + id);
+    }
+  }, {
+    key: "pdf2html",
+    value: function pdf2html(id) {
+      return http$1.get("/crpt-file/file/pdf2html?pdfFileId=".concat(id));
+    }
   }]);
 
   return Service;
@@ -2755,7 +2771,9 @@ function vmInit() {
         // 银行卡开户行名称（ocr返回）
         uniqueCode: '',
         // 预签约唯一码（发送短信验证码返回）
-        pageParam: api.pageParam || {}
+        pageParam: api.pageParam || {},
+        contractList: [] // 合同列表
+
       };
     },
     computed: {
@@ -2763,10 +2781,139 @@ function vmInit() {
         return this.pageParam.productId || '';
       }
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+      this.initPage();
+    },
     methods: {
-      selectPicture: function selectPicture() {
+      initPage: function initPage() {
         var _this = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+          return regenerator.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  api.showProgress({
+                    title: '数据加载中...',
+                    text: ''
+                  });
+                  _context.next = 3;
+                  return _this.__getContract();
+
+                case 3:
+                  api.hideProgress();
+
+                case 4:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      __getContract: function __getContract() {
+        var _this2 = this;
+
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+          var res;
+          return regenerator.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.prev = 0;
+                  _context2.next = 3;
+                  return Service.getContract();
+
+                case 3:
+                  res = _context2.sent;
+                  _this2.contractList = res.data || [];
+                  api.refreshHeaderLoadDone();
+                  _context2.next = 12;
+                  break;
+
+                case 8:
+                  _context2.prev = 8;
+                  _context2.t0 = _context2["catch"](0);
+                  api.toast({
+                    msg: _context2.t0.msg || '获取协议失败',
+                    location: 'middle'
+                  });
+                  api.refreshHeaderLoadDone();
+
+                case 12:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, null, [[0, 8]]);
+        }))();
+      },
+      handleContractClick: function handleContractClick(record) {
+        var _this3 = this;
+
+        // isReadLimit 是否强制阅读   1：是   0：否
+        var countdown = null;
+
+        if (String(record.isReadLimit) === '1') {
+          countdown = {
+            desc: '同意',
+            seconds: 8
+          };
+        }
+
+        api.showProgress({
+          title: '合同加载中...',
+          text: ''
+        });
+        Service.docx2html(record.protocolFileId).then(function (res) {
+          api.hideProgress();
+
+          if (res.code === 200) {
+            $api.setStorage('yjd-loan-contract', res.data.fileName);
+
+            _this3.openDialog({
+              title: record.fileName,
+              countdown: countdown
+            });
+          } else {
+            $api.setStorage('yjd-loan-contract', '');
+            api.toast({
+              msg: res.msg || '合同加载失败',
+              location: 'middle'
+            });
+          }
+        })["catch"](function (e) {
+          api.hideProgress();
+          $api.setStorage('yjd-loan-contract', '');
+          api.toast({
+            msg: e.msg || '合同加载失败',
+            location: 'middle'
+          });
+        });
+      },
+      openDialog: function openDialog(_ref2) {
+        var title = _ref2.title,
+            countdown = _ref2.countdown;
+        api.openFrame({
+          reload: true,
+          name: 'dialog',
+          bounces: false,
+          bgColor: 'rgba(0,0,0,0)',
+          url: 'widget://html/yjd_account_open/contract-msg.html',
+          rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+          },
+          pageParam: {
+            title: title,
+            countdown: countdown
+          }
+        });
+      },
+      selectPicture: function selectPicture() {
+        var _this4 = this;
 
         var btns = ['相机', '相册'];
         var sourceType = '';
@@ -2779,51 +2926,51 @@ function vmInit() {
 
           getPicture(sourceType, function (ret, err) {
             if (ret && ret.data) {
-              _this.__bankCardOcr(ret.data);
+              _this4.__bankCardOcr(ret.data);
             }
           });
         });
       },
       __bankCardOcr: function __bankCardOcr(file) {
-        var _this2 = this;
+        var _this5 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
           var res;
-          return regenerator.wrap(function _callee$(_context) {
+          return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
                   api.showProgress({
                     title: '识别中...',
                     text: ''
                   });
-                  _context.prev = 1;
-                  _context.next = 4;
+                  _context3.prev = 1;
+                  _context3.next = 4;
                   return Service.bankCardOcr(file);
 
                 case 4:
-                  res = _context.sent;
+                  res = _context3.sent;
 
                   //  {"msg":"","data":{"bankIdentificationNumber":"01040000","cardName":"医保联名借记IC卡","bankName":"中国银行","cardType":"借记卡","cardNumber":"6217582000022247241"},"code":200}
                   if (res.code === 200) {
-                    _this2.bankCardNo = res.data.cardNumber || '';
-                    _this2.cardName = res.data.cardName || '';
+                    _this5.bankCardNo = res.data.cardNumber || '';
+                    _this5.cardName = res.data.cardName || '';
                     api.toast({
                       msg: '识别成功',
                       location: 'middle'
                     });
                   }
 
-                  _context.next = 13;
+                  _context3.next = 13;
                   break;
 
                 case 8:
-                  _context.prev = 8;
-                  _context.t0 = _context["catch"](1);
-                  _this2.bankCardNo = '';
-                  _this2.cardName = '';
+                  _context3.prev = 8;
+                  _context3.t0 = _context3["catch"](1);
+                  _this5.bankCardNo = '';
+                  _this5.cardName = '';
                   api.toast({
-                    msg: _context.t0.msg || '出错啦',
+                    msg: _context3.t0.msg || '出错啦',
                     location: 'middle'
                   });
 
@@ -2832,31 +2979,31 @@ function vmInit() {
 
                 case 14:
                 case "end":
-                  return _context.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee, null, [[1, 8]]);
+          }, _callee3, null, [[1, 8]]);
         }))();
       },
       handleSendCodeClick: function handleSendCodeClick() {
-        var _this3 = this;
+        var _this6 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
           var cardNo, phone, res;
-          return regenerator.wrap(function _callee2$(_context2) {
+          return regenerator.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
-                  if (!_this3.code.loading) {
-                    _context2.next = 2;
+                  if (!_this6.code.loading) {
+                    _context4.next = 2;
                     break;
                   }
 
-                  return _context2.abrupt("return");
+                  return _context4.abrupt("return");
 
                 case 2:
-                  if (_this3.bankCardNo.trim()) {
-                    _context2.next = 5;
+                  if (_this6.bankCardNo.trim()) {
+                    _context4.next = 5;
                     break;
                   }
 
@@ -2864,11 +3011,11 @@ function vmInit() {
                     msg: '请输入银行卡号',
                     location: 'middle'
                   });
-                  return _context2.abrupt("return");
+                  return _context4.abrupt("return");
 
                 case 5:
-                  if (_this3.phoneNo.trim()) {
-                    _context2.next = 8;
+                  if (_this6.phoneNo.trim()) {
+                    _context4.next = 8;
                     break;
                   }
 
@@ -2876,11 +3023,11 @@ function vmInit() {
                     msg: '请输入手机号码',
                     location: 'middle'
                   });
-                  return _context2.abrupt("return");
+                  return _context4.abrupt("return");
 
                 case 8:
-                  if (isPhoneNo(_this3.phoneNo.trim())) {
-                    _context2.next = 11;
+                  if (isPhoneNo(_this6.phoneNo.trim())) {
+                    _context4.next = 11;
                     break;
                   }
 
@@ -2888,61 +3035,61 @@ function vmInit() {
                     msg: '手机号码格式不正确',
                     location: 'middle'
                   });
-                  return _context2.abrupt("return");
+                  return _context4.abrupt("return");
 
                 case 11:
-                  _this3.code.loading = true;
-                  _this3.code.txt = '验证码发送中...';
-                  _context2.prev = 13;
-                  cardNo = _this3.bankCardNo;
-                  phone = _this3.phoneNo;
-                  _context2.next = 18;
+                  _this6.code.loading = true;
+                  _this6.code.txt = '验证码发送中...';
+                  _context4.prev = 13;
+                  cardNo = _this6.bankCardNo;
+                  phone = _this6.phoneNo;
+                  _context4.next = 18;
                   return Service.sendCode(cardNo, phone);
 
                 case 18:
-                  res = _context2.sent;
+                  res = _context4.sent;
 
                   //{"msg":"","data":{"uniqueCode":"1234"},"code":200}
                   if (res.code === 200) {
-                    _this3.uniqueCode = res.data.uniqueCode || '';
+                    _this6.uniqueCode = res.data.uniqueCode || '';
                     api.toast({
                       msg: '验证码已经发送至手机',
                       location: 'middle'
                     });
                   } else {
-                    _this3.uniqueCode = '';
+                    _this6.uniqueCode = '';
                     api.toast({
                       msg: res.msg || '短信验证码发送失败',
                       location: 'middle'
                     });
                   }
 
-                  _this3.__countDown();
+                  _this6.__countDown();
 
-                  _context2.next = 29;
+                  _context4.next = 29;
                   break;
 
                 case 23:
-                  _context2.prev = 23;
-                  _context2.t0 = _context2["catch"](13);
-                  _this3.code.loading = false;
-                  _this3.code.txt = '获取验证码';
-                  _this3.uniqueCode = '';
+                  _context4.prev = 23;
+                  _context4.t0 = _context4["catch"](13);
+                  _this6.code.loading = false;
+                  _this6.code.txt = '获取验证码';
+                  _this6.uniqueCode = '';
                   api.toast({
-                    msg: _context2.t0.msg || '短信验证码发送失败',
+                    msg: _context4.t0.msg || '短信验证码发送失败',
                     location: 'middle'
                   });
 
                 case 29:
                 case "end":
-                  return _context2.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee2, null, [[13, 23]]);
+          }, _callee4, null, [[13, 23]]);
         }))();
       },
       __countDown: function __countDown() {
-        var _this4 = this;
+        var _this7 = this;
 
         this.code.txt = currentSeconds + 's 后重新获取';
         var timer = setInterval(function () {
@@ -2950,33 +3097,33 @@ function vmInit() {
 
           if (currentSeconds < 0) {
             currentSeconds = initSeconds;
-            _this4.code.txt = '获取验证码';
-            _this4.code.loading = false;
+            _this7.code.txt = '获取验证码';
+            _this7.code.loading = false;
             clearInterval(timer);
           } else {
-            _this4.code.txt = currentSeconds + 's 后重新获取';
+            _this7.code.txt = currentSeconds + 's 后重新获取';
           }
         }, 1000);
       },
       submit: function submit() {
-        var _this5 = this;
+        var _this8 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
           var cardName, cardNo, phone, verifyCode, uniqueCode, res, url, productId;
-          return regenerator.wrap(function _callee3$(_context3) {
+          return regenerator.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  if (!_this5.loading) {
-                    _context3.next = 2;
+                  if (!_this8.loading) {
+                    _context5.next = 2;
                     break;
                   }
 
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 2:
-                  if (_this5.bankCardNo.trim()) {
-                    _context3.next = 5;
+                  if (_this8.bankCardNo.trim()) {
+                    _context5.next = 5;
                     break;
                   }
 
@@ -2984,11 +3131,11 @@ function vmInit() {
                     msg: '请输入银行卡号',
                     location: 'middle'
                   });
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 5:
-                  if (_this5.phoneNo.trim()) {
-                    _context3.next = 8;
+                  if (_this8.phoneNo.trim()) {
+                    _context5.next = 8;
                     break;
                   }
 
@@ -2996,11 +3143,11 @@ function vmInit() {
                     msg: '请输入手机号码',
                     location: 'middle'
                   });
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 8:
-                  if (isPhoneNo(_this5.phoneNo.trim())) {
-                    _context3.next = 11;
+                  if (isPhoneNo(_this8.phoneNo.trim())) {
+                    _context5.next = 11;
                     break;
                   }
 
@@ -3008,11 +3155,11 @@ function vmInit() {
                     msg: '手机号码格式不正确',
                     location: 'middle'
                   });
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 11:
-                  if (_this5.code.no.trim()) {
-                    _context3.next = 14;
+                  if (_this8.code.no.trim()) {
+                    _context5.next = 14;
                     break;
                   }
 
@@ -3020,11 +3167,11 @@ function vmInit() {
                     msg: '请输入短息验证码',
                     location: 'middle'
                   });
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 14:
-                  if (_this5.checked) {
-                    _context3.next = 17;
+                  if (_this8.checked) {
+                    _context5.next = 17;
                     break;
                   }
 
@@ -3032,21 +3179,21 @@ function vmInit() {
                     msg: '请先仔细阅读协议',
                     location: 'middle'
                   });
-                  return _context3.abrupt("return");
+                  return _context5.abrupt("return");
 
                 case 17:
-                  _this5.loading = true;
+                  _this8.loading = true;
                   api.showProgress({
                     title: '数据加载中...',
                     text: ''
                   });
-                  _context3.prev = 19;
-                  cardName = _this5.cardName;
-                  cardNo = _this5.bankCardNo;
-                  phone = _this5.phoneNo;
-                  verifyCode = _this5.code.no;
-                  uniqueCode = _this5.uniqueCode;
-                  _context3.next = 27;
+                  _context5.prev = 19;
+                  cardName = _this8.cardName;
+                  cardNo = _this8.bankCardNo;
+                  phone = _this8.phoneNo;
+                  verifyCode = _this8.code.no;
+                  uniqueCode = _this8.uniqueCode;
+                  _context5.next = 27;
                   return Service.openAccount({
                     cardName: cardName,
                     cardNo: cardNo,
@@ -3056,12 +3203,12 @@ function vmInit() {
                   });
 
                 case 27:
-                  res = _context3.sent;
+                  res = _context5.sent;
                   api.hideProgress();
 
                   if (res.code === 200) {
                     url = res.data.url;
-                    productId = _this5.productId;
+                    productId = _this8.productId;
                     Router$2.openPage({
                       key: 'yjd_account_open_xinwang',
                       params: {
@@ -3078,27 +3225,27 @@ function vmInit() {
                     });
                   }
 
-                  _context3.next = 36;
+                  _context5.next = 36;
                   break;
 
                 case 32:
-                  _context3.prev = 32;
-                  _context3.t0 = _context3["catch"](19);
+                  _context5.prev = 32;
+                  _context5.t0 = _context5["catch"](19);
                   api.hideProgress();
                   api.toast({
-                    msg: _context3.t0.msg || '提交失败',
+                    msg: _context5.t0.msg || '提交失败',
                     location: 'middle'
                   });
 
                 case 36:
-                  _this5.loading = false;
+                  _this8.loading = false;
 
                 case 37:
                 case "end":
-                  return _context3.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee3, null, [[19, 32]]);
+          }, _callee5, null, [[19, 32]]);
         }))();
       }
     }

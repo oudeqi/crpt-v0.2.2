@@ -53,13 +53,17 @@ html, body {
 }
 .seclect-content__toprow {
   margin: 12px 0;
+  display: flex;
+  align-items: flex-start;
   .key {
+    flex-shrink: 0;
     width: 90px;
     margin-right: 10px;
     font-size:14px;
     color:rgba(144,147,153,1);
   }
   .value {
+    flex-grow: 1;
     font-size:14px;
     font-weight:500;
     color:rgba(48,49,51,1);

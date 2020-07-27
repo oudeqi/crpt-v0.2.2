@@ -2972,7 +2972,7 @@ var App = /*#__PURE__*/function () {
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({ key: 'hxd_u_try_detail'})
       // return
-      // Router.openPage({key: 'hxd_a_success', params: {
+      // Router.openPage({key: 'yjd_account_open', params: {
       //   pageParam: {
       //     productId: '1'
       //   }
