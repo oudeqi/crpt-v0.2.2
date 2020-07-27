@@ -2702,8 +2702,9 @@ apiready = function apiready() {
             id = _ref.id;
 
         switch (type) {
+          // 1-信用贷款 2-担保贷款 3-上游入库单贷款
           // 好销贷跳往好销贷产品授信简介
-          case 1:
+          case 3:
             Router$2.openPage({
               key: 'hxd_apply',
               params: {
@@ -2714,8 +2715,10 @@ apiready = function apiready() {
               }
             });
             break;
+          // case 2:
+          //   break;
 
-          case 2:
+          default:
             openProductDetails({
               id: id,
               open: 1 // 1 已开通， 0未开通
