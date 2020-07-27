@@ -1317,10 +1317,10 @@ var routerConfig = {
     navigationBar: navigationBarGreen
   },
   // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
+  my_product: {
+    name: 'my_product',
     title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
+    url: 'widget://html/my_product/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -3940,7 +3940,7 @@ function vmInit() {
                   api.refreshHeaderLoadDone();
                   _this4.loading = false;
                   _this4.total = res.data.count;
-                  _this4.totalSum = res.data.totalAmount;
+                  _this4.totalSum = numeral(res.data.totalAmount || 0).format('0,0.00');
 
                   if (res.data.list && res.data.list.length > 0) {
                     _this4.more = 'hasMore';
@@ -4008,7 +4008,7 @@ function vmInit() {
               key: 'hxd_loan_details',
               params: {
                 pageParam: {
-                  id: orderId
+                  orderId: orderId
                 }
               }
             });

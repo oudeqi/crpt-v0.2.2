@@ -2592,10 +2592,10 @@ var routerConfig = {
     navigationBar: navigationBarGreen
   },
   // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
+  my_product: {
+    name: 'my_product',
     title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
+    url: 'widget://html/my_product/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -2972,11 +2972,6 @@ var App = /*#__PURE__*/function () {
       // Utils.Router.openPageCreditInformation()
       // Router.openPage({ key: 'hxd_u_try_detail'})
       // return
-      // Router.openPage({key: 'hxd_a_success', params: {
-      //   pageParam: {
-      //     productId: '1'
-      //   }
-      // }})
       // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
       // let productId = '1282497823763111937'
       // Router.openPage({key: 'yjd_select_contract', params: {pageParam: { url, productId }}})

@@ -802,6 +802,40 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openProductDetails() {
+  var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref5.id,
+      open = _ref5.open;
+
+  api.openTabLayout({
+    name: 'html/productdetails/win',
+    title: '产品详情',
+    url: 'widget://html/productdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: {
+      id: id,
+      open: open
+    },
+    // open 1 已开通， 0未开通
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
+    }
+  });
+} // 城市选择
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -2077,19 +2111,6 @@ var http$1 = {
   }
 };
 
-var service = {
-  getProductInfo: function getProductInfo(params) {
-    return http$1.get("/crpt-credit/credit/jf/product/detail", {
-      values: params
-    });
-  },
-  postSignJF: function postSignJF(params) {
-    return http$1.post("/crpt-credit/credit/jf/apply/sign?productId=".concat(params.productId), null, {
-      timeout: 10
-    });
-  }
-};
-
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
@@ -2659,92 +2680,7 @@ var Router$1 = /*#__PURE__*/function () {
 
 var Router$2 = new Router$1();
 
-/**
- * @author Sunning
- * 存放部分方法
- */
-var filter = {
-  /**
-   * @author Sunning
-   * 数字格式化为千分位   1000 ==> 1,000
-   * @param {Object} s 要格式化的数字
-   * @param {Object} n 保留几位小数
-   */
-  formatNumber: function formatNumber(s, n) {
-    if (s === '-' || !s) {
-      return '-';
-    } else {
-      if (n === 0) {
-        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      } else {
-        n = n > 0 && n <= 20 ? n : 2;
-        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
-        var positive = s.toString().split('-');
-        var l;
-        var r;
-
-        if (positive.length > 1) {
-          l = positive[1].split('.')[0].split('').reverse();
-          r = positive[1].split('.')[1];
-        } else {
-          l = s.split('.')[0].split('').reverse();
-          r = s.split('.')[1];
-        }
-
-        var t = '';
-
-        for (var i = 0; i < l.length; i++) {
-          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
-        }
-
-        var result = t.split('').reverse().join('') + '.' + r;
-        if (positive.length > 1) result = '-' + result;
-        return result;
-      }
-    }
-  },
-
-  /**
-   * author: Sunning
-   * 将数字格式化为千分位
-   * @param {Object} value 需要转化的数字
-   */
-  toThousands: function toThousands(value) {
-    if (value === '' || value === undefined || value === null) {
-      return '';
-    }
-
-    value = String(value); // 强制转化为转化为字符串
-
-    var isDecimal = value.split('.');
-
-    if (isDecimal.length === 1) {
-      // 如果长度为1表示没有小数，否则表示有小数
-      return this.formatNumber(value, 0);
-    } else {
-      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
-    }
-  }
-};
-
-var filterDict = function filterDict(type) {
-  var Obj = {};
-  var sendJson = {
-    type: type,
-    valid: 1
-  };
-  return http.post('/crpt-biz/dict/codelist', {
-    body: sendJson
-  }).then(function (res) {
-    res.data.map(function (item) {
-      Obj[item.code] = item.name;
-    });
-    return Obj;
-  });
-};
-
 apiready = function apiready() {
-  var pageParam = api.pageParam || {};
   api.addEventListener({
     name: 'navitembtn'
   }, function (ret, err) {
@@ -2755,151 +2691,116 @@ apiready = function apiready() {
   var page = new Vue({
     el: '#app',
     data: {
-      creditStatus: 0,
-      productInfo: {},
-      duebillTypeMap: {},
-      creditAmountStatusMap: {}
-    },
-    computed: {
-      productTotalLimitTn: function productTotalLimitTn() {
-        return filter.toThousands(this.productInfo.productTotalLimit);
-      },
-      availableAmountTn: function availableAmountTn() {
-        return filter.toThousands(this.productInfo.availableAmount);
-      }
+      pageSize: 20,
+      pageNo: 1,
+      loading: false,
+      list: []
     },
     methods: {
-      handleGetProductDetail: function handleGetProductDetail() {
+      handleClickToPage: function handleClickToPage(_ref) {
+        var type = _ref.type,
+            id = _ref.id;
+
+        switch (type) {
+          // 好销贷跳往好销贷产品授信简介
+          case 1:
+            Router$2.openPage({
+              key: 'hxd_apply',
+              params: {
+                pageParam: {
+                  hasApply: true,
+                  productId: id
+                }
+              }
+            });
+            break;
+
+          case 2:
+            openProductDetails({
+              id: id,
+              open: 1 // 1 已开通， 0未开通
+
+            });
+            break;
+        }
+      },
+      getPageData: function getPageData(cb) {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var duebillTypeMap, creditAmountStatusMap, res;
+          var res, newList;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  Utils$1.UI.showLoading('加载中'); // 还款方式码表
-
+                  Utils$1.UI.showLoading('加载中');
                   _context.next = 4;
-                  return filterDict('duebillType');
+                  return http$1.get("/crpt-cust/product/openinglist/");
 
                 case 4:
-                  duebillTypeMap = _context.sent;
-
-                  if (duebillTypeMap) {
-                    _this.duebillTypeMap = duebillTypeMap;
-                  } // 授信额度状态码表
-
-
-                  _context.next = 8;
-                  return filterDict('creditAmountStatus');
-
-                case 8:
-                  creditAmountStatusMap = _context.sent;
-
-                  if (creditAmountStatusMap) {
-                    _this.creditAmountStatusMap = creditAmountStatusMap;
-                  }
-
-                  _context.next = 12;
-                  return service.getProductInfo({
-                    productId: pageParam.productId
-                  });
-
-                case 12:
                   res = _context.sent;
 
                   if (res.code === 200) {
-                    _this.productInfo = {
-                      creditAmount: res.data.creditAmount,
-                      producName: res.data.productName,
-                      signedContract: [res.data.signedContract || {}],
-                      // 后端只返回了一个合同，并且是对象不是list
-                      exeInterest: res.data.exeInterest,
-                      opType: _this.duebillTypeMap[res.data.opType],
-                      repayCycle: res.data.repayCycle,
-                      productTotalLimit: res.data.productTotalLimit,
-                      availableAmount: res.data.availableAmount,
-                      expireDate: res.data.expireDate,
-                      amountStatus: res.data.amountStatus,
-                      amountStatusText: _this.creditAmountStatusMap[res.data.amountStatus]
-                    };
-                    _this.creditStatus = res.data.creditStatus;
+                    if (_this.pageNo === 1) {
+                      Utils$1.UI.toast('加载完成');
+                    }
+
+                    if (res.data.length > 0) {
+                      // this.pageNo = this.pageNo + 1
+                      newList = _this.list.concat(res.data);
+                      _this.list = JSON.parse(JSON.stringify(newList)); // alert(JSON.stringify(this.list))
+                    } else {
+                      Utils$1.UI.toast('没有更多啦');
+                    }
                   }
 
-                  _context.next = 19;
+                  _context.next = 11;
                   break;
 
-                case 16:
-                  _context.prev = 16;
+                case 8:
+                  _context.prev = 8;
                   _context.t0 = _context["catch"](0);
 
-                  if (_context.t0.msg) {
-                    Utils$1.UI.toast("".concat(_context.t0.code, " : ").concat(_context.t0.msg));
+                  if (_context.t0.code) {
+                    Utils$1.UI.toast("".concat(_context.t0.code, ": ").concat(_context.t0.msg));
                   }
 
-                case 19:
+                case 11:
+                  _context.prev = 11;
                   Utils$1.UI.hideLoading();
+                  return _context.finish(11);
 
-                case 20:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 16]]);
+          }, _callee, null, [[0, 8, 11, 14]]);
         }))();
-      },
-      handleToChangeLog: function handleToChangeLog() {
-        Router$2.openPage({
-          key: 'hxd_quota',
-          params: {
-            pageParam: {
-              productId: pageParam.productId,
-              productTotalLimit: filter.toThousands(this.productInfo.productTotalLimit)
-            }
-          }
-        });
-      },
-      handleToAgreement: function handleToAgreement(id) {
-        Router$2.openPage({
-          key: 'pdf_agreement',
-          params: {
-            pageParam: {
-              id: id,
-              type: 'pdf'
-            }
-          }
-        });
-      },
-      handleToProductIntro: function handleToProductIntro() {
-        Router$2.openPage({
-          key: 'hxd_apply',
-          params: {
-            pageParam: {
-              productId: pageParam.productId,
-              hasApply: true
-            }
-          }
-        });
       }
     },
     mounted: function mounted() {
       var _this2 = this;
 
+      this.getPageData();
       Utils$1.UI.setRefreshHeaderInfo({
         success: function success() {
-          _this2.handleGetProductDetail();
+          _this2.list = [];
+
+          _this2.getPageData();
 
           setTimeout(function () {
             api.refreshHeaderLoadDone();
-          }, 0);
+          }, 0); // api.refreshHeaderLoadDone()
+          // setTimeout(() => {
+          //   window.location.reload()
+          // }, 100);
         },
         fail: function fail() {
           api.refreshHeaderLoadDone();
         }
       });
-      this.handleGetProductDetail();
     }
-  }); // alert(Vue)
+  });
 };

@@ -25,6 +25,283 @@ function openRegLogin() {
   });
 } // 个人登录
 
+
+function openContactUs() {
+  api.openTabLayout({
+    name: 'html/contactus/win',
+    title: '联系我们',
+    url: 'widget://html/contactus/win.html',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
+    }
+  });
+} // 订单详情
+
+
+function openProductDetails() {
+  var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      id = _ref5.id,
+      open = _ref5.open;
+
+  api.openTabLayout({
+    name: 'html/productdetails/win',
+    title: '产品详情',
+    url: 'widget://html/productdetails/win.html',
+    bgColor: '#fff',
+    reload: true,
+    pageParam: {
+      id: id,
+      open: open
+    },
+    // open 1 已开通， 0未开通
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
+    }
+  });
+} // 城市选择
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var base64 = createCommonjsModule(function (module, exports) {
+(function (global, factory) {
+     module.exports = factory(global)
+        ;
+}((
+    typeof self !== 'undefined' ? self
+        : typeof window !== 'undefined' ? window
+        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
+: commonjsGlobal
+), function(global) {
+    // existing version for noConflict()
+    global = global || {};
+    var _Base64 = global.Base64;
+    var version = "2.5.2";
+    // if node.js and NOT React Native, we use Buffer
+    var buffer;
+    if ( module.exports) {
+        try {
+            buffer = eval("require('buffer').Buffer");
+        } catch (err) {
+            buffer = undefined;
+        }
+    }
+    // constants
+    var b64chars
+        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    var b64tab = function(bin) {
+        var t = {};
+        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
+        return t;
+    }(b64chars);
+    var fromCharCode = String.fromCharCode;
+    // encoder stuff
+    var cb_utob = function(c) {
+        if (c.length < 2) {
+            var cc = c.charCodeAt(0);
+            return cc < 0x80 ? c
+                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
+                                + fromCharCode(0x80 | (cc & 0x3f)))
+                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        } else {
+            var cc = 0x10000
+                + (c.charCodeAt(0) - 0xD800) * 0x400
+                + (c.charCodeAt(1) - 0xDC00);
+            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
+                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
+                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
+                    + fromCharCode(0x80 | ( cc         & 0x3f)));
+        }
+    };
+    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+    var utob = function(u) {
+        return u.replace(re_utob, cb_utob);
+    };
+    var cb_encode = function(ccc) {
+        var padlen = [0, 2, 1][ccc.length % 3],
+        ord = ccc.charCodeAt(0) << 16
+            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
+            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
+        chars = [
+            b64chars.charAt( ord >>> 18),
+            b64chars.charAt((ord >>> 12) & 63),
+            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
+            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
+        ];
+        return chars.join('');
+    };
+    var btoa = global.btoa ? function(b) {
+        return global.btoa(b);
+    } : function(b) {
+        return b.replace(/[\s\S]{1,3}/g, cb_encode);
+    };
+    var _encode = function(u) {
+        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
+        return isUint8Array ? u.toString('base64')
+            : btoa(utob(String(u)));
+    };
+    var encode = function(u, urisafe) {
+        return !urisafe
+            ? _encode(u)
+            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
+                return m0 == '+' ? '-' : '_';
+            }).replace(/=/g, '');
+    };
+    var encodeURI = function(u) { return encode(u, true) };
+    // decoder stuff
+    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
+    var cb_btou = function(cccc) {
+        switch(cccc.length) {
+        case 4:
+            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
+                |    ((0x3f & cccc.charCodeAt(1)) << 12)
+                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
+                |     (0x3f & cccc.charCodeAt(3)),
+            offset = cp - 0x10000;
+            return (fromCharCode((offset  >>> 10) + 0xD800)
+                    + fromCharCode((offset & 0x3FF) + 0xDC00));
+        case 3:
+            return fromCharCode(
+                ((0x0f & cccc.charCodeAt(0)) << 12)
+                    | ((0x3f & cccc.charCodeAt(1)) << 6)
+                    |  (0x3f & cccc.charCodeAt(2))
+            );
+        default:
+            return  fromCharCode(
+                ((0x1f & cccc.charCodeAt(0)) << 6)
+                    |  (0x3f & cccc.charCodeAt(1))
+            );
+        }
+    };
+    var btou = function(b) {
+        return b.replace(re_btou, cb_btou);
+    };
+    var cb_decode = function(cccc) {
+        var len = cccc.length,
+        padlen = len % 4,
+        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
+            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
+            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
+            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
+        chars = [
+            fromCharCode( n >>> 16),
+            fromCharCode((n >>>  8) & 0xff),
+            fromCharCode( n         & 0xff)
+        ];
+        chars.length -= [0, 0, 2, 1][padlen];
+        return chars.join('');
+    };
+    var _atob = global.atob ? function(a) {
+        return global.atob(a);
+    } : function(a){
+        return a.replace(/\S{1,4}/g, cb_decode);
+    };
+    var atob = function(a) {
+        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
+    };
+    var _decode = buffer ?
+        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
+        ? function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : buffer.from(a, 'base64')).toString();
+        }
+        : function(a) {
+            return (a.constructor === buffer.constructor
+                    ? a : new buffer(a, 'base64')).toString();
+        }
+        : function(a) { return btou(_atob(a)) };
+    var decode = function(a){
+        return _decode(
+            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
+                .replace(/[^A-Za-z0-9\+\/]/g, '')
+        );
+    };
+    var noConflict = function() {
+        var Base64 = global.Base64;
+        global.Base64 = _Base64;
+        return Base64;
+    };
+    // export Base64
+    global.Base64 = {
+        VERSION: version,
+        atob: atob,
+        btoa: btoa,
+        fromBase64: decode,
+        toBase64: encode,
+        utob: utob,
+        encode: encode,
+        encodeURI: encodeURI,
+        btou: btou,
+        decode: decode,
+        noConflict: noConflict,
+        __buffer__: buffer
+    };
+    // if ES5 is available, make Base64.extendString() available
+    if (typeof Object.defineProperty === 'function') {
+        var noEnum = function(v){
+            return {value:v,enumerable:false,writable:true,configurable:true};
+        };
+        global.Base64.extendString = function () {
+            Object.defineProperty(
+                String.prototype, 'fromBase64', noEnum(function () {
+                    return decode(this)
+                }));
+            Object.defineProperty(
+                String.prototype, 'toBase64', noEnum(function (urisafe) {
+                    return encode(this, urisafe)
+                }));
+            Object.defineProperty(
+                String.prototype, 'toBase64URI', noEnum(function () {
+                    return encode(this, true)
+                }));
+        };
+    }
+    //
+    // export Base64 to the namespace
+    //
+    if (global['Meteor']) { // Meteor.js
+        Base64 = global.Base64;
+    }
+    // module.exports and AMD are mutually exclusive.
+    // module.exports has precedence.
+    if ( module.exports) {
+        module.exports.Base64 = global.Base64;
+    }
+    // that's it!
+    return {Base64: global.Base64}
+}));
+});
+var base64_1 = base64.Base64;
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -32,12 +309,6 @@ function _classCallCheck(instance, Constructor) {
 }
 
 var classCallCheck = _classCallCheck;
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
 
 var _extends_1 = createCommonjsModule(function (module) {
 function _extends() {
@@ -1303,217 +1574,186 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
-var base64 = createCommonjsModule(function (module, exports) {
-(function (global, factory) {
-     module.exports = factory(global)
-        ;
-}((
-    typeof self !== 'undefined' ? self
-        : typeof window !== 'undefined' ? window
-        : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal
-: commonjsGlobal
-), function(global) {
-    // existing version for noConflict()
-    global = global || {};
-    var _Base64 = global.Base64;
-    var version = "2.5.2";
-    // if node.js and NOT React Native, we use Buffer
-    var buffer;
-    if ( module.exports) {
-        try {
-            buffer = eval("require('buffer').Buffer");
-        } catch (err) {
-            buffer = undefined;
-        }
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
     }
-    // constants
-    var b64chars
-        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    var b64tab = function(bin) {
-        var t = {};
-        for (var i = 0, l = bin.length; i < l; i++) t[bin.charAt(i)] = i;
-        return t;
-    }(b64chars);
-    var fromCharCode = String.fromCharCode;
-    // encoder stuff
-    var cb_utob = function(c) {
-        if (c.length < 2) {
-            var cc = c.charCodeAt(0);
-            return cc < 0x80 ? c
-                : cc < 0x800 ? (fromCharCode(0xc0 | (cc >>> 6))
-                                + fromCharCode(0x80 | (cc & 0x3f)))
-                : (fromCharCode(0xe0 | ((cc >>> 12) & 0x0f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        } else {
-            var cc = 0x10000
-                + (c.charCodeAt(0) - 0xD800) * 0x400
-                + (c.charCodeAt(1) - 0xDC00);
-            return (fromCharCode(0xf0 | ((cc >>> 18) & 0x07))
-                    + fromCharCode(0x80 | ((cc >>> 12) & 0x3f))
-                    + fromCharCode(0x80 | ((cc >>>  6) & 0x3f))
-                    + fromCharCode(0x80 | ( cc         & 0x3f)));
-        }
-    };
-    var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
-    var utob = function(u) {
-        return u.replace(re_utob, cb_utob);
-    };
-    var cb_encode = function(ccc) {
-        var padlen = [0, 2, 1][ccc.length % 3],
-        ord = ccc.charCodeAt(0) << 16
-            | ((ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8)
-            | ((ccc.length > 2 ? ccc.charCodeAt(2) : 0)),
-        chars = [
-            b64chars.charAt( ord >>> 18),
-            b64chars.charAt((ord >>> 12) & 63),
-            padlen >= 2 ? '=' : b64chars.charAt((ord >>> 6) & 63),
-            padlen >= 1 ? '=' : b64chars.charAt(ord & 63)
-        ];
-        return chars.join('');
-    };
-    var btoa = global.btoa ? function(b) {
-        return global.btoa(b);
-    } : function(b) {
-        return b.replace(/[\s\S]{1,3}/g, cb_encode);
-    };
-    var _encode = function(u) {
-        var isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]';
-        return isUint8Array ? u.toString('base64')
-            : btoa(utob(String(u)));
-    };
-    var encode = function(u, urisafe) {
-        return !urisafe
-            ? _encode(u)
-            : _encode(String(u)).replace(/[+\/]/g, function(m0) {
-                return m0 == '+' ? '-' : '_';
-            }).replace(/=/g, '');
-    };
-    var encodeURI = function(u) { return encode(u, true) };
-    // decoder stuff
-    var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
-    var cb_btou = function(cccc) {
-        switch(cccc.length) {
-        case 4:
-            var cp = ((0x07 & cccc.charCodeAt(0)) << 18)
-                |    ((0x3f & cccc.charCodeAt(1)) << 12)
-                |    ((0x3f & cccc.charCodeAt(2)) <<  6)
-                |     (0x3f & cccc.charCodeAt(3)),
-            offset = cp - 0x10000;
-            return (fromCharCode((offset  >>> 10) + 0xD800)
-                    + fromCharCode((offset & 0x3FF) + 0xDC00));
-        case 3:
-            return fromCharCode(
-                ((0x0f & cccc.charCodeAt(0)) << 12)
-                    | ((0x3f & cccc.charCodeAt(1)) << 6)
-                    |  (0x3f & cccc.charCodeAt(2))
-            );
-        default:
-            return  fromCharCode(
-                ((0x1f & cccc.charCodeAt(0)) << 6)
-                    |  (0x3f & cccc.charCodeAt(1))
-            );
-        }
-    };
-    var btou = function(b) {
-        return b.replace(re_btou, cb_btou);
-    };
-    var cb_decode = function(cccc) {
-        var len = cccc.length,
-        padlen = len % 4,
-        n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0)
-            | (len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0)
-            | (len > 2 ? b64tab[cccc.charAt(2)] <<  6 : 0)
-            | (len > 3 ? b64tab[cccc.charAt(3)]       : 0),
-        chars = [
-            fromCharCode( n >>> 16),
-            fromCharCode((n >>>  8) & 0xff),
-            fromCharCode( n         & 0xff)
-        ];
-        chars.length -= [0, 0, 2, 1][padlen];
-        return chars.join('');
-    };
-    var _atob = global.atob ? function(a) {
-        return global.atob(a);
-    } : function(a){
-        return a.replace(/\S{1,4}/g, cb_decode);
-    };
-    var atob = function(a) {
-        return _atob(String(a).replace(/[^A-Za-z0-9\+\/]/g, ''));
-    };
-    var _decode = buffer ?
-        buffer.from && Uint8Array && buffer.from !== Uint8Array.from
-        ? function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : buffer.from(a, 'base64')).toString();
-        }
-        : function(a) {
-            return (a.constructor === buffer.constructor
-                    ? a : new buffer(a, 'base64')).toString();
-        }
-        : function(a) { return btou(_atob(a)) };
-    var decode = function(a){
-        return _decode(
-            String(a).replace(/[-_]/g, function(m0) { return m0 == '-' ? '+' : '/' })
-                .replace(/[^A-Za-z0-9\+\/]/g, '')
-        );
-    };
-    var noConflict = function() {
-        var Base64 = global.Base64;
-        global.Base64 = _Base64;
-        return Base64;
-    };
-    // export Base64
-    global.Base64 = {
-        VERSION: version,
-        atob: atob,
-        btoa: btoa,
-        fromBase64: decode,
-        toBase64: encode,
-        utob: utob,
-        encode: encode,
-        encodeURI: encodeURI,
-        btou: btou,
-        decode: decode,
-        noConflict: noConflict,
-        __buffer__: buffer
-    };
-    // if ES5 is available, make Base64.extendString() available
-    if (typeof Object.defineProperty === 'function') {
-        var noEnum = function(v){
-            return {value:v,enumerable:false,writable:true,configurable:true};
-        };
-        global.Base64.extendString = function () {
-            Object.defineProperty(
-                String.prototype, 'fromBase64', noEnum(function () {
-                    return decode(this)
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
                 }));
-            Object.defineProperty(
-                String.prototype, 'toBase64', noEnum(function (urisafe) {
-                    return encode(this, urisafe)
-                }));
-            Object.defineProperty(
-                String.prototype, 'toBase64URI', noEnum(function () {
-                    return encode(this, true)
-                }));
-        };
-    }
-    //
-    // export Base64 to the namespace
-    //
-    if (global['Meteor']) { // Meteor.js
-        Base64 = global.Base64;
-    }
-    // module.exports and AMD are mutually exclusive.
-    // module.exports has precedence.
-    if ( module.exports) {
-        module.exports.Base64 = global.Base64;
-    }
-    // that's it!
-    return {Base64: global.Base64}
-}));
-});
-var base64_1 = base64.Base64;
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
 
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1702,1002 +1942,126 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
-var BaiduSDK = /*#__PURE__*/function () {
-  function BaiduSDK() {
-    classCallCheck(this, BaiduSDK);
-
-    this.ajaxUrls = {
-      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
-      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
-      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
-      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
-    };
-  }
-
-  createClass(BaiduSDK, [{
-    key: "getToken",
-    value: function getToken() {
-      return http.get(this.ajaxUrls.URL_TOKEN, null, {
-        headers: {}
-      });
-    }
-  }, {
-    key: "CarVerify",
-    value: function () {
-      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
-        var self, res;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                self = this;
-                _context.next = 3;
-                return this.getToken();
-
-              case 3:
-                res = _context.sent;
-
-                if (!(res.code === 200)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                }));
-
-              case 6:
-                return _context.abrupt("return", Promise.reject(res));
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function CarVerify(_x) {
-        return _CarVerify.apply(this, arguments);
-      }
-
-      return CarVerify;
-    }()
-  }, {
-    key: "IdcardVerify",
-    value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
-        var res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context2.sent;
-
-                if (!(res.code === 200)) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function IdcardVerify(_x2) {
-        return _IdcardVerify.apply(this, arguments);
-      }
-
-      return IdcardVerify;
-    }()
-  }, {
-    key: "BankVerify",
-    value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
-        var res;
-        return regenerator.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context3.sent;
-
-                if (!(res.code === 200)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context3.abrupt("return", _context3.sent);
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function BankVerify(_x3) {
-        return _BankVerify.apply(this, arguments);
-      }
-
-      return BankVerify;
-    }()
-  }]);
-
-  return BaiduSDK;
-}();
-
-var OCR = {
-  Baidu: new BaiduSDK()
-};
-
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-  this.OCR = OCR;
-};
-
-var Utils$1 = new Utils();
-
-var ENV_URLS = {
-  development: 'http://crptdev.liuheco.com',
-  testing: 'https://gateway.crpt-cloud.liuheco.com',
-  production: 'https://crpt-cloud.oak.net.cn'
-};
-var baseUrl$1 = ENV_URLS["testing"];
-
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var whiteList$1 = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert$1 = false;
-
-function ajax$1(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
-
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
+function setRefreshHeaderInfo$1(successCallback, errorCallback) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  api.setRefreshHeaderInfo(_objectSpread$1({
+    // loadingImg: 'widget://image/refresh.png',
+    bgColor: 'rgba(0,0,0,0)',
+    textColor: '#bfbfbf',
+    textDown: '下拉刷新',
+    textUp: '松开刷新',
+    textLoading: '加载中...',
+    showTime: false
+  }, options), function (ret, error) {
+    if (error) {
+      errorCallback && errorCallback(error);
     } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    }
-
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList$1.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
-    api.ajax({
-      url: baseUrl$1 + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
-      certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
-
-      }
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
-
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          // 表单校验未过专属code
-          if (ret.code === 202) {
-            var _data = ret.data;
-            _data && Utils$1.UI.toast(_data[0].msg);
-            ret.msg && Utils$1.UI.toast(ret.msg);
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert$1) {
-            hasAlert$1 = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert$1 = false;
-              api.closeWin({
-                name: 'html/register/index'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/index'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
-
-          reject(error);
-        }
-
-        reject(error);
-      }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
-    });
-  });
-}
-
-var http$1 = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
-
-    return ajax$1('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
-
-    return ajax$1('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
-
-    return ajax$1('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
-
-    return ajax$1('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax$1('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  }
-};
-
-// 主题色
-var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
-
-var textColor = 'rgba(48,49,51,1)'; // 浅色底导航
-
-var navigationBarWhite = {
-  hideBackButton: false,
-  background: '#fff',
-  color: textColor,
-  shadow: 'transparent',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: themeMainColor,
-    iconPath: 'widget://image/back_green_big.png'
-  }]
-}; // 绿色底导航
-
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: themeMainColor,
-  color: '#fff',
-  shadow: 'transparent',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-};
-
-/**
- * themeMainColor 主题色
- * textColor 导航文字黑色
- * navigationBarWhite 浅色底导航
- * navigationBarGreen 绿色底导航
- */
-
-var routerMap = {
-  yjd_select_contract: {
-    name: 'yjd_select_contract',
-    title: '选择代养合同',
-    url: 'widget://html/yjd_select_contract/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_confirm: {
-    name: 'yjd_apply_confirm',
-    title: '申请贷款',
-    url: 'widget://html/yjd_apply_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_face_auth: {
-    name: 'yjd_face_auth',
-    title: '人脸识别',
-    url: 'widget://html/yjd_face_auth/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_send_msgcode: {
-    name: 'yjd_send_msgcode',
-    title: '短信验证',
-    url: 'widget://html/yjd_send_msgcode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    softInputMode: 'pan',
-    navigationBar: navigationBarWhite
-  },
-  yjd_hukouben_upload: {
-    name: 'yjd_hukouben_upload',
-    title: '上传户口本',
-    url: 'widget://html/yjd_hukouben_upload/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_status: {
-    name: 'yjd_apply_status',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_apply_result: {
-    name: 'yjd_apply_result',
-    title: '贷款申请',
-    url: 'widget://html/yjd_apply_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_loan_signing: {
-    name: 'yjd_loan_signing',
-    title: '贷款签约',
-    url: 'widget://html/yjd_loan_signing/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_signing_result: {
-    name: 'yjd_signing_result',
-    title: '签约结果',
-    url: 'widget://html/yjd_signing_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_account_open: {
-    name: 'yjd_account_open',
-    title: '开通新网账户',
-    url: 'widget://html/yjd_account_open/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  yjd_account_open_xinwang: {
-    name: 'yjd_account_open_xinwang',
-    title: '开通新网账户',
-    url: 'widget://html/yjd_account_open_xinwang/index.html',
-    bgColor: '#fff',
-    reload: true
-  },
-  // 押金贷产品详情
-  yjd_product_detail: {
-    name: 'yjd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/yjd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 贷款申请
-  loan_application: {
-    name: 'loan_application',
-    title: '待申请',
-    url: 'widget://html/loan_application/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 贷款确认
-  loan_confirm: {
-    name: 'loan_confirm',
-    title: '贷款确认',
-    url: 'widget://html/loan_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 押金贷贷款详情
-  yjd_loan_details: {
-    name: 'yjd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/yjd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 公用的贷款详情
-  loan_details: {
-    name: 'loan_details',
-    title: '贷款详情',
-    url: 'widget://html/loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款计划
-  repay_plan: {
-    name: 'repay_plan',
-    title: '还款计划',
-    url: 'widget://html/repay_plan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款记录
-  repay_record: {
-    name: 'repay_record',
-    title: '还款记录',
-    url: 'widget://html/repay_record/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷代养合同
-  yjd_contract_daiyang: {
-    name: 'yjd_contract_daiyang',
-    title: '代养合同',
-    url: 'widget://html/yjd_contract_daiyang/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 押金贷贷款合同
-  yjd_contract_loan: {
-    name: 'yjd_contract_loan',
-    title: '贷款合同',
-    url: 'widget://html/yjd_contract_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerHXDConfig = {
-  // 好销宝授信申请
-  hxd_apply: {
-    name: 'hxd_apply',
-    title: '产品介绍',
-    url: 'widget://html/hxd_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝授信申请补充企业信息
-  hxd_a_supply: {
-    name: 'hxd_a_supply',
-    title: '补充企业信息',
-    url: 'widget://html/hxd_a_supply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝授信申请成功/失败
-  hxd_a_success: {
-    name: 'hxd_a_success',
-    title: '产品开通',
-    url: 'widget://html/hxd_a_success/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarGreen
-  },
-  // 好销宝产品详情
-  hxd_product_detail: {
-    name: 'hxd_product_detail',
-    title: '产品详情',
-    url: 'widget://html/hxd_product_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝额度变化详情
-  hxd_quota: {
-    name: 'hxd_quota',
-    title: '额度变化详情',
-    url: 'widget://html/hxd_quota/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝用款申请
-  hxd_u_apply: {
-    name: 'hxd_u_apply',
-    title: '申请用款',
-    url: 'widget://html/hxd_u_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝用款确认
-  hxd_u_confirm: {
-    name: 'hxd_u_confirm',
-    title: '用款确认',
-    url: 'widget://html/hxd_u_confirm/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝用款确认
-  hxd_u_try_detail: {
-    name: 'hxd_u_try_detail',
-    title: '用款试算',
-    url: 'widget://html/hxd_u_try_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝用款校验
-  hxd_u_smscode: {
-    name: 'hxd_u_smscode',
-    title: '用款校验',
-    url: 'widget://html/hxd_u_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝用款结果
-  hxd_u_result: {
-    name: 'hxd_u_result',
-    title: '审核结果',
-    url: 'widget://html/hxd_u_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝还款试算
-  hxd_r_try: {
-    name: 'hxd_r_try',
-    title: '还款试算',
-    url: 'widget://html/hxd_r_try/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝还款试算详情页
-  hxd_r_try_detail: {
-    name: 'hxd_r_try_detail',
-    title: '还款试算详情',
-    url: 'widget://html/hxd_r_try_detail/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝还款校验页
-  hxd_r_smscode: {
-    name: 'hxd_r_smscode',
-    title: '还款校验',
-    url: 'widget://html/hxd_r_smscode/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝还款校验页
-  hxd_r_result: {
-    name: 'hxd_r_result',
-    title: '还款结果',
-    url: 'widget://html/hxd_r_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝金服开户申请
-  hxd_jf_apply: {
-    name: 'hxd_jf_apply',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_apply/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝金服开户成功页
-  hxd_jf_account: {
-    name: 'hxd_jf_account',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_account/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝金服开户企业补充信息
-  hxd_jf_enterprise: {
-    name: 'hxd_jf_enterprise',
-    title: '开通信息补充',
-    url: 'widget://html/hxd_jf_enterprise/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝金服开户结果
-  hxd_jf_result: {
-    name: 'hxd_jf_result',
-    title: '开户结果',
-    url: 'widget://html/hxd_jf_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝金服开户状态查看
-  hxd_jf_status: {
-    name: 'hxd_jf_status',
-    title: '转账还款通道',
-    url: 'widget://html/hxd_jf_status/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 好销宝贷款详情
-  hxd_loan_details: {
-    name: 'hxd_loan_details',
-    title: '贷款详情',
-    url: 'widget://html/hxd_loan_details/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-var routerConfig = {
-  // 消息中心
-  msgcenter: {
-    name: 'html/msgcenter/win',
-    title: '消息中心',
-    url: 'widget://html/msgcenter/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的账单
-  billlist: {
-    name: 'html/billlist/win',
-    title: '我的账单',
-    url: 'widget://html/billlist/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 账单详情
-  billdetails: {
-    name: 'html/billdetails/win',
-    title: '账单详情',
-    url: 'widget://html/billdetails/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 我的贷款
-  my_loan: {
-    name: 'html/my_loan/win',
-    title: '我的贷款',
-    url: 'widget://html/my_loan/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: false,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的额度
-  my_quota: {
-    name: 'html/my_quota/index',
-    title: '我的额度',
-    url: 'widget://html/my_quota/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 已开通的产品
-  my_product: {
-    name: 'my_product',
-    title: '我开通的产品',
-    url: 'widget://html/my_product/index.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 联系我们
-  contactus: {
-    name: 'html/contactus/win',
-    title: '联系我们',
-    url: 'widget://html/contactus/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarGreen
-  },
-  // 设置
-  settings: {
-    name: 'html/settings/win',
-    title: '设置',
-    url: 'widget://html/settings/win.html',
-    bgColor: '#fff',
-    reload: true,
-    bounces: true,
-    slidBackEnabled: true,
-    navigationBar: navigationBarWhite
-  },
-  // 我的钱包详情
-  wallet: {
-    name: 'wallet',
-    title: '希望钱包',
-    url: 'widget://html/wallet/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 通用产品列表
-  com_product_list: {
-    name: 'com_product_list',
-    title: '产品列表',
-    url: 'widget://html/com_product_list/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 合同页
-  agreement: {
-    name: 'agreement',
-    title: '查看合同',
-    url: 'widget://html/agreement/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款试算页面
-  com_repay_trial: {
-    name: 'com_repay_trial',
-    title: '还款试算',
-    url: 'widget://html/com_repay_trial/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // 还款结果页面
-  com_repay_result: {
-    name: 'com_repay_result',
-    title: '还款结果',
-    url: 'widget://html/com_repay_result/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  },
-  // pdf webview
-  pdf_agreement: {
-    name: 'pdf_agreement',
-    title: '查看合同',
-    url: 'widget://html/pdf_agreement/index.html',
-    bgColor: '#fff',
-    reload: true,
-    navigationBar: navigationBarWhite
-  }
-};
-
-function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
-
-function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var Router$1 = /*#__PURE__*/function () {
-  function Router() {
-    classCallCheck(this, Router);
-  }
-
-  createClass(Router, [{
-    key: "openPage",
-    // 打开window级别页面
-    value: function openPage(_ref) {
-      var key = _ref.key,
-          params = _ref.params;
-      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
-    }
-  }]);
-
-  return Router;
-}();
-
-var Router$2 = new Router$1();
-
-var timer = null;
-
-function getOpenAccountStatus(productId) {
-  http$1.get('/crpt-product/product/yjd/detail/' + productId).then(function (res) {
-    var openAccountStatus = String(res.data.openHopeAccountFlag);
-
-    if (res.code === 200 && openAccountStatus === '1') {
-      clearInterval(timer);
-      Router$2.openPage({
-        key: 'yjd_select_contract',
-        params: {
-          pageParam: {
-            productId: productId
-          }
-        }
-      });
+      successCallback && successCallback(ret);
     }
   });
 }
+
+// import './index.less'
 
 apiready = function apiready() {
-  var statusBar = document.querySelector('#status_bar');
-  $api.fixStatusBar(statusBar);
-  var offset = $api.offset(statusBar);
-
-  var _ref = api.pageParam || {},
-      url = _ref.url,
-      productId = _ref.productId;
-
-  api.openFrame({
-    name: 'yjd_account_open_xinwang_frm',
-    url: url,
-    // url: 'https://gateway.crpt-cloud.liuheco.com/crpt-h5/xw_callback/close',
-    rect: {
-      x: 0,
-      y: offset.h,
-      w: 'auto',
-      h: 'auto'
-    },
-    pageParam: {
-      productId: productId
-    },
-    progress: {
-      type: 'page' // 加载进度效果类型，默认值为 default，取值范围为 default|page，为 page 时，进度效果为仿浏览器类型，固定在页面的顶部
-      // title: '', // type 为 default 时显示的加载框标题，字符串类型
-      // text: '', // type 为 default 时显示的加载框内容，字符串类型
-      // color: '#45C01A', // type 为 page 时进度条的颜色，默认值为 #45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-      // height:  3, // type 为 page 时进度条高度，默认值为3，数字类型
-
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
     }
   });
-  timer = setInterval(function () {
-    getOpenAccountStatus(productId);
-  }, 3000);
+  var pageNo = 1;
+  var loading = false;
+
+  function getPageData(cb) {
+    if (loading) {
+      return;
+    }
+
+    loading = true;
+    http.get("/crpt-cust/product/openinglist/").then(function (res) {
+      loading = false;
+      api.refreshHeaderLoadDone();
+
+      if (res && res.data.length > 0) {
+        pageNo++;
+        cb(res.data);
+      } else if (pageNo === 1) {
+        api.toast({
+          msg: '无数据'
+        });
+      } else {
+        api.toast({
+          msg: '无更多数据'
+        });
+      }
+    })["catch"](function (error) {
+      loading = false;
+      api.refreshHeaderLoadDone();
+      alert(error);
+      api.toast({
+        msg: '数据加载失败'
+      });
+    });
+  }
+
+  function appendList(data) {
+    data.forEach(function (item, index) {
+      // $api.append($api.byId('list'), `
+      //   <li tapmode data-id="${item.productId || ''}">
+      //     <div class="t">
+      //       <div class="logo logo-${index % 2}">${item.productName ? item.productName.slice(0, 1) : ''}</div>
+      //       <div class="desc">
+      //           <strong>${item.productName || '***'}</strong>
+      //           <div class="b">
+      //               开通时间 ${item.openDate || ''}
+      //           </div>
+      //       </div>
+      //     </div>
+      //     <span class="bank">${item.bankName || '***'}（${item.account || '***'}）</span>
+      //   </li>
+      // `)
+      $api.append($api.byId('list'), "\n        <li tapmode data-id=\"".concat(item.productId || '', "\">\n          <div class=\"t\">\n            <div class=\"logo logo-").concat(index % 2, "\">").concat(item.productName ? item.productName.slice(0, 1) : '', "</div>\n            <div class=\"desc\">\n                <strong>").concat(item.productName || '***', "</strong>\n                <div class=\"b\">\n                    \u5F00\u901A\u65F6\u95F4 ").concat(item.openDate || '', "\n                </div>\n            </div>\n          </div>\n        </li>\n      "));
+    });
+  }
+
+  function refresh() {
+    pageNo = 1;
+    getPageData(function (data) {
+      $api.byId('list').innerHTML = '';
+      appendList(data);
+    });
+  }
+
+  setRefreshHeaderInfo$1(function (ret, err) {
+    refresh();
+  });
+  api.refreshHeaderLoading();
+
+  document.querySelector('#list').onclick = function (event) {
+    var li = $api.closest(event.target, 'li');
+
+    if (!li) {
+      return;
+    }
+
+    var id = li.dataset.id;
+
+    if (id) {
+      openProductDetails({
+        id: id,
+        open: 1 // 1 已开通， 0未开通
+
+      });
+    } else {
+      api.toast({
+        msg: 'id 不存在'
+      });
+    }
+  };
+
+  document.querySelector('#contactus').onclick = function (event) {
+    openContactUs();
+  };
 };

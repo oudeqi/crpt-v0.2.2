@@ -1,8 +1,8 @@
-import '../../../app.css'
+// import './index.less'
 import './win.less'
 
-import { openProductDetails, openContactUs } from '../../../webview.js'
-import { http, setRefreshHeaderInfo } from '../../../config.js'
+import { openProductDetails, openContactUs } from '../../webview.js'
+import { http, setRefreshHeaderInfo } from '../../config.js'
 
 apiready = function () {
   api.addEventListener({

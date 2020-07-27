@@ -21,7 +21,7 @@ const page = new Vue({
       'billlist', // 我的账单
       'my_loan', // 我的贷款
       'my_quota', // 我的额度
-      'myproduct', // 已开通的产品
+      'my_product', // 已开通的产品
       'contactus', // 联系我们
       'settings', // 设置
       'wallet' // 我的钱包
