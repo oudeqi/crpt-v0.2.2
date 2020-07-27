@@ -36,6 +36,18 @@ class Service {
     })
   }
 
+  static getContract (type = 2) {
+    return http.get(`/crpt-biz/biz/fund/protocol/query/${type}`)
+  }
+
+  static docx2html(id) {
+    return http.get('/crpt-file/file/docx2html?id=' + id)
+  }
+
+  static pdf2html(id) {
+    return http.get(`/crpt-file/file/pdf2html?pdfFileId=${id}`)
+  }
+
 }
 
 const initSeconds = 60
@@ -57,7 +69,8 @@ function vmInit () {
         },
         cardName: '', // 银行卡开户行名称（ocr返回）
         uniqueCode: '', // 预签约唯一码（发送短信验证码返回）
-        pageParam: api.pageParam || {}
+        pageParam: api.pageParam || {},
+        contractList: [] // 合同列表
       }
     },
     computed: {
@@ -66,9 +79,72 @@ function vmInit () {
       }
     },
     mounted: function () {
-      
+      this.initPage()
     },
     methods: {
+
+      async initPage () {
+        api.showProgress({ title: '数据加载中...', text: '' })
+        await this.__getContract()
+        api.hideProgress()
+      },
+
+      async __getContract () {
+        try {
+          const res = await Service.getContract()
+          this.contractList = res.data || []
+          api.refreshHeaderLoadDone()
+        } catch (e) {
+          api.toast({ msg: e.msg || '获取协议失败', location: 'middle' })
+          api.refreshHeaderLoadDone()
+        }
+      },
+
+      handleContractClick (record) {
+        // isReadLimit 是否强制阅读   1：是   0：否
+        let countdown = null
+        if (String(record.isReadLimit) === '1') {
+          countdown = {
+            desc: '同意',
+            seconds: 8,
+          }
+        }
+        api.showProgress({ title: '合同加载中...', text: '' })
+        Service.docx2html(record.protocolFileId).then(res => {
+          api.hideProgress()
+          if (res.code === 200) {
+            $api.setStorage('yjd-loan-contract', res.data.fileName)
+            this.openDialog({
+              title: record.fileName,
+              countdown
+            })
+          } else {
+            $api.setStorage('yjd-loan-contract', '')
+            api.toast({ msg: res.msg || '合同加载失败', location: 'middle' })
+          }
+        }).catch(e => {
+          api.hideProgress()
+          $api.setStorage('yjd-loan-contract', '')
+          api.toast({ msg: e.msg || '合同加载失败', location: 'middle' })
+        })
+      },
+
+      openDialog ({title, countdown}) {
+        api.openFrame({
+          reload: true,
+          name: 'dialog',
+          bounces: false,
+          bgColor: 'rgba(0,0,0,0)',
+          url: 'widget://html/yjd_account_open/contract-msg.html',
+          rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+          },
+          pageParam: { title, countdown }
+        })
+      },
 
       selectPicture () {
         let btns = ['相机', '相册']

@@ -1,6 +1,7 @@
 import '../../../app.css'
 import './index.css'
 
+import numeral from 'numeral'
 // outCode, // 代养合同编号
 // payee, // 收款方
 // signedDate, // 签订日期
@@ -17,6 +18,7 @@ function vmInit () {
       }
     },
     methods: {
+      numeral: numeral,
       
     }
   })

@@ -69,26 +69,9 @@ html, body {
   }
 }
 
-.contract {
+.app_agreement {
   margin-top: 20px;
-  display: flex;
-  align-items: flex-start;
   padding: 0 12px;
-  input {
-    margin-right: 12px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .contract-txt {
-    flex-grow: 1;
-    font-size:14px;
-    color:rgba(144,147,153,1);
-    line-height:20px;
-    strong {
-      color: #66BB6A;
-      display: inline;
-    }
-  }
 }
 
 .btn-box {

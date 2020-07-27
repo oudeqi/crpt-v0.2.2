@@ -1,0 +1,14 @@
+.contract-content {
+  padding: 12px;
+  overflow: hidden;
+  * {
+    white-space: normal !important;
+    word-break: break-all;
+    word-wrap: break-word;
+    box-sizing: border-box;
+  }
+  span {
+    display: inline !important;
+  }
+}
+

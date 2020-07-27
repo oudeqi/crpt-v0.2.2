@@ -54,7 +54,7 @@ function vmInit () {
     },
     computed: {
       orderId: function () {
-        return this.pageParam.id
+        return this.pageParam.orderId
       },
       orderNo: function () {
         return this.pageParam.orderNo
@@ -84,7 +84,7 @@ function vmInit () {
         let url = this.url[this.status]
         try {
           let res = await http.get(`${url}?orderId=${orderId}`)
-          this.data = res.data
+          this.data = res.data || {}
         } catch (error) {
           api.toast({ msg: error.msg || '请求发生错误', location: 'middle' })
         }
@@ -101,12 +101,14 @@ function vmInit () {
       },
 
       openLoanContract () {
-        let orderNo = this.orderNo
-        Router.openPage({ key: 'yjd_contract_loan', params: {pageParam: { orderNo }}})
+        Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
+          type: 'pdf',
+          id: this.data.contractId
+        }}})
       },
 
       openDaiyangContract () {
-        let data = this.data
+        let data = this.data || {}
         let {
           outCode, // 代养合同编号
           payee, // 收款方
@@ -115,7 +117,7 @@ function vmInit () {
           receivedBond, // 已收保证金
           surplusReceivableBond, // 剩余应收保证金
         } = data
-        Router.openPage({ key: key, params: {pageParam: {
+        Router.openPage({ key: 'yjd_contract_daiyang', params: {pageParam: {
           outCode,
           payee,
           signedDate,

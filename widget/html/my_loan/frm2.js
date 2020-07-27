@@ -3920,7 +3920,8 @@ function vmInit() {
             params: {
               pageParam: {
                 orderId: orderId,
-                orderNo: orderNo
+                orderNo: orderNo,
+                status: 'invalid'
               }
             }
           });

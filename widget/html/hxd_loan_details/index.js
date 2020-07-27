@@ -3792,7 +3792,7 @@ function vmInit() {
 
                 case 4:
                   res = _context3.sent;
-                  _this3.data = res.data;
+                  _this3.data = res.data || {};
                   _context3.next = 11;
                   break;
 
