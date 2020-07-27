@@ -2529,10 +2529,10 @@ var routerConfig = {
     navigationBar: navigationBarGreen
   },
   // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
+  my_product: {
+    name: 'my_product',
     title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
+    url: 'widget://html/my_product/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
@@ -2678,7 +2678,7 @@ var page = new Vue({
     'billlist', // 我的账单
     'my_loan', // 我的贷款
     'my_quota', // 我的额度
-    'myproduct', // 已开通的产品
+    'my_product', // 已开通的产品
     'contactus', // 联系我们
     'settings', // 设置
     'wallet' // 我的钱包

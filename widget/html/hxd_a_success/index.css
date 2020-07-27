@@ -243,8 +243,10 @@ html, body {
 .header .icon .plogo {
   width: 65px;
   height: 65px;
-  background: #ffffff;
   border-radius: 50%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../image/default/product_def.png);
 }
 .header .icon .below {
   width: 32px;

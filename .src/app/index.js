@@ -81,7 +81,6 @@ class App {
     // Router.openPage({key: 'yjd_select_contract', params: {pageParam: { url, productId }}})
     // openIDcardInfo()
     // return
-    
     // saveDeviceMes()
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {

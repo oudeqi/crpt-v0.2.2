@@ -41,29 +41,13 @@ apiready = function () {
     title: '查看合同',
     useWKWebView: true,
     fixedOn: 'ui_window',
+    scaleEnabled: true,
     rect: {
       marginLeft: 0,    //相对父页面左外边距的距离，数字类型
       marginTop: 0,     //相对父页面上外边距的距离，数字类型
       marginBottom: 0,  //相对父页面下外边距的距离，数字类型
       marginRight: 0,   //相对父页面右外边距的距离，数字类型
-      // x: 0,
-      // y: h,
-      // w: 'auto',
-      // h: 'auto'
     }
   });
-  // const page = new Vue({
-  //   el: '#app',
-  //   data: {
-
-  //   },
-  //   methods: {
-
-
-  //   },
-  //   mounted() {
-
-  //   }
-  // })
 
 }

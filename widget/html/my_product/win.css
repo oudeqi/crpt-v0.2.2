@@ -1,0 +1,101 @@
+html, body {
+  background: #f5f5f5;
+}
+ul {
+  padding: 0 15px;
+}
+li {
+  background: #fff;
+  margin-top: 15px;
+  border-radius: 5px;
+  padding: 10px;
+}
+.t {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 11px;
+}
+.t .logo {
+  width: 48px;
+  height: 48px;
+  background: #66bb6a;
+  font-size: 30px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+  line-height: 48px;
+  border-radius: 50%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  margin-right: 16px;
+}
+.t .logo.logo-1 {
+  background: #4a90e2;
+}
+.t .desc {
+  height: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.t .desc strong {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #303133;
+}
+.t .desc .b {
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+}
+.bank {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #909399;
+  margin-top: 16px;
+}
+.contactus {
+  background: rgba(102, 187, 106, 0.1);
+  border-radius: 13px;
+  border: 1px solid #66bb6a;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100px;
+  height: 26px;
+  margin: 120px auto 94px;
+}
+.contactus .contactus-btn {
+  font-size: 14px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #66bb6a;
+}

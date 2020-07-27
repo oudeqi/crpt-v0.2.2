@@ -2610,10 +2610,10 @@ var routerConfig = {
     navigationBar: navigationBarGreen
   },
   // 已开通的产品
-  myproduct: {
-    name: 'html/myproduct/win',
+  my_product: {
+    name: 'my_product',
     title: '我开通的产品',
-    url: 'widget://html/myproduct/win.html',
+    url: 'widget://html/my_product/index.html',
     bgColor: '#fff',
     reload: true,
     bounces: true,
