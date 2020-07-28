@@ -3939,7 +3939,7 @@ function vmInit() {
                   res = _context4.sent;
                   api.refreshHeaderLoadDone();
                   _this4.loading = false;
-                  _this4.total = res.data.count;
+                  _this4.total = res.data.applyCount;
                   _this4.totalSum = res.data.totalAmount;
 
                   if (res.data.list && res.data.list.length > 0) {

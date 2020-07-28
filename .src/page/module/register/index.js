@@ -1,11 +1,24 @@
 import '../../../app.css'
 import './index.css'
 
-import { openAgreement } from '../../../webview.js'
 import {
   http, loginSuccessCallback, appLogin,
   getNodeProtocolFromStorage, getProtocolFromNode
 } from '../../../config.js'
+import Router from '../../../router'
+
+class Service {
+
+  static getPDFId (id) {
+    return http.post(`/crpt-file/file/wordRelaceBookmark`, {
+      body: {
+        wordFileId: id,
+        businessKey: 'registrationAgreement'
+      }
+    })
+  }
+
+}
 
 apiready = function() {
 
@@ -61,11 +74,25 @@ apiready = function() {
     $api.byId('agreement').innerHTML = tpl.join('')
   }
 
+  async function showContract (id) {
+    api.showProgress({ title: '协议加载中...', text: '', modal: true })
+    try {
+      let res = await Service.getPDFId(id)
+      Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
+        type: 'pdf',
+        id: res.data.unsignContractFileId
+      }}})
+    } catch (e) {
+      api.toast({ msg: e.msg || '获取PDF文件失败', location: 'middle' })
+    }
+    api.hideProgress()
+  }
+
   showProtocol(1) // protocolType 1-个人，2-企业，3-通用
   document.querySelector('#agreement').onclick = (e) => {
     let strong = $api.closest(e.target, 'li')
     if (strong) {
-      openAgreement(strong.dataset.id, strong.dataset.name)
+      showContract(strong.dataset.id)
     }
   }
 

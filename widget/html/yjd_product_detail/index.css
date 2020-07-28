@@ -463,6 +463,9 @@ input, textarea {
 html, body {
   background: #efefef;
 }
+.container {
+  padding-bottom: 100px;
+}
 .header {
   display: -webkit-box;
   display: -ms-flexbox;

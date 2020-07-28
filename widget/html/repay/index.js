@@ -3921,11 +3921,12 @@ function vmInit() {
             repayStatus = record.repayStatus,
             productName = record.productName,
             planId = record.planId,
-            repayResult = record.repayResult;
+            repayResult = record.repayResult,
+            ifRepay = record.ifRepay;
 
         if (String(orderType) === '4') {
           // 押金贷
-          if (String(repayResult) !== '1') {
+          if (String(repayResult) !== '1' && String(ifRepay) === '1') {
             Router$1.openPage({
               key: 'com_repay_trial',
               params: {
@@ -3934,6 +3935,16 @@ function vmInit() {
                   planId: planId
                 }
               }
+            });
+          } else if (String(repayResult) !== '1' && String(ifRepay) === '0') {
+            api.toast({
+              msg: '押金贷贷款当日不能提前还款',
+              location: 'middle'
+            });
+          } else {
+            api.toast({
+              msg: '押金贷款还款中，请耐心等待',
+              location: 'middle'
             });
           }
         } else if (String(orderType) === '1') {

@@ -2537,7 +2537,8 @@ var Service = /*#__PURE__*/function () {
     value: function getPDFId(id) {
       return http.post("/crpt-file/file/wordRelaceBookmark", {
         body: {
-          wordFileId: id
+          wordFileId: id,
+          businessKey: 'threeCreditReporting'
         }
       });
     }
@@ -2643,7 +2644,7 @@ apiready = function apiready() {
               api.showProgress({
                 title: '协议加载中...',
                 text: '',
-                modal: false
+                modal: true
               });
               agreement = nodes[0];
               _context.prev = 15;

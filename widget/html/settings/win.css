@@ -338,7 +338,6 @@ html, body {
   background: #fff;
 }
 .btn-box {
-  padding: 30px;
   height: 54px;
   background: #ffffff;
   width: 100vw;
@@ -360,8 +359,8 @@ html, body {
   color: #66bb6a;
 }
 .active {
-  position: relative;
-  top: -1px;
+  padding-top: 1px;
+  padding-left: 1px;
 }
 li {
   display: -webkit-box;

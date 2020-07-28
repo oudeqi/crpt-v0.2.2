@@ -166,11 +166,12 @@ apiready = function () {
     })
   }
   controller.renderNav()
-  controller.renderProduct()
+  // controller.renderProduct()
   
   setRefreshHeaderInfo((ret, err) => {
     controller.renderNav()
-    controller.renderProduct()
+    api.refreshHeaderLoadDone()
+    // controller.renderProduct()
   })
 
   // api.setTabLayoutAttr({

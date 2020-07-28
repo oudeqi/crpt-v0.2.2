@@ -100,7 +100,7 @@ function vmInit() {
           let res = await http.get(`/crpt-order/order/list/currentuser?pageSize=${pageSize}&pageNo=${pageNo}`)
           api.refreshHeaderLoadDone()
           this.loading = false
-          this.total = res.data.count
+          this.total = res.data.applyCount
           this.totalSum = res.data.totalAmount
           if (res.data.list && res.data.list.length > 0) {
             this.more = 'hasMore'

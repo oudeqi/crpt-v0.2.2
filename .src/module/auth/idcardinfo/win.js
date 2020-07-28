@@ -14,11 +14,12 @@ class Service {
   static getPDFId (id) {
     return http.post(`/crpt-file/file/wordRelaceBookmark`, {
       body: {
-        wordFileId: id
+        wordFileId: id,
+        businessKey: 'threeCreditReporting'
       }
     })
-    
   }
+
 }
 
 apiready = function() {
@@ -74,7 +75,7 @@ apiready = function() {
       api.toast({ msg: '协议不存在', location: 'middle' })
       return
     }
-    api.showProgress({ title: '协议加载中...', text: '', modal: false })
+    api.showProgress({ title: '协议加载中...', text: '', modal: true })
     let agreement = nodes[0]
     try {
       let res = await Service.getPDFId(agreement.protocolFileId)
