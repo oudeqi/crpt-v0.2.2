@@ -43,7 +43,8 @@
           
           
           <span v-if="String(item.orderType) === '4' && String(item.repayResult) === '1'" :class="['card-btn', 'disabled']">还款中</span>
-          <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1'" class="['card-btn']">去还款</span>
+          <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1' && String(item.ifRepay) === '1'" :class="['card-btn']">去还款</span>
+          <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1' && String(item.ifRepay) === '0'" :class="['card-btn', 'disabled']">去还款</span>
           <span @click="repay(item)" v-else :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>
         </div>
       </div>

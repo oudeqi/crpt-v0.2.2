@@ -109,10 +109,14 @@ function vmInit () {
       },
 
       repay (record) {
-        let { loanId, orderType, repayStatus, productName, planId } = record
+        let { loanId, orderType, repayStatus, productName, planId, repayResult, ifRepay } = record
         if (String(orderType) === '4') { // 押金贷
-          if (String(repayResult) !== '1') {
+          if (String(repayResult) !== '1' && String(ifRepay) === '1') {
             Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
+          } else if (String(repayResult) !== '1' && String(ifRepay) === '0') {
+            api.toast({ msg: '押金贷贷款当日不能提前还款', location: 'middle' })
+          } else {
+            api.toast({ msg: '押金贷款还款中，请耐心等待', location: 'middle' })
           }
         } else if (String(orderType) === '1') { // 好销宝
           if (String(repayStatus) === '8') {

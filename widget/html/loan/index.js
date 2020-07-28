@@ -3767,7 +3767,7 @@ function vmInit() {
         var productId = this.hxd.productId;
 
         if (creditStatus === 0 || creditStatus === 1) {
-          // 未申请 立即开通 // 已受理 继续开通
+          // 未申请 立即申请 // 已受理 继续申请
           if (this.userinfo.userType === '1') {
             // 个人用户
             Router$1.openPage({
@@ -3939,7 +3939,7 @@ function vmInit() {
                   res = _context4.sent;
                   api.refreshHeaderLoadDone();
                   _this4.loading = false;
-                  _this4.total = res.data.count;
+                  _this4.total = res.data.applyCount;
                   _this4.totalSum = res.data.totalAmount;
 
                   if (res.data.list && res.data.list.length > 0) {

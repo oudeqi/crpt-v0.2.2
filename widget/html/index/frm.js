@@ -3892,11 +3892,11 @@ apiready = function apiready() {
     });
   };
 
-  controller.renderNav();
-  controller.renderProduct();
+  controller.renderNav(); // controller.renderProduct()
+
   setRefreshHeaderInfo$1(function (ret, err) {
     controller.renderNav();
-    controller.renderProduct();
+    api.refreshHeaderLoadDone(); // controller.renderProduct()
   }); // api.setTabLayoutAttr({
   //   hideNavigationBar: true
   // })

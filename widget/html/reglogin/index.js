@@ -2088,6 +2088,7 @@ var PageController = /*#__PURE__*/function (_Service) {
                   if (res.data.count > 0) {
                     saveProtocolToStorage(res.data.list);
                   } else {
+                    saveProtocolToStorage([]);
                     api.toast({
                       msg: '没有获取到协议',
                       location: 'middle'
@@ -2095,18 +2096,19 @@ var PageController = /*#__PURE__*/function (_Service) {
                   }
                 }
 
-                _context.next = 10;
+                _context.next = 11;
                 break;
 
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
+                saveProtocolToStorage([]);
                 api.toast({
                   msg: _context.t0.msg || '获取协议失败',
                   location: 'middle'
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }

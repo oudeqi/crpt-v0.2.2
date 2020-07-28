@@ -2,7 +2,7 @@ import './index.less'
 import http from '../../http'
 import Utils from '../../utils'
 import Router from '../../router'
-import { openProductDetails, openContactUs } from '../../webview.js'
+import { openProductDetails } from '../../webview.js'
 
 apiready = function () {
   api.addEventListener({

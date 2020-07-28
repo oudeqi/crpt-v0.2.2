@@ -8,6 +8,7 @@ let timer = null
 function getOpenAccountStatus (productId) {
   http.get('/crpt-product/product/yjd/detail/' + productId).then(res => {
     const openAccountStatus = String(res.data.openHopeAccountFlag)
+    // 是否开通新网账户标记  1：已开通   0：未开通
     if (res.code === 200 && openAccountStatus === '1') {
       clearInterval(timer)
       Router.openPage({

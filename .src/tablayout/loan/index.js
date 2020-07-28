@@ -50,7 +50,7 @@ function vmInit() {
       handleHXDClick() {
         let creditStatus = this.hxd.creditStatus
         let productId = this.hxd.productId
-        if (creditStatus === 0 || creditStatus === 1) { // 未申请 立即开通 // 已受理 继续开通
+        if (creditStatus === 0 || creditStatus === 1) { // 未申请 立即申请 // 已受理 继续申请
           if (this.userinfo.userType === '1') { // 个人用户
             Router.openPage({ key: 'hxd_apply', params: { pageParam: { productId } } })
           } else if (this.userinfo.userType === '2') { // 企业用户
@@ -100,7 +100,7 @@ function vmInit() {
           let res = await http.get(`/crpt-order/order/list/currentuser?pageSize=${pageSize}&pageNo=${pageNo}`)
           api.refreshHeaderLoadDone()
           this.loading = false
-          this.total = res.data.count
+          this.total = res.data.applyCount
           this.totalSum = res.data.totalAmount
           if (res.data.list && res.data.list.length > 0) {
             this.more = 'hasMore'
