@@ -775,6 +775,20 @@ function _asyncToGenerator(fn) {
 
 var asyncToGenerator = _asyncToGenerator;
 
+var AppDrawer = {
+  template: "\n    <div class=\"full-mask\" @click=\"onMaskClick\">\n      <div class=\"drawer\">\n        <div class=\"drawer-content\">\n          <slot></slot>\n        </div>\n        <div class=\"drawer-close\" @click=\"onClick\"></div>\n      </div>\n    </div>\n  ",
+  methods: {
+    onClick: function onClick() {
+      this.$emit('on-close');
+    },
+    onMaskClick: function onMaskClick(e) {
+      if (e.target.className.includes('dialog-mask')) {
+        this.$emit('update:show', false);
+      }
+    }
+  }
+};
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -2077,98 +2091,1015 @@ var http$1 = {
   }
 };
 
-var service = {
-  postConfirmOrders: function postConfirmOrders(params) {
-    return http$1.post("/crpt-order/order/hxd/query/confirm/warehouse/order/list", {
-      body: params
-    });
-  },
-  postApply: function postApply(params) {
-    return http$1.post("/crpt-credit/credit/hxd/apply/warehouse/order/list", {
-      body: params
-    }, {
-      timeout: 60
-    });
-  },
-  postQueryApply: function postQueryApply(params) {
-    return http$1.post("/crpt-credit/credit/hxd/query/warehouse/order/apply/info", {
-      body: params
-    });
-  },
-  postContractList: function postContractList() {
-    return http$1.post("/crpt-credit/credit/hxd/query/prepay/warehouse/contract/list", {
-      body: params
-    });
-  }
-};
-
-/**
- * @author Sunning
- * 存放部分方法
+var numeral = createCommonjsModule(function (module) {
+/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
  */
-var filter = {
-  /**
-   * @author Sunning
-   * 数字格式化为千分位   1000 ==> 1,000
-   * @param {Object} s 要格式化的数字
-   * @param {Object} n 保留几位小数
-   */
-  formatNumber: function formatNumber(s, n) {
-    if (s === '-' || !s) {
-      return '-';
-    } else {
-      if (n === 0) {
-        return (s || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      } else {
-        n = n > 0 && n <= 20 ? n : 2;
-        s = parseFloat(Number((s + '').toString().replace(/[^\d\\.-]/g, ''))).toFixed(n) + '';
-        var positive = s.toString().split('-');
-        var l;
-        var r;
 
-        if (positive.length > 1) {
-          l = positive[1].split('.')[0].split('').reverse();
-          r = positive[1].split('.')[1];
+(function (global, factory) {
+    if ( module.exports) {
+        module.exports = factory();
+    } else {
+        global.numeral = factory();
+    }
+}(commonjsGlobal, function () {
+    /************************************
+        Variables
+    ************************************/
+
+    var numeral,
+        _,
+        VERSION = '2.0.6',
+        formats = {},
+        locales = {},
+        defaults = {
+            currentLocale: 'en',
+            zeroFormat: null,
+            nullFormat: null,
+            defaultFormat: '0,0',
+            scalePercentBy100: true
+        },
+        options = {
+            currentLocale: defaults.currentLocale,
+            zeroFormat: defaults.zeroFormat,
+            nullFormat: defaults.nullFormat,
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
+        };
+
+
+    /************************************
+        Constructors
+    ************************************/
+
+    // Numeral prototype object
+    function Numeral(input, number) {
+        this._input = input;
+
+        this._value = number;
+    }
+
+    numeral = function(input) {
+        var value,
+            kind,
+            unformatFunction,
+            regexp;
+
+        if (numeral.isNumeral(input)) {
+            value = input.value();
+        } else if (input === 0 || typeof input === 'undefined') {
+            value = 0;
+        } else if (input === null || _.isNaN(input)) {
+            value = null;
+        } else if (typeof input === 'string') {
+            if (options.zeroFormat && input === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                for (kind in formats) {
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+
+                    if (regexp && input.match(regexp)) {
+                        unformatFunction = formats[kind].unformat;
+
+                        break;
+                    }
+                }
+
+                unformatFunction = unformatFunction || numeral._.stringToNumber;
+
+                value = unformatFunction(input);
+            }
         } else {
-          l = s.split('.')[0].split('').reverse();
-          r = s.split('.')[1];
+            value = Number(input)|| null;
         }
 
-        var t = '';
+        return new Numeral(input, value);
+    };
 
-        for (var i = 0; i < l.length; i++) {
-          t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
+    // version number
+    numeral.version = VERSION;
+
+    // compare numeral object
+    numeral.isNumeral = function(obj) {
+        return obj instanceof Numeral;
+    };
+
+    // helper functions
+    numeral._ = _ = {
+        // formats numbers separators, decimals places, signs, abbreviations
+        numberToFormat: function(value, format, roundingFunction) {
+            var locale = locales[numeral.options.currentLocale],
+                negP = false,
+                optDec = false,
+                leadingCount = 0,
+                abbr = '',
+                trillion = 1000000000000,
+                billion = 1000000000,
+                million = 1000000,
+                thousand = 1000,
+                decimal = '',
+                neg = false,
+                abbrForce, // force abbreviation
+                abs,
+                int,
+                precision,
+                signed,
+                thousands,
+                output;
+
+            // make sure we never format a null value
+            value = value || 0;
+
+            abs = Math.abs(value);
+
+            // see if we should use parentheses for negative number or if we should prefix with a sign
+            // if both are present we default to parentheses
+            if (numeral._.includes(format, '(')) {
+                negP = true;
+                format = format.replace(/[\(|\)]/g, '');
+            } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
+                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
+                format = format.replace(/[\+|\-]/g, '');
+            }
+
+            // see if abbreviation is wanted
+            if (numeral._.includes(format, 'a')) {
+                abbrForce = format.match(/a(k|m|b|t)?/);
+
+                abbrForce = abbrForce ? abbrForce[1] : false;
+
+                // check for space before abbreviation
+                if (numeral._.includes(format, ' a')) {
+                    abbr = ' ';
+                }
+
+                format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
+
+                if (abs >= trillion && !abbrForce || abbrForce === 't') {
+                    // trillion
+                    abbr += locale.abbreviations.trillion;
+                    value = value / trillion;
+                } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
+                    // billion
+                    abbr += locale.abbreviations.billion;
+                    value = value / billion;
+                } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
+                    // million
+                    abbr += locale.abbreviations.million;
+                    value = value / million;
+                } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
+                    // thousand
+                    abbr += locale.abbreviations.thousand;
+                    value = value / thousand;
+                }
+            }
+
+            // check for optional decimals
+            if (numeral._.includes(format, '[.]')) {
+                optDec = true;
+                format = format.replace('[.]', '.');
+            }
+
+            // break number and format
+            int = value.toString().split('.')[0];
+            precision = format.split('.')[1];
+            thousands = format.indexOf(',');
+            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
+
+            if (precision) {
+                if (numeral._.includes(precision, '[')) {
+                    precision = precision.replace(']', '');
+                    precision = precision.split('[');
+                    decimal = numeral._.toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                } else {
+                    decimal = numeral._.toFixed(value, precision.length, roundingFunction);
+                }
+
+                int = decimal.split('.')[0];
+
+                if (numeral._.includes(decimal, '.')) {
+                    decimal = locale.delimiters.decimal + decimal.split('.')[1];
+                } else {
+                    decimal = '';
+                }
+
+                if (optDec && Number(decimal.slice(1)) === 0) {
+                    decimal = '';
+                }
+            } else {
+                int = numeral._.toFixed(value, 0, roundingFunction);
+            }
+
+            // check abbreviation again after rounding
+            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+                int = String(Number(int) / 1000);
+
+                switch (abbr) {
+                    case locale.abbreviations.thousand:
+                        abbr = locale.abbreviations.million;
+                        break;
+                    case locale.abbreviations.million:
+                        abbr = locale.abbreviations.billion;
+                        break;
+                    case locale.abbreviations.billion:
+                        abbr = locale.abbreviations.trillion;
+                        break;
+                }
+            }
+
+
+            // format number
+            if (numeral._.includes(int, '-')) {
+                int = int.slice(1);
+                neg = true;
+            }
+
+            if (int.length < leadingCount) {
+                for (var i = leadingCount - int.length; i > 0; i--) {
+                    int = '0' + int;
+                }
+            }
+
+            if (thousands > -1) {
+                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
+            }
+
+            if (format.indexOf('.') === 0) {
+                int = '';
+            }
+
+            output = int + decimal + (abbr ? abbr : '');
+
+            if (negP) {
+                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
+            } else {
+                if (signed >= 0) {
+                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
+                } else if (neg) {
+                    output = '-' + output;
+                }
+            }
+
+            return output;
+        },
+        // unformats numbers separators, decimals places, signs, abbreviations
+        stringToNumber: function(string) {
+            var locale = locales[options.currentLocale],
+                stringOriginal = string,
+                abbreviations = {
+                    thousand: 3,
+                    million: 6,
+                    billion: 9,
+                    trillion: 12
+                },
+                abbreviation,
+                value,
+                regexp;
+
+            if (options.zeroFormat && string === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                value = 1;
+
+                if (locale.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                }
+
+                for (abbreviation in abbreviations) {
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+
+                    if (stringOriginal.match(regexp)) {
+                        value *= Math.pow(10, abbreviations[abbreviation]);
+                        break;
+                    }
+                }
+
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                // remove non numbers
+                string = string.replace(/[^0-9\.]+/g, '');
+
+                value *= Number(string);
+            }
+
+            return value;
+        },
+        isNaN: function(value) {
+            return typeof value === 'number' && isNaN(value);
+        },
+        includes: function(string, search) {
+            return string.indexOf(search) !== -1;
+        },
+        insert: function(string, subString, start) {
+            return string.slice(0, start) + subString + string.slice(start);
+        },
+        reduce: function(array, callback /*, initialValue*/) {
+            if (this === null) {
+                throw new TypeError('Array.prototype.reduce called on null or undefined');
+            }
+
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+
+            var t = Object(array),
+                len = t.length >>> 0,
+                k = 0,
+                value;
+
+            if (arguments.length === 3) {
+                value = arguments[2];
+            } else {
+                while (k < len && !(k in t)) {
+                    k++;
+                }
+
+                if (k >= len) {
+                    throw new TypeError('Reduce of empty array with no initial value');
+                }
+
+                value = t[k++];
+            }
+            for (; k < len; k++) {
+                if (k in t) {
+                    value = callback(value, t[k], k, t);
+                }
+            }
+            return value;
+        },
+        /**
+         * Computes the multiplier necessary to make x >= 1,
+         * effectively eliminating miscalculations caused by
+         * finite precision.
+         */
+        multiplier: function (x) {
+            var parts = x.toString().split('.');
+
+            return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
+        },
+        /**
+         * Given a variable number of arguments, returns the maximum
+         * multiplier that must be used to normalize an operation involving
+         * all of them.
+         */
+        correctionFactor: function () {
+            var args = Array.prototype.slice.call(arguments);
+
+            return args.reduce(function(accum, next) {
+                var mn = _.multiplier(next);
+                return accum > mn ? accum : mn;
+            }, 1);
+        },
+        /**
+         * Implementation of toFixed() that treats floats more like decimals
+         *
+         * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
+         * problems for accounting- and finance-related software.
+         */
+        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+            var splitValue = value.toString().split('.'),
+                minDecimals = maxDecimals - (optionals || 0),
+                boundedPrecision,
+                optionalsRegExp,
+                power,
+                output;
+
+            // Use the smallest precision value possible to avoid errors from floating point representation
+            if (splitValue.length === 2) {
+              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+            } else {
+              boundedPrecision = minDecimals;
+            }
+
+            power = Math.pow(10, boundedPrecision);
+
+            // Multiply up by precision, round accurately, then divide and use native toFixed():
+            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+
+            if (optionals > maxDecimals - boundedPrecision) {
+                optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
+                output = output.replace(optionalsRegExp, '');
+            }
+
+            return output;
+        }
+    };
+
+    // avaliable options
+    numeral.options = options;
+
+    // avaliable formats
+    numeral.formats = formats;
+
+    // avaliable formats
+    numeral.locales = locales;
+
+    // This function sets the current locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    numeral.locale = function(key) {
+        if (key) {
+            options.currentLocale = key.toLowerCase();
         }
 
-        var result = t.split('').reverse().join('') + '.' + r;
-        if (positive.length > 1) result = '-' + result;
-        return result;
-      }
-    }
-  },
+        return options.currentLocale;
+    };
 
-  /**
-   * author: Sunning
-   * 将数字格式化为千分位
-   * @param {Object} value 需要转化的数字
-   */
-  toThousands: function toThousands(value) {
-    if (value === '' || value === undefined || value === null) {
-      return '';
-    }
+    // This function provides access to the loaded locale data.  If
+    // no arguments are passed in, it will simply return the current
+    // global locale object.
+    numeral.localeData = function(key) {
+        if (!key) {
+            return locales[options.currentLocale];
+        }
 
-    value = String(value); // 强制转化为转化为字符串
+        key = key.toLowerCase();
 
-    var isDecimal = value.split('.');
+        if (!locales[key]) {
+            throw new Error('Unknown locale : ' + key);
+        }
 
-    if (isDecimal.length === 1) {
-      // 如果长度为1表示没有小数，否则表示有小数
-      return this.formatNumber(value, 0);
-    } else {
-      return this.formatNumber(isDecimal[0], 0) + '.' + isDecimal[1];
-    }
-  }
-};
+        return locales[key];
+    };
+
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
+        }
+    };
+
+    numeral.zeroFormat = function(format) {
+        options.zeroFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.nullFormat = function (format) {
+        options.nullFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.defaultFormat = function(format) {
+        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    };
+
+    numeral.register = function(type, name, format) {
+        name = name.toLowerCase();
+
+        if (this[type + 's'][name]) {
+            throw new TypeError(name + ' ' + type + ' already registered.');
+        }
+
+        this[type + 's'][name] = format;
+
+        return format;
+    };
+
+
+    numeral.validate = function(val, culture) {
+        var _decimalSep,
+            _thousandSep,
+            _currSymbol,
+            _valArray,
+            _abbrObj,
+            _thousandRegEx,
+            localeData,
+            temp;
+
+        //coerce val to string
+        if (typeof val !== 'string') {
+            val += '';
+
+            if (console.warn) {
+                console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
+            }
+        }
+
+        //trim whitespaces from either sides
+        val = val.trim();
+
+        //if val is just digits return true
+        if (!!val.match(/^\d+$/)) {
+            return true;
+        }
+
+        //if val is empty return false
+        if (val === '') {
+            return false;
+        }
+
+        //get the decimal and thousands separator from numeral.localeData
+        try {
+            //check if the culture is understood by numeral. if not, default it to current locale
+            localeData = numeral.localeData(culture);
+        } catch (e) {
+            localeData = numeral.localeData(numeral.locale());
+        }
+
+        //setup the delimiters and currency symbol based on culture/locale
+        _currSymbol = localeData.currency.symbol;
+        _abbrObj = localeData.abbreviations;
+        _decimalSep = localeData.delimiters.decimal;
+        if (localeData.delimiters.thousands === '.') {
+            _thousandSep = '\\.';
+        } else {
+            _thousandSep = localeData.delimiters.thousands;
+        }
+
+        // validating currency symbol
+        temp = val.match(/^[^\d]+/);
+        if (temp !== null) {
+            val = val.substr(1);
+            if (temp[0] !== _currSymbol) {
+                return false;
+            }
+        }
+
+        //validating abbreviation symbol
+        temp = val.match(/[^\d]+$/);
+        if (temp !== null) {
+            val = val.slice(0, -1);
+            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+                return false;
+            }
+        }
+
+        _thousandRegEx = new RegExp(_thousandSep + '{2}');
+
+        if (!val.match(/[^\d.,]/g)) {
+            _valArray = val.split(_decimalSep);
+            if (_valArray.length > 2) {
+                return false;
+            } else {
+                if (_valArray.length < 2) {
+                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
+                } else {
+                    if (_valArray[0].length === 1) {
+                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    } else {
+                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
+
+
+    /************************************
+        Numeral Prototype
+    ************************************/
+
+    numeral.fn = Numeral.prototype = {
+        clone: function() {
+            return numeral(this);
+        },
+        format: function(inputString, roundingFunction) {
+            var value = this._value,
+                format = inputString || options.defaultFormat,
+                kind,
+                output,
+                formatFunction;
+
+            // make sure we have a roundingFunction
+            roundingFunction = roundingFunction || Math.round;
+
+            // format based on value
+            if (value === 0 && options.zeroFormat !== null) {
+                output = options.zeroFormat;
+            } else if (value === null && options.nullFormat !== null) {
+                output = options.nullFormat;
+            } else {
+                for (kind in formats) {
+                    if (format.match(formats[kind].regexps.format)) {
+                        formatFunction = formats[kind].format;
+
+                        break;
+                    }
+                }
+
+                formatFunction = formatFunction || numeral._.numberToFormat;
+
+                output = formatFunction(value, format, roundingFunction);
+            }
+
+            return output;
+        },
+        value: function() {
+            return this._value;
+        },
+        input: function() {
+            return this._input;
+        },
+        set: function(value) {
+            this._value = Number(value);
+
+            return this;
+        },
+        add: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+
+            function cback(accum, curr, currI, O) {
+                return accum + Math.round(corrFactor * curr);
+            }
+
+            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
+
+            return this;
+        },
+        subtract: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+
+            function cback(accum, curr, currI, O) {
+                return accum - Math.round(corrFactor * curr);
+            }
+
+            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+
+            return this;
+        },
+        multiply: function(value) {
+            function cback(accum, curr, currI, O) {
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
+            }
+
+            this._value = _.reduce([this._value, value], cback, 1);
+
+            return this;
+        },
+        divide: function(value) {
+            function cback(accum, curr, currI, O) {
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
+            }
+
+            this._value = _.reduce([this._value, value], cback);
+
+            return this;
+        },
+        difference: function(value) {
+            return Math.abs(numeral(this._value).subtract(value).value());
+        }
+    };
+
+    /************************************
+        Default Locale && Format
+    ************************************/
+
+    numeral.register('locale', 'en', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function(number) {
+            var b = number % 10;
+            return (~~(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    });
+
+    
+
+(function() {
+        numeral.register('format', 'bps', {
+            regexps: {
+                format: /(BPS)/,
+                unformat: /(BPS)/
+            },
+            format: function(value, format, roundingFunction) {
+                var space = numeral._.includes(format, ' BPS') ? ' ' : '',
+                    output;
+
+                value = value * 10000;
+
+                // check for space before BPS
+                format = format.replace(/\s?BPS/, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + 'BPS');
+
+                    output = output.join('');
+                } else {
+                    output = output + space + 'BPS';
+                }
+
+                return output;
+            },
+            unformat: function(string) {
+                return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
+            }
+        });
+})();
+
+
+(function() {
+        var decimal = {
+            base: 1000,
+            suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        },
+        binary = {
+            base: 1024,
+            suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+        };
+
+    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+            return decimal.suffixes.indexOf(item) < 0;
+        }));
+        var unformatRegex = allSuffixes.join('|');
+        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
+        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
+
+    numeral.register('format', 'bytes', {
+        regexps: {
+            format: /([0\s]i?b)/,
+            unformat: new RegExp(unformatRegex)
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                bytes = numeral._.includes(format, 'ib') ? binary : decimal,
+                suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
+                power,
+                min,
+                max;
+
+            // check for space before
+            format = format.replace(/\s?i?b/, '');
+
+            for (power = 0; power <= bytes.suffixes.length; power++) {
+                min = Math.pow(bytes.base, power);
+                max = Math.pow(bytes.base, power + 1);
+
+                if (value === null || value === 0 || value >= min && value < max) {
+                    suffix += bytes.suffixes[power];
+
+                    if (min > 0) {
+                        value = value / min;
+                    }
+
+                    break;
+                }
+            }
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + suffix;
+        },
+        unformat: function(string) {
+            var value = numeral._.stringToNumber(string),
+                power,
+                bytesMultiplier;
+
+            if (value) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                    if (numeral._.includes(string, decimal.suffixes[power])) {
+                        bytesMultiplier = Math.pow(decimal.base, power);
+
+                        break;
+                    }
+
+                    if (numeral._.includes(string, binary.suffixes[power])) {
+                        bytesMultiplier = Math.pow(binary.base, power);
+
+                        break;
+                    }
+                }
+
+                value *= (bytesMultiplier || 1);
+            }
+
+            return value;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'currency', {
+        regexps: {
+            format: /(\$)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                symbols = {
+                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
+                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                },
+                output,
+                symbol,
+                i;
+
+            // strip format of spaces and $
+            format = format.replace(/\s?\$\s?/, '');
+
+            // format the number
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            // update the before and after based on value
+            if (value >= 0) {
+                symbols.before = symbols.before.replace(/[\-\(]/, '');
+                symbols.after = symbols.after.replace(/[\-\)]/, '');
+            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+                symbols.before = '-' + symbols.before;
+            }
+
+            // loop through each before symbol
+            for (i = 0; i < symbols.before.length; i++) {
+                symbol = symbols.before[i];
+
+                switch (symbol) {
+                    case '$':
+                        output = numeral._.insert(output, locale.currency.symbol, i);
+                        break;
+                    case ' ':
+                        output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
+                        break;
+                }
+            }
+
+            // loop through each after symbol
+            for (i = symbols.after.length - 1; i >= 0; i--) {
+                symbol = symbols.after[i];
+
+                switch (symbol) {
+                    case '$':
+                        output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                        break;
+                    case ' ':
+                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
+                        break;
+                }
+            }
+
+
+            return output;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'exponential', {
+        regexps: {
+            format: /(e\+|e-)/,
+            unformat: /(e\+|e-)/
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
+                parts = exponential.split('e');
+
+            format = format.replace(/e[\+|\-]{1}0/, '');
+
+            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
+
+            return output + 'e' + parts[1];
+        },
+        unformat: function(string) {
+            var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
+                value = Number(parts[0]),
+                power = Number(parts[1]);
+
+            power = numeral._.includes(string, 'e-') ? power *= -1 : power;
+
+            function cback(accum, curr, currI, O) {
+                var corrFactor = numeral._.correctionFactor(accum, curr),
+                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+                return num;
+            }
+
+            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'ordinal', {
+        regexps: {
+            format: /(o)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                output,
+                ordinal = numeral._.includes(format, ' o') ? ' ' : '';
+
+            // check for space before
+            format = format.replace(/\s?o/, '');
+
+            ordinal += locale.ordinal(value);
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + ordinal;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'percentage', {
+        regexps: {
+            format: /(%)/,
+            unformat: /(%)/
+        },
+        format: function(value, format, roundingFunction) {
+            var space = numeral._.includes(format, ' %') ? ' ' : '',
+                output;
+
+            if (numeral.options.scalePercentBy100) {
+                value = value * 100;
+            }
+
+            // check for space before %
+            format = format.replace(/\s?\%/, '');
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            if (numeral._.includes(output, ')')) {
+                output = output.split('');
+
+                output.splice(-1, 0, space + '%');
+
+                output = output.join('');
+            } else {
+                output = output + space + '%';
+            }
+
+            return output;
+        },
+        unformat: function(string) {
+            var number = numeral._.stringToNumber(string);
+            if (numeral.options.scalePercentBy100) {
+                return number * 0.01;
+            }
+            return number;
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('format', 'time', {
+        regexps: {
+            format: /(:)/,
+            unformat: /(:)/
+        },
+        format: function(value, format, roundingFunction) {
+            var hours = Math.floor(value / 60 / 60),
+                minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+
+            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        },
+        unformat: function(string) {
+            var timeArray = string.split(':'),
+                seconds = 0;
+
+            // turn hours and minutes into seconds and add them all up
+            if (timeArray.length === 3) {
+                // hours
+                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+                // minutes
+                seconds = seconds + (Number(timeArray[1]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[2]);
+            } else if (timeArray.length === 2) {
+                // minutes
+                seconds = seconds + (Number(timeArray[0]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[1]);
+            }
+            return Number(seconds);
+        }
+    });
+})();
+
+return numeral;
+}));
+});
 
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
@@ -2739,7 +3670,7 @@ var Router$1 = /*#__PURE__*/function () {
 
 var Router$2 = new Router$1();
 
-var service$1 = {
+var service = {
   postSendSMSCode: function postSendSMSCode(params) {
     return http$1.post("/crpt-credit/credit/hxd/check/warehouse/order/list/amount", {
       body: params
@@ -2759,43 +3690,49 @@ var service$1 = {
   }
 };
 
-apiready = function apiready() {
-  var pageParam = api.pageParam || {};
-  api.addEventListener({
-    name: 'navitembtn'
-  }, function (ret, err) {
-    if (ret.type === 'left') {
-      api.closeWin();
-    }
-  }); // api.closeWin({
-  //   name: 'hxd_u_apply'
-  // })
-
-  var page = new Vue({
+function vmInit() {
+  var pageParam = api.pageParam;
+  return new Vue({
     el: '#app',
-    data: {
-      // status: 1,
-      isFolder: true,
-      isShowPop: false,
-      amount: '',
-      needApplyAmount: '',
-      warehouseOrderlist: [{}],
-      agreements: [],
-      successList: [],
-      failList: [],
-      errorCount: 0,
-      hasApply: false,
-      processStatus: 1,
-      maxErrorRetry: 20,
-      status: pageParam.status || 11,
-      // 用来区分是从单条入库单列表进来，还是从正常流程进来
-      filter: filter
+    components: {
+      'app-drawer': AppDrawer
+    },
+    data: function data() {
+      return {
+        // status: 1,
+        agreements: pageParam.agreements,
+        successList: pageParam.successList,
+        failList: pageParam.failList,
+        orderIds: pageParam.orderIds // isFolder: true,
+        // isShowPop: false,
+        // amount: '',
+        // needApplyAmount: '',
+        // warehouseOrderlist: [{}],
+        // agreements: [],
+        // successList: [],
+        // failList: [],
+        // errorCount: 0,
+        // hasApply: false,
+        // processStatus: 1,
+        // maxErrorRetry: 20,
+        // status: pageParam.status || 11, // 用来区分是从单条入库单列表进来，还是从正常流程进来
+        // pageSize: 100,
+        // pageNo: 1,
+        // total: '*',
+        // list: [],
+        // loading: false,
+        // more: 'noData', // hasMore,noMore,noData
+
+      };
+    },
+    mounted: function mounted() {// console.log(this.id)
     },
     methods: {
-      handleFolder: function handleFolder() {
-        this.isFolder = !this.isFolder;
+      numeral: numeral,
+      handleDisagree: function handleDisagree() {
+        this.onClose();
       },
-      handleGetConfirmOrders: function handleGetConfirmOrders() {
+      handleAgree: function handleAgree() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
@@ -2804,246 +3741,54 @@ apiready = function apiready() {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _context.prev = 0;
-                  Utils$1.UI.showLoading('查询中');
-                  _context.next = 4;
-                  return service.postConfirmOrders({
-                    warehouseOrderNos: JSON.parse(pageParam.warehouseOrderNos),
-                    status: String(_this.status),
-                    amount: pageParam.amount
-                  });
+                  if (!(_this.agreements.length < 1)) {
+                    _context.next = 3;
+                    break;
+                  }
 
-                case 4:
+                  Utils$1.UI.toast('服务异常');
+                  return _context.abrupt("return");
+
+                case 3:
+                  Utils$1.UI.showLoading('提交中');
+                  _context.prev = 4;
+                  _context.next = 7;
+                  return service.postSendSMSCode();
+
+                case 7:
                   res = _context.sent;
 
                   if (res.code === 200) {
-                    _this.warehouseOrderlist = res.data.warehouseOrderlist;
-                    _this.needApplyAmount = res.data.amount;
-                    _this.amount = filter.toThousands(res.data.amount);
-                    _this.processStatus = res.data.warehouseOrderlist[0].processStatus;
+                    Utils$1.UI.hideLoading();
+                    Router$2.openPage({
+                      key: 'hxd_u_smscode',
+                      params: {
+                        pageParam: {
+                          phone: res.data.phone,
+                          orderIds: JSON.stringify(_this.successList.map(function (item) {
+                            return item.orderId;
+                          })),
+                          successList: JSON.stringify(_this.successList || []),
+                          failList: JSON.stringify(_this.failList || [])
+                        }
+                      }
+                    });
                   }
 
-                  _context.next = 11;
+                  _context.next = 14;
                   break;
 
-                case 8:
-                  _context.prev = 8;
-                  _context.t0 = _context["catch"](0);
-
-                  if (_context.t0.msg) {
-                    Utils$1.UI.toast(_context.t0.msg);
-                  }
-
                 case 11:
+                  _context.prev = 11;
+                  _context.t0 = _context["catch"](4);
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 8]]);
-        }))();
-      },
-      handleOpenPop: function handleOpenPop() {
-        this.isShowPop = true;
-      },
-      handleBtnClickConfirm: function handleBtnClickConfirm() {
-        var _this2 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var res;
-          return regenerator.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  Utils$1.UI.showLoading('正在提交');
-
-                  if (!(_this2.processStatus === 1)) {
-                    _context2.next = 16;
-                    break;
-                  }
-
-                  _context2.prev = 2;
-                  _context2.next = 5;
-                  return service.postApply({
-                    productId: pageParam.productId,
-                    applyAmount: _this2.needApplyAmount,
-                    orderIds: _this2.warehouseOrderlist.map(function (item) {
-                      return item.orderId;
-                    })
-                  });
-
-                case 5:
-                  res = _context2.sent;
-
-                  if (res.code === 200) {
-                    // 申请提交成功，开始轮询金服返回结果
-                    _this2.processStatus = res.data.successList[0].processStatus;
-
-                    _this2.handlePollingPostApply();
-                  } else {
-                    Utils$1.UI.hideLoading();
-                  }
-
-                  _context2.next = 14;
-                  break;
-
-                case 9:
-                  _context2.prev = 9;
-                  _context2.t0 = _context2["catch"](2);
-
-                  if (_context2.t0.msg) {
-                    Utils$1.UI.toast("".concat(_context2.t0.code, ": ").concat(_context2.t0.msg));
-                  }
-
-                  _this2.handleGetConfirmOrders();
-
-                  Utils$1.UI.hideLoading();
-
-                case 14:
-                  _context2.next = 17;
-                  break;
-
-                case 16:
-                  _this2.handlePollingPostApply();
-
-                case 17:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, null, [[2, 9]]);
-        }))();
-      },
-      // 轮询金服结果
-      handlePollingPostApply: function handlePollingPostApply() {
-        var _this3 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
-          var res, successFlag;
-          return regenerator.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.prev = 0;
-                  _context3.next = 3;
-                  return service.postQueryApply({
-                    orderIds: _this3.warehouseOrderlist.map(function (item) {
-                      return item.orderId;
-                    })
-                  });
-
-                case 3:
-                  res = _context3.sent;
-
-                  if (res.code === 200) {
-                    successFlag = res.data.successFlag; //  1: 轮询单条或全部成功已返回结果
-
-                    if (successFlag === 1) {
-                      // 更新successList，并join failList
-                      _this3.successList = res.data.successList;
-                      _this3.failList = _this3.failList.concat(res.data.failList); // todo 弹起合同弹框，查询合同
-                      // this.handleOpenPop()
-                      // const orderIds = this.successList.map((item, i) => {
-                      //   return item.orderId
-                      // })
-
-                      Utils$1.UI.hideLoading();
-                      _this3.agreements = res.data.successList;
-
-                      _this3.handleOpenAgreementFrame(); // this.handlePostContractList(orderIds)
-
-                    } else if (successFlag === 0) {
-                      // 0: 继续轮询
-                      setTimeout(function () {
-                        _this3.handlePollingPostApply();
-                      }, 1000);
-                    } else {
-                      // 2: 全部失败 终止轮询 跳到结果失败页
-                      Utils$1.UI.hideLoading();
-                      setTimeout(function () {
-                        Router$2.openPage({
-                          key: 'hxd_u_result',
-                          params: {
-                            pageParam: {
-                              // orderIds: this.successList.map((item) => item.orderId) || [],
-                              successList: JSON.stringify(_this3.successList || []),
-                              failList: JSON.stringify(_this3.failList || [])
-                            }
-                          }
-                        });
-                      }, 50);
-                    }
-                  }
-
-                  _context3.next = 10;
-                  break;
-
-                case 7:
-                  _context3.prev = 7;
-                  _context3.t0 = _context3["catch"](0);
-
-                  // 如果服务本身报错或响应超时，只允许retry 5次
-                  if (_this3.errorCount <= _this3.maxErrorRetry) {
-                    _this3.handlePollingPostApply();
-
-                    _this3.errorCount = _this3.errorCount + 1;
-                  } else {
-                    Utils$1.UI.hideLoading();
-                    Utils$1.UI.toast('查询超时');
-                  }
-
-                case 10:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3, null, [[0, 7]]);
-        }))();
-      },
-      // 查询合同
-      // async handlePostContractList(orderIds) {
-      //   try {
-      //     const res = await service.postContractList({
-      //       orderIds
-      //     })
-      //     if (res.code === 200) {
-      //       this.agreements = res.data
-      //     }
-      //   } catch (error) {
-      //     if (error.msg) {
-      //       Utils.UI.toast(error.msg)
-      //     }
-      //   }
-      // },
-      handleClosePop: function handleClosePop() {
-        this.isShowPop = false;
-      },
-      handleToUseTry: function handleToUseTry() {
-        var _this4 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
-          return regenerator.wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  Router$2.openPage({
-                    key: 'hxd_u_try_detail',
-                    params: {
-                      pageParam: {
-                        productId: pageParam.productId,
-                        needApplyAmount: _this4.needApplyAmount
-                      }
-                    }
-                  });
-
-                case 1:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
+          }, _callee, null, [[4, 11]]);
         }))();
       },
       handleToAgreement: function handleToAgreement(id) {
@@ -3057,110 +3802,15 @@ apiready = function apiready() {
           }
         });
       },
-      handleAgree: function handleAgree() {
-        var _this5 = this;
-
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee5() {
-          var res;
-          return regenerator.wrap(function _callee5$(_context5) {
-            while (1) {
-              switch (_context5.prev = _context5.next) {
-                case 0:
-                  if (!(_this5.agreements.length < 1)) {
-                    _context5.next = 3;
-                    break;
-                  }
-
-                  Utils$1.UI.toast('服务异常');
-                  return _context5.abrupt("return");
-
-                case 3:
-                  Utils$1.UI.showLoading('提交中');
-                  _context5.prev = 4;
-                  _context5.next = 7;
-                  return service$1.postSendSMSCode();
-
-                case 7:
-                  res = _context5.sent;
-
-                  if (res.code === 200) {
-                    Utils$1.UI.hideLoading();
-                    Router$2.openPage({
-                      key: 'hxd_u_smscode',
-                      params: {
-                        pageParam: {
-                          phone: res.data.phone,
-                          orderIds: JSON.stringify(_this5.successList.map(function (item) {
-                            return item.orderId;
-                          })),
-                          successList: JSON.stringify(_this5.successList || []),
-                          failList: JSON.stringify(_this5.failList || [])
-                        }
-                      }
-                    });
-                  }
-
-                  _context5.next = 14;
-                  break;
-
-                case 11:
-                  _context5.prev = 11;
-                  _context5.t0 = _context5["catch"](4);
-                  Utils$1.UI.hideLoading();
-
-                case 14:
-                case "end":
-                  return _context5.stop();
-              }
-            }
-          }, _callee5, null, [[4, 11]]);
-        }))();
-      },
-      handleDisagree: function handleDisagree() {
-        this.isShowPop = false;
-      },
-      handleOpenAgreementFrame: function handleOpenAgreementFrame() {
-        api.openFrame({
-          reload: true,
-          name: 'hxd_u_confirm_frm',
-          bounces: false,
-          bgColor: 'rgba(0,0,0,0)',
-          url: 'widget://html/hxd_u_confirm/frm.html',
-          rect: {
-            x: 0,
-            y: 0,
-            w: 'auto',
-            h: 'auto'
-          },
-          pageParam: {
-            // id: orderNo,
-            // date: loanInPocketTime,
-            // money: loanAmount,
-            agreements: this.agreements,
-            successList: this.successList,
-            orderIds: this.successList,
-            failList: this.failList
-          }
+      onClose: function onClose() {
+        api.closeFrame({
+          name: 'hxd_u_confirm_frm'
         });
       }
-    },
-    mounted: function mounted() {
-      var _this6 = this;
-
-      this.handleGetConfirmOrders();
-      Utils$1.UI.setRefreshHeaderInfo({
-        success: function success() {
-          _this6.handleGetConfirmOrders();
-
-          _this6.useAmount = '';
-          setTimeout(function () {
-            api.refreshHeaderLoadDone();
-          }, 0);
-        },
-        fail: function fail() {
-          api.refreshHeaderLoadDone();
-        }
-      });
     }
   });
+}
+
+apiready = function apiready() {
+  var vm = vmInit();
 };

@@ -70,9 +70,9 @@
           <span>业务单号：{{item.orderNo || ''}}</span>
         </div>
         <!-- // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加 -->
-        <div v-if="(item.status === 1 || item.status === 2) && item.orderType === 1" class="item-row4">
+        <!-- <div v-if="(item.status === 1 || item.status === 2) && item.orderType === 1" class="item-row4">
           <div class="btn cancel" @click="handleCancel(item)">取消</div>
-        </div>
+        </div> -->
       </li>
     </ul>
     

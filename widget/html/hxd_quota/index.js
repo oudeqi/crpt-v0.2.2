@@ -2520,6 +2520,22 @@ var filter = {
   }
 };
 
+var filterDict = function filterDict(type) {
+  var Obj = {};
+  var sendJson = {
+    type: type,
+    valid: 1
+  };
+  return http.post('/crpt-biz/dict/codelist', {
+    body: sendJson
+  }).then(function (res) {
+    res.data.map(function (item) {
+      Obj[item.code] = item.name;
+    });
+    return Obj;
+  });
+};
+
 var ENV_URLS = {
   development: 'http://crptdev.liuheco.com',
   testing: 'https://gateway.crpt-cloud.liuheco.com',
@@ -2734,10 +2750,12 @@ apiready = function apiready() {
 
   var page = new Vue({
     el: '#app',
-    data: defineProperty({
+    data: {
       productTotalLimit: pageParam.productTotalLimit,
-      list: []
-    }, "productTotalLimit", pageParam.productTotalLimit),
+      list: [],
+      // productTotalLimit: pageParam.productTotalLimit,
+      amountOperateTypeMap: {}
+    },
     methods: {
       handleGetChangeList: function handleGetChangeList() {
         var _this = this;
@@ -2751,11 +2769,16 @@ apiready = function apiready() {
                   _context.prev = 0;
                   Utils$1.UI.showLoading('加载中');
                   _context.next = 4;
+                  return filterDict('amountOperateType');
+
+                case 4:
+                  _this.amountOperateTypeMap = _context.sent;
+                  _context.next = 7;
                   return service.getChangeList({
                     productId: pageParam.productId
                   });
 
-                case 4:
+                case 7:
                   res = _context.sent;
 
                   if (res.code === 200) {
@@ -2767,7 +2790,7 @@ apiready = function apiready() {
 
                       if (len === 1) {
                         return {
-                          opType: '额度提升',
+                          opType: _this.amountOperateTypeMap[item.opType],
                           changeDate: _this.getNowFormatDate(d),
                           limitAmount: filter.toThousands(item.limitAmount),
                           showYear: d.getFullYear(),
@@ -2775,7 +2798,7 @@ apiready = function apiready() {
                         };
                       } else {
                         return {
-                          opType: '额度提升',
+                          opType: _this.amountOperateTypeMap[item.opType],
                           changeDate: _this.getNowFormatDate(d),
                           limitAmount: filter.toThousands(item.limitAmount),
                           showYear: isNotFirstItem && d.getFullYear() !== prevD.getFullYear() ? d.getFullYear() : '',
@@ -2785,26 +2808,26 @@ apiready = function apiready() {
                     });
                   }
 
-                  _context.next = 11;
+                  _context.next = 14;
                   break;
 
-                case 8:
-                  _context.prev = 8;
+                case 11:
+                  _context.prev = 11;
                   _context.t0 = _context["catch"](0);
 
                   if (_context.t0.msg) {
                     Utils$1.UI.toast(_context.t0.msg);
                   }
 
-                case 11:
+                case 14:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 15:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 8]]);
+          }, _callee, null, [[0, 11]]);
         }))();
       },
       getNowFormatDate: function getNowFormatDate(date) {

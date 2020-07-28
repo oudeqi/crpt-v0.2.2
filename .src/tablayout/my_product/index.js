@@ -25,7 +25,7 @@ apiready = function () {
       handleClickToPage({ type, id }) {
         switch (type) {
           // 1-信用贷款 2-担保贷款 3-上游入库单贷款
-          // 好销贷跳往好销贷产品授信简介
+          // 好销宝跳往好销宝产品授信简介
           case 3:
             Router.openPage({
               key: 'hxd_apply',

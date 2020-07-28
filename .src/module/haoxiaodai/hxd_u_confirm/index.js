@@ -43,7 +43,7 @@ apiready = function () {
       async handleGetConfirmOrders() {
         // let ids = ['1280041840938172417', '1280032548025647106']
         try {
-          Utils.UI.showLoading('查询中')   
+          Utils.UI.showLoading('查询中')
           const res = await service.postConfirmOrders({
             warehouseOrderNos: JSON.parse(pageParam.warehouseOrderNos),
             status: String(this.status),
@@ -67,7 +67,7 @@ apiready = function () {
       },
       async handleBtnClickConfirm() {
         Utils.UI.showLoading('正在提交')
-        if(this.processStatus === 1) {
+        if (this.processStatus === 1) {
           try {
             const res = await service.postApply({
               productId: pageParam.productId,
@@ -88,7 +88,7 @@ apiready = function () {
             this.handleGetConfirmOrders()
             Utils.UI.hideLoading()
           }
-        }else {
+        } else {
           this.handlePollingPostApply()
         }
       },
@@ -107,12 +107,15 @@ apiready = function () {
               this.failList = this.failList.concat(res.data.failList)
 
               // todo 弹起合同弹框，查询合同
-              this.handleOpenPop()
-              const orderIds = this.successList.map((item, i) => {
-                return item.orderId
-              })
+              // this.handleOpenPop()
+              // const orderIds = this.successList.map((item, i) => {
+              //   return item.orderId
+              // })
               Utils.UI.hideLoading()
               this.agreements = res.data.successList
+
+              this.handleOpenAgreementFrame()
+              
               // this.handlePostContractList(orderIds)
             } else if (successFlag === 0) {
               // 0: 继续轮询
@@ -148,20 +151,20 @@ apiready = function () {
         }
       },
       // 查询合同
-      async handlePostContractList(orderIds) {
-        try {
-          const res = await service.postContractList({
-            orderIds
-          })
-          if (res.code === 200) {
-            this.agreements = res.data
-          }
-        } catch (error) {
-          if (error.msg) {
-            Utils.UI.toast(error.msg)
-          }
-        }
-      },
+      // async handlePostContractList(orderIds) {
+      //   try {
+      //     const res = await service.postContractList({
+      //       orderIds
+      //     })
+      //     if (res.code === 200) {
+      //       this.agreements = res.data
+      //     }
+      //   } catch (error) {
+      //     if (error.msg) {
+      //       Utils.UI.toast(error.msg)
+      //     }
+      //   }
+      // },
       handleClosePop() {
         this.isShowPop = false
       },
@@ -216,6 +219,30 @@ apiready = function () {
       },
       handleDisagree() {
         this.isShowPop = false
+      },
+      handleOpenAgreementFrame() {
+        api.openFrame({
+          reload: true,
+          name: 'hxd_u_confirm_frm',
+          bounces: false,
+          bgColor: 'rgba(0,0,0,0)',
+          url: 'widget://html/hxd_u_confirm/frm.html',
+          rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+          },
+          pageParam: {
+            // id: orderNo,
+            // date: loanInPocketTime,
+            // money: loanAmount,
+            agreements: this.agreements,
+            successList: this.successList,
+            orderIds: this.successList,
+            failList: this.failList,
+          }
+        })
       }
     },
     mounted() {
