@@ -53,7 +53,7 @@
             // repayResult 押金贷专用字段 还款结果，1 等待中，2 成功，3 失败
             // ifRepay 押金贷专用字段 是否可以还款，1是，0否
            -->
-          <span v-if="String(item.orderType) === '4' && String(item.repayResult) === '1'" :class="['card-btn', 'disabled']">还款中</span>
+          <span @click="repay(item)" v-if="String(item.orderType) === '4' && String(item.repayResult) === '1'" :class="['card-btn', 'disabled']">还款中</span>
           <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1' && String(item.ifRepay) === '1'" :class="['card-btn']">去还款</span>
           <span @click="repay(item)" v-else-if="String(item.orderType) === '4' && String(item.repayResult) !== '1' && String(item.ifRepay) === '0'" :class="['card-btn', 'disabled']">去还款</span>
           <span @click="repay(item)" v-else :class="['card-btn', {disabled: String(item.repayStatus) === '8'}]">去还款</span>
