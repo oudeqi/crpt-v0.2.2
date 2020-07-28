@@ -3920,7 +3920,8 @@ function vmInit() {
             orderType = record.orderType,
             repayStatus = record.repayStatus,
             productName = record.productName,
-            planId = record.planId;
+            planId = record.planId,
+            repayResult = record.repayResult;
 
         if (String(orderType) === '4') {
           // 押金贷

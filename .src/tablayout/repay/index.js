@@ -109,7 +109,7 @@ function vmInit () {
       },
 
       repay (record) {
-        let { loanId, orderType, repayStatus, productName, planId } = record
+        let { loanId, orderType, repayStatus, productName, planId, repayResult } = record
         if (String(orderType) === '4') { // 押金贷
           if (String(repayResult) !== '1') {
             Router.openPage({ key: 'com_repay_trial', params: { pageParam: { loanId, planId }}})
