@@ -3767,7 +3767,7 @@ function vmInit() {
         var productId = this.hxd.productId;
 
         if (creditStatus === 0 || creditStatus === 1) {
-          // 未申请 立即开通 // 已受理 继续开通
+          // 未申请 立即申请 // 已受理 继续申请
           if (this.userinfo.userType === '1') {
             // 个人用户
             Router$1.openPage({
