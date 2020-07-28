@@ -2703,7 +2703,7 @@ apiready = function apiready() {
 
         switch (type) {
           // 1-信用贷款 2-担保贷款 3-上游入库单贷款
-          // 好销贷跳往好销贷产品授信简介
+          // 好销宝跳往好销宝产品授信简介
           case 3:
             Router$2.openPage({
               key: 'hxd_apply',

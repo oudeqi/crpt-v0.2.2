@@ -6,12 +6,10 @@ apiready = function apiready() {
       api.closeWin();
     }
   });
-  api.parseTapmode();
-
-  document.querySelector('#tel').onclick = function () {
-    api.call({
-      type: 'tel_prompt',
-      number: '10000'
-    });
-  };
+  api.parseTapmode(); // document.querySelector('#tel').onclick = function () {
+  //   api.call({
+  //       type: 'tel_prompt',
+  //       number: '10000'
+  //   });
+  // }
 };

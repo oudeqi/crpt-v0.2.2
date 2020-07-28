@@ -68,9 +68,7 @@
           <span>业务单号：{{item.orderNo || ''}}</span>
         </div>
         
-        <div v-if="(item.status === 1 || item.status === 2) && item.orderType === 1" class="item-row4">
-          <div class="btn cancel" @click="handleCancel(item)">取消</div>
-        </div>
+        
       </li>
     </ul>
     

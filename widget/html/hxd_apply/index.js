@@ -2849,7 +2849,7 @@ apiready = function apiready() {
                     });
                   }
 
-                  _context.next = 11;
+                  _context.next = 12;
                   break;
 
                 case 8:
@@ -2858,12 +2858,21 @@ apiready = function apiready() {
 
                   if (_context.t0.msg) {
                     Utils$1.UI.toast("".concat(_context.t0.code, " : ").concat(_context.t0.msg));
+                  } else {
+                    Utils$1.UI.toast("\u670D\u52A1\u8D85\u65F6");
+                  } // 服务超时
+
+
+                  if (_context.t0.message) {
+                    Router$2.openPage({
+                      key: 'com_product_list'
+                    });
                   }
 
-                case 11:
+                case 12:
                   Utils$1.UI.hideLoading();
 
-                case 12:
+                case 13:
                 case "end":
                   return _context.stop();
               }

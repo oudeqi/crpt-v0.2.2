@@ -20,12 +20,14 @@ apiready = function () {
     data: {
       productTotalLimit: pageParam.productTotalLimit,
       list: [],
-      productTotalLimit: pageParam.productTotalLimit
+      // productTotalLimit: pageParam.productTotalLimit,
+      amountOperateTypeMap: {}
     },
     methods: {
       async handleGetChangeList() {
         try {
           Utils.UI.showLoading('加载中')
+          this.amountOperateTypeMap = await filterDict('amountOperateType')
           const res = await service.getChangeList({ productId: pageParam.productId })
           if (res.code === 200) {
             let len = res.data.length
@@ -36,7 +38,7 @@ apiready = function () {
               // 只有一条数据
               if (len === 1) {
                 return {
-                  opType: '额度提升',
+                  opType: this.amountOperateTypeMap[item.opType],
                   changeDate: this.getNowFormatDate(d),
                   limitAmount: filter.toThousands(item.limitAmount),
                   showYear: d.getFullYear(),
@@ -44,7 +46,7 @@ apiready = function () {
                 }
               } else {
                 return {
-                  opType: '额度提升',
+                  opType: this.amountOperateTypeMap[item.opType],
                   changeDate: this.getNowFormatDate(d),
                   limitAmount: filter.toThousands(item.limitAmount),
                   showYear: isNotFirstItem && d.getFullYear() !== prevD.getFullYear() ? d.getFullYear() : '',

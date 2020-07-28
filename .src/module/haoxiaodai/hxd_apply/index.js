@@ -90,6 +90,14 @@ apiready = function () {
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(`${error.code} : ${error.msg}`)
+          }else {
+            Utils.UI.toast(`服务超时`)
+          }
+          // 服务超时
+          if(error.message) {
+            Router.openPage({
+              key: 'com_product_list'
+            })
           }
         }
         Utils.UI.hideLoading()

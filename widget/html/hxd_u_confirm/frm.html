@@ -1,0 +1,57 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+    <meta name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    >
+    <meta name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    >
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" >
+  
+  <link rel="stylesheet" href="./frm.css"></head>
+  <body>
+    <div id="app" v-cloak>
+      <app-drawer @on-close="onClose">
+        <section class="container">
+          
+          <section class="content">
+            
+            <div class="pheader">协议确认</div>
+            <div class="blkc no-account">
+              <p class="tips">
+                在用款过程中，您需要通过点击“同意”的形式接受每笔入库单协议。请仔细阅读、充分理解协议内容后再点击同意。
+              </p>
+              <div class="s-c"
+              >
+                <ul class="s-list">
+                  <li class="s-cell" v-for="item in agreements" :key="item">
+                    <div class="cube">
+                      <div class="oi">
+                        业务单号：{{item.orderNo}}
+                      </div>
+                      <div class="name"
+                        @click="handleToAgreement(item.contractId)"
+                      >
+                        《{{item.contractName}}》
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="b-group">
+                <div class="btn" @click="handleAgree">同意</div>
+                <div class="btn btn-prime" @click="handleDisagree">不同意</div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </app-drawer>
+    </div>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+  
+  <script src="./frm.js"></script></body>
+</html>

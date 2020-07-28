@@ -20,8 +20,8 @@
     <section v-if="list.length > 0" class="total">
       <strong>共{{total}}笔</strong>
       <!-- 
-        是否存在逾期记录 0 否 1 是 ，下面的逻辑只处理好销贷
-        企业用户是能看到好销贷，个人用户只能看到押金贷
+        是否存在逾期记录 0 否 1 是 ，下面的逻辑只处理好销宝
+        企业用户是能看到好销宝，个人用户只能看到押金贷
       -->
       <span v-if="userType ==='2' && overdueExist===0">可提前还款</span>
       <span v-if="userType ==='2' && overdueExist===1">未按期还款的订单不支持线上还款</span>
