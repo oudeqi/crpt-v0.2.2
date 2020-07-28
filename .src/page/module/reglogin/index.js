@@ -23,10 +23,12 @@ class PageController extends Service {
         if (res.data.count > 0) {
           saveProtocolToStorage(res.data.list)
         } else {
+          saveProtocolToStorage([])
           api.toast({ msg: '没有获取到协议', location: 'middle' })
         }
       }
     } catch (error) {
+      saveProtocolToStorage([])
       api.toast({ msg: error.msg || '获取协议失败', location: 'middle' })
     }
   }

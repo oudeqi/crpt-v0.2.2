@@ -531,7 +531,7 @@ function getNodeProtocolFromStorage(useNode) {
   if (protocol[useNode] && protocol[useNode].length > 0) {
     return protocol[useNode]
   } else {
-    return null
+    return []
   }
 }
 
@@ -549,7 +549,7 @@ function getProtocolFromNode(nodeArr, protocolType) {
   if (map[protocolType] && map[protocolType].length > 0) {
     return map[protocolType]
   } else {
-    return null
+    return []
   }
 }
 

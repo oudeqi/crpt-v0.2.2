@@ -2100,7 +2100,7 @@ function getNodeProtocolFromStorage(useNode) {
   if (protocol[useNode] && protocol[useNode].length > 0) {
     return protocol[useNode];
   } else {
-    return null;
+    return [];
   }
 }
 

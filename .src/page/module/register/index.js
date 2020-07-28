@@ -1,14 +1,16 @@
 import '../../../app.css'
 import './index.css'
-
+import http from '../../../http'
 import {
-  http, loginSuccessCallback, appLogin,
+  loginSuccessCallback, appLogin, saveProtocolToStorage,
   getNodeProtocolFromStorage, getProtocolFromNode
 } from '../../../config.js'
 import Router from '../../../router'
 
 class Service {
-
+  static queryArgument () {
+    return http.get('/crpt-biz/biz/platform/protocol/app/query')
+  }
   static getPDFId (id) {
     return http.post(`/crpt-file/file/wordRelaceBookmark`, {
       body: {
@@ -17,7 +19,6 @@ class Service {
       }
     })
   }
-
 }
 
 apiready = function() {
@@ -49,11 +50,29 @@ apiready = function() {
   document.querySelector('#geren').onclick = radioOnChange
   document.querySelector('#qiye').onclick = radioOnChange
 
-  function showProtocol (type) {
+  async function getAndSaveProtocol () {
+    api.showProgress({ title: '协议加载中...', text: '', modal: true })
+    try {
+      const res = await Service.queryArgument()
+      if (res.code === 200) {
+        if (res.data.count > 0) {
+          saveProtocolToStorage(res.data.list)
+        } else {
+          saveProtocolToStorage([])
+        }
+      }
+    } catch (error) {
+      api.toast({ msg: error.msg || '获取协议失败', location: 'middle' })
+      saveProtocolToStorage([])
+    }
+    api.hideProgress()
+  }
+
+  async function showProtocol (type) {
     let node = getNodeProtocolFromStorage(1)
-    if (!node) {
-      api.toast({ msg: '协议不存在', location: 'middle' })
-      return
+    if (node.length === 0) {
+      await getAndSaveProtocol()
+      node = getNodeProtocolFromStorage(1)
     }
     let tyeeNode = getProtocolFromNode(node, type)
     let tyeeNode3 = getProtocolFromNode(node, 3)
@@ -65,7 +84,7 @@ apiready = function() {
       nodes = nodes.concat(tyeeNode3)
     }
     if (nodes.length === 0) {
-      api.toast({ msg: '协议不存在', location: 'middle' })
+      api.toast({ msg: '无当前节点协议', location: 'middle' })
       return
     }
     let tpl = nodes.map(item => {
@@ -75,7 +94,7 @@ apiready = function() {
   }
 
   async function showContract (id) {
-    api.showProgress({ title: '协议加载中...', text: '', modal: true })
+    api.showProgress({ title: '协议转换中...', text: '', modal: true })
     try {
       let res = await Service.getPDFId(id)
       Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
@@ -83,7 +102,7 @@ apiready = function() {
         id: res.data.unsignContractFileId
       }}})
     } catch (e) {
-      api.toast({ msg: e.msg || '获取PDF文件失败', location: 'middle' })
+      api.toast({ msg: e.msg || '转换PDF文件失败', location: 'middle' })
     }
     api.hideProgress()
   }
