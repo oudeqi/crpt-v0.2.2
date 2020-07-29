@@ -2753,6 +2753,8 @@ var Service = /*#__PURE__*/function () {
           wordFileId: id,
           businessKey: String(userType) === '1' ? 'GR' : 'QY'
         }
+      }, {
+        timeout: 30
       });
     }
   }]);

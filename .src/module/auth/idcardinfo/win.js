@@ -22,6 +22,8 @@ class Service {
         wordFileId: id,
         businessKey: String(userType) === '1' ? 'GR' : 'QY'
       }
+    }, {
+      timeout: 30
     })
   }
 
