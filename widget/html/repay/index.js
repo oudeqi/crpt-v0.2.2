@@ -3991,6 +3991,11 @@ apiready = function apiready() {
     vm.pageInit();
   });
   api.addEventListener({
+    name: 'repayRefresh'
+  }, function (ret, err) {
+    vm.pageInit();
+  });
+  api.addEventListener({
     name: 'scrolltobottom',
     extra: {
       threshold: 100

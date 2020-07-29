@@ -34,7 +34,6 @@ function vmInit () {
       }
     },
     mounted: function () {
-      console.log(this.id)
       this.pageInit()
     },
     methods: {
