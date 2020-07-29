@@ -1,8 +1,8 @@
-import '../../../app.css'
+import '../../app.css'
 import './win.less'
 
-import { openMsgList, openRegLogin, openChangePwd } from '../../../webview.js'
-import { http } from '../../../config.js'
+import { openMsgList, openRegLogin, openChangePwd } from '../../webview.js'
+import { http } from '../../config.js'
 
 apiready = function () {
   api.addEventListener({
@@ -15,7 +15,7 @@ apiready = function () {
   let userinfo = $api.getStorage('userinfo')
   let { name, userType, access_token } = userinfo
 
-  function logout () {
+  function logout() {
     http.delete(`/auth/token/${access_token}`).then(res => {
       $api.removeCls($api.byId('logout'), 'loading')
     }).catch(error => {
@@ -60,6 +60,32 @@ apiready = function () {
   document.querySelector('#changepwd').onclick = function () {
     openChangePwd()
   }
-
-
+  // alert(1)
+  // var superFile = api.require('superFile');
+  // superFile.open({path:'});
+  // var pdfReader = api.require('pdfReader');
+  // pdfReader.open({
+  //     path: 'https://gateway.crpt-cloud.liuheco.com/crpt-file/file/download/1287970120248987648',
+  //     hidden:{
+  //       print: true,           
+  //       export: true,          
+  //       bookmark: true,         
+  //       email: true           
+  //     }
+  // });
+  // var pdfReader = api.require('pdfReader');
+  // pdfReader.openView({
+  //   rect: {
+  //     x: 0,
+  //     y: 0,
+  //     w: 'auto',
+  //     h: 'auto'
+  //   },
+  //   path: 'https://gateway.crpt-cloud.liuheco.com/crpt-file/file/download/1287970120248987648',
+  //   fixedOn: api.frameName,
+  //   fixed: true
+  // }, function (ret) {
+  //   alert(JSON.stringify(ret));
+  // });
+  
 }

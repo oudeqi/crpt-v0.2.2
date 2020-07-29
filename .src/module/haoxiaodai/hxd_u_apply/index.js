@@ -31,16 +31,16 @@ apiready = function () {
         // 当选中入库单=1时，需要前端控制
         if (this.selectedNumber === 1) {
           let flag = false
-          if (this.useAmount < 1000 || this.useAmount > this.amount) {
+          if (Number(this.useAmount) < 1000 || Number(this.useAmount) > Number(this.amount)) {
             flag = true
           }
-          if (this.useAmount > this.EBSOrders.filter(item => item.isSelected)[0].wareAvailableAmount) {
+          if (Number(this.useAmount) > Number(this.EBSOrders.filter(item => item.isSelected)[0].wareAvailableAmount)) {
             flag = true
           }
           return flag
         } else if (this.selectedNumber > 1) {
           // 多条入库单时，只校验入库单之和是否与总额度大小
-          return !(this.useAmount < this.amount)
+          return !(Number(this.useAmount) < Number(this.amount))
         } else {
           return false
         }
@@ -92,8 +92,8 @@ apiready = function () {
       calculateUseAmount() {
         let _list = this.EBSOrders.filter((item) => item.isSelected)
         let m = _list.reduce((prev, item, i) => {
-          return prev + item.wareAvailableAmount
-        }, 0) || ''
+          return Number(prev) + Number(item.wareAvailableAmount)
+        }, '') || ''
         return Number(m).toFixed(2)
       },
       async postApplySubmit() {

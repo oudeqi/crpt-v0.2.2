@@ -90,11 +90,11 @@ apiready = function () {
         } catch (error) {
           if (error.msg) {
             Utils.UI.toast(`${error.code} : ${error.msg}`)
-          }else {
+          } else {
             Utils.UI.toast(`服务超时`)
           }
           // 服务超时
-          if(error.message) {
+          if (error.message) {
             Router.openPage({
               key: 'com_product_list'
             })
@@ -112,7 +112,7 @@ apiready = function () {
           let form = {
             productId: pageParam.productId
           }
-          if(this.hasApply) {
+          if (this.hasApply) {
             Object.assign(form, {
               query: 0
             })
@@ -129,9 +129,21 @@ apiready = function () {
               productSlogan: res.data.productSlogan
             }
             // 优先展示已签署，已签署没有，再展示未签署
-            this.contractList = res.data.signedContract
-              ? [res.data.signedContract]
-              : res.data.unsignContract && [res.data.unsignContract] || []
+            let contractList = res.data.signedContract || res.data.unsignContract
+            if (contractList) {
+              let _idList = contractList.contractFileId.split(',')
+              let _nameList = contractList.contractName.split(',')
+              let _newContractList = _idList.map((item, index) => {
+                return {
+                  contractName: _nameList[index],
+                  contractFileId: _idList[index],
+                }
+              })
+              this.contractList = _newContractList || []
+            }
+            // this.contractList = res.data.signedContract
+            //   ? [res.data.signedContract]
+            //   : res.data.unsignContract && [res.data.unsignContract] || []
 
             this.btnText = this.mapRes[res.data.creditStatus]
             this.creditStatus = res.data.creditStatus

@@ -2759,20 +2759,20 @@ apiready = function apiready() {
         if (this.selectedNumber === 1) {
           var flag = false;
 
-          if (this.useAmount < 1000 || this.useAmount > this.amount) {
+          if (Number(this.useAmount) < 1000 || Number(this.useAmount) > Number(this.amount)) {
             flag = true;
           }
 
-          if (this.useAmount > this.EBSOrders.filter(function (item) {
+          if (Number(this.useAmount) > Number(this.EBSOrders.filter(function (item) {
             return item.isSelected;
-          })[0].wareAvailableAmount) {
+          })[0].wareAvailableAmount)) {
             flag = true;
           }
 
           return flag;
         } else if (this.selectedNumber > 1) {
           // 多条入库单时，只校验入库单之和是否与总额度大小
-          return !(this.useAmount < this.amount);
+          return !(Number(this.useAmount) < Number(this.amount));
         } else {
           return false;
         }
@@ -2857,8 +2857,8 @@ apiready = function apiready() {
         });
 
         var m = _list.reduce(function (prev, item, i) {
-          return prev + item.wareAvailableAmount;
-        }, 0) || '';
+          return Number(prev) + Number(item.wareAvailableAmount);
+        }, '') || '';
         return Number(m).toFixed(2);
       },
       postApplySubmit: function postApplySubmit() {

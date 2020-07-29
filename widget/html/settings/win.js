@@ -1968,5 +1968,32 @@ apiready = function apiready() {
 
   document.querySelector('#changepwd').onclick = function () {
     openChangePwd();
-  };
+  }; // alert(1)
+  // var superFile = api.require('superFile');
+  // superFile.open({path:'});
+  // var pdfReader = api.require('pdfReader');
+  // pdfReader.open({
+  //     path: 'https://gateway.crpt-cloud.liuheco.com/crpt-file/file/download/1287970120248987648',
+  //     hidden:{
+  //       print: true,           
+  //       export: true,          
+  //       bookmark: true,         
+  //       email: true           
+  //     }
+  // });
+  // var pdfReader = api.require('pdfReader');
+  // pdfReader.openView({
+  //   rect: {
+  //     x: 0,
+  //     y: 0,
+  //     w: 'auto',
+  //     h: 'auto'
+  //   },
+  //   path: 'https://gateway.crpt-cloud.liuheco.com/crpt-file/file/download/1287970120248987648',
+  //   fixedOn: api.frameName,
+  //   fixed: true
+  // }, function (ret) {
+  //   alert(JSON.stringify(ret));
+  // });
+
 };
