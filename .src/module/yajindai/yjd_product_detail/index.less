@@ -145,25 +145,23 @@ html, body {
   .detail-row {
     margin: 14px 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
     span {
-      height:20px;
       font-size:15px;
       color:rgba(144,147,153,1);
       line-height:20px;
-      display: block;
       text-align: right;
-      width: calc(100% - 75px);
+      flex-grow: 1;
     }
     strong {
-      height:20px;
       font-size:15px;
       color:rgba(48,49,51,1);
       line-height:20px;
       font-style: normal;
       font-weight: normal;
       width: 75px;
+      margin-right: 5px;
+      flex-shrink: 0;
     }
   }
 }

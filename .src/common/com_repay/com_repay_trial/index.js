@@ -3,6 +3,7 @@ import Router from '../../../router'
 import filter from '../../../utils/filter'
 import http from '../../../http/index.js'
 import Utils from '../../../utils'
+import numeral from 'numeral'
 
 apiready = function () {
   const page = new Vue({
@@ -11,7 +12,7 @@ apiready = function () {
       status: 3,
       isShowPop: false,
       filter,
-      principal: '',
+      principalTn: '',
       tips: '',
       totalAmount: 0,
       tirialData: {},
@@ -19,21 +20,40 @@ apiready = function () {
       cannotClick: true
     },
     computed:{
-      principalTn () {
+      principal () {
         this.cannotClick = true
-        return filter.toThousands(this.principal)
-      }
-    },
-    methods: {
-      handleChange (e) {
-        this.principal = e.target.value.replace(/,/g, '')
-        if (Number(this.principal) < 200) {
+        let num = Number(this.principalTn.replace(/,/g, ''))
+        if (num < 200) {
           this.tips = '最低还款本金200元，请重新输入'
-        } else if (Number(this.principal) > this.totalAmount) {
+        } else if (num > this.totalAmount) {
           this.tips = '超出剩余待还本金，请重新输入'
         } else {
           this.tips = ''
         }
+        return num
+      }
+    },
+    methods: {
+      numberFormat (number) {
+        let res = ''
+        let dot = '.'
+        if (number.includes(dot)) {
+          let [a, b] = number.split(dot)
+          if (a) {
+            res = numeral(a).format('0,0') + dot
+            if (b) {
+              res = numeral(a).format('0,0') + dot + b.substr(0, 2)
+            }
+          }
+        } else if (number === '') {
+          res = ''
+        } else {
+          res = numeral(number).format('0,0')
+        }
+        return res
+      },
+      handleInput () {
+        this.principalTn = this.numberFormat(this.principalTn); 
       },
       async retialAmount () { // 获取试算结果
         Utils.UI.showLoading('加载中')
@@ -52,7 +72,7 @@ apiready = function () {
         try {
           // this.pageParam.loanId = '12'
           const res = await http.get('/crpt-credit/credit/yjd/repay/remain/principal?loanId=' + this.pageParam.loanId)
-          this.principal = res.data
+          this.principalTn = this.numberFormat(res.data); 
           this.totalAmount = res.data
           Utils.UI.hideLoading()
         } catch (err) {

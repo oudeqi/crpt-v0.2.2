@@ -16,11 +16,11 @@ class Service {
     return http.get('/crpt-biz/biz/platform/protocol/app/query')
   }
 
-  static getPDFId (id) {
+  static getPDFId (id, userType) {
     return http.post(`/crpt-file/file/wordRelaceBookmark`, {
       body: {
         wordFileId: id,
-        businessKey: 'threeCreditReporting'
+        businessKey: String(userType) === '1' ? 'GR' : 'QY'
       }
     })
   }
@@ -102,7 +102,7 @@ apiready = function() {
     api.showProgress({ title: '协议转换中...', text: '', modal: true })
     let agreement = nodes[0]
     try {
-      let res = await Service.getPDFId(agreement.protocolFileId)
+      let res = await Service.getPDFId(agreement.protocolFileId, userinfo.userType)
       let tpl = `<li tapmode="active" data-name="${agreement.protocolName}" data-id="${res.data.unsignContractFileId}">《${agreement.protocolName}》</li>`
       $api.byId('agreement').innerHTML = tpl
       unsignContractFileId = res.data.unsignContractFileId
