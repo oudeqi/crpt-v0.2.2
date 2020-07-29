@@ -1,7 +1,7 @@
-import '../../../app.css'
+import '../../app.css'
 import './win.less'
 
-import { openMsgList } from '../../../webview.js'
+import { openMsgList } from '../../webview.js'
 
 apiready = function () {
   api.addEventListener({

@@ -12,18 +12,18 @@
 <body>
   <div id="app">
     <div class="top">
-      <div class="name" id="name">***</div>
-      <div class="tel" id="type">***</div>
-      <div class="tel" id="tel">****</div>
+      <div class="name" id="name">{{userInfo.name}}</div>
+      <div class="tel" id="type">{{userInfo.type}}</div>
+      <div class="tel" id="tel">{{userInfo.phone}}</div>
     </div>
     <section class="tab_my-main">
       <ul class="tm-main-ul">
-        <li tapmode="active" v-for="(item, index) in menuArr" :key="item.icon" @click="changePage(index)">
+        <li v-if="item.online" tapmode="active" v-for="(item, index) in menuArr" :key="item.router" @click="handleToPage(item)">
           <div class="icon" :class="item.icon"></div>
           <div class="line-box">
             <div class="text ">{{item.title}}</div>
-            <div class="msg" id="msgcount" v-if="item.title === '消息中心'"></div>
-            <div class="msg" id="prodopencount" v-if="item.title === '已开通的产品'"></div>
+            <div class="msg" id="msgcount" v-if="item.router === 'msgcenter'">{{msgCount}}</div>
+            <div class="msg" id="prodopencount" v-if="item.router === 'my_product'">{{productOpenCount}}</div>
             <div class="arrow">
               <i class="aui-iconfont aui-icon-right"></i>
             </div>

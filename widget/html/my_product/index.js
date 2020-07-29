@@ -2706,7 +2706,7 @@ apiready = function apiready() {
           // 好销宝跳往好销宝产品授信简介
           case 3:
             Router$2.openPage({
-              key: 'hxd_apply',
+              key: 'hxd_product_detail',
               params: {
                 pageParam: {
                   hasApply: true,

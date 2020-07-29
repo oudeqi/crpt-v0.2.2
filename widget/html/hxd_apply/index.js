@@ -2884,7 +2884,8 @@ apiready = function apiready() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          var form, res;
+          var form, res, contractList, _idList, _nameList, _newContractList;
+
           return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -2922,7 +2923,23 @@ apiready = function apiready() {
                       productSlogan: res.data.productSlogan
                     }; // 优先展示已签署，已签署没有，再展示未签署
 
-                    _this.contractList = res.data.signedContract ? [res.data.signedContract] : res.data.unsignContract && [res.data.unsignContract] || [];
+                    contractList = res.data.signedContract || res.data.unsignContract;
+
+                    if (contractList) {
+                      _idList = contractList.contractFileId.split(',');
+                      _nameList = contractList.contractName.split(',');
+                      _newContractList = _idList.map(function (item, index) {
+                        return {
+                          contractName: _nameList[index],
+                          contractFileId: _idList[index]
+                        };
+                      });
+                      _this.contractList = _newContractList || [];
+                    } // this.contractList = res.data.signedContract
+                    //   ? [res.data.signedContract]
+                    //   : res.data.unsignContract && [res.data.unsignContract] || []
+
+
                     _this.btnText = _this.mapRes[res.data.creditStatus];
                     _this.creditStatus = res.data.creditStatus;
                   }

@@ -357,6 +357,10 @@ html, body {
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
   color: #66bb6a;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
 }
 .active {
   padding-top: 1px;
