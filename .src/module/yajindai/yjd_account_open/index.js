@@ -67,7 +67,7 @@ function vmInit () {
           loading: false,
           txt: '获取验证码',
         },
-        cardName: '', // 银行卡开户行名称（ocr返回）
+        cardName: '', // 银行卡开户行名称
         uniqueCode: '', // 预签约唯一码（发送短信验证码返回）
         pageParam: api.pageParam || {},
         contractList: [] // 合同列表
@@ -169,7 +169,7 @@ function vmInit () {
           const res = await Service.bankCardOcr(file) //  {"msg":"","data":{"bankIdentificationNumber":"01040000","cardName":"医保联名借记IC卡","bankName":"中国银行","cardType":"借记卡","cardNumber":"6217582000022247241"},"code":200}
           if (res.code === 200) {
             this.bankCardNo = res.data.cardNumber || ''
-            this.cardName = res.data.cardName || ''
+            this.cardName = res.data.bankName || '' // 这里是开卡银行名称
             api.toast({ msg: '识别成功', location: 'middle' })
           }
         } catch (e) {
@@ -242,6 +242,10 @@ function vmInit () {
           api.toast({ msg: '请输入银行卡号', location: 'middle' })
           return
         }
+        if (!this.cardName.trim()) {
+          api.toast({ msg: '请输入银行卡开户行名称', location: 'middle' })
+          return
+        }
         if (!this.phoneNo.trim()) {
           api.toast({ msg: '请输入手机号码', location: 'middle' })
           return
@@ -252,6 +256,10 @@ function vmInit () {
         }
         if (!this.code.no.trim()) {
           api.toast({ msg: '请输入短息验证码', location: 'middle' })
+          return
+        }
+        if (!this.uniqueCode.trim()) {
+          api.toast({ msg: '请点击获取验证码', location: 'middle' })
           return
         }
         if (!this.checked) {

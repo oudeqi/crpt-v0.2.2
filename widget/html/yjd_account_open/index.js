@@ -2768,7 +2768,7 @@ function vmInit() {
           txt: '获取验证码'
         },
         cardName: '',
-        // 银行卡开户行名称（ocr返回）
+        // 银行卡开户行名称
         uniqueCode: '',
         // 预签约唯一码（发送短信验证码返回）
         pageParam: api.pageParam || {},
@@ -2954,7 +2954,8 @@ function vmInit() {
                   //  {"msg":"","data":{"bankIdentificationNumber":"01040000","cardName":"医保联名借记IC卡","bankName":"中国银行","cardType":"借记卡","cardNumber":"6217582000022247241"},"code":200}
                   if (res.code === 200) {
                     _this5.bankCardNo = res.data.cardNumber || '';
-                    _this5.cardName = res.data.cardName || '';
+                    _this5.cardName = res.data.bankName || ''; // 这里是开卡银行名称
+
                     api.toast({
                       msg: '识别成功',
                       location: 'middle'
@@ -3134,8 +3135,20 @@ function vmInit() {
                   return _context5.abrupt("return");
 
                 case 5:
-                  if (_this8.phoneNo.trim()) {
+                  if (_this8.cardName.trim()) {
                     _context5.next = 8;
+                    break;
+                  }
+
+                  api.toast({
+                    msg: '请输入银行卡开户行名称',
+                    location: 'middle'
+                  });
+                  return _context5.abrupt("return");
+
+                case 8:
+                  if (_this8.phoneNo.trim()) {
+                    _context5.next = 11;
                     break;
                   }
 
@@ -3145,9 +3158,9 @@ function vmInit() {
                   });
                   return _context5.abrupt("return");
 
-                case 8:
+                case 11:
                   if (isPhoneNo(_this8.phoneNo.trim())) {
-                    _context5.next = 11;
+                    _context5.next = 14;
                     break;
                   }
 
@@ -3157,9 +3170,9 @@ function vmInit() {
                   });
                   return _context5.abrupt("return");
 
-                case 11:
+                case 14:
                   if (_this8.code.no.trim()) {
-                    _context5.next = 14;
+                    _context5.next = 17;
                     break;
                   }
 
@@ -3169,9 +3182,21 @@ function vmInit() {
                   });
                   return _context5.abrupt("return");
 
-                case 14:
+                case 17:
+                  if (_this8.uniqueCode.trim()) {
+                    _context5.next = 20;
+                    break;
+                  }
+
+                  api.toast({
+                    msg: '请点击获取验证码',
+                    location: 'middle'
+                  });
+                  return _context5.abrupt("return");
+
+                case 20:
                   if (_this8.checked) {
-                    _context5.next = 17;
+                    _context5.next = 23;
                     break;
                   }
 
@@ -3181,19 +3206,19 @@ function vmInit() {
                   });
                   return _context5.abrupt("return");
 
-                case 17:
+                case 23:
                   _this8.loading = true;
                   api.showProgress({
                     title: '数据加载中...',
                     text: ''
                   });
-                  _context5.prev = 19;
+                  _context5.prev = 25;
                   cardName = _this8.cardName;
                   cardNo = _this8.bankCardNo;
                   phone = _this8.phoneNo;
                   verifyCode = _this8.code.no;
                   uniqueCode = _this8.uniqueCode;
-                  _context5.next = 27;
+                  _context5.next = 33;
                   return Service.openAccount({
                     cardName: cardName,
                     cardNo: cardNo,
@@ -3202,7 +3227,7 @@ function vmInit() {
                     uniqueCode: uniqueCode
                   });
 
-                case 27:
+                case 33:
                   res = _context5.sent;
                   api.hideProgress();
 
@@ -3225,27 +3250,27 @@ function vmInit() {
                     });
                   }
 
-                  _context5.next = 36;
+                  _context5.next = 42;
                   break;
 
-                case 32:
-                  _context5.prev = 32;
-                  _context5.t0 = _context5["catch"](19);
+                case 38:
+                  _context5.prev = 38;
+                  _context5.t0 = _context5["catch"](25);
                   api.hideProgress();
                   api.toast({
                     msg: _context5.t0.msg || '提交失败',
                     location: 'middle'
                   });
 
-                case 36:
+                case 42:
                   _this8.loading = false;
 
-                case 37:
+                case 43:
                 case "end":
                   return _context5.stop();
               }
             }
-          }, _callee5, null, [[19, 32]]);
+          }, _callee5, null, [[25, 38]]);
         }))();
       }
     }
