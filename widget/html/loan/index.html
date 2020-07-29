@@ -13,7 +13,7 @@
 
     <section v-if="userType === '1' && totalSum" class="header">
       <div class="header-main">
-        <span>待申请金额(元)</span>
+        <span>申请金额(元)</span>
         <strong>{{numeral(totalSum || 0).format('0,0.00')}}</strong>
       </div>
     </section>
@@ -53,7 +53,7 @@
         <div class="item-row2">
           <div class="txt">
             <span v-if="String(item.orderType) === '4'">申请金额(元)</span>
-            <span v-else>待申请金额(元)</span>
+            <span v-else>申请金额(元)</span>
             <strong>{{numeral(item.payAmount || '').format('0,0.00')}}</strong>
           </div>
           

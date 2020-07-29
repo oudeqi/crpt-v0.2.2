@@ -149,13 +149,18 @@ apiready = function () {
 
       Utils.UI.setRefreshHeaderInfo({
         success: () => {
-          api.refreshHeaderLoadDone()
-          window.location.reload()
-          // this.handleGetEBSOrders()
-          // this.useAmount = ''
-          // setTimeout(() => {
-          //   api.refreshHeaderLoadDone()
-          // }, 0);
+          // api.refreshHeaderLoadDone()
+          // window.location.reload()
+          this.useAmount = ''
+          this.EBSOrders = []
+          // this.amount = 0
+          this.useAmount = ''
+          this.selectedNumber = 0
+          this.handleGetEBSOrders()
+
+          setTimeout(() => {
+            api.refreshHeaderLoadDone()
+          }, 0);
         },
         fail: () => {
           api.refreshHeaderLoadDone()
