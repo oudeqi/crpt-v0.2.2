@@ -2949,15 +2949,24 @@ apiready = function apiready() {
       }
     },
     mounted: function mounted() {
+      var _this3 = this;
+
       api.parseTapmode();
       Utils$1.UI.setRefreshHeaderInfo({
         success: function success() {
-          api.refreshHeaderLoadDone();
-          window.location.reload(); // this.handleGetEBSOrders()
-          // this.useAmount = ''
-          // setTimeout(() => {
-          //   api.refreshHeaderLoadDone()
-          // }, 0);
+          // api.refreshHeaderLoadDone()
+          // window.location.reload()
+          _this3.useAmount = '';
+          _this3.EBSOrders = []; // this.amount = 0
+
+          _this3.useAmount = '';
+          _this3.selectedNumber = 0;
+
+          _this3.handleGetEBSOrders();
+
+          setTimeout(function () {
+            api.refreshHeaderLoadDone();
+          }, 0);
         },
         fail: function fail() {
           api.refreshHeaderLoadDone();
