@@ -22,7 +22,7 @@
           <div class="form">
             <div class="ipt-box">
               <span class="unit">￥</span>
-              <input type="text" :value="principalTn" @keyup="handleChange" class="r-ipt" />
+              <input type="text" v-model="principalTn" @input="handleInput()" class="r-ipt" />
             </div>
             <span class="total-btn" @click="repayAll">全额还款</span>
           </div>

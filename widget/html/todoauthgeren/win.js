@@ -2209,7 +2209,9 @@ apiready = function apiready() {
   api.addEventListener({
     name: 'viewappear'
   }, function (ret, err) {
-    initPage();
+    setTimeout(function () {
+      initPage();
+    }, 60);
   });
 
   $api.byId('logout').onclick = function () {

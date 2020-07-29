@@ -2747,11 +2747,11 @@ var Service = /*#__PURE__*/function () {
     }
   }, {
     key: "getPDFId",
-    value: function getPDFId(id) {
+    value: function getPDFId(id, userType) {
       return http$1.post("/crpt-file/file/wordRelaceBookmark", {
         body: {
           wordFileId: id,
-          businessKey: 'threeCreditReporting'
+          businessKey: String(userType) === '1' ? 'GR' : 'QY'
         }
       });
     }
@@ -2919,7 +2919,7 @@ apiready = function apiready() {
               agreement = nodes[0];
               _context2.prev = 16;
               _context2.next = 19;
-              return Service.getPDFId(agreement.protocolFileId);
+              return Service.getPDFId(agreement.protocolFileId, userinfo.userType);
 
             case 19:
               res = _context2.sent;
