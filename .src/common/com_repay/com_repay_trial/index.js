@@ -17,11 +17,9 @@ apiready = function () {
       totalAmount: 0,
       tirialData: {},
       pageParam: api.pageParam || {},
-      cannotClick: true
     },
     computed:{
       principal () {
-        this.cannotClick = true
         let num = Number(this.principalTn.replace(/,/g, ''))
         if (num < 200) {
           this.tips = '最低还款本金200元，请重新输入'
@@ -31,6 +29,15 @@ apiready = function () {
           this.tips = ''
         }
         return num
+      },
+      cannotClick () {
+        if (this.principal < 200) {
+          return true
+        } else if (this.principal > this.totalAmount) {
+          return true
+        } else {
+          return false
+        }
       }
     },
     methods: {
@@ -61,7 +68,6 @@ apiready = function () {
           // this.pageParam.loanId = '12'
           const res = await http.get(`/crpt-credit/credit/yjd/repay/try?repayPrincipal=${this.principal}&loanId=${this.pageParam.loanId}&planId=${this.pageParam.planId}`)
           this.tirialData = res.data
-          this.cannotClick = false
           Utils.UI.hideLoading()
         } catch (err) {
           Utils.UI.hideLoading()

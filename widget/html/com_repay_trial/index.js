@@ -3805,12 +3805,10 @@ apiready = function apiready() {
       tips: '',
       totalAmount: 0,
       tirialData: {},
-      pageParam: api.pageParam || {},
-      cannotClick: true
+      pageParam: api.pageParam || {}
     },
     computed: {
       principal: function principal() {
-        this.cannotClick = true;
         var num = Number(this.principalTn.replace(/,/g, ''));
 
         if (num < 200) {
@@ -3822,6 +3820,15 @@ apiready = function apiready() {
         }
 
         return num;
+      },
+      cannotClick: function cannotClick() {
+        if (this.principal < 200) {
+          return true;
+        } else if (this.principal > this.totalAmount) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     methods: {
@@ -3871,22 +3878,21 @@ apiready = function apiready() {
                 case 4:
                   res = _context.sent;
                   _this.tirialData = res.data;
-                  _this.cannotClick = false;
                   Utils$1.UI.hideLoading();
-                  _context.next = 13;
+                  _context.next = 12;
                   break;
 
-                case 10:
-                  _context.prev = 10;
+                case 9:
+                  _context.prev = 9;
                   _context.t0 = _context["catch"](1);
                   Utils$1.UI.hideLoading();
 
-                case 13:
+                case 12:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[1, 10]]);
+          }, _callee, null, [[1, 9]]);
         }))();
       },
       repayAll: function repayAll() {
