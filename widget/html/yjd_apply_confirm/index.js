@@ -3674,6 +3674,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 活体识别
+  face: {
+    name: 'face',
+    title: '活体识别调试',
+    url: 'widget://html/face/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
