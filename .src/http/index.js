@@ -18,7 +18,7 @@ const whiteList = [ // 白名单里不带token，否则后端会报错
 
 let hasAlert = false
 
-function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 20 } = {}) {
+function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 } = {}) {
   return new Promise((resolve, reject) => {
     let token = ''
     if (headers.token) {

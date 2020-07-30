@@ -22,8 +22,6 @@ class Service {
         wordFileId: id,
         businessKey: String(userType) === '1' ? 'GR' : 'QY'
       }
-    }, {
-      timeout: 30
     })
   }
 
@@ -97,10 +95,10 @@ apiready = function() {
       api.toast({ msg: '无当前节点协议', location: 'middle' })
       return
     }
-    // let tpl = nodes.map(item => {
-    //   return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
-    // })
-    // $api.byId('agreement').innerHTML = tpl.join('')
+    let tpl = nodes.map(item => {
+      return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
+    })
+    $api.byId('agreement').innerHTML = tpl.join('')
     api.showProgress({ title: '协议转换中...', text: '', modal: true })
     let agreement = nodes[0]
     try {

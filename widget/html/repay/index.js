@@ -2331,7 +2331,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2543,7 +2543,7 @@ function ajax$1(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -3901,7 +3901,7 @@ function vmInit() {
                   _context4.prev = 17;
                   _context4.t0 = _context4["catch"](5);
                   api.toast({
-                    msg: _context4.t0.message || '出错啦',
+                    msg: _context4.t0.msg || '出错啦',
                     location: 'middle'
                   });
                   api.refreshHeaderLoadDone();

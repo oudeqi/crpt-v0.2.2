@@ -12,7 +12,7 @@ apiready = function () {
       status: 3,
       isShowPop: false,
       filter,
-      principalTn: '',
+      principalTn: null,
       tips: '',
       totalAmount: 0,
       tirialData: {},
@@ -20,6 +20,10 @@ apiready = function () {
     },
     computed:{
       principal () {
+        if (this.principalTn === null) {
+          this.tips = ''
+          return
+        }
         let num = Number(this.principalTn.replace(/,/g, ''))
         if (num < 200) {
           this.tips = '最低还款本金200元，请重新输入'
@@ -31,12 +35,10 @@ apiready = function () {
         return num
       },
       cannotClick () {
-        if (this.principal < 200) {
-          return true
-        } else if (this.principal > this.totalAmount) {
-          return true
-        } else {
+        if (this.tirialData.principalAmnt && this.principal >= 200 && this.principal <= this.totalAmount) {
           return false
+        } else {
+          return true
         }
       }
     },
@@ -67,11 +69,17 @@ apiready = function () {
         try {
           // this.pageParam.loanId = '12'
           const res = await http.get(`/crpt-credit/credit/yjd/repay/try?repayPrincipal=${this.principal}&loanId=${this.pageParam.loanId}&planId=${this.pageParam.planId}`)
-          this.tirialData = res.data
-          Utils.UI.hideLoading()
-        } catch (err) {
-          Utils.UI.hideLoading()
+          if (res.code === 200) {
+            this.tirialData = res.data
+          } else {
+            this.tirialData = {}
+            api.toast({ msg: res.msg, location: 'middle' })
+          }
+        } catch (e) {
+          this.tirialData = {}
+          api.toast({ msg: e.msg || '试算失败', location: 'middle' })
         }
+        Utils.UI.hideLoading()
       },
       async repayAll () { // 获取全部金额
         Utils.UI.showLoading('加载中')

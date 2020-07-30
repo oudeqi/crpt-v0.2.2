@@ -1573,7 +1573,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -1991,7 +1991,7 @@ function ajax$1(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2753,8 +2753,6 @@ var Service = /*#__PURE__*/function () {
           wordFileId: id,
           businessKey: String(userType) === '1' ? 'GR' : 'QY'
         }
-      }, {
-        timeout: 30
       });
     }
   }]);
@@ -2864,7 +2862,8 @@ apiready = function apiready() {
 
   function _showProtocol() {
     _showProtocol = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-      var userinfo, node, tyeeNode, tyeeNode3, nodes, agreement, res, tpl;
+      var userinfo, node, tyeeNode, tyeeNode3, nodes, tpl, agreement, res, _tpl;
+
       return regenerator.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -2909,45 +2908,45 @@ apiready = function apiready() {
               return _context2.abrupt("return");
 
             case 14:
-              // let tpl = nodes.map(item => {
-              //   return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
-              // })
-              // $api.byId('agreement').innerHTML = tpl.join('')
+              tpl = nodes.map(function (item) {
+                return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">\u300A").concat(item.protocolName, "\u300B</li>");
+              });
+              $api.byId('agreement').innerHTML = tpl.join('');
               api.showProgress({
                 title: '协议转换中...',
                 text: '',
                 modal: true
               });
               agreement = nodes[0];
-              _context2.prev = 16;
-              _context2.next = 19;
+              _context2.prev = 18;
+              _context2.next = 21;
               return Service.getPDFId(agreement.protocolFileId, userinfo.userType);
 
-            case 19:
+            case 21:
               res = _context2.sent;
-              tpl = "<li tapmode=\"active\" data-name=\"".concat(agreement.protocolName, "\" data-id=\"").concat(res.data.unsignContractFileId, "\">\u300A").concat(agreement.protocolName, "\u300B</li>");
-              $api.byId('agreement').innerHTML = tpl;
+              _tpl = "<li tapmode=\"active\" data-name=\"".concat(agreement.protocolName, "\" data-id=\"").concat(res.data.unsignContractFileId, "\">\u300A").concat(agreement.protocolName, "\u300B</li>");
+              $api.byId('agreement').innerHTML = _tpl;
               unsignContractFileId = res.data.unsignContractFileId;
-              _context2.next = 28;
+              _context2.next = 30;
               break;
 
-            case 25:
-              _context2.prev = 25;
-              _context2.t0 = _context2["catch"](16);
+            case 27:
+              _context2.prev = 27;
+              _context2.t0 = _context2["catch"](18);
               api.toast({
                 msg: _context2.t0.msg || '获取PDF文件失败',
                 location: 'middle'
               });
 
-            case 28:
+            case 30:
               api.hideProgress();
 
-            case 29:
+            case 31:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[16, 25]]);
+      }, _callee2, null, [[18, 27]]);
     }));
     return _showProtocol.apply(this, arguments);
   }

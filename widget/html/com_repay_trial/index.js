@@ -2241,7 +2241,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2615,7 +2615,7 @@ function ajax$1(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -3801,7 +3801,7 @@ apiready = function apiready() {
       status: 3,
       isShowPop: false,
       filter: filter,
-      principalTn: '',
+      principalTn: null,
       tips: '',
       totalAmount: 0,
       tirialData: {},
@@ -3809,6 +3809,11 @@ apiready = function apiready() {
     },
     computed: {
       principal: function principal() {
+        if (this.principalTn === null) {
+          this.tips = '';
+          return;
+        }
+
         var num = Number(this.principalTn.replace(/,/g, ''));
 
         if (num < 200) {
@@ -3822,12 +3827,10 @@ apiready = function apiready() {
         return num;
       },
       cannotClick: function cannotClick() {
-        if (this.principal < 200) {
-          return true;
-        } else if (this.principal > this.totalAmount) {
-          return true;
-        } else {
+        if (this.tirialData.principalAmnt && this.principal >= 200 && this.principal <= this.totalAmount) {
           return false;
+        } else {
+          return true;
         }
       }
     },
@@ -3877,22 +3880,38 @@ apiready = function apiready() {
 
                 case 4:
                   res = _context.sent;
-                  _this.tirialData = res.data;
-                  Utils$1.UI.hideLoading();
+
+                  if (res.code === 200) {
+                    _this.tirialData = res.data;
+                  } else {
+                    _this.tirialData = {};
+                    api.toast({
+                      msg: res.msg,
+                      location: 'middle'
+                    });
+                  }
+
                   _context.next = 12;
                   break;
 
-                case 9:
-                  _context.prev = 9;
+                case 8:
+                  _context.prev = 8;
                   _context.t0 = _context["catch"](1);
-                  Utils$1.UI.hideLoading();
+                  _this.tirialData = {};
+                  api.toast({
+                    msg: _context.t0.msg || '试算失败',
+                    location: 'middle'
+                  });
 
                 case 12:
+                  Utils$1.UI.hideLoading();
+
+                case 13:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[1, 9]]);
+          }, _callee, null, [[1, 8]]);
         }))();
       },
       repayAll: function repayAll() {

@@ -1687,7 +1687,7 @@ function ajax(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2734,7 +2734,7 @@ function ajax$1(method, url) {
       _ref$tag = _ref.tag,
       tag = _ref$tag === void 0 ? null : _ref$tag,
       _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 20 : _ref$timeout;
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
 
   return new Promise(function (resolve, reject) {
     var token = '';
@@ -2981,7 +2981,7 @@ var App = /*#__PURE__*/function () {
       // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
       // let productId = '1282497823763111937'
       // Router.openPage({key: 'yjd_select_contract', params: {pageParam: { url, productId }}})
-      // openIDcardInfo()
+      // openIDcardUpload()
       // return
       // saveDeviceMes()
       var userinfo = $api.getStorage('userinfo');

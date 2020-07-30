@@ -12,7 +12,7 @@ apiready = function() {
       api.closeWin();
     }
   });
-  let userinfo = $api.getStorage('userinfo')
+  let userinfo = $api.getStorage('userinfo') || {}
   let { name, userType } = userinfo
   $api.byId('name').innerHTML = name
   if (userType === '1') { // userType === '1' ? '个人账号' : '企业账号'
