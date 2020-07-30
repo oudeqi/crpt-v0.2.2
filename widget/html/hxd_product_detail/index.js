@@ -2773,7 +2773,7 @@ apiready = function apiready() {
         var _this = this;
 
         return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-          var duebillTypeMap, creditAmountStatusMap, res;
+          var duebillTypeMap, creditAmountStatusMap, res, contract1Name, contract1FileId, contractList;
           return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -2811,10 +2811,16 @@ apiready = function apiready() {
                   res = _context.sent;
 
                   if (res.code === 200) {
+                    contract1Name = res.data.signedContract.contractName.split(',')[0];
+                    contract1FileId = res.data.signedContract.contractFileId.split(',')[0];
+                    contractList = [{
+                      contractFileId: contract1FileId,
+                      contractName: contract1Name
+                    }];
                     _this.productInfo = {
                       creditAmount: res.data.creditAmount,
                       producName: res.data.productName,
-                      signedContract: [res.data.signedContract || {}],
+                      signedContract: contractList,
                       // 后端只返回了一个合同，并且是对象不是list
                       exeInterest: res.data.exeInterest,
                       opType: _this.duebillTypeMap[res.data.opType],

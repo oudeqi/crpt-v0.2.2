@@ -2874,7 +2874,12 @@ apiready = function apiready() {
                   if (res.code === 200) {
                     _this3.successList = res.data.successList;
                     _this3.failList = _this3.failList.concat(res.data.failList);
-                    _this3.successTotalAmount = res.data.successTotalAmount; // 跳转结果页
+                    _this3.successTotalAmount = res.data.successTotalAmount; // 用来刷新贷款首页的状态
+
+                    api.sendEvent({
+                      name: 'loanRefresh',
+                      extra: {}
+                    }); // 跳转结果页
 
                     Router$2.openPage({
                       key: 'hxd_u_result',

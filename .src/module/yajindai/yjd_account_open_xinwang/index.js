@@ -27,6 +27,8 @@ apiready = function () {
   $api.fixStatusBar(statusBar)
   const offset = $api.offset(statusBar)
   const { url, productId } = api.pageParam || {}
+  const userinfo = $api.getStorage('userinfo')
+
   api.openFrame({
     name: 'yjd_account_open_xinwang_frm',
     url: url,
@@ -37,7 +39,8 @@ apiready = function () {
       h: 'auto',
     },
     pageParam: {
-      productId: productId
+      productId: productId,
+      userinfo
     },
     progress: {
       type: 'page', // 加载进度效果类型，默认值为 default，取值范围为 default|page，为 page 时，进度效果为仿浏览器类型，固定在页面的顶部
