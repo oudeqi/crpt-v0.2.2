@@ -3969,7 +3969,7 @@ apiready = function apiready() {
               switch (_context3.prev = _context3.next) {
                 case 0:
                   if (_this3.cannotClick) {
-                    _context3.next = 16;
+                    _context3.next = 17;
                     break;
                   }
 
@@ -3986,23 +3986,27 @@ apiready = function apiready() {
                 case 8:
                   res = _context3.sent;
                   Utils$1.UI.hideLoading();
+                  api.sendEvent({
+                    name: 'repayRefresh',
+                    extra: {}
+                  });
                   Router$1.openPage({
                     key: 'com_repay_result'
                   });
-                  _context3.next = 16;
+                  _context3.next = 17;
                   break;
 
-                case 13:
-                  _context3.prev = 13;
+                case 14:
+                  _context3.prev = 14;
                   _context3.t0 = _context3["catch"](5);
                   Utils$1.UI.hideLoading();
 
-                case 16:
+                case 17:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[5, 13]]);
+          }, _callee3, null, [[5, 14]]);
         }))();
       },
       handleClosePop: function handleClosePop() {

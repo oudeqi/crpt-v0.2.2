@@ -53,7 +53,6 @@ function vmInit () {
       },
     },
     mounted: async function () {
-      
       this.pageInit()
     },
     methods: {
@@ -156,6 +155,12 @@ apiready = function () {
   const vm = vmInit()
 
   setRefreshHeaderInfo(function() {
+    vm.pageInit()
+  })
+
+  api.addEventListener({
+    name: 'repayRefresh'
+  }, (ret, err) => {
     vm.pageInit()
   })
 

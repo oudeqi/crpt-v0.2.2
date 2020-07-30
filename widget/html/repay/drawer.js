@@ -3178,7 +3178,6 @@ function vmInit() {
       }
     },
     mounted: function mounted() {
-      console.log(this.id);
       this.pageInit();
     },
     methods: {

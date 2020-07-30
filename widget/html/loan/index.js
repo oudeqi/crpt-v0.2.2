@@ -4092,6 +4092,11 @@ apiready = function apiready() {
     vm.pageInit();
   });
   api.addEventListener({
+    name: 'loanRefresh'
+  }, function (ret, err) {
+    vm.pageInit();
+  });
+  api.addEventListener({
     name: 'scrolltobottom',
     extra: {
       threshold: 100

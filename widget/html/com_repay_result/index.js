@@ -100,6 +100,10 @@ apiready = function apiready() {
     methods: {
       changePage: function changePage() {
         // 跳转到还款页面
+        api.sendEvent({
+          name: 'repayRefresh',
+          extra: {}
+        });
         openTabLayout(2);
       }
     }
@@ -108,6 +112,10 @@ apiready = function apiready() {
     name: 'navitembtn'
   }, function (ret, err) {
     if (ret.type === 'left') {
+      api.sendEvent({
+        name: 'repayRefresh',
+        extra: {}
+      });
       openTabLayout(2);
       api.closeWin();
     }

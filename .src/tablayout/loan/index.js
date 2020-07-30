@@ -200,6 +200,12 @@ apiready = function () {
   })
 
   api.addEventListener({
+    name: 'loanRefresh'
+  }, (ret, err) => {
+    vm.pageInit()
+  })
+
+  api.addEventListener({
     name: 'scrolltobottom',
     extra: {
       threshold: 100

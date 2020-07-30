@@ -16,7 +16,17 @@
           <strong>银行卡号</strong>
         </div>
         <div class="card-b">
-          <input type="number" v-model="bankCardNo" placeholder="请输入">
+          <input type="text" v-model="bankCardNo" placeholder="请输入">
+          <i class="ocr-btn" @click="selectPicture()"></i>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">
+          <strong>银行卡开户行</strong>
+        </div>
+        <div class="card-b">
+          <input type="text" v-model="cardName" placeholder="请输入">
           <i class="ocr-btn" @click="selectPicture()"></i>
         </div>
       </div>

@@ -124,6 +124,7 @@ apiready = function () {
           try {
             const res = await http.post('/crpt-credit/credit/yjd/repay/affirm', {body: sendJson})
             Utils.UI.hideLoading()
+            api.sendEvent({ name: 'repayRefresh', extra: {}})
             Router.openPage({key: 'com_repay_result'})
           } catch (err) {
             Utils.UI.hideLoading()

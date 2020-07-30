@@ -71,7 +71,7 @@ class App {
     // Utils.Router.openPageCreditInformation()
     // Router.openPage({ key: 'hxd_u_try_detail'})
     // return
-    // Router.openPage({key: 'hxd_product_detail', params: {
+    // Router.openPage({key: 'yjd_account_open', params: {
     //   pageParam: {
     //     productId: '1'
     //   }
