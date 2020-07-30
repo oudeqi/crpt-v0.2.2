@@ -36,11 +36,13 @@
         </div>
       </div>
     </section>
+
     <section class="total" v-if="total > 0 || (userType === '2' && totalSum)">
       <span v-if="total > 0">待申请(共{{total}}笔)</span>
       <span v-else></span>
       <strong v-if="userType === '2'">{{ totalSum ? ('¥ ' + numeral(totalSum).format('0,0.00')) : ''}}</strong>
     </section>
+    
     
     <ul class="list" id="list">
       <li v-for="(item, index) in list" :key="index" class="item">

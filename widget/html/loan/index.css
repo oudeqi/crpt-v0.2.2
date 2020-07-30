@@ -325,7 +325,6 @@ html, body {
   padding: 0 12px;
   padding-top: 20px;
   background:rgba(245,245,245,1);
-  margin-bottom: 15px;
 }
 
 .hxd::before {
@@ -429,7 +428,6 @@ html, body {
   padding: 0 12px;
   padding-top: 20px;
   position: relative;
-  margin-bottom: 15px;
 }
 
 .header::before {
@@ -498,9 +496,9 @@ html, body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 0 10px;
-  padding-bottom: 12px;
+  padding: 0 15px;
   margin: 0 !important;
+  padding-top: 10px;
 }
 
 .total span {
@@ -522,7 +520,7 @@ html, body {
 
 .list {
   padding: 0 12px;
-  margin: 0;
+  margin-top: 16px;
 }
 
 .item {
