@@ -64,9 +64,4 @@
   <preference name="WKWebViewRecoveryMode" value="reload" />
   <preference name="checkSslTrusted" value="false" />
   <meta-data name="com.baidu.lbsapi.API_KEY" value="9v96NtkeIqsqEgXYnYfblfDKfVqIN1Nh" />
-  <feature name="bdFace">
-    <param name="faceLicenseName" value="idl-license" />
-    <param name="faceLicenseSuffic" value="face-ios" />
-    <param name="faceLicenseID" value="crpt-app-bdverify-face-ios" />
-  </feature>
 </widget>
