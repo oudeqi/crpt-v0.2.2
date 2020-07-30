@@ -51,10 +51,15 @@ apiready = function () {
 
           const res = await service.getProductInfo({ productId: pageParam.productId })
           if (res.code === 200) {
+            let contract1Name = res.data.signedContract.contractName.split(',')[0]
+            let contract1FileId = res.data.signedContract.contractFileId.split(',')[0]
+            let contractList = [
+              { contractFileId: contract1FileId, contractName: contract1Name }
+            ]
             this.productInfo = {
               creditAmount: res.data.creditAmount,
               producName: res.data.productName,
-              signedContract: [res.data.signedContract || {}],// 后端只返回了一个合同，并且是对象不是list
+              signedContract: contractList,// 后端只返回了一个合同，并且是对象不是list
               exeInterest: res.data.exeInterest,
               opType: this.duebillTypeMap[res.data.opType],
               repayCycle: res.data.repayCycle,

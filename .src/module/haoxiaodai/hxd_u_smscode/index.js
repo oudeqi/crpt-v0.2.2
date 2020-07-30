@@ -75,7 +75,8 @@ apiready = function () {
             this.successList = res.data.successList
             this.failList = this.failList.concat(res.data.failList)
             this.successTotalAmount = res.data.successTotalAmount
-
+            // 用来刷新贷款首页的状态
+            api.sendEvent({ name: 'loanRefresh', extra: {}})
             // 跳转结果页
             Router.openPage({
               key: 'hxd_u_result',

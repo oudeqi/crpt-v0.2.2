@@ -3,7 +3,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://crpt-cloud.oak.net.cn'
 };
-var baseUrl = ENV_URLS["testing"];
+var baseUrl = ENV_URLS["production"];
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};
@@ -16,7 +16,19 @@ apiready = function apiready() {
   });
   var fileUrl = "".concat(baseUrl, "/crpt-file/file/download/").concat(pageParam.id); // const frameUrl = `${baseUrl}/crpt-h5/common/pdf_agreement?fileUrl=${encodeURIComponent(fileUrl)}`
 
-  var pdfReader = api.require('pdfReader');
+  var pdfReader = api.require('pdfReader'); // api.openFrame({
+  //   name: '1232131',
+  //   url: 'http://192.168.43.2:3000/crpt-h5/xw_callback/close/1?key=XUV1VNwwP4VDrHOgobVhpNnQvcFwyTZHPZmBb8kd3uYHaDNe+/JXWgmOdetrfjT38vWlKJfZ33NazYXPufg8dyNS+ThEMxt+0dIWx0vhkSL+FgRijuRnJt9KPPkXMTYRXwmKZwA/0f5zh/6UVNtgaUd4jVLl/Ons3tMIrbF1VDEuB29IFmalauPfgIy5KPwdGV3rRAZxIX0c7hG4E3MrPK6l6JrEKk0U3gRqWPgTuRKyzJi8wOZdTsVEoFHNfp6cd3IyAyzpnQjEGJeQobIwyaJODpDubO66mP+/WLsb4Lw9Qj9ssXAYr/2E1plaiJRytkMwXkK/HtURYoTNVTwjiw==&data=EjX9RmFNQMYB3CYsPJ1RIQP/wji7o+SBvt9I00Gekxq8nIqwX88BbMtaMugGeOs0Lc0DDqF5G72Ita42scXDzBeVhFzw5fT9Xjv0BBpygtd5YZRTwFfPS6XUJpoftPJN2mm0hTL770NBWR8r11+bZ6uN1QphqH1G0C8ks9Kb7I/B2VU1BqVf/bziyfIrANPv',
+  //   title: "查看合同",
+  //   // url: "widget://html/yjd_select_contract/index.html",
+  //   bgColor: "#fff",
+  //   reload: true,
+  //   pageParam: {
+  //     userinfo: $api.getStorage('userinfo')
+  //   }
+  // })
+  // return
+
 
   pdfReader.openPdfView({
     rect: {
