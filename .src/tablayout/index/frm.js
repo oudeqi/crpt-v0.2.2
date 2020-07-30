@@ -152,9 +152,6 @@ apiready = function () {
   $api.byId('kaitong').onclick = () => {
     controller.goDanbao()
   }
-  $api.byId('danbaofuwu').onclick = () => {
-    controller.goDanbao()
-  }
   $api.byId('gongyingshang').onclick = () => { // 供应商服务
     Router.openPage({ key: 'com_product_list', params: {
       pageParam: {pageFrom: 'gongyingshang'}}

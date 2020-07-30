@@ -208,12 +208,12 @@ apiready = function() {
       mapping.baseinfo.status === 1 ? step = 0 : null
       if (step > 0) {
         $api.byId('tips').innerHTML = `完成以下<strong>${step}</strong>步，即可获得申请额度资格`
-        $api.byId('yugueduContainer').innerHTML = ''
+        // $api.byId('yugueduContainer').innerHTML = ''
       } else if (step === 0) {
         $api.byId('tips').innerHTML = `已完成信息收集`
-        $api.byId('yugueduContainer').innerHTML = `
-          <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
-        `
+        // $api.byId('yugueduContainer').innerHTML = `
+        //   <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
+        // `
       }
       renderStep1(mapping.realAuth.status)
       renderStep2(mapping.faceAuth.status)

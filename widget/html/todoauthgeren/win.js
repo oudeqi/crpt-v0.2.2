@@ -2192,11 +2192,11 @@ apiready = function apiready() {
       mapping.baseinfo.status === 1 ? step = 0 : null;
 
       if (step > 0) {
-        $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "</strong>\u6B65\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C");
-        $api.byId('yugueduContainer').innerHTML = '';
+        $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "</strong>\u6B65\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C"); // $api.byId('yugueduContainer').innerHTML = ''
       } else if (step === 0) {
-        $api.byId('tips').innerHTML = "\u5DF2\u5B8C\u6210\u4FE1\u606F\u6536\u96C6";
-        $api.byId('yugueduContainer').innerHTML = "\n          <div class=\"app_btn\" tapmode=\"active\" id=\"yuguedu\">\u7ACB\u5373\u9884\u4F30\u989D\u5EA6</div>\n        ";
+        $api.byId('tips').innerHTML = "\u5DF2\u5B8C\u6210\u4FE1\u606F\u6536\u96C6"; // $api.byId('yugueduContainer').innerHTML = `
+        //   <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
+        // `
       }
 
       renderStep1(mapping.realAuth.status);

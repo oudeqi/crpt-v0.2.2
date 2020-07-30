@@ -3864,10 +3864,6 @@ apiready = function apiready() {
     controller.goDanbao();
   };
 
-  $api.byId('danbaofuwu').onclick = function () {
-    controller.goDanbao();
-  };
-
   $api.byId('gongyingshang').onclick = function () {
     // 供应商服务
     Router$2.openPage({
