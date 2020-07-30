@@ -8,6 +8,7 @@ function initVM() {
   let userInfo = {
     name: userinfo.name,
     phone: '****',
+    userType: userinfo.userType,
     type: userinfo.userType === '1' ? '个人账号' : '企业账号'
   }
   return new Vue({

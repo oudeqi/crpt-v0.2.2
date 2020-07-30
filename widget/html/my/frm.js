@@ -2665,7 +2665,8 @@ var menuConfig = [{
   router: 'my_quota',
   title: '我的额度',
   'icon': 'limit',
-  online: true
+  online: true,
+  isLimit: '2'
 }, {
   router: 'my_product',
   title: '已开通的产品',
@@ -2697,6 +2698,7 @@ function initVM() {
   var userInfo = {
     name: userinfo.name,
     phone: '****',
+    userType: userinfo.userType,
     type: userinfo.userType === '1' ? '个人账号' : '企业账号'
   };
   return new Vue({

@@ -18,7 +18,7 @@
     </div>
     <section class="tab_my-main">
       <ul class="tm-main-ul">
-        <li v-if="item.online" tapmode="active" v-for="(item, index) in menuArr" :key="item.router" @click="handleToPage(item)">
+        <li v-if="(!item.isLimit || item.isLimit === userInfo.userType) && item.online" tapmode="active" v-for="(item, index) in menuArr" :key="item.router" @click="handleToPage(item)">
           <div class="icon" :class="item.icon"></div>
           <div class="line-box">
             <div class="text ">{{item.title}}</div>

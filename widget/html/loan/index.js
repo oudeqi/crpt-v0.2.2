@@ -3998,7 +3998,7 @@ function vmInit() {
                   productId: productId,
                   warehouseOrderNos: JSON.stringify(record.warehouseOrderNo && [record.warehouseOrderNo] || []),
                   status: record.status,
-                  amount: record.payAmount
+                  amount: numeral(record.payAmount || '').format('0.00')
                 }
               }
             });
