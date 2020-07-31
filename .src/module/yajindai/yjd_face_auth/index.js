@@ -82,10 +82,10 @@ function vmInit () {
       //   })
       // },
 
-      selectPicture: async () => {
+      selectPicture () {
         SDK.BaiduFace.open({
-          success: async (path) => {
-            await this.__startAuth(path)
+          success: (path) => {
+            this.__startAuth(path)
           }
         })
       },
@@ -105,6 +105,7 @@ function vmInit () {
       },
 
       async __startAuth (file) {
+        console.log(file)
         api.showProgress({ title: '认证中...', text: '', modal: false })
         try {
           let resOcr = await Service.faceOcr(file)

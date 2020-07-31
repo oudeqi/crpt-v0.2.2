@@ -77,11 +77,11 @@ class App {
     //   }
     // }})
     // return
-    let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
-    let productId = '1282497823763111937'
-    Router.openPage({key: 'yjd_face_auth', params: {pageParam: { url, productId }}})
+    // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
+    // let productId = '1282497823763111937'
+    // Router.openPage({key: 'yjd_face_auth', params: {pageParam: { url, productId }}})
     // openFaceAuth()
-    return
+    // return
     // saveDeviceMes()
     // Router.openPage({
     //   key: 'face'
