@@ -1,20 +1,3 @@
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty = _defineProperty;
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -754,6 +737,23 @@ try {
 
 var regenerator = runtime_1;
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -987,14 +987,14 @@ function closeCurrentWinAndRefresh(_ref6) {
 }
 
 var rmap = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  openPageCreditInformation: openPageCreditInformation,
-  openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
-  openAttachmentInfo: openAttachmentInfo,
-  openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
-  openGuaranteeApplicationCar: openGuaranteeApplicationCar,
-  openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
-  closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
+	__proto__: null,
+	openPageCreditInformation: openPageCreditInformation,
+	openGuaranteeApplicationIndex: openGuaranteeApplicationIndex,
+	openAttachmentInfo: openAttachmentInfo,
+	openGuaranteeApplicationHouse: openGuaranteeApplicationHouse,
+	openGuaranteeApplicationCar: openGuaranteeApplicationCar,
+	openGuaranteeApplicationFamily: openGuaranteeApplicationFamily,
+	closeCurrentWinAndRefresh: closeCurrentWinAndRefresh
 });
 
 /**
@@ -2872,8 +2872,6 @@ var Service = /*#__PURE__*/function () {
 }();
 
 function vmInit() {
-  var _this = this;
-
   return new Vue({
     el: '#app',
     data: function data() {
@@ -2907,70 +2905,33 @@ function vmInit() {
       //     })
       //   })
       // },
-      selectPicture: function () {
-        var _selectPicture = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
-          return regenerator.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  SDK$1.BaiduFace.open({
-                    success: function () {
-                      var _success = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(path) {
-                        return regenerator.wrap(function _callee$(_context) {
-                          while (1) {
-                            switch (_context.prev = _context.next) {
-                              case 0:
-                                _context.next = 2;
-                                return _this.__startAuth(path);
+      selectPicture: function selectPicture() {
+        var _this = this;
 
-                              case 2:
-                              case "end":
-                                return _context.stop();
-                            }
-                          }
-                        }, _callee);
-                      }));
-
-                      function success(_x) {
-                        return _success.apply(this, arguments);
-                      }
-
-                      return success;
-                    }()
-                  });
-
-                case 1:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }));
-
-        function selectPicture() {
-          return _selectPicture.apply(this, arguments);
-        }
-
-        return selectPicture;
-      }(),
+        SDK$1.BaiduFace.open({
+          success: function success(path) {
+            _this.__startAuth(path);
+          }
+        });
+      },
       __createLoan: function __createLoan(userId) {
         var _this2 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
           var postData, res;
-          return regenerator.wrap(function _callee3$(_context3) {
+          return regenerator.wrap(function _callee$(_context) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context.prev = _context.next) {
                 case 0:
-                  _context3.prev = 0;
+                  _context.prev = 0;
                   postData = _objectSpread$6({}, _this2.createLoanOrderArgus, {
                     userId: userId
                   });
-                  _context3.next = 4;
+                  _context.next = 4;
                   return Service.createLoanOrder(postData);
 
                 case 4:
-                  res = _context3.sent;
+                  res = _context.sent;
 
                   if (res.code === 200) {
                     Router$2.openPage({
@@ -2983,51 +2944,53 @@ function vmInit() {
                     });
                   }
 
-                  _context3.next = 11;
+                  _context.next = 11;
                   break;
 
                 case 8:
-                  _context3.prev = 8;
-                  _context3.t0 = _context3["catch"](0);
+                  _context.prev = 8;
+                  _context.t0 = _context["catch"](0);
                   api.toast({
-                    msg: _context3.t0.msg || '出错啦',
+                    msg: _context.t0.msg || '出错啦',
                     location: 'middle'
                   });
 
                 case 11:
                 case "end":
-                  return _context3.stop();
+                  return _context.stop();
               }
             }
-          }, _callee3, null, [[0, 8]]);
+          }, _callee, null, [[0, 8]]);
         }))();
       },
       __startAuth: function __startAuth(file) {
         var _this3 = this;
 
-        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4() {
+        return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2() {
           var resOcr, resBank, _resBank$data, bankCardNo, bankCardMobile, bankCardName, xwBandBankFlag, userId;
 
-          return regenerator.wrap(function _callee4$(_context4) {
+          return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
+                  // alert('__startAuth')
+                  // return
                   api.showProgress({
                     title: '认证中...',
                     text: '',
                     modal: false
                   });
-                  _context4.prev = 1;
-                  _context4.next = 4;
+                  _context2.prev = 1;
+                  _context2.next = 4;
                   return Service.faceOcr(file);
 
                 case 4:
-                  resOcr = _context4.sent;
-                  _context4.next = 7;
+                  resOcr = _context2.sent;
+                  _context2.next = 7;
                   return Service.getBankInfo();
 
                 case 7:
-                  resBank = _context4.sent;
+                  resBank = _context2.sent;
 
                   if (resOcr.code === 200 && resOcr.data.result === 'YES' && resBank.code === 200) {
                     _resBank$data = resBank.data, bankCardNo = _resBank$data.bankCardNo, bankCardMobile = _resBank$data.bankCardMobile, bankCardName = _resBank$data.bankCardName, xwBandBankFlag = _resBank$data.xwBandBankFlag, userId = _resBank$data.userId;
@@ -3062,14 +3025,14 @@ function vmInit() {
                     });
                   }
 
-                  _context4.next = 14;
+                  _context2.next = 14;
                   break;
 
                 case 11:
-                  _context4.prev = 11;
-                  _context4.t0 = _context4["catch"](1);
+                  _context2.prev = 11;
+                  _context2.t0 = _context2["catch"](1);
                   api.toast({
-                    msg: _context4.t0.msg || '认证失败',
+                    msg: _context2.t0.msg || '认证失败',
                     location: 'middle'
                   });
 
@@ -3078,10 +3041,10 @@ function vmInit() {
 
                 case 15:
                 case "end":
-                  return _context4.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee4, null, [[1, 11]]);
+          }, _callee2, null, [[1, 11]]);
         }))();
       }
     }
