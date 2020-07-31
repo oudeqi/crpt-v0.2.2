@@ -95,6 +95,7 @@ const routerMap = {
     url: 'widget://html/yjd_account_open_xinwang/index.html',
     bgColor: '#fff',
     reload: true,
+    navigationBar: navigationBarWhite
   },
   // 押金贷产品详情
   yjd_product_detail: {

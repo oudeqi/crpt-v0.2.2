@@ -2514,7 +2514,8 @@ var routerMap = {
     title: '开通新网账户',
     url: 'widget://html/yjd_account_open_xinwang/index.html',
     bgColor: '#fff',
-    reload: true
+    reload: true,
+    navigationBar: navigationBarWhite$1
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -3118,9 +3119,10 @@ apiready = function apiready() {
               tpl = nodes.map(function (item) {
                 return "<li tapmode=\"active\" data-name=\"".concat(item.protocolName, "\" data-id=\"").concat(item.protocolFileId, "\">\u300A").concat(item.protocolName, "\u300B</li>");
               });
+              console.log(tpl);
               $api.byId('agreement').innerHTML = tpl.join('');
 
-            case 15:
+            case 16:
             case "end":
               return _context2.stop();
           }
@@ -3130,68 +3132,22 @@ apiready = function apiready() {
     return _showProtocol.apply(this, arguments);
   }
 
-  function showContract(_x2) {
-    return _showContract.apply(this, arguments);
-  }
-
-  function _showContract() {
-    _showContract = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(id) {
-      var res;
-      return regenerator.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              api.showProgress({
-                title: '协议转换中...',
-                text: '',
-                modal: true
-              });
-              _context3.prev = 1;
-              _context3.next = 4;
-              return Service.getPDFId(id);
-
-            case 4:
-              res = _context3.sent;
-              Router$2.openPage({
-                key: 'pdf_agreement',
-                params: {
-                  pageParam: {
-                    type: 'pdf',
-                    id: res.data.unsignContractFileId
-                  }
-                }
-              });
-              _context3.next = 11;
-              break;
-
-            case 8:
-              _context3.prev = 8;
-              _context3.t0 = _context3["catch"](1);
-              api.toast({
-                msg: _context3.t0.msg || '转换PDF文件失败',
-                location: 'middle'
-              });
-
-            case 11:
-              api.hideProgress();
-
-            case 12:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[1, 8]]);
-    }));
-    return _showContract.apply(this, arguments);
-  }
-
   showProtocol(1); // protocolType 1-个人，2-企业，3-通用
 
   document.querySelector('#agreement').onclick = function (e) {
     var strong = $api.closest(e.target, 'li');
 
     if (strong) {
-      showContract(strong.dataset.id);
+      // showContract(strong.dataset.id)
+      Router$2.openPage({
+        key: 'pdf_agreement',
+        params: {
+          pageParam: {
+            type: 'pdf',
+            id: strong.dataset.id
+          }
+        }
+      });
     }
   };
 

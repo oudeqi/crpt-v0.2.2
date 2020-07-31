@@ -2010,7 +2010,8 @@ var routerMap = {
     title: '开通新网账户',
     url: 'widget://html/yjd_account_open_xinwang/index.html',
     bgColor: '#fff',
-    reload: true
+    reload: true,
+    navigationBar: navigationBarWhite
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -2467,7 +2468,7 @@ apiready = function apiready() {
     url: url,
     rect: {
       x: 0,
-      y: offset.h,
+      y: offset.h + 45,
       w: 'auto',
       h: 'auto'
     },
@@ -2482,6 +2483,13 @@ apiready = function apiready() {
       // color: '#45C01A', // type 为 page 时进度条的颜色，默认值为 #45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
       // height:  3, // type 为 page 时进度条高度，默认值为3，数字类型
 
+    }
+  });
+  api.addEventListener({
+    name: 'navitembtn'
+  }, function (ret, err) {
+    if (ret.type === 'left') {
+      api.closeWin();
     }
   }); // timer = setInterval(function () {
   //   getOpenAccountStatus(productId)

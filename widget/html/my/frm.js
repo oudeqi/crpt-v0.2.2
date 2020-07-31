@@ -2204,7 +2204,8 @@ var routerMap = {
     title: '开通新网账户',
     url: 'widget://html/yjd_account_open_xinwang/index.html',
     bgColor: '#fff',
-    reload: true
+    reload: true,
+    navigationBar: navigationBarWhite
   },
   // 押金贷产品详情
   yjd_product_detail: {
@@ -2678,14 +2679,14 @@ var menuConfig = [{
   'icon': 'contact',
   online: true
 }, {
-  router: 'settings',
-  title: '设置',
-  'icon': 'settings',
-  online: true
-}, {
   router: 'wallet',
   title: '我的钱包',
   'icon': 'wallet',
+  online: true
+}, {
+  router: 'settings',
+  title: '设置',
+  'icon': 'settings',
   online: true
 }];
 

@@ -90,6 +90,7 @@ apiready = function() {
     let tpl = nodes.map(item => {
       return `<li tapmode="active" data-name="${item.protocolName}" data-id="${item.protocolFileId}">《${item.protocolName}》</li>`
     })
+    console.log(tpl)
     $api.byId('agreement').innerHTML = tpl.join('')
   }
 
@@ -99,7 +100,7 @@ apiready = function() {
       let res = await Service.getPDFId(id)
       Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
         type: 'pdf',
-        id: res.data.unsignContractFileId
+        id: res.data.unsignContractFileId,
       }}})
     } catch (e) {
       api.toast({ msg: e.msg || '转换PDF文件失败', location: 'middle' })
@@ -111,7 +112,11 @@ apiready = function() {
   document.querySelector('#agreement').onclick = (e) => {
     let strong = $api.closest(e.target, 'li')
     if (strong) {
-      showContract(strong.dataset.id)
+      // showContract(strong.dataset.id)
+      Router.openPage({ key: 'pdf_agreement', params: {pageParam: {
+        type: 'pdf',
+        id: strong.dataset.id
+      }}})
     }
   }
 
