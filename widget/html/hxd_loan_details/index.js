@@ -2097,8 +2097,8 @@ var base64_1 = base64.Base64;
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'https://gateway.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var prod = 'https://crpt-cloud.oak.net.cn';
+var baseUrl =   prod;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -2145,7 +2145,7 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
 
       }
     }, function (ret, error) {
@@ -2195,19 +2195,6 @@ function ajax(method, url) {
         }
 
         reject(error);
-      }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
       }
     });
   });
@@ -2467,7 +2454,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://crpt-cloud.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["testing"];
+var baseUrl$1 = ENV_URLS["production"];
 
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2519,7 +2506,7 @@ function ajax$1(method, url) {
       timeout: timeout,
       headers: _objectSpread$4({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
 
       }
     }, function (ret, error) {
@@ -2570,19 +2557,6 @@ function ajax$1(method, url) {
         }
 
         reject(error);
-      }
-
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
       }
     });
   });
