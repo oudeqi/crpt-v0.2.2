@@ -64,31 +64,31 @@ function vmInit() {
     },
     methods: {
 
-      // selectPicture () {
-      //   let btns = ['相机', '相册']
-      //   let sourceType = ''
-      //   ActionSheet('请选择', btns, index => {
-      //     if (index === 0) {
-      //       sourceType = 'camera'
-      //     } else {
-      //       sourceType = 'library'
-      //     }
-      //     getPicture(sourceType, (ret, err) => {
-      //       if (ret && ret.data) {
-      //         console.log(ret.data)
-      //         this.__startAuth(ret.data)
-      //       }
-      //     })
-      //   })
-      // },
-
       selectPicture () {
-        SDK.BaiduFace.open({
-          success: (path) => {
-            this.__startAuth(path)
+        let btns = ['相机', '相册']
+        let sourceType = ''
+        ActionSheet('请选择', btns, index => {
+          if (index === 0) {
+            sourceType = 'camera'
+          } else {
+            sourceType = 'library'
           }
+          getPicture(sourceType, (ret, err) => {
+            if (ret && ret.data) {
+              console.log(ret.data)
+              this.__startAuth(ret.data)
+            }
+          })
         })
       },
+
+      // selectPicture () {
+      //   SDK.BaiduFace.open({
+      //     success: (path) => {
+      //       this.__startAuth(path)
+      //     }
+      //   })
+      // },
 
       async __createLoan(userId) {
         try {

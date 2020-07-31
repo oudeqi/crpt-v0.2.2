@@ -1701,6 +1701,37 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function ActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
+  }, function (ret, err) {
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
+    }
+  });
+}
+
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: false,
+    quality: 80,
+    targetWidth: 1000,
+    // targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
 var BaiduSDK = /*#__PURE__*/function () {
   function BaiduSDK() {
     classCallCheck(this, BaiduSDK);
@@ -2813,7 +2844,7 @@ var SDK = function SDK() {
   this.BaiduFace = new BaiduFaceSDK();
 };
 
-var SDK$1 = new SDK();
+new SDK();
 
 function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2886,32 +2917,34 @@ function vmInit() {
     },
     mounted: function mounted() {},
     methods: {
-      // selectPicture () {
-      //   let btns = ['相机', '相册']
-      //   let sourceType = ''
-      //   ActionSheet('请选择', btns, index => {
-      //     if (index === 0) {
-      //       sourceType = 'camera'
-      //     } else {
-      //       sourceType = 'library'
-      //     }
-      //     getPicture(sourceType, (ret, err) => {
-      //       if (ret && ret.data) {
-      //         console.log(ret.data)
-      //         this.__startAuth(ret.data)
-      //       }
-      //     })
-      //   })
-      // },
       selectPicture: function selectPicture() {
         var _this = this;
 
-        SDK$1.BaiduFace.open({
-          success: function success(path) {
-            _this.__startAuth(path);
+        var btns = ['相机', '相册'];
+        var sourceType = '';
+        ActionSheet('请选择', btns, function (index) {
+          if (index === 0) {
+            sourceType = 'camera';
+          } else {
+            sourceType = 'library';
           }
+
+          getPicture(sourceType, function (ret, err) {
+            if (ret && ret.data) {
+              console.log(ret.data);
+
+              _this.__startAuth(ret.data);
+            }
+          });
         });
       },
+      // selectPicture () {
+      //   SDK.BaiduFace.open({
+      //     success: (path) => {
+      //       this.__startAuth(path)
+      //     }
+      //   })
+      // },
       __createLoan: function __createLoan(userId) {
         var _this2 = this;
 

@@ -1949,6 +1949,37 @@ var http = {
   }
 }; // 统一ios和android的输入框，下标都从0开始
 
+function ActionSheet(title, buttons, cb) {
+  api.actionSheet({
+    title: title,
+    cancelTitle: '取消',
+    buttons: buttons
+  }, function (ret, err) {
+    var index = ret.buttonIndex; // index 从1开始
+
+    if (index !== buttons.length + 1) {
+      cb(index - 1);
+    }
+  });
+}
+
+function getPicture(sourceType, cb) {
+  // library         //图片库
+  // camera          //相机
+  // album           //相册
+  api.getPicture({
+    sourceType: sourceType,
+    encodingType: 'png',
+    mediaValue: 'pic',
+    destinationType: 'file',
+    allowEdit: false,
+    quality: 80,
+    targetWidth: 1000,
+    // targetHeight: 300,
+    saveToPhotoAlbum: false
+  }, cb);
+}
+
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2108,7 +2139,7 @@ var SDK = function SDK() {
   this.BaiduFace = new BaiduFaceSDK();
 };
 
-var SDK$1 = new SDK();
+new SDK();
 
 apiready = function apiready() {
   api.addEventListener({
@@ -2130,6 +2161,24 @@ apiready = function apiready() {
 
   var submitStatus = 'notsubmit'; // notsubmit:未提交,submitting:正在提交
 
+  function pickPic(fn) {
+    var btns = ['相机', '相册'];
+    var sourceType = '';
+    ActionSheet('请选择', btns, function (index) {
+      if (index === 0) {
+        sourceType = 'camera';
+      } else {
+        sourceType = 'library';
+      }
+
+      getPicture(sourceType, function (ret, err) {
+        if (ret && ret.data) {
+          fn(ret.data);
+        }
+      });
+    });
+  }
+
   function submit(path) {
     return http.upload('/crpt-cust/saas/faceauth', {
       files: {
@@ -2140,81 +2189,86 @@ apiready = function apiready() {
 
   document.querySelector('#start').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      SDK$1.BaiduFace.open({
-        success: function success(path) {
-          return asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-            var ret;
-            return regenerator.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    submitStatus = 'submitting';
-                    $api.addCls($api.byId('start'), 'loading');
-                    api.showProgress({
-                      title: '加载中...',
-                      text: '',
-                      modal: false
+      // SDK.BaiduFace.open({
+      //   async success(path) {
+      //     submitStatus = 'submitting'
+      //     $api.addCls($api.byId('start'), 'loading')
+      //     api.showProgress({ title: '加载中...', text: '', modal: false })
+      //     try {
+      //       const ret = await submit(path)
+      //       if (ret.data.result === 'YES') {
+      //         openAuthResult({ status: 'success' })
+      //       } else {
+      //         api.toast({ msg: ret.data.info, location: 'middle' })
+      //       }
+      //     } catch (error) {
+      //       api.toast({ msg: error.msg || '网络错误', location: 'middle' })
+      //     }
+      //     submitStatus = 'notsubmit'
+      //     $api.removeCls($api.byId('start'), 'loading')
+      //     api.hideProgress()
+      //   }
+      // })
+      pickPic( /*#__PURE__*/function () {
+        var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(path) {
+          var ret;
+          return regenerator.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  submitStatus = 'submitting';
+                  $api.addCls($api.byId('start'), 'loading');
+                  api.showProgress({
+                    title: '加载中...',
+                    text: '',
+                    modal: false
+                  });
+                  _context.prev = 3;
+                  _context.next = 6;
+                  return submit(path);
+
+                case 6:
+                  ret = _context.sent;
+
+                  if (ret.data.result === 'YES') {
+                    openAuthResult({
+                      status: 'success'
                     });
-                    _context.prev = 3;
-                    _context.next = 6;
-                    return submit(path);
-
-                  case 6:
-                    ret = _context.sent;
-
-                    if (ret.data.result === 'YES') {
-                      openAuthResult({
-                        status: 'success'
-                      });
-                    } else {
-                      api.toast({
-                        msg: ret.data.info,
-                        location: 'middle'
-                      });
-                    }
-
-                    _context.next = 13;
-                    break;
-
-                  case 10:
-                    _context.prev = 10;
-                    _context.t0 = _context["catch"](3);
+                  } else {
                     api.toast({
-                      msg: _context.t0.msg || '网络错误',
+                      msg: ret.data.info,
                       location: 'middle'
                     });
+                  }
 
-                  case 13:
-                    submitStatus = 'notsubmit';
-                    $api.removeCls($api.byId('start'), 'loading');
-                    api.hideProgress();
+                  _context.next = 13;
+                  break;
 
-                  case 16:
-                  case "end":
-                    return _context.stop();
-                }
+                case 10:
+                  _context.prev = 10;
+                  _context.t0 = _context["catch"](3);
+                  api.toast({
+                    msg: _context.t0.msg || '网络错误',
+                    location: 'middle'
+                  });
+
+                case 13:
+                  submitStatus = 'notsubmit';
+                  $api.removeCls($api.byId('start'), 'loading');
+                  api.hideProgress();
+
+                case 16:
+                case "end":
+                  return _context.stop();
               }
-            }, _callee, null, [[3, 10]]);
-          }))();
-        }
-      }); // pickPic(async function (path) {
-      //   submitStatus = 'submitting'
-      //   $api.addCls($api.byId('start'), 'loading')
-      //   api.showProgress({ title: '加载中...', text: '', modal: false })
-      //   try {
-      //     const ret = await submit(path)
-      //     if (ret.data.result === 'YES') {
-      //       openAuthResult({status: 'success'})
-      //     } else {
-      //       api.toast({ msg: ret.data.info, location: 'middle' })
-      //     }
-      //   } catch (error) {
-      //     api.toast({ msg: error.msg || '网络错误', location: 'middle' })
-      //   }
-      //   submitStatus = 'notsubmit'
-      //   $api.removeCls($api.byId('start'), 'loading')
-      //   api.hideProgress()
-      // })
+            }
+          }, _callee, null, [[3, 10]]);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     }
   };
 
