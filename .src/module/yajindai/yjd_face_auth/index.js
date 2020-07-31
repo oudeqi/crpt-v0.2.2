@@ -8,19 +8,19 @@ import SDK from '../../../sdk'
 
 class Service {
 
-  static faceOcr (file) {
+  static faceOcr(file) {
     return http.upload('/crpt-cust/cust/openloan/yjd/faceauth', { files: { YJDFaceImage: file } }, {
-        headers: {},
-        timeout: 10000
-      }
+      headers: {},
+      timeout: 10000
+    }
     )
   }
 
-  static getBankInfo () {
+  static getBankInfo() {
     return http.get(`/crpt-cust/cust/openloan/prebindcardphnm`)
   }
 
-  static createLoanOrder (args) {
+  static createLoanOrder(args) {
     return http.post('/crpt-order/order/yjd/loan/apply', {
       body: args
     })
@@ -44,7 +44,7 @@ class Service {
 
 }
 
-function vmInit () {
+function vmInit() {
   return new Vue({
     el: '#app',
     data: function () {
@@ -60,7 +60,7 @@ function vmInit () {
       },
     },
     mounted: function () {
-      
+
     },
     methods: {
 
@@ -90,7 +90,7 @@ function vmInit () {
         })
       },
 
-      async __createLoan (userId) {
+      async __createLoan(userId) {
         try {
           let postData = { ...this.createLoanOrderArgus, userId }
           const res = await Service.createLoanOrder(postData)
@@ -105,7 +105,6 @@ function vmInit () {
       },
 
       async __startAuth (file) {
-        console.log(file)
         api.showProgress({ title: '认证中...', text: '', modal: false })
         try {
           let resOcr = await Service.faceOcr(file)
@@ -123,11 +122,15 @@ function vmInit () {
               this.__createLoan(userId) // 创建贷款
             } else { // 未完成绑卡
               setTimeout(() => {
-                Router.openPage({key: 'yjd_send_msgcode', params: {pageParam: {
-                  bankCardNo,
-                  bankCardMobile,
-                  bankCardName,
-                }}})
+                Router.openPage({
+                  key: 'yjd_send_msgcode', params: {
+                    pageParam: {
+                      bankCardNo,
+                      bankCardMobile,
+                      bankCardName,
+                    }
+                  }
+                })
               }, 1500)
             }
           } else {
@@ -143,7 +146,7 @@ function vmInit () {
   })
 }
 
-apiready = function() {
+apiready = function () {
 
   api.addEventListener({
     name: 'navitembtn'

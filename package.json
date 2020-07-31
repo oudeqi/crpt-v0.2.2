@@ -9,7 +9,8 @@
     "dev": "cross-env NODE_ENV=development rollup --config --watch",
     "testing": "cross-env NODE_ENV=testing rollup --config --watch",
     "uat": "cross-env NODE_ENV=testing rollup --config",
-    "prod": "cross-env NODE_ENV=production rollup --config --silent"
+    "prod": "cross-env NODE_ENV=production rollup --config",
+    "prod-test": "cross-env NODE_ENV=production rollup --config --watch"
   },
   "repository": {
     "type": "git",

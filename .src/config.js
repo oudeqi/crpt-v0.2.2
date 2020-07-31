@@ -100,7 +100,7 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 }
         }
         reject(error)
       }
-      if (__buildEnv__ !== 'production') {
+      // if (__buildEnv__ !== 'production') {
         if (ret) {
           console.log('/************* SUCCESS. **********/')
         } else {
@@ -110,7 +110,7 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 }
         console.log('__TOKEN ==> ' + token)
         console.log('__BODY ==> ' + JSON.stringify(data))
         console.log('__DATA ==> ' + JSON.stringify(ret || error))
-      }
+      // }
     })
   })
 }

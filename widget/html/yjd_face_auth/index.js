@@ -1518,8 +1518,8 @@ var base64_1 = base64.Base64;
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'https://gateway.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var prod = 'https://crpt-cloud.oak.net.cn';
+var baseUrl =   prod;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1566,7 +1566,7 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
 
       }
     }, function (ret, error) {
@@ -1616,20 +1616,19 @@ function ajax(method, url) {
         }
 
         reject(error);
+      } // if ("production" !== 'production') {
+
+
+      if (ret) {
+        console.log('/************* SUCCESS. **********/');
+      } else {
+        console.log('/************* ERROR. ************/');
       }
 
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
+      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
+      console.log('__TOKEN ==> ' + token);
+      console.log('__BODY ==> ' + JSON.stringify(data));
+      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
     });
   });
 }
@@ -1888,7 +1887,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://crpt-cloud.oak.net.cn'
 };
-var baseUrl$1 = ENV_URLS["testing"];
+var baseUrl$1 = ENV_URLS["production"];
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1940,7 +1939,7 @@ function ajax$1(method, url) {
       timeout: timeout,
       headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
 
       }
     }, function (ret, error) {
@@ -1991,20 +1990,19 @@ function ajax$1(method, url) {
         }
 
         reject(error);
+      } // if ("production" !== 'production') {
+
+
+      if (ret) {
+        console.log('/************* SUCCESS. **********/');
+      } else {
+        console.log('/************* ERROR. ************/');
       }
 
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
+      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+      console.log('__TOKEN ==> ' + token);
+      console.log('__BODY ==> ' + JSON.stringify(data));
+      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
     });
   });
 }
@@ -2973,22 +2971,21 @@ function vmInit() {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  console.log(file);
                   api.showProgress({
                     title: '认证中...',
                     text: '',
                     modal: false
                   });
-                  _context2.prev = 2;
-                  _context2.next = 5;
+                  _context2.prev = 1;
+                  _context2.next = 4;
                   return Service.faceOcr(file);
 
-                case 5:
+                case 4:
                   resOcr = _context2.sent;
-                  _context2.next = 8;
+                  _context2.next = 7;
                   return Service.getBankInfo();
 
-                case 8:
+                case 7:
                   resBank = _context2.sent;
 
                   if (resOcr.code === 200 && resOcr.data.result === 'YES' && resBank.code === 200) {
@@ -3024,26 +3021,26 @@ function vmInit() {
                     });
                   }
 
-                  _context2.next = 15;
+                  _context2.next = 14;
                   break;
 
-                case 12:
-                  _context2.prev = 12;
-                  _context2.t0 = _context2["catch"](2);
+                case 11:
+                  _context2.prev = 11;
+                  _context2.t0 = _context2["catch"](1);
                   api.toast({
                     msg: _context2.t0.msg || '认证失败',
                     location: 'middle'
                   });
 
-                case 15:
+                case 14:
                   api.hideProgress();
 
-                case 16:
+                case 15:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[2, 12]]);
+          }, _callee2, null, [[1, 11]]);
         }))();
       }
     }

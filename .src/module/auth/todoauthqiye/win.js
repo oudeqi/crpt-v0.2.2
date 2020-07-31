@@ -3,7 +3,7 @@ import './win.css'
 
 import {
   openRegLogin, openBaseinfoFill, openCompanyInfo,
-  openFaceAuth, openYuguEdu
+  openFaceAuth, openYuguEdu, openProductRecommend
 } from '../../../webview.js'
 import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../config.js'
 
@@ -163,6 +163,7 @@ apiready = function() {
     let faceAuth = document.querySelector('#faceAuth')
     let baseinfo = document.querySelector('#baseinfo')
     let yuguedu = document.querySelector('#yuguedu')
+    let next = document.querySelector('#next')
     if (companyInfo) {
       companyInfo.onclick = function () {
         openCompanyInfo()
@@ -198,6 +199,11 @@ apiready = function() {
         openYuguEdu()
       }
     }
+    if (next) {
+      next.onclick = function () {
+        openProductRecommend()
+      }
+    }
   }
 
   function initPage () {
@@ -210,6 +216,7 @@ apiready = function() {
       if (step > 0) {
         $api.byId('tips').innerHTML = `完成以下<strong>${step}</strong>步，即可获得申请额度资格`
         // $api.byId('yugueduContainer').innerHTML = ''
+        $api.byId('next-container').innerHTML = ''
       } else if (step === 0) {
         $api.byId('tips').innerHTML = `已完成信息收集`
         // $api.byId('yugueduContainer').innerHTML = `
@@ -218,6 +225,7 @@ apiready = function() {
         //     <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
         //   </div>
         // `
+        $api.byId('next-container').innerHTML = '<div class="app_btn" tapmode="active" id="next">下一步</div>'
       }
       renderStep1(mapping.realAuth.status)
       renderStep2(mapping.faceAuth.status)

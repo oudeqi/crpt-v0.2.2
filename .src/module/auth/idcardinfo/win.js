@@ -106,6 +106,7 @@ apiready = function() {
       let tpl = `<li tapmode="active" data-name="${agreement.protocolName}" data-id="${res.data.unsignContractFileId}">《${agreement.protocolName}》</li>`
       $api.byId('agreement').innerHTML = tpl
       unsignContractFileId = res.data.unsignContractFileId
+      console.log(tpl)
     } catch (e) {
       api.toast({ msg: e.msg || '获取PDF文件失败', location: 'middle' })
     }

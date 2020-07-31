@@ -86,8 +86,8 @@ function vmInit() {
           } else {
             api.toast({ msg: res.msg || '未查询到好销宝产品', location: 'middle' })
           }
-        } catch (error) {
-          api.toast({ msg: error.message || '出错啦', location: 'middle' })
+        } catch (e) {
+          api.toast({ msg: e.msg || '出错啦', location: 'middle' })
         }
       },
 
@@ -117,8 +117,8 @@ function vmInit() {
               this.more = 'noMore'
             }
           }
-        } catch (error) {
-          api.toast({ msg: error.message || '出错啦', location: 'middle' })
+        } catch (e) {
+          api.toast({ msg: e.msg || '出错啦', location: 'middle' })
           api.refreshHeaderLoadDone()
           this.loading = false
         }

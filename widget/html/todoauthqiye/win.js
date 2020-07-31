@@ -109,6 +109,30 @@ function openYuguEdu() {
   });
 } // 认证结果
 
+
+function openProductRecommend(pageParam) {
+  api.openTabLayout({
+    name: 'html/productrecommend/win',
+    title: '产品推荐',
+    url: 'widget://html/productrecommend/win.html',
+    bgColor: '#fff',
+    pageParam: pageParam,
+    slidBackEnabled: true,
+    navigationBar: {
+      hideBackButton: false,
+      background: 'rgba(102,187,106,1)',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      leftButtons: [{
+        text: '',
+        color: '#fff',
+        iconPath: 'widget://image/back_white_big.png'
+      }]
+    }
+  });
+} // 开通担保
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -1783,8 +1807,8 @@ var Utils$1 = new Utils();
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var uat = 'https://gateway.crpt-cloud.liuheco.com';
-var baseUrl =   uat ;
+var prod = 'https://crpt-cloud.oak.net.cn';
+var baseUrl =   prod;
 var whiteList = [// 白名单里不带token，否则后端会报错
 '/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
 ];
@@ -1831,7 +1855,7 @@ function ajax(method, url) {
       timeout: timeout,
       headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
       certificate:  {
-        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
 
       }
     }, function (ret, error) {
@@ -1881,20 +1905,19 @@ function ajax(method, url) {
         }
 
         reject(error);
+      } // if ("production" !== 'production') {
+
+
+      if (ret) {
+        console.log('/************* SUCCESS. **********/');
+      } else {
+        console.log('/************* ERROR. ************/');
       }
 
-      {
-        if (ret) {
-          console.log('/************* SUCCESS. **********/');
-        } else {
-          console.log('/************* ERROR. ************/');
-        }
-
-        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-        console.log('__TOKEN ==> ' + token);
-        console.log('__BODY ==> ' + JSON.stringify(data));
-        console.log('__DATA ==> ' + JSON.stringify(ret || error));
-      }
+      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
+      console.log('__TOKEN ==> ' + token);
+      console.log('__BODY ==> ' + JSON.stringify(data));
+      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
     });
   });
 }
@@ -2133,6 +2156,7 @@ apiready = function apiready() {
     var faceAuth = document.querySelector('#faceAuth');
     var baseinfo = document.querySelector('#baseinfo');
     var yuguedu = document.querySelector('#yuguedu');
+    var next = document.querySelector('#next');
 
     if (companyInfo) {
       companyInfo.onclick = function () {
@@ -2184,6 +2208,12 @@ apiready = function apiready() {
         openYuguEdu();
       };
     }
+
+    if (next) {
+      next.onclick = function () {
+        openProductRecommend();
+      };
+    }
   }
 
   function initPage() {
@@ -2196,6 +2226,8 @@ apiready = function apiready() {
 
       if (step > 0) {
         $api.byId('tips').innerHTML = "\u5B8C\u6210\u4EE5\u4E0B<strong>".concat(step, "</strong>\u6B65\uFF0C\u5373\u53EF\u83B7\u5F97\u7533\u8BF7\u989D\u5EA6\u8D44\u683C"); // $api.byId('yugueduContainer').innerHTML = ''
+
+        $api.byId('next-container').innerHTML = '';
       } else if (step === 0) {
         $api.byId('tips').innerHTML = "\u5DF2\u5B8C\u6210\u4FE1\u606F\u6536\u96C6"; // $api.byId('yugueduContainer').innerHTML = `
         //   <div class="smile"></div>
@@ -2203,6 +2235,8 @@ apiready = function apiready() {
         //     <div class="app_btn" tapmode="active" id="yuguedu">立即预估额度</div>
         //   </div>
         // `
+
+        $api.byId('next-container').innerHTML = '<div class="app_btn" tapmode="active" id="next">下一步</div>';
       }
 
       renderStep1(mapping.realAuth.status);
