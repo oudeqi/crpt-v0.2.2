@@ -3,6 +3,7 @@ import './win.css'
 
 import { openAuthResult,openFaceUpload } from '../../../webview.js'
 import { http, getPicture, ActionSheet } from '../../../config.js'
+import SDK from '../../../sdk'
 
 apiready = function() {
 
@@ -52,24 +53,30 @@ apiready = function() {
 
   document.querySelector('#start').onclick = function () {
     if (submitStatus === 'notsubmit') {
-      pickPic(async function (path) {
-        submitStatus = 'submitting'
-        $api.addCls($api.byId('start'), 'loading')
-        api.showProgress({ title: '加载中...', text: '', modal: false })
-        try {
-          const ret = await submit(path)
-          if (ret.data.result === 'YES') {
-            openAuthResult({status: 'success'})
-          } else {
-            api.toast({ msg: ret.data.info, location: 'middle' })
-          }
-        } catch (error) {
-          api.toast({ msg: error.msg || '网络错误', location: 'middle' })
-        }
-        submitStatus = 'notsubmit'
-        $api.removeCls($api.byId('start'), 'loading')
-        api.hideProgress()
+      SDK.BaiduFace.open({
+        success (src) {
+          console.log(src)
+        },
+        fail () {}
       })
+      // pickPic(async function (path) {
+      //   submitStatus = 'submitting'
+      //   $api.addCls($api.byId('start'), 'loading')
+      //   api.showProgress({ title: '加载中...', text: '', modal: false })
+      //   try {
+      //     const ret = await submit(path)
+      //     if (ret.data.result === 'YES') {
+      //       openAuthResult({status: 'success'})
+      //     } else {
+      //       api.toast({ msg: ret.data.info, location: 'middle' })
+      //     }
+      //   } catch (error) {
+      //     api.toast({ msg: error.msg || '网络错误', location: 'middle' })
+      //   }
+      //   submitStatus = 'notsubmit'
+      //   $api.removeCls($api.byId('start'), 'loading')
+      //   api.hideProgress()
+      // })
     }
   }
 
