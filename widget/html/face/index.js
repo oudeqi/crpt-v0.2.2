@@ -157,15 +157,14 @@ var BaiduFaceSDK = /*#__PURE__*/function () {
             // alert('活体认证通过')
             try {
               //  /storage/emulated/0/UZMap/A6038689491241/faces/bestimage0.jpg
-              var _src = "".concat(ret.result['bestimage0']);
-
+              var src = "".concat(ret.result['bestimage0']);
               setTimeout(function () {
-                api.toast({
-                  msg: '活体识别通过',
-                  duration: 1000,
-                  location: 'middle'
-                });
-                success && success(_src);
+                // api.toast({
+                //   msg: '活体识别通过',
+                //   duration: 1000,
+                //   location: 'middle'
+                // })
+                success && success(src);
               }, 50);
             } catch (e) {// alert(e)
             }
@@ -177,7 +176,7 @@ var BaiduFaceSDK = /*#__PURE__*/function () {
                   duration: 1000,
                   location: 'middle'
                 });
-                fail && fail(src);
+                fail && fail();
               }, 50);
             }
           }

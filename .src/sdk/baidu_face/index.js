@@ -87,11 +87,11 @@ export default class BaiduFaceSDK {
             let src = `${ret.result['bestimage0']}`
             
             setTimeout(() => {
-              api.toast({
-                msg: '活体识别通过',
-                duration: 1000,
-                location: 'middle'
-              })
+              // api.toast({
+              //   msg: '活体识别通过',
+              //   duration: 1000,
+              //   location: 'middle'
+              // })
               success && success(src)
             }, 50);
           } catch (e) {
@@ -105,7 +105,7 @@ export default class BaiduFaceSDK {
                 duration: 1000,
                 location: 'middle'
               })
-              fail && fail(src)
+              fail && fail()
             }, 50);
           }
         }

@@ -41,20 +41,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-var navigationBarGreen = {
-  hideBackButton: false,
-  background: 'rgba(102,187,106,1)',
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  leftButtons: [{
-    text: '',
-    color: '#fff',
-    iconPath: 'widget://image/back_white_big.png'
-  }]
-}; // 打开侧滑
-
-
 function openRegLogin() {
   api.openTabLayout({
     name: 'html/reglogin/index',
@@ -64,28 +50,6 @@ function openRegLogin() {
     slidBackEnabled: false
   });
 } // 个人登录
-
-
-function openFaceAuth() {
-  var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      title = _ref3.title,
-      userType = _ref3.userType;
-
-  api.openTabLayout({
-    name: 'html/faceauth/win',
-    title: title || '人脸识别',
-    url: 'widget://html/faceauth/win.html',
-    bgColor: '#fff',
-    reload: true,
-    pageParam: {
-      title: title,
-      userType: userType
-    },
-    bounces: true,
-    slidBackEnabled: false,
-    navigationBar: navigationBarGreen
-  });
-} // 手持身份证上传
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1938,7 +1902,7 @@ var navigationBarWhite = {
   }]
 }; // 绿色底导航
 
-var navigationBarGreen$1 = {
+var navigationBarGreen = {
   hideBackButton: false,
   background: themeMainColor,
   color: '#fff',
@@ -2065,7 +2029,7 @@ var routerMap = {
     url: 'widget://html/loan_application/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 贷款确认
   loan_confirm: {
@@ -2074,7 +2038,7 @@ var routerMap = {
     url: 'widget://html/loan_confirm/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 押金贷贷款详情
   yjd_loan_details: {
@@ -2158,7 +2122,7 @@ var routerHXDConfig = {
     url: 'widget://html/hxd_a_success/index.html',
     bgColor: '#fff',
     reload: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 好销宝产品详情
   hxd_product_detail: {
@@ -2336,7 +2300,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 账单详情
   billdetails: {
@@ -2347,7 +2311,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 我的贷款
   my_loan: {
@@ -2369,7 +2333,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 已开通的产品
   my_product: {
@@ -2391,7 +2355,7 @@ var routerConfig = {
     reload: true,
     bounces: true,
     slidBackEnabled: true,
-    navigationBar: navigationBarGreen$1
+    navigationBar: navigationBarGreen
   },
   // 设置
   settings: {
@@ -2496,7 +2460,7 @@ var Router$1 = /*#__PURE__*/function () {
   return Router;
 }();
 
-new Router$1();
+var Router$2 = new Router$1();
 
 var App = /*#__PURE__*/function () {
   function App() {
@@ -2523,10 +2487,18 @@ var App = /*#__PURE__*/function () {
       //   }
       // }})
       // return
-      // let url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516'
-      // let productId = '1282497823763111937'
-      // Router.openPage({key: 'yjd_account_open_xinwang', params: {pageParam: { url, productId }}})
-      openFaceAuth();
+      var url = 'https://opentest.hopebank.com:42220/opcf-yfk/#/mobileUniversal/phoneconfirm/open?appID=FLEXB3b12c980d56f4ec9ab81e24a0c668bb1&unicodeKey=opf-aos%3AopenAcct%3A487769829156272516';
+      var productId = '1282497823763111937';
+      Router$2.openPage({
+        key: 'yjd_face_auth',
+        params: {
+          pageParam: {
+            url: url,
+            productId: productId
+          }
+        }
+      }); // openFaceAuth()
+
       return; // saveDeviceMes()
     }
   }, {

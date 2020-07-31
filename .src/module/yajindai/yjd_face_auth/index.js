@@ -4,6 +4,7 @@ import './index.css'
 import http from '../../../http'
 import Router from '../../../router'
 import { getPicture, ActionSheet } from '../../../config.js'
+import SDK from '../../../sdk'
 
 class Service {
 
@@ -63,20 +64,29 @@ function vmInit () {
     },
     methods: {
 
-      selectPicture () {
-        let btns = ['相机', '相册']
-        let sourceType = ''
-        ActionSheet('请选择', btns, index => {
-          if (index === 0) {
-            sourceType = 'camera'
-          } else {
-            sourceType = 'library'
+      // selectPicture () {
+      //   let btns = ['相机', '相册']
+      //   let sourceType = ''
+      //   ActionSheet('请选择', btns, index => {
+      //     if (index === 0) {
+      //       sourceType = 'camera'
+      //     } else {
+      //       sourceType = 'library'
+      //     }
+      //     getPicture(sourceType, (ret, err) => {
+      //       if (ret && ret.data) {
+      //         console.log(ret.data)
+      //         this.__startAuth(ret.data)
+      //       }
+      //     })
+      //   })
+      // },
+
+      selectPicture: async () => {
+        SDK.BaiduFace.open({
+          success: async (path) => {
+            await this.__startAuth(path)
           }
-          getPicture(sourceType, (ret, err) => {
-            if (ret && ret.data) {
-              this.__startAuth(ret.data)
-            }
-          })
         })
       },
 
@@ -119,7 +129,6 @@ function vmInit () {
                 }}})
               }, 1500)
             }
-            
           } else {
             api.toast({ msg: resOcr.data.info || '认证失败', location: 'middle' })
           }

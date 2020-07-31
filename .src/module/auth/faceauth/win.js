@@ -71,8 +71,7 @@ apiready = function () {
           submitStatus = 'notsubmit'
           $api.removeCls($api.byId('start'), 'loading')
           api.hideProgress()
-        },
-        fail() { }
+        }
       })
       // pickPic(async function (path) {
       //   submitStatus = 'submitting'
