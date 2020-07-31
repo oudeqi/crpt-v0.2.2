@@ -1403,6 +1403,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
+  },
+  // 活体识别
+  face: {
+    name: 'face',
+    title: '活体识别调试',
+    url: 'widget://html/face/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
   }
 };
 
@@ -3992,6 +4001,7 @@ function vmInit() {
           // 业务单状态：1-申请中，2-已审批通过，11-待申请  待增加
           if (record.status === 1) {
             // 申请中 继续申请
+            console.log(record.status);
             Router$1.openPage({
               key: 'hxd_u_confirm',
               params: {

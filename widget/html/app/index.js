@@ -2678,6 +2678,15 @@ var routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite$1
+  },
+  // 活体识别
+  face: {
+    name: 'face',
+    title: '活体识别调试',
+    url: 'widget://html/face/index.html',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite$1
   }
 };
 
@@ -2985,6 +2994,9 @@ var App = /*#__PURE__*/function () {
       // openFaceAuth()
       // return
       // saveDeviceMes()
+      // Router.openPage({
+      //   key: 'face'
+      // })
       var userinfo = $api.getStorage('userinfo');
 
       if (userinfo) {

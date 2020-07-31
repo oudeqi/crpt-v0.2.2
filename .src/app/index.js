@@ -83,6 +83,9 @@ class App {
     // openFaceAuth()
     // return
     // saveDeviceMes()
+    // Router.openPage({
+    //   key: 'face'
+    // })
     const userinfo = $api.getStorage('userinfo')
     if (userinfo) {
       const authStatus = $api.getStorage('authStatus') || {}
