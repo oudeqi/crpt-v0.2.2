@@ -3,6 +3,7 @@ import './win.less'
 
 import { openMsgList, openRegLogin, openChangePwd } from '../../webview.js'
 import { http } from '../../config.js'
+import Router from './../../router'
 
 apiready = function () {
   api.addEventListener({
@@ -42,7 +43,7 @@ apiready = function () {
         if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
           windows.forEach(win => {
             // 关闭非root、非登录注册页、非本页
-            if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/settings/win') {
+            if (win.name !== 'root' && win.name !== 'login_index' && win.name !== 'html/settings/win') {
               api.closeWin({
                 name: win.name
               })
@@ -51,14 +52,20 @@ apiready = function () {
         }
         setTimeout(() => {
           $api.clearStorage()
-          openRegLogin()
+          // openRegLogin()
+          Router.openPage({
+            key: 'login_index'
+          })
         }, 150)
       }
     })
   }
 
   document.querySelector('#changepwd').onclick = function () {
-    openChangePwd()
+    // openChangePwd()
+    Router.openPage({
+      key: 'change_pwd'
+    })
   }
   // alert(1)
   // var superFile = api.require('superFile');
@@ -87,5 +94,5 @@ apiready = function () {
   // }, function (ret) {
   //   alert(JSON.stringify(ret));
   // });
-  
+
 }

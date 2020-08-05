@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"
+    />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="tab">
+        <label tapmode>
+          <input
+            type="radio"
+            name="type"
+            id="geren"
+            data-type="geren"
+            checked
+          />
+          <span>个人用户</span>
+        </label>
+        <label tapmode>
+          <input type="radio" name="type" id="qiye" data-type="qiye" />
+          <span>企业用户</span>
+        </label>
+      </div>
+      <!-- <div id="companyName" class="qiye-name">
+      <textarea id="name" name="name" placeholder="请输入企业全称"></textarea>
+    </div> -->
+      <div class="app_ipt_group">
+        <div class="item">
+          <div class="ipt">
+            <input
+              type="tel"
+              id="tel"
+              name="tel"
+              placeholder="请输入手机号码"
+              value=""
+            />
+          </div>
+          <!-- 请输入手机号码 -->
+        </div>
+        <div class="item">
+          <div class="ipt">
+            <input
+              id="code"
+              type="number"
+              name="code"
+              placeholder="短信验证码"
+              value=""
+            />
+          </div>
+          <div class="btn" tapmode id="sendcode">发送验证码</div>
+        </div>
+        <div class="item">
+          <div class="ipt">
+            <input
+              id="pwd"
+              type="password"
+              name="pwd"
+              placeholder="请输入密码"
+            />
+          </div>
+        </div>
+        <div class="item">
+          <div class="ipt">
+            <input
+              id="repwd"
+              type="password"
+              name="repwd"
+              placeholder="请确认密码"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="app_agreement">
+        <label>
+          <input
+            class="app_checkbox"
+            type="checkbox"
+            id="checkbox"
+            name="type"
+          />
+        </label>
+        <div class="agreement_content">
+          <strong>已阅读并同意</strong>
+          <ul id="agreement"></ul>
+          <!-- <span>《</span><strong tapmode="active">用户服务协议</strong><span>》</span> -->
+          <!-- <li tapmode="active">《用户服务协议》</li> -->
+        </div>
+      </div>
+      <div class="submit app_btn" tapmode="active" id="submit">确认</div>
+      <div class="text-btn">
+        <span class="app_link_btn" id="login" tapmode="active"
+          >已有账号立即登录</span
+        >
+      </div>
+    </div>
+    <script type="text/javascript" src="../../script/api.js"></script>
+  </body>
+</html>

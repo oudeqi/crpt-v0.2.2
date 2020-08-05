@@ -2,10 +2,10 @@ import '../../../app.css'
 import './index.css'
 import { http, saveProtocolToStorage } from '../../../config.js'
 import { openReg, openGerenLogin, openQiyeLogin } from '../../../webview.js'
-
+import Router from './../../../router'
 // 获取平台所有协议
 class Service {
-  queryArgument () {
+  queryArgument() {
     return http.get('/crpt-biz/biz/platform/protocol/app/query')
   }
 }
@@ -16,7 +16,7 @@ class PageController extends Service {
     super(...arguments)
   }
 
-  async getAndSaveProtocol () {
+  async getAndSaveProtocol() {
     try {
       const res = await this.queryArgument()
       if (res.code === 200) {
@@ -33,25 +33,31 @@ class PageController extends Service {
     }
   }
 
-  bindEvent () {
+  bindEvent() {
 
     document.querySelector('#register').onclick = function () {
-      openReg()
+      // openReg()
+      Router.openPage({
+        key: 'register'
+      })
     }
 
     document.querySelectorAll('.login').forEach(element => {
       element.onclick = function () {
-        if (this.dataset.type === 'geren') {
-          openGerenLogin()
-        } else {
-          openQiyeLogin()
-        }
+        Router.openPage({
+          key: 'account_login'
+        })
+        // if (this.dataset.type === 'geren') {
+        //   openGerenLogin()
+        // } else {
+        //   openQiyeLogin()
+        // }
       }
     })
   }
 }
 
-apiready = function() {
+apiready = function () {
 
   api.closeWin({ name: 'html/todoauthgeren/win' })
   api.closeWin({ name: 'html/todoauthqiye/win' })
@@ -61,7 +67,7 @@ apiready = function() {
 
   api.addEventListener({
     name: 'keyback'
-  }, function(ret, err) {
+  }, function (ret, err) {
     // 安卓系统监听按返回键的事件即可阻止返回上一个界面，ios无此事件
     api.closeWidget({
       silent: false
@@ -69,8 +75,8 @@ apiready = function() {
   })
 
   api.addEventListener({
-    name:'viewappear'
-  }, function(ret, err){
+    name: 'viewappear'
+  }, function (ret, err) {
     ctrl.getAndSaveProtocol()
   })
 

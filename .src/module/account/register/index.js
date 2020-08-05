@@ -38,11 +38,11 @@ apiready = function() {
   function radioOnChange () {
     if (this.dataset.type === 'geren') {
       showProtocol(1)
-      $api.byId('companyName').style.display = 'none'
+      // $api.byId('companyName').style.display = 'none'
       type = 'geren'
     } else {
       showProtocol(2)
-      $api.byId('companyName').style.display = 'block'
+      // $api.byId('companyName').style.display = 'block'
       type = 'qiye'
     }
   }
@@ -119,6 +119,12 @@ apiready = function() {
       }}})
     }
   }
+  document.querySelector('#login').onclick = function () {
+    // openReg()
+    Router.openPage({
+      key: 'account_login'
+    })
+  }
 
   function countDown () {
     let second = 60
@@ -161,14 +167,14 @@ apiready = function() {
     let enterpriseRegister = '/crpt-cust/identification/enterpriseregister'
     let url = type === 'geren' ? personRegister : enterpriseRegister
     if (submitStatus === 'notsubmit') {
-      let companyName = $api.byId('name').value.trim()
+      // let companyName = $api.byId('name').value.trim()
       let tel = $api.byId('tel').value.trim()
       let code = $api.byId('code').value.trim()
       let pwd = $api.byId('pwd').value.trim()
       let repwd = $api.byId('repwd').value.trim()
-      if (type === 'qiye' && !companyName) {
-        return api.toast({ msg: '请输入企业全称', location: 'middle' })
-      }
+      // if (type === 'qiye' && !companyName) {
+      //   return api.toast({ msg: '请输入企业全称', location: 'middle' })
+      // }
       if (!tel) {
         return api.toast({ msg: '请输入手机号码', location: 'middle' })
       }
@@ -191,16 +197,16 @@ apiready = function() {
         confirmPassword: Base64.encode(pwd),
         verification: code
       }
-      if (type === 'qiye') {
-        body.name = companyName
-      }
+      // if (type === 'qiye') {
+      //   body.name = companyName
+      // }
       $api.addCls($api.byId('submit'), 'loading')
       http.post(url, { body }).then(ret => {
         submitStatus = 'notsubmit'
         $api.removeCls($api.byId('submit'), 'loading')
         api.toast({ msg: '注册成功', location: 'middle', global: true })
         let body = {
-          userType: type === 'geren' ? 1 : 2, // 1个人用户登录，2企业用户登录
+          // userType: type === 'geren' ? 1 : 2, // 1个人用户登录，2企业用户登录
           username: tel,
           loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
           // verification: code,

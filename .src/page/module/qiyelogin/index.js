@@ -7,7 +7,7 @@ import {
 } from '../../../webview.js'
 import { http } from '../../../config.js'
 
-apiready = function() {
+apiready = function () {
 
   api.addEventListener({
     name: 'navitembtn'
@@ -20,10 +20,13 @@ apiready = function() {
   let submitStatus = 'notsubmit' // notsubmit:未提交,submitting:正在提交
 
   document.querySelector('#register').onclick = function () {
-    openReg()
+    // openReg()
+    Router.openPage({
+      key: 'register'
+    })
   }
   document.querySelector('#pwd_login').onclick = function () {
-    openGerenLogin({userType: 2})
+    openGerenLogin({ userType: 2 })
   }
 
   document.querySelector('#tel_login').onclick = function () {
@@ -37,7 +40,7 @@ apiready = function() {
     }
   }
 
-  function qiyeSendCode (companyName) {
+  function qiyeSendCode(companyName) {
     submitStatus = 'submitting'
     $api.addCls($api.byId('tel_login'), 'loading')
     http.post('/crpt-cust/identification/gainenterprisephone', {

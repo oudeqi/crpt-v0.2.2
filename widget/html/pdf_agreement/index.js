@@ -3,7 +3,7 @@ var ENV_URLS = {
   testing: 'https://gateway.crpt-cloud.liuheco.com',
   production: 'https://crpt-cloud.oak.net.cn'
 };
-var baseUrl = ENV_URLS["production"];
+var baseUrl = ENV_URLS["testing"];
 
 apiready = function apiready() {
   var pageParam = api.pageParam || {};

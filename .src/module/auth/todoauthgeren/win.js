@@ -6,8 +6,8 @@ import {
   openFaceAuth, openYuguEdu, openIDcardUpload
 } from '../../../webview.js'
 import { http, getAndStorageAuthStatus, setRefreshHeaderInfo } from '../../../config.js'
-
-apiready = function() {
+import Router from './../../../router'
+apiready = function () {
 
   api.addEventListener({
     name: 'keyback'
@@ -18,7 +18,7 @@ apiready = function() {
   let userinfo = $api.getStorage('userinfo')
   let { userType, access_token } = userinfo || {}
 
-  function logout (cb) {
+  function logout(cb) {
     http.delete(`/auth/token/${access_token}`).then(res => {
       $api.removeCls($api.byId('logout'), 'loading')
       cb()
@@ -31,7 +31,7 @@ apiready = function() {
     })
   }
 
-  function getStatus (cb) {
+  function getStatus(cb) {
     api.showProgress({ title: '加载中...', text: '', modal: false })
     getAndStorageAuthStatus(function (status) {
       api.hideProgress()
@@ -71,7 +71,7 @@ apiready = function() {
     })
   }
 
-  function renderStep1 (status) {
+  function renderStep1(status) {
     if (status === 0) {
       $api.byId('step1').innerHTML = `
       <div class="auth-block" tapmode="active" id="realAuth">
@@ -94,7 +94,7 @@ apiready = function() {
     }
   }
 
-  function renderStep2 (status) {
+  function renderStep2(status) {
     if (status === 0) {
       $api.byId('step2').innerHTML = `
       <div class="auth-block" tapmode="active" id="faceAuth">
@@ -119,13 +119,13 @@ apiready = function() {
         <div class="badge">2</div>
         <div class="content">
         ${
-          status === 1
+        status === 1
           ? '<strong>人脸认证</strong>'
           : status === 2
-          ? '<strong>人脸认证人工审核中...</strong>'
-          : status === 3
-          ? '<strong>人脸认证人工审核失败</strong><p>请联系客服</p>'
-          : ''
+            ? '<strong>人脸认证人工审核中...</strong>'
+            : status === 3
+              ? '<strong>人脸认证人工审核失败</strong><p>请联系客服</p>'
+              : ''
         }
         </div>
       </div>
@@ -133,7 +133,7 @@ apiready = function() {
     }
   }
 
-  function renderStep3 (status) {
+  function renderStep3(status) {
     if (status === 0) {
       $api.byId('step3').innerHTML = `
       <div class="auth-block" tapmode="active" id="baseinfo">
@@ -156,7 +156,7 @@ apiready = function() {
     }
   }
 
-  function bindEvent (mapping) {
+  function bindEvent(mapping) {
     api.parseTapmode()
     let realAuth = document.querySelector('#realAuth')
     let faceAuth = document.querySelector('#faceAuth')
@@ -187,7 +187,7 @@ apiready = function() {
           return
         }
         if (mapping.faceAuth.status === 0 || mapping.faceAuth.status === 2 || mapping.faceAuth.status === 3) {
-          api.toast({ msg: '请先完成第二步', location: 'middle'})
+          api.toast({ msg: '请先完成第二步', location: 'middle' })
           return
         }
         openBaseinfoFill()
@@ -205,7 +205,7 @@ apiready = function() {
     }
   }
 
-  function initPage () {
+  function initPage() {
     getStatus(function (mapping) {
       // 0未通过，1通过，2人工审核
       let step = 3
@@ -231,8 +231,8 @@ apiready = function() {
   }
 
   api.addEventListener({
-    name:'viewappear'
-  }, function(ret, err){
+    name: 'viewappear'
+  }, function (ret, err) {
     setTimeout(function () {
       initPage()
     }, 60)
@@ -254,13 +254,16 @@ apiready = function() {
             global: true
           })
           $api.clearStorage()
-          openRegLogin()
+          // openRegLogin()
+          Router.openPage({
+            key: 'login_index'
+          })
         })
       }
     })
   }
 
-  setRefreshHeaderInfo(function(ret, err) {
+  setRefreshHeaderInfo(function (ret, err) {
     initPage()
   })
 

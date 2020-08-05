@@ -14,7 +14,7 @@
     <section class="header">
       <div v-if="[1, 2, 3, 4, 6, 7, 9, 10, 11, 12].includes(data.orderStatus)" class="header-num">
         <span>订单金额(元)</span>
-        <strong>{{data.amount ? numeral(data.amount).format('0,0.00') : ''}}</strong>
+        <strong>{{data.loanAmount ? numeral(data.loanAmount).format('0,0.00') : ''}}</strong>
       </div>
       <div v-else class="header-num">
         <span>剩余未还本金(元)</span>

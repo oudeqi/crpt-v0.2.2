@@ -1,9 +1,11 @@
-import ouweiRouterMap from './routermap-ouwei'
+import routerYJDConfig from './routermap-yjd'
 import routerHXDConfig from './routermap-hxd'
-import routerConfig from './routermap'
+import routerAccountConfig from './routermap-account'
+import routerBaseConfig from './routermap'
 
 export default {
+  ...routerBaseConfig,
+  ...routerAccountConfig,
   ...routerHXDConfig,
-  ...ouweiRouterMap,
-  ...routerConfig
+  ...routerYJDConfig
 }

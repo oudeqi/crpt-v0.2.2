@@ -1,0 +1,50 @@
+<!doctype html>
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" >
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" >
+  <link rel="stylesheet" type="text/css" href="../../css/aui.css" >
+
+  <link rel="stylesheet" href="./win.css"></head>
+
+<body>
+  <div class="container">
+    <div class="app_ipt_group">
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-unlock"></i>
+        </div>
+        <div class="ipt">
+          <input id="pwd" type="password" name="pwd" placeholder="请输入密码">
+        </div>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-unlock"></i>
+        </div>
+        <div class="ipt">
+          <input id="repwd" type="password" name="repwd" placeholder="请确认密码">
+        </div>
+        
+      </div>
+      <div class="item">
+        <div class="icon">
+          <i class="aui-iconfont aui-icon-comment"></i>
+        </div>
+        <div class="ipt">
+          <input id="code" type="number" name="code" placeholder="短信验证码" value="">
+        </div>
+        <div class="btn" tapmode id="sendcode">发送验证码</div>
+      </div>
+    </div>
+    <div class="submit app_btn" id="submit" tapmode="loading">确认</div>
+  </div>
+
+  <script type="text/javascript" src="../../script/api.js"></script>
+
+  <script src="./win.js"></script></body>
+</html>

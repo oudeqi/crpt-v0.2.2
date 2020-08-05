@@ -4,15 +4,16 @@ import './win.css'
 import { openRegLogin, openBaseinfoFill, openTodoAuthGeren, openTodoAuthQiye } from '../../../webview.js'
 import { http } from '../../../config.js'
 import { version } from '../../../../package.json'
+import Router from './../../../router'
 
-apiready = function(){
+apiready = function () {
 
   let userinfo = {}
   let name = ''
   let userType = ''
   let access_token = ''
 
-  function initPage () {
+  function initPage() {
     userinfo = $api.getStorage('userinfo') || {}
     name = userinfo.name
     userType = userinfo.userType
@@ -24,7 +25,7 @@ apiready = function(){
 
   api.addEventListener({
     name: 'swipeleft'
-  }, function(ret, err){
+  }, function (ret, err) {
     api.closeWin()
   })
 
@@ -39,7 +40,7 @@ apiready = function(){
     }
   }
 
-  function logout (cb) {
+  function logout(cb) {
     http.delete(`/auth/token/${access_token}`).then(res => {
       $api.removeCls($api.byId('logout'), 'loading')
       cb()
@@ -71,7 +72,7 @@ apiready = function(){
           if (windows && windows.length > 0) { // 退出登录关闭部分win解决重新登录部分界面不刷新数据问题
             windows.forEach(win => {
               // 关闭非root、非登录注册页、非本页
-              if (win.name !== 'root' && win.name !== 'html/reglogin/index' && win.name !== 'html/leftpane/win') {
+              if (win.name !== 'root' && win.name !== 'login_index' && win.name !== 'html/leftpane/win') {
                 api.closeWin({
                   name: win.name
                 })
@@ -80,7 +81,10 @@ apiready = function(){
           }
           setTimeout(() => {
             $api.clearStorage()
-            openRegLogin()
+            // openRegLogin()
+            Router.openPage({
+              key: 'login_index'
+            })
           }, 150)
         })
       }

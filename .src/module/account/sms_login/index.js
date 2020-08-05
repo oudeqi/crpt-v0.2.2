@@ -6,6 +6,7 @@ import {
   http, loginSuccessCallback, isPhoneNo,
   phoneNoFormat, appLogin
 } from '../../../config.js'
+import Router from './../../../router'
 
 apiready = function() {
 
@@ -29,14 +30,19 @@ apiready = function() {
   }
 
   let apLoginBtn = document.querySelector('#ap_login')
-  if (userType === 1) { // 个人登录
-    $api.byId('tit').innerHTML = '个人登录'
-    sendCode()
-  } else {
-    sendStatus = 'sending'
-    $api.byId('tit').innerHTML = '企业登录'
-    countDown()
-  }
+
+  sendCode()
+  countDown()
+  sendStatus = 'sending'
+
+  // if (userType === 1) { // 个人登录
+  //   $api.byId('tit').innerHTML = '个人登录'
+  //   sendCode()
+  // } else {
+  //   sendStatus = 'sending'
+  //   $api.byId('tit').innerHTML = '企业登录'
+  //   countDown()
+  // }
 
   function countDown () {
     let second = 60
@@ -77,13 +83,18 @@ apiready = function() {
     sendCode()
   }
 
-  if(userType === 2) {
-    apLoginBtn.onclick = function() {
-      openGerenLogin({ userType: 2 })
-    }
-  }else {// 个人登录时隐藏账密登录提示
-    apLoginBtn.style.display = 'none'
+  apLoginBtn.onclick = function() {
+    Router.openPage({
+      key: 'account_login'
+    })
   }
+  // if(userType === 2) {
+  //   apLoginBtn.onclick = function() {
+  //     openGerenLogin({ userType: 2 })
+  //   }
+  // }else {// 个人登录时隐藏账密登录提示
+  //   apLoginBtn.style.display = 'none'
+  // }
 
   document.querySelector('#login').onclick = function () {
     if (submitStatus === 'notsubmit') {
@@ -94,7 +105,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
-        userType: userType, // 1个人用户登录，2企业用户登录
+        // userType: userType, // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 2, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         verification: code,

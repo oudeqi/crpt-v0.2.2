@@ -6,6 +6,7 @@ import {
 } from './webview.js'
 import { Base64 } from 'js-base64'
 import Utils from "./utils"
+import Router from './router'
 // import key from './../widget/cert/gateway.crpt-cloud.liuheco.com.key'
 
 const dev = 'http://crptdev.liuheco.com'
@@ -88,11 +89,14 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 }
             }, function (ret, err) {
               hasAlert = false
               api.closeWin({ name: 'html/register/index' })
-              api.closeWin({ name: 'html/gerenlogin/index' })
+              api.closeWin({ name: 'account_login' })
               api.closeWin({ name: 'html/qiyelogin/index' })
               setTimeout(() => {
                 $api.clearStorage()
-                openRegLogin()
+                // openRegLogin()
+                Router.openPage({
+                  key: 'login_index'
+                })
               }, 150)
             })
           }
@@ -100,7 +104,7 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 }
         }
         reject(error)
       }
-      // if (__buildEnv__ !== 'production') {
+      if (__buildEnv__ !== 'production') {
         if (ret) {
           console.log('/************* SUCCESS. **********/')
         } else {
@@ -110,7 +114,7 @@ function ajax(method, url, data = {}, { headers = {}, tag = null, timeout = 30 }
         console.log('__TOKEN ==> ' + token)
         console.log('__BODY ==> ' + JSON.stringify(data))
         console.log('__DATA ==> ' + JSON.stringify(ret || error))
-      // }
+      }
     })
   })
 }

@@ -792,16 +792,6 @@ function _defineProperty(obj, key, value) {
 
 var defineProperty = _defineProperty;
 
-function openRegLogin() {
-  api.openTabLayout({
-    name: 'html/reglogin/index',
-    url: 'widget://html/reglogin/index.html',
-    bgColor: '#fff',
-    reload: true,
-    slidBackEnabled: false
-  });
-} // 个人登录
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1515,566 +1505,6 @@ var base64 = createCommonjsModule(function (module, exports) {
 });
 var base64_1 = base64.Base64;
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var prod = 'https://crpt-cloud.oak.net.cn';
-var baseUrl =   prod;
-var whiteList = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert = false;
-
-function ajax(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
-
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
-    } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    }
-
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
-    api.ajax({
-      url: baseUrl + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread$1({}, Authorization, {}, contentType, {}, headers),
-      certificate:  {
-        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
-
-      }
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
-
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          // 表单校验未过专属code
-          if (ret.code === 202) {
-            var _data = ret.data;
-            Utils$1.UI.toast(_data[0].msg);
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert) {
-            hasAlert = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert = false;
-              api.closeWin({
-                name: 'html/register/index'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/index'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
-
-          reject(error);
-        }
-
-        reject(error);
-      } // if ("production" !== 'production') {
-
-
-      if (ret) {
-        console.log('/************* SUCCESS. **********/');
-      } else {
-        console.log('/************* ERROR. ************/');
-      }
-
-      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
-      console.log('__TOKEN ==> ' + token);
-      console.log('__BODY ==> ' + JSON.stringify(data));
-      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
-    });
-  });
-}
-
-var http = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
-
-    return ajax('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
-
-    return ajax('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
-
-    return ajax('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
-
-    return ajax('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  }
-}; // 统一ios和android的输入框，下标都从0开始
-
-var BaiduSDK = /*#__PURE__*/function () {
-  function BaiduSDK() {
-    classCallCheck(this, BaiduSDK);
-
-    this.ajaxUrls = {
-      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
-      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
-      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
-      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
-    };
-  }
-
-  createClass(BaiduSDK, [{
-    key: "getToken",
-    value: function getToken() {
-      return http.get(this.ajaxUrls.URL_TOKEN, null, {
-        headers: {}
-      });
-    }
-  }, {
-    key: "CarVerify",
-    value: function () {
-      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
-        var self, res;
-        return regenerator.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                self = this;
-                _context.next = 3;
-                return this.getToken();
-
-              case 3:
-                res = _context.sent;
-
-                if (!(res.code === 200)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                }));
-
-              case 6:
-                return _context.abrupt("return", Promise.reject(res));
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function CarVerify(_x) {
-        return _CarVerify.apply(this, arguments);
-      }
-
-      return CarVerify;
-    }()
-  }, {
-    key: "IdcardVerify",
-    value: function () {
-      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
-        var res;
-        return regenerator.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context2.sent;
-
-                if (!(res.code === 200)) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function IdcardVerify(_x2) {
-        return _IdcardVerify.apply(this, arguments);
-      }
-
-      return IdcardVerify;
-    }()
-  }, {
-    key: "BankVerify",
-    value: function () {
-      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
-        var res;
-        return regenerator.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.getToken();
-
-              case 2:
-                res = _context3.sent;
-
-                if (!(res.code === 200)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 6;
-                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
-                  files: files
-                }, {
-                  headers: {},
-                  timeout: 3000
-                });
-
-              case 6:
-                return _context3.abrupt("return", _context3.sent);
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function BankVerify(_x3) {
-        return _BankVerify.apply(this, arguments);
-      }
-
-      return BankVerify;
-    }()
-  }]);
-
-  return BaiduSDK;
-}();
-
-var OCR = {
-  Baidu: new BaiduSDK()
-};
-
-/**
- * Utils class
- * @authro liyang
- * @desc 工具类暴露的顶层api类，注入各class
- */
-
-var Utils = function Utils() {
-  classCallCheck(this, Utils);
-
-  this.Router = new Router();
-  this.UI = new UI();
-  this.File = new File();
-  this.DictFilter = codeMapFilter;
-  this.OCR = OCR;
-};
-
-var Utils$1 = new Utils();
-
-var ENV_URLS = {
-  development: 'http://crptdev.liuheco.com',
-  testing: 'https://gateway.crpt-cloud.liuheco.com',
-  production: 'https://crpt-cloud.oak.net.cn'
-};
-var baseUrl$1 = ENV_URLS["production"];
-
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var whiteList$1 = [// 白名单里不带token，否则后端会报错
-'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
-];
-var hasAlert$1 = false;
-
-function ajax$1(method, url) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-      _ref$headers = _ref.headers,
-      headers = _ref$headers === void 0 ? {} : _ref$headers,
-      _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? null : _ref$tag,
-      _ref$timeout = _ref.timeout,
-      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
-
-  return new Promise(function (resolve, reject) {
-    var token = '';
-
-    if (headers.token) {
-      token = headers.token;
-    } else {
-      var userinfo = $api.getStorage('userinfo');
-      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
-    }
-
-    var contentType = {
-      'Content-Type': 'application/json;charset=utf-8'
-    };
-    var Authorization = {
-      Authorization: token
-    };
-    method === 'upload' ? contentType = {} : null;
-    var include = whiteList$1.find(function (value) {
-      return url.includes(value);
-    });
-    include ? Authorization = {} : null;
-    var start = new Date().getTime();
-    api.ajax({
-      url: baseUrl$1 + url,
-      method: method === 'upload' ? 'post' : method,
-      data: data,
-      tag: tag,
-      timeout: timeout,
-      headers: _objectSpread$2({}, Authorization, {}, contentType, {}, headers),
-      certificate:  {
-        path:  'widget://widget/cert/oak.net.cn.cert' // password: key
-
-      }
-    }, function (ret, error) {
-      var end = new Date().getTime();
-      var dis = (end - start) / 1000;
-      console.log('/************* ' + dis + 's **********/');
-
-      if (ret) {
-        if (ret.code === 200) {
-          resolve(ret);
-        } else {
-          // 表单校验未过专属code
-          if (ret.code === 202) {
-            var _data = ret.data;
-            _data && Utils$1.UI.toast(_data[0].msg);
-            ret.msg && Utils$1.UI.toast(ret.msg);
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        }
-      } else {
-        if (error.statusCode === 500 && error.body.code === 216) {
-          if (!hasAlert$1) {
-            hasAlert$1 = true;
-            api.alert({
-              title: '提示',
-              msg: '登录状态已经过期，请重新登录！'
-            }, function (ret, err) {
-              hasAlert$1 = false;
-              api.closeWin({
-                name: 'html/register/index'
-              });
-              api.closeWin({
-                name: 'html/gerenlogin/index'
-              });
-              api.closeWin({
-                name: 'html/qiyelogin/index'
-              });
-              setTimeout(function () {
-                $api.clearStorage();
-                openRegLogin();
-              }, 150);
-            });
-          }
-
-          reject(error);
-        }
-
-        reject(error);
-      } // if ("production" !== 'production') {
-
-
-      if (ret) {
-        console.log('/************* SUCCESS. **********/');
-      } else {
-        console.log('/************* ERROR. ************/');
-      }
-
-      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
-      console.log('__TOKEN ==> ' + token);
-      console.log('__BODY ==> ' + JSON.stringify(data));
-      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
-    });
-  });
-}
-
-var http$1 = {
-  cancel: function cancel(tag) {
-    return api.cancelAjax({
-      tag: tag
-    });
-  },
-  get: function get(url, data) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref2.headers,
-        tag = _ref2.tag,
-        timeout = _ref2.timeout;
-
-    return ajax$1('get', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  post: function post(url, data) {
-    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref3.headers,
-        tag = _ref3.tag,
-        timeout = _ref3.timeout;
-
-    return ajax$1('post', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  put: function put(url, data) {
-    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref4.headers,
-        tag = _ref4.tag,
-        timeout = _ref4.timeout;
-
-    return ajax$1('put', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  "delete": function _delete(url, data) {
-    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref5.headers,
-        tag = _ref5.tag,
-        timeout = _ref5.timeout;
-
-    return ajax$1('delete', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  },
-  upload: function upload(url, data) {
-    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        headers = _ref6.headers,
-        tag = _ref6.tag,
-        timeout = _ref6.timeout;
-
-    return ajax$1('upload', url, data, {
-      headers: headers,
-      tag: tag,
-      timeout: timeout
-    });
-  }
-};
-
 // 主题色
 var themeMainColor = 'rgba(102,187,106,1)'; // 导航文字黑色
 
@@ -2472,6 +1902,64 @@ var routerHXDConfig = {
 };
 
 var routerConfig = {
+  // 登录注册首页
+  login_index: {
+    name: 'login_index',
+    url: 'widget://html/login_index/index.html',
+    bgColor: '#fff',
+    reload: true,
+    slidBackEnabled: false
+  },
+  // 账密登录页
+  account_login: {
+    name: 'account_login',
+    url: 'widget://html/account_login/index.html',
+    title: '',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 短信登录页
+  sms_login: {
+    name: 'sms_login',
+    url: 'widget://html/sms_login/index.html',
+    title: '',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 找回密码
+  find_pwd: {
+    name: 'find_pwd',
+    url: 'widget://html/find_pwd/index.html',
+    title: '',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  },
+  // 修改密码
+  change_pwd: {
+    name: 'change_pwd',
+    url: 'widget://html/change_pwd/win.html',
+    title: '修改密码',
+    bgColor: '#fff',
+    reload: true,
+    bounces: true,
+    slidBackEnabled: true,
+    navigationBar: navigationBarGreen
+  },
+  // 注册账号
+  register: {
+    name: 'register',
+    url: 'widget://html/register/index.html',
+    title: '注册',
+    bgColor: '#fff',
+    reload: true,
+    navigationBar: navigationBarWhite
+  }
+};
+
+var routerConfig$1 = {
   // 消息中心
   msgcenter: {
     name: 'html/msgcenter/win',
@@ -2625,14 +2113,14 @@ var routerConfig = {
   }
 };
 
-function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-var profile = _objectSpread$3({}, routerHXDConfig, {}, routerMap, {}, routerConfig);
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var profile = _objectSpread$1({}, routerConfig$1, {}, routerConfig, {}, routerHXDConfig, {}, routerMap);
 
-function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Router$1 = /*#__PURE__*/function () {
   function Router() {
@@ -2645,7 +2133,7 @@ var Router$1 = /*#__PURE__*/function () {
     value: function openPage(_ref) {
       var key = _ref.key,
           params = _ref.params;
-      api.openTabLayout(_objectSpread$4({}, profile[key], {}, params));
+      api.openTabLayout(_objectSpread$2({}, profile[key], {}, params));
     }
   }]);
 
@@ -2653,6 +2141,573 @@ var Router$1 = /*#__PURE__*/function () {
 }();
 
 var Router$2 = new Router$1();
+
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var uat = 'https://gateway.crpt-cloud.liuheco.com';
+var baseUrl =   uat ;
+var whiteList = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert = false;
+
+function ajax(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$3({}, Authorization, {}, contentType, {}, headers),
+      certificate:  {
+        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+
+      }
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            Utils$1.UI.toast(_data[0].msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert) {
+            hasAlert = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'account_login'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage(); // openRegLogin()
+
+                Router$2.openPage({
+                  key: 'login_index'
+                });
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      }
+
+      {
+        if (ret) {
+          console.log('/************* SUCCESS. **********/');
+        } else {
+          console.log('/************* ERROR. ************/');
+        }
+
+        console.log('__URL ==> ' + '[' + method + '] ' + baseUrl + url);
+        console.log('__TOKEN ==> ' + token);
+        console.log('__BODY ==> ' + JSON.stringify(data));
+        console.log('__DATA ==> ' + JSON.stringify(ret || error));
+      }
+    });
+  });
+}
+
+var http = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+}; // 统一ios和android的输入框，下标都从0开始
+
+var BaiduSDK = /*#__PURE__*/function () {
+  function BaiduSDK() {
+    classCallCheck(this, BaiduSDK);
+
+    this.ajaxUrls = {
+      URL_TOKEN: "/crpt-biz/saas/query/accesstoken",
+      URL_BANK_INFO: "/crpt-biz/saas/query/bankcardinfo",
+      URL_IDCARD_INFO: "/crpt-biz/saas/query/certinfo",
+      URL_CAR_INFO: "/crpt-biz/saas/query/carinfo"
+    };
+  }
+
+  createClass(BaiduSDK, [{
+    key: "getToken",
+    value: function getToken() {
+      return http.get(this.ajaxUrls.URL_TOKEN, null, {
+        headers: {}
+      });
+    }
+  }, {
+    key: "CarVerify",
+    value: function () {
+      var _CarVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(files) {
+        var self, res;
+        return regenerator.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                _context.next = 3;
+                return this.getToken();
+
+              case 3:
+                res = _context.sent;
+
+                if (!(res.code === 200)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", http.upload("".concat(self.ajaxUrls.URL_CAR_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                }));
+
+              case 6:
+                return _context.abrupt("return", Promise.reject(res));
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function CarVerify(_x) {
+        return _CarVerify.apply(this, arguments);
+      }
+
+      return CarVerify;
+    }()
+  }, {
+    key: "IdcardVerify",
+    value: function () {
+      var _IdcardVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(files) {
+        var res;
+        return regenerator.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context2.sent;
+
+                if (!(res.code === 200)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_IDCARD_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function IdcardVerify(_x2) {
+        return _IdcardVerify.apply(this, arguments);
+      }
+
+      return IdcardVerify;
+    }()
+  }, {
+    key: "BankVerify",
+    value: function () {
+      var _BankVerify = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(files) {
+        var res;
+        return regenerator.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.getToken();
+
+              case 2:
+                res = _context3.sent;
+
+                if (!(res.code === 200)) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 6;
+                return http.upload("".concat(this.ajaxUrls.URL_BANK_INFO, "?accessToken=").concat(res.data.accessToken), {
+                  files: files
+                }, {
+                  headers: {},
+                  timeout: 3000
+                });
+
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function BankVerify(_x3) {
+        return _BankVerify.apply(this, arguments);
+      }
+
+      return BankVerify;
+    }()
+  }]);
+
+  return BaiduSDK;
+}();
+
+var OCR = {
+  Baidu: new BaiduSDK()
+};
+
+/**
+ * Utils class
+ * @authro liyang
+ * @desc 工具类暴露的顶层api类，注入各class
+ */
+
+var Utils = function Utils() {
+  classCallCheck(this, Utils);
+
+  this.Router = new Router();
+  this.UI = new UI();
+  this.File = new File();
+  this.DictFilter = codeMapFilter;
+  this.OCR = OCR;
+};
+
+var Utils$1 = new Utils();
+
+var ENV_URLS = {
+  development: 'http://crptdev.liuheco.com',
+  testing: 'https://gateway.crpt-cloud.liuheco.com',
+  production: 'https://crpt-cloud.oak.net.cn'
+};
+var baseUrl$1 = ENV_URLS["testing"];
+
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var whiteList$1 = [// 白名单里不带token，否则后端会报错
+'/sms/smsverificationcode', '/identification/gainenterprisephone', '/identification/personregister', '/identification/enterpriseregister', '/identification/enterpriseregister', '/identification/getbackpassword', '/auth/oauth/token', '/auth/token/' // 退出登录
+];
+var hasAlert$1 = false;
+
+function ajax$1(method, url) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      _ref$headers = _ref.headers,
+      headers = _ref$headers === void 0 ? {} : _ref$headers,
+      _ref$tag = _ref.tag,
+      tag = _ref$tag === void 0 ? null : _ref$tag,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? 30 : _ref$timeout;
+
+  return new Promise(function (resolve, reject) {
+    var token = '';
+
+    if (headers.token) {
+      token = headers.token;
+    } else {
+      var userinfo = $api.getStorage('userinfo');
+      token = userinfo ? userinfo.token_type + ' ' + userinfo.access_token : '';
+    }
+
+    var contentType = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    var Authorization = {
+      Authorization: token
+    };
+    method === 'upload' ? contentType = {} : null;
+    var include = whiteList$1.find(function (value) {
+      return url.includes(value);
+    });
+    include ? Authorization = {} : null;
+    var start = new Date().getTime();
+    api.ajax({
+      url: baseUrl$1 + url,
+      method: method === 'upload' ? 'post' : method,
+      data: data,
+      tag: tag,
+      timeout: timeout,
+      headers: _objectSpread$4({}, Authorization, {}, contentType, {}, headers),
+      certificate:  {
+        path:  'widget://widget/cert/gateway.crpt-cloud.liuheco.com.cert'  // password: key
+
+      }
+    }, function (ret, error) {
+      var end = new Date().getTime();
+      var dis = (end - start) / 1000;
+      console.log('/************* ' + dis + 's **********/');
+
+      if (ret) {
+        if (ret.code === 200) {
+          resolve(ret);
+        } else {
+          // 表单校验未过专属code
+          if (ret.code === 202) {
+            var _data = ret.data;
+            _data && Utils$1.UI.toast(_data[0].msg);
+            ret.msg && Utils$1.UI.toast(ret.msg);
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        }
+      } else {
+        if (error.statusCode === 500 && error.body.code === 216) {
+          if (!hasAlert$1) {
+            hasAlert$1 = true;
+            api.alert({
+              title: '提示',
+              msg: '登录状态已经过期，请重新登录！'
+            }, function (ret, err) {
+              hasAlert$1 = false;
+              api.closeWin({
+                name: 'html/register/index'
+              });
+              api.closeWin({
+                name: 'account_login'
+              });
+              api.closeWin({
+                name: 'html/qiyelogin/index'
+              });
+              setTimeout(function () {
+                $api.clearStorage(); // openRegLogin()
+
+                Router$2.openPage({
+                  key: 'login_index'
+                });
+              }, 150);
+            });
+          }
+
+          reject(error);
+        }
+
+        reject(error);
+      } // if ("testing" !== 'production') {
+
+
+      if (ret) {
+        console.log('/************* SUCCESS. **********/');
+      } else {
+        console.log('/************* ERROR. ************/');
+      }
+
+      console.log('__URL ==> ' + '[' + method + '] ' + baseUrl$1 + url);
+      console.log('__TOKEN ==> ' + token);
+      console.log('__BODY ==> ' + JSON.stringify(data));
+      console.log('__DATA ==> ' + JSON.stringify(ret || error)); // }
+    });
+  });
+}
+
+var http$1 = {
+  cancel: function cancel(tag) {
+    return api.cancelAjax({
+      tag: tag
+    });
+  },
+  get: function get(url, data) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref2.headers,
+        tag = _ref2.tag,
+        timeout = _ref2.timeout;
+
+    return ajax$1('get', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  post: function post(url, data) {
+    var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref3.headers,
+        tag = _ref3.tag,
+        timeout = _ref3.timeout;
+
+    return ajax$1('post', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  put: function put(url, data) {
+    var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref4.headers,
+        tag = _ref4.tag,
+        timeout = _ref4.timeout;
+
+    return ajax$1('put', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  "delete": function _delete(url, data) {
+    var _ref5 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref5.headers,
+        tag = _ref5.tag,
+        timeout = _ref5.timeout;
+
+    return ajax$1('delete', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  },
+  upload: function upload(url, data) {
+    var _ref6 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        headers = _ref6.headers,
+        tag = _ref6.tag,
+        timeout = _ref6.timeout;
+
+    return ajax$1('upload', url, data, {
+      headers: headers,
+      tag: tag,
+      timeout: timeout
+    });
+  }
+};
 
 /**
  * @author Sunning

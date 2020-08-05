@@ -3,6 +3,7 @@ import './index.css'
 
 import { openReg, openFindPwd, openSendCode } from '../../../webview.js'
 import { http, isPhoneNo, loginSuccessCallback, appLogin } from '../../../config.js'
+import Router from './../../../router'
 
 apiready = function() {
 
@@ -31,14 +32,17 @@ apiready = function() {
   //   }
   // }
   //  企业登录，屏蔽短信验证码按钮
-  if(userType === 2) {
-    document.querySelector('#tel_login').style.display = 'none'
-    $api.byId('tit').innerHTML = '企业登录'
-  } else {
-    $api.byId('tit').innerHTML = '个人登录'
-  }
+  // if(userType === 2) {
+  //   document.querySelector('#tel_login').style.display = 'none'
+  //   $api.byId('tit').innerHTML = '企业登录'
+  // } else {
+  //   $api.byId('tit').innerHTML = '个人登录'
+  // }
   document.querySelector('#forget').onclick = function () {
-    openFindPwd()
+    // openFindPwd()
+    Router.openPage({
+      key: 'find_pwd'
+    })
   }
 
   document.querySelector('#tel_login').onclick = function () {
@@ -46,14 +50,25 @@ apiready = function() {
     if (!tel) {
       api.toast({ msg: '请输入手机号码', location: 'middle' })
     } else if (isPhoneNo(tel)) {
-      openSendCode({ tel, userType: 1 })
+      Router.openPage({
+        key: 'sms_login',
+        params: {
+          pageParam: {
+            tel
+          }
+        }
+      })
+      // openSendCode({ tel, userType: 1 })
     } else {
       api.toast({ msg: '手机号码格式不正确', location: 'middle' })
     }
   }
 
   document.querySelector('#register').onclick = function () {
-    openReg()
+    // openReg()
+    Router.openPage({
+      key: 'register'
+    })
   }
 
   document.querySelector('#login').onclick = function () {
@@ -69,7 +84,7 @@ apiready = function() {
       submitStatus = 'submitting'
       $api.addCls($api.byId('login'), 'loading')
       let body = {
-        userType: userType || 1, // 1个人用户登录，2企业用户登录
+        // userType: userType || 1, // 1个人用户登录，2企业用户登录
         username: tel,
         loginType: 1, // 登录方式,1-账密登录，2-验证码登录（企业只能是2）
         // verification: code,

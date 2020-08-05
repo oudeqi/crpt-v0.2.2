@@ -152,6 +152,6 @@ const routerConfig = {
     bgColor: '#fff',
     reload: true,
     navigationBar: navigationBarWhite
-  }
+  },
 }
 export default routerConfig

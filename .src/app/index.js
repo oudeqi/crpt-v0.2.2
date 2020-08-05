@@ -1,12 +1,12 @@
 import {
   openTabLayout,
-  openRegLogin,
+  // openRegLogin,
   openTodoAuthGeren,
   openTodoAuthQiye,
-  openDanbaoKaitong,
-  openIDcardUpload,
-  openIDcardInfo,
-  openFaceAuth,
+  // openDanbaoKaitong,
+  // openIDcardUpload,
+  // openIDcardInfo,
+  // openFaceAuth,
 } from '../webview.js'
 import Utils from '../utils'
 import getRealLocation from '../utils/location'
@@ -101,7 +101,10 @@ class App {
         }
       }
     } else {
-      openRegLogin()
+      // openRegLogin()
+      Router.openPage({
+        key: 'login_index'
+      })
     }
   }
   bindEvent() {
@@ -111,7 +114,7 @@ class App {
     }, (ret, err) => {
       api.confirm({
         title: '提示',
-        msg: '云修复完成，是否需要重启应用？',
+        msg: 'App更新完成，是否需要重启应用？',
         buttons: ['确定', '取消']
       }, (ret, err) => {
         var index = ret.buttonIndex
